@@ -1,0 +1,21 @@
+engines:
+  duplication:
+    enabled: true
+    exclude_paths:
+    - "webpack.config.js"
+    - "test/webpack.config.js"
+    - "test/webpack.config.hot.js"
+    config:
+      languages:
+      - javascript
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.js"
+  - "**.jsx"
+exclude_paths:
+- build/
+- test/build/

@@ -1,0 +1,45 @@
+{
+  "name": "react-calendar-test-page",
+  "version": "0.0.1-alpha",
+  "description": "A test page for React-Calendar.",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --config webpack.config.hot.js"
+  },
+  "author": {
+    "name": "Wojciech Maj",
+    "email": "kontakt@wojtekmaj.pl"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "prop-types": "next",
+    "react": "next",
+    "react-dom": "next",
+    "react-calendar": "../"
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "latest",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.2",
+    "eslint-plugin-class-property": "^1.0.6",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "file-loader": "latest",
+    "less": "^2.7.2",
+    "less-loader": "latest",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "style-loader": "latest",
+    "url-loader": "latest",
+    "webpack": "^2.7.0",
+    "webpack-dev-server": "^2.5.1"
+  }
+}
