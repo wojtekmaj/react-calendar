@@ -18,10 +18,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.pdf$/,
-        use: 'url-loader',
-      },
-      {
         test: /\.less$/,
         use: [
           'style-loader',

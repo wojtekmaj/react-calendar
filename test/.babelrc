@@ -1,0 +1,16 @@
+{
+  "presets": [
+    [
+      "es2015",
+      {
+        "modules": false
+      }
+    ],
+    "stage-2",
+    "react"
+  ],
+  "plugins": [
+    "transform-class-properties",
+    "react-hot-loader/babel"
+  ]
+}
