@@ -2,49 +2,43 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Grid from '../Grid';
+import Year from './Year';
 
-import {
-  getBeginOfDecadeYear,
-  getBeginOfYear,
-  getEndOfYear,
-} from '../shared/dates';
+import { getBeginOfDecadeYear } from '../shared/dates';
 
 export default class Years extends Component {
   yearsInDecade = 10
 
-  render() {
-    const { decade, onClickYear, setActiveRange } = this.props;
+  get start() {
+    const { decade } = this.props;
 
-    const start = getBeginOfDecadeYear(decade);
-    const end = start + this.yearsInDecade;
+    return getBeginOfDecadeYear(decade);
+  }
+
+  get end() {
+    return this.start + this.yearsInDecade;
+  }
+
+  render() {
+    const { end, start } = this;
+    const { onClickYear, setActiveRange } = this.props;
 
     const years = [];
+
     for (let year = start; year < end; year += 1) {
       years.push(
-        <button
-          className={
-            'react-calendar__year-view__years__year react-calendar__tile'
-          }
+        <Year
+          year={year}
           key={year}
-          onClick={() => {
-            if (onClickYear) onClickYear();
-
-            if (setActiveRange) {
-              const beginOfYear = getBeginOfYear(year);
-              const endOfYear = getEndOfYear(year);
-
-              setActiveRange([beginOfYear, endOfYear]);
-            }
-          }}
-        >
-          {year}
-        </button>,
+          onClick={onClickYear}
+          setActiveRange={setActiveRange}
+        />,
       );
     }
 
     return (
       <Grid
-        className="react-calendar__year-view__years"
+        className="react-calendar__decade-view__years"
         grow
       >
         {years}

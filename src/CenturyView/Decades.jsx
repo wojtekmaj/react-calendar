@@ -2,51 +2,44 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Grid from '../Grid';
+import Decade from './Decade';
 
-import {
-  getBeginOfCenturyYear,
-  getDecadeRange,
-  getDecadeLabel,
-} from '../shared/dates';
+import { getBeginOfCenturyYear } from '../shared/dates';
 
 export default class Decades extends Component {
   decadesInCentury = 10
 
   yearsInDecade = 10
 
-  render() {
-    const { decadesInCentury, yearsInDecade } = this;
-    const { century, onClickDecade, setActiveRange } = this.props;
+  get start() {
+    const { century } = this.props;
+    return getBeginOfCenturyYear(century);
+  }
 
-    const start = getBeginOfCenturyYear(century);
-    const end = start + (decadesInCentury * yearsInDecade);
+  get end() {
+    return this.start + (this.decadesInCentury * this.yearsInDecade);
+  }
+
+  render() {
+    const { yearsInDecade, end, start } = this;
+    const { onClickDecade, setActiveRange } = this.props;
 
     const decades = [];
+
     for (let decade = start; decade < end; decade += yearsInDecade) {
       decades.push(
-        <button
-          className={
-            'react-calendar__decade-view__decades__decade react-calendar__tile'
-          }
+        <Decade
+          decade={decade}
           key={decade}
-          onClick={() => {
-            if (onClickDecade) onClickDecade();
-
-            if (setActiveRange) {
-              const range = getDecadeRange(decade);
-
-              setActiveRange(range);
-            }
-          }}
-        >
-          {getDecadeLabel(decade)}
-        </button>,
+          onClick={onClickDecade}
+          setActiveRange={setActiveRange}
+        />,
       );
     }
 
     return (
       <Grid
-        className="react-calendar__decade-view__decades"
+        className="react-calendar__century-view__decades"
         grow
       >
         {decades}

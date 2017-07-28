@@ -3,19 +3,11 @@ import PropTypes from 'prop-types';
 
 import Decades from './CenturyView/Decades';
 
-import {
-  getBeginOfCentury,
-  getEndOfCentury,
-} from './shared/dates';
-
 export default class CenturyView extends Component {
   componentDidMount() {
-    const { century, setActiveRange } = this.props;
+    const { setView } = this.props;
 
-    const beginOfCentury = getBeginOfCentury(century);
-    const endOfCentury = getEndOfCentury(century);
-
-    if (setActiveRange) setActiveRange([beginOfCentury, endOfCentury]);
+    if (setView) setView('century');
   }
 
   renderDecades() {
@@ -55,4 +47,5 @@ CenturyView.propTypes = {
   ]).isRequired,
   onClickDecade: PropTypes.func,
   setActiveRange: PropTypes.func,
+  setView: PropTypes.func,
 };

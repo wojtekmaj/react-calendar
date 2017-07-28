@@ -12,17 +12,17 @@ import {
   getYear,
 } from '../shared/dates';
 
-const views = ['century', 'decade', 'year', 'month'];
+const allViews = ['century', 'decade', 'year', 'month'];
 
 export default class Navigation extends Component {
   get drillDownAvailable() {
-    const { view } = this.props;
+    const { view, views } = this.props;
 
     return views.indexOf(view) < views.length - 1;
   }
 
   get drillUpAvailable() {
-    const { view } = this.props;
+    const { view, views } = this.props;
 
     return views.indexOf(view) > 0;
   }
@@ -136,6 +136,8 @@ Navigation.defaultProps = {
   prevLabel: '‹',
 };
 
+const viewPropType = PropTypes.oneOf(allViews);
+
 Navigation.propTypes = {
   activeRange: PropTypes.arrayOf(
     PropTypes.instanceOf(Date),
@@ -146,5 +148,6 @@ Navigation.propTypes = {
   prev2Label: PropTypes.string,
   prevLabel: PropTypes.string,
   setActiveRange: PropTypes.func.isRequired,
-  view: PropTypes.oneOf(views).isRequired,
+  view: viewPropType.isRequired,
+  views: PropTypes.arrayOf(viewPropType).isRequired,
 };

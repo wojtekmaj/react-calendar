@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { formatDate } from './shared/dates';
-
 import './ReactCalendar.less';
 
 import Navigation from './ReactCalendar/Navigation';
@@ -11,7 +9,9 @@ import DecadeView from './DecadeView';
 import YearView from './YearView';
 import MonthView from './MonthView';
 
-const views = ['century', 'decade', 'year', 'month'];
+import { getRange } from './shared/dates';
+
+const allViews = ['century', 'decade', 'year', 'month'];
 
 export default class ReactCalendar extends Component {
   /**
@@ -20,7 +20,7 @@ export default class ReactCalendar extends Component {
   get limitedViews() {
     const { minDetail, maxDetail } = this.props;
 
-    return views.slice(views.indexOf(minDetail), views.indexOf(maxDetail) + 1);
+    return allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
   }
 
   get initialView() {
@@ -33,6 +33,36 @@ export default class ReactCalendar extends Component {
     return this.limitedViews.pop();
   }
 
+  get drillDownAvailable() {
+    const { limitedViews: views } = this;
+    const { view } = this.state;
+
+    return views.indexOf(view) < views.length - 1;
+  }
+
+  get drillUpAvailable() {
+    const { limitedViews: views } = this;
+    const { view } = this.state;
+
+    return views.indexOf(view) > 0;
+  }
+
+  get value() {
+    const { returnValue } = this.props;
+    const { activeRange } = this.state;
+
+    switch (returnValue) {
+      case 'start':
+        return activeRange[0];
+      case 'end':
+        return activeRange[1];
+      case 'range':
+        return activeRange;
+      default:
+        throw new Error('Invalid returnValue.');
+    }
+  }
+
   state = {
     // @TODO: Take it from value, fallback to current month
     activeRange: [new Date(), new Date()],
@@ -40,21 +70,60 @@ export default class ReactCalendar extends Component {
   }
 
   drillDown = () => {
+    if (!this.drillDownAvailable) {
+      return;
+    }
+
+    const { limitedViews: views } = this;
+
     this.setState(prevState => ({
-      view: views[Math.min(views.indexOf(prevState.view) + 1, views.length - 1)],
+      view: views[views.indexOf(prevState.view) + 1],
     }));
   }
 
   drillUp = () => {
+    if (!this.drillUpAvailable) {
+      return;
+    }
+
+    const { limitedViews: views } = this;
+
     this.setState(prevState => ({
-      view: views[Math.max(views.indexOf(prevState.view) - 1, 0)],
+      view: views[views.indexOf(prevState.view) - 1],
     }));
   }
 
-  setActiveRange = activeRange => this.setState({ activeRange })
+  onChange = () => {
+    const { maxDetail } = this.props;
+    const { view } = this.state;
 
+    const maxDetailReached = (view === maxDetail);
+
+    if (!maxDetailReached) {
+      return;
+    }
+
+    const { onChange } = this.props;
+
+    if (onChange) onChange(this.value);
+  }
+
+  setView = (view) => {
+    this.setState((prevState) => {
+      const [startDate] = [].concat(prevState.activeRange);
+      const activeRange = getRange(view, startDate);
+
+      return { activeRange };
+    });
+  }
+
+  setActiveRange = (activeRange) => {
+    this.setState({ activeRange });
+    this.onChange();
+  }
 
   renderContent() {
+    const { drillDown } = this;
     const { activeRange, view } = this.state;
     const { onClickDay, onClickMonth, onClickYear, onClickDecade } = this.props;
     const [startDate] = [].concat(activeRange);
@@ -64,32 +133,35 @@ export default class ReactCalendar extends Component {
         return (
           <CenturyView
             century={startDate}
-            onClickDecade={onClickDecade || this.drillDown}
-            setActiveRange={this.setActiveRange}
+            onClickDecade={onClickDecade || drillDown}
+            setView={this.setView}
           />
         );
       case 'decade':
         return (
           <DecadeView
             decade={startDate}
-            onClickYear={onClickYear || this.drillDown}
+            onClickYear={onClickYear || drillDown}
             setActiveRange={this.setActiveRange}
+            setView={this.setView}
           />
         );
       case 'year':
         return (
           <YearView
             year={startDate}
-            onClickMonth={onClickMonth || this.drillDown}
+            onClickMonth={onClickMonth || drillDown}
             setActiveRange={this.setActiveRange}
+            setView={this.setView}
           />
         );
       case 'month':
         return (
           <MonthView
             month={startDate}
-            onClickDay={onClickDay || this.drillDown}
+            onClickDay={onClickDay || drillDown}
             setActiveRange={this.setActiveRange}
+            setView={this.setView}
           />
         );
       default:
@@ -115,35 +187,14 @@ export default class ReactCalendar extends Component {
         prev2Label={prev2Label}
         setActiveRange={this.setActiveRange}
         view={this.state.view}
+        views={this.limitedViews}
       />
-    );
-  }
-
-  renderDebugInfo() {
-    const { activeRange } = this.state;
-
-    const renderDate = (dateToRender) => {
-      if (dateToRender instanceof Date) {
-        return formatDate(dateToRender);
-      }
-      return dateToRender;
-    };
-
-    if (activeRange instanceof Array) {
-      return (
-        <p>Chosen date range: {renderDate(activeRange[0])} - {renderDate(activeRange[1])}</p>
-      );
-    }
-
-    return (
-      <p>Chosen date: {renderDate(activeRange)}</p>
     );
   }
 
   render() {
     return (
       <div className="react-calendar">
-        {this.renderDebugInfo()}
         {this.renderNavigation()}
         {this.renderContent()}
       </div>
@@ -154,19 +205,22 @@ export default class ReactCalendar extends Component {
 ReactCalendar.defaultProps = {
   maxDetail: 'month',
   minDetail: 'century',
+  returnValue: 'start',
   view: 'month',
 };
 
 ReactCalendar.propTypes = {
-  maxDetail: PropTypes.oneOf(views),
-  minDetail: PropTypes.oneOf(views),
+  maxDetail: PropTypes.oneOf(allViews),
+  minDetail: PropTypes.oneOf(allViews),
   next2Label: PropTypes.string,
   nextLabel: PropTypes.string,
+  onChange: PropTypes.func,
   onClickDay: PropTypes.func,
   onClickDecade: PropTypes.func,
   onClickMonth: PropTypes.func,
   onClickYear: PropTypes.func,
   prev2Label: PropTypes.string,
   prevLabel: PropTypes.string,
-  view: PropTypes.oneOf(views),
+  returnValue: PropTypes.oneOf(['start', 'end', 'range']).isRequired,
+  view: PropTypes.oneOf(allViews),
 };

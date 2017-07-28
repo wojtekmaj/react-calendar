@@ -306,6 +306,21 @@ export const getDayRange = (date) => {
   ];
 };
 
+export const getRange = (range, date) => {
+  switch (range) {
+    case 'century':
+      return getCenturyRange(date);
+    case 'decade':
+      return getDecadeRange(date);
+    case 'year':
+      return getYearRange(date);
+    case 'month':
+      return getMonthRange(date);
+    default:
+      throw new Error('Invalid range.');
+  }
+};
+
 export const getPreviousRange = (range, date) => {
   switch (range) {
     case 'century':

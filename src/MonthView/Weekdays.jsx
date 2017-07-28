@@ -5,27 +5,35 @@ import Grid from '../Grid';
 
 import {
   formatShortWeekday,
+  getBeginOfMonth,
   getDayOfWeek,
   getMonthIndex,
   getYear,
 } from '../shared/dates';
+import { isCalendarType } from '../shared/propTypes';
 
 export default class Weekdays extends Component {
+  get beginOfMonth() {
+    const { month } = this.props;
+
+    return getBeginOfMonth(month);
+  }
+
   get year() {
-    const { beginOfMonth } = this.props;
+    const { beginOfMonth } = this;
 
     return getYear(beginOfMonth);
   }
 
   get monthIndex() {
-    const { beginOfMonth } = this.props;
+    const { beginOfMonth } = this;
 
     return getMonthIndex(beginOfMonth);
   }
 
   render() {
-    const { year, monthIndex } = this;
-    const { beginOfMonth, calendarType } = this.props;
+    const { beginOfMonth, year, monthIndex } = this;
+    const { calendarType } = this.props;
 
     const weekdays = [];
 
@@ -58,6 +66,10 @@ Weekdays.defaultProps = {
 };
 
 Weekdays.propTypes = {
-  beginOfMonth: PropTypes.instanceOf(Date),
-  calendarType: PropTypes.oneOf(['ISO 8601', 'US']),
+  calendarType: isCalendarType,
+  month: PropTypes.oneOfType([
+    PropTypes.string, // Only strings that are parseable to integer
+    PropTypes.number,
+    PropTypes.instanceOf(Date),
+  ]).isRequired,
 };
