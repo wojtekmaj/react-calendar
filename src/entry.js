@@ -7,6 +7,7 @@ import MonthView from './MonthView';
 export default Calendar;
 
 export {
+  Calendar,
   CenturyView,
   DecadeView,
   YearView,
