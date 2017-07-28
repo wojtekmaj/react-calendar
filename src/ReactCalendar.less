@@ -1,5 +1,54 @@
 .react-calendar {
-  &--month-view {
-    
+  width: 350px;
+  border: 1px solid red;
+  font-family: Arial, Helvetica, sans-serif;
+
+  button {
+    border: 0;
+    background: none;
+
+    &:not([disabled]) {
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(230, 230, 230);
+      }
+    }
+  }
+
+  &__navigation {
+    height: 44px;
+    display: flex;
+    margin-bottom: 1em;
+
+    button {
+      min-width: 44px;
+    }
+
+    :nth-child(3) {
+      flex-grow: 1;
+    }
+  }
+
+  &__tile {
+    text-align: center;
+    padding: .75em .5em;
+  }
+
+  &__month-view {
+    &__weekdays {
+      font-weight: bold;
+
+      div {
+        padding: .5em;
+      }
+    }
+
+    &__days {
+      &__day {
+        &--weekend {
+          color: red;
+        }
+      }
+    }
   }
 }

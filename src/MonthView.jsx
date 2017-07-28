@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Days from './MonthView/Days';
+import Weekdays from './MonthView/Weekdays';
+
 import {
   getBeginOfMonth,
   getEndOfMonth,
-  getDaysInMonth,
-  formatDate,
-  getYear,
   getMonthIndex,
+  getYear,
 } from './shared/dates';
 
 export default class MonthView extends Component {
   componentDidMount() {
-    const { month, setDate } = this.props;
+    const { month, setActiveRange } = this.props;
 
     const beginOfMonth = getBeginOfMonth(month);
     const endOfMonth = getEndOfMonth(month);
 
-    if (setDate) setDate([beginOfMonth, endOfMonth]);
+    if (setActiveRange) setActiveRange([beginOfMonth, endOfMonth]);
   }
 
   get year() {
@@ -32,52 +33,69 @@ export default class MonthView extends Component {
     return getMonthIndex(month);
   }
 
-  render() {
-    const { month, onClickDay, setDate } = this.props;
+  get beginOfMonth() {
+    const { month } = this.props;
 
-    const days = [];
-    for (let day = 1; day <= getDaysInMonth(month); day += 1) {
-      const beginOfDay = new Date(this.year, this.monthIndex, day);
+    return getBeginOfMonth(month);
+  }
 
-      days.push(
-        <li
-          key={day}
-          onClick={() => {
-            if (onClickDay) onClickDay();
+  get endOfMonth() {
+    const { month } = this.props;
 
-            if (setDate) {
-              const endOfDay = new Date(this.year, this.monthIndex, day + 1, 0, 0, 0, -1);
+    return getEndOfMonth(month);
+  }
 
-              setDate([beginOfDay, endOfDay]);
-            }
-          }}
-        >
-          {formatDate(beginOfDay)}
-        </li>,
-      );
-    }
+  renderWeekdays() {
+    const { calendarType } = this.props;
 
     return (
-      <div>
-        <p>MonthView</p>
-        <ul>
-          {days}
-        </ul>
+      <Weekdays
+        beginOfMonth={this.beginOfMonth}
+        calendarType={calendarType}
+      />
+    );
+  }
+
+  renderDays() {
+    const {
+      calendarType,
+      month,
+      onClickDay,
+      setActiveRange,
+    } = this.props;
+
+    return (
+      <Days
+        calendarType={calendarType}
+        month={month}
+        onClickDay={onClickDay}
+        setActiveRange={setActiveRange}
+      />
+    );
+  }
+
+  render() {
+    return (
+      <div className="react-calendar__month-view">
+        {this.renderWeekdays()}
+        {this.renderDays()}
       </div>
     );
   }
 }
 
 MonthView.defaultProps = {
+  calendarType: 'ISO 8601',
   month: new Date(),
 };
 
 MonthView.propTypes = {
+  calendarType: PropTypes.oneOf(['ISO 8601', 'US']),
   month: PropTypes.oneOfType([
     PropTypes.string, // Only strings that are parseable to integer
     PropTypes.number,
     PropTypes.instanceOf(Date),
   ]).isRequired,
   onClickDay: PropTypes.func,
-  setDate: PropTypes.func,
+  setActiveRange: PropTypes.func,
 };

@@ -22,6 +22,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "lodash.once": "^4.1.1",
     "prop-types": ">=15.5",
     "react": ">=15.5",
     "react-dom": ">=15.5"

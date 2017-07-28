@@ -5,6 +5,7 @@ import { formatDate } from './shared/dates';
 
 import './ReactCalendar.less';
 
+import Navigation from './ReactCalendar/Navigation';
 import CenturyView from './CenturyView';
 import DecadeView from './DecadeView';
 import YearView from './YearView';
@@ -14,6 +15,8 @@ const views = ['century', 'decade', 'year', 'month'];
 
 export default class ReactCalendar extends Component {
   state = {
+    // @TODO: Take it from value, fallback to current month
+    activeRange: [new Date(), new Date()],
     view: this.props.view,
   }
 
@@ -29,7 +32,7 @@ export default class ReactCalendar extends Component {
     }));
   }
 
-  setDate = date => this.setState({ date })
+  setActiveRange = activeRange => this.setState({ activeRange })
 
   get drillDownAvailable() {
     const { view } = this.state;
@@ -44,9 +47,9 @@ export default class ReactCalendar extends Component {
   }
 
   renderContent() {
-    const { view, date } = this.state;
+    const { activeRange, view } = this.state;
     const { onClickDay, onClickMonth, onClickYear, onClickDecade } = this.props;
-    const startDate = date instanceof Array ? date[0] : date;
+    const [startDate] = [].concat(activeRange);
 
     switch (view) {
       case 'century':
@@ -54,7 +57,7 @@ export default class ReactCalendar extends Component {
           <CenturyView
             century={startDate}
             onClickDecade={onClickDecade || this.drillDown}
-            setDate={this.setDate}
+            setActiveRange={this.setActiveRange}
           />
         );
       case 'decade':
@@ -62,7 +65,7 @@ export default class ReactCalendar extends Component {
           <DecadeView
             decade={startDate}
             onClickYear={onClickYear || this.drillDown}
-            setDate={this.setDate}
+            setActiveRange={this.setActiveRange}
           />
         );
       case 'year':
@@ -70,7 +73,7 @@ export default class ReactCalendar extends Component {
           <YearView
             year={startDate}
             onClickMonth={onClickMonth || this.drillDown}
-            setDate={this.setDate}
+            setActiveRange={this.setActiveRange}
           />
         );
       case 'month':
@@ -78,7 +81,7 @@ export default class ReactCalendar extends Component {
           <MonthView
             month={startDate}
             onClickDay={onClickDay || this.drillDown}
-            setDate={this.setDate}
+            setActiveRange={this.setActiveRange}
           />
         );
       default:
@@ -87,32 +90,29 @@ export default class ReactCalendar extends Component {
   }
 
   renderNavigation() {
+    const {
+      prevLabel,
+      prev2Label,
+      nextLabel,
+      next2Label,
+    } = this.props;
+
     return (
-      <div className="react-calendar__navigation">
-        <button>
-          {'<<'}
-        </button>
-        <button>
-          {'<'}
-        </button>
-        <button
-          onClick={this.drillUp}
-          disabled={!this.drillUpAvailable}
-        >
-          {this.state.view}
-        </button>
-        <button>
-          {'>'}
-        </button>
-        <button>
-          {'>>'}
-        </button>
-      </div>
+      <Navigation
+        activeRange={this.state.activeRange}
+        drillUp={this.drillUp}
+        nextLabel={nextLabel}
+        next2Label={next2Label}
+        prevLabel={prevLabel}
+        prev2Label={prev2Label}
+        setActiveRange={this.setActiveRange}
+        view={this.state.view}
+      />
     );
   }
 
   renderDebugInfo() {
-    const { date } = this.state;
+    const { activeRange } = this.state;
 
     const renderDate = (dateToRender) => {
       if (dateToRender instanceof Date) {
@@ -121,21 +121,20 @@ export default class ReactCalendar extends Component {
       return dateToRender;
     };
 
-    if (date instanceof Array) {
+    if (activeRange instanceof Array) {
       return (
-        <p>Chosen date range: {renderDate(date[0])} - {renderDate(date[1])}</p>
+        <p>Chosen date range: {renderDate(activeRange[0])} - {renderDate(activeRange[1])}</p>
       );
     }
 
     return (
-      <p>Chosen date: {renderDate(date)}</p>
+      <p>Chosen date: {renderDate(activeRange)}</p>
     );
   }
 
   render() {
     return (
       <div className="react-calendar">
-        Calendar
         {this.renderDebugInfo()}
         {this.renderNavigation()}
         {this.renderContent()}
@@ -145,13 +144,21 @@ export default class ReactCalendar extends Component {
 }
 
 ReactCalendar.defaultProps = {
+  maxDetail: 'month',
+  minDetail: 'century',
   view: 'month',
 };
 
 ReactCalendar.propTypes = {
-  view: PropTypes.oneOf(views),
+  maxDetail: PropTypes.oneOf(views),
+  minDetail: PropTypes.oneOf(views),
+  next2Label: PropTypes.string,
+  nextLabel: PropTypes.string,
   onClickDay: PropTypes.func,
+  onClickDecade: PropTypes.func,
   onClickMonth: PropTypes.func,
   onClickYear: PropTypes.func,
-  onClickDecade: PropTypes.func,
+  prev2Label: PropTypes.string,
+  prevLabel: PropTypes.string,
+  view: PropTypes.oneOf(views),
 };

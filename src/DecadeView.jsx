@@ -1,58 +1,43 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Years from './DecadeView/Years';
+
 import {
   getBeginOfDecade,
   getEndOfDecade,
-  getBeginOfYear,
-  getEndOfYear,
-  getBeginOfDecadeYear,
 } from './shared/dates';
 
 export default class DecadeView extends Component {
   componentDidMount() {
-    const { decade, setDate } = this.props;
+    const { decade, setActiveRange } = this.props;
 
     const beginOfCentury = getBeginOfDecade(decade);
     const endOfCentury = getEndOfDecade(decade);
 
-    if (setDate) setDate([beginOfCentury, endOfCentury]);
+    if (setActiveRange) setActiveRange([beginOfCentury, endOfCentury]);
   }
 
-  yearsInDecade = 10
-
-  render() {
-    const { decade, onClickYear, setDate } = this.props;
-
-    const start = getBeginOfDecadeYear(decade);
-
-    const years = [];
-    for (let year = start; year < start + this.yearsInDecade; year += 1) {
-      years.push(
-        <li
-          key={year}
-          onClick={() => {
-            if (onClickYear) onClickYear();
-
-            if (setDate) {
-              const beginOfYear = getBeginOfYear(year);
-              const endOfYear = getEndOfYear(year);
-
-              setDate([beginOfYear, endOfYear]);
-            }
-          }}
-        >
-          {year}s
-        </li>,
-      );
-    }
+  renderYears() {
+    const {
+      onClickYear,
+      setActiveRange,
+      decade,
+    } = this.props;
 
     return (
-      <div>
-        <p>DecadeView</p>
-        <ul>
-          {years}
-        </ul>
+      <Years
+        decade={decade}
+        onClickYear={onClickYear}
+        setActiveRange={setActiveRange}
+      />
+    );
+  }
+
+  render() {
+    return (
+      <div className="react-calendar__decade-view">
+        {this.renderYears()}
       </div>
     );
   }
@@ -69,5 +54,5 @@ DecadeView.propTypes = {
     PropTypes.instanceOf(Date),
   ]).isRequired,
   onClickYear: PropTypes.func,
-  setDate: PropTypes.func,
+  setActiveRange: PropTypes.func,
 };
