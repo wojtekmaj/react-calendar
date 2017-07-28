@@ -5,16 +5,14 @@ import { getDecadeLabel, getDecadeRange } from '../shared/dates';
 
 const className = 'react-calendar__century-view__decades__decade';
 
-const Decade = ({ decade, onClick, setActiveRange }) => (
+const Decade = ({ decade, onClick }) => (
   <button
     className={[
       className,
       'react-calendar__tile',
     ].join(' ')}
     onClick={() => {
-      if (onClick) onClick();
-
-      if (setActiveRange) setActiveRange(getDecadeRange(decade));
+      if (onClick) onClick(getDecadeRange(decade));
     }}
   >
     {getDecadeLabel(decade)}
@@ -24,7 +22,6 @@ const Decade = ({ decade, onClick, setActiveRange }) => (
 Decade.propTypes = {
   decade: PropTypes.number.isRequired,
   onClick: PropTypes.func,
-  setActiveRange: PropTypes.func,
 };
 
 export default Decade;

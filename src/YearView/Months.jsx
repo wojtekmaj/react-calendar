@@ -17,7 +17,7 @@ export default class Months extends Component {
 
   render() {
     const { monthsInYear, year } = this;
-    const { onClickMonth, setActiveRange } = this.props;
+    const { onClickMonth } = this.props;
 
     const months = [];
 
@@ -27,7 +27,6 @@ export default class Months extends Component {
           key={monthIndex}
           month={new Date(year, monthIndex, 1)}
           onClick={onClickMonth}
-          setActiveRange={setActiveRange}
         />,
       );
     }
@@ -45,6 +44,5 @@ export default class Months extends Component {
 
 Months.propTypes = {
   onClickMonth: PropTypes.func,
-  setActiveRange: PropTypes.func,
   year: PropTypes.instanceOf(Date).isRequired,
 };

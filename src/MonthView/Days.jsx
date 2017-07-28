@@ -26,7 +26,7 @@ export default class Days extends Component {
 
   render() {
     const { year, monthIndex } = this;
-    const { calendarType, month, onClickDay, setActiveRange } = this.props;
+    const { calendarType, month, onClickDay } = this.props;
 
     const days = [];
     for (let day = 1; day <= getDaysInMonth(month); day += 1) {
@@ -36,7 +36,6 @@ export default class Days extends Component {
           day={new Date(year, monthIndex, day)}
           key={day}
           onClick={onClickDay}
-          setActiveRange={setActiveRange}
         />,
       );
     }
@@ -61,5 +60,4 @@ Days.propTypes = {
     PropTypes.instanceOf(Date),
   ]).isRequired,
   onClickDay: PropTypes.func,
-  setActiveRange: PropTypes.func,
 };

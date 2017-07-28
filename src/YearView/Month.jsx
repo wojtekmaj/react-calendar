@@ -8,16 +8,14 @@ import {
 
 const className = 'react-calendar__year-view__months__month';
 
-const Month = ({ month, onClick, setActiveRange }) => (
+const Month = ({ month, onClick }) => (
   <button
     className={[
       className,
       'react-calendar__tile',
     ].join(' ')}
     onClick={() => {
-      if (onClick) onClick();
-
-      if (setActiveRange) setActiveRange(getMonthRange(month));
+      if (onClick) onClick(getMonthRange(month));
     }}
   >
     {formatMonth(month)}
@@ -27,7 +25,6 @@ const Month = ({ month, onClick, setActiveRange }) => (
 Month.propTypes = {
   month: PropTypes.instanceOf(Date).isRequired,
   onClick: PropTypes.func,
-  setActiveRange: PropTypes.func,
 };
 
 export default Month;

@@ -91,7 +91,7 @@ export default class ReactCalendar extends Component {
     }
   }
 
-  drillDown = () => {
+  drillDown = (activeRange) => {
     if (!this.drillDownAvailable) {
       return;
     }
@@ -99,6 +99,7 @@ export default class ReactCalendar extends Component {
     const views = this.getLimitedViews();
 
     this.setState(prevState => ({
+      activeRange,
       view: views[views.indexOf(prevState.view) + 1],
     }));
   }
@@ -147,7 +148,7 @@ export default class ReactCalendar extends Component {
     if (callback) callback();
 
     if (this.drillDownAvailable) {
-      this.drillDown();
+      this.drillDown(activeRange);
     } else {
       this.onChange(activeRange);
     }
@@ -172,7 +173,6 @@ export default class ReactCalendar extends Component {
           <DecadeView
             decade={startDate}
             onClickYear={this.onDrillDown(onClickYear)}
-            setActiveRange={this.setActiveRange}
             setView={this.setView}
           />
         );
@@ -181,7 +181,6 @@ export default class ReactCalendar extends Component {
           <YearView
             year={startDate}
             onClickMonth={this.onDrillDown(onClickMonth)}
-            setActiveRange={this.setActiveRange}
             setView={this.setView}
           />
         );
@@ -190,7 +189,6 @@ export default class ReactCalendar extends Component {
           <MonthView
             month={startDate}
             onClickDay={this.onDrillDown(onClickDay)}
-            setActiveRange={this.setActiveRange}
             setView={this.setView}
           />
         );

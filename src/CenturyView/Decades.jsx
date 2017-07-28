@@ -22,7 +22,7 @@ export default class Decades extends Component {
 
   render() {
     const { yearsInDecade, end, start } = this;
-    const { onClickDecade, setActiveRange } = this.props;
+    const { onClickDecade } = this.props;
 
     const decades = [];
 
@@ -32,7 +32,6 @@ export default class Decades extends Component {
           decade={decade}
           key={decade}
           onClick={onClickDecade}
-          setActiveRange={setActiveRange}
         />,
       );
     }
@@ -51,5 +50,4 @@ export default class Decades extends Component {
 Decades.propTypes = {
   century: PropTypes.instanceOf(Date).isRequired,
   onClickDecade: PropTypes.func,
-  setActiveRange: PropTypes.func,
 };

@@ -11,7 +11,7 @@ import { isCalendarType } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
 
-const Day = ({ calendarType, day, onClick, setActiveRange }) => (
+const Day = ({ calendarType, day, onClick }) => (
   <button
     className={[
       className,
@@ -20,9 +20,7 @@ const Day = ({ calendarType, day, onClick, setActiveRange }) => (
     ].join(' ')}
     key={day}
     onClick={() => {
-      if (onClick) onClick();
-
-      if (setActiveRange) setActiveRange(getDayRange(day));
+      if (onClick) onClick(getDayRange(day));
     }}
     style={(getDay(day) === 1) ? {
       gridColumnStart: getDayOfWeek(day, calendarType) + 1,
@@ -36,7 +34,6 @@ Day.propTypes = {
   calendarType: isCalendarType,
   day: PropTypes.instanceOf(Date).isRequired,
   onClick: PropTypes.func,
-  setActiveRange: PropTypes.func,
 };
 
 export default Day;
