@@ -11,9 +11,12 @@
     }
   },
   "rules": {
-    "global-require": 0,
+    "global-require": "off",
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["canvas", "element"] }],
-    "react/require-default-props": 0,
-    "react/sort-comp": 0
+    "prefer-destructuring": "warn",
+    "prefer-spread": "warn",
+    "react/require-default-props": "off",
+    "react/sort-comp": "off",
+    "sort-keys": "warn"
   }
 }
