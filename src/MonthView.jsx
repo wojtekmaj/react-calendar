@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { getBeginOfMonth, formatDate, getYear, getMonthIndex } from './shared/dates';
+import {
+  getBeginOfMonth,
+  getEndOfMonth,
+  getDaysInMonth,
+  formatDate,
+  getYear,
+  getMonthIndex,
+} from './shared/dates';
 
 export default class MonthView extends Component {
+  componentDidMount() {
+    const { month, setDate } = this.props;
+
+    const beginOfMonth = getBeginOfMonth(month);
+    const endOfMonth = getEndOfMonth(month);
+
+    if (setDate) setDate([beginOfMonth, endOfMonth]);
+  }
+
   get year() {
     const { month } = this.props;
 
@@ -16,21 +32,34 @@ export default class MonthView extends Component {
     return getMonthIndex(month);
   }
 
-  get daysInMonth() {
-    return new Date(this.year, this.monthIndex + 1, 0).getDate();
-  }
-
   render() {
-    const days = [];
+    const { month, onClickDay, setDate } = this.props;
 
-    for (let day = 1; day <= this.daysInMonth; day += 1) {
-      days.push(<li key={day}>{formatDate(new Date(this.year, this.monthIndex, day))}</li>);
+    const days = [];
+    for (let day = 1; day <= getDaysInMonth(month); day += 1) {
+      const beginOfDay = new Date(this.year, this.monthIndex, day);
+
+      days.push(
+        <li
+          key={day}
+          onClick={() => {
+            if (onClickDay) onClickDay();
+
+            if (setDate) {
+              const endOfDay = new Date(this.year, this.monthIndex, day + 1, 0, 0, 0, -1);
+
+              setDate([beginOfDay, endOfDay]);
+            }
+          }}
+        >
+          {formatDate(beginOfDay)}
+        </li>,
+      );
     }
 
     return (
       <div>
         <p>MonthView</p>
-        <p>Month begins on {formatDate(getBeginOfMonth(this.props.month))}</p>
         <ul>
           {days}
         </ul>
@@ -49,4 +78,6 @@ MonthView.propTypes = {
     PropTypes.number,
     PropTypes.instanceOf(Date),
   ]).isRequired,
+  onClickDay: PropTypes.func,
+  setDate: PropTypes.func,
 };

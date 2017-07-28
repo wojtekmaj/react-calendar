@@ -64,6 +64,12 @@ export const getBeginOfCentury = (date) => {
   return new Date(beginOfCenturyYear, 0, 1);
 };
 
+export const getEndOfCentury = (date) => {
+  const beginOfCenturyYear = getBeginOfCenturyYear(date);
+
+  return new Date(beginOfCenturyYear + 100, 0, 0, 0, 0, 0, -1);
+};
+
 export const getBeginOfDecadeYear = (date) => {
   const year = getYear(date);
 
@@ -76,10 +82,22 @@ export const getBeginOfDecade = (date) => {
   return new Date(beginOfDecadeYear, 0, 1);
 };
 
+export const getEndOfDecade = (date) => {
+  const beginOfDecadeYear = getBeginOfDecadeYear(date);
+
+  return new Date(beginOfDecadeYear + 10, 0, 1, 0, 0, 0, -1);
+};
+
 export const getBeginOfYear = (date) => {
   const year = getYear(date);
 
   return new Date(year, 0, 1);
+};
+
+export const getEndOfYear = (date) => {
+  const year = getYear(date);
+
+  return new Date(year + 1, 0, 1, 0, 0, 0, -1);
 };
 
 export const getBeginOfMonth = (date) => {
@@ -87,4 +105,18 @@ export const getBeginOfMonth = (date) => {
   const monthIndex = getMonthIndex(date);
 
   return new Date(year, monthIndex, 1);
+};
+
+export const getEndOfMonth = (date) => {
+  const year = getYear(date);
+  const monthIndex = getMonthIndex(date);
+
+  return new Date(year, monthIndex + 1, 1, 0, 0, 0, -1);
+};
+
+export const getDaysInMonth = (date) => {
+  const year = getYear(date);
+  const monthIndex = getMonthIndex(date);
+
+  return new Date(year, monthIndex + 1, 0).getDate();
 };

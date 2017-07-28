@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CenturyView, DecadeView, YearView, MonthView } from 'react-calendar/src/entry';
+import ReactCalendar, { CenturyView, DecadeView, YearView, MonthView } from 'react-calendar/src/entry';
 
 import './Test.less';
 
@@ -11,6 +11,10 @@ export default class Test extends Component {
           <h1>react-calendar test page</h1>
         </header>
         <main>
+          <section>
+            <h2>ReactCalendar</h2>
+            <ReactCalendar />
+          </section>
           <section>
             <h2>MonthView</h2>
             <MonthView />
