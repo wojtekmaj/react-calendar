@@ -40,6 +40,7 @@ export default class Decades extends Component {
       <Grid
         className="react-calendar__century-view__decades"
         grow
+        width={110}
       >
         {decades}
       </Grid>

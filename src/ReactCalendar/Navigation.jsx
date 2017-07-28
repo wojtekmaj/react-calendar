@@ -17,37 +17,43 @@ const allViews = ['century', 'decade', 'year', 'month'];
 export default class Navigation extends Component {
   get drillDownAvailable() {
     const { view, views } = this.props;
-
     return views.indexOf(view) < views.length - 1;
   }
 
   get drillUpAvailable() {
     const { view, views } = this.props;
-
     return views.indexOf(view) > 0;
+  }
+
+  get prevButtonDisabled() {
+    const { activeStartDate: date, view } = this.props;
+    const [nextActiveStartDate] = getPreviousRange(view, date);
+    return nextActiveStartDate.getFullYear() < 1000;
+  }
+
+  get prev2ButtonDisabled() {
+    const { activeStartDate: date, view } = this.props;
+    const [nextActiveStartDate] = getPreviousRange2(view, date);
+    return nextActiveStartDate.getFullYear() < 1000;
   }
 
   onClickPrevious = () => {
     const { activeStartDate: date, view, setActiveStartDate } = this.props;
-
     setActiveStartDate(getPreviousRange(view, date)[0]);
   }
 
   onClickNext = () => {
     const { activeStartDate: date, view, setActiveStartDate } = this.props;
-
     setActiveStartDate(getNextRange(view, date)[0]);
   }
 
   onClickPrevious2 = () => {
     const { activeStartDate: date, view, setActiveStartDate } = this.props;
-
     setActiveStartDate(getPreviousRange2(view, date)[0]);
   }
 
   onClickNext2 = () => {
     const { activeStartDate: date, view, setActiveStartDate } = this.props;
-
     setActiveStartDate(getNextRange2(view, date)[0]);
   }
 
@@ -84,12 +90,14 @@ export default class Navigation extends Component {
         {
           view !== 'century' &&
           <button
+            disabled={this.prev2ButtonDisabled}
             onClick={this.onClickPrevious2}
           >
             {prev2Label}
           </button>
         }
         <button
+          disabled={this.prevButtonDisabled}
           onClick={this.onClickPrevious}
         >
           {prevLabel}
