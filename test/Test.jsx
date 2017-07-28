@@ -1,37 +1,54 @@
 import React, { Component } from 'react';
-import ReactCalendar, { CenturyView, DecadeView, YearView, MonthView } from 'react-calendar/src/entry';
+import ReactCalendar from 'react-calendar/src/entry';
+
+import MaxDetailOptions from './MaxDetailOptions';
+import MinDetailOptions from './MinDetailOptions';
+
+import { formatDate } from '../src/shared/dates';
 
 import './Test.less';
 
 export default class Test extends Component {
+  state = {
+    maxDetail: 'month',
+    minDetail: 'century',
+    value: new Date(),
+  }
+
+  onChange = value => this.setState({ value })
+
   render() {
+    const {
+      maxDetail,
+      minDetail,
+    } = this.state;
+
     return (
       <div className="Test">
         <header>
           <h1>react-calendar test page</h1>
         </header>
-        <main>
-          <section>
-            <h2>ReactCalendar</h2>
-            <ReactCalendar />
-          </section>
-          <section>
-            <h2>MonthView</h2>
-            <MonthView />
-          </section>
-          <section>
-            <h2>YearView</h2>
-            <YearView />
-          </section>
-          <section>
-            <h2>DecadeView</h2>
-            <DecadeView />
-          </section>
-          <section>
-            <h2>CenturyView</h2>
-            <CenturyView />
-          </section>
-        </main>
+        <div className="Test__container">
+          <aside className="Test__container__options">
+            <MinDetailOptions
+              maxDetail={maxDetail}
+              minDetail={minDetail}
+              setState={state => this.setState(state)}
+            />
+            <MaxDetailOptions
+              maxDetail={maxDetail}
+              minDetail={minDetail}
+              setState={state => this.setState(state)}
+            />
+          </aside>
+          <main className="Test__container__content">
+            <ReactCalendar
+              maxDetail={maxDetail}
+              minDetail={minDetail}
+              onChange={this.onChange}
+            />
+          </main>
+        </div>
       </div>
     );
   }
