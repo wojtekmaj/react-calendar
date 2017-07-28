@@ -17,34 +17,40 @@ export default class ReactCalendar extends Component {
   /**
    * Returns views array with disallowed values cut off.
    */
-  get limitedViews() {
-    const { minDetail, maxDetail } = this.props;
+  getLimitedViews(props = this.props) {
+    const { minDetail, maxDetail } = props;
 
     return allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
   }
 
-  get initialView() {
-    const { view } = this.props;
+  getInitialView(props = this.props) {
+    const { view } = props;
 
-    if (this.limitedViews.includes(view)) {
+    if (this.getLimitedViews(props).includes(view)) {
       return view;
     }
 
-    return this.limitedViews.pop();
+    return this.getLimitedViews(props).pop();
   }
 
   get drillDownAvailable() {
-    const { limitedViews: views } = this;
+    const views = this.getLimitedViews();
     const { view } = this.state;
 
     return views.indexOf(view) < views.length - 1;
   }
 
   get drillUpAvailable() {
-    const { limitedViews: views } = this;
+    const views = this.getLimitedViews();
     const { view } = this.state;
 
     return views.indexOf(view) > 0;
+  }
+
+  isViewAllowed(view, props = this.props) {
+    const views = this.getLimitedViews(props);
+
+    return views.includes(view);
   }
 
   get value() {
@@ -66,7 +72,24 @@ export default class ReactCalendar extends Component {
   state = {
     // @TODO: Take it from value, fallback to current month
     activeRange: [new Date(), new Date()],
-    view: this.initialView,
+    view: this.getInitialView(),
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { props } = this;
+
+    if (
+      nextProps.minDetail !== props.minDetail ||
+      nextProps.maxDetail !== props.maxDetail
+    ) {
+      const { view } = this.state;
+
+      if (!this.isViewAllowed(view, nextProps)) {
+        this.setState({
+          view: this.getInitialView(nextProps),
+        });
+      }
+    }
   }
 
   drillDown = () => {
@@ -74,7 +97,7 @@ export default class ReactCalendar extends Component {
       return;
     }
 
-    const { limitedViews: views } = this;
+    const views = this.getLimitedViews();
 
     this.setState(prevState => ({
       view: views[views.indexOf(prevState.view) + 1],
@@ -86,7 +109,7 @@ export default class ReactCalendar extends Component {
       return;
     }
 
-    const { limitedViews: views } = this;
+    const views = this.getLimitedViews();
 
     this.setState(prevState => ({
       view: views[views.indexOf(prevState.view) - 1],
@@ -165,7 +188,7 @@ export default class ReactCalendar extends Component {
           />
         );
       default:
-        throw new Error('Invalid view.');
+        throw new Error(`Invalid view: ${view}.`);
     }
   }
 
@@ -187,7 +210,7 @@ export default class ReactCalendar extends Component {
         prev2Label={prev2Label}
         setActiveRange={this.setActiveRange}
         view={this.state.view}
-        views={this.limitedViews}
+        views={this.getLimitedViews()}
       />
     );
   }

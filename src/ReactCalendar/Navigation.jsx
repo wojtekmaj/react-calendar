@@ -79,7 +79,7 @@ export default class Navigation extends Component {
         label = formatMonthYear(date);
         break;
       default:
-        throw new Error('Invalid view.');
+        throw new Error(`Invalid view: ${view}.`);
     }
 
     const {
