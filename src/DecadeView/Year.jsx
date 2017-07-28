@@ -15,7 +15,7 @@ const Year = ({ year, onClick }) => (
       if (onClick) onClick(getYearRange(year));
     }}
   >
-    <time dateTime={year.toISOString()}>
+    <time dateTime={year}>
       {year}
     </time>
   </button>
