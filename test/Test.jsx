@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactCalendar from 'react-calendar/src/entry';
+import Calendar from 'react-calendar/src/entry';
 
 import MaxDetailOptions from './MaxDetailOptions';
 import MinDetailOptions from './MinDetailOptions';
@@ -69,7 +69,7 @@ export default class Test extends Component {
             />
           </aside>
           <main className="Test__container__content">
-            <ReactCalendar
+            <Calendar
               maxDetail={maxDetail}
               minDetail={minDetail}
               onChange={this.onChange}

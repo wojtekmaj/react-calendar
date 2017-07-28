@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import './ReactCalendar.less';
+import './Calendar.less';
 
-import Navigation from './ReactCalendar/Navigation';
+import Navigation from './Calendar/Navigation';
 import CenturyView from './CenturyView';
 import DecadeView from './DecadeView';
 import YearView from './YearView';
@@ -14,7 +14,7 @@ import { getRange } from './shared/dates';
 const allViews = ['century', 'decade', 'year', 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
 
-export default class ReactCalendar extends Component {
+export default class Calendar extends Component {
   get drillDownAvailable() {
     const views = this.getLimitedViews();
     const { view } = this.state;
@@ -287,14 +287,14 @@ export default class ReactCalendar extends Component {
   }
 }
 
-ReactCalendar.defaultProps = {
+Calendar.defaultProps = {
   maxDetail: 'month',
   minDetail: 'century',
   returnValue: 'start',
   view: 'month',
 };
 
-ReactCalendar.propTypes = {
+Calendar.propTypes = {
   maxDetail: PropTypes.oneOf(allViews),
   minDetail: PropTypes.oneOf(allViews),
   next2Label: PropTypes.string,
