@@ -3,6 +3,7 @@ import ReactCalendar from 'react-calendar/src/entry';
 
 import MaxDetailOptions from './MaxDetailOptions';
 import MinDetailOptions from './MinDetailOptions';
+import ValueOptions from './ValueOptions';
 
 import { formatDate } from '../src/shared/dates';
 
@@ -42,6 +43,7 @@ export default class Test extends Component {
     const {
       maxDetail,
       minDetail,
+      value,
     } = this.state;
 
     return (
@@ -61,12 +63,17 @@ export default class Test extends Component {
               minDetail={minDetail}
               setState={state => this.setState(state)}
             />
+            <ValueOptions
+              setState={state => this.setState(state)}
+              value={value}
+            />
           </aside>
           <main className="Test__container__content">
             <ReactCalendar
               maxDetail={maxDetail}
               minDetail={minDetail}
               onChange={this.onChange}
+              value={value}
             />
             {this.renderDebugInfo()}
           </main>

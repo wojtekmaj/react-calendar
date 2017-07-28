@@ -306,8 +306,8 @@ export const getDayRange = (date) => {
   ];
 };
 
-export const getRange = (range, date) => {
-  switch (range) {
+export const getRange = (rangeType, date) => {
+  switch (rangeType) {
     case 'century':
       return getCenturyRange(date);
     case 'decade':
@@ -316,13 +316,15 @@ export const getRange = (range, date) => {
       return getYearRange(date);
     case 'month':
       return getMonthRange(date);
+    case 'day':
+      return getDayRange(date);
     default:
-      throw new Error('Invalid range.');
+      throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
 
-export const getPreviousRange = (range, date) => {
-  switch (range) {
+export const getPreviousRange = (rangeType, date) => {
+  switch (rangeType) {
     case 'century':
       return getPreviousCenturyRange(date);
     case 'decade':
@@ -332,12 +334,12 @@ export const getPreviousRange = (range, date) => {
     case 'month':
       return getPreviousMonthRange(date);
     default:
-      throw new Error('Invalid range.');
+      throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
 
-export const getNextRange = (range, date) => {
-  switch (range) {
+export const getNextRange = (rangeType, date) => {
+  switch (rangeType) {
     case 'century':
       return getNextCenturyRange(date);
     case 'decade':
@@ -347,12 +349,12 @@ export const getNextRange = (range, date) => {
     case 'month':
       return getNextMonthRange(date);
     default:
-      throw new Error('Invalid range.');
+      throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
 
-export const getPreviousRange2 = (range, date) => {
-  switch (range) {
+export const getPreviousRange2 = (rangeType, date) => {
+  switch (rangeType) {
     case 'decade':
       return getPreviousDecadeRange(date, 100);
     case 'year':
@@ -360,12 +362,12 @@ export const getPreviousRange2 = (range, date) => {
     case 'month':
       return getPreviousMonthRange(date, 12);
     default:
-      throw new Error('Invalid range.');
+      throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
 
-export const getNextRange2 = (range, date) => {
-  switch (range) {
+export const getNextRange2 = (rangeType, date) => {
+  switch (rangeType) {
     case 'decade':
       return getNextDecadeRange(date, 100);
     case 'year':
@@ -373,7 +375,7 @@ export const getNextRange2 = (range, date) => {
     case 'month':
       return getNextMonthRange(date, 12);
     default:
-      throw new Error('Invalid range.');
+      throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
 

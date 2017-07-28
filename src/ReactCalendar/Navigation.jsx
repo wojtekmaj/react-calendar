@@ -27,42 +27,32 @@ export default class Navigation extends Component {
     return views.indexOf(view) > 0;
   }
 
-  get date() {
-    const { activeRange } = this.props;
-    return activeRange[0];
-  }
-
   onClickPrevious = () => {
-    const { view, setActiveRange } = this.props;
-    const { date } = this;
+    const { activeStartDate: date, view, setActiveStartDate } = this.props;
 
-    setActiveRange(getPreviousRange(view, date));
+    setActiveStartDate(getPreviousRange(view, date)[0]);
   }
 
   onClickNext = () => {
-    const { view, setActiveRange } = this.props;
-    const { date } = this;
+    const { activeStartDate: date, view, setActiveStartDate } = this.props;
 
-    setActiveRange(getNextRange(view, date));
+    setActiveStartDate(getNextRange(view, date)[0]);
   }
 
   onClickPrevious2 = () => {
-    const { view, setActiveRange } = this.props;
-    const { date } = this;
+    const { activeStartDate: date, view, setActiveStartDate } = this.props;
 
-    setActiveRange(getPreviousRange2(view, date));
+    setActiveStartDate(getPreviousRange2(view, date)[0]);
   }
 
   onClickNext2 = () => {
-    const { view, setActiveRange } = this.props;
-    const { date } = this;
+    const { activeStartDate: date, view, setActiveStartDate } = this.props;
 
-    setActiveRange(getNextRange2(view, date));
+    setActiveStartDate(getNextRange2(view, date)[0]);
   }
 
   render() {
-    const { activeRange, drillUp, view } = this.props;
-    const [date] = activeRange;
+    const { activeStartDate: date, drillUp, view } = this.props;
 
     let label;
     switch (view) {
@@ -139,15 +129,13 @@ Navigation.defaultProps = {
 const viewPropType = PropTypes.oneOf(allViews);
 
 Navigation.propTypes = {
-  activeRange: PropTypes.arrayOf(
-    PropTypes.instanceOf(Date),
-  ).isRequired,
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
   drillUp: PropTypes.func.isRequired,
   next2Label: PropTypes.string,
   nextLabel: PropTypes.string,
   prev2Label: PropTypes.string,
   prevLabel: PropTypes.string,
-  setActiveRange: PropTypes.func.isRequired,
+  setActiveStartDate: PropTypes.func.isRequired,
   view: viewPropType.isRequired,
   views: PropTypes.arrayOf(viewPropType).isRequired,
 };
