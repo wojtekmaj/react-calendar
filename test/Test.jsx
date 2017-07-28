@@ -17,6 +17,27 @@ export default class Test extends Component {
 
   onChange = value => this.setState({ value })
 
+  renderDebugInfo() {
+    const { value } = this.state;
+
+    const renderDate = (dateToRender) => {
+      if (dateToRender instanceof Date) {
+        return formatDate(dateToRender);
+      }
+      return dateToRender;
+    };
+
+    if (value instanceof Array) {
+      return (
+        <p>Chosen date range: {renderDate(value[0])} - {renderDate(value[1])}</p>
+      );
+    }
+
+    return (
+      <p>Chosen date: {renderDate(value)}</p>
+    );
+  }
+
   render() {
     const {
       maxDetail,
@@ -47,6 +68,7 @@ export default class Test extends Component {
               minDetail={minDetail}
               onChange={this.onChange}
             />
+            {this.renderDebugInfo()}
           </main>
         </div>
       </div>
