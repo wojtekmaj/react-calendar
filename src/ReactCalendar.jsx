@@ -14,10 +14,29 @@ import MonthView from './MonthView';
 const views = ['century', 'decade', 'year', 'month'];
 
 export default class ReactCalendar extends Component {
+  /**
+   * Returns views array with disallowed values cut off.
+   */
+  get limitedViews() {
+    const { minDetail, maxDetail } = this.props;
+
+    return views.slice(views.indexOf(minDetail), views.indexOf(maxDetail) + 1);
+  }
+
+  get initialView() {
+    const { view } = this.props;
+
+    if (this.limitedViews.includes(view)) {
+      return view;
+    }
+
+    return this.limitedViews.pop();
+  }
+
   state = {
     // @TODO: Take it from value, fallback to current month
     activeRange: [new Date(), new Date()],
-    view: this.props.view,
+    view: this.initialView,
   }
 
   drillDown = () => {
@@ -34,17 +53,6 @@ export default class ReactCalendar extends Component {
 
   setActiveRange = activeRange => this.setState({ activeRange })
 
-  get drillDownAvailable() {
-    const { view } = this.state;
-
-    return views.indexOf(view) < views.length - 1;
-  }
-
-  get drillUpAvailable() {
-    const { view } = this.state;
-
-    return views.indexOf(view) > 0;
-  }
 
   renderContent() {
     const { activeRange, view } = this.state;

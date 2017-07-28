@@ -171,14 +171,14 @@ export const getDecadeRange = (date) => {
   ];
 };
 
-export const getPreviousDecadeRange = (date) => {
-  const previousDecadeYear = getBeginOfDecadeYear(date) - 10;
+export const getPreviousDecadeRange = (date, offset = 10) => {
+  const previousDecadeYear = getBeginOfDecadeYear(date) - offset;
 
   return getDecadeRange(previousDecadeYear);
 };
 
-export const getNextDecadeRange = (date) => {
-  const nextDecadeYear = getBeginOfDecadeYear(date) + 10;
+export const getNextDecadeRange = (date, offset = 10) => {
+  const nextDecadeYear = getBeginOfDecadeYear(date) + offset;
 
   return getDecadeRange(nextDecadeYear);
 };
@@ -219,14 +219,14 @@ export const getYearRange = (date) => {
   ];
 };
 
-export const getPreviousYearRange = (date) => {
-  const previousYear = getYear(date) - 1;
+export const getPreviousYearRange = (date, offset = 1) => {
+  const previousYear = getYear(date) - offset;
 
   return getYearRange(previousYear);
 };
 
-export const getNextYearRange = (date) => {
-  const nextYear = getYear(date) + 1;
+export const getNextYearRange = (date, offset = 1) => {
+  const nextYear = getYear(date) + offset;
 
   return getYearRange(nextYear);
 };
@@ -270,9 +270,9 @@ export const getMonthRange = (date) => {
   ];
 };
 
-export const getPreviousMonthRange = (date) => {
+export const getPreviousMonthRange = (date, offset = 1) => {
   const year = getYear(date);
-  const previousMonthIndex = getMonthIndex(date) - 1;
+  const previousMonthIndex = getMonthIndex(date) - offset;
 
   return [
     new Date(year, previousMonthIndex, 1),
@@ -280,9 +280,9 @@ export const getPreviousMonthRange = (date) => {
   ];
 };
 
-export const getNextMonthRange = (date) => {
+export const getNextMonthRange = (date, offset = 1) => {
   const year = getYear(date);
-  const nextMonthIndex = getMonthIndex(date) + 1;
+  const nextMonthIndex = getMonthIndex(date) + offset;
 
   return [
     new Date(year, nextMonthIndex, 1),
@@ -331,6 +331,32 @@ export const getNextRange = (range, date) => {
       return getNextYearRange(date);
     case 'month':
       return getNextMonthRange(date);
+    default:
+      throw new Error('Invalid range.');
+  }
+};
+
+export const getPreviousRange2 = (range, date) => {
+  switch (range) {
+    case 'decade':
+      return getPreviousDecadeRange(date, 100);
+    case 'year':
+      return getPreviousYearRange(date, 10);
+    case 'month':
+      return getPreviousMonthRange(date, 12);
+    default:
+      throw new Error('Invalid range.');
+  }
+};
+
+export const getNextRange2 = (range, date) => {
+  switch (range) {
+    case 'decade':
+      return getNextDecadeRange(date, 100);
+    case 'year':
+      return getNextYearRange(date, 10);
+    case 'month':
+      return getNextMonthRange(date, 12);
     default:
       throw new Error('Invalid range.');
   }

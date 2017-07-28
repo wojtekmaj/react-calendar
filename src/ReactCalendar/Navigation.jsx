@@ -6,7 +6,9 @@ import {
   getCenturyLabel,
   getDecadeLabel,
   getNextRange,
+  getNextRange2,
   getPreviousRange,
+  getPreviousRange2,
   getYear,
 } from '../shared/dates';
 
@@ -25,18 +27,37 @@ export default class Navigation extends Component {
     return views.indexOf(view) > 0;
   }
 
+  get date() {
+    const { activeRange } = this.props;
+    return activeRange[0];
+  }
+
   onClickPrevious = () => {
-    const { activeRange, view, setActiveRange } = this.props;
-    const [date] = activeRange;
+    const { view, setActiveRange } = this.props;
+    const { date } = this;
 
     setActiveRange(getPreviousRange(view, date));
   }
 
   onClickNext = () => {
-    const { activeRange, view, setActiveRange } = this.props;
-    const [date] = activeRange;
+    const { view, setActiveRange } = this.props;
+    const { date } = this;
 
     setActiveRange(getNextRange(view, date));
+  }
+
+  onClickPrevious2 = () => {
+    const { view, setActiveRange } = this.props;
+    const { date } = this;
+
+    setActiveRange(getPreviousRange2(view, date));
+  }
+
+  onClickNext2 = () => {
+    const { view, setActiveRange } = this.props;
+    const { date } = this;
+
+    setActiveRange(getNextRange2(view, date));
   }
 
   render() {
@@ -70,16 +91,39 @@ export default class Navigation extends Component {
 
     return (
       <div className="react-calendar__navigation">
-        <button disabled>{prev2Label}</button>
-        <button onClick={this.onClickPrevious}>{prevLabel}</button>
+        {
+          view !== 'century' &&
+          <button
+            onClick={this.onClickPrevious2}
+          >
+            {prev2Label}
+          </button>
+        }
         <button
+          onClick={this.onClickPrevious}
+        >
+          {prevLabel}
+        </button>
+        <button
+          className="react-calendar__navigation__label"
           onClick={drillUp}
           disabled={!this.drillUpAvailable}
         >
           {label}
         </button>
-        <button onClick={this.onClickNext}>{nextLabel}</button>
-        <button disabled>{next2Label}</button>
+        <button
+          onClick={this.onClickNext}
+        >
+          {nextLabel}
+        </button>
+        {
+          view !== 'century' &&
+          <button
+            onClick={this.onClickNext2}
+          >
+            {next2Label}
+          </button>
+        }
       </div>
     );
   }
