@@ -11,12 +11,16 @@ export default class YearView extends Component {
   }
 
   renderMonths() {
-    const { onClickMonth, setActiveRange, year } = this.props;
+    const {
+      activeStartDate,
+      onClickItem,
+      setActiveRange,
+    } = this.props;
 
     return (
       <Months
-        year={year}
-        onClickMonth={onClickMonth}
+        activeStartDate={activeStartDate}
+        onClickItem={onClickItem}
         setActiveRange={setActiveRange}
       />
     );
@@ -32,12 +36,8 @@ export default class YearView extends Component {
 }
 
 YearView.propTypes = {
-  onClickMonth: PropTypes.func,
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
+  onClickItem: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,
-  year: PropTypes.oneOfType([
-    PropTypes.string, // Only strings that are parseable to integer
-    PropTypes.number,
-    PropTypes.instanceOf(Date),
-  ]).isRequired,
 };

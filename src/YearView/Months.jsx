@@ -8,16 +8,15 @@ import { getYear } from '../shared/dates';
 
 export default class Months extends Component {
   get year() {
-    const { year } = this.props;
-
-    return getYear(year);
+    const { activeStartDate } = this.props;
+    return getYear(activeStartDate);
   }
 
   monthsInYear = 12
 
   render() {
     const { monthsInYear, year } = this;
-    const { onClickMonth } = this.props;
+    const { onClickItem } = this.props;
 
     const months = [];
 
@@ -26,7 +25,7 @@ export default class Months extends Component {
         <Month
           key={monthIndex}
           month={new Date(year, monthIndex, 1)}
-          onClick={onClickMonth}
+          onClick={onClickItem}
         />,
       );
     }
@@ -43,6 +42,6 @@ export default class Months extends Component {
 }
 
 Months.propTypes = {
-  onClickMonth: PropTypes.func,
-  year: PropTypes.instanceOf(Date).isRequired,
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
+  onClickItem: PropTypes.func,
 };

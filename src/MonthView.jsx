@@ -14,29 +14,29 @@ export default class MonthView extends Component {
   }
 
   renderWeekdays() {
-    const { calendarType, month } = this.props;
+    const { calendarType, activeStartDate } = this.props;
 
     return (
       <Weekdays
         calendarType={calendarType}
-        month={month}
+        month={activeStartDate}
       />
     );
   }
 
   renderDays() {
     const {
+      activeStartDate,
       calendarType,
-      month,
-      onClickDay,
+      onClickItem,
       setActiveRange,
     } = this.props;
 
     return (
       <Days
+        activeStartDate={activeStartDate}
         calendarType={calendarType}
-        month={month}
-        onClickDay={onClickDay}
+        onClickItem={onClickItem}
         setActiveRange={setActiveRange}
       />
     );
@@ -57,13 +57,9 @@ MonthView.defaultProps = {
 };
 
 MonthView.propTypes = {
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType,
-  month: PropTypes.oneOfType([
-    PropTypes.string, // Only strings that are parseable to integer
-    PropTypes.number,
-    PropTypes.instanceOf(Date),
-  ]).isRequired,
-  onClickDay: PropTypes.func,
+  onClickItem: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,
 };

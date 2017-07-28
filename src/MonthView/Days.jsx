@@ -13,29 +13,31 @@ import { isCalendarType } from '../shared/propTypes';
 
 export default class Days extends Component {
   get year() {
-    const { month } = this.props;
-
-    return getYear(month);
+    const { activeStartDate } = this.props;
+    return getYear(activeStartDate);
   }
 
   get monthIndex() {
-    const { month } = this.props;
-
-    return getMonthIndex(month);
+    const { activeStartDate } = this.props;
+    return getMonthIndex(activeStartDate);
   }
 
   render() {
     const { year, monthIndex } = this;
-    const { calendarType, month, onClickDay } = this.props;
+    const {
+      activeStartDate,
+      calendarType,
+      onClickItem,
+    } = this.props;
 
     const days = [];
-    for (let day = 1; day <= getDaysInMonth(month); day += 1) {
+    for (let day = 1; day <= getDaysInMonth(activeStartDate); day += 1) {
       days.push(
         <Day
           calendarType={calendarType}
           day={new Date(year, monthIndex, day)}
           key={day}
-          onClick={onClickDay}
+          onClick={onClickItem}
         />,
       );
     }
@@ -53,11 +55,7 @@ export default class Days extends Component {
 }
 
 Days.propTypes = {
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType,
-  month: PropTypes.oneOfType([
-    PropTypes.string, // Only strings that are parseable to integer
-    PropTypes.number,
-    PropTypes.instanceOf(Date),
-  ]).isRequired,
-  onClickDay: PropTypes.func,
+  onClickItem: PropTypes.func,
 };

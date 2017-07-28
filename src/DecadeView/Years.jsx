@@ -10,9 +10,8 @@ export default class Years extends Component {
   yearsInDecade = 10
 
   get start() {
-    const { decade } = this.props;
-
-    return getBeginOfDecadeYear(decade);
+    const { activeStartDate } = this.props;
+    return getBeginOfDecadeYear(activeStartDate);
   }
 
   get end() {
@@ -21,7 +20,7 @@ export default class Years extends Component {
 
   render() {
     const { end, start } = this;
-    const { onClickYear } = this.props;
+    const { onClickItem } = this.props;
 
     const years = [];
 
@@ -30,7 +29,7 @@ export default class Years extends Component {
         <Year
           year={year}
           key={year}
-          onClick={onClickYear}
+          onClick={onClickItem}
         />,
       );
     }
@@ -47,6 +46,6 @@ export default class Years extends Component {
 }
 
 Years.propTypes = {
-  decade: PropTypes.instanceOf(Date).isRequired,
-  onClickYear: PropTypes.func,
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
+  onClickItem: PropTypes.func,
 };

@@ -12,15 +12,15 @@ export default class CenturyView extends Component {
 
   renderDecades() {
     const {
-      onClickDecade,
+      activeStartDate,
+      onClickItem,
       setActiveRange,
-      century,
     } = this.props;
 
     return (
       <Decades
-        century={century}
-        onClickDecade={onClickDecade}
+        activeStartDate={activeStartDate}
+        onClickItem={onClickItem}
         setActiveRange={setActiveRange}
       />
     );
@@ -36,12 +36,8 @@ export default class CenturyView extends Component {
 }
 
 CenturyView.propTypes = {
-  century: PropTypes.oneOfType([
-    PropTypes.string, // Only strings that are parseable to integer
-    PropTypes.number,
-    PropTypes.instanceOf(Date),
-  ]).isRequired,
-  onClickDecade: PropTypes.func,
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
+  onClickItem: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,
 };

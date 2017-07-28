@@ -12,8 +12,8 @@ export default class Decades extends Component {
   yearsInDecade = 10
 
   get start() {
-    const { century } = this.props;
-    return getBeginOfCenturyYear(century);
+    const { activeStartDate } = this.props;
+    return getBeginOfCenturyYear(activeStartDate);
   }
 
   get end() {
@@ -22,7 +22,7 @@ export default class Decades extends Component {
 
   render() {
     const { yearsInDecade, end, start } = this;
-    const { onClickDecade } = this.props;
+    const { onClickItem } = this.props;
 
     const decades = [];
 
@@ -31,7 +31,7 @@ export default class Decades extends Component {
         <Decade
           decade={decade}
           key={decade}
-          onClick={onClickDecade}
+          onClick={onClickItem}
         />,
       );
     }
@@ -49,6 +49,6 @@ export default class Decades extends Component {
 }
 
 Decades.propTypes = {
-  century: PropTypes.instanceOf(Date).isRequired,
-  onClickDecade: PropTypes.func,
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
+  onClickItem: PropTypes.func,
 };

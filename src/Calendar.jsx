@@ -211,40 +211,43 @@ export default class Calendar extends Component {
   }
 
   renderContent() {
-    const { activeStartDate, view } = this.state;
+    const { setView } = this;
+    const { activeStartDate, value, view } = this.state;
     const { onClickDay, onClickMonth, onClickYear, onClickDecade } = this.props;
+
+    const commonProps = {
+      activeStartDate,
+      setView,
+      value,
+    };
 
     switch (view) {
       case 'century':
         return (
           <CenturyView
-            century={activeStartDate}
-            onClickDecade={this.onDrillDown(onClickDecade)}
-            setView={this.setView}
+            onClickItem={this.onDrillDown(onClickDecade)}
+            {...commonProps}
           />
         );
       case 'decade':
         return (
           <DecadeView
-            decade={activeStartDate}
-            onClickYear={this.onDrillDown(onClickYear)}
-            setView={this.setView}
+            onClickItem={this.onDrillDown(onClickYear)}
+            {...commonProps}
           />
         );
       case 'year':
         return (
           <YearView
-            year={activeStartDate}
-            onClickMonth={this.onDrillDown(onClickMonth)}
-            setView={this.setView}
+            onClickItem={this.onDrillDown(onClickMonth)}
+            {...commonProps}
           />
         );
       case 'month':
         return (
           <MonthView
-            month={activeStartDate}
-            onClickDay={this.onDrillDown(onClickDay)}
-            setView={this.setView}
+            onClickItem={this.onDrillDown(onClickDay)}
+            {...commonProps}
           />
         );
       default:
@@ -308,5 +311,5 @@ Calendar.propTypes = {
   prevLabel: PropTypes.string,
   returnValue: PropTypes.oneOf(['start', 'end', 'range']).isRequired,
   value: PropTypes.instanceOf(Date),
-  view: PropTypes.oneOf(allViews),
+  view: PropTypes.oneOf(allViews), // eslint-disable-line react/no-unused-prop-types
 };
