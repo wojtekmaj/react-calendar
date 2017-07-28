@@ -54,7 +54,6 @@ export default class MonthView extends Component {
 
 MonthView.defaultProps = {
   calendarType: 'ISO 8601',
-  month: new Date(),
 };
 
 MonthView.propTypes = {

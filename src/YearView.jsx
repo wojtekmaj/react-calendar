@@ -31,10 +31,6 @@ export default class YearView extends Component {
   }
 }
 
-YearView.defaultProps = {
-  year: new Date(),
-};
-
 YearView.propTypes = {
   onClickMonth: PropTypes.func,
   setActiveRange: PropTypes.func,

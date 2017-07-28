@@ -35,10 +35,6 @@ export default class CenturyView extends Component {
   }
 }
 
-CenturyView.defaultProps = {
-  century: new Date(),
-};
-
 CenturyView.propTypes = {
   century: PropTypes.oneOfType([
     PropTypes.string, // Only strings that are parseable to integer

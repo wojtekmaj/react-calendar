@@ -35,10 +35,6 @@ export default class DecadeView extends Component {
   }
 }
 
-DecadeView.defaultProps = {
-  decade: new Date(),
-};
-
 DecadeView.propTypes = {
   decade: PropTypes.oneOfType([
     PropTypes.string, // Only strings that are parseable to integer
