@@ -53,9 +53,8 @@ export default class ReactCalendar extends Component {
     return views.includes(view);
   }
 
-  get value() {
+  getValue(activeRange = this.state.activeRange) {
     const { returnValue } = this.props;
-    const { activeRange } = this.state;
 
     switch (returnValue) {
       case 'start':
@@ -116,19 +115,16 @@ export default class ReactCalendar extends Component {
     }));
   }
 
-  onChange = () => {
-    const { maxDetail } = this.props;
-    const { view } = this.state;
+  onChange = (activeRange) => {
+    const { onChange } = this.props;
 
-    const maxDetailReached = (view === maxDetail);
-
-    if (!maxDetailReached) {
+    if (!onChange) {
       return;
     }
 
-    const { onChange } = this.props;
+    const value = this.getValue(activeRange);
 
-    if (onChange) onChange(this.value);
+    onChange(value);
   }
 
   setView = (view) => {
@@ -136,17 +132,28 @@ export default class ReactCalendar extends Component {
       const [startDate] = [].concat(prevState.activeRange);
       const activeRange = getRange(view, startDate);
 
-      return { activeRange };
+      return {
+        activeRange,
+        view,
+      };
     });
   }
 
   setActiveRange = (activeRange) => {
     this.setState({ activeRange });
-    this.onChange();
+  }
+
+  onDrillDown = callback => (activeRange) => {
+    if (callback) callback();
+
+    if (this.drillDownAvailable) {
+      this.drillDown();
+    } else {
+      this.onChange(activeRange);
+    }
   }
 
   renderContent() {
-    const { drillDown } = this;
     const { activeRange, view } = this.state;
     const { onClickDay, onClickMonth, onClickYear, onClickDecade } = this.props;
     const [startDate] = [].concat(activeRange);
@@ -156,7 +163,7 @@ export default class ReactCalendar extends Component {
         return (
           <CenturyView
             century={startDate}
-            onClickDecade={onClickDecade || drillDown}
+            onClickDecade={this.onDrillDown(onClickDecade)}
             setView={this.setView}
           />
         );
@@ -164,7 +171,7 @@ export default class ReactCalendar extends Component {
         return (
           <DecadeView
             decade={startDate}
-            onClickYear={onClickYear || drillDown}
+            onClickYear={this.onDrillDown(onClickYear)}
             setActiveRange={this.setActiveRange}
             setView={this.setView}
           />
@@ -173,7 +180,7 @@ export default class ReactCalendar extends Component {
         return (
           <YearView
             year={startDate}
-            onClickMonth={onClickMonth || drillDown}
+            onClickMonth={this.onDrillDown(onClickMonth)}
             setActiveRange={this.setActiveRange}
             setView={this.setView}
           />
@@ -182,7 +189,7 @@ export default class ReactCalendar extends Component {
         return (
           <MonthView
             month={startDate}
-            onClickDay={onClickDay || drillDown}
+            onClickDay={this.onDrillDown(onClickDay)}
             setActiveRange={this.setActiveRange}
             setView={this.setView}
           />
