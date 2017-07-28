@@ -21,7 +21,7 @@ export default class MaxDetailOptions extends Component {
         <div>
           <input
             checked={maxDetail === 'century'}
-            disabled={minDetailIndex >= 0}
+            disabled={minDetailIndex > 0}
             id="maxDetailCentury"
             name="maxDetail"
             onChange={this.onChange}
@@ -33,7 +33,7 @@ export default class MaxDetailOptions extends Component {
         <div>
           <input
             checked={maxDetail === 'decade'}
-            disabled={minDetailIndex >= 1}
+            disabled={minDetailIndex > 1}
             id="maxDetailDecade"
             name="maxDetail"
             onChange={this.onChange}
@@ -45,7 +45,7 @@ export default class MaxDetailOptions extends Component {
         <div>
           <input
             checked={maxDetail === 'year'}
-            disabled={minDetailIndex >= 2}
+            disabled={minDetailIndex > 2}
             id="maxDetailYear"
             name="maxDetail"
             onChange={this.onChange}
@@ -57,7 +57,7 @@ export default class MaxDetailOptions extends Component {
         <div>
           <input
             checked={maxDetail === 'month'}
-            disabled={minDetailIndex >= 3}
+            disabled={minDetailIndex > 3}
             id="maxDetailMonth"
             name="maxDetail"
             onChange={this.onChange}

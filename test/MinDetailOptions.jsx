@@ -21,7 +21,7 @@ export default class MinDetailOptions extends Component {
         <div>
           <input
             checked={minDetail === 'century'}
-            disabled={maxDetailIndex <= 0}
+            disabled={maxDetailIndex < 0}
             id="minDetailCentury"
             name="minDetail"
             onChange={this.onChange}
@@ -33,7 +33,7 @@ export default class MinDetailOptions extends Component {
         <div>
           <input
             checked={minDetail === 'decade'}
-            disabled={maxDetailIndex <= 1}
+            disabled={maxDetailIndex < 1}
             id="minDetailDecade"
             name="minDetail"
             onChange={this.onChange}
@@ -45,7 +45,7 @@ export default class MinDetailOptions extends Component {
         <div>
           <input
             checked={minDetail === 'year'}
-            disabled={maxDetailIndex <= 2}
+            disabled={maxDetailIndex < 2}
             id="minDetailYear"
             name="minDetail"
             onChange={this.onChange}
@@ -57,7 +57,7 @@ export default class MinDetailOptions extends Component {
         <div>
           <input
             checked={minDetail === 'month'}
-            disabled={maxDetailIndex <= 3}
+            disabled={maxDetailIndex < 3}
             id="minDetailMonth"
             name="minDetail"
             onChange={this.onChange}
