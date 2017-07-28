@@ -15,7 +15,9 @@ const Decade = ({ decade, onClick }) => (
       if (onClick) onClick(getDecadeRange(decade));
     }}
   >
-    {getDecadeLabel(decade)}
+    <time dateTime={decade.toISOString()}>
+      {getDecadeLabel(decade)}
+    </time>
   </button>
 );
 

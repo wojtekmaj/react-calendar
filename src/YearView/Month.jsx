@@ -18,7 +18,9 @@ const Month = ({ month, onClick }) => (
       if (onClick) onClick(getMonthRange(month));
     }}
   >
-    {formatMonth(month)}
+    <time dateTime={month.toISOString()}>
+      {formatMonth(month)}
+    </time>
   </button>
 );
 

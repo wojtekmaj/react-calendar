@@ -26,7 +26,9 @@ const Day = ({ calendarType, day, onClick }) => (
       gridColumnStart: getDayOfWeek(day, calendarType) + 1,
     } : null}
   >
-    {getDay(day)}
+    <time dateTime={day.toISOString()}>
+      {getDay(day)}
+    </time>
   </button>
 );
 
