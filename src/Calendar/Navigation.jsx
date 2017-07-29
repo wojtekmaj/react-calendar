@@ -5,10 +5,10 @@ import {
   formatMonthYear,
   getCenturyLabel,
   getDecadeLabel,
-  getNextRange,
-  getNextRange2,
-  getPreviousRange,
-  getPreviousRange2,
+  getBeginNext,
+  getBeginNext2,
+  getBeginPrevious,
+  getBeginPrevious2,
   getYear,
 } from '../shared/dates';
 
@@ -27,34 +27,34 @@ export default class Navigation extends Component {
 
   get prevButtonDisabled() {
     const { activeStartDate: date, view } = this.props;
-    const [nextActiveStartDate] = getPreviousRange(view, date);
+    const nextActiveStartDate = getBeginPrevious(view, date);
     return nextActiveStartDate.getFullYear() < 1000;
   }
 
   get prev2ButtonDisabled() {
     const { activeStartDate: date, view } = this.props;
-    const [nextActiveStartDate] = getPreviousRange2(view, date);
+    const nextActiveStartDate = getBeginPrevious2(view, date);
     return nextActiveStartDate.getFullYear() < 1000;
   }
 
   onClickPrevious = () => {
     const { activeStartDate: date, view, setActiveStartDate } = this.props;
-    setActiveStartDate(getPreviousRange(view, date)[0]);
+    setActiveStartDate(getBeginPrevious(view, date));
   }
 
   onClickNext = () => {
     const { activeStartDate: date, view, setActiveStartDate } = this.props;
-    setActiveStartDate(getNextRange(view, date)[0]);
+    setActiveStartDate(getBeginNext(view, date));
   }
 
   onClickPrevious2 = () => {
     const { activeStartDate: date, view, setActiveStartDate } = this.props;
-    setActiveStartDate(getPreviousRange2(view, date)[0]);
+    setActiveStartDate(getBeginPrevious2(view, date));
   }
 
   onClickNext2 = () => {
     const { activeStartDate: date, view, setActiveStartDate } = this.props;
-    setActiveStartDate(getNextRange2(view, date)[0]);
+    setActiveStartDate(getBeginNext2(view, date));
   }
 
   render() {

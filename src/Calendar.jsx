@@ -9,7 +9,7 @@ import DecadeView from './DecadeView';
 import YearView from './YearView';
 import MonthView from './MonthView';
 
-import { getRange } from './shared/dates';
+import { getBegin, getRange } from './shared/dates';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
@@ -110,7 +110,7 @@ export default class Calendar extends Component {
 
   getActiveStartDate(props = this.props) {
     const rangeType = this.getView(props);
-    return getRange(rangeType, props.value)[0];
+    return getBegin(rangeType, props.value);
   }
 
   getValue(props = this.props) {
