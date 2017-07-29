@@ -11,6 +11,7 @@ import MonthView from './MonthView';
 
 import { getBegin, getRange } from './shared/dates';
 import { setLocale } from './shared/locales';
+import { isCalendarType } from './shared/propTypes';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
@@ -221,8 +222,18 @@ export default class Calendar extends Component {
 
   renderContent() {
     const { setView } = this;
-    const { activeStartDate, value, view } = this.state;
-    const { onClickDay, onClickMonth, onClickYear, onClickDecade } = this.props;
+    const {
+      activeStartDate,
+      value,
+      view,
+    } = this.state;
+    const {
+      calendarType,
+      onClickDay,
+      onClickDecade,
+      onClickMonth,
+      onClickYear,
+    } = this.props;
 
     const commonProps = {
       activeStartDate,
@@ -255,6 +266,7 @@ export default class Calendar extends Component {
       case 'month':
         return (
           <MonthView
+            calendarType={calendarType}
             onClickItem={this.onDrillDown(onClickDay)}
             {...commonProps}
           />
@@ -307,6 +319,7 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
+  calendarType: isCalendarType,
   locale: PropTypes.string,
   maxDetail: PropTypes.oneOf(allViews),
   minDetail: PropTypes.oneOf(allViews),
