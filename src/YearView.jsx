@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import Months from './YearView/Months';
 
+import { isValue } from './shared/propTypes';
+
 export default class YearView extends Component {
   componentDidMount() {
     const { setView } = this.props;
@@ -12,19 +14,12 @@ export default class YearView extends Component {
 
   renderMonths() {
     const {
-      activeStartDate,
-      onClickItem,
-      setActiveRange,
-      value,
+      setView,
+      ...childProps
     } = this.props;
 
     return (
-      <Months
-        activeStartDate={activeStartDate}
-        onClickItem={onClickItem}
-        setActiveRange={setActiveRange}
-        value={value}
-      />
+      <Months {...childProps} />
     );
   }
 
@@ -39,8 +34,9 @@ export default class YearView extends Component {
 
 YearView.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  onClickItem: PropTypes.func,
+  onChange: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,
-  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  value: isValue,
+  valueType: PropTypes.string,
 };

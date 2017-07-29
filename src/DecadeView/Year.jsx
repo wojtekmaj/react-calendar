@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getYearRange } from '../shared/dates';
-
 const className = 'react-calendar__decade-view__years__year';
 
-const Year = ({ active, date, hasActive, onClick, year }) => (
+const Year = ({ active, date, hasActive, onChange, year }) => (
   <button
     className={[
       className,
@@ -13,9 +11,7 @@ const Year = ({ active, date, hasActive, onClick, year }) => (
       (hasActive ? 'react-calendar__tile--hasActive' : ''),
       'react-calendar__tile',
     ].join(' ')}
-    onClick={() => {
-      if (onClick) onClick(getYearRange(date));
-    }}
+    onClick={onChange && (() => onChange(date))}
   >
     <time dateTime={year}>
       {year}
@@ -27,7 +23,7 @@ Year.propTypes = {
   active: PropTypes.bool.isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
   hasActive: PropTypes.bool.isRequired,
-  onClick: PropTypes.func,
+  onChange: PropTypes.func,
   year: PropTypes.number.isRequired,
 };
 

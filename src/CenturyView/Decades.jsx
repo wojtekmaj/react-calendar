@@ -7,9 +7,9 @@ import Decade from './Decade';
 import {
   getBeginOfDecade,
   getBeginOfCenturyYear,
-  isWithinRange,
-  isRangeWithinRange,
 } from '../shared/dates';
+import { getTileActivityFlags } from '../shared/utils';
+import { isValue } from '../shared/propTypes';
 
 export default class Decades extends Component {
   get start() {
@@ -23,21 +23,19 @@ export default class Decades extends Component {
 
   render() {
     const { end, start } = this;
-    const { onClickItem, value } = this.props;
+    const { onChange, value, valueType } = this.props;
 
     const decades = [];
-
     for (let decade = start; decade <= end; decade += 10) {
       const date = getBeginOfDecade(decade);
 
       decades.push(
         <Decade
-          active={isWithinRange(value, date)}
-          hasActive={isRangeWithinRange(value, 'decade', date)}
+          {...getTileActivityFlags(value, valueType, date, 'decade')}
           date={date}
           decade={decade}
           key={decade}
-          onClick={onClickItem}
+          onChange={onChange}
         />,
       );
     }
@@ -56,6 +54,7 @@ export default class Decades extends Component {
 
 Decades.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  onClickItem: PropTypes.func,
-  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  onChange: PropTypes.func,
+  value: isValue,
+  valueType: PropTypes.string,
 };

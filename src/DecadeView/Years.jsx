@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import Grid from '../Grid';
 import Year from './Year';
 
-import {
-  getBeginOfDecadeYear,
-  isWithinRange,
-  isRangeWithinRange,
-} from '../shared/dates';
+import { getBeginOfDecadeYear } from '../shared/dates';
+import { getTileActivityFlags } from '../shared/utils';
+import { isValue } from '../shared/propTypes';
 
 export default class Years extends Component {
   get start() {
@@ -22,20 +20,18 @@ export default class Years extends Component {
 
   render() {
     const { end, start } = this;
-    const { onClickItem, value } = this.props;
+    const { onChange, value, valueType } = this.props;
 
     const years = [];
-
     for (let year = start; year <= end; year += 1) {
       const date = new Date(year, 0, 1);
 
       years.push(
         <Year
-          active={isWithinRange(value, date)}
-          hasActive={isRangeWithinRange(value, 'year', date)}
+          {...getTileActivityFlags(value, valueType, date, 'year')}
           date={date}
           key={year}
-          onClick={onClickItem}
+          onChange={onChange}
           year={year}
         />,
       );
@@ -54,6 +50,7 @@ export default class Years extends Component {
 
 Years.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  onClickItem: PropTypes.func,
-  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  onChange: PropTypes.func,
+  value: isValue,
+  valueType: PropTypes.string,
 };

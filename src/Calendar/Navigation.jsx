@@ -57,33 +57,26 @@ export default class Navigation extends Component {
     setActiveStartDate(getBeginNext2(view, date));
   }
 
-  render() {
-    const { activeStartDate: date, drillUp, view } = this.props;
+  get label() {
+    const { activeStartDate: date, view } = this.props;
 
-    let label;
     switch (view) {
       case 'century':
-        label = getCenturyLabel(date);
-        break;
+        return getCenturyLabel(date);
       case 'decade':
-        label = getDecadeLabel(date);
-        break;
+        return getDecadeLabel(date);
       case 'year':
-        label = getYear(date);
-        break;
+        return getYear(date);
       case 'month':
-        label = formatMonthYear(date);
-        break;
+        return formatMonthYear(date);
       default:
         throw new Error(`Invalid view: ${view}.`);
     }
+  }
 
-    const {
-      prevLabel,
-      prev2Label,
-      nextLabel,
-      next2Label,
-    } = this.props;
+  render() {
+    const { label } = this;
+    const { drillUp, view } = this.props;
 
     return (
       <div className="react-calendar__navigation">
@@ -93,14 +86,14 @@ export default class Navigation extends Component {
             disabled={this.prev2ButtonDisabled}
             onClick={this.onClickPrevious2}
           >
-            {prev2Label}
+            {this.props.prev2Label}
           </button>
         }
         <button
           disabled={this.prevButtonDisabled}
           onClick={this.onClickPrevious}
         >
-          {prevLabel}
+          {this.props.prevLabel}
         </button>
         <button
           className="react-calendar__navigation__label"
@@ -112,14 +105,14 @@ export default class Navigation extends Component {
         <button
           onClick={this.onClickNext}
         >
-          {nextLabel}
+          {this.props.nextLabel}
         </button>
         {
           view !== 'century' &&
           <button
             onClick={this.onClickNext2}
           >
-            {next2Label}
+            {this.props.next2Label}
           </button>
         }
       </div>

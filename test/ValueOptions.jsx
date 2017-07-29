@@ -1,20 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class ValueOptions extends Component {
-  /**
-   * Returns local date in ISO-like format (YYYY-MM-DD).
-   */
-  get ISOLocalDate() {
-    const { value } = this.props;
+import { isValue } from '../src/shared/propTypes';
 
-    return `${
-      value.getFullYear()
-    }-${
-      `0${value.getMonth() + 1}`.slice(-2)
-    }-${
-      `0${value.getDate()}`.slice(-2)
-    }`;
+/**
+ * Returns local date in ISO-like format (YYYY-MM-DD).
+ */
+const getISOLocalDate = (value) => {
+  if (!value) {
+    return value;
+  }
+
+  return `${
+    value.getFullYear()
+  }-${
+    `0${value.getMonth() + 1}`.slice(-2)
+  }-${
+    `0${value.getDate()}`.slice(-2)
+  }`;
+};
+
+export default class ValueOptions extends Component {
+  get startDate() {
+    const { value } = this.props;
+    return [].concat(value)[0];
+  }
+
+  get endDate() {
+    const { value } = this.props;
+    return [].concat(value)[1];
   }
 
   onChange = (event) => {
@@ -37,7 +51,7 @@ export default class ValueOptions extends Component {
           <input
             onChange={this.onChange}
             type="date"
-            value={this.ISOLocalDate}
+            value={getISOLocalDate(this.startDate)}
           />
         </div>
       </fieldset>
@@ -47,5 +61,5 @@ export default class ValueOptions extends Component {
 
 ValueOptions.propTypes = {
   setState: PropTypes.func.isRequired,
-  value: PropTypes.instanceOf(Date),
+  value: isValue,
 };

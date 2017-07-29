@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import Grid from '../Grid';
 import Month from './Month';
 
-import {
-  getYear,
-  isWithinRange,
-  isRangeWithinRange,
-} from '../shared/dates';
+import { getYear } from '../shared/dates';
+import { getTileActivityFlags } from '../shared/utils';
+import { isValue } from '../shared/propTypes';
 
 export default class Months extends Component {
   start = 0
@@ -22,20 +20,18 @@ export default class Months extends Component {
 
   render() {
     const { end, start, year } = this;
-    const { onClickItem, value } = this.props;
+    const { onChange, value, valueType } = this.props;
 
     const months = [];
-
     for (let monthIndex = start; monthIndex <= end; monthIndex += 1) {
       const date = new Date(year, monthIndex, 1);
 
       months.push(
         <Month
-          active={isWithinRange(value, date)}
-          hasActive={isRangeWithinRange(value, 'month', date)}
+          {...getTileActivityFlags(value, valueType, date, 'month')}
           key={monthIndex}
           date={date}
-          onClick={onClickItem}
+          onChange={onChange}
         />,
       );
     }
@@ -53,6 +49,7 @@ export default class Months extends Component {
 
 Months.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  onClickItem: PropTypes.func,
-  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  onChange: PropTypes.func,
+  value: isValue,
+  valueType: PropTypes.string,
 };

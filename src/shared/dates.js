@@ -78,19 +78,16 @@ export const getDayOfWeek = (date, calendarType = 'ISO 8601') => {
 
 export const getBeginOfCenturyYear = (date) => {
   const year = getYear(date);
-
   return year + (-year % 100) + 1;
 };
 
 const getBeginOfCentury = (date) => {
   const beginOfCenturyYear = getBeginOfCenturyYear(date);
-
   return new Date(beginOfCenturyYear, 0, 1);
 };
 
 const getEndOfCentury = (date) => {
   const beginOfCenturyYear = getBeginOfCenturyYear(date);
-
   return new Date(beginOfCenturyYear + 100, 0, 0, 0, 0, 0, -1);
 };
 
@@ -101,48 +98,41 @@ const getCenturyRange = date => [
 
 const getBeginOfPreviousCentury = (date) => {
   const previousCenturyYear = getYear(date) - 100;
-
   return getBeginOfCentury(previousCenturyYear);
 };
 
 const getBeginOfNextCentury = (date) => {
   const nextCenturyYear = getYear(date) + 100;
-
   return getBeginOfCentury(nextCenturyYear);
 };
 
 export const getBeginOfDecadeYear = (date) => {
-  const year = getYear(date);
-
+  const year = getYear(date) - 1;
   return year + (-year % 10) + 1;
 };
 
 export const getBeginOfDecade = (date) => {
   const beginOfDecadeYear = getBeginOfDecadeYear(date);
-
   return new Date(beginOfDecadeYear, 0, 1);
 };
 
 const getEndOfDecade = (date) => {
   const beginOfDecadeYear = getBeginOfDecadeYear(date);
-
   return new Date(beginOfDecadeYear + 10, 0, 1, 0, 0, 0, -1);
 };
 
-export const getDecadeRange = date => [
+const getDecadeRange = date => [
   getBeginOfDecade(date),
   getEndOfDecade(date),
 ];
 
 const getBeginOfPreviousDecade = (date, offset = 10) => {
   const previousDecadeYear = getBeginOfDecadeYear(date) - offset;
-
   return getBeginOfDecade(previousDecadeYear);
 };
 
 const getBeginOfNextDecade = (date, offset = 10) => {
   const nextDecadeYear = getBeginOfDecadeYear(date) + offset;
-
   return getBeginOfDecade(nextDecadeYear);
 };
 
@@ -153,7 +143,6 @@ const getBeginOfNextDecade = (date, offset = 10) => {
  */
 const getBeginOfYear = (date) => {
   const year = getYear(date);
-
   return new Date(year, 0, 1);
 };
 
@@ -164,7 +153,6 @@ const getBeginOfYear = (date) => {
  */
 const getEndOfYear = (date) => {
   const year = getYear(date);
-
   return new Date(year + 1, 0, 1, 0, 0, 0, -1);
 };
 
@@ -173,20 +161,18 @@ const getEndOfYear = (date) => {
  *
  * @param {Date} date Date.
  */
-export const getYearRange = date => [
+const getYearRange = date => [
   getBeginOfYear(date),
   getEndOfYear(date),
 ];
 
 const getBeginOfPreviousYear = (date, offset = 1) => {
   const previousYear = getYear(date) - offset;
-
   return getBeginOfYear(previousYear);
 };
 
 const getBeginOfNextYear = (date, offset = 1) => {
   const nextYear = getYear(date) + offset;
-
   return getBeginOfYear(nextYear);
 };
 
@@ -198,7 +184,6 @@ const getBeginOfNextYear = (date, offset = 1) => {
 export const getBeginOfMonth = (date) => {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
-
   return new Date(year, monthIndex, 1);
 };
 
@@ -210,7 +195,6 @@ export const getBeginOfMonth = (date) => {
 const getEndOfMonth = (date) => {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
-
   return new Date(year, monthIndex + 1, 1, 0, 0, 0, -1);
 };
 
@@ -219,7 +203,7 @@ const getEndOfMonth = (date) => {
  *
  * @param {Date} date Date.
  */
-export const getMonthRange = date => [
+const getMonthRange = date => [
   getBeginOfMonth(date),
   getEndOfMonth(date),
 ];
@@ -227,14 +211,12 @@ export const getMonthRange = date => [
 const getBeginOfPreviousMonth = (date, offset = 1) => {
   const year = getYear(date);
   const previousMonthIndex = getMonthIndex(date) - offset;
-
   return getBeginOfMonth(new Date(year, previousMonthIndex, 1));
 };
 
 const getBeginOfNextMonth = (date, offset = 1) => {
   const year = getYear(date);
   const nextMonthIndex = getMonthIndex(date) + offset;
-
   return getBeginOfMonth(new Date(year, nextMonthIndex, 1));
 };
 
@@ -242,7 +224,6 @@ const getBeginOfDay = (date) => {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   const day = getDay(date);
-
   return new Date(year, monthIndex, day);
 };
 
@@ -250,15 +231,7 @@ const getEndOfDay = (date) => {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   const day = getDay(date);
-
   return new Date(year, monthIndex, day + 1, 0, 0, 0, -1);
-};
-
-export const getWeekNumber = (date, calendarType = 'ISO 8601') => {    // Copy date so don't modify original
-  const tempDate = new Date(+date);
-  tempDate.setDate(getDay(tempDate) + (4 - getDayOfWeek(tempDate, calendarType)));
-  const yearStart = getBeginOfYear(tempDate);
-  return Math.ceil((((tempDate - yearStart) / 8.64e7)) / 7);
 };
 
 /**
@@ -266,11 +239,24 @@ export const getWeekNumber = (date, calendarType = 'ISO 8601') => {    // Copy d
  *
  * @param {Date} date Date.
  */
-export const getDayRange = date => [
+const getDayRange = date => [
   getBeginOfDay(date),
   getEndOfDay(date),
 ];
 
+export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
+  const tempDate = new Date(+date);
+  tempDate.setDate(getDay(tempDate) + (4 - getDayOfWeek(tempDate, calendarType)));
+  const yearStart = getBeginOfYear(tempDate);
+  return Math.ceil((((tempDate - yearStart) / 8.64e7)) / 7);
+};
+
+/**
+ * Returns an array with the beginning and the end of a given range.
+ *
+ * @param {String} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ */
 export const getRange = (rangeType, date) => {
   switch (rangeType) {
     case 'century':
@@ -288,6 +274,12 @@ export const getRange = (rangeType, date) => {
   }
 };
 
+/**
+ * Returns the beginning of a given range.
+ *
+ * @param {String} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ */
 export const getBegin = (rangeType, date) => {
   switch (rangeType) {
     case 'century':
@@ -369,7 +361,6 @@ export const getBeginNext2 = (rangeType, date) => {
 export const getDaysInMonth = (date) => {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
-
   return new Date(year, monthIndex + 1, 0).getDate();
 };
 
@@ -383,7 +374,6 @@ export const getCenturyLabel = (date) => {
   const [start, end] = getCenturyRange(date);
   const startLabel = getYear(start);
   const endLabel = getYear(end);
-
   return `${startLabel} – ${endLabel}`;
 };
 
@@ -397,7 +387,6 @@ export const getDecadeLabel = (date) => {
   const [start, end] = getDecadeRange(date);
   const startLabel = getYear(start);
   const endLabel = getYear(end);
-
   return `${startLabel} – ${endLabel}`;
 };
 
@@ -407,19 +396,5 @@ export const getDecadeLabel = (date) => {
  */
 export const isWeekend = (date) => {
   const weekday = getDayOfWeek(date);
-
-  return weekday === 5 || weekday === 6;
-};
-
-export const isWithinRange = (range, date) => (
-  date.getTime() >= range[0].getTime() &&
-  date.getTime() <= range[1].getTime()
-);
-
-export const isRangeWithinRange = (range, rangeType, date) => {
-  const range2 = getRange(rangeType, date);
-  return (
-    isWithinRange(range2, range[0]) ||
-    isWithinRange(range2, range[1])
-  );
+  return weekday >= 5;
 };

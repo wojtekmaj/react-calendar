@@ -6,7 +6,7 @@ import Weekdays from './MonthView/Weekdays';
 import WeekNumbers from './MonthView/WeekNumbers';
 
 import { getLocale } from './shared/locales';
-import { isCalendarType } from './shared/propTypes';
+import { isCalendarType, isValue } from './shared/propTypes';
 
 export default class MonthView extends Component {
   get calendarType() {
@@ -61,21 +61,12 @@ export default class MonthView extends Component {
   }
 
   renderDays() {
-    const { calendarType } = this;
-    const {
-      activeStartDate,
-      onClickItem,
-      setActiveRange,
-      value,
-    } = this.props;
+    const { setView, calendarType, ...childProps } = this.props;
 
     return (
       <Days
-        activeStartDate={activeStartDate}
-        calendarType={calendarType}
-        onClickItem={onClickItem}
-        setActiveRange={setActiveRange}
-        value={value}
+        calendarType={this.calendarType}
+        {...childProps}
       />
     );
   }
@@ -103,9 +94,10 @@ export default class MonthView extends Component {
 MonthView.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType,
-  onClickItem: PropTypes.func,
+  onChange: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,
   showWeekNumbers: PropTypes.bool,
-  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  value: isValue,
+  valueType: PropTypes.string,
 };

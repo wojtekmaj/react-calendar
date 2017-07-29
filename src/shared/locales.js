@@ -11,8 +11,7 @@ const getDefaultLocales = once(() => {
     languageList.push(window.navigator.userLanguage);
   }
 
-  // Fallback
-  languageList.push('en-GB');
+  languageList.push('en-GB'); // Fallback
 
   return languageList;
 });

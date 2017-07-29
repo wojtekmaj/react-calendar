@@ -15,6 +15,7 @@ export default class Test extends Component {
     locale: null,
     maxDetail: 'month',
     minDetail: 'century',
+    returnValue: 'start',
     value: new Date(),
   }
 
@@ -46,6 +47,7 @@ export default class Test extends Component {
       locale,
       maxDetail,
       minDetail,
+      returnValue,
       value,
     } = this.state;
 
@@ -81,6 +83,7 @@ export default class Test extends Component {
               maxDetail={maxDetail}
               minDetail={minDetail}
               onChange={this.onChange}
+              returnValue={returnValue}
               showWeekNumbers
               value={value}
             />

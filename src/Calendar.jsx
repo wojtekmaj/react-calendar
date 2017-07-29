@@ -11,7 +11,8 @@ import MonthView from './MonthView';
 
 import { getBegin, getRange } from './shared/dates';
 import { setLocale } from './shared/locales';
-import { isCalendarType } from './shared/propTypes';
+import { isCalendarType, isValue } from './shared/propTypes';
+import { mergeFunctions } from './shared/utils';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
@@ -32,20 +33,47 @@ export default class Calendar extends Component {
   }
 
   /**
+   * Returns value type that can be returned with currently applied settings.
+   */
+  get valueType() {
+    const { maxDetail } = this.props;
+    return allValueTypes[allViews.indexOf(maxDetail)];
+  }
+
+  get valueFrom() {
+    const { value } = this.props;
+    return this.getValueFrom(value);
+  }
+
+  get valueTo() {
+    const { value } = this.props;
+    return this.getValueTo(value);
+  }
+
+  getValueArray(value) {
+    if (value instanceof Array) {
+      return value;
+    }
+    return getRange(this.valueType, value);
+  }
+
+  getValueFrom(value) {
+    const rawValueFrom = value instanceof Array ? value[0] : value;
+    return getRange(this.valueType, rawValueFrom)[0];
+  }
+
+  getValueTo(value) {
+    const rawValueFrom = value instanceof Array ? value[1] : value;
+    return getRange(this.valueType, rawValueFrom)[1];
+  }
+
+  /**
    * Returns views array with disallowed values cut off.
    */
   getLimitedViews(props = this.props) {
     const { minDetail, maxDetail } = props;
 
     return allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
-  }
-
-  /**
-   * Returns value type that can be returned with currently applied settings.
-   */
-  getValueType(props = this.props) {
-    const { maxDetail } = props;
-    return allValueTypes[allViews.indexOf(maxDetail)];
   }
 
   /**
@@ -60,16 +88,16 @@ export default class Calendar extends Component {
   /**
    * Gets current value in a desired format.
    */
-  getValueFromRange(valueRange = this.state.value) {
+  getProcessedValue(value) {
     const { returnValue } = this.props;
 
     switch (returnValue) {
       case 'start':
-        return valueRange[0];
+        return this.getValueFrom(value);
       case 'end':
-        return valueRange[1];
+        return this.getValueTo(value);
       case 'range':
-        return valueRange;
+        return this.getValueArray(value);
       default:
         throw new Error('Invalid returnValue.');
     }
@@ -77,7 +105,6 @@ export default class Calendar extends Component {
 
   state = {
     activeStartDate: this.getActiveStartDate(),
-    value: this.getValue(),
     view: this.getView(),
   }
 
@@ -93,10 +120,21 @@ export default class Calendar extends Component {
       nextProps.maxDetail !== props.maxDetail
     );
 
-    const valueChanged = (
-      (nextProps.value && !props.value) ||
-      (nextProps.value && props.value && nextProps.value.getTime() !== props.value.getTime())
+    const nextValueFrom = this.getValueFrom(nextProps.value);
+    const valueFrom = this.getValueFrom(props.value);
+    const valueFromChanged = (
+      (nextValueFrom && !valueFrom) ||
+      (nextValueFrom && valueFrom && nextValueFrom.getTime() !== valueFrom.getTime())
     );
+
+    const nextValueTo = this.getValueTo(nextProps.value);
+    const valueTo = this.getValueTo(props.value);
+    const valueToChanged = (
+      (nextValueTo && !valueTo) ||
+      (nextValueTo && valueTo && nextValueTo.getTime() !== valueTo.getTime())
+    );
+
+    const valueChanged = valueFromChanged || valueToChanged;
 
     const nextState = {};
 
@@ -111,7 +149,6 @@ export default class Calendar extends Component {
     }
 
     if (allowedViewChanged || valueChanged) {
-      nextState.value = this.getValue(nextProps);
       nextState.activeStartDate = this.getActiveStartDate(nextProps);
     }
 
@@ -120,12 +157,7 @@ export default class Calendar extends Component {
 
   getActiveStartDate(props = this.props) {
     const rangeType = this.getView(props);
-    return getBegin(rangeType, props.value);
-  }
-
-  getValue(props = this.props) {
-    const rangeType = this.getValueType(props);
-    return getRange(rangeType, props.value);
+    return getBegin(rangeType, this.getValueFrom(props.value));
   }
 
   getView(props = this.props) {
@@ -156,26 +188,14 @@ export default class Calendar extends Component {
   /**
    * Called when the user uses navigation buttons.
    */
-  setActiveRange = (activeRange) => {
-    const [activeStartDate] = activeRange;
-
-    this.setState({
-      activeStartDate,
-    });
-  }
-
-  /**
-   * Called when the user uses navigation buttons.
-   */
   setActiveStartDate = activeStartDate => this.setState({ activeStartDate })
 
-  drillDown = (activeRange) => {
+  drillDown = (activeStartDate) => {
     if (!this.drillDownAvailable) {
       return;
     }
 
     const views = this.getLimitedViews();
-    const [activeStartDate] = activeRange;
 
     this.setState(prevState => ({
       activeStartDate,
@@ -195,72 +215,47 @@ export default class Calendar extends Component {
     }));
   }
 
-  onChange = (valueRange) => {
+  onChange = (value) => {
+    this.setState({ value });
+
     const { onChange } = this.props;
-
-    this.setState({ value: valueRange });
-
-    const value = this.getValueFromRange(valueRange);
-
-    if (onChange) onChange(value);
-  }
-
-  /**
-   * Called when the user clicks an item on any view.
-   * If they "hit the bottom" and they can't drill further down, onChange will be called.
-   * Otherwise, drillDown will be called.
-   */
-  onDrillDown = callback => (range) => {
-    if (callback) callback();
-
-    if (this.drillDownAvailable) {
-      this.drillDown(range);
-    } else {
-      this.onChange(range);
-    }
+    const processedValue = this.getProcessedValue(value);
+    if (onChange) onChange(processedValue);
   }
 
   renderContent() {
-    const { setView } = this;
-    const {
-      activeStartDate,
-      value,
-      view,
-    } = this.state;
-    const {
-      calendarType,
-      onClickDay,
-      onClickDecade,
-      onClickMonth,
-      onClickYear,
-      showWeekNumbers,
-    } = this.props;
+    const { setView, valueType } = this;
+    const { calendarType, showWeekNumbers, value } = this.props;
+    const { activeStartDate, view } = this.state;
 
     const commonProps = {
       activeStartDate,
       setView,
       value,
+      valueType,
     };
+
+    const clickAction = this.drillDownAvailable ? this.drillDown : this.onChange;
 
     switch (view) {
       case 'century':
         return (
           <CenturyView
-            onClickItem={this.onDrillDown(onClickDecade)}
+            onChange={mergeFunctions(clickAction, this.props.onClickDecade)}
             {...commonProps}
           />
         );
       case 'decade':
         return (
           <DecadeView
-            onClickItem={this.onDrillDown(onClickYear)}
+            onChange={mergeFunctions(clickAction, this.props.onClickYear)}
             {...commonProps}
           />
         );
       case 'year':
         return (
           <YearView
-            onClickItem={this.onDrillDown(onClickMonth)}
+            onChange={mergeFunctions(clickAction, this.props.onClickMonth)}
             {...commonProps}
           />
         );
@@ -268,7 +263,7 @@ export default class Calendar extends Component {
         return (
           <MonthView
             calendarType={calendarType}
-            onClickItem={this.onDrillDown(onClickDay)}
+            onChange={mergeFunctions(clickAction, this.props.onClickDay)}
             showWeekNumbers={showWeekNumbers}
             {...commonProps}
           />
@@ -279,23 +274,15 @@ export default class Calendar extends Component {
   }
 
   renderNavigation() {
-    const {
-      prevLabel,
-      prev2Label,
-      nextLabel,
-      next2Label,
-    } = this.props;
-
     return (
       <Navigation
         activeRange={this.state.activeRange}
         activeStartDate={this.state.activeStartDate}
         drillUp={this.drillUp}
-        nextLabel={nextLabel}
-        next2Label={next2Label}
-        prevLabel={prevLabel}
-        prev2Label={prev2Label}
-        setActiveRange={this.setActiveRange}
+        nextLabel={this.props.nextLabel}
+        next2Label={this.props.next2Label}
+        prevLabel={this.props.prevLabel}
+        prev2Label={this.props.prev2Label}
         setActiveStartDate={this.setActiveStartDate}
         view={this.state.view}
         views={this.getLimitedViews()}
@@ -336,6 +323,6 @@ Calendar.propTypes = {
   prevLabel: PropTypes.string,
   returnValue: PropTypes.oneOf(['start', 'end', 'range']).isRequired,
   showWeekNumbers: PropTypes.bool,
-  value: PropTypes.instanceOf(Date),
+  value: isValue,
   view: PropTypes.oneOf(allViews), // eslint-disable-line react/no-unused-prop-types
 };

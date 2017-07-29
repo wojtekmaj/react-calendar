@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import Years from './DecadeView/Years';
 
+import { isValue } from './shared/propTypes';
+
 export default class DecadeView extends Component {
   componentDidMount() {
     const { setView } = this.props;
@@ -12,19 +14,12 @@ export default class DecadeView extends Component {
 
   renderYears() {
     const {
-      activeStartDate,
-      onClickItem,
-      setActiveRange,
-      value,
+      setView,
+      ...childProps
     } = this.props;
 
     return (
-      <Years
-        activeStartDate={activeStartDate}
-        onClickItem={onClickItem}
-        setActiveRange={setActiveRange}
-        value={value}
-      />
+      <Years {...childProps} />
     );
   }
 
@@ -39,8 +34,9 @@ export default class DecadeView extends Component {
 
 DecadeView.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  onClickItem: PropTypes.func,
+  onChange: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,
-  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  value: isValue,
+  valueType: PropTypes.string,
 };
