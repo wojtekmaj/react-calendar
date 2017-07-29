@@ -38,7 +38,9 @@
   &__month-view {
     &__weekdays {
       text-align: center;
+      text-transform: uppercase;
       font-weight: bold;
+      font-size: 0.8em;
 
       div {
         padding: .5em;
@@ -51,6 +53,14 @@
           color: red;
         }
       }
+    }
+  }
+
+  &__year-view,
+  &__decade-view,
+  &__century-view {
+    .react-calendar__tile {
+      padding: 2em .5em;
     }
   }
 
