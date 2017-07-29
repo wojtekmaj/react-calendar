@@ -30,6 +30,7 @@ export default class MonthView extends Component {
       calendarType,
       onClickItem,
       setActiveRange,
+      value,
     } = this.props;
 
     return (
@@ -38,6 +39,7 @@ export default class MonthView extends Component {
         calendarType={calendarType}
         onClickItem={onClickItem}
         setActiveRange={setActiveRange}
+        value={value}
       />
     );
   }
@@ -62,4 +64,5 @@ MonthView.propTypes = {
   onClickItem: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,
+  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
 };

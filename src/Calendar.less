@@ -5,12 +5,11 @@
 
   button {
     border: 0;
-    background: none;
+    outline: none;
 
     &:not([disabled]) {
       &:hover {
         cursor: pointer;
-        background-color: rgb(230, 230, 230);
       }
     }
   }
@@ -22,16 +21,18 @@
 
     button {
       min-width: 44px;
+      background: none;
+
+      &:not([disabled]) {
+        &:hover {
+          background-color: rgb(230, 230, 230);
+        }
+      }
     }
 
     &__label {
       flex-grow: 1;
     }
-  }
-
-  &__tile {
-    text-align: center;
-    padding: .75em .5em;
   }
 
   &__month-view {
@@ -48,6 +49,41 @@
       &__day {
         &--weekend {
           color: red;
+        }
+      }
+    }
+  }
+
+  &__tile {
+    text-align: center;
+    padding: .75em .5em;
+    background: none;
+
+    &:not([disabled]) {
+      &:hover {
+        background-color: rgb(230, 230, 230);
+      }
+    }
+
+    &--active {
+      @bgcolor: rgb(0, 110, 220);
+      background: @bgcolor;
+      color: white;
+
+      &:not([disabled]) {
+        &:hover {
+          background: lighten(@bgcolor, 10%);
+        }
+      }
+    }
+
+    &--hasActive {
+      @bgcolor: lighten(rgb(0, 110, 220), 30%);
+      background: @bgcolor;
+
+      &:not([disabled]) {
+        &:hover {
+          background: lighten(@bgcolor, 10%);
         }
       }
     }

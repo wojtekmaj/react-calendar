@@ -8,10 +8,18 @@ import {
   getDaysInMonth,
   getMonthIndex,
   getYear,
+  isWithinRange,
 } from '../shared/dates';
 import { isCalendarType } from '../shared/propTypes';
 
 export default class Days extends Component {
+  start = 1
+
+  get end() {
+    const { activeStartDate } = this.props;
+    return getDaysInMonth(activeStartDate);
+  }
+
   get year() {
     const { activeStartDate } = this.props;
     return getYear(activeStartDate);
@@ -23,19 +31,22 @@ export default class Days extends Component {
   }
 
   render() {
-    const { year, monthIndex } = this;
+    const { start, end, year, monthIndex } = this;
     const {
-      activeStartDate,
       calendarType,
       onClickItem,
+      value,
     } = this.props;
 
     const days = [];
-    for (let day = 1; day <= getDaysInMonth(activeStartDate); day += 1) {
+    for (let day = start; day <= end; day += 1) {
+      const date = new Date(year, monthIndex, day);
+
       days.push(
         <Day
+          active={isWithinRange(value, date)}
           calendarType={calendarType}
-          day={new Date(year, monthIndex, day)}
+          date={date}
           key={day}
           onClick={onClickItem}
         />,
@@ -58,4 +69,5 @@ Days.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType,
   onClickItem: PropTypes.func,
+  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
 };

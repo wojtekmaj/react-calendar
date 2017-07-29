@@ -8,24 +8,28 @@ import {
 
 const className = 'react-calendar__year-view__months__month';
 
-const Month = ({ month, onClick }) => (
+const Month = ({ active, date, hasActive, onClick }) => (
   <button
     className={[
       className,
+      (active ? 'react-calendar__tile--active' : ''),
+      (hasActive ? 'react-calendar__tile--hasActive' : ''),
       'react-calendar__tile',
     ].join(' ')}
     onClick={() => {
-      if (onClick) onClick(getMonthRange(month));
+      if (onClick) onClick(getMonthRange(date));
     }}
   >
-    <time dateTime={month.toISOString()}>
-      {formatMonth(month)}
+    <time dateTime={date.toISOString()}>
+      {formatMonth(date)}
     </time>
   </button>
 );
 
 Month.propTypes = {
-  month: PropTypes.instanceOf(Date).isRequired,
+  active: PropTypes.bool.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
+  hasActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
 };
 

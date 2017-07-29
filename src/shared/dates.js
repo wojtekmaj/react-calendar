@@ -134,7 +134,7 @@ export const getBeginOfDecadeYear = (date) => {
   return year + (-year % 10) + 1;
 };
 
-const getBeginOfDecade = (date) => {
+export const getBeginOfDecade = (date) => {
   const beginOfDecadeYear = getBeginOfDecadeYear(date);
 
   return new Date(beginOfDecadeYear, 0, 1);
@@ -419,4 +419,17 @@ export const isWeekend = (date) => {
   const weekday = getDayOfWeek(date);
 
   return weekday === 5 || weekday === 6;
+};
+
+export const isWithinRange = (range, date) => (
+  date.getTime() >= range[0].getTime() &&
+  date.getTime() <= range[1].getTime()
+);
+
+export const isRangeWithinRange = (range, rangeType, date) => {
+  const range2 = getRange(rangeType, date);
+  return (
+    isWithinRange(range2, range[0]) ||
+    isWithinRange(range2, range[1])
+  );
 };

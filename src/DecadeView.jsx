@@ -15,6 +15,7 @@ export default class DecadeView extends Component {
       activeStartDate,
       onClickItem,
       setActiveRange,
+      value,
     } = this.props;
 
     return (
@@ -22,6 +23,7 @@ export default class DecadeView extends Component {
         activeStartDate={activeStartDate}
         onClickItem={onClickItem}
         setActiveRange={setActiveRange}
+        value={value}
       />
     );
   }
@@ -40,4 +42,5 @@ DecadeView.propTypes = {
   onClickItem: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,
+  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
 };

@@ -4,32 +4,39 @@ import PropTypes from 'prop-types';
 import Grid from '../Grid';
 import Year from './Year';
 
-import { getBeginOfDecadeYear } from '../shared/dates';
+import {
+  getBeginOfDecadeYear,
+  isWithinRange,
+  isRangeWithinRange,
+} from '../shared/dates';
 
 export default class Years extends Component {
-  yearsInDecade = 10
-
   get start() {
     const { activeStartDate } = this.props;
     return getBeginOfDecadeYear(activeStartDate);
   }
 
   get end() {
-    return this.start + this.yearsInDecade;
+    return this.start + 9;
   }
 
   render() {
     const { end, start } = this;
-    const { onClickItem } = this.props;
+    const { onClickItem, value } = this.props;
 
     const years = [];
 
-    for (let year = start; year < end; year += 1) {
+    for (let year = start; year <= end; year += 1) {
+      const date = new Date(year, 0, 1);
+
       years.push(
         <Year
-          year={year}
+          active={isWithinRange(value, date)}
+          hasActive={isRangeWithinRange(value, 'year', date)}
+          date={date}
           key={year}
           onClick={onClickItem}
+          year={year}
         />,
       );
     }
@@ -48,4 +55,5 @@ export default class Years extends Component {
 Years.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   onClickItem: PropTypes.func,
+  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
 };
