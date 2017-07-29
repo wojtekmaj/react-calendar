@@ -197,9 +197,9 @@ export default class Calendar extends Component {
   onChange = (valueRange) => {
     const { onChange } = this.props;
 
-    const value = this.getValueFromRange(valueRange);
+    this.setState({ value: valueRange });
 
-    this.setState({ value });
+    const value = this.getValueFromRange(valueRange);
 
     if (onChange) onChange(value);
   }
