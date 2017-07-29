@@ -60,13 +60,8 @@ export default class Weekdays extends Component {
   }
 }
 
-Weekdays.defaultProps = {
-  calendarType: 'ISO 8601',
-  month: new Date(),
-};
-
 Weekdays.propTypes = {
-  calendarType: isCalendarType,
+  calendarType: isCalendarType.isRequired,
   month: PropTypes.oneOfType([
     PropTypes.string, // Only strings that are parseable to integer
     PropTypes.number,

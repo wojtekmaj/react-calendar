@@ -67,7 +67,7 @@ export default class Days extends Component {
 
 Days.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  calendarType: isCalendarType,
+  calendarType: isCalendarType.isRequired,
   onClickItem: PropTypes.func,
   value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
 };
