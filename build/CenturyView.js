@@ -18,7 +18,11 @@ var _Decades = require('./CenturyView/Decades');
 
 var _Decades2 = _interopRequireDefault(_Decades);
 
+var _propTypes3 = require('./shared/propTypes');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -47,16 +51,10 @@ var CenturyView = function (_Component) {
     key: 'renderDecades',
     value: function renderDecades() {
       var _props = this.props,
-          onClickDecade = _props.onClickDecade,
-          setActiveRange = _props.setActiveRange,
-          century = _props.century;
+          setView = _props.setView,
+          childProps = _objectWithoutProperties(_props, ['setView']);
 
-
-      return _react2.default.createElement(_Decades2.default, {
-        century: century,
-        onClickDecade: onClickDecade,
-        setActiveRange: setActiveRange
-      });
+      return _react2.default.createElement(_Decades2.default, childProps);
     }
   }, {
     key: 'render',
@@ -76,9 +74,10 @@ exports.default = CenturyView;
 
 
 CenturyView.propTypes = {
-  century: _propTypes2.default.oneOfType([_propTypes2.default.string, // Only strings that are parseable to integer
-  _propTypes2.default.number, _propTypes2.default.instanceOf(Date)]).isRequired,
-  onClickDecade: _propTypes2.default.func,
+  activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
+  onChange: _propTypes2.default.func,
   setActiveRange: _propTypes2.default.func,
-  setView: _propTypes2.default.func
+  setView: _propTypes2.default.func,
+  value: _propTypes3.isValue,
+  valueType: _propTypes2.default.string
 };

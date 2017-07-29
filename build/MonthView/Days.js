@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -26,6 +28,8 @@ var _dates = require('../shared/dates');
 
 var _propTypes3 = require('../shared/propTypes');
 
+var _utils = require('../shared/utils');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38,30 +42,43 @@ var Days = function (_Component) {
   _inherits(Days, _Component);
 
   function Days() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, Days);
 
-    return _possibleConstructorReturn(this, (Days.__proto__ || Object.getPrototypeOf(Days)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Days.__proto__ || Object.getPrototypeOf(Days)).call.apply(_ref, [this].concat(args))), _this), _this.start = 1, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Days, [{
     key: 'render',
     value: function render() {
-      var year = this.year,
+      var start = this.start,
+          end = this.end,
+          year = this.year,
           monthIndex = this.monthIndex;
       var _props = this.props,
           calendarType = _props.calendarType,
-          month = _props.month,
-          onClickDay = _props.onClickDay;
+          onChange = _props.onChange,
+          value = _props.value,
+          valueType = _props.valueType;
 
 
       var days = [];
-      for (var day = 1; day <= (0, _dates.getDaysInMonth)(month); day += 1) {
-        days.push(_react2.default.createElement(_Day2.default, {
+      for (var day = start; day <= end; day += 1) {
+        var date = new Date(year, monthIndex, day);
+
+        days.push(_react2.default.createElement(_Day2.default, _extends({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'day'), {
           calendarType: calendarType,
-          day: new Date(year, monthIndex, day),
+          date: date,
           key: day,
-          onClick: onClickDay
-        }));
+          onChange: onChange
+        })));
       }
 
       return _react2.default.createElement(
@@ -75,20 +92,25 @@ var Days = function (_Component) {
       );
     }
   }, {
+    key: 'end',
+    get: function get() {
+      var activeStartDate = this.props.activeStartDate;
+
+      return (0, _dates.getDaysInMonth)(activeStartDate);
+    }
+  }, {
     key: 'year',
     get: function get() {
-      var month = this.props.month;
+      var activeStartDate = this.props.activeStartDate;
 
-
-      return (0, _dates.getYear)(month);
+      return (0, _dates.getYear)(activeStartDate);
     }
   }, {
     key: 'monthIndex',
     get: function get() {
-      var month = this.props.month;
+      var activeStartDate = this.props.activeStartDate;
 
-
-      return (0, _dates.getMonthIndex)(month);
+      return (0, _dates.getMonthIndex)(activeStartDate);
     }
   }]);
 
@@ -99,8 +121,9 @@ exports.default = Days;
 
 
 Days.propTypes = {
-  calendarType: _propTypes3.isCalendarType,
-  month: _propTypes2.default.oneOfType([_propTypes2.default.string, // Only strings that are parseable to integer
-  _propTypes2.default.number, _propTypes2.default.instanceOf(Date)]).isRequired,
-  onClickDay: _propTypes2.default.func
+  activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
+  calendarType: _propTypes3.isCalendarType.isRequired,
+  onChange: _propTypes2.default.func,
+  value: _propTypes3.isValue,
+  valueType: _propTypes2.default.string
 };

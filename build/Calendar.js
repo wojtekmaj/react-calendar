@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -40,6 +42,12 @@ var _MonthView2 = _interopRequireDefault(_MonthView);
 
 var _dates = require('./shared/dates');
 
+var _locales = require('./shared/locales');
+
+var _propTypes3 = require('./shared/propTypes');
+
+var _utils = require('./shared/utils');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69,7 +77,6 @@ var Calendar = function (_Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       activeStartDate: _this.getActiveStartDate(),
-      value: _this.getValue(),
       view: _this.getView()
     }, _this.setView = function (view) {
       _this.setState(function (prevState) {
@@ -83,24 +90,14 @@ var Calendar = function (_Component) {
           view: view
         };
       });
-    }, _this.setActiveRange = function (activeRange) {
-      var _activeRange2 = _slicedToArray(activeRange, 1),
-          activeStartDate = _activeRange2[0];
-
-      _this.setState({
-        activeStartDate: activeStartDate
-      });
     }, _this.setActiveStartDate = function (activeStartDate) {
       return _this.setState({ activeStartDate: activeStartDate });
-    }, _this.drillDown = function (activeRange) {
+    }, _this.drillDown = function (activeStartDate) {
       if (!_this.drillDownAvailable) {
         return;
       }
 
       var views = _this.getLimitedViews();
-
-      var _activeRange3 = _slicedToArray(activeRange, 1),
-          activeStartDate = _activeRange3[0];
 
       _this.setState(function (prevState) {
         return {
@@ -120,35 +117,43 @@ var Calendar = function (_Component) {
           view: views[views.indexOf(prevState.view) - 1]
         };
       });
-    }, _this.onChange = function (valueRange) {
-      var onChange = _this.props.onChange;
-
-
-      var value = _this.getValueFromRange(valueRange);
-
+    }, _this.onChange = function (value) {
       _this.setState({ value: value });
 
-      if (onChange) onChange(value);
-    }, _this.onDrillDown = function (callback) {
-      return function (range) {
-        if (callback) callback();
+      var onChange = _this.props.onChange;
 
-        if (_this.drillDownAvailable) {
-          _this.drillDown(range);
-        } else {
-          _this.onChange(range);
-        }
-      };
+      var processedValue = _this.getProcessedValue(value);
+      if (onChange) onChange(processedValue);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Calendar, [{
-    key: 'getLimitedViews',
-
+    key: 'getValueArray',
+    value: function getValueArray(value) {
+      if (value instanceof Array) {
+        return value;
+      }
+      return (0, _dates.getRange)(this.valueType, value);
+    }
+  }, {
+    key: 'getValueFrom',
+    value: function getValueFrom(value) {
+      var rawValueFrom = value instanceof Array ? value[0] : value;
+      return (0, _dates.getRange)(this.valueType, rawValueFrom)[0];
+    }
+  }, {
+    key: 'getValueTo',
+    value: function getValueTo(value) {
+      var rawValueFrom = value instanceof Array ? value[1] : value;
+      return (0, _dates.getRange)(this.valueType, rawValueFrom)[1];
+    }
 
     /**
      * Returns views array with disallowed values cut off.
      */
+
+  }, {
+    key: 'getLimitedViews',
     value: function getLimitedViews() {
       var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
       var minDetail = props.minDetail,
@@ -156,19 +161,6 @@ var Calendar = function (_Component) {
 
 
       return allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
-    }
-
-    /**
-     * Returns value type that can be returned with currently applied settings.
-     */
-
-  }, {
-    key: 'getValueType',
-    value: function getValueType() {
-      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
-      var maxDetail = props.maxDetail;
-
-      return allValueTypes[allViews.indexOf(maxDetail)];
     }
 
     /**
@@ -191,22 +183,26 @@ var Calendar = function (_Component) {
      */
 
   }, {
-    key: 'getValueFromRange',
-    value: function getValueFromRange() {
-      var valueRange = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.value;
+    key: 'getProcessedValue',
+    value: function getProcessedValue(value) {
       var returnValue = this.props.returnValue;
 
 
       switch (returnValue) {
         case 'start':
-          return valueRange[0];
+          return this.getValueFrom(value);
         case 'end':
-          return valueRange[1];
+          return this.getValueTo(value);
         case 'range':
-          return valueRange;
+          return this.getValueArray(value);
         default:
           throw new Error('Invalid returnValue.');
       }
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      (0, _locales.setLocale)(this.props.locale);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -216,9 +212,21 @@ var Calendar = function (_Component) {
 
       var allowedViewChanged = nextProps.minDetail !== props.minDetail || nextProps.maxDetail !== props.maxDetail;
 
-      var valueChanged = nextProps.value && !props.value || nextProps.value && props.value && nextProps.value.getTime() !== props.value.getTime();
+      var nextValueFrom = this.getValueFrom(nextProps.value);
+      var valueFrom = this.getValueFrom(props.value);
+      var valueFromChanged = nextValueFrom && !valueFrom || nextValueFrom && valueFrom && nextValueFrom.getTime() !== valueFrom.getTime();
+
+      var nextValueTo = this.getValueTo(nextProps.value);
+      var valueTo = this.getValueTo(props.value);
+      var valueToChanged = nextValueTo && !valueTo || nextValueTo && valueTo && nextValueTo.getTime() !== valueTo.getTime();
+
+      var valueChanged = valueFromChanged || valueToChanged;
 
       var nextState = {};
+
+      if (nextProps.locale !== props.locale) {
+        (0, _locales.setLocale)(nextProps.locale);
+      }
 
       if (allowedViewChanged) {
         if (!this.isViewAllowed(nextProps)) {
@@ -227,7 +235,6 @@ var Calendar = function (_Component) {
       }
 
       if (allowedViewChanged || valueChanged) {
-        nextState.value = this.getValue(nextProps);
         nextState.activeStartDate = this.getActiveStartDate(nextProps);
       }
 
@@ -239,15 +246,7 @@ var Calendar = function (_Component) {
       var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
       var rangeType = this.getView(props);
-      return (0, _dates.getRange)(rangeType, props.value)[0];
-    }
-  }, {
-    key: 'getValue',
-    value: function getValue() {
-      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
-
-      var rangeType = this.getValueType(props);
-      return (0, _dates.getRange)(rangeType, props.value);
+      return (0, _dates.getBegin)(rangeType, this.getValueFrom(props.value));
     }
   }, {
     key: 'getView',
@@ -272,56 +271,48 @@ var Calendar = function (_Component) {
      * Called when the user uses navigation buttons.
      */
 
-
-    /**
-     * Called when the user uses navigation buttons.
-     */
-
-
-    /**
-     * Called when the user clicks an item on any view.
-     * If they "hit the bottom" and they can't drill further down, onChange will be called.
-     * Otherwise, drillDown will be called.
-     */
-
   }, {
     key: 'renderContent',
     value: function renderContent() {
+      var setView = this.setView,
+          valueType = this.valueType;
+      var _props = this.props,
+          calendarType = _props.calendarType,
+          showWeekNumbers = _props.showWeekNumbers,
+          value = _props.value;
       var _state = this.state,
           activeStartDate = _state.activeStartDate,
           view = _state.view;
-      var _props = this.props,
-          onClickDay = _props.onClickDay,
-          onClickMonth = _props.onClickMonth,
-          onClickYear = _props.onClickYear,
-          onClickDecade = _props.onClickDecade;
 
+
+      var commonProps = {
+        activeStartDate: activeStartDate,
+        setView: setView,
+        value: value,
+        valueType: valueType
+      };
+
+      var clickAction = this.drillDownAvailable ? this.drillDown : this.onChange;
 
       switch (view) {
         case 'century':
-          return _react2.default.createElement(_CenturyView2.default, {
-            century: activeStartDate,
-            onClickDecade: this.onDrillDown(onClickDecade),
-            setView: this.setView
-          });
+          return _react2.default.createElement(_CenturyView2.default, _extends({
+            onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickDecade)
+          }, commonProps));
         case 'decade':
-          return _react2.default.createElement(_DecadeView2.default, {
-            decade: activeStartDate,
-            onClickYear: this.onDrillDown(onClickYear),
-            setView: this.setView
-          });
+          return _react2.default.createElement(_DecadeView2.default, _extends({
+            onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickYear)
+          }, commonProps));
         case 'year':
-          return _react2.default.createElement(_YearView2.default, {
-            year: activeStartDate,
-            onClickMonth: this.onDrillDown(onClickMonth),
-            setView: this.setView
-          });
+          return _react2.default.createElement(_YearView2.default, _extends({
+            onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickMonth)
+          }, commonProps));
         case 'month':
-          return _react2.default.createElement(_MonthView2.default, {
-            month: activeStartDate,
-            onClickDay: this.onDrillDown(onClickDay),
-            setView: this.setView
-          });
+          return _react2.default.createElement(_MonthView2.default, _extends({
+            calendarType: calendarType,
+            onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickDay),
+            showWeekNumbers: showWeekNumbers
+          }, commonProps));
         default:
           throw new Error('Invalid view: ' + view + '.');
       }
@@ -329,22 +320,14 @@ var Calendar = function (_Component) {
   }, {
     key: 'renderNavigation',
     value: function renderNavigation() {
-      var _props2 = this.props,
-          prevLabel = _props2.prevLabel,
-          prev2Label = _props2.prev2Label,
-          nextLabel = _props2.nextLabel,
-          next2Label = _props2.next2Label;
-
-
       return _react2.default.createElement(_Navigation2.default, {
         activeRange: this.state.activeRange,
         activeStartDate: this.state.activeStartDate,
         drillUp: this.drillUp,
-        nextLabel: nextLabel,
-        next2Label: next2Label,
-        prevLabel: prevLabel,
-        prev2Label: prev2Label,
-        setActiveRange: this.setActiveRange,
+        nextLabel: this.props.nextLabel,
+        next2Label: this.props.next2Label,
+        prevLabel: this.props.prevLabel,
+        prev2Label: this.props.prev2Label,
         setActiveStartDate: this.setActiveStartDate,
         view: this.state.view,
         views: this.getLimitedViews()
@@ -378,6 +361,32 @@ var Calendar = function (_Component) {
 
       return views.indexOf(view) > 0;
     }
+
+    /**
+     * Returns value type that can be returned with currently applied settings.
+     */
+
+  }, {
+    key: 'valueType',
+    get: function get() {
+      var maxDetail = this.props.maxDetail;
+
+      return allValueTypes[allViews.indexOf(maxDetail)];
+    }
+  }, {
+    key: 'valueFrom',
+    get: function get() {
+      var value = this.props.value;
+
+      return this.getValueFrom(value);
+    }
+  }, {
+    key: 'valueTo',
+    get: function get() {
+      var value = this.props.value;
+
+      return this.getValueTo(value);
+    }
   }]);
 
   return Calendar;
@@ -394,6 +403,8 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
+  calendarType: _propTypes3.isCalendarType,
+  locale: _propTypes2.default.string,
   maxDetail: _propTypes2.default.oneOf(allViews),
   minDetail: _propTypes2.default.oneOf(allViews),
   next2Label: _propTypes2.default.string,
@@ -406,6 +417,7 @@ Calendar.propTypes = {
   prev2Label: _propTypes2.default.string,
   prevLabel: _propTypes2.default.string,
   returnValue: _propTypes2.default.oneOf(['start', 'end', 'range']).isRequired,
-  value: _propTypes2.default.instanceOf(Date),
-  view: _propTypes2.default.oneOf(allViews)
+  showWeekNumbers: _propTypes2.default.bool,
+  value: _propTypes3.isValue,
+  view: _propTypes2.default.oneOf(allViews) // eslint-disable-line react/no-unused-prop-types
 };

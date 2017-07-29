@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -24,6 +26,10 @@ var _Decade2 = _interopRequireDefault(_Decade);
 
 var _dates = require('../shared/dates');
 
+var _utils = require('../shared/utils');
+
+var _propTypes3 = require('../shared/propTypes');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36,36 +42,32 @@ var Decades = function (_Component) {
   _inherits(Decades, _Component);
 
   function Decades() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, Decades);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Decades.__proto__ || Object.getPrototypeOf(Decades)).call.apply(_ref, [this].concat(args))), _this), _this.decadesInCentury = 10, _this.yearsInDecade = 10, _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (Decades.__proto__ || Object.getPrototypeOf(Decades)).apply(this, arguments));
   }
 
   _createClass(Decades, [{
     key: 'render',
     value: function render() {
-      var yearsInDecade = this.yearsInDecade,
-          end = this.end,
+      var end = this.end,
           start = this.start;
-      var onClickDecade = this.props.onClickDecade;
+      var _props = this.props,
+          onChange = _props.onChange,
+          value = _props.value,
+          valueType = _props.valueType;
 
 
       var decades = [];
+      for (var decade = start; decade <= end; decade += 10) {
+        var date = (0, _dates.getBeginOfDecade)(decade);
 
-      for (var decade = start; decade < end; decade += yearsInDecade) {
-        decades.push(_react2.default.createElement(_Decade2.default, {
+        decades.push(_react2.default.createElement(_Decade2.default, _extends({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'decade'), {
+          date: date,
           decade: decade,
           key: decade,
-          onClick: onClickDecade
-        }));
+          onChange: onChange
+        })));
       }
 
       return _react2.default.createElement(
@@ -81,14 +83,14 @@ var Decades = function (_Component) {
   }, {
     key: 'start',
     get: function get() {
-      var century = this.props.century;
+      var activeStartDate = this.props.activeStartDate;
 
-      return (0, _dates.getBeginOfCenturyYear)(century);
+      return (0, _dates.getBeginOfCenturyYear)(activeStartDate);
     }
   }, {
     key: 'end',
     get: function get() {
-      return this.start + this.decadesInCentury * this.yearsInDecade;
+      return this.start + 99;
     }
   }]);
 
@@ -99,6 +101,8 @@ exports.default = Decades;
 
 
 Decades.propTypes = {
-  century: _propTypes2.default.instanceOf(Date).isRequired,
-  onClickDecade: _propTypes2.default.func
+  activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
+  onChange: _propTypes2.default.func,
+  value: _propTypes3.isValue,
+  valueType: _propTypes2.default.string
 };

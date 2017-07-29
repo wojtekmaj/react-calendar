@@ -19,23 +19,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var className = 'react-calendar__year-view__months__month';
 
 var Month = function Month(_ref) {
-  var month = _ref.month,
-      _onClick = _ref.onClick;
+  var active = _ref.active,
+      date = _ref.date,
+      hasActive = _ref.hasActive,
+      onChange = _ref.onChange;
   return _react2.default.createElement(
     'button',
     {
-      className: [className, 'react-calendar__tile'].join(' '),
-      onClick: function onClick() {
-        if (_onClick) _onClick((0, _dates.getMonthRange)(month));
+      className: [className, active ? 'react-calendar__tile--active' : '', hasActive ? 'react-calendar__tile--hasActive' : '', 'react-calendar__tile'].join(' '),
+      onClick: onChange && function () {
+        return onChange(date);
       }
     },
-    (0, _dates.formatMonth)(month)
+    _react2.default.createElement(
+      'time',
+      { dateTime: date.toISOString() },
+      (0, _dates.formatMonth)(date)
+    )
   );
 };
 
 Month.propTypes = {
-  month: _propTypes2.default.instanceOf(Date).isRequired,
-  onClick: _propTypes2.default.func
+  active: _propTypes2.default.bool.isRequired,
+  date: _propTypes2.default.instanceOf(Date).isRequired,
+  hasActive: _propTypes2.default.bool.isRequired,
+  onChange: _propTypes2.default.func
 };
 
 exports.default = Month;

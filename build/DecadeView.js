@@ -18,7 +18,11 @@ var _Years = require('./DecadeView/Years');
 
 var _Years2 = _interopRequireDefault(_Years);
 
+var _propTypes3 = require('./shared/propTypes');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -47,16 +51,10 @@ var DecadeView = function (_Component) {
     key: 'renderYears',
     value: function renderYears() {
       var _props = this.props,
-          onClickYear = _props.onClickYear,
-          setActiveRange = _props.setActiveRange,
-          decade = _props.decade;
+          setView = _props.setView,
+          childProps = _objectWithoutProperties(_props, ['setView']);
 
-
-      return _react2.default.createElement(_Years2.default, {
-        decade: decade,
-        onClickYear: onClickYear,
-        setActiveRange: setActiveRange
-      });
+      return _react2.default.createElement(_Years2.default, childProps);
     }
   }, {
     key: 'render',
@@ -76,9 +74,10 @@ exports.default = DecadeView;
 
 
 DecadeView.propTypes = {
-  decade: _propTypes2.default.oneOfType([_propTypes2.default.string, // Only strings that are parseable to integer
-  _propTypes2.default.number, _propTypes2.default.instanceOf(Date)]).isRequired,
-  onClickYear: _propTypes2.default.func,
+  activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
+  onChange: _propTypes2.default.func,
   setActiveRange: _propTypes2.default.func,
-  setView: _propTypes2.default.func
+  setView: _propTypes2.default.func,
+  value: _propTypes3.isValue,
+  valueType: _propTypes2.default.string
 };

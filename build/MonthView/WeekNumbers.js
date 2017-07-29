@@ -14,10 +14,6 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Grid = require('../Grid');
-
-var _Grid2 = _interopRequireDefault(_Grid);
-
 var _dates = require('../shared/dates');
 
 var _propTypes3 = require('../shared/propTypes');
@@ -30,80 +26,83 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Weekdays = function (_Component) {
-  _inherits(Weekdays, _Component);
+var WeekNumbers = function (_Component) {
+  _inherits(WeekNumbers, _Component);
 
-  function Weekdays() {
-    _classCallCheck(this, Weekdays);
+  function WeekNumbers() {
+    _classCallCheck(this, WeekNumbers);
 
-    return _possibleConstructorReturn(this, (Weekdays.__proto__ || Object.getPrototypeOf(Weekdays)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (WeekNumbers.__proto__ || Object.getPrototypeOf(WeekNumbers)).apply(this, arguments));
   }
 
-  _createClass(Weekdays, [{
+  _createClass(WeekNumbers, [{
     key: 'render',
     value: function render() {
-      var beginOfMonth = this.beginOfMonth,
-          year = this.year,
-          monthIndex = this.monthIndex;
-      var calendarType = this.props.calendarType;
+      var startWeekNumber = this.startWeekNumber;
 
-
-      var weekdays = [];
-
-      for (var weekday = 1; weekday <= 7; weekday += 1) {
-        var weekdayDate = new Date(year, monthIndex, weekday - (0, _dates.getDayOfWeek)(beginOfMonth, calendarType));
-
-        weekdays.push(_react2.default.createElement(
-          'div',
-          { key: weekday },
-          (0, _dates.formatShortWeekday)(weekdayDate)
-        ));
-      }
+      var weekNumbers = Array(this.numberOfWeeks).fill(null).map(function (item, index) {
+        return index + startWeekNumber;
+      }).map(function (item) {
+        return item > 52 ? item % 52 : item;
+      });
 
       return _react2.default.createElement(
-        _Grid2.default,
-        {
-          className: 'react-calendar__month-view__weekdays',
-          count: 7,
-          grow: true
-        },
-        weekdays
+        'div',
+        { className: 'react-calendar__month-view__weekNumbers' },
+        weekNumbers.map(function (weekNumber) {
+          return _react2.default.createElement(
+            'div',
+            {
+              className: 'react-calendar__tile',
+              key: weekNumber
+            },
+            weekNumber
+          );
+        })
       );
     }
   }, {
-    key: 'beginOfMonth',
+    key: 'numberOfDays',
     get: function get() {
-      var month = this.props.month;
+      var activeStartDate = this.props.activeStartDate;
 
-
-      return (0, _dates.getBeginOfMonth)(month);
+      return (0, _dates.getDaysInMonth)(activeStartDate);
     }
   }, {
-    key: 'year',
+    key: 'startWeekday',
     get: function get() {
-      var beginOfMonth = this.beginOfMonth;
+      var _props = this.props,
+          activeStartDate = _props.activeStartDate,
+          calendarType = _props.calendarType;
 
-
-      return (0, _dates.getYear)(beginOfMonth);
+      return (0, _dates.getDayOfWeek)(activeStartDate, calendarType);
     }
   }, {
-    key: 'monthIndex',
+    key: 'startWeekNumber',
     get: function get() {
-      var beginOfMonth = this.beginOfMonth;
+      var _props2 = this.props,
+          activeStartDate = _props2.activeStartDate,
+          calendarType = _props2.calendarType;
 
+      return (0, _dates.getWeekNumber)(activeStartDate, calendarType);
+    }
+  }, {
+    key: 'numberOfWeeks',
+    get: function get() {
+      var days = this.numberOfDays - (7 - this.startWeekday);
+      var weeks = 1 + Math.ceil(days / 7);
 
-      return (0, _dates.getMonthIndex)(beginOfMonth);
+      return weeks;
     }
   }]);
 
-  return Weekdays;
+  return WeekNumbers;
 }(_react.Component);
 
-exports.default = Weekdays;
+exports.default = WeekNumbers;
 
 
-Weekdays.propTypes = {
-  calendarType: _propTypes3.isCalendarType.isRequired,
-  month: _propTypes2.default.oneOfType([_propTypes2.default.string, // Only strings that are parseable to integer
-  _propTypes2.default.number, _propTypes2.default.instanceOf(Date)]).isRequired
+WeekNumbers.propTypes = {
+  activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
+  calendarType: _propTypes3.isCalendarType.isRequired
 };

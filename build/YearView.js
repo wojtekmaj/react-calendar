@@ -18,7 +18,11 @@ var _Months = require('./YearView/Months');
 
 var _Months2 = _interopRequireDefault(_Months);
 
+var _propTypes3 = require('./shared/propTypes');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -47,16 +51,10 @@ var YearView = function (_Component) {
     key: 'renderMonths',
     value: function renderMonths() {
       var _props = this.props,
-          onClickMonth = _props.onClickMonth,
-          setActiveRange = _props.setActiveRange,
-          year = _props.year;
+          setView = _props.setView,
+          childProps = _objectWithoutProperties(_props, ['setView']);
 
-
-      return _react2.default.createElement(_Months2.default, {
-        year: year,
-        onClickMonth: onClickMonth,
-        setActiveRange: setActiveRange
-      });
+      return _react2.default.createElement(_Months2.default, childProps);
     }
   }, {
     key: 'render',
@@ -76,9 +74,10 @@ exports.default = YearView;
 
 
 YearView.propTypes = {
-  onClickMonth: _propTypes2.default.func,
+  activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
+  onChange: _propTypes2.default.func,
   setActiveRange: _propTypes2.default.func,
   setView: _propTypes2.default.func,
-  year: _propTypes2.default.oneOfType([_propTypes2.default.string, // Only strings that are parseable to integer
-  _propTypes2.default.number, _propTypes2.default.instanceOf(Date)]).isRequired
+  value: _propTypes3.isValue,
+  valueType: _propTypes2.default.string
 };

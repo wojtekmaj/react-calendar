@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -22,9 +24,17 @@ var _Weekdays = require('./MonthView/Weekdays');
 
 var _Weekdays2 = _interopRequireDefault(_Weekdays);
 
+var _WeekNumbers = require('./MonthView/WeekNumbers');
+
+var _WeekNumbers2 = _interopRequireDefault(_WeekNumbers);
+
+var _locales = require('./shared/locales');
+
 var _propTypes3 = require('./shared/propTypes');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -52,42 +62,80 @@ var MonthView = function (_Component) {
   }, {
     key: 'renderWeekdays',
     value: function renderWeekdays() {
-      var _props = this.props,
-          calendarType = _props.calendarType,
-          month = _props.month;
+      var calendarType = this.calendarType;
+      var activeStartDate = this.props.activeStartDate;
 
 
       return _react2.default.createElement(_Weekdays2.default, {
         calendarType: calendarType,
-        month: month
+        month: activeStartDate
+      });
+    }
+  }, {
+    key: 'renderWeekNumbers',
+    value: function renderWeekNumbers() {
+      var showWeekNumbers = this.props.showWeekNumbers;
+
+
+      if (!showWeekNumbers) {
+        return null;
+      }
+
+      var calendarType = this.calendarType;
+      var activeStartDate = this.props.activeStartDate;
+
+
+      return _react2.default.createElement(_WeekNumbers2.default, {
+        activeStartDate: activeStartDate,
+        calendarType: calendarType
       });
     }
   }, {
     key: 'renderDays',
     value: function renderDays() {
-      var _props2 = this.props,
-          calendarType = _props2.calendarType,
-          month = _props2.month,
-          onClickDay = _props2.onClickDay,
-          setActiveRange = _props2.setActiveRange;
+      var _props = this.props,
+          setView = _props.setView,
+          calendarType = _props.calendarType,
+          childProps = _objectWithoutProperties(_props, ['setView', 'calendarType']);
 
-
-      return _react2.default.createElement(_Days2.default, {
-        calendarType: calendarType,
-        month: month,
-        onClickDay: onClickDay,
-        setActiveRange: setActiveRange
-      });
+      return _react2.default.createElement(_Days2.default, _extends({
+        calendarType: this.calendarType
+      }, childProps));
     }
   }, {
     key: 'render',
     value: function render() {
+      var showWeekNumbers = this.props.showWeekNumbers;
+
+
+      var className = 'react-calendar__month-view';
+
       return _react2.default.createElement(
         'div',
-        { className: 'react-calendar__month-view' },
+        {
+          className: [className, showWeekNumbers ? className + '--weekNumbers' : ''].join(' ')
+        },
         this.renderWeekdays(),
+        this.renderWeekNumbers(),
         this.renderDays()
       );
+    }
+  }, {
+    key: 'calendarType',
+    get: function get() {
+      var calendarType = this.props.calendarType;
+
+
+      if (calendarType) {
+        return calendarType;
+      }
+
+      switch ((0, _locales.getLocale)()) {
+        case 'en-US':
+          return 'US';
+        default:
+          return 'ISO 8601';
+      }
     }
   }]);
 
@@ -97,15 +145,13 @@ var MonthView = function (_Component) {
 exports.default = MonthView;
 
 
-MonthView.defaultProps = {
-  calendarType: 'ISO 8601'
-};
-
 MonthView.propTypes = {
+  activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
   calendarType: _propTypes3.isCalendarType,
-  month: _propTypes2.default.oneOfType([_propTypes2.default.string, // Only strings that are parseable to integer
-  _propTypes2.default.number, _propTypes2.default.instanceOf(Date)]).isRequired,
-  onClickDay: _propTypes2.default.func,
+  onChange: _propTypes2.default.func,
   setActiveRange: _propTypes2.default.func,
-  setView: _propTypes2.default.func
+  setView: _propTypes2.default.func,
+  showWeekNumbers: _propTypes2.default.bool,
+  value: _propTypes3.isValue,
+  valueType: _propTypes2.default.string
 };

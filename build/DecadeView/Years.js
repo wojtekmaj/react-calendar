@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -24,6 +26,10 @@ var _Year2 = _interopRequireDefault(_Year);
 
 var _dates = require('../shared/dates');
 
+var _utils = require('../shared/utils');
+
+var _propTypes3 = require('../shared/propTypes');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36,17 +42,9 @@ var Years = function (_Component) {
   _inherits(Years, _Component);
 
   function Years() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, Years);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Years.__proto__ || Object.getPrototypeOf(Years)).call.apply(_ref, [this].concat(args))), _this), _this.yearsInDecade = 10, _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (Years.__proto__ || Object.getPrototypeOf(Years)).apply(this, arguments));
   }
 
   _createClass(Years, [{
@@ -54,17 +52,22 @@ var Years = function (_Component) {
     value: function render() {
       var end = this.end,
           start = this.start;
-      var onClickYear = this.props.onClickYear;
+      var _props = this.props,
+          onChange = _props.onChange,
+          value = _props.value,
+          valueType = _props.valueType;
 
 
       var years = [];
+      for (var year = start; year <= end; year += 1) {
+        var date = new Date(year, 0, 1);
 
-      for (var year = start; year < end; year += 1) {
-        years.push(_react2.default.createElement(_Year2.default, {
-          year: year,
+        years.push(_react2.default.createElement(_Year2.default, _extends({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'year'), {
+          date: date,
           key: year,
-          onClick: onClickYear
-        }));
+          onChange: onChange,
+          year: year
+        })));
       }
 
       return _react2.default.createElement(
@@ -79,15 +82,14 @@ var Years = function (_Component) {
   }, {
     key: 'start',
     get: function get() {
-      var decade = this.props.decade;
+      var activeStartDate = this.props.activeStartDate;
 
-
-      return (0, _dates.getBeginOfDecadeYear)(decade);
+      return (0, _dates.getBeginOfDecadeYear)(activeStartDate);
     }
   }, {
     key: 'end',
     get: function get() {
-      return this.start + this.yearsInDecade;
+      return this.start + 9;
     }
   }]);
 
@@ -98,6 +100,8 @@ exports.default = Years;
 
 
 Years.propTypes = {
-  decade: _propTypes2.default.instanceOf(Date).isRequired,
-  onClickYear: _propTypes2.default.func
+  activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
+  onChange: _propTypes2.default.func,
+  value: _propTypes3.isValue,
+  valueType: _propTypes2.default.string
 };

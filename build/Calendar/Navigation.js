@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -48,63 +46,38 @@ var Navigation = function (_Component) {
           view = _this$props.view,
           setActiveStartDate = _this$props.setActiveStartDate;
 
-      setActiveStartDate((0, _dates.getPreviousRange)(view, date)[0]);
+      setActiveStartDate((0, _dates.getBeginPrevious)(view, date));
     }, _this.onClickNext = function () {
       var _this$props2 = _this.props,
           date = _this$props2.activeStartDate,
           view = _this$props2.view,
           setActiveStartDate = _this$props2.setActiveStartDate;
 
-      setActiveStartDate((0, _dates.getNextRange)(view, date)[0]);
+      setActiveStartDate((0, _dates.getBeginNext)(view, date));
     }, _this.onClickPrevious2 = function () {
       var _this$props3 = _this.props,
           date = _this$props3.activeStartDate,
           view = _this$props3.view,
           setActiveStartDate = _this$props3.setActiveStartDate;
 
-      setActiveStartDate((0, _dates.getPreviousRange2)(view, date)[0]);
+      setActiveStartDate((0, _dates.getBeginPrevious2)(view, date));
     }, _this.onClickNext2 = function () {
       var _this$props4 = _this.props,
           date = _this$props4.activeStartDate,
           view = _this$props4.view,
           setActiveStartDate = _this$props4.setActiveStartDate;
 
-      setActiveStartDate((0, _dates.getNextRange2)(view, date)[0]);
+      setActiveStartDate((0, _dates.getBeginNext2)(view, date));
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Navigation, [{
     key: 'render',
     value: function render() {
+      var label = this.label;
       var _props = this.props,
-          date = _props.activeStartDate,
           drillUp = _props.drillUp,
           view = _props.view;
-
-
-      var label = void 0;
-      switch (view) {
-        case 'century':
-          label = (0, _dates.getCenturyLabel)(date);
-          break;
-        case 'decade':
-          label = (0, _dates.getDecadeLabel)(date);
-          break;
-        case 'year':
-          label = (0, _dates.getYear)(date);
-          break;
-        case 'month':
-          label = (0, _dates.formatMonthYear)(date);
-          break;
-        default:
-          throw new Error('Invalid view: ' + view + '.');
-      }
-
-      var _props2 = this.props,
-          prevLabel = _props2.prevLabel,
-          prev2Label = _props2.prev2Label,
-          nextLabel = _props2.nextLabel,
-          next2Label = _props2.next2Label;
 
 
       return _react2.default.createElement(
@@ -116,7 +89,7 @@ var Navigation = function (_Component) {
             disabled: this.prev2ButtonDisabled,
             onClick: this.onClickPrevious2
           },
-          prev2Label
+          this.props.prev2Label
         ),
         _react2.default.createElement(
           'button',
@@ -124,7 +97,7 @@ var Navigation = function (_Component) {
             disabled: this.prevButtonDisabled,
             onClick: this.onClickPrevious
           },
-          prevLabel
+          this.props.prevLabel
         ),
         _react2.default.createElement(
           'button',
@@ -140,60 +113,75 @@ var Navigation = function (_Component) {
           {
             onClick: this.onClickNext
           },
-          nextLabel
+          this.props.nextLabel
         ),
         view !== 'century' && _react2.default.createElement(
           'button',
           {
             onClick: this.onClickNext2
           },
-          next2Label
+          this.props.next2Label
         )
       );
     }
   }, {
     key: 'drillDownAvailable',
     get: function get() {
-      var _props3 = this.props,
-          view = _props3.view,
-          views = _props3.views;
+      var _props2 = this.props,
+          view = _props2.view,
+          views = _props2.views;
 
       return views.indexOf(view) < views.length - 1;
     }
   }, {
     key: 'drillUpAvailable',
     get: function get() {
-      var _props4 = this.props,
-          view = _props4.view,
-          views = _props4.views;
+      var _props3 = this.props,
+          view = _props3.view,
+          views = _props3.views;
 
       return views.indexOf(view) > 0;
     }
   }, {
     key: 'prevButtonDisabled',
     get: function get() {
-      var _props5 = this.props,
-          date = _props5.activeStartDate,
-          view = _props5.view;
+      var _props4 = this.props,
+          date = _props4.activeStartDate,
+          view = _props4.view;
 
-      var _getPreviousRange = (0, _dates.getPreviousRange)(view, date),
-          _getPreviousRange2 = _slicedToArray(_getPreviousRange, 1),
-          nextActiveStartDate = _getPreviousRange2[0];
-
+      var nextActiveStartDate = (0, _dates.getBeginPrevious)(view, date);
       return nextActiveStartDate.getFullYear() < 1000;
     }
   }, {
     key: 'prev2ButtonDisabled',
     get: function get() {
+      var _props5 = this.props,
+          date = _props5.activeStartDate,
+          view = _props5.view;
+
+      var nextActiveStartDate = (0, _dates.getBeginPrevious2)(view, date);
+      return nextActiveStartDate.getFullYear() < 1000;
+    }
+  }, {
+    key: 'label',
+    get: function get() {
       var _props6 = this.props,
           date = _props6.activeStartDate,
           view = _props6.view;
 
-      var _getPreviousRange3 = (0, _dates.getPreviousRange2)(view, date),
-          _getPreviousRange4 = _slicedToArray(_getPreviousRange3, 1),
-          nextActiveStartDate = _getPreviousRange4[0];
 
-      return nextActiveStartDate.getFullYear() < 1000;
+      switch (view) {
+        case 'century':
+          return (0, _dates.getCenturyLabel)(date);
+        case 'decade':
+          return (0, _dates.getDecadeLabel)(date);
+        case 'year':
+          return (0, _dates.getYear)(date);
+        case 'month':
+          return (0, _dates.formatMonthYear)(date);
+        default:
+          throw new Error('Invalid view: ' + view + '.');
+      }
     }
   }]);
 

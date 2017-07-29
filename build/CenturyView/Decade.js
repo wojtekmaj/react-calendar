@@ -19,23 +19,33 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var className = 'react-calendar__century-view__decades__decade';
 
 var Decade = function Decade(_ref) {
-  var decade = _ref.decade,
-      _onClick = _ref.onClick;
+  var active = _ref.active,
+      date = _ref.date,
+      decade = _ref.decade,
+      hasActive = _ref.hasActive,
+      onChange = _ref.onChange;
   return _react2.default.createElement(
     'button',
     {
-      className: [className, 'react-calendar__tile'].join(' '),
-      onClick: function onClick() {
-        if (_onClick) _onClick((0, _dates.getDecadeRange)(decade));
+      className: [className, active ? 'react-calendar__tile--active' : '', hasActive ? 'react-calendar__tile--hasActive' : '', 'react-calendar__tile'].join(' '),
+      onClick: onChange && function () {
+        return onChange(date);
       }
     },
-    (0, _dates.getDecadeLabel)(decade)
+    _react2.default.createElement(
+      'time',
+      null,
+      (0, _dates.getDecadeLabel)(decade)
+    )
   );
 };
 
 Decade.propTypes = {
+  active: _propTypes2.default.bool.isRequired,
+  date: _propTypes2.default.instanceOf(Date).isRequired,
   decade: _propTypes2.default.number.isRequired,
-  onClick: _propTypes2.default.func
+  hasActive: _propTypes2.default.bool.isRequired,
+  onChange: _propTypes2.default.func
 };
 
 exports.default = Decade;

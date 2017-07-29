@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -23,6 +25,10 @@ var _Month = require('./Month');
 var _Month2 = _interopRequireDefault(_Month);
 
 var _dates = require('../shared/dates');
+
+var _utils = require('../shared/utils');
+
+var _propTypes3 = require('../shared/propTypes');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46,25 +52,30 @@ var Months = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Months.__proto__ || Object.getPrototypeOf(Months)).call.apply(_ref, [this].concat(args))), _this), _this.monthsInYear = 12, _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Months.__proto__ || Object.getPrototypeOf(Months)).call.apply(_ref, [this].concat(args))), _this), _this.start = 0, _this.end = 11, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Months, [{
     key: 'render',
     value: function render() {
-      var monthsInYear = this.monthsInYear,
+      var end = this.end,
+          start = this.start,
           year = this.year;
-      var onClickMonth = this.props.onClickMonth;
+      var _props = this.props,
+          onChange = _props.onChange,
+          value = _props.value,
+          valueType = _props.valueType;
 
 
       var months = [];
+      for (var monthIndex = start; monthIndex <= end; monthIndex += 1) {
+        var date = new Date(year, monthIndex, 1);
 
-      for (var monthIndex = 0; monthIndex < monthsInYear; monthIndex += 1) {
-        months.push(_react2.default.createElement(_Month2.default, {
+        months.push(_react2.default.createElement(_Month2.default, _extends({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'month'), {
           key: monthIndex,
-          month: new Date(year, monthIndex, 1),
-          onClick: onClickMonth
-        }));
+          date: date,
+          onChange: onChange
+        })));
       }
 
       return _react2.default.createElement(
@@ -79,10 +90,9 @@ var Months = function (_Component) {
   }, {
     key: 'year',
     get: function get() {
-      var year = this.props.year;
+      var activeStartDate = this.props.activeStartDate;
 
-
-      return (0, _dates.getYear)(year);
+      return (0, _dates.getYear)(activeStartDate);
     }
   }]);
 
@@ -93,6 +103,8 @@ exports.default = Months;
 
 
 Months.propTypes = {
-  onClickMonth: _propTypes2.default.func,
-  year: _propTypes2.default.instanceOf(Date).isRequired
+  activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
+  onChange: _propTypes2.default.func,
+  value: _propTypes3.isValue,
+  valueType: _propTypes2.default.string
 };
