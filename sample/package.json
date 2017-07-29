@@ -3,7 +3,7 @@
   "version": "0.3.0-alpha",
   "description": "A sample page for React-Calendar.",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack"
   },
   "author": {
     "name": "Wojciech Maj",

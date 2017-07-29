@@ -32,13 +32,8 @@ React-Calendar uses modern web technologies like Internationalization API or CSS
 |Apple Safari|10.1|
 |Apple Safari (iOS)|10.3|
 |Opera|44|
-|Internet Explorer|11
+|Internet Explorer|(no support)
 
-#### Internet Explorer 10
-
-If you're interested in supporting Internet Explorer 10, you'll need to include Intl polyfill in your project.
-
-Other unsupported browsers won't benefit from adding Intl polyfill, as most of these limitations come from CSS Grid layout support.
 
 ### Installation
 
