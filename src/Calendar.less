@@ -75,10 +75,9 @@
       }
     }
 
-    &--active {
-      @bgcolor: rgb(0, 110, 220);
+    &--hasActive {
+      @bgcolor: lighten(rgb(0, 110, 220), 30%);
       background: @bgcolor;
-      color: white;
 
       &:not([disabled]) {
         &:hover {
@@ -87,9 +86,10 @@
       }
     }
 
-    &--hasActive {
-      @bgcolor: lighten(rgb(0, 110, 220), 30%);
+    &--active {
+      @bgcolor: rgb(0, 110, 220);
       background: @bgcolor;
+      color: white;
 
       &:not([disabled]) {
         &:hover {
