@@ -58,11 +58,17 @@ export default class Calendar extends Component {
   }
 
   getValueFrom(value) {
+    if (!value) {
+      return value;
+    }
     const rawValueFrom = value instanceof Array ? value[0] : value;
     return getRange(this.valueType, rawValueFrom)[0];
   }
 
   getValueTo(value) {
+    if (!value) {
+      return value;
+    }
     const rawValueFrom = value instanceof Array ? value[1] : value;
     return getRange(this.valueType, rawValueFrom)[1];
   }
@@ -157,7 +163,8 @@ export default class Calendar extends Component {
 
   getActiveStartDate(props = this.props) {
     const rangeType = this.getView(props);
-    return getBegin(rangeType, this.getValueFrom(props.value));
+    const valueFrom = this.getValueFrom(props.value) || new Date();
+    return getBegin(rangeType, valueFrom);
   }
 
   getView(props = this.props) {
