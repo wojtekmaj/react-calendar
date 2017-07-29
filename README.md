@@ -28,7 +28,7 @@ React-Calendar uses modern web technologies like Internationalization API or CSS
 |----|----|
 |Google Chrome|57|
 |Mozilla Firefox|52|
-|Microsoft Edge|all versions|
+|Microsoft Edge|16.16237|
 |Apple Safari|10.1|
 |Apple Safari (iOS)|10.3|
 |Opera|44|
