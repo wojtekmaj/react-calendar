@@ -1,21 +1,4 @@
-import once from 'lodash.once';
-
-const getLocales = once(() => {
-  const languageList = [];
-
-  if (window.navigator.languages) {
-    languageList.push(...window.navigator.languages);
-  } else if (window.navigator.userLanguage) {
-    languageList.push(window.navigator.userLanguage);
-  }
-
-  // Fallback
-  languageList.push('en-GB');
-
-  return languageList;
-});
-
-const getLocale = once(() => getLocales()[0]);
+import { getLocale } from './locales';
 
 const formatterCache = {};
 

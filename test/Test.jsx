@@ -3,6 +3,7 @@ import Calendar from 'react-calendar/src/entry';
 
 import MaxDetailOptions from './MaxDetailOptions';
 import MinDetailOptions from './MinDetailOptions';
+import LocaleOptions from './LocaleOptions';
 import ValueOptions from './ValueOptions';
 
 import { formatDate } from '../src/shared/dates';
@@ -11,6 +12,7 @@ import './Test.less';
 
 export default class Test extends Component {
   state = {
+    locale: null,
     maxDetail: 'month',
     minDetail: 'century',
     value: new Date(),
@@ -41,6 +43,7 @@ export default class Test extends Component {
 
   render() {
     const {
+      locale,
       maxDetail,
       minDetail,
       value,
@@ -63,6 +66,10 @@ export default class Test extends Component {
               minDetail={minDetail}
               setState={state => this.setState(state)}
             />
+            <LocaleOptions
+              setState={state => this.setState(state)}
+              locale={locale}
+            />
             <ValueOptions
               setState={state => this.setState(state)}
               value={value}
@@ -70,6 +77,7 @@ export default class Test extends Component {
           </aside>
           <main className="Test__container__content">
             <Calendar
+              locale={locale}
               maxDetail={maxDetail}
               minDetail={minDetail}
               onChange={this.onChange}

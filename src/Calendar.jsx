@@ -10,6 +10,7 @@ import YearView from './YearView';
 import MonthView from './MonthView';
 
 import { getBegin, getRange } from './shared/dates';
+import { setLocale } from './shared/locales';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
@@ -79,6 +80,10 @@ export default class Calendar extends Component {
     view: this.getView(),
   }
 
+  componentWillMount() {
+    setLocale(this.props.locale);
+  }
+
   componentWillReceiveProps(nextProps) {
     const { props } = this;
 
@@ -93,6 +98,10 @@ export default class Calendar extends Component {
     );
 
     const nextState = {};
+
+    if (nextProps.locale !== props.locale) {
+      setLocale(nextProps.locale);
+    }
 
     if (allowedViewChanged) {
       if (!this.isViewAllowed(nextProps)) {
@@ -298,6 +307,7 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
+  locale: PropTypes.string,
   maxDetail: PropTypes.oneOf(allViews),
   minDetail: PropTypes.oneOf(allViews),
   next2Label: PropTypes.string,
