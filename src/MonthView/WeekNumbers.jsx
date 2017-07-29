@@ -42,7 +42,10 @@ export default class WeekNumbers extends Component {
       <div className="react-calendar__month-view__weekNumbers">
         {
           weekNumbers.map(weekNumber => (
-            <div className="react-calendar__tile">
+            <div
+              className="react-calendar__tile"
+              key={weekNumber}
+            >
               {weekNumber}
             </div>
           ))
