@@ -12,6 +12,18 @@ export default class LocaleOptions extends Component {
     this.props.setState({ locale });
   }
 
+  onCustomChange = (event) => {
+    event.preventDefault();
+
+    const { value: locale } = event.target.customLocale;
+
+    this.props.setState({ locale });
+  }
+
+  resetLocale = () => {
+    this.props.setState({ locale: null });
+  }
+
   render() {
     const { locale } = this.props;
 
@@ -52,6 +64,29 @@ export default class LocaleOptions extends Component {
           />
           <label htmlFor="localeFrFR">fr-FR</label>
         </div>
+        <form onSubmit={this.onCustomChange}>
+          <label htmlFor="customLocale">Custom locale:</label>&nbsp;
+          <input
+            type="text"
+            key={locale}
+            name="customLocale"
+            defaultValue={locale}
+            pattern="^[a-z]{2}-[A-Z0-9]{2,3}$"
+          />&nbsp;
+          <button
+            style={{ display: 'none' }}
+            type="submit"
+          >
+            Set locale
+          </button>
+          <button
+            disabled={locale === null}
+            onClick={this.resetLocale}
+            type="button"
+          >
+            Reset locale
+          </button>
+        </form>
       </fieldset>
     );
   }
