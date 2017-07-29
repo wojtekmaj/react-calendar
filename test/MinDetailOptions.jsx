@@ -16,7 +16,7 @@ export default class MinDetailOptions extends Component {
 
     return (
       <fieldset id="detailoptions">
-        <legend htmlFor="viewoptions">Miniumum detail</legend>
+        <legend htmlFor="viewoptions">Minimum detail</legend>
 
         <div>
           <input
