@@ -81,6 +81,7 @@ export default class Test extends Component {
               maxDetail={maxDetail}
               minDetail={minDetail}
               onChange={this.onChange}
+              showWeekNumbers
               value={value}
             />
             {this.renderDebugInfo()}

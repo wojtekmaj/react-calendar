@@ -233,6 +233,7 @@ export default class Calendar extends Component {
       onClickDecade,
       onClickMonth,
       onClickYear,
+      showWeekNumbers,
     } = this.props;
 
     const commonProps = {
@@ -268,6 +269,7 @@ export default class Calendar extends Component {
           <MonthView
             calendarType={calendarType}
             onClickItem={this.onDrillDown(onClickDay)}
+            showWeekNumbers={showWeekNumbers}
             {...commonProps}
           />
         );
@@ -333,6 +335,7 @@ Calendar.propTypes = {
   prev2Label: PropTypes.string,
   prevLabel: PropTypes.string,
   returnValue: PropTypes.oneOf(['start', 'end', 'range']).isRequired,
+  showWeekNumbers: PropTypes.bool,
   value: PropTypes.instanceOf(Date),
   view: PropTypes.oneOf(allViews), // eslint-disable-line react/no-unused-prop-types
 };

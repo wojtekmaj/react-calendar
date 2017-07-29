@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Days from './MonthView/Days';
 import Weekdays from './MonthView/Weekdays';
+import WeekNumbers from './MonthView/WeekNumbers';
 
 import { getLocale } from './shared/locales';
 import { isCalendarType } from './shared/propTypes';
@@ -41,6 +42,24 @@ export default class MonthView extends Component {
     );
   }
 
+  renderWeekNumbers() {
+    const { showWeekNumbers } = this.props;
+
+    if (!showWeekNumbers) {
+      return null;
+    }
+
+    const { calendarType } = this;
+    const { activeStartDate } = this.props;
+
+    return (
+      <WeekNumbers
+        activeStartDate={activeStartDate}
+        calendarType={calendarType}
+      />
+    );
+  }
+
   renderDays() {
     const { calendarType } = this;
     const {
@@ -62,9 +81,19 @@ export default class MonthView extends Component {
   }
 
   render() {
+    const { showWeekNumbers } = this.props;
+
+    const className = 'react-calendar__month-view';
+
     return (
-      <div className="react-calendar__month-view">
+      <div
+        className={[
+          className,
+          showWeekNumbers ? `${className}--weekNumbers` : '',
+        ].join(' ')}
+      >
         {this.renderWeekdays()}
+        {this.renderWeekNumbers()}
         {this.renderDays()}
       </div>
     );

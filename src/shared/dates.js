@@ -254,6 +254,13 @@ const getEndOfDay = (date) => {
   return new Date(year, monthIndex, day + 1, 0, 0, 0, -1);
 };
 
+export const getWeekNumber = (date, calendarType = 'ISO 8601') => {    // Copy date so don't modify original
+  const tempDate = new Date(+date);
+  tempDate.setDate(getDay(tempDate) + (4 - getDayOfWeek(tempDate, calendarType)));
+  const yearStart = getBeginOfYear(tempDate);
+  return Math.ceil((((tempDate - yearStart) / 8.64e7)) / 7);
+};
+
 /**
  * Returns an array with the beginning and the end of a given day.
  *
