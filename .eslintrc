@@ -17,7 +17,6 @@
     "prefer-destructuring": "warn",
     "prefer-spread": "warn",
     "react/require-default-props": "off",
-    "react/sort-comp": "off",
-    "sort-keys": "warn"
+    "react/sort-comp": "off"
   }
 }
