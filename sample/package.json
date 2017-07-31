@@ -36,7 +36,6 @@
     "less-loader": "latest",
     "react-hot-loader": "^3.0.0-beta.7",
     "style-loader": "latest",
-    "url-loader": "latest",
     "webpack": "^3.4.1",
     "webpack-dev-server": "^2.6.1"
   }
