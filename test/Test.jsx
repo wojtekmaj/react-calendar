@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Calendar from 'react-calendar/src/entry';
+import 'react-calendar/src/Calendar.less';
 
 import MaxDetailOptions from './MaxDetailOptions';
 import MinDetailOptions from './MinDetailOptions';

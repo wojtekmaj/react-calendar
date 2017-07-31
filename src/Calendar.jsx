@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import './Calendar.less';
-
 import Navigation from './Calendar/Navigation';
 import CenturyView from './CenturyView';
 import DecadeView from './DecadeView';
