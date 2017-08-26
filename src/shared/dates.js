@@ -354,6 +354,29 @@ export const getBeginNext2 = (rangeType, date) => {
 };
 
 /**
+ * Returns the end of a given range.
+ *
+ * @param {String} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ */
+export const getEnd = (rangeType, date) => {
+  switch (rangeType) {
+    case 'century':
+      return getEndOfCentury(date);
+    case 'decade':
+      return getEndOfDecade(date);
+    case 'year':
+      return getEndOfYear(date);
+    case 'month':
+      return getEndOfMonth(date);
+    case 'day':
+      return getEndOfDay(date);
+    default:
+      throw new Error(`Invalid rangeType: ${rangeType}`);
+  }
+};
+
+/**
  * Returns a number of days in a month of a given date.
  *
  * @param {Date} date Date.

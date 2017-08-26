@@ -9,7 +9,7 @@ import DecadeView from './DecadeView';
 import YearView from './YearView';
 import MonthView from './MonthView';
 
-import { getBegin, getRange } from './shared/dates';
+import { getBegin, getEnd, getRange } from './shared/dates';
 import { setLocale } from './shared/locales';
 import { isCalendarType, isMaxDate, isMinDate, isValue } from './shared/propTypes';
 import { mergeFunctions } from './shared/utils';
@@ -54,23 +54,35 @@ export default class Calendar extends Component {
     if (value instanceof Array) {
       return value;
     }
-    return getRange(this.valueType, value);
+    return [this.getValueFrom(value), this.getValueTo(value)];
   }
 
   getValueFrom(value) {
     if (!value) {
       return value;
     }
+    const { minDate } = this.props;
     const rawValueFrom = value instanceof Array ? value[0] : value;
-    return getRange(this.valueType, rawValueFrom)[0];
+    const valueFrom = getBegin(this.valueType, rawValueFrom);
+    return (
+      minDate && minDate > valueFrom ?
+        minDate :
+        valueFrom
+    );
   }
 
   getValueTo(value) {
     if (!value) {
       return value;
     }
+    const { maxDate } = this.props;
     const rawValueFrom = value instanceof Array ? value[1] : value;
-    return getRange(this.valueType, rawValueFrom)[1];
+    const valueTo = getEnd(this.valueType, rawValueFrom);
+    return (
+      maxDate && maxDate < valueTo ?
+        maxDate :
+        valueTo
+    );
   }
 
   /**
