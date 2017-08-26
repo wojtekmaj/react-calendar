@@ -148,6 +148,8 @@ exports.default = MonthView;
 MonthView.propTypes = {
   activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
   calendarType: _propTypes3.isCalendarType,
+  maxDate: _propTypes3.isMaxDate,
+  minDate: _propTypes3.isMinDate,
   onChange: _propTypes2.default.func,
   setActiveRange: _propTypes2.default.func,
   setView: _propTypes2.default.func,

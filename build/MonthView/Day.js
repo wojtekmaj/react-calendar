@@ -24,11 +24,14 @@ var Day = function Day(_ref) {
   var active = _ref.active,
       calendarType = _ref.calendarType,
       date = _ref.date,
+      maxDate = _ref.maxDate,
+      minDate = _ref.minDate,
       onChange = _ref.onChange;
   return _react2.default.createElement(
     'button',
     {
       className: [className, 'react-calendar__tile', active ? 'react-calendar__tile--active' : '', (0, _dates.isWeekend)(date) ? className + '--weekend' : ''].join(' '),
+      disabled: minDate && (0, _dates.getBeginOfDay)(minDate) > date || maxDate && (0, _dates.getEndOfDay)(maxDate) < date,
       key: date,
       onClick: onChange && function () {
         return onChange(date);
@@ -49,6 +52,8 @@ Day.propTypes = {
   active: _propTypes2.default.bool.isRequired,
   calendarType: _propTypes3.isCalendarType,
   date: _propTypes2.default.instanceOf(Date).isRequired,
+  maxDate: _propTypes3.isMaxDate,
+  minDate: _propTypes3.isMinDate,
   onChange: _propTypes2.default.func
 };
 

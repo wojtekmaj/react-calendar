@@ -75,6 +75,8 @@ exports.default = YearView;
 
 YearView.propTypes = {
   activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
+  maxDate: _propTypes3.isMaxDate,
+  minDate: _propTypes3.isMinDate,
   onChange: _propTypes2.default.func,
   setActiveRange: _propTypes2.default.func,
   setView: _propTypes2.default.func,

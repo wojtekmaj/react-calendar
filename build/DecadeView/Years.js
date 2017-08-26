@@ -53,6 +53,8 @@ var Years = function (_Component) {
       var end = this.end,
           start = this.start;
       var _props = this.props,
+          maxDate = _props.maxDate,
+          minDate = _props.minDate,
           onChange = _props.onChange,
           value = _props.value,
           valueType = _props.valueType;
@@ -65,6 +67,8 @@ var Years = function (_Component) {
         years.push(_react2.default.createElement(_Year2.default, _extends({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'year'), {
           date: date,
           key: year,
+          maxDate: maxDate,
+          minDate: minDate,
           onChange: onChange,
           year: year
         })));
@@ -101,6 +105,8 @@ exports.default = Years;
 
 Years.propTypes = {
   activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
+  maxDate: _propTypes3.isMaxDate,
+  minDate: _propTypes3.isMinDate,
   onChange: _propTypes2.default.func,
   value: _propTypes3.isValue,
   valueType: _propTypes2.default.string
