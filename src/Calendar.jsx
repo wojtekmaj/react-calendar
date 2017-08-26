@@ -11,7 +11,7 @@ import MonthView from './MonthView';
 
 import { getBegin, getRange } from './shared/dates';
 import { setLocale } from './shared/locales';
-import { isCalendarType, isValue } from './shared/propTypes';
+import { isCalendarType, isMaxDate, isMinDate, isValue } from './shared/propTypes';
 import { mergeFunctions } from './shared/utils';
 
 const allViews = ['century', 'decade', 'year', 'month'];
@@ -232,11 +232,13 @@ export default class Calendar extends Component {
 
   renderContent() {
     const { setView, valueType } = this;
-    const { calendarType, showWeekNumbers, value } = this.props;
+    const { calendarType, maxDate, minDate, showWeekNumbers, value } = this.props;
     const { activeStartDate, view } = this.state;
 
     const commonProps = {
       activeStartDate,
+      maxDate,
+      minDate,
       setView,
       value,
       valueType,
@@ -317,7 +319,9 @@ Calendar.defaultProps = {
 Calendar.propTypes = {
   calendarType: isCalendarType,
   locale: PropTypes.string,
+  maxDate: isMaxDate,
   maxDetail: PropTypes.oneOf(allViews),
+  minDate: isMinDate,
   minDetail: PropTypes.oneOf(allViews),
   next2Label: PropTypes.string,
   nextLabel: PropTypes.string,

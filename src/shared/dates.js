@@ -116,7 +116,7 @@ export const getBeginOfDecade = (date) => {
   return new Date(beginOfDecadeYear, 0, 1);
 };
 
-const getEndOfDecade = (date) => {
+export const getEndOfDecade = (date) => {
   const beginOfDecadeYear = getBeginOfDecadeYear(date);
   return new Date(beginOfDecadeYear + 10, 0, 1, 0, 0, 0, -1);
 };
@@ -141,7 +141,7 @@ const getBeginOfNextDecade = (date, offset = 10) => {
  *
  * @param {Date} date Date.
  */
-const getBeginOfYear = (date) => {
+export const getBeginOfYear = (date) => {
   const year = getYear(date);
   return new Date(year, 0, 1);
 };
@@ -151,7 +151,7 @@ const getBeginOfYear = (date) => {
  *
  * @param {Date} date Date.
  */
-const getEndOfYear = (date) => {
+export const getEndOfYear = (date) => {
   const year = getYear(date);
   return new Date(year + 1, 0, 1, 0, 0, 0, -1);
 };
@@ -192,7 +192,7 @@ export const getBeginOfMonth = (date) => {
  *
  * @param {Date} date Date.
  */
-const getEndOfMonth = (date) => {
+export const getEndOfMonth = (date) => {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   return new Date(year, monthIndex + 1, 1, 0, 0, 0, -1);
@@ -220,14 +220,14 @@ const getBeginOfNextMonth = (date, offset = 1) => {
   return getBeginOfMonth(new Date(year, nextMonthIndex, 1));
 };
 
-const getBeginOfDay = (date) => {
+export const getBeginOfDay = (date) => {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   const day = getDay(date);
   return new Date(year, monthIndex, day);
 };
 
-const getEndOfDay = (date) => {
+export const getEndOfDay = (date) => {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   const day = getDay(date);

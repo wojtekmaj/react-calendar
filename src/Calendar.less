@@ -87,6 +87,10 @@
     padding: .75em .5em;
     background: none;
 
+    button&[disabled] {
+      background-color: rgb(240, 240, 240);
+    }
+
     button&:not([disabled]) {
       &:hover {
         background-color: rgb(230, 230, 230);
