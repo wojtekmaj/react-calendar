@@ -17,7 +17,7 @@ export default class DateBonduariesOptions extends Component {
   }
 
   render() {
-    const { maxDate, minDate } = this.props;
+    const { maxDate, minDate, setState } = this.props;
 
     return (
       <fieldset id="datebonduariesoptions">
@@ -28,16 +28,18 @@ export default class DateBonduariesOptions extends Component {
           <input
             onChange={this.onMinChange}
             type="date"
-            value={getISOLocalDate(minDate)}
-          />
+            value={minDate ? getISOLocalDate(minDate) : ''}
+          />&nbsp;
+          <button onClick={() => setState({ minDate: null })}>Clear</button>
         </div>
         <div>
           <label htmlFor="maxDate">Max date</label>
           <input
             onChange={this.onMaxChange}
             type="date"
-            value={getISOLocalDate(maxDate)}
-          />
+            value={maxDate ? getISOLocalDate(maxDate) : ''}
+          />&nbsp;
+          <button onClick={() => setState({ maxDate: null })}>Clear</button>
         </div>
       </fieldset>
     );
