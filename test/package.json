@@ -1,6 +1,6 @@
 {
   "name": "react-calendar-test-page",
-  "version": "0.6.0-alpha",
+  "version": "0.7.0-alpha",
   "description": "A test page for React-Calendar.",
   "scripts": {
     "build": "webpack",
