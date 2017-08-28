@@ -86,6 +86,7 @@ var Navigation = function (_Component) {
         view !== 'century' && _react2.default.createElement(
           'button',
           {
+            className: 'react-calendar__navigation__arrow',
             disabled: this.prev2ButtonDisabled,
             onClick: this.onClickPrevious2
           },
@@ -94,6 +95,7 @@ var Navigation = function (_Component) {
         _react2.default.createElement(
           'button',
           {
+            className: 'react-calendar__navigation__arrow',
             disabled: this.prevButtonDisabled,
             onClick: this.onClickPrevious
           },
@@ -111,6 +113,7 @@ var Navigation = function (_Component) {
         _react2.default.createElement(
           'button',
           {
+            className: 'react-calendar__navigation__arrow',
             disabled: this.nextButtonDisabled,
             onClick: this.onClickNext
           },
@@ -119,6 +122,7 @@ var Navigation = function (_Component) {
         view !== 'century' && _react2.default.createElement(
           'button',
           {
+            className: 'react-calendar__navigation__arrow',
             disabled: this.next2ButtonDisabled,
             onClick: this.onClickNext2
           },
