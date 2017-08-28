@@ -203,10 +203,10 @@ var viewPropType = _propTypes2.default.oneOf(allViews);
 Navigation.propTypes = {
   activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
   drillUp: _propTypes2.default.func.isRequired,
-  next2Label: _propTypes2.default.string,
-  nextLabel: _propTypes2.default.string,
-  prev2Label: _propTypes2.default.string,
-  prevLabel: _propTypes2.default.string,
+  next2Label: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
+  nextLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
+  prev2Label: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
+  prevLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   setActiveStartDate: _propTypes2.default.func.isRequired,
   view: viewPropType.isRequired,
   views: _propTypes2.default.arrayOf(viewPropType).isRequired
