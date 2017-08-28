@@ -3,7 +3,8 @@ Ultimate date picker for your React application.
 
 ## tl;dr
 * Install by executing `npm install --save {NPM_NAME_GOES_HERE}`.
-* Import by adding `import Calendar from ' {NPM_NAME_GOES_HERE}'`.
+* Import by adding `import Calendar from '{NPM_NAME_GOES_HERE}'`.
+* Import styles by adding `import '{NPM_NAME_GOES_HERE}/build/Calendar.less'` or style the calendar on your own.
 * Use by adding `<Calendar />`. Use `onChange` prop for getting new values.
 
 ## Demo
