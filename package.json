@@ -1,6 +1,6 @@
 {
   "name": "react-calendar",
-  "version": "0.4.2-alpha",
+  "version": "0.5.0-alpha",
   "description": "Ultimate date picker for your React application.",
   "main": "build/entry.js",
   "es6": "src/entry.js",
