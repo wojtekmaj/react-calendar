@@ -31,7 +31,7 @@ export default class Navigation extends Component {
     if (previousActiveStartDate.getFullYear() < 1000) {
       return true;
     }
-    return minDate && minDate >= previousActiveStartDate;
+    return minDate && minDate >= date;
   }
 
   get prev2ButtonDisabled() {
@@ -40,7 +40,7 @@ export default class Navigation extends Component {
     if (previousActiveStartDate.getFullYear() < 1000) {
       return true;
     }
-    return minDate && minDate >= previousActiveStartDate;
+    return minDate && minDate >= date;
   }
 
   get nextButtonDisabled() {
