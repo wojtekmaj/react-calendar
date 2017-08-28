@@ -26,15 +26,33 @@ export default class Navigation extends Component {
   }
 
   get prevButtonDisabled() {
-    const { activeStartDate: date, view } = this.props;
-    const nextActiveStartDate = getBeginPrevious(view, date);
-    return nextActiveStartDate.getFullYear() < 1000;
+    const { activeStartDate: date, minDate, view } = this.props;
+    const previousActiveStartDate = getBeginPrevious(view, date);
+    if (previousActiveStartDate.getFullYear() < 1000) {
+      return true;
+    }
+    return minDate && minDate >= previousActiveStartDate;
   }
 
   get prev2ButtonDisabled() {
-    const { activeStartDate: date, view } = this.props;
-    const nextActiveStartDate = getBeginPrevious2(view, date);
-    return nextActiveStartDate.getFullYear() < 1000;
+    const { activeStartDate: date, minDate, view } = this.props;
+    const previousActiveStartDate = getBeginPrevious2(view, date);
+    if (previousActiveStartDate.getFullYear() < 1000) {
+      return true;
+    }
+    return minDate && minDate >= previousActiveStartDate;
+  }
+
+  get nextButtonDisabled() {
+    const { activeStartDate: date, maxDate, view } = this.props;
+    const nextActiveStartDate = getBeginNext(view, date);
+    return maxDate && maxDate <= nextActiveStartDate;
+  }
+
+  get next2ButtonDisabled() {
+    const { activeStartDate: date, maxDate, view } = this.props;
+    const nextActiveStartDate = getBeginNext2(view, date);
+    return maxDate && maxDate <= nextActiveStartDate;
   }
 
   onClickPrevious = () => {
@@ -103,6 +121,7 @@ export default class Navigation extends Component {
           {label}
         </button>
         <button
+          disabled={this.nextButtonDisabled}
           onClick={this.onClickNext}
         >
           {this.props.nextLabel}
@@ -110,6 +129,7 @@ export default class Navigation extends Component {
         {
           view !== 'century' &&
           <button
+            disabled={this.next2ButtonDisabled}
             onClick={this.onClickNext2}
           >
             {this.props.next2Label}
@@ -132,6 +152,8 @@ const viewPropType = PropTypes.oneOf(allViews);
 Navigation.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   drillUp: PropTypes.func.isRequired,
+  maxDate: PropTypes.instanceOf(Date),
+  minDate: PropTypes.instanceOf(Date),
   next2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   nextLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),

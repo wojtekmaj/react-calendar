@@ -298,10 +298,12 @@ export default class Calendar extends Component {
         activeRange={this.state.activeRange}
         activeStartDate={this.state.activeStartDate}
         drillUp={this.drillUp}
-        nextLabel={this.props.nextLabel}
+        maxDate={this.props.maxDate}
+        minDate={this.props.minDate}
         next2Label={this.props.next2Label}
-        prevLabel={this.props.prevLabel}
+        nextLabel={this.props.nextLabel}
         prev2Label={this.props.prev2Label}
+        prevLabel={this.props.prevLabel}
         setActiveStartDate={this.setActiveStartDate}
         view={this.state.view}
         views={this.getLimitedViews()}
