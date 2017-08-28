@@ -18,7 +18,6 @@
 
   &__navigation {
     height: 44px;
-    display: flex;
     margin-bottom: 1em;
 
     button {
@@ -35,47 +34,30 @@
         background-color: rgb(240, 240, 240);
       }
     }
-
-    &__label {
-      flex-grow: 1;
-    }
   }
 
   &__month-view {
-    &--weekNumbers {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      grid-template-columns: 1fr 7fr;
-      grid-template-areas:
-        ". weekdays"
-        "weekNumbers days";
-    }
-
     &__weekdays {
-      grid-area: weekdays;
       text-align: center;
       text-transform: uppercase;
       font-weight: bold;
-      font-size: 0.8em;
+      font-size: .75em;
 
-      div {
+      &__weekday {
         padding: .5em;
       }
     }
 
     &__weekNumbers {
-      grid-area: weekNumbers;
       font-weight: bold;
 
       .react-calendar__tile {
-        font-size: 0.8em;
-        padding: calc(.75em / 0.8) calc(.5em / 0.8);
+        font-size: .75em;
+        padding: calc(.75em / .75) calc(.5em / .75);
       }
     }
 
     &__days {
-      grid-area: days;
-
       &__day {
         &--weekend {
           color: red;

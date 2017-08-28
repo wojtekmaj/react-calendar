@@ -97,7 +97,10 @@ export default class Navigation extends Component {
     const { drillUp, view } = this.props;
 
     return (
-      <div className="react-calendar__navigation">
+      <div
+        className="react-calendar__navigation"
+        style={{ display: 'flex' }}
+      >
         {
           view !== 'century' &&
           <button
@@ -119,6 +122,7 @@ export default class Navigation extends Component {
           className="react-calendar__navigation__label"
           onClick={drillUp}
           disabled={!this.drillUpAvailable}
+          style={{ flexGrow: 1 }}
         >
           {label}
         </button>

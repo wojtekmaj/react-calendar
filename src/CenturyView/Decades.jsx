@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Grid from '../Grid';
+import Flex from '../Flex';
 import Decade from './Decade';
 
 import {
@@ -43,13 +43,13 @@ export default class Decades extends Component {
     }
 
     return (
-      <Grid
+      <Flex
         className="react-calendar__century-view__decades"
-        grow
-        width={110}
+        count={3}
+        wrap
       >
         {decades}
-      </Grid>
+      </Flex>
     );
   }
 }

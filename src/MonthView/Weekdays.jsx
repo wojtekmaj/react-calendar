@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Grid from '../Grid';
+import Flex from '../Flex';
 
 import {
   formatShortWeekday,
@@ -42,20 +42,23 @@ export default class Weekdays extends Component {
         new Date(year, monthIndex, weekday - getDayOfWeek(beginOfMonth, calendarType));
 
       weekdays.push(
-        <div key={weekday}>
+        <div
+          className="react-calendar__month-view__weekdays__weekday"
+          key={weekday}
+          style={{ flexGrow: 1 }}
+        >
           {formatShortWeekday(weekdayDate)}
         </div>,
       );
     }
 
     return (
-      <Grid
+      <Flex
         className="react-calendar__month-view__weekdays"
         count={7}
-        grow
       >
         {weekdays}
-      </Grid>
+      </Flex>
     );
   }
 }

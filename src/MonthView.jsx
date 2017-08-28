@@ -83,9 +83,13 @@ export default class MonthView extends Component {
           showWeekNumbers ? `${className}--weekNumbers` : '',
         ].join(' ')}
       >
-        {this.renderWeekdays()}
-        {this.renderWeekNumbers()}
-        {this.renderDays()}
+        <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          {this.renderWeekNumbers()}
+          <div style={{ flexGrow: 1 }}>
+            {this.renderWeekdays()}
+            {this.renderDays()}
+          </div>
+        </div>
       </div>
     );
   }

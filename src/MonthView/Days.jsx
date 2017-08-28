@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Grid from '../Grid';
+import Flex from '../Flex';
 import Day from './Day';
 
 import {
@@ -14,14 +14,22 @@ import { isCalendarType, isMaxDate, isMinDate, isValue } from '../shared/propTyp
 import { getTileActivityFlags } from '../shared/utils';
 
 export default class Days extends Component {
+  get offset() {
+    if (this.props.showNeighboringMonth) {
+      return 0;
+    }
+
+    const { activeStartDate, calendarType } = this.props;
+    return getDayOfWeek(activeStartDate, calendarType);
+  }
+
   /**
    * Defines on which day of the month the grid shall start. If we simply show current
-   * month, we obviously start on day one, but if showNeighboringMonth is set to
+   * month, we bviously start on day one, but if showNeighboringMonth is set to
    * true, we need to find the beginning of the week the first day of the month is in.
    */
   get start() {
-    const { showNeighboringMonth } = this.props;
-    if (showNeighboringMonth) {
+    if (this.props.showNeighboringMonth) {
       const { activeStartDate, calendarType } = this.props;
       return -getDayOfWeek(activeStartDate, calendarType) + 1;
     }
@@ -34,9 +42,9 @@ export default class Days extends Component {
    * is set to true, we need to find the end of the week the last day of the month is in.
    */
   get end() {
-    const { activeStartDate, showNeighboringMonth } = this.props;
+    const { activeStartDate } = this.props;
     const daysInMonth = getDaysInMonth(activeStartDate);
-    if (showNeighboringMonth) {
+    if (this.props.showNeighboringMonth) {
       const { year, monthIndex } = this;
       const { calendarType } = this.props;
       const activeEndDate = new Date(year, monthIndex, daysInMonth);
@@ -58,7 +66,6 @@ export default class Days extends Component {
   render() {
     const { start, end, year, monthIndex } = this;
     const {
-      calendarType,
       maxDate,
       minDate,
       onChange,
@@ -73,7 +80,6 @@ export default class Days extends Component {
       days.push(
         <Day
           {...getTileActivityFlags(value, valueType, date, 'day')}
-          calendarType={calendarType}
           currentMonthIndex={monthIndex}
           date={date}
           maxDate={maxDate}
@@ -85,13 +91,14 @@ export default class Days extends Component {
     }
 
     return (
-      <Grid
+      <Flex
         className="react-calendar__month-view__days"
         count={7}
-        grow
+        offset={this.offset}
+        wrap
       >
         {days}
-      </Grid>
+      </Flex>
     );
   }
 }

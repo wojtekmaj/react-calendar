@@ -4,15 +4,14 @@ import PropTypes from 'prop-types';
 import {
   getBeginOfDay,
   getDay,
-  getDayOfWeek,
   getEndOfDay,
   isWeekend,
 } from '../shared/dates';
-import { isCalendarType, isMaxDate, isMinDate } from '../shared/propTypes';
+import { isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
 
-const Day = ({ active, calendarType, currentMonthIndex, date, maxDate, minDate, onChange }) => (
+const Day = ({ active, currentMonthIndex, date, maxDate, minDate, onChange }) => (
   <button
     className={[
       className,
@@ -27,9 +26,7 @@ const Day = ({ active, calendarType, currentMonthIndex, date, maxDate, minDate, 
     }
     key={date}
     onClick={onChange && (() => onChange(date))}
-    style={(getDay(date) === 1) ? {
-      gridColumnStart: getDayOfWeek(date, calendarType) + 1,
-    } : null}
+    style={{ flexGrow: 1 }}
   >
     <time dateTime={date.toISOString()}>
       {getDay(date)}
@@ -39,7 +36,6 @@ const Day = ({ active, calendarType, currentMonthIndex, date, maxDate, minDate, 
 
 Day.propTypes = {
   active: PropTypes.bool.isRequired,
-  calendarType: isCalendarType.isRequired,
   currentMonthIndex: PropTypes.number.isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
   maxDate: isMaxDate,

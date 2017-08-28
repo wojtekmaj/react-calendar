@@ -40,7 +40,10 @@ export default class WeekNumbers extends Component {
     }
 
     return (
-      <div className="react-calendar__month-view__weekNumbers">
+      <div
+        className="react-calendar__month-view__weekNumbers"
+        style={{ flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }}
+      >
         {
           weekNumbers.map(weekNumber => (
             <div

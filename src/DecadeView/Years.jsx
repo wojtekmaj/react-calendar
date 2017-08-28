@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Grid from '../Grid';
+import Flex from '../Flex';
 import Year from './Year';
 
 import { getBeginOfDecadeYear } from '../shared/dates';
@@ -40,12 +40,13 @@ export default class Years extends Component {
     }
 
     return (
-      <Grid
+      <Flex
         className="react-calendar__decade-view__years"
-        grow
+        count={3}
+        wrap
       >
         {years}
-      </Grid>
+      </Flex>
     );
   }
 }

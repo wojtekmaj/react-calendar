@@ -19,6 +19,7 @@ const Decade = ({ active, date, decade, hasActive, maxDate, minDate, onChange })
       (maxDate && getEndOfDecade(maxDate) < date)
     }
     onClick={onChange && (() => onChange(date))}
+    style={{ flexGrow: 1 }}
   >
     <time>
       {getDecadeLabel(decade)}

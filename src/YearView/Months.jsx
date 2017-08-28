@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Grid from '../Grid';
+import Flex from '../Flex';
 import Month from './Month';
 
 import { getYear } from '../shared/dates';
@@ -39,12 +39,13 @@ export default class Months extends Component {
     }
 
     return (
-      <Grid
+      <Flex
         className="react-calendar__year-view__months"
-        grow
+        count={3}
+        wrap
       >
         {months}
-      </Grid>
+      </Flex>
     );
   }
 }

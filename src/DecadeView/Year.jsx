@@ -22,6 +22,7 @@ const Year = ({ active, date, hasActive, maxDate, minDate, onChange, year }) => 
       (maxDate && getEndOfYear(maxDate) < date)
     }
     onClick={onChange && (() => onChange(date))}
+    style={{ flexGrow: 1 }}
   >
     <time dateTime={year}>
       {year}

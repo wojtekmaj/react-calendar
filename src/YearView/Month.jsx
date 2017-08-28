@@ -23,6 +23,7 @@ const Month = ({ active, date, hasActive, maxDate, minDate, onChange }) => (
       (maxDate && getEndOfMonth(maxDate) < date)
     }
     onClick={onChange && (() => onChange(date))}
+    style={{ flexGrow: 1 }}
   >
     <time dateTime={date.toISOString()}>
       {formatMonth(date)}
