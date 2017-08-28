@@ -242,7 +242,7 @@ export default class Calendar extends Component {
 
   renderContent() {
     const { setView, valueType } = this;
-    const { calendarType, maxDate, minDate, showWeekNumbers, value } = this.props;
+    const { calendarType, maxDate, minDate, value } = this.props;
     const { activeStartDate, view } = this.state;
 
     const commonProps = {
@@ -283,7 +283,8 @@ export default class Calendar extends Component {
           <MonthView
             calendarType={calendarType}
             onChange={mergeFunctions(clickAction, this.props.onClickDay)}
-            showWeekNumbers={showWeekNumbers}
+            showNeighboringMonth={this.props.showNeighboringMonth}
+            showWeekNumbers={this.props.showWeekNumbers}
             {...commonProps}
           />
         );
@@ -325,6 +326,7 @@ Calendar.defaultProps = {
   maxDetail: 'month',
   minDetail: 'century',
   returnValue: 'start',
+  showNeighboringMonth: true,
   view: 'month',
 };
 
@@ -345,6 +347,7 @@ Calendar.propTypes = {
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   returnValue: PropTypes.oneOf(['start', 'end', 'range']).isRequired,
+  showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
   value: isValue,
   view: PropTypes.oneOf(allViews), // eslint-disable-line react/no-unused-prop-types

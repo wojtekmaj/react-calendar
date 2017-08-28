@@ -14,22 +14,35 @@ import { isCalendarType, isMaxDate, isMinDate, isValue } from '../shared/propTyp
 import { getTileActivityFlags } from '../shared/utils';
 
 export default class Days extends Component {
-  getDayOfWeek(date) {
-    const { calendarType } = this.props;
-    return getDayOfWeek(date, calendarType);
-  }
-
+  /**
+   * Defines on which day of the month the grid shall start. If we simply show current
+   * month, we obviously start on day one, but if showNeighboringMonth is set to
+   * true, we need to find the beginning of the week the first day of the month is in.
+   */
   get start() {
-    const { activeStartDate } = this.props;
-    return -this.getDayOfWeek(activeStartDate) + 1;
+    const { showNeighboringMonth } = this.props;
+    if (showNeighboringMonth) {
+      const { activeStartDate, calendarType } = this.props;
+      return -getDayOfWeek(activeStartDate, calendarType) + 1;
+    }
+    return 1;
   }
 
+  /**
+   * Defines on which day of the month the grid shall end. If we simply show current
+   * month, we need to stop on the last day of the month, but if showNeighboringMonth
+   * is set to true, we need to find the end of the week the last day of the month is in.
+   */
   get end() {
-    const { activeStartDate } = this.props;
-    const { year, monthIndex } = this;
+    const { activeStartDate, showNeighboringMonth } = this.props;
     const daysInMonth = getDaysInMonth(activeStartDate);
-    const activeEndDate = new Date(year, monthIndex, daysInMonth);
-    return getDaysInMonth(activeStartDate) + (7 - this.getDayOfWeek(activeEndDate) - 1);
+    if (showNeighboringMonth) {
+      const { year, monthIndex } = this;
+      const { calendarType } = this.props;
+      const activeEndDate = new Date(year, monthIndex, daysInMonth);
+      return daysInMonth + (7 - getDayOfWeek(activeEndDate, calendarType) - 1);
+    }
+    return daysInMonth;
   }
 
   get year() {
@@ -45,6 +58,7 @@ export default class Days extends Component {
   render() {
     const { start, end, year, monthIndex } = this;
     const {
+      calendarType,
       maxDate,
       minDate,
       onChange,
@@ -59,6 +73,7 @@ export default class Days extends Component {
       days.push(
         <Day
           {...getTileActivityFlags(value, valueType, date, 'day')}
+          calendarType={calendarType}
           currentMonthIndex={monthIndex}
           date={date}
           maxDate={maxDate}
@@ -87,6 +102,7 @@ Days.propTypes = {
   maxDate: isMaxDate,
   minDate: isMinDate,
   onChange: PropTypes.func,
+  showNeighboringMonth: PropTypes.bool,
   value: isValue,
   valueType: PropTypes.string,
 };

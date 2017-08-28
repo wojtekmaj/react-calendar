@@ -99,6 +99,7 @@ MonthView.propTypes = {
   onChange: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,
+  showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
   value: isValue,
   valueType: PropTypes.string,
