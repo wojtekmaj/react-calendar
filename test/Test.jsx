@@ -18,7 +18,7 @@ export default class Test extends Component {
     locale: null,
     maxDate: new Date(2017, 8, 15, 12),
     maxDetail: 'month',
-    minDate: new Date(2015, 7, 15, 12),
+    minDate: new Date(1995, 7, 15, 12),
     minDetail: 'century',
     returnValue: 'start',
     showNeighboringMonth: false,

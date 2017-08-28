@@ -21,10 +21,10 @@ export default class DateBonduariesOptions extends Component {
 
     return (
       <fieldset id="datebonduariesoptions">
-        <legend htmlFor="viewoptions">Set date externally</legend>
+        <legend htmlFor="datebonduariesoptions">Minimum and maximum date</legend>
 
         <div>
-          <label htmlFor="minDate">Min date</label>
+          <label htmlFor="minDate">Minimum date</label>
           <input
             onChange={this.onMinChange}
             type="date"
@@ -33,7 +33,7 @@ export default class DateBonduariesOptions extends Component {
           <button onClick={() => setState({ minDate: null })}>Clear</button>
         </div>
         <div>
-          <label htmlFor="maxDate">Max date</label>
+          <label htmlFor="maxDate">Maximum date</label>
           <input
             onChange={this.onMaxChange}
             type="date"
