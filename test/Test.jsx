@@ -7,6 +7,7 @@ import MaxDetailOptions from './MaxDetailOptions';
 import MinDetailOptions from './MinDetailOptions';
 import LocaleOptions from './LocaleOptions';
 import ValueOptions from './ValueOptions';
+import ViewOptions from './ViewOptions';
 
 import { formatDate } from '../src/shared/dates';
 
@@ -20,6 +21,8 @@ export default class Test extends Component {
     minDate: new Date(2015, 7, 15, 12),
     minDetail: 'century',
     returnValue: 'start',
+    showNeighboringMonth: false,
+    showWeekNumbers: false,
     value: new Date(),
   }
 
@@ -54,6 +57,8 @@ export default class Test extends Component {
       minDate,
       minDetail,
       returnValue,
+      showNeighboringMonth,
+      showWeekNumbers,
       value,
     } = this.state;
 
@@ -89,6 +94,11 @@ export default class Test extends Component {
               setState={setState}
               value={value}
             />
+            <ViewOptions
+              setState={setState}
+              showNeighboringMonth={showNeighboringMonth}
+              showWeekNumbers={showWeekNumbers}
+            />
           </aside>
           <main className="Test__container__content">
             <Calendar
@@ -99,7 +109,8 @@ export default class Test extends Component {
               minDetail={minDetail}
               onChange={this.onChange}
               returnValue={returnValue}
-              showWeekNumbers
+              showNeighboringMonth={showNeighboringMonth}
+              showWeekNumbers={showWeekNumbers}
               value={value}
             />
             {this.renderDebugInfo()}
