@@ -5,9 +5,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isWeekend = exports.getDecadeLabel = exports.getCenturyLabel = exports.getDaysInMonth = exports.getEnd = exports.getBeginNext2 = exports.getBeginPrevious2 = exports.getBeginNext = exports.getBeginPrevious = exports.getBegin = exports.getRange = exports.getWeekNumber = exports.getEndOfDay = exports.getBeginOfDay = exports.getEndOfMonth = exports.getBeginOfMonth = exports.getEndOfYear = exports.getBeginOfYear = exports.getEndOfDecade = exports.getBeginOfDecade = exports.getBeginOfDecadeYear = exports.getBeginOfCenturyYear = exports.getDayOfWeek = exports.getDay = exports.getMonthIndex = exports.getYear = exports.formatShortWeekday = exports.formatMonth = exports.formatMonthYear = exports.formatDate = undefined;
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
 
 var _locales = require('./locales');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var formatterCache = {};
 
@@ -18,7 +26,7 @@ var formatterCache = {};
 var getFormatter = function getFormatter(options) {
   var locales = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (0, _locales.getLocale)();
 
-  var stringifiedOptions = JSON.stringify(options);
+  var stringifiedOptions = (0, _stringify2.default)(options);
 
   if (!formatterCache[locales]) {
     formatterCache[locales] = {};
@@ -421,7 +429,7 @@ var getDaysInMonth = exports.getDaysInMonth = function getDaysInMonth(date) {
  */
 var getCenturyLabel = exports.getCenturyLabel = function getCenturyLabel(date) {
   var _getCenturyRange = getCenturyRange(date),
-      _getCenturyRange2 = _slicedToArray(_getCenturyRange, 2),
+      _getCenturyRange2 = (0, _slicedToArray3.default)(_getCenturyRange, 2),
       start = _getCenturyRange2[0],
       end = _getCenturyRange2[1];
 
@@ -438,7 +446,7 @@ var getCenturyLabel = exports.getCenturyLabel = function getCenturyLabel(date) {
  */
 var getDecadeLabel = exports.getDecadeLabel = function getDecadeLabel(date) {
   var _getDecadeRange = getDecadeRange(date),
-      _getDecadeRange2 = _slicedToArray(_getDecadeRange, 2),
+      _getDecadeRange2 = (0, _slicedToArray3.default)(_getDecadeRange, 2),
       start = _getDecadeRange2[0],
       end = _getDecadeRange2[1];
 

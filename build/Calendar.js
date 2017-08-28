@@ -4,11 +4,37 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _extends2 = require('babel-runtime/helpers/extends');
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+var _extends3 = _interopRequireDefault(_extends2);
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 var _react = require('react');
 
@@ -48,39 +74,31 @@ var _utils = require('./shared/utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 var allViews = ['century', 'decade', 'year', 'month'];
-var allValueTypes = [].concat(_toConsumableArray(allViews.slice(1)), ['day']);
+var allValueTypes = [].concat((0, _toConsumableArray3.default)(allViews.slice(1)), ['day']);
 
 var Calendar = function (_Component) {
-  _inherits(Calendar, _Component);
+  (0, _inherits3.default)(Calendar, _Component);
 
   function Calendar() {
     var _ref;
 
     var _temp, _this, _ret;
 
-    _classCallCheck(this, Calendar);
+    (0, _classCallCheck3.default)(this, Calendar);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Calendar.__proto__ || (0, _getPrototypeOf2.default)(Calendar)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       activeStartDate: _this.getActiveStartDate(),
       view: _this.getView()
     }, _this.setView = function (view) {
       _this.setState(function (prevState) {
         var activeRange = (0, _dates.getRange)(view, prevState.activeStartDate);
 
-        var _activeRange = _slicedToArray(activeRange, 1),
+        var _activeRange = (0, _slicedToArray3.default)(activeRange, 1),
             activeStartDate = _activeRange[0];
 
         return {
@@ -122,10 +140,10 @@ var Calendar = function (_Component) {
 
       var processedValue = _this.getProcessedValue(value);
       if (onChange) onChange(processedValue);
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
-  _createClass(Calendar, [{
+  (0, _createClass3.default)(Calendar, [{
     key: 'getValueArray',
     value: function getValueArray(value) {
       if (value instanceof Array) {
@@ -185,7 +203,7 @@ var Calendar = function (_Component) {
 
       var views = this.getLimitedViews(props);
 
-      return views.includes(view);
+      return views.indexOf(view) !== -1;
     }
 
     /**
@@ -266,7 +284,7 @@ var Calendar = function (_Component) {
       var view = props.view;
 
 
-      if (this.getLimitedViews(props).includes(view)) {
+      if (view && this.getLimitedViews(props).indexOf(view) !== -1) {
         return view;
       }
 
@@ -291,7 +309,6 @@ var Calendar = function (_Component) {
           calendarType = _props.calendarType,
           maxDate = _props.maxDate,
           minDate = _props.minDate,
-          showWeekNumbers = _props.showWeekNumbers,
           value = _props.value;
       var _state = this.state,
           activeStartDate = _state.activeStartDate,
@@ -311,22 +328,23 @@ var Calendar = function (_Component) {
 
       switch (view) {
         case 'century':
-          return _react2.default.createElement(_CenturyView2.default, _extends({
+          return _react2.default.createElement(_CenturyView2.default, (0, _extends3.default)({
             onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickDecade)
           }, commonProps));
         case 'decade':
-          return _react2.default.createElement(_DecadeView2.default, _extends({
+          return _react2.default.createElement(_DecadeView2.default, (0, _extends3.default)({
             onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickYear)
           }, commonProps));
         case 'year':
-          return _react2.default.createElement(_YearView2.default, _extends({
+          return _react2.default.createElement(_YearView2.default, (0, _extends3.default)({
             onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickMonth)
           }, commonProps));
         case 'month':
-          return _react2.default.createElement(_MonthView2.default, _extends({
+          return _react2.default.createElement(_MonthView2.default, (0, _extends3.default)({
             calendarType: calendarType,
             onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickDay),
-            showWeekNumbers: showWeekNumbers
+            showNeighboringMonth: this.props.showNeighboringMonth,
+            showWeekNumbers: this.props.showWeekNumbers
           }, commonProps));
         default:
           throw new Error('Invalid view: ' + view + '.');
@@ -405,7 +423,6 @@ var Calendar = function (_Component) {
       return this.getValueTo(value);
     }
   }]);
-
   return Calendar;
 }(_react.Component);
 
@@ -416,6 +433,7 @@ Calendar.defaultProps = {
   maxDetail: 'month',
   minDetail: 'century',
   returnValue: 'start',
+  showNeighboringMonth: true,
   view: 'month'
 };
 
@@ -436,6 +454,7 @@ Calendar.propTypes = {
   prev2Label: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   prevLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   returnValue: _propTypes2.default.oneOf(['start', 'end', 'range']).isRequired,
+  showNeighboringMonth: _propTypes2.default.bool,
   showWeekNumbers: _propTypes2.default.bool,
   value: _propTypes3.isValue,
   view: _propTypes2.default.oneOf(allViews) // eslint-disable-line react/no-unused-prop-types

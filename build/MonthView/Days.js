@@ -4,9 +4,29 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _extends2 = require('babel-runtime/helpers/extends');
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
 
 var _react = require('react');
 
@@ -32,29 +52,15 @@ var _utils = require('../shared/utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Days = function (_Component) {
-  _inherits(Days, _Component);
+  (0, _inherits3.default)(Days, _Component);
 
   function Days() {
-    _classCallCheck(this, Days);
-
-    return _possibleConstructorReturn(this, (Days.__proto__ || Object.getPrototypeOf(Days)).apply(this, arguments));
+    (0, _classCallCheck3.default)(this, Days);
+    return (0, _possibleConstructorReturn3.default)(this, (Days.__proto__ || (0, _getPrototypeOf2.default)(Days)).apply(this, arguments));
   }
 
-  _createClass(Days, [{
-    key: 'getDayOfWeek',
-    value: function getDayOfWeek(date) {
-      var calendarType = this.props.calendarType;
-
-      return (0, _dates.getDayOfWeek)(date, calendarType);
-    }
-  }, {
+  (0, _createClass3.default)(Days, [{
     key: 'render',
     value: function render() {
       var start = this.start,
@@ -62,6 +68,7 @@ var Days = function (_Component) {
           year = this.year,
           monthIndex = this.monthIndex;
       var _props = this.props,
+          calendarType = _props.calendarType,
           maxDate = _props.maxDate,
           minDate = _props.minDate,
           onChange = _props.onChange,
@@ -73,7 +80,8 @@ var Days = function (_Component) {
       for (var day = start; day <= end; day += 1) {
         var date = new Date(year, monthIndex, day);
 
-        days.push(_react2.default.createElement(_Day2.default, _extends({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'day'), {
+        days.push(_react2.default.createElement(_Day2.default, (0, _extends3.default)({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'day'), {
+          calendarType: calendarType,
           currentMonthIndex: monthIndex,
           date: date,
           maxDate: maxDate,
@@ -95,21 +103,48 @@ var Days = function (_Component) {
     }
   }, {
     key: 'start',
-    get: function get() {
-      var activeStartDate = this.props.activeStartDate;
 
-      return -this.getDayOfWeek(activeStartDate) + 1;
+    /**
+     * Defines on which day of the month the grid shall start. If we simply show current
+     * month, we obviously start on day one, but if showNeighboringMonth is set to
+     * true, we need to find the beginning of the week the first day of the month is in.
+     */
+    get: function get() {
+      var showNeighboringMonth = this.props.showNeighboringMonth;
+
+      if (showNeighboringMonth) {
+        var _props2 = this.props,
+            activeStartDate = _props2.activeStartDate,
+            calendarType = _props2.calendarType;
+
+        return -(0, _dates.getDayOfWeek)(activeStartDate, calendarType) + 1;
+      }
+      return 1;
     }
+
+    /**
+     * Defines on which day of the month the grid shall end. If we simply show current
+     * month, we need to stop on the last day of the month, but if showNeighboringMonth
+     * is set to true, we need to find the end of the week the last day of the month is in.
+     */
+
   }, {
     key: 'end',
     get: function get() {
-      var activeStartDate = this.props.activeStartDate;
-      var year = this.year,
-          monthIndex = this.monthIndex;
+      var _props3 = this.props,
+          activeStartDate = _props3.activeStartDate,
+          showNeighboringMonth = _props3.showNeighboringMonth;
 
       var daysInMonth = (0, _dates.getDaysInMonth)(activeStartDate);
-      var activeEndDate = new Date(year, monthIndex, daysInMonth);
-      return (0, _dates.getDaysInMonth)(activeStartDate) + (7 - this.getDayOfWeek(activeEndDate) - 1);
+      if (showNeighboringMonth) {
+        var year = this.year,
+            monthIndex = this.monthIndex;
+        var calendarType = this.props.calendarType;
+
+        var activeEndDate = new Date(year, monthIndex, daysInMonth);
+        return daysInMonth + (7 - (0, _dates.getDayOfWeek)(activeEndDate, calendarType) - 1);
+      }
+      return daysInMonth;
     }
   }, {
     key: 'year',
@@ -126,7 +161,6 @@ var Days = function (_Component) {
       return (0, _dates.getMonthIndex)(activeStartDate);
     }
   }]);
-
   return Days;
 }(_react.Component);
 
@@ -139,6 +173,7 @@ Days.propTypes = {
   maxDate: _propTypes3.isMaxDate,
   minDate: _propTypes3.isMinDate,
   onChange: _propTypes2.default.func,
+  showNeighboringMonth: _propTypes2.default.bool,
   value: _propTypes3.isValue,
   valueType: _propTypes2.default.string
 };

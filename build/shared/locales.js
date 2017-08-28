@@ -5,13 +5,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.setLocale = exports.getLocale = undefined;
 
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _lodash = require('lodash.once');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var userLocale = null;
 
@@ -19,7 +21,7 @@ var getDefaultLocales = (0, _lodash2.default)(function () {
   var languageList = [];
 
   if (window.navigator.languages) {
-    languageList.push.apply(languageList, _toConsumableArray(window.navigator.languages));
+    languageList.push.apply(languageList, (0, _toConsumableArray3.default)(window.navigator.languages));
   } else if (window.navigator.userLanguage) {
     languageList.push(window.navigator.userLanguage);
   }

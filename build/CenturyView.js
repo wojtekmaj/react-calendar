@@ -4,7 +4,29 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
 
 var _react = require('react');
 
@@ -22,24 +44,15 @@ var _propTypes3 = require('./shared/propTypes');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var CenturyView = function (_Component) {
-  _inherits(CenturyView, _Component);
+  (0, _inherits3.default)(CenturyView, _Component);
 
   function CenturyView() {
-    _classCallCheck(this, CenturyView);
-
-    return _possibleConstructorReturn(this, (CenturyView.__proto__ || Object.getPrototypeOf(CenturyView)).apply(this, arguments));
+    (0, _classCallCheck3.default)(this, CenturyView);
+    return (0, _possibleConstructorReturn3.default)(this, (CenturyView.__proto__ || (0, _getPrototypeOf2.default)(CenturyView)).apply(this, arguments));
   }
 
-  _createClass(CenturyView, [{
+  (0, _createClass3.default)(CenturyView, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       var setView = this.props.setView;
@@ -52,7 +65,8 @@ var CenturyView = function (_Component) {
     value: function renderDecades() {
       var _props = this.props,
           setView = _props.setView,
-          childProps = _objectWithoutProperties(_props, ['setView']);
+          childProps = (0, _objectWithoutProperties3.default)(_props, ['setView']);
+
 
       return _react2.default.createElement(_Decades2.default, childProps);
     }
@@ -66,7 +80,6 @@ var CenturyView = function (_Component) {
       );
     }
   }]);
-
   return CenturyView;
 }(_react.Component);
 

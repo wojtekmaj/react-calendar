@@ -5,7 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isValue = exports.isMaxDate = exports.isMinDate = exports.isCalendarType = undefined;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof2 = require('babel-runtime/helpers/typeof');
+
+var _typeof3 = _interopRequireDefault(_typeof2);
 
 var _propTypes = require('prop-types');
 
@@ -22,11 +24,11 @@ var isMinDate = exports.isMinDate = function isMinDate(props, propName, componen
 
   if (minDate) {
     if (!(minDate instanceof Date)) {
-      return new Error('Warning: Failed prop type: Invalid prop `' + propName + '` of type `' + (typeof maxDate === 'undefined' ? 'undefined' : _typeof(maxDate)) + '` supplied to `' + componentName + '`, expected instance of `Date`.');
+      return new Error('Warning: Failed prop type: Invalid prop `' + propName + '` of type `' + (typeof maxDate === 'undefined' ? 'undefined' : (0, _typeof3.default)(maxDate)) + '` supplied to `' + componentName + '`, expected instance of `Date`.');
     }
 
     if (maxDate && minDate > maxDate) {
-      return new Error('Warning: Failed prop type: Invalid prop `' + propName + '` of type `' + (typeof maxDate === 'undefined' ? 'undefined' : _typeof(maxDate)) + '` supplied to `' + componentName + '`, minDate cannot be larger than maxDate.');
+      return new Error('Warning: Failed prop type: Invalid prop `' + propName + '` of type `' + (typeof maxDate === 'undefined' ? 'undefined' : (0, _typeof3.default)(maxDate)) + '` supplied to `' + componentName + '`, minDate cannot be larger than maxDate.');
     }
   }
 
@@ -41,11 +43,11 @@ var isMaxDate = exports.isMaxDate = function isMaxDate(props, propName, componen
 
   if (maxDate) {
     if (!(maxDate instanceof Date)) {
-      return new Error('Warning: Failed prop type: Invalid prop `' + propName + '` of type `' + (typeof maxDate === 'undefined' ? 'undefined' : _typeof(maxDate)) + '` supplied to `' + componentName + '`, expected instance of `Date`.');
+      return new Error('Warning: Failed prop type: Invalid prop `' + propName + '` of type `' + (typeof maxDate === 'undefined' ? 'undefined' : (0, _typeof3.default)(maxDate)) + '` supplied to `' + componentName + '`, expected instance of `Date`.');
     }
 
     if (minDate && maxDate < minDate) {
-      return new Error('Warning: Failed prop type: Invalid prop `' + propName + '` of type `' + (typeof maxDate === 'undefined' ? 'undefined' : _typeof(maxDate)) + '` supplied to `' + componentName + '`, maxDate cannot be smaller than minDate.');
+      return new Error('Warning: Failed prop type: Invalid prop `' + propName + '` of type `' + (typeof maxDate === 'undefined' ? 'undefined' : (0, _typeof3.default)(maxDate)) + '` supplied to `' + componentName + '`, maxDate cannot be smaller than minDate.');
     }
   }
 
