@@ -98,7 +98,7 @@ export default class Calendar extends Component {
   isViewAllowed(props = this.props, view = this.state.view) {
     const views = this.getLimitedViews(props);
 
-    return views.includes(view);
+    return views.indexOf(view) !== -1;
   }
 
   /**
@@ -180,7 +180,7 @@ export default class Calendar extends Component {
   getView(props = this.props) {
     const { view } = props;
 
-    if (this.getLimitedViews(props).includes(view)) {
+    if (view && this.getLimitedViews(props).indexOf(view) !== -1) {
       return view;
     }
 
