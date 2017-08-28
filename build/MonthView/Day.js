@@ -47,7 +47,6 @@ var Day = function Day(_ref) {
 
 Day.propTypes = {
   active: _propTypes2.default.bool.isRequired,
-  calendarType: _propTypes3.isCalendarType,
   currentMonthIndex: _propTypes2.default.number.isRequired,
   date: _propTypes2.default.instanceOf(Date).isRequired,
   maxDate: _propTypes3.isMaxDate,
