@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { formatMonth } from '../shared/dates';
+import {
+  formatMonth,
+  getBeginOfMonth,
+  getEndOfMonth,
+} from '../shared/dates';
+import { isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__year-view__months__month';
 
-const Month = ({ active, date, hasActive, onChange }) => (
+const Month = ({ active, date, hasActive, maxDate, minDate, onChange }) => (
   <button
     className={[
       className,
@@ -13,6 +18,10 @@ const Month = ({ active, date, hasActive, onChange }) => (
       (hasActive ? 'react-calendar__tile--hasActive' : ''),
       'react-calendar__tile',
     ].join(' ')}
+    disabled={
+      (minDate && getBeginOfMonth(minDate) > date) ||
+      (maxDate && getEndOfMonth(maxDate) < date)
+    }
     onClick={onChange && (() => onChange(date))}
   >
     <time dateTime={date.toISOString()}>
@@ -25,6 +34,8 @@ Month.propTypes = {
   active: PropTypes.bool.isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
   hasActive: PropTypes.bool.isRequired,
+  maxDate: isMaxDate,
+  minDate: isMinDate,
   onChange: PropTypes.func,
 };
 

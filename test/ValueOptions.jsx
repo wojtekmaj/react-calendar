@@ -2,23 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { isValue } from '../src/shared/propTypes';
-
-/**
- * Returns local date in ISO-like format (YYYY-MM-DD).
- */
-const getISOLocalDate = (value) => {
-  if (!value) {
-    return value;
-  }
-
-  return `${
-    value.getFullYear()
-  }-${
-    `0${value.getMonth() + 1}`.slice(-2)
-  }-${
-    `0${value.getDate()}`.slice(-2)
-  }`;
-};
+import { getISOLocalDate } from './shared/dates';
 
 export default class ValueOptions extends Component {
   get startDate() {

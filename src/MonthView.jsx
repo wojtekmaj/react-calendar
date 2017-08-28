@@ -6,7 +6,7 @@ import Weekdays from './MonthView/Weekdays';
 import WeekNumbers from './MonthView/WeekNumbers';
 
 import { getLocale } from './shared/locales';
-import { isCalendarType, isValue } from './shared/propTypes';
+import { isCalendarType, isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
 export default class MonthView extends Component {
   get calendarType() {
@@ -94,6 +94,8 @@ export default class MonthView extends Component {
 MonthView.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType,
+  maxDate: isMaxDate,
+  minDate: isMinDate,
   onChange: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,

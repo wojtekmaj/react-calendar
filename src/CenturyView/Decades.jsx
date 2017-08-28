@@ -9,7 +9,7 @@ import {
   getBeginOfCenturyYear,
 } from '../shared/dates';
 import { getTileActivityFlags } from '../shared/utils';
-import { isValue } from '../shared/propTypes';
+import { isMaxDate, isMinDate, isValue } from '../shared/propTypes';
 
 export default class Decades extends Component {
   get start() {
@@ -23,7 +23,7 @@ export default class Decades extends Component {
 
   render() {
     const { end, start } = this;
-    const { onChange, value, valueType } = this.props;
+    const { maxDate, minDate, onChange, value, valueType } = this.props;
 
     const decades = [];
     for (let decade = start; decade <= end; decade += 10) {
@@ -35,6 +35,8 @@ export default class Decades extends Component {
           date={date}
           decade={decade}
           key={decade}
+          maxDate={maxDate}
+          minDate={minDate}
           onChange={onChange}
         />,
       );
@@ -54,6 +56,8 @@ export default class Decades extends Component {
 
 Decades.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
+  maxDate: isMaxDate,
+  minDate: isMinDate,
   onChange: PropTypes.func,
   value: isValue,
   valueType: PropTypes.string,

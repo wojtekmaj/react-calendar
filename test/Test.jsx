@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Calendar from 'react-calendar/src/entry';
 import 'react-calendar/src/Calendar.less';
 
+import DateBonduariesOptions from './DateBonduariesOptions';
 import MaxDetailOptions from './MaxDetailOptions';
 import MinDetailOptions from './MinDetailOptions';
 import LocaleOptions from './LocaleOptions';
@@ -14,7 +15,9 @@ import './Test.less';
 export default class Test extends Component {
   state = {
     locale: null,
+    maxDate: new Date(2017, 8, 15, 12),
     maxDetail: 'month',
+    minDate: new Date(2015, 7, 15, 12),
     minDetail: 'century',
     returnValue: 'start',
     value: new Date(),
@@ -46,11 +49,15 @@ export default class Test extends Component {
   render() {
     const {
       locale,
+      maxDate,
       maxDetail,
+      minDate,
       minDetail,
       returnValue,
       value,
     } = this.state;
+
+    const setState = state => this.setState(state);
 
     return (
       <div className="Test">
@@ -62,26 +69,33 @@ export default class Test extends Component {
             <MinDetailOptions
               maxDetail={maxDetail}
               minDetail={minDetail}
-              setState={state => this.setState(state)}
+              setState={setState}
             />
             <MaxDetailOptions
               maxDetail={maxDetail}
               minDetail={minDetail}
-              setState={state => this.setState(state)}
+              setState={setState}
+            />
+            <DateBonduariesOptions
+              maxDate={maxDate}
+              minDate={minDate}
+              setState={setState}
             />
             <LocaleOptions
-              setState={state => this.setState(state)}
+              setState={setState}
               locale={locale}
             />
             <ValueOptions
-              setState={state => this.setState(state)}
+              setState={setState}
               value={value}
             />
           </aside>
           <main className="Test__container__content">
             <Calendar
               locale={locale}
+              maxDate={maxDate}
               maxDetail={maxDetail}
+              minDate={minDate}
               minDetail={minDetail}
               onChange={this.onChange}
               returnValue={returnValue}

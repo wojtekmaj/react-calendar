@@ -64,6 +64,8 @@ var Days = function (_Component) {
           monthIndex = this.monthIndex;
       var _props = this.props,
           calendarType = _props.calendarType,
+          maxDate = _props.maxDate,
+          minDate = _props.minDate,
           onChange = _props.onChange,
           value = _props.value,
           valueType = _props.valueType;
@@ -76,6 +78,8 @@ var Days = function (_Component) {
         days.push(_react2.default.createElement(_Day2.default, _extends({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'day'), {
           calendarType: calendarType,
           date: date,
+          maxDate: maxDate,
+          minDate: minDate,
           key: day,
           onChange: onChange
         })));
@@ -123,6 +127,8 @@ exports.default = Days;
 Days.propTypes = {
   activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
   calendarType: _propTypes3.isCalendarType.isRequired,
+  maxDate: _propTypes3.isMaxDate,
+  minDate: _propTypes3.isMinDate,
   onChange: _propTypes2.default.func,
   value: _propTypes3.isValue,
   valueType: _propTypes2.default.string

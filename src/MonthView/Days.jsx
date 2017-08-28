@@ -9,7 +9,7 @@ import {
   getMonthIndex,
   getYear,
 } from '../shared/dates';
-import { isCalendarType, isValue } from '../shared/propTypes';
+import { isCalendarType, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
 import { getTileActivityFlags } from '../shared/utils';
 
 export default class Days extends Component {
@@ -34,6 +34,8 @@ export default class Days extends Component {
     const { start, end, year, monthIndex } = this;
     const {
       calendarType,
+      maxDate,
+      minDate,
       onChange,
       value,
       valueType,
@@ -48,6 +50,8 @@ export default class Days extends Component {
           {...getTileActivityFlags(value, valueType, date, 'day')}
           calendarType={calendarType}
           date={date}
+          maxDate={maxDate}
+          minDate={minDate}
           key={day}
           onChange={onChange}
         />,
@@ -69,6 +73,8 @@ export default class Days extends Component {
 Days.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType.isRequired,
+  maxDate: isMaxDate,
+  minDate: isMinDate,
   onChange: PropTypes.func,
   value: isValue,
   valueType: PropTypes.string,

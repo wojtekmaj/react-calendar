@@ -6,7 +6,7 @@ import Month from './Month';
 
 import { getYear } from '../shared/dates';
 import { getTileActivityFlags } from '../shared/utils';
-import { isValue } from '../shared/propTypes';
+import { isMaxDate, isMinDate, isValue } from '../shared/propTypes';
 
 export default class Months extends Component {
   start = 0
@@ -20,7 +20,7 @@ export default class Months extends Component {
 
   render() {
     const { end, start, year } = this;
-    const { onChange, value, valueType } = this.props;
+    const { maxDate, minDate, onChange, value, valueType } = this.props;
 
     const months = [];
     for (let monthIndex = start; monthIndex <= end; monthIndex += 1) {
@@ -29,8 +29,10 @@ export default class Months extends Component {
       months.push(
         <Month
           {...getTileActivityFlags(value, valueType, date, 'month')}
-          key={monthIndex}
           date={date}
+          key={monthIndex}
+          maxDate={maxDate}
+          minDate={minDate}
           onChange={onChange}
         />,
       );
@@ -49,6 +51,8 @@ export default class Months extends Component {
 
 Months.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
+  maxDate: isMaxDate,
+  minDate: isMinDate,
   onChange: PropTypes.func,
   value: isValue,
   valueType: PropTypes.string,

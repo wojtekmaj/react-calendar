@@ -133,19 +133,31 @@ var Calendar = function (_Component) {
       if (value instanceof Array) {
         return value;
       }
-      return (0, _dates.getRange)(this.valueType, value);
+      return [this.getValueFrom(value), this.getValueTo(value)];
     }
   }, {
     key: 'getValueFrom',
     value: function getValueFrom(value) {
+      if (!value) {
+        return value;
+      }
+      var minDate = this.props.minDate;
+
       var rawValueFrom = value instanceof Array ? value[0] : value;
-      return (0, _dates.getRange)(this.valueType, rawValueFrom)[0];
+      var valueFrom = (0, _dates.getBegin)(this.valueType, rawValueFrom);
+      return minDate && minDate > valueFrom ? minDate : valueFrom;
     }
   }, {
     key: 'getValueTo',
     value: function getValueTo(value) {
+      if (!value) {
+        return value;
+      }
+      var maxDate = this.props.maxDate;
+
       var rawValueFrom = value instanceof Array ? value[1] : value;
-      return (0, _dates.getRange)(this.valueType, rawValueFrom)[1];
+      var valueTo = (0, _dates.getEnd)(this.valueType, rawValueFrom);
+      return maxDate && maxDate < valueTo ? maxDate : valueTo;
     }
 
     /**
@@ -246,7 +258,8 @@ var Calendar = function (_Component) {
       var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
       var rangeType = this.getView(props);
-      return (0, _dates.getBegin)(rangeType, this.getValueFrom(props.value));
+      var valueFrom = this.getValueFrom(props.value) || new Date();
+      return (0, _dates.getBegin)(rangeType, valueFrom);
     }
   }, {
     key: 'getView',
@@ -278,6 +291,8 @@ var Calendar = function (_Component) {
           valueType = this.valueType;
       var _props = this.props,
           calendarType = _props.calendarType,
+          maxDate = _props.maxDate,
+          minDate = _props.minDate,
           showWeekNumbers = _props.showWeekNumbers,
           value = _props.value;
       var _state = this.state,
@@ -287,6 +302,8 @@ var Calendar = function (_Component) {
 
       var commonProps = {
         activeStartDate: activeStartDate,
+        maxDate: maxDate,
+        minDate: minDate,
         setView: setView,
         value: value,
         valueType: valueType
@@ -405,7 +422,9 @@ Calendar.defaultProps = {
 Calendar.propTypes = {
   calendarType: _propTypes3.isCalendarType,
   locale: _propTypes2.default.string,
+  maxDate: _propTypes3.isMaxDate,
   maxDetail: _propTypes2.default.oneOf(allViews),
+  minDate: _propTypes3.isMinDate,
   minDetail: _propTypes2.default.oneOf(allViews),
   next2Label: _propTypes2.default.string,
   nextLabel: _propTypes2.default.string,
