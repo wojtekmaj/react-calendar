@@ -1,0 +1,123 @@
+.react-calendar {
+  width: 350px;
+  background: white;
+  border: 1px solid rgb(160, 160, 150);
+  font-family: Arial, Helvetica, sans-serif;
+
+  button {
+    border: 0;
+    outline: none;
+
+    &:not([disabled]) {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__navigation {
+    height: 44px;
+    display: flex;
+    margin-bottom: 1em;
+
+    button {
+      min-width: 44px;
+      background: none;
+
+      &:not([disabled]) {
+        &:hover {
+          background-color: rgb(230, 230, 230);
+        }
+      }
+    }
+
+    &__label {
+      flex-grow: 1;
+    }
+  }
+
+  &__month-view {
+    &--weekNumbers {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      grid-template-columns: 1fr 7fr;
+      grid-template-areas:
+        ". weekdays"
+        "weekNumbers days";
+    }
+
+    &__weekdays {
+      grid-area: weekdays;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 0.8em;
+
+      div {
+        padding: .5em;
+      }
+    }
+
+    &__weekNumbers {
+      grid-area: weekNumbers;
+      color: rgb(150, 150, 150);
+    }
+
+    &__days {
+      grid-area: days;
+
+      &__day {
+        &--weekend {
+          color: red;
+        }
+      }
+    }
+  }
+
+  &__year-view,
+  &__decade-view,
+  &__century-view {
+    .react-calendar__tile {
+      padding: 2em .5em;
+    }
+  }
+
+  &__tile {
+    text-align: center;
+    padding: .75em .5em;
+    background: none;
+
+    button&[disabled] {
+      background-color: rgb(240, 240, 240);
+    }
+
+    button&:not([disabled]) {
+      &:hover {
+        background-color: rgb(230, 230, 230);
+      }
+    }
+
+    &--hasActive {
+      @bgcolor: lighten(rgb(0, 110, 220), 30%);
+      background: @bgcolor;
+
+      button&:not([disabled]) {
+        &:hover {
+          background: lighten(@bgcolor, 10%);
+        }
+      }
+    }
+
+    &--active {
+      @bgcolor: rgb(0, 110, 220);
+      background: @bgcolor;
+      color: white;
+
+      button&:not([disabled]) {
+        &:hover {
+          background: lighten(@bgcolor, 10%);
+        }
+      }
+    }
+  }
+}

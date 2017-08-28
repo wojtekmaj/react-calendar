@@ -18,8 +18,6 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-require('./Calendar.less');
-
 var _Navigation = require('./Calendar/Navigation');
 
 var _Navigation2 = _interopRequireDefault(_Navigation);
