@@ -91,7 +91,7 @@ Displays a complete, interactive calendar.
 |onClickMonth|Function called when the user clicks a month.|`(value) => alert('Clicked month: ', value)`|
 |onClickYear|Function called when the user clicks a year.|`(value) => alert('Clicked year: ', value)`|
 |prevLabel|Defines the content of the "previous" button on the navigation pane. Defaults to "‹".|<ul><li>String: `"‹"`</li><li>React element: `<PrevousIcon />`</li></ul>|
-|prev2Label|Defines the content of the "previous on higher level" button on the navigation pane. Defaults to "«".|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviusIcon />`</li></ul>|
+|prev2Label|Defines the content of the "previous on higher level" button on the navigation pane. Defaults to "«".|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
 |returnValue|Defines which dates shall be passed by the calendar to the onChange function and onClick{Period} functions. Can be "start", "end"  or "range". The latter will cause an arrray with start and end values to be passed. Defaults to "start".|`"range"`|
 |showNeighboringMonth|Defines whether days from previous or next month shall be rendered if the month doesn't start on the first day of the week or doesn't end on the last day of the week, respectively. Defaults to true.|`false`|
 |showWeekNumbers|Defines whether week numbers shall be shown at the left of MonthView or not. Defaults to false.|`true`|
