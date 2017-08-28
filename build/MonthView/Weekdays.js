@@ -32,9 +32,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Grid = require('../Grid');
+var _Flex = require('../Flex');
 
-var _Grid2 = _interopRequireDefault(_Grid);
+var _Flex2 = _interopRequireDefault(_Flex);
 
 var _dates = require('../shared/dates');
 
@@ -66,17 +66,20 @@ var Weekdays = function (_Component) {
 
         weekdays.push(_react2.default.createElement(
           'div',
-          { key: weekday },
+          {
+            className: 'react-calendar__month-view__weekdays__weekday',
+            key: weekday,
+            style: { flexGrow: 1 }
+          },
           (0, _dates.formatShortWeekday)(weekdayDate)
         ));
       }
 
       return _react2.default.createElement(
-        _Grid2.default,
+        _Flex2.default,
         {
           className: 'react-calendar__month-view__weekdays',
-          count: 7,
-          grow: true
+          count: 7
         },
         weekdays
       );

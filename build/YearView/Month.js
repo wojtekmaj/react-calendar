@@ -34,7 +34,8 @@ var Month = function Month(_ref) {
       disabled: minDate && (0, _dates.getBeginOfMonth)(minDate) > date || maxDate && (0, _dates.getEndOfMonth)(maxDate) < date,
       onClick: onChange && function () {
         return onChange(date);
-      }
+      },
+      style: { flexGrow: 1 }
     },
     _react2.default.createElement(
       'time',

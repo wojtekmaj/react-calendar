@@ -22,7 +22,6 @@ var className = 'react-calendar__month-view__days__day';
 
 var Day = function Day(_ref) {
   var active = _ref.active,
-      calendarType = _ref.calendarType,
       currentMonthIndex = _ref.currentMonthIndex,
       date = _ref.date,
       maxDate = _ref.maxDate,
@@ -37,9 +36,7 @@ var Day = function Day(_ref) {
       onClick: onChange && function () {
         return onChange(date);
       },
-      style: (0, _dates.getDay)(date) === 1 ? {
-        gridColumnStart: (0, _dates.getDayOfWeek)(date, calendarType) + 1
-      } : null
+      style: { flexGrow: 1 }
     },
     _react2.default.createElement(
       'time',
@@ -51,7 +48,6 @@ var Day = function Day(_ref) {
 
 Day.propTypes = {
   active: _propTypes2.default.bool.isRequired,
-  calendarType: _propTypes3.isCalendarType.isRequired,
   currentMonthIndex: _propTypes2.default.number.isRequired,
   date: _propTypes2.default.instanceOf(Date).isRequired,
   maxDate: _propTypes3.isMaxDate,

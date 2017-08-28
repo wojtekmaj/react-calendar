@@ -35,7 +35,8 @@ var Decade = function Decade(_ref) {
       disabled: minDate && (0, _dates.getBeginOfDecade)(minDate) > date || maxDate && (0, _dates.getEndOfDecade)(maxDate) < date,
       onClick: onChange && function () {
         return onChange(date);
-      }
+      },
+      style: { flexGrow: 1 }
     },
     _react2.default.createElement(
       'time',

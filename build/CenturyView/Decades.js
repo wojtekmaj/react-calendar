@@ -36,9 +36,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Grid = require('../Grid');
+var _Flex = require('../Flex');
 
-var _Grid2 = _interopRequireDefault(_Grid);
+var _Flex2 = _interopRequireDefault(_Flex);
 
 var _Decade = require('./Decade');
 
@@ -88,11 +88,11 @@ var Decades = function (_Component) {
       }
 
       return _react2.default.createElement(
-        _Grid2.default,
+        _Flex2.default,
         {
           className: 'react-calendar__century-view__decades',
-          grow: true,
-          width: 110
+          count: 3,
+          wrap: true
         },
         decades
       );

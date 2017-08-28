@@ -36,9 +36,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Grid = require('../Grid');
+var _Flex = require('../Flex');
 
-var _Grid2 = _interopRequireDefault(_Grid);
+var _Flex2 = _interopRequireDefault(_Flex);
 
 var _Day = require('./Day');
 
@@ -68,7 +68,6 @@ var Days = function (_Component) {
           year = this.year,
           monthIndex = this.monthIndex;
       var _props = this.props,
-          calendarType = _props.calendarType,
           maxDate = _props.maxDate,
           minDate = _props.minDate,
           onChange = _props.onChange,
@@ -81,7 +80,6 @@ var Days = function (_Component) {
         var date = new Date(year, monthIndex, day);
 
         days.push(_react2.default.createElement(_Day2.default, (0, _extends3.default)({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'day'), {
-          calendarType: calendarType,
           currentMonthIndex: monthIndex,
           date: date,
           maxDate: maxDate,
@@ -92,30 +90,43 @@ var Days = function (_Component) {
       }
 
       return _react2.default.createElement(
-        _Grid2.default,
+        _Flex2.default,
         {
           className: 'react-calendar__month-view__days',
           count: 7,
-          grow: true
+          offset: this.offset,
+          wrap: true
         },
         days
       );
     }
   }, {
-    key: 'start',
+    key: 'offset',
+    get: function get() {
+      if (this.props.showNeighboringMonth) {
+        return 0;
+      }
+
+      var _props2 = this.props,
+          activeStartDate = _props2.activeStartDate,
+          calendarType = _props2.calendarType;
+
+      return (0, _dates.getDayOfWeek)(activeStartDate, calendarType);
+    }
 
     /**
      * Defines on which day of the month the grid shall start. If we simply show current
-     * month, we obviously start on day one, but if showNeighboringMonth is set to
+     * month, we bviously start on day one, but if showNeighboringMonth is set to
      * true, we need to find the beginning of the week the first day of the month is in.
      */
-    get: function get() {
-      var showNeighboringMonth = this.props.showNeighboringMonth;
 
-      if (showNeighboringMonth) {
-        var _props2 = this.props,
-            activeStartDate = _props2.activeStartDate,
-            calendarType = _props2.calendarType;
+  }, {
+    key: 'start',
+    get: function get() {
+      if (this.props.showNeighboringMonth) {
+        var _props3 = this.props,
+            activeStartDate = _props3.activeStartDate,
+            calendarType = _props3.calendarType;
 
         return -(0, _dates.getDayOfWeek)(activeStartDate, calendarType) + 1;
       }
@@ -131,12 +142,10 @@ var Days = function (_Component) {
   }, {
     key: 'end',
     get: function get() {
-      var _props3 = this.props,
-          activeStartDate = _props3.activeStartDate,
-          showNeighboringMonth = _props3.showNeighboringMonth;
+      var activeStartDate = this.props.activeStartDate;
 
       var daysInMonth = (0, _dates.getDaysInMonth)(activeStartDate);
-      if (showNeighboringMonth) {
+      if (this.props.showNeighboringMonth) {
         var year = this.year,
             monthIndex = this.monthIndex;
         var calendarType = this.props.calendarType;

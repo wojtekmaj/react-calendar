@@ -131,9 +131,17 @@ var MonthView = function (_Component) {
         {
           className: [className, showWeekNumbers ? className + '--weekNumbers' : ''].join(' ')
         },
-        this.renderWeekdays(),
-        this.renderWeekNumbers(),
-        this.renderDays()
+        _react2.default.createElement(
+          'div',
+          { style: { display: 'flex', alignItems: 'flex-end' } },
+          this.renderWeekNumbers(),
+          _react2.default.createElement(
+            'div',
+            { style: { flexGrow: 1 } },
+            this.renderWeekdays(),
+            this.renderDays()
+          )
+        )
       );
     }
   }, {

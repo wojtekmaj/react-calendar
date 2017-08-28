@@ -94,7 +94,10 @@ var Navigation = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'react-calendar__navigation' },
+        {
+          className: 'react-calendar__navigation',
+          style: { display: 'flex' }
+        },
         view !== 'century' && _react2.default.createElement(
           'button',
           {
@@ -118,7 +121,8 @@ var Navigation = function (_Component) {
           {
             className: 'react-calendar__navigation__label',
             onClick: drillUp,
-            disabled: !this.drillUpAvailable
+            disabled: !this.drillUpAvailable,
+            style: { flexGrow: 1 }
           },
           label
         ),
@@ -172,7 +176,7 @@ var Navigation = function (_Component) {
       if (previousActiveStartDate.getFullYear() < 1000) {
         return true;
       }
-      return minDate && minDate >= previousActiveStartDate;
+      return minDate && minDate >= date;
     }
   }, {
     key: 'prev2ButtonDisabled',
@@ -186,7 +190,7 @@ var Navigation = function (_Component) {
       if (previousActiveStartDate.getFullYear() < 1000) {
         return true;
       }
-      return minDate && minDate >= previousActiveStartDate;
+      return minDate && minDate >= date;
     }
   }, {
     key: 'nextButtonDisabled',

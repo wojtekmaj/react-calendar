@@ -36,9 +36,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Grid = require('../Grid');
+var _Flex = require('../Flex');
 
-var _Grid2 = _interopRequireDefault(_Grid);
+var _Flex2 = _interopRequireDefault(_Flex);
 
 var _Month = require('./Month');
 
@@ -97,10 +97,11 @@ var Months = function (_Component) {
       }
 
       return _react2.default.createElement(
-        _Grid2.default,
+        _Flex2.default,
         {
           className: 'react-calendar__year-view__months',
-          grow: true
+          count: 3,
+          wrap: true
         },
         months
       );

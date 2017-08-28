@@ -35,7 +35,8 @@ var Year = function Year(_ref) {
       disabled: minDate && (0, _dates.getBeginOfYear)(minDate) > date || maxDate && (0, _dates.getEndOfYear)(maxDate) < date,
       onClick: onChange && function () {
         return onChange(date);
-      }
+      },
+      style: { flexGrow: 1 }
     },
     _react2.default.createElement(
       'time',

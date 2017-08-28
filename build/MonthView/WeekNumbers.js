@@ -59,7 +59,10 @@ var WeekNumbers = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'react-calendar__month-view__weekNumbers' },
+        {
+          className: 'react-calendar__month-view__weekNumbers',
+          style: { flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }
+        },
         weekNumbers.map(function (weekNumber) {
           return _react2.default.createElement(
             'div',
