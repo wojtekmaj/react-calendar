@@ -8,6 +8,8 @@ import {
   getBeginNext2,
   getBeginPrevious,
   getBeginPrevious2,
+  getEndPrevious,
+  getEndPrevious2,
   getYear,
 } from '../shared/dates';
 import { formatMonthYear } from '../shared/dateFormatter';
@@ -31,7 +33,8 @@ export default class Navigation extends Component {
     if (previousActiveStartDate.getFullYear() < 1000) {
       return true;
     }
-    return minDate && minDate >= date;
+    const previousActiveEndDate = getEndPrevious(view, date);
+    return minDate && minDate >= previousActiveEndDate;
   }
 
   get prev2ButtonDisabled() {
@@ -40,7 +43,8 @@ export default class Navigation extends Component {
     if (previousActiveStartDate.getFullYear() < 1000) {
       return true;
     }
-    return minDate && minDate >= date;
+    const previousActiveEndDate = getEndPrevious2(view, date);
+    return minDate && minDate >= previousActiveEndDate;
   }
 
   get nextButtonDisabled() {
