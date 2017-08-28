@@ -111,6 +111,7 @@ var Navigation = function (_Component) {
         _react2.default.createElement(
           'button',
           {
+            disabled: this.nextButtonDisabled,
             onClick: this.onClickNext
           },
           this.props.nextLabel
@@ -118,6 +119,7 @@ var Navigation = function (_Component) {
         view !== 'century' && _react2.default.createElement(
           'button',
           {
+            disabled: this.next2ButtonDisabled,
             onClick: this.onClickNext2
           },
           this.props.next2Label
@@ -147,27 +149,57 @@ var Navigation = function (_Component) {
     get: function get() {
       var _props4 = this.props,
           date = _props4.activeStartDate,
+          minDate = _props4.minDate,
           view = _props4.view;
 
-      var nextActiveStartDate = (0, _dates.getBeginPrevious)(view, date);
-      return nextActiveStartDate.getFullYear() < 1000;
+      var previousActiveStartDate = (0, _dates.getBeginPrevious)(view, date);
+      if (previousActiveStartDate.getFullYear() < 1000) {
+        return true;
+      }
+      return minDate && minDate >= previousActiveStartDate;
     }
   }, {
     key: 'prev2ButtonDisabled',
     get: function get() {
       var _props5 = this.props,
           date = _props5.activeStartDate,
+          minDate = _props5.minDate,
           view = _props5.view;
 
-      var nextActiveStartDate = (0, _dates.getBeginPrevious2)(view, date);
-      return nextActiveStartDate.getFullYear() < 1000;
+      var previousActiveStartDate = (0, _dates.getBeginPrevious2)(view, date);
+      if (previousActiveStartDate.getFullYear() < 1000) {
+        return true;
+      }
+      return minDate && minDate >= previousActiveStartDate;
+    }
+  }, {
+    key: 'nextButtonDisabled',
+    get: function get() {
+      var _props6 = this.props,
+          date = _props6.activeStartDate,
+          maxDate = _props6.maxDate,
+          view = _props6.view;
+
+      var nextActiveStartDate = (0, _dates.getBeginNext)(view, date);
+      return maxDate && maxDate <= nextActiveStartDate;
+    }
+  }, {
+    key: 'next2ButtonDisabled',
+    get: function get() {
+      var _props7 = this.props,
+          date = _props7.activeStartDate,
+          maxDate = _props7.maxDate,
+          view = _props7.view;
+
+      var nextActiveStartDate = (0, _dates.getBeginNext2)(view, date);
+      return maxDate && maxDate <= nextActiveStartDate;
     }
   }, {
     key: 'label',
     get: function get() {
-      var _props6 = this.props,
-          date = _props6.activeStartDate,
-          view = _props6.view;
+      var _props8 = this.props,
+          date = _props8.activeStartDate,
+          view = _props8.view;
 
 
       switch (view) {
@@ -203,6 +235,8 @@ var viewPropType = _propTypes2.default.oneOf(allViews);
 Navigation.propTypes = {
   activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
   drillUp: _propTypes2.default.func.isRequired,
+  maxDate: _propTypes2.default.instanceOf(Date),
+  minDate: _propTypes2.default.instanceOf(Date),
   next2Label: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   nextLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   prev2Label: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
