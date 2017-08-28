@@ -3,6 +3,7 @@
   background: white;
   border: 1px solid rgb(160, 160, 150);
   font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
 
   button {
     border: 0;
@@ -64,7 +65,12 @@
 
     &__weekNumbers {
       grid-area: weekNumbers;
-      color: rgb(150, 150, 150);
+      font-weight: bold;
+
+      .react-calendar__tile {
+        font-size: 0.8em;
+        padding: calc(.75em / 0.8) calc(.5em / 0.8);
+      }
     }
 
     &__days {
@@ -73,6 +79,10 @@
       &__day {
         &--weekend {
           color: red;
+        }
+
+        &--neighboringMonth {
+          color: rgb(150, 150, 150);
         }
       }
     }

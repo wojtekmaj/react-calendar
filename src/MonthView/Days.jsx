@@ -5,6 +5,7 @@ import Grid from '../Grid';
 import Day from './Day';
 
 import {
+  getDayOfWeek,
   getDaysInMonth,
   getMonthIndex,
   getYear,
@@ -13,11 +14,22 @@ import { isCalendarType, isMaxDate, isMinDate, isValue } from '../shared/propTyp
 import { getTileActivityFlags } from '../shared/utils';
 
 export default class Days extends Component {
-  start = 1
+  getDayOfWeek(date) {
+    const { calendarType } = this.props;
+    return getDayOfWeek(date, calendarType);
+  }
+
+  get start() {
+    const { activeStartDate } = this.props;
+    return -this.getDayOfWeek(activeStartDate) + 1;
+  }
 
   get end() {
     const { activeStartDate } = this.props;
-    return getDaysInMonth(activeStartDate);
+    const { year, monthIndex } = this;
+    const daysInMonth = getDaysInMonth(activeStartDate);
+    const activeEndDate = new Date(year, monthIndex, daysInMonth);
+    return getDaysInMonth(activeStartDate) + (7 - this.getDayOfWeek(activeEndDate) - 1);
   }
 
   get year() {
@@ -33,7 +45,6 @@ export default class Days extends Component {
   render() {
     const { start, end, year, monthIndex } = this;
     const {
-      calendarType,
       maxDate,
       minDate,
       onChange,
@@ -48,7 +59,7 @@ export default class Days extends Component {
       days.push(
         <Day
           {...getTileActivityFlags(value, valueType, date, 'day')}
-          calendarType={calendarType}
+          currentMonthIndex={monthIndex}
           date={date}
           maxDate={maxDate}
           minDate={minDate}
