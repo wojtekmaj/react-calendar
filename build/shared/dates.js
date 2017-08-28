@@ -3,57 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isWeekend = exports.getDecadeLabel = exports.getCenturyLabel = exports.getDaysInMonth = exports.getEnd = exports.getBeginNext2 = exports.getBeginPrevious2 = exports.getBeginNext = exports.getBeginPrevious = exports.getBegin = exports.getRange = exports.getWeekNumber = exports.getEndOfDay = exports.getBeginOfDay = exports.getEndOfMonth = exports.getBeginOfMonth = exports.getEndOfYear = exports.getBeginOfYear = exports.getEndOfDecade = exports.getBeginOfDecade = exports.getBeginOfDecadeYear = exports.getBeginOfCenturyYear = exports.getDayOfWeek = exports.getDay = exports.getMonthIndex = exports.getYear = exports.formatShortWeekday = exports.formatMonth = exports.formatMonthYear = exports.formatDate = undefined;
+exports.isWeekend = exports.getDecadeLabel = exports.getCenturyLabel = exports.getDaysInMonth = exports.getEndPrevious2 = exports.getEndPrevious = exports.getEnd = exports.getBeginNext2 = exports.getBeginPrevious2 = exports.getBeginNext = exports.getBeginPrevious = exports.getBegin = exports.getRange = exports.getWeekNumber = exports.getDayRange = exports.getEndOfDay = exports.getBeginOfDay = exports.getBeginOfNextMonth = exports.getEndOfPreviousMonth = exports.getBeginOfPreviousMonth = exports.getMonthRange = exports.getEndOfMonth = exports.getBeginOfMonth = exports.getBeginOfNextYear = exports.getEndOfPreviousYear = exports.getBeginOfPreviousYear = exports.getYearRange = exports.getEndOfYear = exports.getBeginOfYear = exports.getBeginOfNextDecade = exports.getEndOfPreviousDecade = exports.getBeginOfPreviousDecade = exports.getDecadeRange = exports.getEndOfDecade = exports.getBeginOfDecade = exports.getBeginOfDecadeYear = exports.getBeginOfNextCentury = exports.getEndOfPreviousCentury = exports.getBeginOfPreviousCentury = exports.getCenturyRange = exports.getEndOfCentury = exports.getBeginOfCentury = exports.getBeginOfCenturyYear = exports.getDayOfWeek = exports.getDay = exports.getMonthIndex = exports.getYear = undefined;
 
 var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
-var _stringify = require('babel-runtime/core-js/json/stringify');
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
-var _locales = require('./locales');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var formatterCache = {};
-
-/**
- * Gets Intl-based date formatter from formatter cache. If it doesn't exist in cache
- * just yet, it will be created on the fly.
- */
-var getFormatter = function getFormatter(options) {
-  var locales = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (0, _locales.getLocale)();
-
-  var stringifiedOptions = (0, _stringify2.default)(options);
-
-  if (!formatterCache[locales]) {
-    formatterCache[locales] = {};
-  }
-
-  if (!formatterCache[locales][stringifiedOptions]) {
-    formatterCache[locales][stringifiedOptions] = new Intl.DateTimeFormat(locales, options).format;
-  }
-
-  return formatterCache[locales][stringifiedOptions];
-};
-
-var formatDate = exports.formatDate = function formatDate(date) {
-  return getFormatter({ day: 'numeric', month: 'numeric', year: 'numeric' })(date);
-};
-
-var formatMonthYear = exports.formatMonthYear = function formatMonthYear(date) {
-  return getFormatter({ month: 'long', year: 'numeric' })(date);
-};
-
-var formatMonth = exports.formatMonth = function formatMonth(date) {
-  return getFormatter({ month: 'long' })(date);
-};
-
-var formatShortWeekday = exports.formatShortWeekday = function formatShortWeekday(date) {
-  return getFormatter({ weekday: 'short' })(date);
-};
 
 /* Simple getters - getting a property of a given point in time */
 
@@ -102,30 +58,35 @@ var getDayOfWeek = exports.getDayOfWeek = function getDayOfWeek(date) {
 /* Complex getters - getting a property somehow related to a given point in time */
 
 var getBeginOfCenturyYear = exports.getBeginOfCenturyYear = function getBeginOfCenturyYear(date) {
-  var year = getYear(date);
+  var year = getYear(date) - 1;
   return year + -year % 100 + 1;
 };
 
-var getBeginOfCentury = function getBeginOfCentury(date) {
+var getBeginOfCentury = exports.getBeginOfCentury = function getBeginOfCentury(date) {
   var beginOfCenturyYear = getBeginOfCenturyYear(date);
   return new Date(beginOfCenturyYear, 0, 1);
 };
 
-var getEndOfCentury = function getEndOfCentury(date) {
+var getEndOfCentury = exports.getEndOfCentury = function getEndOfCentury(date) {
   var beginOfCenturyYear = getBeginOfCenturyYear(date);
-  return new Date(beginOfCenturyYear + 100, 0, 0, 0, 0, 0, -1);
+  return new Date(beginOfCenturyYear + 100, 0, 1, 0, 0, 0, -1);
 };
 
-var getCenturyRange = function getCenturyRange(date) {
+var getCenturyRange = exports.getCenturyRange = function getCenturyRange(date) {
   return [getBeginOfCentury(date), getEndOfCentury(date)];
 };
 
-var getBeginOfPreviousCentury = function getBeginOfPreviousCentury(date) {
+var getBeginOfPreviousCentury = exports.getBeginOfPreviousCentury = function getBeginOfPreviousCentury(date) {
   var previousCenturyYear = getYear(date) - 100;
   return getBeginOfCentury(previousCenturyYear);
 };
 
-var getBeginOfNextCentury = function getBeginOfNextCentury(date) {
+var getEndOfPreviousCentury = exports.getEndOfPreviousCentury = function getEndOfPreviousCentury(date) {
+  var previousCenturyYear = getYear(date) - 100;
+  return getEndOfCentury(previousCenturyYear);
+};
+
+var getBeginOfNextCentury = exports.getBeginOfNextCentury = function getBeginOfNextCentury(date) {
   var nextCenturyYear = getYear(date) + 100;
   return getBeginOfCentury(nextCenturyYear);
 };
@@ -145,18 +106,25 @@ var getEndOfDecade = exports.getEndOfDecade = function getEndOfDecade(date) {
   return new Date(beginOfDecadeYear + 10, 0, 1, 0, 0, 0, -1);
 };
 
-var getDecadeRange = function getDecadeRange(date) {
+var getDecadeRange = exports.getDecadeRange = function getDecadeRange(date) {
   return [getBeginOfDecade(date), getEndOfDecade(date)];
 };
 
-var getBeginOfPreviousDecade = function getBeginOfPreviousDecade(date) {
+var getBeginOfPreviousDecade = exports.getBeginOfPreviousDecade = function getBeginOfPreviousDecade(date) {
   var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
 
   var previousDecadeYear = getBeginOfDecadeYear(date) - offset;
   return getBeginOfDecade(previousDecadeYear);
 };
 
-var getBeginOfNextDecade = function getBeginOfNextDecade(date) {
+var getEndOfPreviousDecade = exports.getEndOfPreviousDecade = function getEndOfPreviousDecade(date) {
+  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+
+  var previousDecadeYear = getBeginOfDecadeYear(date) - offset;
+  return getEndOfDecade(previousDecadeYear);
+};
+
+var getBeginOfNextDecade = exports.getBeginOfNextDecade = function getBeginOfNextDecade(date) {
   var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
 
   var nextDecadeYear = getBeginOfDecadeYear(date) + offset;
@@ -188,18 +156,25 @@ var getEndOfYear = exports.getEndOfYear = function getEndOfYear(date) {
  *
  * @param {Date} date Date.
  */
-var getYearRange = function getYearRange(date) {
+var getYearRange = exports.getYearRange = function getYearRange(date) {
   return [getBeginOfYear(date), getEndOfYear(date)];
 };
 
-var getBeginOfPreviousYear = function getBeginOfPreviousYear(date) {
+var getBeginOfPreviousYear = exports.getBeginOfPreviousYear = function getBeginOfPreviousYear(date) {
   var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
   var previousYear = getYear(date) - offset;
   return getBeginOfYear(previousYear);
 };
 
-var getBeginOfNextYear = function getBeginOfNextYear(date) {
+var getEndOfPreviousYear = exports.getEndOfPreviousYear = function getEndOfPreviousYear(date) {
+  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+  var previousYear = getYear(date) - offset;
+  return getEndOfYear(previousYear);
+};
+
+var getBeginOfNextYear = exports.getBeginOfNextYear = function getBeginOfNextYear(date) {
   var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
   var nextYear = getYear(date) + offset;
@@ -233,11 +208,11 @@ var getEndOfMonth = exports.getEndOfMonth = function getEndOfMonth(date) {
  *
  * @param {Date} date Date.
  */
-var getMonthRange = function getMonthRange(date) {
+var getMonthRange = exports.getMonthRange = function getMonthRange(date) {
   return [getBeginOfMonth(date), getEndOfMonth(date)];
 };
 
-var getBeginOfPreviousMonth = function getBeginOfPreviousMonth(date) {
+var getBeginOfPreviousMonth = exports.getBeginOfPreviousMonth = function getBeginOfPreviousMonth(date) {
   var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
   var year = getYear(date);
@@ -245,7 +220,15 @@ var getBeginOfPreviousMonth = function getBeginOfPreviousMonth(date) {
   return getBeginOfMonth(new Date(year, previousMonthIndex, 1));
 };
 
-var getBeginOfNextMonth = function getBeginOfNextMonth(date) {
+var getEndOfPreviousMonth = exports.getEndOfPreviousMonth = function getEndOfPreviousMonth(date) {
+  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+  var year = getYear(date);
+  var previousMonthIndex = getMonthIndex(date) - offset;
+  return getEndOfMonth(new Date(year, previousMonthIndex, 1));
+};
+
+var getBeginOfNextMonth = exports.getBeginOfNextMonth = function getBeginOfNextMonth(date) {
   var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
   var year = getYear(date);
@@ -272,7 +255,7 @@ var getEndOfDay = exports.getEndOfDay = function getEndOfDay(date) {
  *
  * @param {Date} date Date.
  */
-var getDayRange = function getDayRange(date) {
+var getDayRange = exports.getDayRange = function getDayRange(date) {
   return [getBeginOfDay(date), getEndOfDay(date)];
 };
 
@@ -405,6 +388,34 @@ var getEnd = exports.getEnd = function getEnd(rangeType, date) {
       return getEndOfMonth(date);
     case 'day':
       return getEndOfDay(date);
+    default:
+      throw new Error('Invalid rangeType: ' + rangeType);
+  }
+};
+
+var getEndPrevious = exports.getEndPrevious = function getEndPrevious(rangeType, date) {
+  switch (rangeType) {
+    case 'century':
+      return getEndOfPreviousCentury(date);
+    case 'decade':
+      return getEndOfPreviousDecade(date);
+    case 'year':
+      return getEndOfPreviousYear(date);
+    case 'month':
+      return getEndOfPreviousMonth(date);
+    default:
+      throw new Error('Invalid rangeType: ' + rangeType);
+  }
+};
+
+var getEndPrevious2 = exports.getEndPrevious2 = function getEndPrevious2(rangeType, date) {
+  switch (rangeType) {
+    case 'decade':
+      return getEndOfPreviousDecade(date, 100);
+    case 'year':
+      return getEndOfPreviousYear(date, 10);
+    case 'month':
+      return getEndOfPreviousMonth(date, 12);
     default:
       throw new Error('Invalid rangeType: ' + rangeType);
   }

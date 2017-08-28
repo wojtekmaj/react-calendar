@@ -38,6 +38,8 @@ var _Flex2 = _interopRequireDefault(_Flex);
 
 var _dates = require('../shared/dates');
 
+var _dateFormatter = require('../shared/dateFormatter');
+
 var _propTypes3 = require('../shared/propTypes');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -71,7 +73,7 @@ var Weekdays = function (_Component) {
             key: weekday,
             style: { flexGrow: 1 }
           },
-          (0, _dates.formatShortWeekday)(weekdayDate)
+          (0, _dateFormatter.formatShortWeekday)(weekdayDate)
         ));
       }
 

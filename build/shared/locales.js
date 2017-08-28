@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setLocale = exports.getLocale = undefined;
+exports.setLocale = exports.getLocale = exports.getDefaultLocale = exports.getDefaultLocales = undefined;
 
 var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
 
@@ -17,7 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var userLocale = null;
 
-var getDefaultLocales = (0, _lodash2.default)(function () {
+var getDefaultLocales = exports.getDefaultLocales = (0, _lodash2.default)(function () {
   var languageList = [];
 
   if (window.navigator.languages) {
@@ -31,7 +31,7 @@ var getDefaultLocales = (0, _lodash2.default)(function () {
   return languageList;
 });
 
-var getDefaultLocale = (0, _lodash2.default)(function () {
+var getDefaultLocale = exports.getDefaultLocale = (0, _lodash2.default)(function () {
   return getDefaultLocales()[0];
 });
 

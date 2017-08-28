@@ -34,6 +34,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _dates = require('../shared/dates');
 
+var _dateFormatter = require('../shared/dateFormatter');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var allViews = ['century', 'decade', 'year', 'month'];
@@ -176,7 +178,8 @@ var Navigation = function (_Component) {
       if (previousActiveStartDate.getFullYear() < 1000) {
         return true;
       }
-      return minDate && minDate >= date;
+      var previousActiveEndDate = (0, _dates.getEndPrevious)(view, date);
+      return minDate && minDate >= previousActiveEndDate;
     }
   }, {
     key: 'prev2ButtonDisabled',
@@ -190,7 +193,8 @@ var Navigation = function (_Component) {
       if (previousActiveStartDate.getFullYear() < 1000) {
         return true;
       }
-      return minDate && minDate >= date;
+      var previousActiveEndDate = (0, _dates.getEndPrevious2)(view, date);
+      return minDate && minDate >= previousActiveEndDate;
     }
   }, {
     key: 'nextButtonDisabled',
@@ -230,7 +234,7 @@ var Navigation = function (_Component) {
         case 'year':
           return (0, _dates.getYear)(date);
         case 'month':
-          return (0, _dates.formatMonthYear)(date);
+          return (0, _dateFormatter.formatMonthYear)(date);
         default:
           throw new Error('Invalid view: ' + view + '.');
       }

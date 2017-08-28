@@ -14,6 +14,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _dates = require('../shared/dates');
 
+var _dateFormatter = require('../shared/dateFormatter');
+
 var _propTypes3 = require('../shared/propTypes');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -40,7 +42,7 @@ var Month = function Month(_ref) {
     _react2.default.createElement(
       'time',
       { dateTime: date.toISOString() },
-      (0, _dates.formatMonth)(date)
+      (0, _dateFormatter.formatMonth)(date)
     )
   );
 };
