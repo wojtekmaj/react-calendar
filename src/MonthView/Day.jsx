@@ -7,7 +7,7 @@ import {
   getDay,
   isWeekend,
 } from '../shared/dates';
-import { isCalendarType, isMaxDate, isMinDate } from '../shared/propTypes';
+import { isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
 
@@ -35,7 +35,6 @@ const Day = ({ active, currentMonthIndex, date, maxDate, minDate, onChange }) =>
 
 Day.propTypes = {
   active: PropTypes.bool.isRequired,
-  calendarType: isCalendarType,
   currentMonthIndex: PropTypes.number.isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
   maxDate: isMaxDate,
