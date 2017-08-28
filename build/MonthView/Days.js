@@ -42,20 +42,19 @@ var Days = function (_Component) {
   _inherits(Days, _Component);
 
   function Days() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, Days);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Days.__proto__ || Object.getPrototypeOf(Days)).call.apply(_ref, [this].concat(args))), _this), _this.start = 1, _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (Days.__proto__ || Object.getPrototypeOf(Days)).apply(this, arguments));
   }
 
   _createClass(Days, [{
+    key: 'getDayOfWeek',
+    value: function getDayOfWeek(date) {
+      var calendarType = this.props.calendarType;
+
+      return (0, _dates.getDayOfWeek)(date, calendarType);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var start = this.start,
@@ -63,7 +62,6 @@ var Days = function (_Component) {
           year = this.year,
           monthIndex = this.monthIndex;
       var _props = this.props,
-          calendarType = _props.calendarType,
           maxDate = _props.maxDate,
           minDate = _props.minDate,
           onChange = _props.onChange,
@@ -76,7 +74,7 @@ var Days = function (_Component) {
         var date = new Date(year, monthIndex, day);
 
         days.push(_react2.default.createElement(_Day2.default, _extends({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'day'), {
-          calendarType: calendarType,
+          currentMonthIndex: monthIndex,
           date: date,
           maxDate: maxDate,
           minDate: minDate,
@@ -96,11 +94,22 @@ var Days = function (_Component) {
       );
     }
   }, {
-    key: 'end',
+    key: 'start',
     get: function get() {
       var activeStartDate = this.props.activeStartDate;
 
-      return (0, _dates.getDaysInMonth)(activeStartDate);
+      return -this.getDayOfWeek(activeStartDate) + 1;
+    }
+  }, {
+    key: 'end',
+    get: function get() {
+      var activeStartDate = this.props.activeStartDate;
+      var year = this.year,
+          monthIndex = this.monthIndex;
+
+      var daysInMonth = (0, _dates.getDaysInMonth)(activeStartDate);
+      var activeEndDate = new Date(year, monthIndex, daysInMonth);
+      return (0, _dates.getDaysInMonth)(activeStartDate) + (7 - this.getDayOfWeek(activeEndDate) - 1);
     }
   }, {
     key: 'year',
