@@ -33,10 +33,11 @@ export default class WeekNumbers extends Component {
 
   render() {
     const { startWeekNumber } = this;
-    const weekNumbers = Array(this.numberOfWeeks)
-      .fill(null)
-      .map((item, index) => (index + startWeekNumber))
-      .map(item => (item > 52 ? item % 52 : item));
+    const weekNumbers = [];
+    for (let index = 0; index < this.numberOfWeeks; index += 1) {
+      const currentNumber = index + startWeekNumber;
+      weekNumbers.push(currentNumber > 52 ? currentNumber % 52 : currentNumber);
+    }
 
     return (
       <div className="react-calendar__month-view__weekNumbers">
