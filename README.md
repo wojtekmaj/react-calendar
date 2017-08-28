@@ -23,17 +23,18 @@ We strongly recommend to use Node >= 6 and npm >= 5 for faster installation spee
 
 ### Compatibility
 
-React-Calendar uses modern web technologies like Internationalization API or CSS Grid layout. It's why it's so fast and easy to style! This, however, comes at a cost of supporting only modern browsers.
+React-Calendar uses modern web technologies. That's why it's so fast, lightweight and easy to style. This, however, comes at a cost of supporting only modern browsers.
 
 |Browser|Minimum supported version|
 |----|----|
-|Google Chrome|57|
-|Mozilla Firefox|52|
-|Microsoft Edge|16.16237|
-|Apple Safari|10.1|
-|Apple Safari (iOS)|10.3|
-|Opera|44|
-|Internet Explorer|(no support)
+|Google Chrome|24|
+|Mozilla Firefox|29|
+|Microsoft Edge|12|
+|Apple Safari|10|
+|Apple Safari (iOS)|10.2|
+|Opera|15|
+|Internet Explorer|11|
+|Samsung Internet|4|
 
 
 ### Installation
