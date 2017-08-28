@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import Flex from '../Flex';
 
 import {
-  formatShortWeekday,
   getBeginOfMonth,
   getDayOfWeek,
   getMonthIndex,
   getYear,
 } from '../shared/dates';
+import { formatShortWeekday } from '../shared/dateFormatter';
 import { isCalendarType } from '../shared/propTypes';
 
 export default class Weekdays extends Component {

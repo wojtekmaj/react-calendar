@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  formatMonth,
   getBeginOfMonth,
   getEndOfMonth,
 } from '../shared/dates';
+import { formatMonth } from '../shared/dateFormatter';
 import { isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__year-view__months__month';

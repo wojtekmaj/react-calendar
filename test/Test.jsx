@@ -9,7 +9,7 @@ import LocaleOptions from './LocaleOptions';
 import ValueOptions from './ValueOptions';
 import ViewOptions from './ViewOptions';
 
-import { formatDate } from '../src/shared/dates';
+import { formatDate } from '../src/shared/dateFormatter';
 
 import './Test.less';
 

@@ -1,41 +1,3 @@
-import { getLocale } from './locales';
-
-const formatterCache = {};
-
-/**
- * Gets Intl-based date formatter from formatter cache. If it doesn't exist in cache
- * just yet, it will be created on the fly.
- */
-const getFormatter = (options, locales = getLocale()) => {
-  const stringifiedOptions = JSON.stringify(options);
-
-  if (!formatterCache[locales]) {
-    formatterCache[locales] = {};
-  }
-
-  if (!formatterCache[locales][stringifiedOptions]) {
-    formatterCache[locales][stringifiedOptions] = new Intl.DateTimeFormat(locales, options).format;
-  }
-
-  return formatterCache[locales][stringifiedOptions];
-};
-
-export const formatDate = date => getFormatter(
-  { day: 'numeric', month: 'numeric', year: 'numeric' },
-)(date);
-
-export const formatMonthYear = date => getFormatter(
-  { month: 'long', year: 'numeric' },
-)(date);
-
-export const formatMonth = date => getFormatter(
-  { month: 'long' },
-)(date);
-
-export const formatShortWeekday = date => getFormatter(
-  { weekday: 'short' },
-)(date);
-
 /* Simple getters - getting a property of a given point in time */
 
 export const getYear = (date) => {
@@ -77,31 +39,36 @@ export const getDayOfWeek = (date, calendarType = 'ISO 8601') => {
 /* Complex getters - getting a property somehow related to a given point in time */
 
 export const getBeginOfCenturyYear = (date) => {
-  const year = getYear(date);
+  const year = getYear(date) - 1;
   return year + (-year % 100) + 1;
 };
 
-const getBeginOfCentury = (date) => {
+export const getBeginOfCentury = (date) => {
   const beginOfCenturyYear = getBeginOfCenturyYear(date);
   return new Date(beginOfCenturyYear, 0, 1);
 };
 
-const getEndOfCentury = (date) => {
+export const getEndOfCentury = (date) => {
   const beginOfCenturyYear = getBeginOfCenturyYear(date);
-  return new Date(beginOfCenturyYear + 100, 0, 0, 0, 0, 0, -1);
+  return new Date(beginOfCenturyYear + 100, 0, 1, 0, 0, 0, -1);
 };
 
-const getCenturyRange = date => [
+export const getCenturyRange = date => [
   getBeginOfCentury(date),
   getEndOfCentury(date),
 ];
 
-const getBeginOfPreviousCentury = (date) => {
+export const getBeginOfPreviousCentury = (date) => {
   const previousCenturyYear = getYear(date) - 100;
   return getBeginOfCentury(previousCenturyYear);
 };
 
-const getBeginOfNextCentury = (date) => {
+export const getEndOfPreviousCentury = (date) => {
+  const previousCenturyYear = getYear(date) - 100;
+  return getEndOfCentury(previousCenturyYear);
+};
+
+export const getBeginOfNextCentury = (date) => {
   const nextCenturyYear = getYear(date) + 100;
   return getBeginOfCentury(nextCenturyYear);
 };
@@ -121,17 +88,22 @@ export const getEndOfDecade = (date) => {
   return new Date(beginOfDecadeYear + 10, 0, 1, 0, 0, 0, -1);
 };
 
-const getDecadeRange = date => [
+export const getDecadeRange = date => [
   getBeginOfDecade(date),
   getEndOfDecade(date),
 ];
 
-const getBeginOfPreviousDecade = (date, offset = 10) => {
+export const getBeginOfPreviousDecade = (date, offset = 10) => {
   const previousDecadeYear = getBeginOfDecadeYear(date) - offset;
   return getBeginOfDecade(previousDecadeYear);
 };
 
-const getBeginOfNextDecade = (date, offset = 10) => {
+export const getEndOfPreviousDecade = (date, offset = 10) => {
+  const previousDecadeYear = getBeginOfDecadeYear(date) - offset;
+  return getEndOfDecade(previousDecadeYear);
+};
+
+export const getBeginOfNextDecade = (date, offset = 10) => {
   const nextDecadeYear = getBeginOfDecadeYear(date) + offset;
   return getBeginOfDecade(nextDecadeYear);
 };
@@ -161,17 +133,22 @@ export const getEndOfYear = (date) => {
  *
  * @param {Date} date Date.
  */
-const getYearRange = date => [
+export const getYearRange = date => [
   getBeginOfYear(date),
   getEndOfYear(date),
 ];
 
-const getBeginOfPreviousYear = (date, offset = 1) => {
+export const getBeginOfPreviousYear = (date, offset = 1) => {
   const previousYear = getYear(date) - offset;
   return getBeginOfYear(previousYear);
 };
 
-const getBeginOfNextYear = (date, offset = 1) => {
+export const getEndOfPreviousYear = (date, offset = 1) => {
+  const previousYear = getYear(date) - offset;
+  return getEndOfYear(previousYear);
+};
+
+export const getBeginOfNextYear = (date, offset = 1) => {
   const nextYear = getYear(date) + offset;
   return getBeginOfYear(nextYear);
 };
@@ -203,18 +180,24 @@ export const getEndOfMonth = (date) => {
  *
  * @param {Date} date Date.
  */
-const getMonthRange = date => [
+export const getMonthRange = date => [
   getBeginOfMonth(date),
   getEndOfMonth(date),
 ];
 
-const getBeginOfPreviousMonth = (date, offset = 1) => {
+export const getBeginOfPreviousMonth = (date, offset = 1) => {
   const year = getYear(date);
   const previousMonthIndex = getMonthIndex(date) - offset;
   return getBeginOfMonth(new Date(year, previousMonthIndex, 1));
 };
 
-const getBeginOfNextMonth = (date, offset = 1) => {
+export const getEndOfPreviousMonth = (date, offset = 1) => {
+  const year = getYear(date);
+  const previousMonthIndex = getMonthIndex(date) - offset;
+  return getEndOfMonth(new Date(year, previousMonthIndex, 1));
+};
+
+export const getBeginOfNextMonth = (date, offset = 1) => {
   const year = getYear(date);
   const nextMonthIndex = getMonthIndex(date) + offset;
   return getBeginOfMonth(new Date(year, nextMonthIndex, 1));
@@ -239,7 +222,7 @@ export const getEndOfDay = (date) => {
  *
  * @param {Date} date Date.
  */
-const getDayRange = date => [
+export const getDayRange = date => [
   getBeginOfDay(date),
   getEndOfDay(date),
 ];
@@ -371,6 +354,34 @@ export const getEnd = (rangeType, date) => {
       return getEndOfMonth(date);
     case 'day':
       return getEndOfDay(date);
+    default:
+      throw new Error(`Invalid rangeType: ${rangeType}`);
+  }
+};
+
+export const getEndPrevious = (rangeType, date) => {
+  switch (rangeType) {
+    case 'century':
+      return getEndOfPreviousCentury(date);
+    case 'decade':
+      return getEndOfPreviousDecade(date);
+    case 'year':
+      return getEndOfPreviousYear(date);
+    case 'month':
+      return getEndOfPreviousMonth(date);
+    default:
+      throw new Error(`Invalid rangeType: ${rangeType}`);
+  }
+};
+
+export const getEndPrevious2 = (rangeType, date) => {
+  switch (rangeType) {
+    case 'decade':
+      return getEndOfPreviousDecade(date, 100);
+    case 'year':
+      return getEndOfPreviousYear(date, 10);
+    case 'month':
+      return getEndOfPreviousMonth(date, 12);
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }

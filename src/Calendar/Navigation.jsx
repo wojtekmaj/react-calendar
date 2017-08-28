@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  formatMonthYear,
   getCenturyLabel,
   getDecadeLabel,
   getBeginNext,
@@ -11,6 +10,7 @@ import {
   getBeginPrevious2,
   getYear,
 } from '../shared/dates';
+import { formatMonthYear } from '../shared/dateFormatter';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 

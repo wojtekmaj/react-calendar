@@ -2,7 +2,7 @@ import once from 'lodash.once';
 
 let userLocale = null;
 
-const getDefaultLocales = once(() => {
+export const getDefaultLocales = once(() => {
   const languageList = [];
 
   if (window.navigator.languages) {
@@ -16,7 +16,7 @@ const getDefaultLocales = once(() => {
   return languageList;
 });
 
-const getDefaultLocale = once(() => getDefaultLocales()[0]);
+export const getDefaultLocale = once(() => getDefaultLocales()[0]);
 
 export const getLocale = () => userLocale || getDefaultLocale();
 
