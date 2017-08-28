@@ -8,7 +8,9 @@
     "build": "babel src -d build",
     "eslint": "eslint ./src",
     "prepublishOnly": "npm run build",
-    "test": "npm run eslint"
+    "test": "npm run test-eslint && npm run test-jest",
+    "test-eslint": "npm run eslint",
+    "test-jest": "jest"
   },
   "keywords": [
     "calendar",
@@ -42,7 +44,8 @@
     "eslint-plugin-class-property": "^1.0.6",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.3.0"
+    "eslint-plugin-react": "^7.3.0",
+    "jest": "^20.0.4"
   },
   "repository": {
     "type": "git",
