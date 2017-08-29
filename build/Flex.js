@@ -18,6 +18,10 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var toPercent = function toPercent(num) {
+  return Math.floor(100 * num) / 100 + '%';
+};
+
 var Flex = function Flex(_ref) {
   var children = _ref.children,
       className = _ref.className,
@@ -39,9 +43,9 @@ var Flex = function Flex(_ref) {
         {
           style: (0, _assign2.default)({
             display: 'flex',
-            flexBasis: 'calc(100% / ' + count + ')'
+            flexBasis: toPercent(100 / count)
           }, offset && index === 0 && {
-            marginLeft: 'calc(100% * ' + offset + ' / ' + count + ')'
+            marginLeft: toPercent(100 * offset / count)
           })
         },
         child
