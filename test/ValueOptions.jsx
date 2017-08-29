@@ -15,14 +15,12 @@ export default class ValueOptions extends Component {
     return [].concat(value)[1];
   }
 
+  setValue = value => this.props.setState({ value });
+
   onChange = (event) => {
     const { value } = event.target;
 
-    if (!value) {
-      return;
-    }
-
-    this.props.setState({ value: new Date(value) });
+    this.setValue(new Date(value));
   }
 
   render() {
@@ -35,8 +33,9 @@ export default class ValueOptions extends Component {
           <input
             onChange={this.onChange}
             type="date"
-            value={getISOLocalDate(this.startDate)}
-          />
+            value={this.startDate ? getISOLocalDate(this.startDate) : ''}
+          />&nbsp;
+          <button onClick={() => this.setValue(null)}>Clear</button>
         </div>
       </fieldset>
     );
