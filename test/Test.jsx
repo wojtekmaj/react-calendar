@@ -13,17 +13,19 @@ import { formatDate } from '../src/shared/dateFormatter';
 
 import './Test.less';
 
+const now = new Date();
+
 export default class Test extends Component {
   state = {
     locale: null,
-    maxDate: new Date(2017, 8, 15, 12),
+    maxDate: new Date(now.getUTCFullYear(), now.getUTCMonth() + 1, 15, 12),
     maxDetail: 'month',
-    minDate: new Date(1995, 7, 15, 12),
+    minDate: new Date(1995, now.getUTCMonth() + 1, 15, 12),
     minDetail: 'century',
     returnValue: 'start',
     showNeighboringMonth: false,
     showWeekNumbers: false,
-    value: new Date(),
+    value: now,
   }
 
   onChange = value => this.setState({ value })
@@ -45,7 +47,7 @@ export default class Test extends Component {
     }
 
     return (
-      <p>Chosen date: {renderDate(value)}</p>
+      <p>Chosen date: {value ? renderDate(value) : '(none)'}</p>
     );
   }
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const toPercent = num => `${Math.floor(100 * num) / 100}%`;
+
 const Flex = ({ children, className, count, offset, wrap }) => (
   <div
     className={className}
@@ -14,10 +16,10 @@ const Flex = ({ children, className, count, offset, wrap }) => (
         style={Object.assign(
           {
             display: 'flex',
-            flexBasis: `calc(100% / ${count})`,
+            flexBasis: toPercent(100 / count),
           },
           offset && (index === 0) && {
-            marginLeft: `calc(100% * ${offset} / ${count})`,
+            marginLeft: toPercent((100 * offset) / count),
           },
         )}
       >
