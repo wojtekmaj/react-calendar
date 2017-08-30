@@ -27,6 +27,7 @@ const Day = ({ active, currentMonthIndex, date, maxDate, minDate, onChange }) =>
     key={date}
     onClick={onChange && (() => onChange(date))}
     style={{ flexGrow: 1 }}
+    type="button"
   >
     <time dateTime={date.toISOString()}>
       {getDay(date)}

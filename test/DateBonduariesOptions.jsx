@@ -30,7 +30,12 @@ export default class DateBonduariesOptions extends Component {
             type="date"
             value={minDate ? getISOLocalDate(minDate) : ''}
           />&nbsp;
-          <button onClick={() => setState({ minDate: null })}>Clear</button>
+          <button
+            onClick={() => setState({ minDate: null })}
+            type="button"
+          >
+            Clear
+          </button>
         </div>
         <div>
           <label htmlFor="maxDate">Maximum date</label>
@@ -39,7 +44,12 @@ export default class DateBonduariesOptions extends Component {
             type="date"
             value={maxDate ? getISOLocalDate(maxDate) : ''}
           />&nbsp;
-          <button onClick={() => setState({ maxDate: null })}>Clear</button>
+          <button
+            onClick={() => setState({ maxDate: null })}
+            type="button"
+          >
+            Clear
+          </button>
         </div>
       </fieldset>
     );

@@ -20,6 +20,7 @@ const Decade = ({ active, date, decade, hasActive, maxDate, minDate, onChange })
     }
     onClick={onChange && (() => onChange(date))}
     style={{ flexGrow: 1 }}
+    type="button"
   >
     <time>
       {getDecadeLabel(decade)}

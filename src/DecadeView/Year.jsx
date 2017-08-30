@@ -23,6 +23,7 @@ const Year = ({ active, date, hasActive, maxDate, minDate, onChange, year }) => 
     }
     onClick={onChange && (() => onChange(date))}
     style={{ flexGrow: 1 }}
+    type="button"
   >
     <time dateTime={year}>
       {year}

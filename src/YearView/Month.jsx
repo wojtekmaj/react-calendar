@@ -24,6 +24,7 @@ const Month = ({ active, date, hasActive, maxDate, minDate, onChange }) => (
     }
     onClick={onChange && (() => onChange(date))}
     style={{ flexGrow: 1 }}
+    type="button"
   >
     <time dateTime={date.toISOString()}>
       {formatMonth(date)}

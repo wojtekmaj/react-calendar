@@ -111,6 +111,7 @@ export default class Navigation extends Component {
             className="react-calendar__navigation__arrow"
             disabled={this.prev2ButtonDisabled}
             onClick={this.onClickPrevious2}
+            type="button"
           >
             {this.props.prev2Label}
           </button>
@@ -119,6 +120,7 @@ export default class Navigation extends Component {
           className="react-calendar__navigation__arrow"
           disabled={this.prevButtonDisabled}
           onClick={this.onClickPrevious}
+          type="button"
         >
           {this.props.prevLabel}
         </button>
@@ -127,6 +129,7 @@ export default class Navigation extends Component {
           onClick={drillUp}
           disabled={!this.drillUpAvailable}
           style={{ flexGrow: 1 }}
+          type="button"
         >
           {label}
         </button>
@@ -134,6 +137,7 @@ export default class Navigation extends Component {
           className="react-calendar__navigation__arrow"
           disabled={this.nextButtonDisabled}
           onClick={this.onClickNext}
+          type="button"
         >
           {this.props.nextLabel}
         </button>
@@ -143,6 +147,7 @@ export default class Navigation extends Component {
             className="react-calendar__navigation__arrow"
             disabled={this.next2ButtonDisabled}
             onClick={this.onClickNext2}
+            type="button"
           >
             {this.props.next2Label}
           </button>
