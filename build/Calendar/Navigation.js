@@ -105,7 +105,8 @@ var Navigation = function (_Component) {
           {
             className: 'react-calendar__navigation__arrow',
             disabled: this.prev2ButtonDisabled,
-            onClick: this.onClickPrevious2
+            onClick: this.onClickPrevious2,
+            type: 'button'
           },
           this.props.prev2Label
         ),
@@ -114,7 +115,8 @@ var Navigation = function (_Component) {
           {
             className: 'react-calendar__navigation__arrow',
             disabled: this.prevButtonDisabled,
-            onClick: this.onClickPrevious
+            onClick: this.onClickPrevious,
+            type: 'button'
           },
           this.props.prevLabel
         ),
@@ -124,7 +126,8 @@ var Navigation = function (_Component) {
             className: 'react-calendar__navigation__label',
             onClick: drillUp,
             disabled: !this.drillUpAvailable,
-            style: { flexGrow: 1 }
+            style: { flexGrow: 1 },
+            type: 'button'
           },
           label
         ),
@@ -133,7 +136,8 @@ var Navigation = function (_Component) {
           {
             className: 'react-calendar__navigation__arrow',
             disabled: this.nextButtonDisabled,
-            onClick: this.onClickNext
+            onClick: this.onClickNext,
+            type: 'button'
           },
           this.props.nextLabel
         ),
@@ -142,7 +146,8 @@ var Navigation = function (_Component) {
           {
             className: 'react-calendar__navigation__arrow',
             disabled: this.next2ButtonDisabled,
-            onClick: this.onClickNext2
+            onClick: this.onClickNext2,
+            type: 'button'
           },
           this.props.next2Label
         )

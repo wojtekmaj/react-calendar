@@ -37,7 +37,8 @@ var Month = function Month(_ref) {
       onClick: onChange && function () {
         return onChange(date);
       },
-      style: { flexGrow: 1 }
+      style: { flexGrow: 1 },
+      type: 'button'
     },
     _react2.default.createElement(
       'time',
