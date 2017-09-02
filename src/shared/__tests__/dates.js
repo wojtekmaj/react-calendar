@@ -480,7 +480,7 @@ describe('getDayRange', () => {
 });
 
 describe('getWeekNumber', () => {
-  it('returns proper week number (ISO 8601)', () => {
+  it('returns proper week number for a year that starts on Sunday (ISO 8601)', () => {
     const date = new Date(2017, 0, 1);
 
     const dayOfWeek = getWeekNumber(date, 'ISO 8601');
@@ -488,12 +488,28 @@ describe('getWeekNumber', () => {
     expect(dayOfWeek).toBe(52);
   });
 
-  it('returns proper week number (US)', () => {
+  it('returns proper week number a year that starts on Sunday (US)', () => {
     const date = new Date(2017, 0, 1);
 
     const dayOfWeek = getWeekNumber(date, 'US');
 
     expect(dayOfWeek).toBe(1);
+  });
+
+  it('returns proper week number for a year that does not start on Sunday (ISO 8601)', () => {
+    const date = new Date(2016, 0, 1);
+
+    const dayOfWeek = getWeekNumber(date, 'ISO 8601');
+
+    expect(dayOfWeek).toBe(52);
+  });
+
+  it('returns proper week number a year that does not start on Sunday (US)', () => {
+    const date = new Date(2016, 0, 1);
+
+    const dayOfWeek = getWeekNumber(date, 'US');
+
+    expect(dayOfWeek).toBe(52);
   });
 
   it('returns proper week number (default)', () => {
