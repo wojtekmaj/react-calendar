@@ -13,8 +13,7 @@ import {
   getYear,
 } from '../shared/dates';
 import { formatMonthYear } from '../shared/dateFormatter';
-
-const allViews = ['century', 'decade', 'year', 'month'];
+import { isView, isViews } from '../shared/propTypes';
 
 export default class Navigation extends Component {
   get drillUpAvailable() {
@@ -159,8 +158,6 @@ Navigation.defaultProps = {
   prevLabel: '‹',
 };
 
-const viewPropType = PropTypes.oneOf(allViews);
-
 Navigation.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   drillUp: PropTypes.func.isRequired,
@@ -171,6 +168,6 @@ Navigation.propTypes = {
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   setActiveStartDate: PropTypes.func.isRequired,
-  view: viewPropType.isRequired,
-  views: PropTypes.arrayOf(viewPropType).isRequired,
+  view: isView.isRequired,
+  views: isViews.isRequired,
 };
