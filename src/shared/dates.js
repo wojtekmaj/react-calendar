@@ -231,7 +231,8 @@ export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
   const tempDate = new Date(+date);
   tempDate.setDate(getDay(tempDate) + (4 - getDayOfWeek(tempDate, calendarType)));
   const yearStart = getBeginOfYear(tempDate);
-  return Math.ceil((((tempDate - yearStart) / 8.64e7)) / 7);
+  const weekNumber = Math.ceil((((tempDate - yearStart) / 8.64e7)) / 7);
+  return weekNumber === 0 ? 52 : weekNumber;
 };
 
 /**
