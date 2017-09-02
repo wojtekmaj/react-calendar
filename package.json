@@ -13,7 +13,7 @@
     "test-jest-coverage": "jest --coverage"
   },
   "jest": {
-    "collectCoverageFrom" : ["**/src/**.{js,jsx}"]
+    "collectCoverageFrom" : ["**/src/**.{js,jsx}", "!**/src/entry.js"]
   },
   "keywords": [
     "calendar",
