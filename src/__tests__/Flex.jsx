@@ -8,7 +8,7 @@ import Flex from '../Flex';
 describe('Flex', () => {
   it('styles itself properly with wrap flag set to false', () => {
     const noWrapComponent = shallow(
-      <Flex wrap={false}>
+      <Flex count={3} wrap={false}>
         <div>Hey</div>
         <div>Hi</div>
         <div>Hello</div>
