@@ -369,6 +369,48 @@ describe('Navigation', () => {
     expect(button.props().disabled).toBe(true);
   });
 
+  it('disallows navigating before minDate', () => {
+    const component = shallow(
+      <Navigation
+        activeStartDate={new Date(2017, 0, 1)}
+        drillUp={jest.fn()}
+        minDate={new Date(2017, 0, 1)}
+        setActiveStartDate={jest.fn()}
+        view="month"
+        views={allViews}
+      />
+    );
+
+    const arrows = component.find('button.react-calendar__navigation__arrow');
+
+    const prev2 = arrows.at(0);
+    const prev = arrows.at(1);
+
+    expect(prev2.props().disabled).toBe(true);
+    expect(prev.props().disabled).toBe(true);
+  });
+
+  it('disallows navigating after maxDate', () => {
+    const component = shallow(
+      <Navigation
+        activeStartDate={new Date(2017, 0, 1)}
+        drillUp={jest.fn()}
+        maxDate={new Date(2017, 0, 31)}
+        setActiveStartDate={jest.fn()}
+        view="month"
+        views={allViews}
+      />
+    );
+
+    const arrows = component.find('button.react-calendar__navigation__arrow');
+
+    const next = arrows.at(2);
+    const next2 = arrows.at(3);
+
+    expect(next.props().disabled).toBe(true);
+    expect(next2.props().disabled).toBe(true);
+  });
+
   it('disallows navigating before the year 1000', () => {
     const component = shallow(
       <Navigation
