@@ -32,6 +32,14 @@ export const getTileActivityFlags = (value, valueType, date, dateType) => {
     return flags;
   }
 
+  if (
+    !date ||
+    (!(value instanceof Array) && !valueType) ||
+    (!(date instanceof Array) && !dateType)
+  ) {
+    throw new Error('getTileActivityFlags(): Unable to get tile activity flags because one or more required arguments were not passed.');
+  }
+
   const valueRange = value instanceof Array ? value : getRange(valueType, value);
   const dateRange = date instanceof Array ? date : getRange(dateType, date);
 
