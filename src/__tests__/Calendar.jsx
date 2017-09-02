@@ -60,6 +60,20 @@ describe('Calendar', () => {
     expect(component.state().view).toBe('month');
   });
 
+  it('renders month view with week numbers when given view = "month" and showWeekNumbers flag set to true', () => {
+    const component = mount(
+      <Calendar
+        view="month"
+        showWeekNumbers
+      />
+    );
+
+    const monthView = component.find('.react-calendar__month-view--weekNumbers');
+
+    expect(monthView).toHaveLength(1);
+    expect(component.state().view).toBe('month');
+  });
+
   it('renders year view when given view = "year"', () => {
     const component = mount(
       <Calendar view="year" />
