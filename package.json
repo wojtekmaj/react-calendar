@@ -6,11 +6,14 @@
   "es6": "src/entry.js",
   "scripts": {
     "build": "babel src -d build",
-    "eslint": "eslint ./src",
     "prepublishOnly": "npm run build",
     "test": "npm run test-eslint && npm run test-jest",
-    "test-eslint": "npm run eslint",
-    "test-jest": "jest"
+    "test-eslint": "eslint ./src",
+    "test-jest": "jest",
+    "test-jest-coverage": "jest --coverage"
+  },
+  "jest": {
+    "collectCoverageFrom" : ["**/src/**.{js,jsx}"]
   },
   "keywords": [
     "calendar",
