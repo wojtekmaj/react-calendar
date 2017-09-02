@@ -9,20 +9,19 @@ import { getRange } from './dates';
 export const mergeFunctions = (...functions) => (...args) =>
   functions.filter(f => f).forEach(f => f(...args));
 
-const isValueWithinRange = (value, range) => (
+export const isValueWithinRange = (value, range) => (
   range[0].getTime() <= value.getTime() &&
   range[1].getTime() >= value.getTime()
 );
 
-const isRangeCoveringRange = (valueRange, dateRange) => (
-  valueRange[0].getTime() <= dateRange[0].getTime() &&
-  valueRange[1].getTime() >= dateRange[1].getTime()
+export const isRangeWithinRange = (greaterRange, smallerRange) => (
+  greaterRange[0].getTime() <= smallerRange[0].getTime() &&
+  greaterRange[1].getTime() >= smallerRange[1].getTime()
 );
 
-const doRangesOverlap = (valueRange, dateRange) => (
-  isValueWithinRange(valueRange[0], dateRange) || // Value begins in date
-  isValueWithinRange(valueRange[1], dateRange) || // Value ends in date
-  isRangeCoveringRange(valueRange, dateRange) // Value covers date
+export const doRangesOverlap = (range1, range2) => (
+  isValueWithinRange(range1[0], range2) ||
+  isValueWithinRange(range1[1], range2)
 );
 
 export const getTileActivityFlags = (value, valueType, date, dateType) => {
@@ -36,7 +35,7 @@ export const getTileActivityFlags = (value, valueType, date, dateType) => {
   const valueRange = value instanceof Array ? value : getRange(valueType, value);
   const dateRange = date instanceof Array ? date : getRange(dateType, date);
 
-  flags.active = isRangeCoveringRange(valueRange, dateRange);
+  flags.active = isRangeWithinRange(valueRange, dateRange);
   flags.hasActive = flags.active ? false : doRangesOverlap(valueRange, dateRange);
 
   return flags;
