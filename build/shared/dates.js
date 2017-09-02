@@ -265,7 +265,8 @@ var getWeekNumber = exports.getWeekNumber = function getWeekNumber(date) {
   var tempDate = new Date(+date);
   tempDate.setDate(getDay(tempDate) + (4 - getDayOfWeek(tempDate, calendarType)));
   var yearStart = getBeginOfYear(tempDate);
-  return Math.ceil((tempDate - yearStart) / 8.64e7 / 7);
+  var weekNumber = Math.ceil((tempDate - yearStart) / 8.64e7 / 7);
+  return weekNumber === 0 ? 52 : weekNumber;
 };
 
 /**

@@ -36,9 +36,9 @@ var _dates = require('../shared/dates');
 
 var _dateFormatter = require('../shared/dateFormatter');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _propTypes3 = require('../shared/propTypes');
 
-var allViews = ['century', 'decade', 'year', 'month'];
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Navigation = function (_Component) {
   (0, _inherits3.default)(Navigation, _Component);
@@ -154,30 +154,21 @@ var Navigation = function (_Component) {
       );
     }
   }, {
-    key: 'drillDownAvailable',
+    key: 'drillUpAvailable',
     get: function get() {
       var _props2 = this.props,
           view = _props2.view,
           views = _props2.views;
-
-      return views.indexOf(view) < views.length - 1;
-    }
-  }, {
-    key: 'drillUpAvailable',
-    get: function get() {
-      var _props3 = this.props,
-          view = _props3.view,
-          views = _props3.views;
 
       return views.indexOf(view) > 0;
     }
   }, {
     key: 'prevButtonDisabled',
     get: function get() {
-      var _props4 = this.props,
-          date = _props4.activeStartDate,
-          minDate = _props4.minDate,
-          view = _props4.view;
+      var _props3 = this.props,
+          date = _props3.activeStartDate,
+          minDate = _props3.minDate,
+          view = _props3.view;
 
       var previousActiveStartDate = (0, _dates.getBeginPrevious)(view, date);
       if (previousActiveStartDate.getFullYear() < 1000) {
@@ -189,10 +180,10 @@ var Navigation = function (_Component) {
   }, {
     key: 'prev2ButtonDisabled',
     get: function get() {
-      var _props5 = this.props,
-          date = _props5.activeStartDate,
-          minDate = _props5.minDate,
-          view = _props5.view;
+      var _props4 = this.props,
+          date = _props4.activeStartDate,
+          minDate = _props4.minDate,
+          view = _props4.view;
 
       var previousActiveStartDate = (0, _dates.getBeginPrevious2)(view, date);
       if (previousActiveStartDate.getFullYear() < 1000) {
@@ -204,10 +195,10 @@ var Navigation = function (_Component) {
   }, {
     key: 'nextButtonDisabled',
     get: function get() {
-      var _props6 = this.props,
-          date = _props6.activeStartDate,
-          maxDate = _props6.maxDate,
-          view = _props6.view;
+      var _props5 = this.props,
+          date = _props5.activeStartDate,
+          maxDate = _props5.maxDate,
+          view = _props5.view;
 
       var nextActiveStartDate = (0, _dates.getBeginNext)(view, date);
       return maxDate && maxDate <= nextActiveStartDate;
@@ -215,10 +206,10 @@ var Navigation = function (_Component) {
   }, {
     key: 'next2ButtonDisabled',
     get: function get() {
-      var _props7 = this.props,
-          date = _props7.activeStartDate,
-          maxDate = _props7.maxDate,
-          view = _props7.view;
+      var _props6 = this.props,
+          date = _props6.activeStartDate,
+          maxDate = _props6.maxDate,
+          view = _props6.view;
 
       var nextActiveStartDate = (0, _dates.getBeginNext2)(view, date);
       return maxDate && maxDate <= nextActiveStartDate;
@@ -226,9 +217,9 @@ var Navigation = function (_Component) {
   }, {
     key: 'label',
     get: function get() {
-      var _props8 = this.props,
-          date = _props8.activeStartDate,
-          view = _props8.view;
+      var _props7 = this.props,
+          date = _props7.activeStartDate,
+          view = _props7.view;
 
 
       switch (view) {
@@ -258,8 +249,6 @@ Navigation.defaultProps = {
   prevLabel: '‹'
 };
 
-var viewPropType = _propTypes2.default.oneOf(allViews);
-
 Navigation.propTypes = {
   activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
   drillUp: _propTypes2.default.func.isRequired,
@@ -270,6 +259,6 @@ Navigation.propTypes = {
   prev2Label: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   prevLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   setActiveStartDate: _propTypes2.default.func.isRequired,
-  view: viewPropType.isRequired,
-  views: _propTypes2.default.arrayOf(viewPropType).isRequired
+  view: _propTypes3.isView.isRequired,
+  views: _propTypes3.isViews.isRequired
 };

@@ -408,20 +408,6 @@ var Calendar = function (_Component) {
 
       return allValueTypes[allViews.indexOf(maxDetail)];
     }
-  }, {
-    key: 'valueFrom',
-    get: function get() {
-      var value = this.props.value;
-
-      return this.getValueFrom(value);
-    }
-  }, {
-    key: 'valueTo',
-    get: function get() {
-      var value = this.props.value;
-
-      return this.getValueTo(value);
-    }
   }]);
   return Calendar;
 }(_react.Component);

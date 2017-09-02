@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getTileActivityFlags = exports.mergeFunctions = undefined;
+exports.getTileActivityFlags = exports.doRangesOverlap = exports.isRangeWithinRange = exports.isValueWithinRange = exports.mergeFunctions = undefined;
 
 var _dates = require('./dates');
 
@@ -31,19 +31,16 @@ var mergeFunctions = exports.mergeFunctions = function mergeFunctions() {
   };
 };
 
-var isValueWithinRange = function isValueWithinRange(value, range) {
+var isValueWithinRange = exports.isValueWithinRange = function isValueWithinRange(value, range) {
   return range[0].getTime() <= value.getTime() && range[1].getTime() >= value.getTime();
 };
 
-var isRangeCoveringRange = function isRangeCoveringRange(valueRange, dateRange) {
-  return valueRange[0].getTime() <= dateRange[0].getTime() && valueRange[1].getTime() >= dateRange[1].getTime();
+var isRangeWithinRange = exports.isRangeWithinRange = function isRangeWithinRange(greaterRange, smallerRange) {
+  return greaterRange[0].getTime() <= smallerRange[0].getTime() && greaterRange[1].getTime() >= smallerRange[1].getTime();
 };
 
-var doRangesOverlap = function doRangesOverlap(valueRange, dateRange) {
-  return isValueWithinRange(valueRange[0], dateRange) || // Value begins in date
-  isValueWithinRange(valueRange[1], dateRange) || // Value ends in date
-  isRangeCoveringRange(valueRange, dateRange) // Value covers date
-  ;
+var doRangesOverlap = exports.doRangesOverlap = function doRangesOverlap(range1, range2) {
+  return isValueWithinRange(range1[0], range2) || isValueWithinRange(range1[1], range2);
 };
 
 var getTileActivityFlags = exports.getTileActivityFlags = function getTileActivityFlags(value, valueType, date, dateType) {
@@ -54,10 +51,14 @@ var getTileActivityFlags = exports.getTileActivityFlags = function getTileActivi
     return flags;
   }
 
+  if (!date || !(value instanceof Array) && !valueType || !(date instanceof Array) && !dateType) {
+    throw new Error('getTileActivityFlags(): Unable to get tile activity flags because one or more required arguments were not passed.');
+  }
+
   var valueRange = value instanceof Array ? value : (0, _dates.getRange)(valueType, value);
   var dateRange = date instanceof Array ? date : (0, _dates.getRange)(dateType, date);
 
-  flags.active = isRangeCoveringRange(valueRange, dateRange);
+  flags.active = isRangeWithinRange(valueRange, dateRange);
   flags.hasActive = flags.active ? false : doRangesOverlap(valueRange, dateRange);
 
   return flags;
