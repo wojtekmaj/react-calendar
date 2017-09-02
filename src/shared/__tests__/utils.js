@@ -3,6 +3,7 @@ import {
   isValueWithinRange,
   isRangeWithinRange,
   doRangesOverlap,
+  getTileActivityFlags,
 } from '../utils';
 
 describe('mergeFunctions', () => {
@@ -161,5 +162,59 @@ describe('doRangesOverlap', () => {
 
     expect(rangesOverlap).toBe(false);
     expect(rangesOverlapReversed).toBe(false);
+  });
+});
+
+describe('getTileActivityFlags', () => {
+  it('returns all flags set to false when given no value', () => {
+    const result = getTileActivityFlags();
+
+    expect(result.active).toBe(false);
+    expect(result.hasActive).toBe(false);
+  });
+
+  it('throws an error when given value but not given other parameters ', () => {
+    expect(
+      () => getTileActivityFlags(new Date(2017, 0, 1)),
+    ).toThrow();
+  });
+
+  it('returns active flag set to true when passed a value equal to date', () => {
+    const result = getTileActivityFlags(
+      new Date(2017, 0, 1), 'month', new Date(2017, 0, 1), 'month',
+    );
+
+    expect(result.active).toBe(true);
+    expect(result.hasActive).toBe(false);
+  });
+
+  it('returns active flag set to true when passed a value array equal to date array', () => {
+    const result = getTileActivityFlags(
+      [new Date(2017, 0, 1), new Date(2017, 0, 31)],
+      undefined,
+      [new Date(2017, 0, 1), new Date(2017, 0, 31)],
+      undefined,
+    );
+
+    expect(result.active).toBe(true);
+    expect(result.hasActive).toBe(false);
+  });
+
+  it('returns hasActive flag set to true when passed a value covering date', () => {
+    const result = getTileActivityFlags(
+      new Date(2017, 6, 1), 'month', new Date(2017, 0, 1), 'year',
+    );
+
+    expect(result.active).toBe(false);
+    expect(result.hasActive).toBe(true);
+  });
+
+  it('returns all flags set to false when given value completely unrelated to date', () => {
+    const result = getTileActivityFlags(
+      new Date(2017, 6, 1), 'month', new Date(2016, 0, 1), 'month',
+    );
+
+    expect(result.active).toBe(false);
+    expect(result.hasActive).toBe(false);
   });
 });
