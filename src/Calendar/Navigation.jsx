@@ -17,11 +17,6 @@ import { formatMonthYear } from '../shared/dateFormatter';
 const allViews = ['century', 'decade', 'year', 'month'];
 
 export default class Navigation extends Component {
-  get drillDownAvailable() {
-    const { view, views } = this.props;
-    return views.indexOf(view) < views.length - 1;
-  }
-
   get drillUpAvailable() {
     const { view, views } = this.props;
     return views.indexOf(view) > 0;
