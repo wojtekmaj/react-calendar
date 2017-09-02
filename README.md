@@ -1,3 +1,7 @@
+![](https://img.shields.io/travis/wojtekmaj/react-calendar.svg) ![](https://img.shields.io/david/wojtekmaj/react-calendar.svg
+) ![](https://img.shields.io/david/dev/wojtekmaj/react-calendar.svg
+)
+
 # React-Calendar
 Ultimate date picker for your React application.
 
