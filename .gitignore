@@ -1,4 +1,5 @@
 .vscode
+coverage
 sample/build
 test/build
 node_modules
