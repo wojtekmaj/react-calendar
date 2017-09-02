@@ -368,4 +368,24 @@ describe('Navigation', () => {
 
     expect(button.props().disabled).toBe(true);
   });
+
+  it('disallows navigating before the year 1000', () => {
+    const component = shallow(
+      <Navigation
+        activeStartDate={new Date(1000, 0, 1)}
+        drillUp={jest.fn()}
+        setActiveStartDate={jest.fn()}
+        view="year"
+        views={allViews}
+      />
+    );
+
+    const arrows = component.find('button.react-calendar__navigation__arrow');
+
+    const prev2 = arrows.at(0);
+    const prev = arrows.at(1);
+
+    expect(prev2.props().disabled).toBe(true);
+    expect(prev.props().disabled).toBe(true);
+  });
 });
