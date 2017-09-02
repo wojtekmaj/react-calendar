@@ -38,16 +38,6 @@ export default class Calendar extends Component {
     return allValueTypes[allViews.indexOf(maxDetail)];
   }
 
-  get valueFrom() {
-    const { value } = this.props;
-    return this.getValueFrom(value);
-  }
-
-  get valueTo() {
-    const { value } = this.props;
-    return this.getValueTo(value);
-  }
-
   getValueArray(value) {
     if (value instanceof Array) {
       return value;
