@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "prop-types": "next",
+    "prop-types": "^15.5.10",
     "react": "next",
     "react-calendar": "../",
     "react-dom": "next"
