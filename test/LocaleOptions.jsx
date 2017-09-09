@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { getLocale } from 'react-calendar/src/shared/locales';
+
 export default class LocaleOptions extends Component {
   onChange = (event) => {
     let { value: locale } = event.target;
@@ -70,7 +72,7 @@ export default class LocaleOptions extends Component {
             type="text"
             key={locale}
             name="customLocale"
-            defaultValue={locale}
+            defaultValue={locale || getLocale()}
             pattern="^[a-z]{2}-[A-Z0-9]{2,3}$"
           />&nbsp;
           <button
