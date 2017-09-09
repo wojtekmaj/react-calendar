@@ -226,8 +226,10 @@ export default class Calendar extends Component {
     this.setState({ value });
 
     const { onChange } = this.props;
-    const processedValue = this.getProcessedValue(value);
-    if (onChange) onChange(processedValue);
+    if (onChange) {
+      const processedValue = this.getProcessedValue(value);
+      onChange(processedValue);
+    }
   }
 
   renderContent() {
