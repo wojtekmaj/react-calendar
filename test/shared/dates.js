@@ -10,11 +10,9 @@ export const getISOLocalDate = (value) => {
     throw new Error(`Invalid date: ${value}`);
   }
 
-  return `${
-    value.getFullYear()
-  }-${
-    `0${value.getMonth() + 1}`.slice(-2)
-  }-${
-    `0${value.getDate()}`.slice(-2)
-  }`;
+  const year = getYear(value);
+  const month = `0${getMonthIndex(value) + 1}`.slice(-2);
+  const day = `0${getDay(value)}`.slice(-2);
+
+  return `${year}-${month}-${day}`;
 };
