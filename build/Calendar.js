@@ -138,8 +138,10 @@ var Calendar = function (_Component) {
 
       var onChange = _this.props.onChange;
 
-      var processedValue = _this.getProcessedValue(value);
-      if (onChange) onChange(processedValue);
+      if (onChange) {
+        var processedValue = _this.getProcessedValue(value);
+        onChange(processedValue);
+      }
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 

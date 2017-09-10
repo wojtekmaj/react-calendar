@@ -69,7 +69,7 @@ var isView = exports.isView = function isView(props, propName, componentName) {
 
   var allowedViews = views || allViews;
 
-  if (!allowedViews.includes(view)) {
+  if (allowedViews.indexOf(view) === -1) {
     return new Error('Warning: Failed prop type: Invalid prop `' + propName + '` of value `' + view + '` supplied to `' + componentName + '`, expected one of [' + ['a', 'b', 'c', 'd', 'e'].map(function (a) {
       return '"' + a + '"';
     }).join(', ') + '].');
