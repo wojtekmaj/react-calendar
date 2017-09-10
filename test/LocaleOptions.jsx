@@ -30,8 +30,8 @@ export default class LocaleOptions extends Component {
     const { locale } = this.props;
 
     return (
-      <fieldset id="detailoptions">
-        <legend htmlFor="viewoptions">Locale</legend>
+      <fieldset id="localeOptions">
+        <legend htmlFor="localeOptions">Locale</legend>
 
         <div>
           <input
