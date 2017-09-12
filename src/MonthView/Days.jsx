@@ -25,7 +25,7 @@ export default class Days extends Component {
 
   /**
    * Defines on which day of the month the grid shall start. If we simply show current
-   * month, we bviously start on day one, but if showNeighboringMonth is set to
+   * month, we obviously start on day one, but if showNeighboringMonth is set to
    * true, we need to find the beginning of the week the first day of the month is in.
    */
   get start() {
