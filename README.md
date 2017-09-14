@@ -6,9 +6,9 @@
 Ultimate date picker for your React application.
 
 ## tl;dr
-* Install by executing `npm install --save {NPM_NAME_GOES_HERE}`.
-* Import by adding `import Calendar from '{NPM_NAME_GOES_HERE}'`.
-* Import styles by adding `import '{NPM_NAME_GOES_HERE}/build/Calendar.less'` or style the calendar on your own.
+* Install by executing `npm install {PACKAGE_NAME_GOES_HERE}` or `yarn add {PACKAGE_NAME_GOES_HERE}`.
+* Import by adding `import Calendar from '{PACKAGE_NAME_GOES_HERE}'`.
+* Import styles by adding `import '{PACKAGE_NAME_GOES_HERE}/build/Calendar.less'` or style the calendar on your own.
 * Use by adding `<Calendar />`. Use `onChange` prop for getting new values.
 
 ## Demo
@@ -43,7 +43,7 @@ React-Calendar uses modern web technologies. That's why it's so fast, lightweigh
 
 ### Installation
 
-Add React-Calendar to your project by executing `npm install --save {NPM_NAME_GOES_HERE}`.
+Add React-Calendar to your project by executing `npm install {PACKAGE_NAME_GOES_HERE}` or `yarn add {PACKAGE_NAME_GOES_HERE}`.
 
 ### Usage
 
@@ -51,7 +51,7 @@ Here's an example of basic usage:
 
 ```js
 import React, { Component } from 'react';
-import Calendar from '{NPM_NAME_GOES_HERE}';
+import Calendar from '{PACKAGE_NAME_GOES_HERE}';
 
 class MyApp extends Component {
   state = {
