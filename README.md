@@ -52,6 +52,7 @@ Here's an example of basic usage:
 ```js
 import React, { Component } from 'react';
 import Calendar from '{PACKAGE_NAME_GOES_HERE}';
+import 'react-calendar/build/Calendar.less';
 
 class MyApp extends Component {
   state = {
