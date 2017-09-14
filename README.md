@@ -19,12 +19,6 @@ Minimal demo page is included in sample directory.
 
 ## Getting started
 
-### Prerequisites
-
-You'll need to have Node >= 4 on your machine.
-
-We strongly recommend to use Node >= 6 and npm >= 5 for faster installation speed and better disk usage.
-
 ### Compatibility
 
 React-Calendar uses modern web technologies. That's why it's so fast, lightweight and easy to style. This, however, comes at a cost of supporting only modern browsers.
