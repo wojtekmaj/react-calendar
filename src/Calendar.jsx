@@ -234,13 +234,14 @@ export default class Calendar extends Component {
 
   renderContent() {
     const { setView, valueType } = this;
-    const { calendarType, maxDate, minDate, value } = this.props;
+    const { calendarType, maxDate, minDate, renderChildren, value } = this.props;
     const { activeStartDate, view } = this.state;
 
     const commonProps = {
       activeStartDate,
       maxDate,
       minDate,
+      renderChildren,
       setView,
       value,
       valueType,
@@ -252,21 +253,21 @@ export default class Calendar extends Component {
       case 'century':
         return (
           <CenturyView
-            onChange={mergeFunctions(clickAction, this.props.onClickDecade)}
+            onClick={mergeFunctions(clickAction, this.props.onClickDecade)}
             {...commonProps}
           />
         );
       case 'decade':
         return (
           <DecadeView
-            onChange={mergeFunctions(clickAction, this.props.onClickYear)}
+            onClick={mergeFunctions(clickAction, this.props.onClickYear)}
             {...commonProps}
           />
         );
       case 'year':
         return (
           <YearView
-            onChange={mergeFunctions(clickAction, this.props.onClickMonth)}
+            onClick={mergeFunctions(clickAction, this.props.onClickMonth)}
             {...commonProps}
           />
         );
@@ -274,7 +275,7 @@ export default class Calendar extends Component {
         return (
           <MonthView
             calendarType={calendarType}
-            onChange={mergeFunctions(clickAction, this.props.onClickDay)}
+            onClick={mergeFunctions(clickAction, this.props.onClickDay)}
             showNeighboringMonth={this.props.showNeighboringMonth}
             showWeekNumbers={this.props.showWeekNumbers}
             {...commonProps}
@@ -345,6 +346,7 @@ Calendar.propTypes = {
   onClickYear: PropTypes.func,
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  renderChildren: PropTypes.func,
   returnValue: PropTypes.oneOf(['start', 'end', 'range']).isRequired,
   showNavigation: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,

@@ -20,7 +20,14 @@ export default class Months extends Component {
 
   render() {
     const { end, start, year } = this;
-    const { maxDate, minDate, onChange, value, valueType } = this.props;
+    const { maxDate, minDate, onClick, renderChildren, value, valueType } = this.props;
+
+    const monthProps = {
+      maxDate,
+      minDate,
+      onClick,
+      renderChildren,
+    };
 
     const months = [];
     for (let monthIndex = start; monthIndex <= end; monthIndex += 1) {
@@ -31,9 +38,7 @@ export default class Months extends Component {
           {...getTileActivityFlags(value, valueType, date, 'month')}
           date={date}
           key={monthIndex}
-          maxDate={maxDate}
-          minDate={minDate}
-          onChange={onChange}
+          {...monthProps}
         />,
       );
     }
@@ -54,7 +59,8 @@ Months.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   maxDate: isMaxDate,
   minDate: isMinDate,
-  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+  renderChildren: PropTypes.func,
   value: isValue,
   valueType: PropTypes.string,
 };

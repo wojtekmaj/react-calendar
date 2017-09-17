@@ -20,7 +20,14 @@ export default class Years extends Component {
 
   render() {
     const { end, start } = this;
-    const { maxDate, minDate, onChange, value, valueType } = this.props;
+    const { maxDate, minDate, onClick, renderChildren, value, valueType } = this.props;
+
+    const yearProps = {
+      maxDate,
+      minDate,
+      onClick,
+      renderChildren,
+    };
 
     const years = [];
     for (let year = start; year <= end; year += 1) {
@@ -31,10 +38,8 @@ export default class Years extends Component {
           {...getTileActivityFlags(value, valueType, date, 'year')}
           date={date}
           key={year}
-          maxDate={maxDate}
-          minDate={minDate}
-          onChange={onChange}
           year={year}
+          {...yearProps}
         />,
       );
     }
@@ -55,7 +60,8 @@ Years.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   maxDate: isMaxDate,
   minDate: isMinDate,
-  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+  renderChildren: PropTypes.func,
   value: isValue,
   valueType: PropTypes.string,
 };

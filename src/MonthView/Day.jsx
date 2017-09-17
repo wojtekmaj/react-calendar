@@ -11,7 +11,7 @@ import { isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
 
-const Day = ({ active, currentMonthIndex, date, maxDate, minDate, onChange }) => (
+const Day = ({ active, currentMonthIndex, date, maxDate, minDate, onClick, renderChildren }) => (
   <button
     className={[
       className,
@@ -25,13 +25,14 @@ const Day = ({ active, currentMonthIndex, date, maxDate, minDate, onChange }) =>
       (maxDate && getEndOfDay(maxDate) < date)
     }
     key={date}
-    onClick={onChange && (() => onChange(date))}
+    onClick={onClick && (() => onClick(date))}
     style={{ flexGrow: 1 }}
     type="button"
   >
     <time dateTime={date.toISOString()}>
       {getDay(date)}
     </time>
+    {renderChildren && renderChildren({ date, view: 'month' })}
   </button>
 );
 
@@ -41,7 +42,8 @@ Day.propTypes = {
   date: PropTypes.instanceOf(Date).isRequired,
   maxDate: isMaxDate,
   minDate: isMinDate,
-  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+  renderChildren: PropTypes.func,
 };
 
 export default Day;

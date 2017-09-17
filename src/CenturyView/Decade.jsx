@@ -6,7 +6,16 @@ import { isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__century-view__decades__decade';
 
-const Decade = ({ active, date, decade, hasActive, maxDate, minDate, onChange }) => (
+const Decade = ({
+  active,
+  date,
+  decade,
+  hasActive,
+  maxDate,
+  minDate,
+  onClick,
+  renderChildren,
+}) => (
   <button
     className={[
       className,
@@ -18,13 +27,14 @@ const Decade = ({ active, date, decade, hasActive, maxDate, minDate, onChange })
       (minDate && getBeginOfDecade(minDate) > date) ||
       (maxDate && getEndOfDecade(maxDate) < date)
     }
-    onClick={onChange && (() => onChange(date))}
+    onClick={onClick && (() => onClick(date))}
     style={{ flexGrow: 1 }}
     type="button"
   >
     <time>
       {getDecadeLabel(decade)}
     </time>
+    {renderChildren && renderChildren({ date, view: 'century' })}
   </button>
 );
 
@@ -35,7 +45,8 @@ Decade.propTypes = {
   hasActive: PropTypes.bool.isRequired,
   maxDate: isMaxDate,
   minDate: isMinDate,
-  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+  renderChildren: PropTypes.func,
 };
 
 export default Decade;

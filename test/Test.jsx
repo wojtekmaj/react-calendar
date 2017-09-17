@@ -119,6 +119,28 @@ export default class Test extends Component {
                 minDate={minDate}
                 minDetail={minDetail}
                 onChange={this.onChange}
+                renderChildren={({ date, view }) => {
+                  switch (view) {
+                    case 'month':
+                      return date.getDay() === 0 ?
+                        <p><small>{'It\'s Sunday!'}</small></p> :
+                        null;
+                    case 'year':
+                      return date.getMonth() === 5 || date.getMonth() === 6 ?
+                        <p><small>Holidays</small></p> :
+                        null;
+                    case 'decade':
+                      return date.getFullYear() === 1991 ?
+                        <p><small>{'Developer\'s birthday!'}</small></p> :
+                        null;
+                    case 'century':
+                      return date.getFullYear() === 1991 ?
+                        <p><small>{'The 90\'s'}</small></p> :
+                        null;
+                    default:
+                      return null;
+                  }
+                }}
                 returnValue={returnValue}
                 showNeighboringMonth={showNeighboringMonth}
                 showWeekNumbers={showWeekNumbers}

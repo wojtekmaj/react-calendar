@@ -17,6 +17,7 @@ const Flex = ({ children, className, count, offset, wrap }) => (
           {
             display: 'flex',
             flexBasis: toPercent(100 / count),
+            overflow: 'hidden',
           },
           offset && (index === 0) && {
             marginLeft: toPercent((100 * offset) / count),

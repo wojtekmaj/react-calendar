@@ -23,7 +23,14 @@ export default class Decades extends Component {
 
   render() {
     const { end, start } = this;
-    const { maxDate, minDate, onChange, value, valueType } = this.props;
+    const { maxDate, minDate, onClick, renderChildren, value, valueType } = this.props;
+
+    const decadeProps = {
+      maxDate,
+      minDate,
+      onClick,
+      renderChildren,
+    };
 
     const decades = [];
     for (let decade = start; decade <= end; decade += 10) {
@@ -35,9 +42,7 @@ export default class Decades extends Component {
           date={date}
           decade={decade}
           key={decade}
-          maxDate={maxDate}
-          minDate={minDate}
-          onChange={onChange}
+          {...decadeProps}
         />,
       );
     }
@@ -58,7 +63,8 @@ Decades.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   maxDate: isMaxDate,
   minDate: isMinDate,
-  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+  renderChildren: PropTypes.func,
   value: isValue,
   valueType: PropTypes.string,
 };

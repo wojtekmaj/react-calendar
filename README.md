@@ -85,19 +85,35 @@ Displays a complete, interactive calendar.
 |minDetail|Defines the least detailed view that the user shall see. Can be "month", "year", "decade" or "century". Defaults to "century".|`"century"`|
 |nextLabel|Defines the content of the "next" button on the navigation pane. Defaults to "›".|<ul><li>String: `"›"`</li><li>React element: `<NextIcon />`</li></ul>|
 |next2Label|Defines the content of the "next on higher level" button on the navigation pane. Defaults to "»". |<ul><li>String: `"»"`</li><li>React element: `<DoubleNextIcon />`</li></ul>|
-|onChange|Function called when the user clicks an item on the most detailed view available.|`(value) => alert('New date is: ', value)`|
+|onChange|Function called when the user clicks an item (day on month view, month on year view and so on) on the most detailed view available.|`(value) => alert('New date is: ', value)`|
 |onClickDay|Function called when the user clicks a day.|`(value) => alert('Clicked day: ', value)`|
 |onClickDecade|Function called when the user clicks a decade.|`(value) => alert('Clicked decade: ', value)`|
 |onClickMonth|Function called when the user clicks a month.|`(value) => alert('Clicked month: ', value)`|
 |onClickYear|Function called when the user clicks a year.|`(value) => alert('Clicked year: ', value)`|
 |prevLabel|Defines the content of the "previous" button on the navigation pane. Defaults to "‹".|<ul><li>String: `"‹"`</li><li>React element: `<PrevousIcon />`</li></ul>|
 |prev2Label|Defines the content of the "previous on higher level" button on the navigation pane. Defaults to "«".|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
+|renderChildren|Allows to render custom content within a given item (day on month view, month on year view and so on).|`({ date, view }) => view === 'month' && date.getDay() === 0 ? <p>It's Sunday!</p> : null`|
 |returnValue|Defines which dates shall be passed by the calendar to the onChange function and onClick{Period} functions. Can be "start", "end"  or "range". The latter will cause an array with start and end values to be passed. Defaults to "start".|`"range"`|
 |showNavigation|Defines whether a navigation bar with arrows and title shall be rendered. Defaults to true.|`false`|
 |showNeighboringMonth|Defines whether days from previous or next month shall be rendered if the month doesn't start on the first day of the week or doesn't end on the last day of the week, respectively. Defaults to true.|`false`|
 |showWeekNumbers|Defines whether week numbers shall be shown at the left of MonthView or not. Defaults to false.|`true`|
 |value|Defines the value of the calendar.|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`|
 |view|Determines which calendar view shall be opened initially. Does not disable navigation. Can be "month", "year", "decade" or "century". Defaults to the most detailed view allowed.|`"year"`|
+
+### MonthView, YearView, DecadeView, CenturyView
+
+Displays a given month, year, decade and a century, respecitvely.
+
+#### Props
+
+|Prop name|Description|Example values|
+|----|----|----|
+|activeStartDate|The beginning of a period that shall be displayed.|`new Date(2017, 0, 1)`|
+|maxDate|Defines maximum date that the user can select. Periods partially overlapped by maxDate will also be selectable, although react-calendar will ensure that no later date is selected.|Date: `new Date()`|
+|minDate|Defines minimum date that the user can select. Periods partially overlapped by minDate will also be selectable, although react-calendar will ensure that no earlier date is selected.|Date: `new Date()`|
+|onClick|Function called when the user clicks an item (day on month view, month on year view and so on).|`(value) => alert('New date is: ', value)`|
+|renderChildren|Allows to render custom content within a given item (day on month view, month on year view and so on).|`({ date, view }) => view === 'month' && date.getDay() === 0 ? <p>It's Sunday!</p> : null`|
+|value|Defines the value of the calendar.|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`|
 
 ## License
 

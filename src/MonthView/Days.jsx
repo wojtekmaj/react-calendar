@@ -68,10 +68,18 @@ export default class Days extends Component {
     const {
       maxDate,
       minDate,
-      onChange,
+      onClick,
+      renderChildren,
       value,
       valueType,
     } = this.props;
+
+    const dayProps = {
+      maxDate,
+      minDate,
+      onClick,
+      renderChildren,
+    };
 
     const days = [];
     for (let day = start; day <= end; day += 1) {
@@ -82,10 +90,8 @@ export default class Days extends Component {
           {...getTileActivityFlags(value, valueType, date, 'day')}
           currentMonthIndex={monthIndex}
           date={date}
-          maxDate={maxDate}
-          minDate={minDate}
           key={day}
-          onChange={onChange}
+          {...dayProps}
         />,
       );
     }
@@ -108,7 +114,8 @@ Days.propTypes = {
   calendarType: isCalendarType.isRequired,
   maxDate: isMaxDate,
   minDate: isMinDate,
-  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+  renderChildren: PropTypes.func,
   showNeighboringMonth: PropTypes.bool,
   value: isValue,
   valueType: PropTypes.string,
