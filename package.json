@@ -31,6 +31,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "babel-runtime": "^6.26.0",
     "lodash.once": "^4.1.1",
     "prop-types": ">=15.5",
     "react": ">=15.5",
