@@ -5,7 +5,7 @@
     "react"
   ],
   "plugins": [
-    "transform-runtime",
+    "transform-object-assign",
     "transform-class-properties",
     "transform-es2015-modules-commonjs"
   ]
