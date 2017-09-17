@@ -5,6 +5,12 @@
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
 
+  &, & *, & *:before, & *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
   button {
     border: 0;
     outline: none;
@@ -52,6 +58,9 @@
       font-weight: bold;
 
       .react-calendar__tile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: .75em;
         padding: calc(.75em / .75) calc(.5em / .75);
       }

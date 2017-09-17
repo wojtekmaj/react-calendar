@@ -50,7 +50,7 @@ export default class WeekNumbers extends Component {
               className="react-calendar__tile"
               key={weekNumber}
             >
-              {weekNumber}
+              <span>{weekNumber}</span>
             </div>
           ))
         }
