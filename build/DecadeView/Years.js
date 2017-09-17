@@ -68,10 +68,18 @@ var Years = function (_Component) {
       var _props = this.props,
           maxDate = _props.maxDate,
           minDate = _props.minDate,
-          onChange = _props.onChange,
+          onClick = _props.onClick,
+          renderChildren = _props.renderChildren,
           value = _props.value,
           valueType = _props.valueType;
 
+
+      var yearProps = {
+        maxDate: maxDate,
+        minDate: minDate,
+        onClick: onClick,
+        renderChildren: renderChildren
+      };
 
       var years = [];
       for (var year = start; year <= end; year += 1) {
@@ -80,11 +88,8 @@ var Years = function (_Component) {
         years.push(_react2.default.createElement(_Year2.default, (0, _extends3.default)({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'year'), {
           date: date,
           key: year,
-          maxDate: maxDate,
-          minDate: minDate,
-          onChange: onChange,
           year: year
-        })));
+        }, yearProps)));
       }
 
       return _react2.default.createElement(
@@ -120,7 +125,8 @@ Years.propTypes = {
   activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
   maxDate: _propTypes3.isMaxDate,
   minDate: _propTypes3.isMinDate,
-  onChange: _propTypes2.default.func,
+  onClick: _propTypes2.default.func,
+  renderChildren: _propTypes2.default.func,
   value: _propTypes3.isValue,
   valueType: _propTypes2.default.string
 };

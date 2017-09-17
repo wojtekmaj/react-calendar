@@ -43,7 +43,8 @@ var Flex = function Flex(_ref) {
         {
           style: (0, _assign2.default)({
             display: 'flex',
-            flexBasis: toPercent(100 / count)
+            flexBasis: toPercent(100 / count),
+            overflow: 'hidden'
           }, offset && index === 0 && {
             marginLeft: toPercent(100 * offset / count)
           })

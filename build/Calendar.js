@@ -311,6 +311,7 @@ var Calendar = function (_Component) {
           calendarType = _props.calendarType,
           maxDate = _props.maxDate,
           minDate = _props.minDate,
+          renderChildren = _props.renderChildren,
           value = _props.value;
       var _state = this.state,
           activeStartDate = _state.activeStartDate,
@@ -321,6 +322,7 @@ var Calendar = function (_Component) {
         activeStartDate: activeStartDate,
         maxDate: maxDate,
         minDate: minDate,
+        renderChildren: renderChildren,
         setView: setView,
         value: value,
         valueType: valueType
@@ -331,20 +333,20 @@ var Calendar = function (_Component) {
       switch (view) {
         case 'century':
           return _react2.default.createElement(_CenturyView2.default, (0, _extends3.default)({
-            onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickDecade)
+            onClick: (0, _utils.mergeFunctions)(clickAction, this.props.onClickDecade)
           }, commonProps));
         case 'decade':
           return _react2.default.createElement(_DecadeView2.default, (0, _extends3.default)({
-            onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickYear)
+            onClick: (0, _utils.mergeFunctions)(clickAction, this.props.onClickYear)
           }, commonProps));
         case 'year':
           return _react2.default.createElement(_YearView2.default, (0, _extends3.default)({
-            onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickMonth)
+            onClick: (0, _utils.mergeFunctions)(clickAction, this.props.onClickMonth)
           }, commonProps));
         case 'month':
           return _react2.default.createElement(_MonthView2.default, (0, _extends3.default)({
             calendarType: calendarType,
-            onChange: (0, _utils.mergeFunctions)(clickAction, this.props.onClickDay),
+            onClick: (0, _utils.mergeFunctions)(clickAction, this.props.onClickDay),
             showNeighboringMonth: this.props.showNeighboringMonth,
             showWeekNumbers: this.props.showWeekNumbers
           }, commonProps));
@@ -355,6 +357,13 @@ var Calendar = function (_Component) {
   }, {
     key: 'renderNavigation',
     value: function renderNavigation() {
+      var showNavigation = this.props.showNavigation;
+
+
+      if (!showNavigation) {
+        return null;
+      }
+
       return _react2.default.createElement(_Navigation2.default, {
         activeRange: this.state.activeRange,
         activeStartDate: this.state.activeStartDate,
@@ -421,6 +430,7 @@ Calendar.defaultProps = {
   maxDetail: 'month',
   minDetail: 'century',
   returnValue: 'start',
+  showNavigation: true,
   showNeighboringMonth: true,
   view: 'month'
 };
@@ -441,7 +451,9 @@ Calendar.propTypes = {
   onClickYear: _propTypes2.default.func,
   prev2Label: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   prevLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
+  renderChildren: _propTypes2.default.func,
   returnValue: _propTypes2.default.oneOf(['start', 'end', 'range']).isRequired,
+  showNavigation: _propTypes2.default.bool,
   showNeighboringMonth: _propTypes2.default.bool,
   showWeekNumbers: _propTypes2.default.bool,
   value: _propTypes3.isValue,

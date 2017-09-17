@@ -78,10 +78,18 @@ var Months = function (_Component) {
       var _props = this.props,
           maxDate = _props.maxDate,
           minDate = _props.minDate,
-          onChange = _props.onChange,
+          onClick = _props.onClick,
+          renderChildren = _props.renderChildren,
           value = _props.value,
           valueType = _props.valueType;
 
+
+      var monthProps = {
+        maxDate: maxDate,
+        minDate: minDate,
+        onClick: onClick,
+        renderChildren: renderChildren
+      };
 
       var months = [];
       for (var monthIndex = start; monthIndex <= end; monthIndex += 1) {
@@ -89,11 +97,8 @@ var Months = function (_Component) {
 
         months.push(_react2.default.createElement(_Month2.default, (0, _extends3.default)({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'month'), {
           date: date,
-          key: monthIndex,
-          maxDate: maxDate,
-          minDate: minDate,
-          onChange: onChange
-        })));
+          key: monthIndex
+        }, monthProps)));
       }
 
       return _react2.default.createElement(
@@ -124,7 +129,8 @@ Months.propTypes = {
   activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
   maxDate: _propTypes3.isMaxDate,
   minDate: _propTypes3.isMinDate,
-  onChange: _propTypes2.default.func,
+  onClick: _propTypes2.default.func,
+  renderChildren: _propTypes2.default.func,
   value: _propTypes3.isValue,
   valueType: _propTypes2.default.string
 };

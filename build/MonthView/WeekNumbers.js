@@ -70,7 +70,11 @@ var WeekNumbers = function (_Component) {
               className: 'react-calendar__tile',
               key: weekNumber
             },
-            weekNumber
+            _react2.default.createElement(
+              'span',
+              null,
+              weekNumber
+            )
           );
         })
       );

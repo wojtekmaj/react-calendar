@@ -28,14 +28,15 @@ var Month = function Month(_ref) {
       hasActive = _ref.hasActive,
       maxDate = _ref.maxDate,
       minDate = _ref.minDate,
-      onChange = _ref.onChange;
+      onClick = _ref.onClick,
+      renderChildren = _ref.renderChildren;
   return _react2.default.createElement(
     'button',
     {
       className: [className, active ? 'react-calendar__tile--active' : '', hasActive ? 'react-calendar__tile--hasActive' : '', 'react-calendar__tile'].join(' '),
       disabled: minDate && (0, _dates.getBeginOfMonth)(minDate) > date || maxDate && (0, _dates.getEndOfMonth)(maxDate) < date,
-      onClick: onChange && function () {
-        return onChange(date);
+      onClick: onClick && function () {
+        return onClick(date);
       },
       style: { flexGrow: 1 },
       type: 'button'
@@ -44,7 +45,8 @@ var Month = function Month(_ref) {
       'time',
       { dateTime: date.toISOString() },
       (0, _dateFormatter.formatMonth)(date)
-    )
+    ),
+    renderChildren && renderChildren({ date: date, view: 'year' })
   );
 };
 
@@ -54,7 +56,8 @@ Month.propTypes = {
   hasActive: _propTypes2.default.bool.isRequired,
   maxDate: _propTypes3.isMaxDate,
   minDate: _propTypes3.isMinDate,
-  onChange: _propTypes2.default.func
+  onClick: _propTypes2.default.func,
+  renderChildren: _propTypes2.default.func
 };
 
 exports.default = Month;

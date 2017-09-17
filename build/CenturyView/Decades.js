@@ -68,10 +68,18 @@ var Decades = function (_Component) {
       var _props = this.props,
           maxDate = _props.maxDate,
           minDate = _props.minDate,
-          onChange = _props.onChange,
+          onClick = _props.onClick,
+          renderChildren = _props.renderChildren,
           value = _props.value,
           valueType = _props.valueType;
 
+
+      var decadeProps = {
+        maxDate: maxDate,
+        minDate: minDate,
+        onClick: onClick,
+        renderChildren: renderChildren
+      };
 
       var decades = [];
       for (var decade = start; decade <= end; decade += 10) {
@@ -80,11 +88,8 @@ var Decades = function (_Component) {
         decades.push(_react2.default.createElement(_Decade2.default, (0, _extends3.default)({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'decade'), {
           date: date,
           decade: decade,
-          key: decade,
-          maxDate: maxDate,
-          minDate: minDate,
-          onChange: onChange
-        })));
+          key: decade
+        }, decadeProps)));
       }
 
       return _react2.default.createElement(
@@ -120,7 +125,8 @@ Decades.propTypes = {
   activeStartDate: _propTypes2.default.instanceOf(Date).isRequired,
   maxDate: _propTypes3.isMaxDate,
   minDate: _propTypes3.isMinDate,
-  onChange: _propTypes2.default.func,
+  onClick: _propTypes2.default.func,
+  renderChildren: _propTypes2.default.func,
   value: _propTypes3.isValue,
   valueType: _propTypes2.default.string
 };

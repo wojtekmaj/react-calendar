@@ -26,15 +26,16 @@ var Year = function Year(_ref) {
       hasActive = _ref.hasActive,
       maxDate = _ref.maxDate,
       minDate = _ref.minDate,
-      onChange = _ref.onChange,
+      onClick = _ref.onClick,
+      renderChildren = _ref.renderChildren,
       year = _ref.year;
   return _react2.default.createElement(
     'button',
     {
       className: [className, active ? 'react-calendar__tile--active' : '', hasActive ? 'react-calendar__tile--hasActive' : '', 'react-calendar__tile'].join(' '),
       disabled: minDate && (0, _dates.getBeginOfYear)(minDate) > date || maxDate && (0, _dates.getEndOfYear)(maxDate) < date,
-      onClick: onChange && function () {
-        return onChange(date);
+      onClick: onClick && function () {
+        return onClick(date);
       },
       style: { flexGrow: 1 },
       type: 'button'
@@ -43,7 +44,8 @@ var Year = function Year(_ref) {
       'time',
       { dateTime: year },
       year
-    )
+    ),
+    renderChildren && renderChildren({ date: date, view: 'decade' })
   );
 };
 
@@ -53,7 +55,8 @@ Year.propTypes = {
   hasActive: _propTypes2.default.bool.isRequired,
   maxDate: _propTypes3.isMaxDate,
   minDate: _propTypes3.isMinDate,
-  onChange: _propTypes2.default.func,
+  onClick: _propTypes2.default.func,
+  renderChildren: _propTypes2.default.func,
   year: _propTypes2.default.number.isRequired
 };
 

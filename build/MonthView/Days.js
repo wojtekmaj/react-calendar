@@ -70,10 +70,18 @@ var Days = function (_Component) {
       var _props = this.props,
           maxDate = _props.maxDate,
           minDate = _props.minDate,
-          onChange = _props.onChange,
+          onClick = _props.onClick,
+          renderChildren = _props.renderChildren,
           value = _props.value,
           valueType = _props.valueType;
 
+
+      var dayProps = {
+        maxDate: maxDate,
+        minDate: minDate,
+        onClick: onClick,
+        renderChildren: renderChildren
+      };
 
       var days = [];
       for (var day = start; day <= end; day += 1) {
@@ -82,11 +90,8 @@ var Days = function (_Component) {
         days.push(_react2.default.createElement(_Day2.default, (0, _extends3.default)({}, (0, _utils.getTileActivityFlags)(value, valueType, date, 'day'), {
           currentMonthIndex: monthIndex,
           date: date,
-          maxDate: maxDate,
-          minDate: minDate,
-          key: day,
-          onChange: onChange
-        })));
+          key: day
+        }, dayProps)));
       }
 
       return _react2.default.createElement(
@@ -116,7 +121,7 @@ var Days = function (_Component) {
 
     /**
      * Defines on which day of the month the grid shall start. If we simply show current
-     * month, we bviously start on day one, but if showNeighboringMonth is set to
+     * month, we obviously start on day one, but if showNeighboringMonth is set to
      * true, we need to find the beginning of the week the first day of the month is in.
      */
 
@@ -181,7 +186,8 @@ Days.propTypes = {
   calendarType: _propTypes3.isCalendarType.isRequired,
   maxDate: _propTypes3.isMaxDate,
   minDate: _propTypes3.isMinDate,
-  onChange: _propTypes2.default.func,
+  onClick: _propTypes2.default.func,
+  renderChildren: _propTypes2.default.func,
   showNeighboringMonth: _propTypes2.default.bool,
   value: _propTypes3.isValue,
   valueType: _propTypes2.default.string
