@@ -34,6 +34,9 @@ React-Calendar uses modern web technologies. That's why it's so fast, lightweigh
 |Internet Explorer|11|
 |Samsung Internet|4|
 
+#### Legacy browsers
+
+If you need to support legacy browsers like Internet Explorer 10, you will need to use [Intl.js](https://github.com/andyearnshaw/Intl.js/) or another Intl polyfill along with React-Calendar.
 
 ### Installation
 
