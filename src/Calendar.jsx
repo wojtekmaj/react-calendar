@@ -286,6 +286,12 @@ export default class Calendar extends Component {
   }
 
   renderNavigation() {
+    const { showNavigation } = this.props;
+
+    if (!showNavigation) {
+      return null;
+    }
+
     return (
       <Navigation
         activeRange={this.state.activeRange}
@@ -318,6 +324,7 @@ Calendar.defaultProps = {
   maxDetail: 'month',
   minDetail: 'century',
   returnValue: 'start',
+  showNavigation: true,
   showNeighboringMonth: true,
   view: 'month',
 };
@@ -339,6 +346,7 @@ Calendar.propTypes = {
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   returnValue: PropTypes.oneOf(['start', 'end', 'range']).isRequired,
+  showNavigation: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
   value: isValue,
