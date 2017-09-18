@@ -25,6 +25,7 @@ import {
   getBeginOfNextYear,
   getBeginOfMonth,
   getEndOfMonth,
+  getBeginOfWeek,
   getMonthRange,
   getBeginOfPreviousMonth,
   getEndOfPreviousMonth,
@@ -396,6 +397,35 @@ describe('getEndOfMonth', () => {
   });
 });
 
+describe('getBeginOfWeek', () => {
+  it('returns proper beginning of the week (ISO 8601)', () => {
+    const date = new Date(2017, 0, 1);
+    const beginOfWeekDate = new Date(2016, 11, 26);
+
+    const beginOfWeek = getBeginOfWeek(date, 'ISO 8601');
+
+    expect(beginOfWeek.toISOString()).toBe(beginOfWeekDate.toISOString());
+  });
+
+  it('returns proper beginning of the week (US)', () => {
+    const date = new Date(2016, 0, 1);
+    const beginOfWeekDate = new Date(2015, 11, 27);
+
+    const beginOfWeek = getBeginOfWeek(date, 'US');
+
+    expect(beginOfWeek.toISOString()).toBe(beginOfWeekDate.toISOString());
+  });
+
+  it('returns proper beginning of the week (default)', () => {
+    const date = new Date(2017, 0, 1);
+    const beginOfWeekDate = new Date(2016, 11, 26);
+
+    const beginOfWeek = getBeginOfWeek(date);
+
+    expect(beginOfWeek.toISOString()).toBe(beginOfWeekDate.toISOString());
+  });
+});
+
 describe('getMonthRange', () => {
   it('returns proper month date range', () => {
     const date = new Date(2017, 0, 1);
@@ -480,44 +510,102 @@ describe('getDayRange', () => {
 });
 
 describe('getWeekNumber', () => {
-  it('returns proper week number for a year that starts on Monday (ISO 8601)', () => {
-    const date = new Date(2007, 0, 1);
+  it('returns proper week number for a sample week 1 (ISO 8601)', () => {
+    const year = 2018;
+    const month = 0;
+    const startDate = 1;
 
-    const dayOfWeek = getWeekNumber(date, 'ISO 8601');
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
 
-    expect(dayOfWeek).toBe(1);
+      const dayOfWeek = getWeekNumber(date, 'ISO 8601');
+
+      expect(dayOfWeek).toBe(1);
+    }
   });
 
-  it('returns proper week number a year that starts on Sunday (US)', () => {
-    const date = new Date(2017, 0, 1);
+  it('returns proper week number for a sample week 52 (ISO 8601)', () => {
+    const year = 2016;
+    const month = 11;
+    const startDate = 26;
 
-    const dayOfWeek = getWeekNumber(date, 'US');
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
 
-    expect(dayOfWeek).toBe(1);
+      const dayOfWeek = getWeekNumber(date, 'ISO 8601');
+
+      expect(dayOfWeek).toBe(52);
+    }
   });
 
-  it('returns proper week number for a year that does not start on Monday (ISO 8601)', () => {
-    const date = new Date(2017, 0, 1);
+  it('returns proper week number for a sample week 53 (ISO 8601)', () => {
+    const year = 2015;
+    const month = 11;
+    const startDate = 28;
 
-    const dayOfWeek = getWeekNumber(date, 'ISO 8601');
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
 
-    expect(dayOfWeek).toBe(52);
+      const dayOfWeek = getWeekNumber(date, 'ISO 8601');
+
+      expect(dayOfWeek).toBe(53);
+    }
   });
 
-  it('returns proper week number a year that does not start on Sunday (US)', () => {
-    const date = new Date(2016, 0, 1);
+  it('returns proper week number for a sample week 1 (US)', () => {
+    const year = 2015;
+    const month = 11;
+    const startDate = 27;
 
-    const dayOfWeek = getWeekNumber(date, 'US');
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
 
-    expect(dayOfWeek).toBe(52);
+      const dayOfWeek = getWeekNumber(date, 'US');
+
+      expect(dayOfWeek).toBe(1);
+    }
   });
 
-  it('returns proper week number (default)', () => {
-    const date = new Date(2017, 0, 1);
+  it('returns proper week number for a sample week 1 (US)', () => {
+    const year = 2015;
+    const month = 11;
+    const startDate = 27;
 
-    const dayOfWeek = getWeekNumber(date);
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
 
-    expect(dayOfWeek).toBe(52);
+      const dayOfWeek = getWeekNumber(date, 'US');
+
+      expect(dayOfWeek).toBe(1);
+    }
+  });
+
+  it('returns proper week number for a sample week 52 (US)', () => {
+    const year = 2017;
+    const month = 11;
+    const startDate = 24;
+
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
+
+      const dayOfWeek = getWeekNumber(date, 'US');
+
+      expect(dayOfWeek).toBe(52);
+    }
+  });
+
+  it('returns proper week number for a sample week 53 (US)', () => {
+    const year = 2016;
+    const month = 11;
+    const startDate = 25;
+
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
+
+      const dayOfWeek = getWeekNumber(date, 'US');
+
+      expect(dayOfWeek).toBe(53);
+    }
   });
 });
 

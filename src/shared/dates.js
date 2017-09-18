@@ -176,6 +176,19 @@ export const getEndOfMonth = (date) => {
 };
 
 /**
+ * Returns the beginning of a given week.
+ *
+ * @param {Date} date Date.
+ * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
+ */
+export const getBeginOfWeek = (date, calendarType = 'ISO 8601') => {
+  const year = getYear(date);
+  const monthIndex = getMonthIndex(date);
+  const day = date.getDate() - getDayOfWeek(date, calendarType);
+  return new Date(year, monthIndex, day);
+};
+
+/**
  * Returns an array with the beginning and the end of a given month.
  *
  * @param {Date} date Date.
@@ -227,12 +240,27 @@ export const getDayRange = date => [
   getEndOfDay(date),
 ];
 
+/**
+ * Gets week number according to ISO 8601 or US standard.
+ * In ISO 8601 week 1 is the one with January 4.
+ * In US calendar week 1 is the one with January 1.
+ *
+ * @param {Date} date Date.
+ * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
+ */
 export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
-  const tempDate = new Date(+date);
-  tempDate.setDate(getDay(tempDate) + (4 - getDayOfWeek(tempDate, calendarType)));
-  const yearStart = getBeginOfYear(tempDate);
-  const weekNumber = Math.ceil((((tempDate - yearStart) / 8.64e7)) / 7);
-  return weekNumber === 0 ? 52 : weekNumber;
+  let year = getYear(date) + 1;
+  let dayInWeekOne;
+  let beginOfFirstWeek;
+
+  // Look for the first week one that does not come after a given date
+  do {
+    dayInWeekOne = new Date(year, 0, calendarType === 'ISO 8601' ? 4 : 1);
+    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarType);
+    year -= 1;
+  } while (date - beginOfFirstWeek < 0);
+
+  return Math.floor((date - beginOfFirstWeek) / (8.64e7 * 7)) + 1;
 };
 
 /**

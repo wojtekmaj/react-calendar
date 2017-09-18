@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import {
+  getDay,
   getDayOfWeek,
   getDaysInMonth,
+  getMonthIndex,
   getWeekNumber,
+  getYear,
 } from '../shared/dates';
 import { isCalendarType } from '../shared/propTypes';
 
@@ -19,24 +22,34 @@ export default class WeekNumbers extends Component {
     return getDayOfWeek(activeStartDate, calendarType);
   }
 
-  get startWeekNumber() {
-    const { activeStartDate, calendarType } = this.props;
-    return getWeekNumber(activeStartDate, calendarType);
+  get year() {
+    const { activeStartDate } = this.props;
+    return getYear(activeStartDate);
+  }
+
+  get monthIndex() {
+    const { activeStartDate } = this.props;
+    return getMonthIndex(activeStartDate);
+  }
+
+  get day() {
+    const { activeStartDate } = this.props;
+    return getDay(activeStartDate);
   }
 
   get numberOfWeeks() {
     const days = this.numberOfDays - (7 - this.startWeekday);
-    const weeks = 1 + Math.ceil(days / 7);
-
-    return weeks;
+    return 1 + Math.ceil(days / 7);
   }
 
   render() {
-    const { startWeekNumber } = this;
+    const { year, monthIndex, day } = this;
+    const { calendarType } = this.props;
+
     const weekNumbers = [];
     for (let index = 0; index < this.numberOfWeeks; index += 1) {
-      const currentNumber = index + startWeekNumber;
-      weekNumbers.push(currentNumber > 52 ? currentNumber % 52 : currentNumber);
+      const date = new Date(year, monthIndex, day + (index * 7));
+      weekNumbers.push(getWeekNumber(date, calendarType));
     }
 
     return (
