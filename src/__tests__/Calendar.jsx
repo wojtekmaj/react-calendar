@@ -223,4 +223,68 @@ describe('Calendar', () => {
       new Date(2017, 0, 1, 23, 59, 59, 999),
     ]);
   });
+
+  it('calls onChange function returning beginning of selected period, but no earlier than minDate', () => {
+    const onChange = jest.fn();
+    const component = mount(
+      <Calendar
+        minDate={new Date(2017, 0, 1, 12)}
+        onChange={onChange}
+        returnValue="start"
+        view="month"
+      />
+    );
+
+    component.node.onChange(new Date(2017, 0, 1));
+
+    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+  });
+
+  it('calls onChange function returning beginning of selected period, but no later than maxDate', () => {
+    const onChange = jest.fn();
+    const component = mount(
+      <Calendar
+        maxDate={new Date(2017, 0, 1, 12)}
+        onChange={onChange}
+        returnValue="start"
+        view="month"
+      />
+    );
+
+    component.node.onChange(new Date(2017, 0, 2));
+
+    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+  });
+
+  it('calls onChange function returning the end of selected period, but no earlier than minDate', () => {
+    const onChange = jest.fn();
+    const component = mount(
+      <Calendar
+        minDate={new Date(2017, 0, 2, 12)}
+        onChange={onChange}
+        returnValue="end"
+        view="month"
+      />
+    );
+
+    component.node.onChange(new Date(2017, 0, 1));
+
+    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 2, 12));
+  });
+
+  it('calls onChange function returning the end of selected period, but no later than maxDate', () => {
+    const onChange = jest.fn();
+    const component = mount(
+      <Calendar
+        maxDate={new Date(2017, 0, 1, 12)}
+        onChange={onChange}
+        returnValue="end"
+        view="month"
+      />
+    );
+
+    component.node.onChange(new Date(2017, 0, 2));
+
+    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+  });
 });

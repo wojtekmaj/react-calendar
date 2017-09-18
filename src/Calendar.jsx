@@ -49,28 +49,34 @@ export default class Calendar extends Component {
     if (!value) {
       return value;
     }
-    const { minDate } = this.props;
+    const { maxDate, minDate } = this.props;
     const rawValueFrom = value instanceof Array ? value[0] : value;
     const valueFrom = getBegin(this.valueType, rawValueFrom);
-    return (
-      minDate && minDate > valueFrom ?
-        minDate :
-        valueFrom
-    );
+
+    if (minDate && minDate > valueFrom) {
+      return minDate;
+    }
+    if (maxDate && maxDate < valueFrom) {
+      return maxDate;
+    }
+    return valueFrom;
   }
 
   getValueTo(value) {
     if (!value) {
       return value;
     }
-    const { maxDate } = this.props;
+    const { maxDate, minDate } = this.props;
     const rawValueFrom = value instanceof Array ? value[1] : value;
     const valueTo = getEnd(this.valueType, rawValueFrom);
-    return (
-      maxDate && maxDate < valueTo ?
-        maxDate :
-        valueTo
-    );
+
+    if (minDate && minDate > valueTo) {
+      return minDate;
+    }
+    if (maxDate && maxDate < valueTo) {
+      return maxDate;
+    }
+    return valueTo;
   }
 
   /**
