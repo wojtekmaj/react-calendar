@@ -49,6 +49,36 @@ describe('Calendar', () => {
     expect(yearView).toHaveLength(1);
   });
 
+  it('renders maximum allowed view when attempting to externally switch to a view that is not allowed', () => {
+    const component = mount(
+      <Calendar
+        maxDetail="year"
+        view="year"
+      />
+    );
+
+    component.setProps({ view: 'month' });
+
+    const yearView = component.find('.react-calendar__year-view');
+
+    expect(yearView).toHaveLength(1);
+  });
+
+  it('renders maximum allowed view when given changed maxDetail', () => {
+    const component = mount(
+      <Calendar
+        maxDetail="month"
+        view="month"
+      />
+    );
+
+    component.setProps({ maxDetail: 'year' });
+
+    const yearView = component.find('.react-calendar__year-view');
+
+    expect(yearView).toHaveLength(1);
+  });
+
   it('renders month view when given view = "month"', () => {
     const component = mount(
       <Calendar view="month" />
