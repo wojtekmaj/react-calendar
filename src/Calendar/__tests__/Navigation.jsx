@@ -1,7 +1,10 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { configure, mount, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
 import Navigation from '../Navigation';
+
+configure({ adapter: new Adapter() });
 
 const allViews = ['century', 'decade', 'year', 'month'];
 

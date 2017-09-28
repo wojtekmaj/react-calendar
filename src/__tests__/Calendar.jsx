@@ -1,7 +1,10 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
 import Calendar from '../Calendar';
+
+configure({ adapter: new Adapter() });
 
 /* eslint-disable comma-dangle */
 
@@ -13,7 +16,7 @@ describe('Calendar', () => {
 
     const navigation = component.find('.react-calendar__navigation');
 
-    expect(navigation).toHaveLength(1);
+    expect(navigation.length).toBe(1);
   });
 
   it('renders month view by default', () => {
@@ -23,7 +26,7 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
 
-    expect(monthView).toHaveLength(1);
+    expect(monthView.length).toBe(1);
   });
 
   it('renders maximum allowed view when given maxDetail', () => {
@@ -33,7 +36,7 @@ describe('Calendar', () => {
 
     const yearView = component.find('.react-calendar__year-view');
 
-    expect(yearView).toHaveLength(1);
+    expect(yearView.length).toBe(1);
   });
 
   it('renders maximum allowed view when given view that is not allowed', () => {
@@ -46,7 +49,7 @@ describe('Calendar', () => {
 
     const yearView = component.find('.react-calendar__year-view');
 
-    expect(yearView).toHaveLength(1);
+    expect(yearView.length).toBe(1);
   });
 
   it('renders maximum allowed view when attempting to externally switch to a view that is not allowed', () => {
@@ -58,10 +61,11 @@ describe('Calendar', () => {
     );
 
     component.setProps({ view: 'month' });
+    component.update();
 
     const yearView = component.find('.react-calendar__year-view');
 
-    expect(yearView).toHaveLength(1);
+    expect(yearView.length).toBe(1);
   });
 
   it('renders maximum allowed view when given changed maxDetail', () => {
@@ -73,10 +77,11 @@ describe('Calendar', () => {
     );
 
     component.setProps({ maxDetail: 'year' });
+    component.update();
 
     const yearView = component.find('.react-calendar__year-view');
 
-    expect(yearView).toHaveLength(1);
+    expect(yearView.length).toBe(1);
   });
 
   it('renders month view when given view = "month"', () => {
@@ -86,7 +91,7 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
 
-    expect(monthView).toHaveLength(1);
+    expect(monthView.length).toBe(1);
     expect(component.state().view).toBe('month');
   });
 
@@ -100,7 +105,7 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view--weekNumbers');
 
-    expect(monthView).toHaveLength(1);
+    expect(monthView.length).toBe(1);
     expect(component.state().view).toBe('month');
   });
 
@@ -111,7 +116,7 @@ describe('Calendar', () => {
 
     const yearView = component.find('.react-calendar__year-view');
 
-    expect(yearView).toHaveLength(1);
+    expect(yearView.length).toBe(1);
     expect(component.state().view).toBe('year');
   });
 
@@ -122,7 +127,7 @@ describe('Calendar', () => {
 
     const decadeView = component.find('.react-calendar__decade-view');
 
-    expect(decadeView).toHaveLength(1);
+    expect(decadeView.length).toBe(1);
     expect(component.state().view).toBe('decade');
   });
 
@@ -133,7 +138,7 @@ describe('Calendar', () => {
 
     const centuryView = component.find('.react-calendar__century-view');
 
-    expect(centuryView).toHaveLength(1);
+    expect(centuryView.length).toBe(1);
     expect(component.state().view).toBe('century');
   });
 
@@ -142,7 +147,7 @@ describe('Calendar', () => {
       <Calendar view="month" />
     );
 
-    component.node.drillUp();
+    component.instance().drillUp();
 
     expect(component.state().view).toBe('year');
   });
@@ -152,7 +157,7 @@ describe('Calendar', () => {
       <Calendar view="century" />
     );
 
-    component.node.drillUp();
+    component.instance().drillUp();
 
     expect(component.state().view).toBe('century');
   });
@@ -162,7 +167,7 @@ describe('Calendar', () => {
       <Calendar view="century" />
     );
 
-    component.node.drillDown(new Date(2011, 0, 1));
+    component.instance().drillDown(new Date(2011, 0, 1));
 
     expect(component.state().view).toBe('decade');
   });
@@ -172,7 +177,7 @@ describe('Calendar', () => {
       <Calendar view="month" />
     );
 
-    component.node.drillDown();
+    component.instance().drillDown();
 
     expect(component.state().view).toBe('month');
   });
@@ -186,7 +191,7 @@ describe('Calendar', () => {
       />
     );
 
-    component.node.onChange(new Date(2017, 0, 1));
+    component.instance().onChange(new Date(2017, 0, 1));
 
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
   });
@@ -201,7 +206,7 @@ describe('Calendar', () => {
       />
     );
 
-    component.node.onChange(new Date(2017, 0, 1));
+    component.instance().onChange(new Date(2017, 0, 1));
 
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
   });
@@ -216,7 +221,7 @@ describe('Calendar', () => {
       />
     );
 
-    component.node.onChange(new Date(2017, 0, 1));
+    component.instance().onChange(new Date(2017, 0, 1));
 
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
   });
@@ -231,7 +236,7 @@ describe('Calendar', () => {
       />
     );
 
-    component.node.onChange(new Date(2017, 0, 1));
+    component.instance().onChange(new Date(2017, 0, 1));
 
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 23, 59, 59, 999));
   });
@@ -246,7 +251,7 @@ describe('Calendar', () => {
       />
     );
 
-    component.node.onChange(new Date(2017, 0, 1));
+    component.instance().onChange(new Date(2017, 0, 1));
 
     expect(onChange).toHaveBeenCalledWith([
       new Date(2017, 0, 1),
@@ -265,7 +270,7 @@ describe('Calendar', () => {
       />
     );
 
-    component.node.onChange(new Date(2017, 0, 1));
+    component.instance().onChange(new Date(2017, 0, 1));
 
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
   });
@@ -281,7 +286,7 @@ describe('Calendar', () => {
       />
     );
 
-    component.node.onChange(new Date(2017, 0, 2));
+    component.instance().onChange(new Date(2017, 0, 2));
 
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
   });
@@ -297,7 +302,7 @@ describe('Calendar', () => {
       />
     );
 
-    component.node.onChange(new Date(2017, 0, 1));
+    component.instance().onChange(new Date(2017, 0, 1));
 
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 2, 12));
   });
@@ -313,7 +318,7 @@ describe('Calendar', () => {
       />
     );
 
-    component.node.onChange(new Date(2017, 0, 2));
+    component.instance().onChange(new Date(2017, 0, 2));
 
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
   });
