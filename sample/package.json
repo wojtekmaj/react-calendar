@@ -1,6 +1,6 @@
 {
   "name": "react-calendar-sample-page",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A sample page for React-Calendar.",
   "scripts": {
     "build": "webpack"
