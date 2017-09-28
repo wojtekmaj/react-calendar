@@ -2,6 +2,7 @@
   "name": "react-calendar-test-page",
   "version": "2.0.4",
   "description": "A test page for React-Calendar.",
+  "private": true,
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --config webpack.config.hot.js"
