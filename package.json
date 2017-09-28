@@ -39,7 +39,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.0",
+    "babel-eslint": "^8.0.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-object-assign": "^6.22.0",
@@ -52,9 +52,9 @@
     "eslint-plugin-class-property": "^1.0.6",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.3.0",
+    "eslint-plugin-react": "^7.4.0",
     "jest": "^21.1.0",
-    "react-test-renderer": "^15.6.1"
+    "react-test-renderer": "^16.0.0"
   },
   "files": [
     "LICENSE",
