@@ -1,5 +1,5 @@
 import React from 'react';
-import { configure, mount, shallow } from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import Navigation from '../Navigation';
@@ -163,7 +163,7 @@ describe('Navigation', () => {
 
   it('calls setActiveStartDate on prev2, prev, next and next2 buttons click', () => {
     const setActiveStartDateFn = jest.fn();
-    const component = mount(
+    const component = shallow(
       <Navigation
         activeStartDate={new Date(2017, 0, 1)}
         drillUp={jest.fn()}
@@ -190,7 +190,7 @@ describe('Navigation', () => {
 
   const monthSetActiveStartDateFn = jest.fn();
 
-  const monthViewComponent = mount(
+  const monthViewComponent = shallow(
     <Navigation
       activeStartDate={new Date(2017, 0, 1)}
       drillUp={jest.fn()}
@@ -236,7 +236,7 @@ describe('Navigation', () => {
 
   const yearSetActiveStartDateFn = jest.fn();
 
-  const yearViewComponent = mount(
+  const yearViewComponent = shallow(
     <Navigation
       activeStartDate={new Date(2017, 0, 1)}
       drillUp={jest.fn()}
@@ -282,7 +282,7 @@ describe('Navigation', () => {
 
   const decadeSetActiveStartDateFn = jest.fn();
 
-  const decadeViewComponent = mount(
+  const decadeViewComponent = shallow(
     <Navigation
       activeStartDate={new Date(2017, 0, 1)}
       drillUp={jest.fn()}
@@ -328,7 +328,7 @@ describe('Navigation', () => {
 
   const centurySetActiveStartDateFn = jest.fn();
 
-  const centuryViewComponent = mount(
+  const centuryViewComponent = shallow(
     <Navigation
       activeStartDate={new Date(2017, 0, 1)}
       drillUp={jest.fn()}
