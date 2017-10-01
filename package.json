@@ -5,7 +5,10 @@
   "main": "build/entry.js",
   "es6": "src/entry.js",
   "scripts": {
-    "build": "babel src -d build --ignore **/__tests__",
+    "build": "npm run build-js && npm run copy-styles && npm run compile-styles",
+    "build-js": "babel src -d build --ignore **/__tests__",
+    "copy-styles": "node ./copy-styles.js",
+    "compile-styles": "lessc ./build/Calendar.less ./build/Calendar.css",
     "prepublishOnly": "npm run build",
     "test": "npm run test-eslint && npm run test-jest",
     "test-eslint": "eslint ./src",
@@ -55,6 +58,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.4.0",
     "jest": "^21.2.1",
+    "less": "^2.7.2",
     "react-test-renderer": "^16.0.0"
   },
   "files": [
