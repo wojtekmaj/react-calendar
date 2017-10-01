@@ -4,7 +4,6 @@ coverage
 node_modules
 sample/build
 sample/package-lock.json
-src/Calendar.css
 test/build
 test/package-lock.json
 npm-debug.log
