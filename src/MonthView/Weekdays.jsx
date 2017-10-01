@@ -47,7 +47,7 @@ export default class Weekdays extends Component {
           key={weekday}
           style={{ flexGrow: 1 }}
         >
-          {formatShortWeekday(weekdayDate)}
+          {formatShortWeekday(weekdayDate).replace('.', '')}
         </div>,
       );
     }
