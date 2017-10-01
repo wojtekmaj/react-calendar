@@ -5,10 +5,10 @@
   "main": "build/entry.js",
   "es6": "src/entry.js",
   "scripts": {
-    "build": "npm run build-js && npm run copy-styles && npm run compile-styles",
+    "build": "npm run build-js && npm run build-styles && npm run copy-styles",
     "build-js": "babel src -d build --ignore **/__tests__",
+    "build-styles": "lessc ./src/Calendar.less ./src/Calendar.css",
     "copy-styles": "node ./copy-styles.js",
-    "compile-styles": "lessc ./build/Calendar.less ./build/Calendar.css",
     "prepublishOnly": "npm run build",
     "test": "npm run test-eslint && npm run test-jest",
     "test-eslint": "eslint ./src",

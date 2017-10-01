@@ -8,7 +8,6 @@ Ultimate date picker for your React application.
 ## tl;dr
 * Install by executing `npm install react-calendar` or `yarn add react-calendar`.
 * Import by adding `import Calendar from 'react-calendar'`.
-* Import styles by adding `import 'react-calendar/build/Calendar.less'`. Precompiled `Calendar.css` file is also available. If you don't want to use default styles, you can style the calendar on your own.
 * Use by adding `<Calendar />`. Use `onChange` prop for getting new values.
 
 ## Demo
@@ -49,7 +48,6 @@ Here's an example of basic usage:
 ```js
 import React, { Component } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/build/Calendar.less';
 
 class MyApp extends Component {
   state = {
@@ -69,6 +67,10 @@ class MyApp extends Component {
   }
 }
 ```
+
+### Custom styling
+
+If you don't want to use default React-Calendar styling to build upon it, you can import React-Calendar by using `import Calendar from 'react-calendar/build/entry.nostyle';` instead.
 
 ## User guide
 

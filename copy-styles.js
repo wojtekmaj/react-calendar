@@ -5,5 +5,13 @@ fs.copyFile('./src/Calendar.less', 'build/Calendar.less', (error) => {
     throw error;
   }
   // eslint-disable-next-line no-console
-  console.log('Styles copied successfully.');
+  console.log('Calendar.less copied successfully.');
+});
+
+fs.copyFile('./src/Calendar.css', 'build/Calendar.css', (error) => {
+  if (error) {
+    throw error;
+  }
+  // eslint-disable-next-line no-console
+  console.log('Calendar.css copied successfully.');
 });

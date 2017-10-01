@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Calendar from 'react-calendar';
-import 'react-calendar/build/Calendar.less';
 
 import './Sample.less';
 
