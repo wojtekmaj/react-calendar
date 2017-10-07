@@ -112,6 +112,7 @@ export default class Test extends Component {
               }}
             >
               <Calendar
+                className="myCustomCalendarClassName"
                 locale={locale}
                 maxDate={maxDate}
                 maxDetail={maxDetail}

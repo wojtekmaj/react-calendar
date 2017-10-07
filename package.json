@@ -35,6 +35,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash.once": "^4.1.1",
+    "merge-class-names": "^1.1.0",
     "prop-types": ">=15.5",
     "react": ">=15.5",
     "react-dom": ">=15.5"

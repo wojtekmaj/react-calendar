@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import mergeClassNames from 'merge-class-names';
 
 import Navigation from './Calendar/Navigation';
 import CenturyView from './CenturyView';
@@ -319,7 +320,7 @@ export default class Calendar extends Component {
 
   render() {
     return (
-      <div className="react-calendar">
+      <div className={mergeClassNames('react-calendar', this.props.className)}>
         {this.renderNavigation()}
         {this.renderContent()}
       </div>
@@ -338,6 +339,10 @@ Calendar.defaultProps = {
 
 Calendar.propTypes = {
   calendarType: isCalendarType,
+  className: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   locale: PropTypes.string,
   maxDate: isMaxDate,
   maxDetail: PropTypes.oneOf(allViews),
