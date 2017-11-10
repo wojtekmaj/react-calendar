@@ -20,18 +20,29 @@ const getFormatter = (options, locales = getLocale()) => {
   return formatterCache[locales][stringifiedOptions];
 };
 
+/**
+ * Changes the hour in a Date to ensure right date formatting even if DST is messed up.
+ * Workaround for bug in WebKit and Firefox with historical dates.
+ * For more details, see:
+ * https://bugs.chromium.org/p/chromium/issues/detail?id=750465
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1385643
+ *
+ * @param {Date} date Date.
+ */
+const toSafeHour = date => new Date(date.setHours(12));
+
 export const formatDate = date => getFormatter(
   { day: 'numeric', month: 'numeric', year: 'numeric' },
-)(date);
+)(toSafeHour(date));
 
 export const formatMonthYear = date => getFormatter(
   { month: 'long', year: 'numeric' },
-)(date);
+)(toSafeHour(date));
 
 export const formatMonth = date => getFormatter(
   { month: 'long' },
-)(date);
+)(toSafeHour(date));
 
 export const formatShortWeekday = date => getFormatter(
   { weekday: 'short' },
-)(date);
+)(toSafeHour(date));
