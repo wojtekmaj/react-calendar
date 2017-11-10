@@ -11,7 +11,7 @@ export const getYear = (date) => {
 
   const year = parseInt(date, 10);
 
-  if (typeof date === 'string' && !isNaN(year)) {
+  if (typeof date === 'string' && !Number.isNaN(year)) {
     return year;
   }
 
