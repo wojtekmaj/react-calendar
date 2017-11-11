@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 const toPercent = num => `${Math.floor(100 * num) / 100}%`;
 
-const Flex = ({ children, className, count, offset, wrap }) => (
+const Flex = ({
+  children, className, count, offset, wrap,
+}) => (
   <div
     className={className}
     style={{

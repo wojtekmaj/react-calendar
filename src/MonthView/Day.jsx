@@ -11,7 +11,9 @@ import { isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
 
-const Day = ({ active, currentMonthIndex, date, maxDate, minDate, onClick, renderChildren }) => (
+const Day = ({
+  active, currentMonthIndex, date, maxDate, minDate, onClick, renderChildren,
+}) => (
   <button
     className={[
       className,

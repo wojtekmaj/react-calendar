@@ -64,7 +64,9 @@ export default class Days extends Component {
   }
 
   render() {
-    const { start, end, year, monthIndex } = this;
+    const {
+      start, end, year, monthIndex,
+    } = this;
     const {
       maxDate,
       minDate,

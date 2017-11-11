@@ -26,6 +26,7 @@ export default class DateBonduariesOptions extends Component {
         <div>
           <label htmlFor="minDate">Minimum date</label>
           <input
+            id="minDate"
             onChange={this.onMinChange}
             type="date"
             value={minDate ? getISOLocalDate(minDate) : ''}
@@ -40,6 +41,7 @@ export default class DateBonduariesOptions extends Component {
         <div>
           <label htmlFor="maxDate">Maximum date</label>
           <input
+            id="maxDate"
             onChange={this.onMaxChange}
             type="date"
             value={maxDate ? getISOLocalDate(maxDate) : ''}

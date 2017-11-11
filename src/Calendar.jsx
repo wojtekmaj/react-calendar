@@ -230,8 +230,6 @@ export default class Calendar extends Component {
   }
 
   onChange = (value) => {
-    this.setState({ value });
-
     const { onChange } = this.props;
     if (onChange) {
       const processedValue = this.getProcessedValue(value);
@@ -241,7 +239,9 @@ export default class Calendar extends Component {
 
   renderContent() {
     const { setView, valueType } = this;
-    const { calendarType, maxDate, minDate, renderChildren, value } = this.props;
+    const {
+      calendarType, maxDate, minDate, renderChildren, value,
+    } = this.props;
     const { activeStartDate, view } = this.state;
 
     const commonProps = {
@@ -358,7 +358,7 @@ Calendar.propTypes = {
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   renderChildren: PropTypes.func,
-  returnValue: PropTypes.oneOf(['start', 'end', 'range']).isRequired,
+  returnValue: PropTypes.oneOf(['start', 'end', 'range']),
   showNavigation: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,

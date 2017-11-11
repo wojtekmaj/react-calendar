@@ -29,8 +29,9 @@ export default class ValueOptions extends Component {
         <legend htmlFor="viewoptions">Set date externally</legend>
 
         <div>
-          <label htmlFor="minDetailCentury">Start date</label>
+          <label htmlFor="startDate">Start date</label>
           <input
+            id="startDate"
             onChange={this.onChange}
             type="date"
             value={this.startDate ? getISOLocalDate(this.startDate) : ''}

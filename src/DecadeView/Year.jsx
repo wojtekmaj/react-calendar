@@ -9,7 +9,9 @@ import { isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__decade-view__years__year';
 
-const Year = ({ active, date, hasActive, maxDate, minDate, onClick, renderChildren, year }) => (
+const Year = ({
+  active, date, hasActive, maxDate, minDate, onClick, renderChildren, year,
+}) => (
   <button
     className={[
       className,

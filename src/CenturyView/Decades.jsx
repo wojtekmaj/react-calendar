@@ -23,7 +23,9 @@ export default class Decades extends Component {
 
   render() {
     const { end, start } = this;
-    const { maxDate, minDate, onClick, renderChildren, value, valueType } = this.props;
+    const {
+      maxDate, minDate, onClick, renderChildren, value, valueType,
+    } = this.props;
 
     const decadeProps = {
       maxDate,
