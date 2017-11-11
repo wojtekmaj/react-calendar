@@ -14,6 +14,7 @@
   "rules": {
     "function-paren-newline": "off",
     "global-require": "off",
+    "jsx-a11y/label-has-for": ["error", { "required": { "some": ["id", "nesting"] }}],
     "max-len": "error",
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["canvas", "element"] }],
     "prefer-destructuring": "warn",
