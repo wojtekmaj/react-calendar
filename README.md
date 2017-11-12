@@ -61,6 +61,7 @@ class MyApp extends Component {
       <div>
         <Calendar
           onChange={this.onChange}
+          value={this.state.date}
         />
       </div>
     );
