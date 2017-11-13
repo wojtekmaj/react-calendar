@@ -3,6 +3,7 @@
   "version": "2.2.1",
   "description": "A component for picking dates or date periods for your React application.",
   "main": "build/entry.js",
+  "types": "./index.d.ts",
   "es6": "src/entry.js",
   "scripts": {
     "build": "npm run build-js && npm run build-styles && npm run copy-styles",
@@ -66,6 +67,7 @@
   "files": [
     "LICENSE",
     "README.md",
+    "index.d.ts",
     "build/",
     "src/"
   ],
