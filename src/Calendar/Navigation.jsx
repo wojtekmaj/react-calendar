@@ -94,15 +94,17 @@ export default class Navigation extends Component {
     const { label } = this;
     const { drillUp, view } = this.props;
 
+    const className = 'react-calendar__navigation';
+
     return (
       <div
-        className="react-calendar__navigation"
+        className={className}
         style={{ display: 'flex' }}
       >
         {
           view !== 'century' &&
           <button
-            className="react-calendar__navigation__arrow"
+            className={`${className}__arrow ${className}__prev2-button`}
             disabled={this.prev2ButtonDisabled}
             onClick={this.onClickPrevious2}
             type="button"
@@ -111,7 +113,7 @@ export default class Navigation extends Component {
           </button>
         }
         <button
-          className="react-calendar__navigation__arrow"
+          className={`${className}__arrow ${className}__prev-button`}
           disabled={this.prevButtonDisabled}
           onClick={this.onClickPrevious}
           type="button"
@@ -128,7 +130,7 @@ export default class Navigation extends Component {
           {label}
         </button>
         <button
-          className="react-calendar__navigation__arrow"
+          className={`${className}__arrow ${className}__next-button`}
           disabled={this.nextButtonDisabled}
           onClick={this.onClickNext}
           type="button"
@@ -138,7 +140,7 @@ export default class Navigation extends Component {
         {
           view !== 'century' &&
           <button
-            className="react-calendar__navigation__arrow"
+            className={`${className}__arrow ${className}__next2-button`}
             disabled={this.next2ButtonDisabled}
             onClick={this.onClickNext2}
             type="button"
