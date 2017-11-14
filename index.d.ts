@@ -36,4 +36,18 @@ declare module "react-calendar" {
     date: Date;
     view: Detail
   }
+
+  export function MonthView(props: DetailViewProps): JSX.Element;
+  export function YearView(props: DetailViewProps): JSX.Element;
+  export function DecadeView(props: DetailViewProps): JSX.Element;
+  export function CenturyView(props: DetailViewProps): JSX.Element;
+
+  export interface DetailViewProps {
+    activeStartDate: Date;
+    maxDate?: Date;
+    minDate?: Date;
+    onClick?: DateCallback;
+    renderChildren?: (props: CalendarRenderChildrenProps) => JSX.Element | null;
+    value?: Date | Date[];
+  }
 }
