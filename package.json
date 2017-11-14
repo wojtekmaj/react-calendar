@@ -33,6 +33,12 @@
     "name": "Wojciech Maj",
     "email": "kontakt@wojtekmaj.pl"
   },
+  "contributors": [
+    {
+      "name": "Kevin Kipp",
+      "email": "kevin.kipp@gmail.com"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "lodash.once": "^4.1.1",
