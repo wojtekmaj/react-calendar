@@ -34,7 +34,7 @@ declare module "react-calendar" {
 
   export interface CalendarRenderChildrenProps {
     date: Date;
-    view: Detail
+    view: Detail;
   }
 
   export function MonthView(props: DetailViewProps): JSX.Element;
