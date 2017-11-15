@@ -18,6 +18,8 @@ export const getYear = (date) => {
   throw new Error(`Failed to get year from date: ${date}.`);
 };
 
+export const getMonth = date => date.getMonth() + 1;
+
 export const getMonthIndex = date => date.getMonth();
 
 export const getDay = date => date.getDate();
@@ -455,9 +457,47 @@ export const getDecadeLabel = (date) => {
 
 /**
  * Returns a boolean determining whether a given date is on Saturday or Sunday.
+ *
  * @param {Date} date Date.
  */
 export const isWeekend = (date) => {
   const weekday = getDayOfWeek(date);
   return weekday >= 5;
+};
+
+/**
+ * Returns local month in ISO-like format (YYYY-MM).
+ */
+export const getISOLocalMonth = (value) => {
+  if (!value) {
+    return value;
+  }
+
+  if (!(value instanceof Date)) {
+    throw new Error(`Invalid date: ${value}`);
+  }
+
+  const year = getYear(value);
+  const month = `0${getMonth(value)}`.slice(-2);
+
+  return `${year}-${month}`;
+};
+
+/**
+ * Returns local date in ISO-like format (YYYY-MM-DD).
+ */
+export const getISOLocalDate = (value) => {
+  if (!value) {
+    return value;
+  }
+
+  if (!(value instanceof Date)) {
+    throw new Error(`Invalid date: ${value}`);
+  }
+
+  const year = getYear(value);
+  const month = `0${getMonth(value)}`.slice(-2);
+  const day = `0${getDay(value)}`.slice(-2);
+
+  return `${year}-${month}-${day}`;
 };

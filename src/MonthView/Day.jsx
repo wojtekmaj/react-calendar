@@ -5,6 +5,7 @@ import {
   getBeginOfDay,
   getDay,
   getEndOfDay,
+  getISOLocalDate,
   isWeekend,
 } from '../shared/dates';
 import { isMaxDate, isMinDate } from '../shared/propTypes';
@@ -31,7 +32,7 @@ const Day = ({
     style={{ flexGrow: 1 }}
     type="button"
   >
-    <time dateTime={date.toISOString()}>
+    <time dateTime={`${getISOLocalDate(date)}T00:00:00.000`}>
       {getDay(date)}
     </time>
     {renderChildren && renderChildren({ date, view: 'month' })}

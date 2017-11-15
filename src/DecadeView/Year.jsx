@@ -27,7 +27,7 @@ const Year = ({
     style={{ flexGrow: 1 }}
     type="button"
   >
-    <time dateTime={year}>
+    <time dateTime={`${year}T00:00:00.000`}>
       {year}
     </time>
     {renderChildren && renderChildren({ date, view: 'decade' })}

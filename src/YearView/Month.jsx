@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import {
   getBeginOfMonth,
   getEndOfMonth,
+  getISOLocalMonth,
 } from '../shared/dates';
 import { formatMonth } from '../shared/dateFormatter';
 import { isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__year-view__months__month';
 
-const Month = ({ active, date, hasActive, maxDate, minDate, onClick, renderChildren }) => (
+const Month = ({
+  active, date, hasActive, maxDate, minDate, onClick, renderChildren,
+}) => (
   <button
     className={[
       className,
@@ -26,7 +29,7 @@ const Month = ({ active, date, hasActive, maxDate, minDate, onClick, renderChild
     style={{ flexGrow: 1 }}
     type="button"
   >
-    <time dateTime={date.toISOString()}>
+    <time dateTime={`${getISOLocalMonth(date)}T00:00:00.000`}>
       {formatMonth(date)}
     </time>
     {renderChildren && renderChildren({ date, view: 'year' })}
