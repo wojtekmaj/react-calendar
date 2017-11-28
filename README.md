@@ -97,7 +97,7 @@ Displays a complete, interactive calendar.
 |onClickDecade|Function called when the user clicks a decade.|`(value) => alert('Clicked decade: ', value)`|
 |onClickMonth|Function called when the user clicks a month.|`(value) => alert('Clicked month: ', value)`|
 |onClickYear|Function called when the user clicks a year.|`(value) => alert('Clicked year: ', value)`|
-|prevLabel|Defines the content of the "previous" button on the navigation pane. Defaults to "‹".|<ul><li>String: `"‹"`</li><li>React element: `<PrevousIcon />`</li></ul>|
+|prevLabel|Defines the content of the "previous" button on the navigation pane. Defaults to "‹".|<ul><li>String: `"‹"`</li><li>React element: `<PreviousIcon />`</li></ul>|
 |prev2Label|Defines the content of the "previous on higher level" button on the navigation pane. Defaults to "«".|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
 |renderChildren|Allows to render custom content within a given item (day on month view, month on year view and so on).|`({ date, view }) => view === 'month' && date.getDay() === 0 ? <p>It's Sunday!</p> : null`|
 |returnValue|Defines which dates shall be passed by the calendar to the onChange function and onClick{Period} functions. Can be "start", "end" or "range". The latter will cause an array with start and end values to be passed. Defaults to "start".|`"range"`|
