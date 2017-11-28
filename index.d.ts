@@ -23,16 +23,18 @@ declare module "react-calendar" {
     onClickYear?: DateCallback;
     prev2Label?: string | React.ReactElement<any>;
     prevLabel?: string | React.ReactElement<any>;
-    renderChildren?: (props: CalendarRenderChildrenProps) => JSX.Element | null;
+    renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
     returnValue?: "start" | "end" | "range";
     showNavigation?: boolean;
     showNeighboringMonth?: boolean;
     showWeekNumbers?: boolean;
+    tileClassName?: string | string[] | ((props: CalendarTileProperties) => string | string[] | null);
+    tileContent?: React.ReactElement<any> | ((props: CalendarTileProperties) => JSX.Element | null);
     value?: Date | Date[];
     view?: Detail;
   }
 
-  export interface CalendarRenderChildrenProps {
+  export interface CalendarTileProperties {
     date: Date;
     view: Detail;
   }
@@ -47,7 +49,9 @@ declare module "react-calendar" {
     maxDate?: Date;
     minDate?: Date;
     onClick?: DateCallback;
-    renderChildren?: (props: CalendarRenderChildrenProps) => JSX.Element | null;
+    renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
+    tileClassName?: string | string[] | ((props: CalendarTileProperties) => string | string[] | null);
+    tileContent?: React.ReactElement<any> | ((props: CalendarTileProperties) => JSX.Element | null);
     value?: Date | Date[];
   }
 }

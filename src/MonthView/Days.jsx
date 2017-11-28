@@ -10,7 +10,7 @@ import {
   getMonthIndex,
   getYear,
 } from '../shared/dates';
-import { isCalendarType, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
+import { isCalendarType, isClassName, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
 import { getTileActivityFlags } from '../shared/utils';
 
 export default class Days extends Component {
@@ -71,7 +71,8 @@ export default class Days extends Component {
       maxDate,
       minDate,
       onClick,
-      renderChildren,
+      tileClassName,
+      tileContent,
       value,
       valueType,
     } = this.props;
@@ -80,7 +81,8 @@ export default class Days extends Component {
       maxDate,
       minDate,
       onClick,
-      renderChildren,
+      tileClassName,
+      tileContent,
     };
 
     const days = [];
@@ -117,8 +119,12 @@ Days.propTypes = {
   maxDate: isMaxDate,
   minDate: isMinDate,
   onClick: PropTypes.func,
-  renderChildren: PropTypes.func,
   showNeighboringMonth: PropTypes.bool,
+  tileClassName: isClassName,
+  tileContent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
   value: isValue,
   valueType: PropTypes.string,
 };

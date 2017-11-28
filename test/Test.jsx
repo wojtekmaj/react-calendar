@@ -119,7 +119,25 @@ export default class Test extends Component {
                 minDate={minDate}
                 minDetail={minDetail}
                 onChange={this.onChange}
-                renderChildren={({ date, view }) => {
+                tileClassName={({ date, view }) => {
+                  switch (view) {
+                    case 'month':
+                      return date.getDay() === 0 || date.getDay() === 6 ?
+                        'red' : null;
+                    case 'year':
+                      return date.getMonth() === 5 || date.getMonth() === 6 ?
+                        'green' : null;
+                    case 'decade':
+                      return date.getFullYear() === 1991 ?
+                        'pink' : null;
+                    case 'century':
+                      return date.getFullYear() === 1991 ?
+                        'brown' : null;
+                    default:
+                      return null;
+                  }
+                }}
+                tileContent={({ date, view }) => {
                   switch (view) {
                     case 'month':
                       return date.getDay() === 0 ?

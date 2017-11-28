@@ -6,7 +6,7 @@ import Month from './Month';
 
 import { getYear } from '../shared/dates';
 import { getTileActivityFlags } from '../shared/utils';
-import { isMaxDate, isMinDate, isValue } from '../shared/propTypes';
+import { isClassName, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
 
 export default class Months extends Component {
   start = 0
@@ -20,13 +20,16 @@ export default class Months extends Component {
 
   render() {
     const { end, start, year } = this;
-    const { maxDate, minDate, onClick, renderChildren, value, valueType } = this.props;
+    const {
+      maxDate, minDate, onClick, tileClassName, tileContent, value, valueType,
+    } = this.props;
 
     const monthProps = {
       maxDate,
       minDate,
       onClick,
-      renderChildren,
+      tileClassName,
+      tileContent,
     };
 
     const months = [];
@@ -60,7 +63,11 @@ Months.propTypes = {
   maxDate: isMaxDate,
   minDate: isMinDate,
   onClick: PropTypes.func,
-  renderChildren: PropTypes.func,
+  tileClassName: isClassName,
+  tileContent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
   value: isValue,
   valueType: PropTypes.string,
 };

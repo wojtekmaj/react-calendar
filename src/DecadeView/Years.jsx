@@ -6,7 +6,7 @@ import Year from './Year';
 
 import { getBeginOfDecadeYear } from '../shared/dates';
 import { getTileActivityFlags } from '../shared/utils';
-import { isMaxDate, isMinDate, isValue } from '../shared/propTypes';
+import { isClassName, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
 
 export default class Years extends Component {
   get start() {
@@ -21,14 +21,15 @@ export default class Years extends Component {
   render() {
     const { end, start } = this;
     const {
-      maxDate, minDate, onClick, renderChildren, value, valueType,
+      maxDate, minDate, onClick, tileClassName, tileContent, value, valueType,
     } = this.props;
 
     const yearProps = {
       maxDate,
       minDate,
       onClick,
-      renderChildren,
+      tileClassName,
+      tileContent,
     };
 
     const years = [];
@@ -63,7 +64,11 @@ Years.propTypes = {
   maxDate: isMaxDate,
   minDate: isMinDate,
   onClick: PropTypes.func,
-  renderChildren: PropTypes.func,
+  tileClassName: isClassName,
+  tileContent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
   value: isValue,
   valueType: PropTypes.string,
 };

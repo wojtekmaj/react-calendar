@@ -48,6 +48,11 @@ export const isValue = PropTypes.oneOfType([
 
 export const isViews = PropTypes.arrayOf(PropTypes.oneOf(allViews));
 
+export const isClassName = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.arrayOf(PropTypes.string),
+]);
+
 export const isView = (props, propName, componentName) => {
   const view = props[propName];
   const { views } = props;

@@ -10,7 +10,7 @@ import MonthView from './MonthView';
 
 import { getBegin, getEnd, getRange } from './shared/dates';
 import { setLocale } from './shared/locales';
-import { isCalendarType, isMaxDate, isMinDate, isValue } from './shared/propTypes';
+import { isCalendarType, isClassName, isMaxDate, isMinDate, isValue } from './shared/propTypes';
 import { mergeFunctions } from './shared/utils';
 
 const allViews = ['century', 'decade', 'year', 'month'];
@@ -240,7 +240,7 @@ export default class Calendar extends Component {
   renderContent() {
     const { setView, valueType } = this;
     const {
-      calendarType, maxDate, minDate, renderChildren, value,
+      calendarType, maxDate, minDate, renderChildren, tileClassName, tileContent, value,
     } = this.props;
     const { activeStartDate, view } = this.state;
 
@@ -248,8 +248,9 @@ export default class Calendar extends Component {
       activeStartDate,
       maxDate,
       minDate,
-      renderChildren,
       setView,
+      tileClassName,
+      tileContent: tileContent || renderChildren, // For backwards compatibility
       value,
       valueType,
     };
@@ -339,10 +340,7 @@ Calendar.defaultProps = {
 
 Calendar.propTypes = {
   calendarType: isCalendarType,
-  className: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
+  className: isClassName,
   locale: PropTypes.string,
   maxDate: isMaxDate,
   maxDetail: PropTypes.oneOf(allViews),
@@ -357,11 +355,16 @@ Calendar.propTypes = {
   onClickYear: PropTypes.func,
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  renderChildren: PropTypes.func,
+  renderChildren: PropTypes.func, // For backwards compatibility
   returnValue: PropTypes.oneOf(['start', 'end', 'range']),
   showNavigation: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
+  tileClassName: isClassName,
+  tileContent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
   value: isValue,
   view: PropTypes.oneOf(allViews), // eslint-disable-line react/no-unused-prop-types
 };

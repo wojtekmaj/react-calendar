@@ -1,24 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import mergeClassNames from 'merge-class-names';
 
 import {
   getBeginOfYear,
   getEndOfYear,
 } from '../shared/dates';
-import { isMaxDate, isMinDate } from '../shared/propTypes';
+import { isClassName, isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__decade-view__years__year';
 
 const Year = ({
-  active, date, hasActive, maxDate, minDate, onClick, renderChildren, year,
+  active, date, hasActive, maxDate, minDate, onClick, tileClassName, tileContent, year,
 }) => (
   <button
-    className={[
+    className={mergeClassNames(
       className,
       (active ? 'react-calendar__tile--active' : ''),
       (hasActive ? 'react-calendar__tile--hasActive' : ''),
       'react-calendar__tile',
-    ].join(' ')}
+      tileClassName instanceof Function ? tileClassName({ date, view: 'decade' }) : tileClassName,
+    )}
     disabled={
       (minDate && getBeginOfYear(minDate) > date) ||
       (maxDate && getEndOfYear(maxDate) < date)
@@ -30,7 +32,7 @@ const Year = ({
     <time dateTime={`${year}T00:00:00.000`}>
       {year}
     </time>
-    {renderChildren && renderChildren({ date, view: 'decade' })}
+    {tileContent instanceof Function ? tileContent({ date, view: 'decade' }) : tileContent}
   </button>
 );
 
@@ -41,7 +43,11 @@ Year.propTypes = {
   maxDate: isMaxDate,
   minDate: isMinDate,
   onClick: PropTypes.func,
-  renderChildren: PropTypes.func,
+  tileClassName: isClassName,
+  tileContent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
   year: PropTypes.number.isRequired,
 };
 

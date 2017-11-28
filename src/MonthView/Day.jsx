@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import mergeClassNames from 'merge-class-names';
 
 import {
   getBeginOfDay,
@@ -8,21 +9,22 @@ import {
   getISOLocalDate,
   isWeekend,
 } from '../shared/dates';
-import { isMaxDate, isMinDate } from '../shared/propTypes';
+import { isClassName, isMaxDate, isMinDate } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
 
 const Day = ({
-  active, currentMonthIndex, date, maxDate, minDate, onClick, renderChildren,
+  active, currentMonthIndex, date, maxDate, minDate, onClick, tileClassName, tileContent,
 }) => (
   <button
-    className={[
+    className={mergeClassNames(
       className,
       'react-calendar__tile',
       (active ? 'react-calendar__tile--active' : ''),
       (isWeekend(date) ? `${className}--weekend` : ''),
       (date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : ''),
-    ].join(' ')}
+      tileClassName instanceof Function ? tileClassName({ date, view: 'month' }) : tileClassName,
+    )}
     disabled={
       (minDate && getBeginOfDay(minDate) > date) ||
       (maxDate && getEndOfDay(maxDate) < date)
@@ -35,7 +37,7 @@ const Day = ({
     <time dateTime={`${getISOLocalDate(date)}T00:00:00.000`}>
       {getDay(date)}
     </time>
-    {renderChildren && renderChildren({ date, view: 'month' })}
+    {tileContent instanceof Function ? tileContent({ date, view: 'month' }) : tileContent}
   </button>
 );
 
@@ -46,7 +48,11 @@ Day.propTypes = {
   maxDate: isMaxDate,
   minDate: isMinDate,
   onClick: PropTypes.func,
-  renderChildren: PropTypes.func,
+  tileClassName: isClassName,
+  tileContent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
 };
 
 export default Day;
