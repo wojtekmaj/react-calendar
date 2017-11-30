@@ -7,6 +7,7 @@ declare module "react-calendar" {
   export default function Calendar(props: CalendarProps): JSX.Element;
 
   export interface CalendarProps {
+    activeStartDate?: Date;
     calendarType?: "US" | "ISO 8601";
     className?: string | string[];
     locale?: string;
