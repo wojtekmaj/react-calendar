@@ -1,6 +1,6 @@
 {
   "name": "react-calendar",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "A component for picking dates or date periods for your React application.",
   "main": "build/entry.js",
   "types": "./index.d.ts",
