@@ -120,6 +120,9 @@ export default class Test extends Component {
                 minDate={minDate}
                 minDetail={minDetail}
                 onChange={this.onChange}
+                onClickWeekNumber={(weekNumber, date) => {
+                  console.log('Clicked week number', weekNumber, date);
+                }}
                 tileClassName={({ date, view }) => {
                   switch (view) {
                     case 'month':

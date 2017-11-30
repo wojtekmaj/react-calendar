@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Flex from '../Flex';
+
 import {
+  getBeginOfWeek,
   getDay,
   getDayOfWeek,
   getDaysInMonth,
@@ -43,31 +46,47 @@ export default class WeekNumbers extends Component {
   }
 
   render() {
-    const { year, monthIndex, day } = this;
-    const { calendarType } = this.props;
+    const {
+      year,
+      monthIndex,
+      numberOfWeeks,
+      day,
+    } = this;
+    const { calendarType, onClickWeekNumber } = this.props;
 
+    const weekDates = [];
     const weekNumbers = [];
     for (let index = 0; index < this.numberOfWeeks; index += 1) {
       const date = new Date(year, monthIndex, day + (index * 7));
+      weekDates.push(getBeginOfWeek(date));
       weekNumbers.push(getWeekNumber(date, calendarType));
     }
 
+    const Tag = onClickWeekNumber ? 'button' : 'div';
+
     return (
-      <div
+      <Flex
         className="react-calendar__month-view__weekNumbers"
+        count={numberOfWeeks}
+        direction="column"
         style={{ flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }}
       >
         {
-          weekNumbers.map(weekNumber => (
-            <div
+          weekNumbers.map((weekNumber, weekIndex) => (
+            <Tag
               className="react-calendar__tile"
               key={weekNumber}
+              onClick={onClickWeekNumber &&
+                (() => onClickWeekNumber(weekNumber, weekDates[weekIndex]))
+              }
+              style={{ flexGrow: 1 }}
+              type={onClickWeekNumber ? 'button' : null}
             >
               <span>{weekNumber}</span>
-            </div>
+            </Tag>
           ))
         }
-      </div>
+      </Flex>
     );
   }
 }
@@ -75,4 +94,5 @@ export default class WeekNumbers extends Component {
 WeekNumbers.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType.isRequired,
+  onClickWeekNumber: PropTypes.func,
 };

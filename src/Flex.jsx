@@ -4,14 +4,23 @@ import PropTypes from 'prop-types';
 const toPercent = num => `${Math.floor(100 * num) / 100}%`;
 
 const Flex = ({
-  children, className, count, offset, wrap,
+  children,
+  className,
+  direction,
+  count,
+  offset,
+  style,
+  wrap,
+  ...otherProps
 }) => (
   <div
     className={className}
-    style={{
+    style={Object.assign({
       display: 'flex',
+      flexDirection: direction,
       flexWrap: wrap ? 'wrap' : 'no-wrap',
-    }}
+    }, style)}
+    {...otherProps}
   >
     {React.Children.map(children, (child, index) => (
       <div
@@ -36,7 +45,12 @@ Flex.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   count: PropTypes.number.isRequired,
+  direction: PropTypes.string,
   offset: PropTypes.number,
+  style: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ])),
   wrap: PropTypes.bool,
 };
 
