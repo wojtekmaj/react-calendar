@@ -83,6 +83,7 @@ Displays a complete, interactive calendar.
 
 |Prop name|Description|Example values|
 |----|----|----|
+|activeStartDate|The beginning of a period that shall be displayed by default when no value is given. Defaults to today.|`new Date(2017, 0, 1)`|
 |calendarType|Defines which type of calendar should be used. Can be "US" or "ISO 8601". Defaults to "US" for "en-US" locale, "ISO 8601" to all the others.|`"ISO 8601"`|
 |className|Defines class name(s) that will be added along with "react-calendar" to the main React-Calendar `<div>` element.|<ul><li>String: `"class1 class2"`</li><li>Array of strings: `["class1", "class2 class3"]`</li></ul>|
 |locale|Defines which locale should be used by the calendar. Can be any [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag). Defaults to user's browser settings.|`"hu-HU"`|
