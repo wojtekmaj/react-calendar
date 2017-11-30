@@ -137,6 +137,7 @@ export default class Calendar extends Component {
     const valueFrom = this.getValueFrom(props.value);
     const valueFromChanged = (
       (nextValueFrom && !valueFrom) ||
+      (!nextValueFrom && valueFrom) ||
       (nextValueFrom && valueFrom && nextValueFrom.getTime() !== valueFrom.getTime())
     );
 
@@ -144,6 +145,7 @@ export default class Calendar extends Component {
     const valueTo = this.getValueTo(props.value);
     const valueToChanged = (
       (nextValueTo && !valueTo) ||
+      (!nextValueTo && valueTo) ||
       (nextValueTo && valueTo && nextValueTo.getTime() !== valueTo.getTime())
     );
 
@@ -170,7 +172,11 @@ export default class Calendar extends Component {
 
   getActiveStartDate(props = this.props) {
     const rangeType = this.getView(props);
-    const valueFrom = this.getValueFrom(props.value) || new Date();
+    const valueFrom = (
+      this.getValueFrom(props.value) ||
+      props.activeStartDate ||
+      new Date()
+    );
     return getBegin(rangeType, valueFrom);
   }
 
@@ -339,6 +345,7 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
+  activeStartDate: PropTypes.instanceOf(Date),
   calendarType: isCalendarType,
   className: isClassName,
   locale: PropTypes.string,
