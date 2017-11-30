@@ -367,7 +367,10 @@ Calendar.propTypes = {
   showNavigation: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
-  tileClassName: isClassName,
+  tileClassName: PropTypes.oneOfType([
+    PropTypes.func,
+    isClassName,
+  ]),
   tileContent: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.node,

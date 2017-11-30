@@ -120,7 +120,10 @@ Days.propTypes = {
   minDate: isMinDate,
   onClick: PropTypes.func,
   showNeighboringMonth: PropTypes.bool,
-  tileClassName: isClassName,
+  tileClassName: PropTypes.oneOfType([
+    PropTypes.func,
+    isClassName,
+  ]),
   tileContent: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.node,

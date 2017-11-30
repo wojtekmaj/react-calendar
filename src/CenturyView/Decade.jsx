@@ -49,7 +49,10 @@ Decade.propTypes = {
   maxDate: isMaxDate,
   minDate: isMinDate,
   onClick: PropTypes.func,
-  tileClassName: isClassName,
+  tileClassName: PropTypes.oneOfType([
+    PropTypes.func,
+    isClassName,
+  ]),
   tileContent: PropTypes.func,
 };
 
