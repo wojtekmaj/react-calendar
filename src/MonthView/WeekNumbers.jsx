@@ -58,7 +58,7 @@ export default class WeekNumbers extends Component {
     const weekNumbers = [];
     for (let index = 0; index < this.numberOfWeeks; index += 1) {
       const date = new Date(year, monthIndex, day + (index * 7));
-      weekDates.push(getBeginOfWeek(date));
+      weekDates.push(getBeginOfWeek(date, calendarType));
       weekNumbers.push(getWeekNumber(date, calendarType));
     }
 
