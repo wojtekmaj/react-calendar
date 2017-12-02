@@ -97,6 +97,7 @@ Displays a complete, interactive calendar.
 |onClickDay|Function called when the user clicks a day.|`(value) => alert('Clicked day: ', value)`|
 |onClickDecade|Function called when the user clicks a decade.|`(value) => alert('Clicked decade: ', value)`|
 |onClickMonth|Function called when the user clicks a month.|`(value) => alert('Clicked month: ', value)`|
+|onClickWeekNumber|Function called when the user clicks a week number.|`(weekNumber, date) => alert('Clicked week: ', weekNumber, 'that starts on: ', date)`|
 |onClickYear|Function called when the user clicks a year.|`(value) => alert('Clicked year: ', value)`|
 |prevLabel|Defines the content of the "previous" button on the navigation pane. Defaults to "‹".|<ul><li>String: `"‹"`</li><li>React element: `<PreviousIcon />`</li></ul>|
 |prev2Label|Defines the content of the "previous on higher level" button on the navigation pane. Defaults to "«".|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
