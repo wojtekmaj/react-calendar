@@ -62,7 +62,7 @@ export default class WeekNumbers extends Component {
       weekNumbers.push(getWeekNumber(date, calendarType));
     }
 
-    const Tag = onClickWeekNumber ? 'button' : 'div';
+    const weekNumbersActive = !!onClickWeekNumber;
 
     return (
       <Flex
@@ -73,17 +73,22 @@ export default class WeekNumbers extends Component {
       >
         {
           weekNumbers.map((weekNumber, weekIndex) => (
-            <Tag
-              className="react-calendar__tile"
-              key={weekNumber}
-              onClick={onClickWeekNumber &&
-                (() => onClickWeekNumber(weekNumber, weekDates[weekIndex]))
-              }
-              style={{ flexGrow: 1 }}
-              type={onClickWeekNumber ? 'button' : null}
-            >
-              <span>{weekNumber}</span>
-            </Tag>
+            weekNumbersActive ?
+              <button
+                className="react-calendar__tile"
+                key={weekNumber}
+                onClick={() => onClickWeekNumber(weekNumber, weekDates[weekIndex])}
+                style={{ flexGrow: 1 }}
+                type="button"
+              >
+                <span>{weekNumber}</span>
+              </button> :
+              <div
+                className="react-calendar__tile"
+                key={weekNumber}
+              >
+                <span>{weekNumber}</span>
+              </div>
           ))
         }
       </Flex>
