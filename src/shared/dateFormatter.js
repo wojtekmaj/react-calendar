@@ -29,7 +29,10 @@ const getFormatter = (options, locales = getLocale()) => {
  *
  * @param {Date} date Date.
  */
-const toSafeHour = date => new Date(date.setHours(12));
+const toSafeHour = (date) => {
+  const safeDate = new Date(date);
+  return new Date(safeDate.setHours(12));
+};
 
 export const formatDate = date => getFormatter(
   { day: 'numeric', month: 'numeric', year: 'numeric' },
