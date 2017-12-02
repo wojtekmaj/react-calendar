@@ -11,7 +11,7 @@ import MonthView from './MonthView';
 import { getBegin, getEnd, getRange } from './shared/dates';
 import { setLocale } from './shared/locales';
 import { isCalendarType, isClassName, isMaxDate, isMinDate, isValue } from './shared/propTypes';
-import { mergeFunctions } from './shared/utils';
+import { between, mergeFunctions } from './shared/utils';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
@@ -54,13 +54,7 @@ export default class Calendar extends Component {
     const rawValueFrom = value instanceof Array ? value[0] : value;
     const valueFrom = getBegin(this.valueType, rawValueFrom);
 
-    if (minDate && minDate > valueFrom) {
-      return minDate;
-    }
-    if (maxDate && maxDate < valueFrom) {
-      return maxDate;
-    }
-    return valueFrom;
+    return between(valueFrom, minDate, maxDate);
   }
 
   getValueTo(value) {
@@ -71,13 +65,7 @@ export default class Calendar extends Component {
     const rawValueFrom = value instanceof Array ? value[1] : value;
     const valueTo = getEnd(this.valueType, rawValueFrom);
 
-    if (minDate && minDate > valueTo) {
-      return minDate;
-    }
-    if (maxDate && maxDate < valueTo) {
-      return maxDate;
-    }
-    return valueTo;
+    return between(valueTo, minDate, maxDate);
   }
 
   /**

@@ -10,19 +10,36 @@ export const mergeFunctions = (...functions) => (...args) =>
   functions.filter(f => f).forEach(f => f(...args));
 
 export const isValueWithinRange = (value, range) => (
-  range[0].getTime() <= value.getTime() &&
-  range[1].getTime() >= value.getTime()
+  range[0] <= value &&
+  range[1] >= value
 );
 
 export const isRangeWithinRange = (greaterRange, smallerRange) => (
-  greaterRange[0].getTime() <= smallerRange[0].getTime() &&
-  greaterRange[1].getTime() >= smallerRange[1].getTime()
+  greaterRange[0] <= smallerRange[0] &&
+  greaterRange[1] >= smallerRange[1]
 );
 
 export const doRangesOverlap = (range1, range2) => (
   isValueWithinRange(range1[0], range2) ||
   isValueWithinRange(range1[1], range2)
 );
+
+/**
+ * Returns a value no smaller than min and no larger than max.
+ *
+ * @param {*} value Value to return.
+ * @param {*} min Minimum return value.
+ * @param {*} max Maximum return value.
+ */
+export const between = (value, min, max) => {
+  if (min && min > value) {
+    return min;
+  }
+  if (max && max < value) {
+    return max;
+  }
+  return value;
+};
 
 export const getTileActivityFlags = (value, valueType, date, dateType) => {
   const flags = {};
