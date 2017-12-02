@@ -7,15 +7,16 @@ export const isCalendarType = PropTypes.oneOf(calendarTypes);
 
 export const isMinDate = (props, propName, componentName) => {
   const minDate = props[propName];
-  const { maxDate } = props;
 
   if (minDate) {
     if (!(minDate instanceof Date)) {
-      return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`);
+      return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of type \`${typeof minDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`);
     }
 
+    const { maxDate } = props;
+
     if (maxDate && minDate > maxDate) {
-      return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, minDate cannot be larger than maxDate.`);
+      return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of type \`${typeof minDate}\` supplied to \`${componentName}\`, minDate cannot be larger than maxDate.`);
     }
   }
 
@@ -25,12 +26,13 @@ export const isMinDate = (props, propName, componentName) => {
 
 export const isMaxDate = (props, propName, componentName) => {
   const maxDate = props[propName];
-  const { minDate } = props;
 
   if (maxDate) {
     if (!(maxDate instanceof Date)) {
       return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`);
     }
+
+    const { minDate } = props;
 
     if (minDate && maxDate < minDate) {
       return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, maxDate cannot be smaller than minDate.`);

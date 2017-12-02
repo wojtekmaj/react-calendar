@@ -68,13 +68,7 @@ export default class Days extends Component {
       start, end, year, monthIndex,
     } = this;
     const {
-      maxDate,
-      minDate,
-      onClick,
-      tileClassName,
-      tileContent,
-      value,
-      valueType,
+      maxDate, minDate, onClick, tileClassName, tileContent, value, valueType,
     } = this.props;
 
     const dayProps = {

@@ -200,22 +200,25 @@ export const getMonthRange = date => [
   getEndOfMonth(date),
 ];
 
-export const getBeginOfPreviousMonth = (date, offset = 1) => {
+const getDifferentMonth = (date, offset) => {
   const year = getYear(date);
-  const previousMonthIndex = getMonthIndex(date) - offset;
-  return getBeginOfMonth(new Date(year, previousMonthIndex, 1));
+  const previousMonthIndex = getMonthIndex(date) + offset;
+  return new Date(year, previousMonthIndex, 1);
+};
+
+export const getBeginOfPreviousMonth = (date, offset = 1) => {
+  const previousMonth = getDifferentMonth(date, -offset);
+  return getBeginOfMonth(previousMonth);
 };
 
 export const getEndOfPreviousMonth = (date, offset = 1) => {
-  const year = getYear(date);
-  const previousMonthIndex = getMonthIndex(date) - offset;
-  return getEndOfMonth(new Date(year, previousMonthIndex, 1));
+  const previousMonth = getDifferentMonth(date, -offset);
+  return getEndOfMonth(previousMonth);
 };
 
 export const getBeginOfNextMonth = (date, offset = 1) => {
-  const year = getYear(date);
-  const nextMonthIndex = getMonthIndex(date) + offset;
-  return getBeginOfMonth(new Date(year, nextMonthIndex, 1));
+  const nextMonth = getDifferentMonth(date, offset);
+  return getBeginOfMonth(nextMonth);
 };
 
 export const getBeginOfDay = (date) => {
@@ -429,18 +432,15 @@ export const getDaysInMonth = (date) => {
   return new Date(year, monthIndex + 1, 0).getDate();
 };
 
+const toYearLabel = ([start, end]) => `${getYear(start)} – ${getYear(end)}`;
+
 /**
  * Returns a string labelling a century of a given date.
  * For example, for 2017 it will return 2001-2100.
  *
  * @param {Date|String|Number} date Date or a year as a string or as a number.
  */
-export const getCenturyLabel = (date) => {
-  const [start, end] = getCenturyRange(date);
-  const startLabel = getYear(start);
-  const endLabel = getYear(end);
-  return `${startLabel} – ${endLabel}`;
-};
+export const getCenturyLabel = date => toYearLabel(getCenturyRange(date));
 
 /**
  * Returns a string labelling a century of a given date.
@@ -448,12 +448,7 @@ export const getCenturyLabel = (date) => {
  *
  * @param {Date|String|Number} date Date or a year as a string or as a number.
  */
-export const getDecadeLabel = (date) => {
-  const [start, end] = getDecadeRange(date);
-  const startLabel = getYear(start);
-  const endLabel = getYear(end);
-  return `${startLabel} – ${endLabel}`;
-};
+export const getDecadeLabel = date => toYearLabel(getDecadeRange(date));
 
 /**
  * Returns a boolean determining whether a given date is on Saturday or Sunday.
