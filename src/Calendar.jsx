@@ -16,6 +16,12 @@ import { between, mergeFunctions } from './shared/utils';
 const allViews = ['century', 'decade', 'year', 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
 
+const datesAreDifferent = (date1, date2) => (
+  (date1 && !date2) ||
+  (!date1 && date2) ||
+  (date1 && date2 && date1.getTime() !== date2.getTime())
+);
+
 export default class Calendar extends Component {
   get drillDownAvailable() {
     const views = this.getLimitedViews();
@@ -114,44 +120,35 @@ export default class Calendar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { props } = this;
+    const { locale: nextLocale, value: nextValue } = nextProps;
+    const { locale, value } = this.props;
 
-    const allowedViewChanged = (
-      nextProps.minDetail !== props.minDetail ||
-      nextProps.maxDetail !== props.maxDetail
-    );
-
-    const nextValueFrom = this.getValueFrom(nextProps.value);
-    const valueFrom = this.getValueFrom(props.value);
-    const valueFromChanged = (
-      (nextValueFrom && !valueFrom) ||
-      (!nextValueFrom && valueFrom) ||
-      (nextValueFrom && valueFrom && nextValueFrom.getTime() !== valueFrom.getTime())
-    );
-
-    const nextValueTo = this.getValueTo(nextProps.value);
-    const valueTo = this.getValueTo(props.value);
-    const valueToChanged = (
-      (nextValueTo && !valueTo) ||
-      (!nextValueTo && valueTo) ||
-      (nextValueTo && valueTo && nextValueTo.getTime() !== valueTo.getTime())
-    );
-
-    const valueChanged = valueFromChanged || valueToChanged;
+    if (nextLocale !== locale) {
+      setLocale(nextLocale);
+    }
 
     const nextState = {};
 
-    if (nextProps.locale !== props.locale) {
-      setLocale(nextProps.locale);
+    const allowedViewChanged = (
+      nextProps.minDetail !== this.props.minDetail ||
+      nextProps.maxDetail !== this.props.maxDetail
+    );
+
+    if (allowedViewChanged && !this.isViewAllowed(nextProps)) {
+      nextState.view = this.getView(nextProps);
     }
 
-    if (allowedViewChanged) {
-      if (!this.isViewAllowed(nextProps)) {
-        nextState.view = this.getView(nextProps);
-      }
-    }
+    const nextValueFrom = this.getValueFrom(nextValue);
+    const valueFrom = this.getValueFrom(value);
 
-    if (allowedViewChanged || valueChanged) {
+    const nextValueTo = this.getValueTo(nextValue);
+    const valueTo = this.getValueTo(value);
+
+    if (
+      allowedViewChanged ||
+      datesAreDifferent(nextValueFrom, valueFrom) ||
+      datesAreDifferent(nextValueTo, valueTo)
+    ) {
       nextState.activeStartDate = this.getActiveStartDate(nextProps);
     }
 
