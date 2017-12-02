@@ -34,7 +34,7 @@ const Decade = ({
     style={{ flexGrow: 1 }}
     type="button"
   >
-    <time>
+    <time dateTime={`${decade}T00:00:00.000`}>
       {getDecadeLabel(decade)}
     </time>
     {tileContent instanceof Function ? tileContent({ date, view: 'century' }) : tileContent}
@@ -53,7 +53,10 @@ Decade.propTypes = {
     PropTypes.func,
     isClassName,
   ]),
-  tileContent: PropTypes.func,
+  tileContent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
 };
 
 export default Decade;

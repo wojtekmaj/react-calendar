@@ -3,10 +3,16 @@ import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import Calendar from '../Calendar';
+import {
+  getBeginOfMonth,
+  getISOLocalDate,
+} from '../shared/dates';
 
 configure({ adapter: new Adapter() });
 
 /* eslint-disable comma-dangle */
+
+const midnightTimestamp = 'T00:00:00.000';
 
 describe('Calendar', () => {
   it('renders navigation', () => {
@@ -140,6 +146,52 @@ describe('Calendar', () => {
 
     expect(centuryView.length).toBe(1);
     expect(component.state().view).toBe('century');
+  });
+
+  it('displays a view with a given value when value is given', () => {
+    const value = new Date(2017, 0, 1);
+    const component = mount(
+      <Calendar
+        showNeighboringMonth={false}
+        value={value}
+      />
+    );
+
+    const monthView = component.find('.react-calendar__month-view');
+    const firstDayTile = monthView.find('.react-calendar__tile').first();
+    const firstDayTileTimeISO = firstDayTile.find('time').props().dateTime;
+
+    expect(firstDayTileTimeISO).toBe(getISOLocalDate(value) + midnightTimestamp);
+  });
+
+  it('displays a view with activeStartDate when no value is given and activeStartDate is given', () => {
+    const activeStartDate = new Date(2017, 0, 1);
+    const component = mount(
+      <Calendar
+        activeStartDate={activeStartDate}
+        showNeighboringMonth={false}
+      />
+    );
+
+    const monthView = component.find('.react-calendar__month-view');
+    const firstDayTile = monthView.find('.react-calendar__tile').first();
+    const firstDayTileTimeISO = firstDayTile.find('time').props().dateTime;
+
+    expect(firstDayTileTimeISO).toBe(getISOLocalDate(activeStartDate) + midnightTimestamp);
+  });
+
+  it('displays a view with today\'s date when no value and no activeStartDate is given', () => {
+    const today = new Date();
+    const beginOfCurrentMonth = getBeginOfMonth(today);
+    const component = mount(
+      <Calendar showNeighboringMonth={false} />
+    );
+
+    const monthView = component.find('.react-calendar__month-view');
+    const firstDayTile = monthView.find('.react-calendar__tile').first();
+    const firstDayTileTimeISO = firstDayTile.find('time').props().dateTime;
+
+    expect(firstDayTileTimeISO).toBe(getISOLocalDate(beginOfCurrentMonth) + midnightTimestamp);
   });
 
   it('drills up when allowed', () => {
