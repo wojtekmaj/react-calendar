@@ -290,6 +290,7 @@ export default class Calendar extends Component {
           <MonthView
             calendarType={calendarType}
             onClick={mergeFunctions(clickAction, this.props.onClickDay)}
+            onClickWeekNumber={this.props.onClickWeekNumber}
             showNeighboringMonth={this.props.showNeighboringMonth}
             showWeekNumbers={this.props.showWeekNumbers}
             {...commonProps}
@@ -359,6 +360,7 @@ Calendar.propTypes = {
   onClickDay: PropTypes.func,
   onClickDecade: PropTypes.func,
   onClickMonth: PropTypes.func,
+  onClickWeekNumber: PropTypes.func,
   onClickYear: PropTypes.func,
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),

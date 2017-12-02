@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Flex from '../Flex';
+
 import {
+  getBeginOfWeek,
   getDay,
   getDayOfWeek,
   getDaysInMonth,
@@ -12,14 +15,19 @@ import {
 import { isCalendarType } from '../shared/propTypes';
 
 export default class WeekNumbers extends Component {
+  get startWeekday() {
+    const { activeStartDate, calendarType } = this.props;
+    return getDayOfWeek(activeStartDate, calendarType);
+  }
+
   get numberOfDays() {
     const { activeStartDate } = this.props;
     return getDaysInMonth(activeStartDate);
   }
 
-  get startWeekday() {
-    const { activeStartDate, calendarType } = this.props;
-    return getDayOfWeek(activeStartDate, calendarType);
+  get numberOfWeeks() {
+    const days = this.numberOfDays - (7 - this.startWeekday);
+    return 1 + Math.ceil(days / 7);
   }
 
   get year() {
@@ -37,37 +45,60 @@ export default class WeekNumbers extends Component {
     return getDay(activeStartDate);
   }
 
-  get numberOfWeeks() {
-    const days = this.numberOfDays - (7 - this.startWeekday);
-    return 1 + Math.ceil(days / 7);
+  get dates() {
+    const {
+      year, monthIndex, numberOfWeeks, day,
+    } = this;
+    const { calendarType } = this.props;
+
+    const dates = [];
+    for (let index = 0; index < numberOfWeeks; index += 1) {
+      dates.push(
+        getBeginOfWeek(new Date(year, monthIndex, day + (index * 7)), calendarType),
+      );
+    }
+    return dates;
+  }
+
+  get weekNumbers() {
+    const { dates } = this;
+    const { calendarType } = this.props;
+    return dates.map(date => getWeekNumber(date, calendarType));
   }
 
   render() {
-    const { year, monthIndex, day } = this;
-    const { calendarType } = this.props;
-
-    const weekNumbers = [];
-    for (let index = 0; index < this.numberOfWeeks; index += 1) {
-      const date = new Date(year, monthIndex, day + (index * 7));
-      weekNumbers.push(getWeekNumber(date, calendarType));
-    }
+    const { dates, numberOfWeeks, weekNumbers } = this;
+    const { onClickWeekNumber } = this.props;
 
     return (
-      <div
+      <Flex
         className="react-calendar__month-view__weekNumbers"
+        count={numberOfWeeks}
+        direction="column"
         style={{ flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }}
       >
         {
-          weekNumbers.map(weekNumber => (
-            <div
-              className="react-calendar__tile"
-              key={weekNumber}
-            >
-              <span>{weekNumber}</span>
-            </div>
+          weekNumbers.map((weekNumber, weekIndex) => (
+            onClickWeekNumber ?
+              <button
+                className="react-calendar__tile"
+                key={weekNumber}
+                onClick={() => onClickWeekNumber(weekNumber, dates[weekIndex])}
+                style={{ flexGrow: 1 }}
+                type="button"
+              >
+                <span>{weekNumber}</span>
+              </button> :
+              <div
+                className="react-calendar__tile"
+                key={weekNumber}
+                style={{ flexGrow: 1 }}
+              >
+                <span>{weekNumber}</span>
+              </div>
           ))
         }
-      </div>
+      </Flex>
     );
   }
 }
@@ -75,4 +106,5 @@ export default class WeekNumbers extends Component {
 WeekNumbers.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType.isRequired,
+  onClickWeekNumber: PropTypes.func,
 };

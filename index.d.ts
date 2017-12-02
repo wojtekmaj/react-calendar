@@ -21,6 +21,7 @@ declare module "react-calendar" {
     onClickDay?: DateCallback;
     onClickDecade?: DateCallback;
     onClickMonth?: DateCallback;
+    onClickWeekNumber?: DateCallback;
     onClickYear?: DateCallback;
     prev2Label?: string | React.ReactElement<any>;
     prevLabel?: string | React.ReactElement<any>;

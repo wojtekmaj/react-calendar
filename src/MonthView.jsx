@@ -50,12 +50,13 @@ export default class MonthView extends Component {
     }
 
     const { calendarType } = this;
-    const { activeStartDate } = this.props;
+    const { activeStartDate, onClickWeekNumber } = this.props;
 
     return (
       <WeekNumbers
         activeStartDate={activeStartDate}
         calendarType={calendarType}
+        onClickWeekNumber={onClickWeekNumber}
       />
     );
   }
@@ -101,6 +102,7 @@ MonthView.propTypes = {
   maxDate: isMaxDate,
   minDate: isMinDate,
   onChange: PropTypes.func,
+  onClickWeekNumber: PropTypes.func,
   setActiveRange: PropTypes.func,
   setView: PropTypes.func,
   showNeighboringMonth: PropTypes.bool,

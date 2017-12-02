@@ -64,4 +64,63 @@ describe('WeekNumbers', () => {
     expect(children.length).toBe(5);
     expect(children.first().text()).toBe('1');
   });
+
+  it('renders static divs as children when not given onClickWeekNumber', () => {
+    const component = shallow(
+      <WeekNumbers
+        activeStartDate={new Date(2017, 0, 1)}
+        calendarType="ISO 8601"
+      />
+    );
+
+    const children = component.find('div.react-calendar__tile');
+
+    expect(children.length).toBe(6);
+  });
+
+  it('renders buttons as children when given onClickWeekNumber', () => {
+    const component = shallow(
+      <WeekNumbers
+        activeStartDate={new Date(2017, 0, 1)}
+        calendarType="ISO 8601"
+        onClickWeekNumber={jest.fn()}
+      />
+    );
+
+    const children = component.find('button.react-calendar__tile');
+
+    expect(children.length).toBe(6);
+  });
+
+  it('calls onClickWeekNumber function with proper arguments when clicked a week number (ISO 8601)', () => {
+    const onClickWeekNumber = jest.fn();
+    const component = shallow(
+      <WeekNumbers
+        activeStartDate={new Date(2017, 0, 1)}
+        calendarType="ISO 8601"
+        onClickWeekNumber={onClickWeekNumber}
+      />
+    );
+
+    const children = component.find('button.react-calendar__tile');
+
+    children.first().simulate('click');
+    expect(onClickWeekNumber).toHaveBeenCalledWith(52, new Date(2016, 11, 26));
+  });
+
+  it('calls onClickWeekNumber function with proper arguments when clicked a week number (US)', () => {
+    const onClickWeekNumber = jest.fn();
+    const component = shallow(
+      <WeekNumbers
+        activeStartDate={new Date(2017, 0, 1)}
+        calendarType="US"
+        onClickWeekNumber={onClickWeekNumber}
+      />
+    );
+
+    const children = component.find('button.react-calendar__tile');
+
+    children.first().simulate('click');
+    expect(onClickWeekNumber).toHaveBeenCalledWith(1, new Date(2017, 0, 1));
+  });
 });
