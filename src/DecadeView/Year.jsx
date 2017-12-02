@@ -16,8 +16,8 @@ const Year = ({
   <button
     className={mergeClassNames(
       className,
-      (active ? 'react-calendar__tile--active' : ''),
-      (hasActive ? 'react-calendar__tile--hasActive' : ''),
+      active && 'react-calendar__tile--active',
+      hasActive && 'react-calendar__tile--hasActive',
       'react-calendar__tile',
       tileClassName instanceof Function ? tileClassName({ date, view: 'decade' }) : tileClassName,
     )}

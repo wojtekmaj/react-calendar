@@ -20,9 +20,9 @@ const Day = ({
     className={mergeClassNames(
       className,
       'react-calendar__tile',
-      (active ? 'react-calendar__tile--active' : ''),
-      (isWeekend(date) ? `${className}--weekend` : ''),
-      (date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : ''),
+      active && 'react-calendar__tile--active',
+      isWeekend(date) && `${className}--weekend`,
+      date.getMonth() !== currentMonthIndex && `${className}--neighboringMonth`,
       tileClassName instanceof Function ? tileClassName({ date, view: 'month' }) : tileClassName,
     )}
     disabled={
