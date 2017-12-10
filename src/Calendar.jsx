@@ -49,27 +49,42 @@ export default class Calendar extends Component {
     if (value instanceof Array) {
       return value;
     }
+
     return [this.getValueFrom(value), this.getValueTo(value)];
   }
 
   getValueFrom(value) {
     if (!value) {
-      return value;
+      return null;
     }
+
     const { maxDate, minDate } = this.props;
     const rawValueFrom = value instanceof Array ? value[0] : value;
-    const valueFrom = getBegin(this.valueType, rawValueFrom);
+    const valueFromDate = new Date(rawValueFrom);
+
+    if (Number.isNaN(valueFromDate.getTime())) {
+      throw new Error(`Invalid date: ${value}`);
+    }
+
+    const valueFrom = getBegin(this.valueType, valueFromDate);
 
     return between(valueFrom, minDate, maxDate);
   }
 
   getValueTo(value) {
     if (!value) {
-      return value;
+      return null;
     }
+
     const { maxDate, minDate } = this.props;
-    const rawValueFrom = value instanceof Array ? value[1] : value;
-    const valueTo = getEnd(this.valueType, rawValueFrom);
+    const rawValueTo = value instanceof Array ? value[1] : value;
+    const valueToDate = new Date(rawValueTo);
+
+    if (Number.isNaN(valueToDate.getTime())) {
+      throw new Error(`Invalid date: ${value}`);
+    }
+
+    const valueTo = getEnd(this.valueType, valueToDate);
 
     return between(valueTo, minDate, maxDate);
   }
@@ -242,7 +257,7 @@ export default class Calendar extends Component {
       setView,
       tileClassName,
       tileContent: tileContent || renderChildren, // For backwards compatibility
-      value,
+      value: this.getProcessedValue(value),
       valueType,
     };
 
@@ -362,6 +377,9 @@ Calendar.propTypes = {
     PropTypes.func,
     PropTypes.node,
   ]),
-  value: isValue,
-  view: PropTypes.oneOf(allViews), // eslint-disable-line react/no-unused-prop-types
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    isValue,
+  ]),
+  view: PropTypes.oneOf(allViews),
 };

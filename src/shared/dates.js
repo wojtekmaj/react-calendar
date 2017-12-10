@@ -468,12 +468,14 @@ export const getISOLocalMonth = (value) => {
     return value;
   }
 
-  if (!(value instanceof Date)) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
     throw new Error(`Invalid date: ${value}`);
   }
 
-  const year = getYear(value);
-  const month = `0${getMonth(value)}`.slice(-2);
+  const year = getYear(date);
+  const month = `0${getMonth(date)}`.slice(-2);
 
   return `${year}-${month}`;
 };
@@ -486,13 +488,15 @@ export const getISOLocalDate = (value) => {
     return value;
   }
 
-  if (!(value instanceof Date)) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
     throw new Error(`Invalid date: ${value}`);
   }
 
-  const year = getYear(value);
-  const month = `0${getMonth(value)}`.slice(-2);
-  const day = `0${getDay(value)}`.slice(-2);
+  const year = getYear(date);
+  const month = `0${getMonth(date)}`.slice(-2);
+  const day = `0${getDay(date)}`.slice(-2);
 
   return `${year}-${month}-${day}`;
 };
