@@ -1097,10 +1097,10 @@ describe('getISOLocalMonth', () => {
 
   it('throws an error when given nonsense data', () => {
     const text = 'wololo';
-    const flag = true;
+    const fn = () => {};
 
     expect(() => getISOLocalMonth(text)).toThrow();
-    expect(() => getISOLocalMonth(flag)).toThrow();
+    expect(() => getISOLocalMonth(fn)).toThrow();
   });
 });
 
@@ -1119,9 +1119,9 @@ describe('getISOLocalDate', () => {
 
   it('throws an error when given nonsense data', () => {
     const text = 'wololo';
-    const flag = true;
+    const fn = () => {};
 
     expect(() => getISOLocalDate(text)).toThrow();
-    expect(() => getISOLocalDate(flag)).toThrow();
+    expect(() => getISOLocalDate(fn)).toThrow();
   });
 });

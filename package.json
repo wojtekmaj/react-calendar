@@ -17,6 +17,10 @@
     "test-jest-coverage": "jest --coverage"
   },
   "jest": {
+    "setupFiles": [
+      "<rootDir>/jest.shim.js",
+      "<rootDir>/jest.setup.js"
+    ],
     "collectCoverageFrom": [
       "**/src/**.{js,jsx}",
       "!**/src/entry.js"

@@ -1,14 +1,11 @@
 import React from 'react';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 
 import Calendar from '../Calendar';
 import {
   getBeginOfMonth,
   getISOLocalDate,
 } from '../shared/dates';
-
-configure({ adapter: new Adapter() });
 
 /* eslint-disable comma-dangle */
 
