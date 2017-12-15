@@ -1,9 +1,9 @@
 /// <reference types="react" />
 
-type Detail = "month" | "year" | "decade" | "century"
-type DateCallback = (date: Date) => void
-
 declare module "react-calendar" {
+  type Detail = "month" | "year" | "decade" | "century"
+  type DateCallback = (date: Date) => void
+
   export default function Calendar(props: CalendarProps): JSX.Element;
 
   export interface CalendarProps {
