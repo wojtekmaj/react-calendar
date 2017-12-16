@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const toPercent = num => `${Math.floor(100 * num) / 100}%`;
+const toPercent = num => `${num}%`;
 
 const Flex = ({
   children,
