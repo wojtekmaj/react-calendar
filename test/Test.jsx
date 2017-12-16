@@ -120,8 +120,17 @@ export default class Test extends Component {
                 minDate={minDate}
                 minDetail={minDetail}
                 onChange={this.onChange}
+                onActiveDateChange={({ activeStartDate, view }) => {
+                  console.log('Changed active start date to', view, activeStartDate);
+                }}
                 onClickWeekNumber={(weekNumber, date) => {
                   console.log('Clicked week number', weekNumber, date);
+                }}
+                onDrillDown={({ activeStartDate, view }) => {
+                  console.log('Drilled down to', view, activeStartDate);
+                }}
+                onDrillUp={({ activeStartDate, view }) => {
+                  console.log('Drilled up to', view, activeStartDate);
                 }}
                 tileClassName={({ date, view }) => {
                   switch (view) {

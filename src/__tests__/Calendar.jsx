@@ -201,6 +201,24 @@ describe('Calendar', () => {
     expect(component.state().view).toBe('year');
   });
 
+  it('calls onDrillUp on drill up', () => {
+    const onDrillUp = jest.fn();
+    const component = mount(
+      <Calendar
+        activeStartDate={new Date(2017, 6, 1)}
+        onDrillUp={onDrillUp}
+        view="month"
+      />
+    );
+
+    component.instance().drillUp();
+
+    expect(onDrillUp).toHaveBeenCalledWith({
+      activeStartDate: new Date(2017, 0, 1),
+      view: 'year',
+    });
+  });
+
   it('refuses to drill up when already on minimum allowed detail', () => {
     const component = mount(
       <Calendar view="century" />
@@ -219,6 +237,24 @@ describe('Calendar', () => {
     component.instance().drillDown(new Date(2011, 0, 1));
 
     expect(component.state().view).toBe('decade');
+  });
+
+  it('calls onDrillDown on drill down', () => {
+    const onDrillDown = jest.fn();
+    const component = mount(
+      <Calendar
+        activeStartDate={new Date(2001, 0, 1)}
+        onDrillDown={onDrillDown}
+        view="century"
+      />
+    );
+
+    component.instance().drillDown(new Date(2011, 0, 1));
+
+    expect(onDrillDown).toHaveBeenCalledWith({
+      activeStartDate: new Date(2011, 0, 1),
+      view: 'decade',
+    });
   });
 
   it('refuses to drill down when already on minimum allowed detail', () => {
@@ -370,5 +406,23 @@ describe('Calendar', () => {
     component.instance().onChange(new Date(2017, 0, 2));
 
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+  });
+
+  it('calls onActiveDateChange on activeStartDate change', () => {
+    const onActiveDateChange = jest.fn();
+    const component = mount(
+      <Calendar
+        activeStartDate={new Date(2017, 0, 1)}
+        onActiveDateChange={onActiveDateChange}
+        view="year"
+      />
+    );
+
+    component.instance().setActiveStartDate(new Date(2018, 0, 1));
+
+    expect(onActiveDateChange).toHaveBeenCalledWith({
+      activeStartDate: new Date(2018, 0, 1),
+      view: 'year',
+    });
   });
 });

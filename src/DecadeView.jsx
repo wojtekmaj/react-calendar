@@ -6,15 +6,8 @@ import Years from './DecadeView/Years';
 import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
 export default class DecadeView extends Component {
-  componentDidMount() {
-    const { setView } = this.props;
-
-    if (setView) setView('decade');
-  }
-
   renderYears() {
     const {
-      setView,
       ...childProps
     } = this.props;
 
@@ -38,7 +31,6 @@ DecadeView.propTypes = {
   minDate: isMinDate,
   onChange: PropTypes.func,
   setActiveRange: PropTypes.func,
-  setView: PropTypes.func,
   value: isValue,
   valueType: PropTypes.string,
 };

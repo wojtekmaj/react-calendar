@@ -6,15 +6,8 @@ import Months from './YearView/Months';
 import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
 export default class YearView extends Component {
-  componentDidMount() {
-    const { setView } = this.props;
-
-    if (setView) setView('year');
-  }
-
   renderMonths() {
     const {
-      setView,
       ...childProps
     } = this.props;
 
@@ -38,7 +31,6 @@ YearView.propTypes = {
   minDate: isMinDate,
   onChange: PropTypes.func,
   setActiveRange: PropTypes.func,
-  setView: PropTypes.func,
   value: isValue,
   valueType: PropTypes.string,
 };

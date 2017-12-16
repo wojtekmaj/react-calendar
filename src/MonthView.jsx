@@ -24,12 +24,6 @@ export default class MonthView extends Component {
     }
   }
 
-  componentDidMount() {
-    const { setView } = this.props;
-
-    if (setView) setView('month');
-  }
-
   renderWeekdays() {
     const { calendarType } = this;
     const { activeStartDate } = this.props;
@@ -62,7 +56,7 @@ export default class MonthView extends Component {
   }
 
   renderDays() {
-    const { setView, calendarType, ...childProps } = this.props;
+    const { calendarType, ...childProps } = this.props;
 
     return (
       <Days
@@ -104,7 +98,6 @@ MonthView.propTypes = {
   onChange: PropTypes.func,
   onClickWeekNumber: PropTypes.func,
   setActiveRange: PropTypes.func,
-  setView: PropTypes.func,
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
   value: isValue,

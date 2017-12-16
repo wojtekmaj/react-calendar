@@ -8,10 +8,10 @@ import DecadeView from './DecadeView';
 import YearView from './YearView';
 import MonthView from './MonthView';
 
-import { getBegin, getEnd, getRange } from './shared/dates';
+import { getBegin, getEnd } from './shared/dates';
 import { setLocale } from './shared/locales';
 import { isCalendarType, isClassName, isMaxDate, isMinDate, isValue } from './shared/propTypes';
-import { between, mergeFunctions } from './shared/utils';
+import { between, callIfDefined, mergeFunctions } from './shared/utils';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
@@ -191,24 +191,16 @@ export default class Calendar extends Component {
   }
 
   /**
-   * Called when the user opens a new view.
-   */
-  setView = (view) => {
-    this.setState((prevState) => {
-      const activeRange = getRange(view, prevState.activeStartDate);
-      const [activeStartDate] = activeRange;
-
-      return {
-        activeStartDate,
-        view,
-      };
-    });
-  }
-
-  /**
    * Called when the user uses navigation buttons.
    */
-  setActiveStartDate = activeStartDate => this.setState({ activeStartDate })
+  setActiveStartDate = (activeStartDate) => {
+    this.setState({ activeStartDate }, () => {
+      callIfDefined(this.props.onActiveDateChange, {
+        activeStartDate,
+        view: this.state.view,
+      });
+    });
+  }
 
   drillDown = (activeStartDate) => {
     if (!this.drillDownAvailable) {
@@ -217,10 +209,18 @@ export default class Calendar extends Component {
 
     const views = this.getLimitedViews();
 
-    this.setState(prevState => ({
-      activeStartDate,
-      view: views[views.indexOf(prevState.view) + 1],
-    }));
+    this.setState((prevState) => {
+      const nextView = views[views.indexOf(prevState.view) + 1];
+      return {
+        activeStartDate,
+        view: nextView,
+      };
+    }, () => {
+      callIfDefined(this.props.onDrillDown, {
+        activeStartDate,
+        view: this.state.view,
+      });
+    });
   }
 
   drillUp = () => {
@@ -230,21 +230,27 @@ export default class Calendar extends Component {
 
     const views = this.getLimitedViews();
 
-    this.setState(prevState => ({
-      view: views[views.indexOf(prevState.view) - 1],
-    }));
+    this.setState((prevState) => {
+      const nextView = views[views.indexOf(prevState.view) - 1];
+      const activeStartDate = getBegin(nextView, prevState.activeStartDate);
+
+      return {
+        activeStartDate,
+        view: nextView,
+      };
+    }, () => {
+      callIfDefined(this.props.onDrillUp, {
+        activeStartDate: this.state.activeStartDate,
+        view: this.state.view,
+      });
+    });
   }
 
   onChange = (value) => {
-    const { onChange } = this.props;
-    if (onChange) {
-      const processedValue = this.getProcessedValue(value);
-      onChange(processedValue);
-    }
+    callIfDefined(this.props.onChange, this.getProcessedValue(value));
   }
 
   renderContent() {
-    const { setView, valueType } = this;
     const {
       calendarType, maxDate, minDate, renderChildren, tileClassName, tileContent, value,
     } = this.props;
@@ -254,11 +260,10 @@ export default class Calendar extends Component {
       activeStartDate,
       maxDate,
       minDate,
-      setView,
       tileClassName,
       tileContent: tileContent || renderChildren, // For backwards compatibility
       value: this.getProcessedValue(value),
-      valueType,
+      valueType: this.valueType,
     };
 
     const clickAction = this.drillDownAvailable ? this.drillDown : this.onChange;
@@ -356,12 +361,15 @@ Calendar.propTypes = {
   minDetail: PropTypes.oneOf(allViews),
   next2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   nextLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  onActiveDateChange: PropTypes.func,
   onChange: PropTypes.func,
   onClickDay: PropTypes.func,
   onClickDecade: PropTypes.func,
   onClickMonth: PropTypes.func,
   onClickWeekNumber: PropTypes.func,
   onClickYear: PropTypes.func,
+  onDrillDown: PropTypes.func,
+  onDrillUp: PropTypes.func,
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   renderChildren: PropTypes.func, // For backwards compatibility

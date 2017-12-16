@@ -9,6 +9,17 @@ import { getRange } from './dates';
 export const mergeFunctions = (...functions) => (...args) =>
   functions.filter(f => f).forEach(f => f(...args));
 
+/**
+ * Calls a function, if it's defined, with specified arguments
+ * @param {Function} fn
+ * @param {Object} args
+ */
+export const callIfDefined = (fn, ...args) => {
+  if (fn && typeof fn === 'function') {
+    fn(...args);
+  }
+};
+
 export const isValueWithinRange = (value, range) => (
   range[0] <= value &&
   range[1] >= value
