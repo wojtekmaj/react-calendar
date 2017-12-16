@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Months from './YearView/Months';
 
 import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
-export default class YearView extends Component {
+export default class YearView extends PureComponent {
   renderMonths() {
     const {
       ...childProps

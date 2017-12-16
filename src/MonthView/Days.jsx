@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Flex from '../Flex';
@@ -13,7 +13,7 @@ import {
 import { isCalendarType, isClassName, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
 import { getTileActivityFlags } from '../shared/utils';
 
-export default class Days extends Component {
+export default class Days extends PureComponent {
   get offset() {
     if (this.props.showNeighboringMonth) {
       return 0;

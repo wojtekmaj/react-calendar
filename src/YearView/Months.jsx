@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Flex from '../Flex';
@@ -8,7 +8,7 @@ import { getYear } from '../shared/dates';
 import { getTileActivityFlags } from '../shared/utils';
 import { isClassName, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
 
-export default class Months extends Component {
+export default class Months extends PureComponent {
   start = 0
 
   end = 11

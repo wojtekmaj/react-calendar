@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Decades from './CenturyView/Decades';
 
 import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
-export default class CenturyView extends Component {
+export default class CenturyView extends PureComponent {
   renderDecades() {
     const {
       ...childProps

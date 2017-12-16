@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Flex from '../Flex';
@@ -12,7 +12,7 @@ import {
 import { formatShortWeekday } from '../shared/dateFormatter';
 import { isCalendarType } from '../shared/propTypes';
 
-export default class Weekdays extends Component {
+export default class Weekdays extends PureComponent {
   get beginOfMonth() {
     const { month } = this.props;
 

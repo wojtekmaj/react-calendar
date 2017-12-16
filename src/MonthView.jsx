@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Days from './MonthView/Days';
@@ -8,7 +8,7 @@ import WeekNumbers from './MonthView/WeekNumbers';
 import { getLocale } from './shared/locales';
 import { isCalendarType, isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
-export default class MonthView extends Component {
+export default class MonthView extends PureComponent {
   get calendarType() {
     const { calendarType } = this.props;
 

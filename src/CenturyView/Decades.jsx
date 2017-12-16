@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Flex from '../Flex';
@@ -11,7 +11,7 @@ import {
 import { getTileActivityFlags } from '../shared/utils';
 import { isClassName, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
 
-export default class Decades extends Component {
+export default class Decades extends PureComponent {
   get start() {
     const { activeStartDate } = this.props;
     return getBeginOfCenturyYear(activeStartDate);
