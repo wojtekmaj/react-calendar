@@ -3,6 +3,7 @@
 declare module "react-calendar" {
   type Detail = "month" | "year" | "decade" | "century"
   type DateCallback = (date: Date) => void
+  type ViewCallback = (props: ViewCallbackProperties) => void
 
   export default function Calendar(props: CalendarProps): JSX.Element;
 
@@ -17,12 +18,15 @@ declare module "react-calendar" {
     minDetail?: Detail;
     next2Label?: string | React.ReactElement<any>;
     nextLabel?: string | React.ReactElement<any>;
+    onActiveDateChange?: ViewCallback;
     onChange?: DateCallback;
     onClickDay?: DateCallback;
     onClickDecade?: DateCallback;
     onClickMonth?: DateCallback;
     onClickWeekNumber?: DateCallback;
     onClickYear?: DateCallback;
+    onDrillDown?: ViewCallback;
+    onDrillUp?: ViewCallback;
     prev2Label?: string | React.ReactElement<any>;
     prevLabel?: string | React.ReactElement<any>;
     renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
@@ -38,6 +42,11 @@ declare module "react-calendar" {
 
   export interface CalendarTileProperties {
     date: Date;
+    view: Detail;
+  }
+
+  export interface ViewCallbackProperties {
+    activeStartDate: Date;
     view: Detail;
   }
 
