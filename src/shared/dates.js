@@ -265,7 +265,7 @@ export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
     year -= 1;
   } while (date - beginOfFirstWeek < 0);
 
-  return Math.floor((date - beginOfFirstWeek) / (8.64e7 * 7)) + 1;
+  return Math.round((date - beginOfFirstWeek) / (8.64e7 * 7)) + 1;
 };
 
 /**
