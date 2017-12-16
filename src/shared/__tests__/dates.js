@@ -531,9 +531,24 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const dayOfWeek = getWeekNumber(date, 'ISO 8601');
+      const weekNumber = getWeekNumber(date, 'ISO 8601');
 
-      expect(dayOfWeek).toBe(1);
+      expect(weekNumber).toBe(1);
+    }
+  });
+
+  it('returns proper week number for a sample year starting in week 1 (ISO 8601)', () => {
+    const year = 2018;
+    const month = 0;
+    const startDate = 1;
+
+    for (let currentWeek = 1; currentWeek <= 52; currentWeek += 1) {
+      const weekOffset = (currentWeek - 1) * 7;
+      const date = new Date(year, month, startDate + weekOffset);
+
+      const weekNumber = getWeekNumber(date, 'ISO 8601');
+
+      expect(weekNumber).toBe(currentWeek);
     }
   });
 
@@ -545,9 +560,9 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const dayOfWeek = getWeekNumber(date, 'ISO 8601');
+      const weekNumber = getWeekNumber(date, 'ISO 8601');
 
-      expect(dayOfWeek).toBe(52);
+      expect(weekNumber).toBe(52);
     }
   });
 
@@ -559,9 +574,9 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const dayOfWeek = getWeekNumber(date, 'ISO 8601');
+      const weekNumber = getWeekNumber(date, 'ISO 8601');
 
-      expect(dayOfWeek).toBe(53);
+      expect(weekNumber).toBe(53);
     }
   });
 
@@ -573,9 +588,24 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const dayOfWeek = getWeekNumber(date, 'US');
+      const weekNumber = getWeekNumber(date, 'US');
 
-      expect(dayOfWeek).toBe(1);
+      expect(weekNumber).toBe(1);
+    }
+  });
+
+  it('returns proper week number for a sample year starting in week 1 (US)', () => {
+    const year = 2015;
+    const month = 11;
+    const startDate = 27;
+
+    for (let currentWeek = 1; currentWeek <= 53; currentWeek += 1) {
+      const weekOffset = (currentWeek - 1) * 7;
+      const date = new Date(year, month, startDate + weekOffset);
+
+      const weekNumber = getWeekNumber(date, 'US');
+
+      expect(weekNumber).toBe(currentWeek);
     }
   });
 
@@ -587,9 +617,9 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const dayOfWeek = getWeekNumber(date, 'US');
+      const weekNumber = getWeekNumber(date, 'US');
 
-      expect(dayOfWeek).toBe(1);
+      expect(weekNumber).toBe(1);
     }
   });
 
@@ -601,9 +631,9 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const dayOfWeek = getWeekNumber(date, 'US');
+      const weekNumber = getWeekNumber(date, 'US');
 
-      expect(dayOfWeek).toBe(52);
+      expect(weekNumber).toBe(52);
     }
   });
 
@@ -615,9 +645,9 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const dayOfWeek = getWeekNumber(date, 'US');
+      const weekNumber = getWeekNumber(date, 'US');
 
-      expect(dayOfWeek).toBe(53);
+      expect(weekNumber).toBe(53);
     }
   });
 });

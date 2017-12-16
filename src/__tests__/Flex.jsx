@@ -60,7 +60,9 @@ describe('Flex', () => {
     const children = component.children();
 
     children.forEach(child => expect(child.props().style.display).toBe('flex'));
-    children.forEach(child => expect(child.props().style.flexBasis).toBe('33.33%'));
-    expect(children.first().props().style.marginLeft).toBe('33.33%');
+    children.forEach(child =>
+      expect(parseFloat(child.props().style.flexBasis)).toBeCloseTo(33.33)
+    );
+    expect(parseFloat(children.first().props().style.marginLeft)).toBeCloseTo(33.33);
   });
 });

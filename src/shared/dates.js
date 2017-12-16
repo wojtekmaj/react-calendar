@@ -254,6 +254,7 @@ export const getDayRange = date => [
  * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
  */
 export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
+  const beginOfWeek = getBeginOfWeek(date, calendarType);
   let year = getYear(date) + 1;
   let dayInWeekOne;
   let beginOfFirstWeek;
@@ -265,7 +266,7 @@ export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
     year -= 1;
   } while (date - beginOfFirstWeek < 0);
 
-  return Math.round((date - beginOfFirstWeek) / (8.64e7 * 7)) + 1;
+  return Math.round((beginOfWeek - beginOfFirstWeek) / (8.64e7 * 7)) + 1;
 };
 
 /**
