@@ -7,7 +7,7 @@ import { getRange } from './dates';
  * @param {Function[]} functions
  */
 export const mergeFunctions = (...functions) => (...args) =>
-  functions.filter(f => f).forEach(f => f(...args));
+  functions.filter(Boolean).forEach(f => f(...args));
 
 /**
  * Calls a function, if it's defined, with specified arguments
