@@ -18,7 +18,7 @@ describe('CenturyView', () => {
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').props().dateTime;
+    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
 
     expect(firstDayTileTimeISO).toBe(activeStartDate.getFullYear() + midnightTimestamp);
   });
@@ -35,7 +35,7 @@ describe('CenturyView', () => {
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
-    const firstDayTileClassName = firstDayTile.props().className;
+    const firstDayTileClassName = firstDayTile.prop('className');
 
     expect(firstDayTileClassName.includes(tileClassName)).toBe(true);
   });
@@ -60,9 +60,9 @@ describe('CenturyView', () => {
     const tiles = component.find('.react-calendar__tile');
 
     const firstDayTile = tiles.first();
-    const firstDayTileClassName = firstDayTile.props().className;
+    const firstDayTileClassName = firstDayTile.prop('className');
     const secondDayTile = tiles.at(1);
-    const secondDayTileClassName = secondDayTile.props().className;
+    const secondDayTileClassName = secondDayTile.prop('className');
 
     expect(firstDayTileClassName.includes('firstDayOfTheMonth')).toBe(true);
     expect(secondDayTileClassName.includes('firstDayOfTheMonth')).toBe(false);

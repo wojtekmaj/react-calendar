@@ -15,8 +15,8 @@ describe('Flex', () => {
       </Flex>
     );
 
-    expect(noWrapComponent.props().style.display).toBe('flex');
-    expect(noWrapComponent.props().style.flexWrap).toBe('no-wrap');
+    expect(noWrapComponent.prop('style').display).toBe('flex');
+    expect(noWrapComponent.prop('style').flexWrap).toBe('no-wrap');
   });
 
   it('styles itself properly with wrap flag set to true', () => {
@@ -28,8 +28,8 @@ describe('Flex', () => {
       </Flex>
     );
 
-    expect(wrapComponent.props().style.display).toBe('flex');
-    expect(wrapComponent.props().style.flexWrap).toBe('wrap');
+    expect(wrapComponent.prop('style').display).toBe('flex');
+    expect(wrapComponent.prop('style').flexWrap).toBe('wrap');
   });
 
   it('renders all given children', () => {
@@ -59,10 +59,10 @@ describe('Flex', () => {
 
     const children = component.children();
 
-    children.forEach(child => expect(child.props().style.display).toBe('flex'));
+    children.forEach(child => expect(child.prop('style').display).toBe('flex'));
     children.forEach(child =>
-      expect(parseFloat(child.props().style.flexBasis)).toBeCloseTo(33.33)
+      expect(parseFloat(child.prop('style').flexBasis)).toBeCloseTo(33.33)
     );
-    expect(parseFloat(children.first().props().style.marginLeft)).toBeCloseTo(33.33);
+    expect(parseFloat(children.first().prop('style').marginLeft)).toBeCloseTo(33.33);
   });
 });

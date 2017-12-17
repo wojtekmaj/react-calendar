@@ -156,7 +156,7 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
     const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').props().dateTime;
+    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
 
     expect(firstDayTileTimeISO).toBe(getISOLocalDate(value) + midnightTimestamp);
   });
@@ -172,7 +172,7 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
     const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').props().dateTime;
+    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
 
     expect(firstDayTileTimeISO).toBe(getISOLocalDate(activeStartDate) + midnightTimestamp);
   });
@@ -186,7 +186,7 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
     const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').props().dateTime;
+    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
 
     expect(firstDayTileTimeISO).toBe(getISOLocalDate(beginOfCurrentMonth) + midnightTimestamp);
   });
