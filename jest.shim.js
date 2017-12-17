@@ -1,5 +1,5 @@
 if (!global.requestAnimationFrame) {
-  global.requestAnimationFrame = function(callback) {
+  global.requestAnimationFrame = function requestAnimationFrame(callback) {
     setTimeout(callback, 0);
   };
 }
