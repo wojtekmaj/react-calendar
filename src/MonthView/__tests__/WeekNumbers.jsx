@@ -16,7 +16,7 @@ describe('WeekNumbers', () => {
 
     const children = component.children();
 
-    expect(children.length).toBe(5);
+    expect(children).toHaveLength(5);
     expect(children.first().text()).toBe('1');
   });
 
@@ -30,7 +30,7 @@ describe('WeekNumbers', () => {
 
     const children = component.children();
 
-    expect(children.length).toBe(6);
+    expect(children).toHaveLength(6);
     expect(children.first().text()).toBe('52');
   });
 
@@ -44,7 +44,7 @@ describe('WeekNumbers', () => {
 
     const children = component.children();
 
-    expect(children.length).toBe(5);
+    expect(children).toHaveLength(5);
     expect(children.first().text()).toBe('53');
   });
 
@@ -58,7 +58,7 @@ describe('WeekNumbers', () => {
 
     const children = component.children();
 
-    expect(children.length).toBe(5);
+    expect(children).toHaveLength(5);
     expect(children.first().text()).toBe('1');
   });
 
@@ -72,7 +72,7 @@ describe('WeekNumbers', () => {
 
     const children = component.find('div.react-calendar__tile');
 
-    expect(children.length).toBe(6);
+    expect(children).toHaveLength(6);
   });
 
   it('renders buttons as children when given onClickWeekNumber', () => {
@@ -86,7 +86,7 @@ describe('WeekNumbers', () => {
 
     const children = component.find('button.react-calendar__tile');
 
-    expect(children.length).toBe(6);
+    expect(children).toHaveLength(6);
   });
 
   it('calls onClickWeekNumber function with proper arguments when clicked a week number (ISO 8601)', () => {

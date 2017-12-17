@@ -23,7 +23,7 @@ describe('Navigation', () => {
 
     const [prev2, prev, drillUp, next, next2] = children;
 
-    expect(children.length).toBe(5);
+    expect(children).toHaveLength(5);
     expect(prev2.type).toBe('button');
     expect(prev.type).toBe('button');
     expect(drillUp.type).toBe('button');
@@ -46,7 +46,7 @@ describe('Navigation', () => {
 
     const [prev, drillUp, next] = children;
 
-    expect(children.length).toBe(3);
+    expect(children).toHaveLength(3);
     expect(prev.type).toBe('button');
     expect(drillUp.type).toBe('button');
     expect(next.type).toBe('button');

@@ -195,7 +195,7 @@ describe('getCenturyRange', () => {
 
     const centuryRange = getCenturyRange(date);
 
-    expect(centuryRange.length).toBe(2);
+    expect(centuryRange).toHaveLength(2);
     expect(centuryRange[0].toISOString()).toBe(beginOfCenturyDate.toISOString());
     expect(centuryRange[1].toISOString()).toBe(endOfCenturyDate.toISOString());
   });
@@ -280,7 +280,7 @@ describe('getDecadeRange', () => {
 
     const decadeRange = getDecadeRange(date);
 
-    expect(decadeRange.length).toBe(2);
+    expect(decadeRange).toHaveLength(2);
     expect(decadeRange[0].toISOString()).toBe(beginOfDecadeDate.toISOString());
     expect(decadeRange[1].toISOString()).toBe(endOfDecadeDate.toISOString());
   });
@@ -349,7 +349,7 @@ describe('getYearRange', () => {
 
     const yearRange = getYearRange(date);
 
-    expect(yearRange.length).toBe(2);
+    expect(yearRange).toHaveLength(2);
     expect(yearRange[0].toISOString()).toBe(beginOfYearDate.toISOString());
     expect(yearRange[1].toISOString()).toBe(endOfYearDate.toISOString());
   });
@@ -447,7 +447,7 @@ describe('getMonthRange', () => {
 
     const monthRange = getMonthRange(date);
 
-    expect(monthRange.length).toBe(2);
+    expect(monthRange).toHaveLength(2);
     expect(monthRange[0].toISOString()).toBe(beginOfMonthDate.toISOString());
     expect(monthRange[1].toISOString()).toBe(endOfMonthDate.toISOString());
   });
@@ -516,7 +516,7 @@ describe('getDayRange', () => {
 
     const dayRange = getDayRange(date);
 
-    expect(dayRange.length).toBe(2);
+    expect(dayRange).toHaveLength(2);
     expect(dayRange[0].toISOString()).toBe(beginOfDayDate.toISOString());
     expect(dayRange[1].toISOString()).toBe(endOfDayDate.toISOString());
   });
@@ -660,7 +660,7 @@ describe('getRange', () => {
 
     const centuryRange = getRange('century', date);
 
-    expect(centuryRange.length).toBe(2);
+    expect(centuryRange).toHaveLength(2);
     expect(centuryRange[0].toISOString()).toBe(beginOfCenturyDate.toISOString());
     expect(centuryRange[1].toISOString()).toBe(endOfCenturyDate.toISOString());
   });
@@ -672,7 +672,7 @@ describe('getRange', () => {
 
     const decadeRange = getRange('decade', date);
 
-    expect(decadeRange.length).toBe(2);
+    expect(decadeRange).toHaveLength(2);
     expect(decadeRange[0].toISOString()).toBe(beginOfDecadeDate.toISOString());
     expect(decadeRange[1].toISOString()).toBe(endOfDecadeDate.toISOString());
   });
@@ -684,7 +684,7 @@ describe('getRange', () => {
 
     const yearRange = getRange('year', date);
 
-    expect(yearRange.length).toBe(2);
+    expect(yearRange).toHaveLength(2);
     expect(yearRange[0].toISOString()).toBe(beginOfYearDate.toISOString());
     expect(yearRange[1].toISOString()).toBe(endOfYearDate.toISOString());
   });
@@ -696,7 +696,7 @@ describe('getRange', () => {
 
     const monthRange = getRange('month', date);
 
-    expect(monthRange.length).toBe(2);
+    expect(monthRange).toHaveLength(2);
     expect(monthRange[0].toISOString()).toBe(beginOfMonthDate.toISOString());
     expect(monthRange[1].toISOString()).toBe(endOfMonthDate.toISOString());
   });
@@ -708,7 +708,7 @@ describe('getRange', () => {
 
     const dayRange = getRange('day', date);
 
-    expect(dayRange.length).toBe(2);
+    expect(dayRange).toHaveLength(2);
     expect(dayRange[0].toISOString()).toBe(beginOfDayDate.toISOString());
     expect(dayRange[1].toISOString()).toBe(endOfDayDate.toISOString());
   });

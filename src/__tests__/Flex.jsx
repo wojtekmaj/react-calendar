@@ -43,7 +43,7 @@ describe('Flex', () => {
 
     const children = component.children();
 
-    expect(children.length).toBe(3);
+    expect(children).toHaveLength(3);
     expect(children.at(0).text()).toBe('Hey');
     expect(children.at(1).text()).toBe('Hi');
     expect(children.at(2).text()).toBe('Hello');

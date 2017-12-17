@@ -19,7 +19,7 @@ describe('Calendar', () => {
 
     const navigation = component.find('.react-calendar__navigation');
 
-    expect(navigation.length).toBe(1);
+    expect(navigation).toHaveLength(1);
   });
 
   it('renders month view by default', () => {
@@ -29,7 +29,7 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
 
-    expect(monthView.length).toBe(1);
+    expect(monthView).toHaveLength(1);
   });
 
   it('renders maximum allowed view when given maxDetail', () => {
@@ -39,7 +39,7 @@ describe('Calendar', () => {
 
     const yearView = component.find('.react-calendar__year-view');
 
-    expect(yearView.length).toBe(1);
+    expect(yearView).toHaveLength(1);
   });
 
   it('renders maximum allowed view when given view that is not allowed', () => {
@@ -52,7 +52,7 @@ describe('Calendar', () => {
 
     const yearView = component.find('.react-calendar__year-view');
 
-    expect(yearView.length).toBe(1);
+    expect(yearView).toHaveLength(1);
   });
 
   it('renders maximum allowed view when attempting to externally switch to a view that is not allowed', () => {
@@ -68,7 +68,7 @@ describe('Calendar', () => {
 
     const yearView = component.find('.react-calendar__year-view');
 
-    expect(yearView.length).toBe(1);
+    expect(yearView).toHaveLength(1);
   });
 
   it('renders maximum allowed view when given changed maxDetail', () => {
@@ -84,7 +84,7 @@ describe('Calendar', () => {
 
     const yearView = component.find('.react-calendar__year-view');
 
-    expect(yearView.length).toBe(1);
+    expect(yearView).toHaveLength(1);
   });
 
   it('renders month view when given view = "month"', () => {
@@ -94,7 +94,7 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
 
-    expect(monthView.length).toBe(1);
+    expect(monthView).toHaveLength(1);
     expect(component.state().view).toBe('month');
   });
 
@@ -108,7 +108,7 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view--weekNumbers');
 
-    expect(monthView.length).toBe(1);
+    expect(monthView).toHaveLength(1);
     expect(component.state().view).toBe('month');
   });
 
@@ -119,7 +119,7 @@ describe('Calendar', () => {
 
     const yearView = component.find('.react-calendar__year-view');
 
-    expect(yearView.length).toBe(1);
+    expect(yearView).toHaveLength(1);
     expect(component.state().view).toBe('year');
   });
 
@@ -130,7 +130,7 @@ describe('Calendar', () => {
 
     const decadeView = component.find('.react-calendar__decade-view');
 
-    expect(decadeView.length).toBe(1);
+    expect(decadeView).toHaveLength(1);
     expect(component.state().view).toBe('decade');
   });
 
@@ -141,7 +141,7 @@ describe('Calendar', () => {
 
     const centuryView = component.find('.react-calendar__century-view');
 
-    expect(centuryView.length).toBe(1);
+    expect(centuryView).toHaveLength(1);
     expect(component.state().view).toBe('century');
   });
 
