@@ -71,7 +71,7 @@ class MyApp extends Component {
 
 ### Custom styling
 
-If you don't want to use default React-Calendar styling to build upon it, you can import React-Calendar by using `import Calendar from 'react-calendar/build/entry.nostyle';` instead.
+If you don't want to use default React-Calendar styling to build upon it, you can import React-Calendar by using `import Calendar from 'react-calendar/dist/entry.nostyle';` instead.
 
 ## User guide
 
