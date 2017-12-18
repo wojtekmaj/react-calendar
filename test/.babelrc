@@ -1,7 +1,7 @@
 {
   "presets": [
     [
-      "es2015",
+      "env",
       {
         "modules": false
       }
@@ -10,7 +10,6 @@
     "react"
   ],
   "plugins": [
-    "transform-class-properties",
-    "react-hot-loader/babel"
+    "transform-class-properties"
   ]
 }
