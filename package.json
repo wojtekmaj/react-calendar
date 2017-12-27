@@ -18,7 +18,6 @@
   },
   "jest": {
     "setupFiles": [
-      "<rootDir>/jest.shim.js",
       "<rootDir>/jest.setup.js"
     ],
     "collectCoverageFrom": [
@@ -70,7 +69,8 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "jest": "^21.2.1",
+    "jest": "^22.0.4",
+    "jest-cli": "^22.0.4",
     "less": "^2.7.3",
     "react-test-renderer": "^16.2.0"
   },
