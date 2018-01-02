@@ -262,7 +262,7 @@ export default class Calendar extends Component {
       minDate,
       tileClassName,
       tileContent: tileContent || renderChildren, // For backwards compatibility
-      value: this.getProcessedValue(value),
+      value,
       valueType: this.valueType,
     };
 
