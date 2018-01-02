@@ -14,13 +14,14 @@ import { isClassName, isMaxDate, isMinDate } from '../shared/propTypes';
 const className = 'react-calendar__month-view__days__day';
 
 const Day = ({
-  active, currentMonthIndex, date, maxDate, minDate, onClick, tileClassName, tileContent,
+  active, currentMonthIndex, date, hasActive, maxDate, minDate, onClick, tileClassName, tileContent,
 }) => (
   <button
     className={mergeClassNames(
       className,
       'react-calendar__tile',
       active && 'react-calendar__tile--active',
+      hasActive && 'react-calendar__tile--hasActive',
       isWeekend(date) && `${className}--weekend`,
       date.getMonth() !== currentMonthIndex && `${className}--neighboringMonth`,
       tileClassName instanceof Function ? tileClassName({ date, view: 'month' }) : tileClassName,
@@ -45,6 +46,7 @@ Day.propTypes = {
   active: PropTypes.bool.isRequired,
   currentMonthIndex: PropTypes.number.isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
+  hasActive: PropTypes.bool.isRequired,
   maxDate: isMaxDate,
   minDate: isMinDate,
   onClick: PropTypes.func,
