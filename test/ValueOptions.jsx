@@ -56,10 +56,18 @@ export default class ValueOptions extends Component {
     this.setEndValue(getEndOfDay(new Date(value)));
   }
 
+  onSelectRangeChange = (event) => {
+    const { checked } = event.target;
+
+    this.props.setState({ selectRange: checked });
+  }
+
   render() {
+    const { selectRange } = this.props;
+
     return (
-      <fieldset id="detailoptions">
-        <legend htmlFor="viewoptions">Set date externally</legend>
+      <fieldset id="valueOptions">
+        <legend htmlFor="valueOptions">Value options</legend>
 
         <div>
           <label htmlFor="startDate">Start date</label>
@@ -84,12 +92,23 @@ export default class ValueOptions extends Component {
           <button onClick={() => this.setEndValue(null)}>Clear to null</button>
           <button onClick={() => this.setEndValue('')}>Clear to empty string</button>
         </div>
+
+        <div>
+          <input
+            id="selectRange"
+            type="checkbox"
+            checked={selectRange}
+            onChange={this.onSelectRangeChange}
+          />
+          <label htmlFor="selectRange">Select range</label>
+        </div>
       </fieldset>
     );
   }
 }
 
 ValueOptions.propTypes = {
+  selectRange: PropTypes.bool,
   setState: PropTypes.func.isRequired,
   value: PropTypes.oneOfType([
     PropTypes.string,
