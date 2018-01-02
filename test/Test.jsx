@@ -14,6 +14,8 @@ import './Test.less';
 
 const now = new Date();
 
+/* eslint-disable no-console */
+
 export default class Test extends Component {
   state = {
     locale: null,
@@ -105,10 +107,8 @@ export default class Test extends Component {
             <form
               onSubmit={(event) => {
                 event.preventDefault();
-                /* eslint-disable no-console */
                 console.error('Calendar triggered submitting the form.');
                 console.log(event);
-                /* eslint-enable no-console */
               }}
             >
               <Calendar
