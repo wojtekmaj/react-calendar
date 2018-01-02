@@ -24,6 +24,7 @@ export default class Test extends Component {
     minDate: new Date(1995, now.getUTCMonth() + 1, 15, 12),
     minDetail: 'century',
     returnValue: 'start',
+    selectRange: false,
     showNeighboringMonth: false,
     showWeekNumbers: false,
     value: now,
@@ -60,6 +61,7 @@ export default class Test extends Component {
       minDate,
       minDetail,
       returnValue,
+      selectRange,
       showNeighboringMonth,
       showWeekNumbers,
       value,
@@ -94,6 +96,7 @@ export default class Test extends Component {
               locale={locale}
             />
             <ValueOptions
+              selectRange={selectRange}
               setState={setState}
               value={value}
             />
@@ -132,6 +135,7 @@ export default class Test extends Component {
                 onDrillUp={({ activeStartDate, view }) => {
                   console.log('Drilled up to', view, activeStartDate);
                 }}
+                selectRange={selectRange}
                 tileClassName={({ date, view }) => {
                   switch (view) {
                     case 'month':
