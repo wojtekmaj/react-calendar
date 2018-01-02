@@ -153,16 +153,10 @@ export default class Calendar extends Component {
       nextState.view = this.getView(nextProps);
     }
 
-    const nextValueFrom = this.getValueFrom(nextValue);
-    const valueFrom = this.getValueFrom(value);
-
-    const nextValueTo = this.getValueTo(nextValue);
-    const valueTo = this.getValueTo(value);
-
     if (
       allowedViewChanged ||
-      datesAreDifferent(nextValueFrom, valueFrom) ||
-      datesAreDifferent(nextValueTo, valueTo)
+      datesAreDifferent(...[nextValue, value].map(this.getValueFrom)) ||
+      datesAreDifferent(...[nextValue, value].map(this.getValueTo))
     ) {
       nextState.activeStartDate = this.getActiveStartDate(nextProps);
     }
