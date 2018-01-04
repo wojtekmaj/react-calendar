@@ -76,3 +76,43 @@ isView.isRequired = (props, propName, componentName) => {
   }
   return isView(props, propName, componentName);
 };
+
+export const viewProps = {
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
+  hover: PropTypes.instanceOf(Date),
+  maxDate: isMaxDate,
+  minDate: isMinDate,
+  onClick: PropTypes.func,
+  onMouseOver: PropTypes.func,
+  tileClassName: PropTypes.oneOfType([
+    PropTypes.func,
+    isClassName,
+  ]),
+  tileContent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
+  value: isValue,
+  valueType: PropTypes.string,
+};
+
+export const tileProps = {
+  classes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
+  maxDate: isMaxDate,
+  minDate: isMinDate,
+  onClick: PropTypes.func,
+  onMouseOver: PropTypes.func,
+  style: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ])),
+  tileClassName: PropTypes.oneOfType([
+    PropTypes.func,
+    isClassName,
+  ]),
+  tileContent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
+};

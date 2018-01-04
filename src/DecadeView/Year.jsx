@@ -16,6 +16,7 @@ const Year = ({
   maxDate,
   minDate,
   onClick,
+  onMouseOver,
   style,
   tileClassName,
   tileContent,
@@ -32,6 +33,8 @@ const Year = ({
       (maxDate && getEndOfYear(maxDate) < date)
     }
     onClick={onClick && (() => onClick(date))}
+    onMouseOver={onMouseOver && (() => onMouseOver(date))}
+    onFocus={onMouseOver && (() => onMouseOver(date))}
     style={style}
     type="button"
   >
