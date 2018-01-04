@@ -20,6 +20,7 @@ const Day = ({
   maxDate,
   minDate,
   onClick,
+  onMouseOver,
   style,
   tileClassName,
   tileContent,
@@ -38,6 +39,8 @@ const Day = ({
     }
     key={date}
     onClick={onClick && (() => onClick(date))}
+    onMouseOver={onMouseOver && (() => onMouseOver(date))}
+    onFocus={onMouseOver && (() => onMouseOver(date))}
     style={style}
     type="button"
   >

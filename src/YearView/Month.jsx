@@ -17,6 +17,7 @@ const Month = ({
   maxDate,
   minDate,
   onClick,
+  onMouseOver,
   style,
   tileClassName,
   tileContent,
@@ -32,6 +33,8 @@ const Month = ({
       (maxDate && getEndOfMonth(maxDate) < date)
     }
     onClick={onClick && (() => onClick(date))}
+    onMouseOver={onMouseOver && (() => onMouseOver(date))}
+    onFocus={onMouseOver && (() => onMouseOver(date))}
     style={style}
     type="button"
   >

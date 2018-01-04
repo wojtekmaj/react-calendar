@@ -5,7 +5,7 @@ import Month from './Month';
 
 import { getYear } from '../shared/dates';
 import { getTileClasses } from '../shared/utils';
-import { viewProps } from '../shared/propTypes';
+import { tileGroupProps } from '../shared/propTypes';
 
 export default class Months extends PureComponent {
   start = 0
@@ -22,6 +22,7 @@ export default class Months extends PureComponent {
 
     const {
       activeStartDate,
+      hover,
       value,
       valueType,
       ...monthProps
@@ -33,7 +34,9 @@ export default class Months extends PureComponent {
 
       months.push(
         <Month
-          {...getTileActivityFlags(value, valueType, date, 'month')}
+          classes={getTileClasses({
+            value, valueType, date, dateType: 'month', hover,
+          })}
           date={date}
           key={monthIndex}
           {...monthProps}
@@ -54,5 +57,5 @@ export default class Months extends PureComponent {
 }
 
 Months.propTypes = {
-  ...viewProps,
+  ...tileGroupProps,
 };

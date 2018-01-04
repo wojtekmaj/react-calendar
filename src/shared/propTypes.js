@@ -77,7 +77,7 @@ isView.isRequired = (props, propName, componentName) => {
   return isView(props, propName, componentName);
 };
 
-export const viewProps = {
+export const tileGroupProps = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   hover: PropTypes.instanceOf(Date),
   maxDate: isMaxDate,

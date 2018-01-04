@@ -8,7 +8,7 @@ import {
   getBeginOfCenturyYear,
 } from '../shared/dates';
 import { getTileClasses } from '../shared/utils';
-import { viewProps } from '../shared/propTypes';
+import { tileGroupProps } from '../shared/propTypes';
 
 export default class Decades extends PureComponent {
   get start() {
@@ -25,6 +25,7 @@ export default class Decades extends PureComponent {
 
     const {
       activeStartDate,
+      hover,
       value,
       valueType,
       ...decadeProps
@@ -36,7 +37,9 @@ export default class Decades extends PureComponent {
 
       decades.push(
         <Decade
-          classes={getTileClasses(value, valueType, date, 'decade')}
+          classes={getTileClasses({
+            value, valueType, date, dateType: 'decade', hover,
+          })}
           date={date}
           decade={decade}
           key={decade}
@@ -58,5 +61,5 @@ export default class Decades extends PureComponent {
 }
 
 Decades.propTypes = {
-  ...viewProps,
+  ...tileGroupProps,
 };

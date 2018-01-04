@@ -127,6 +127,7 @@ export default class Calendar extends Component {
 
   state = {
     activeStartDate: this.getActiveStartDate(),
+    hover: null,
     view: this.getView(),
     value: this.props.value,
   }
@@ -160,6 +161,10 @@ export default class Calendar extends Component {
       datesAreDifferent(...[nextValue, value].map(this.getValueTo))
     ) {
       nextState.activeStartDate = this.getActiveStartDate(nextProps);
+    }
+
+    if (!nextProps.selectRange && this.props.selectRange) {
+      nextState.hover = null;
     }
 
     this.setState(nextState);
@@ -283,17 +288,30 @@ export default class Calendar extends Component {
     this.setState({ value: nextValue });
   }
 
+  onMouseOver = (value) => {
+    this.setState({ hover: value });
+  }
+
   renderContent() {
     const {
-      calendarType, maxDate, minDate, renderChildren, tileClassName, tileContent,
+      calendarType,
+      maxDate,
+      minDate,
+      renderChildren,
+      tileClassName,
+      tileContent,
     } = this.props;
-    const { activeStartDate, value, view } = this.state;
-    const { valueType } = this;
+    const {
+      activeStartDate, hover, value, view,
+    } = this.state;
+    const { onMouseOver, valueType } = this;
 
     const commonProps = {
       activeStartDate,
+      hover,
       maxDate,
       minDate,
+      onMouseOver: this.props.selectRange ? onMouseOver : null,
       tileClassName,
       tileContent: tileContent || renderChildren, // For backwards compatibility
       value,
@@ -366,8 +384,18 @@ export default class Calendar extends Component {
   }
 
   render() {
+    const { className, selectRange } = this.props;
+    const { value } = this.state;
+    const valueArray = [].concat(value);
+
     return (
-      <div className={mergeClassNames('react-calendar', this.props.className)}>
+      <div
+        className={mergeClassNames(
+          'react-calendar',
+          selectRange && valueArray.length === 1 && 'react-calendar--selectRange',
+          className,
+        )}
+      >
         {this.renderNavigation()}
         {this.renderContent()}
       </div>

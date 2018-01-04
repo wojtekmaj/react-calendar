@@ -10,7 +10,7 @@ import {
   getMonthIndex,
   getYear,
 } from '../shared/dates';
-import { isCalendarType, viewProps } from '../shared/propTypes';
+import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 import { getTileClasses } from '../shared/utils';
 
 export default class Days extends PureComponent {
@@ -70,6 +70,7 @@ export default class Days extends PureComponent {
 
     const {
       activeStartDate,
+      hover,
       value,
       valueType,
       ...dayProps
@@ -81,7 +82,9 @@ export default class Days extends PureComponent {
 
       days.push(
         <Day
-          classes={getTileClasses(value, valueType, date, 'day')}
+          classes={getTileClasses({
+            value, valueType, date, dateType: 'day', hover,
+          })}
           currentMonthIndex={monthIndex}
           date={date}
           key={day}
@@ -106,5 +109,5 @@ export default class Days extends PureComponent {
 Days.propTypes = {
   calendarType: isCalendarType.isRequired,
   showNeighboringMonth: PropTypes.bool,
-  ...viewProps,
+  ...tileGroupProps,
 };

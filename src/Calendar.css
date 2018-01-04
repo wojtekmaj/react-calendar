@@ -90,3 +90,6 @@ button.react-calendar__tile--hasActive:not([disabled]):hover {
 button.react-calendar__tile--active:not([disabled]):hover {
   background: #1087ff;
 }
+.react-calendar--selectRange .react-calendar__tile--hover {
+  background-color: #e6e6e6;
+}
