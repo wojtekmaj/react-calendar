@@ -4,7 +4,7 @@ import {
   isRangeWithinRange,
   doRangesOverlap,
   between,
-  getTileActivityFlags,
+  getTileClasses,
 } from '../utils';
 
 describe('mergeFunctions', () => {
@@ -202,9 +202,9 @@ describe('between', () => {
   });
 });
 
-describe('getTileActivityFlags', () => {
+describe('getTileClasses', () => {
   it('returns all flags set to false when given no value', () => {
-    const result = getTileActivityFlags();
+    const result = getTileClasses();
 
     expect(result.active).toBe(false);
     expect(result.hasActive).toBe(false);
@@ -212,12 +212,12 @@ describe('getTileActivityFlags', () => {
 
   it('throws an error when given value but not given other parameters ', () => {
     expect(
-      () => getTileActivityFlags(new Date(2017, 0, 1)),
+      () => getTileClasses(new Date(2017, 0, 1)),
     ).toThrow();
   });
 
   it('returns active flag set to true when passed a value equal to date', () => {
-    const result = getTileActivityFlags(
+    const result = getTileClasses(
       new Date(2017, 0, 1), 'month', new Date(2017, 0, 1), 'month',
     );
 
@@ -226,7 +226,7 @@ describe('getTileActivityFlags', () => {
   });
 
   it('returns active flag set to true when passed a value array equal to date array', () => {
-    const result = getTileActivityFlags(
+    const result = getTileClasses(
       [new Date(2017, 0, 1), new Date(2017, 0, 31)],
       undefined,
       [new Date(2017, 0, 1), new Date(2017, 0, 31)],
@@ -238,7 +238,7 @@ describe('getTileActivityFlags', () => {
   });
 
   it('returns hasActive flag set to true when passed a value covering date', () => {
-    const result = getTileActivityFlags(
+    const result = getTileClasses(
       new Date(2017, 6, 1), 'month', new Date(2017, 0, 1), 'year',
     );
 
@@ -247,7 +247,7 @@ describe('getTileActivityFlags', () => {
   });
 
   it('returns all flags set to false when given value completely unrelated to date', () => {
-    const result = getTileActivityFlags(
+    const result = getTileClasses(
       new Date(2017, 6, 1), 'month', new Date(2016, 0, 1), 'month',
     );
 

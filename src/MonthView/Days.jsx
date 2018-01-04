@@ -10,8 +10,8 @@ import {
   getMonthIndex,
   getYear,
 } from '../shared/dates';
-import { isCalendarType, isClassName, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
-import { getTileActivityFlags } from '../shared/utils';
+import { isCalendarType, viewProps } from '../shared/propTypes';
+import { getTileClasses } from '../shared/utils';
 
 export default class Days extends PureComponent {
   get offset() {
@@ -67,17 +67,13 @@ export default class Days extends PureComponent {
     const {
       start, end, year, monthIndex,
     } = this;
-    const {
-      maxDate, minDate, onClick, tileClassName, tileContent, value, valueType,
-    } = this.props;
 
-    const dayProps = {
-      maxDate,
-      minDate,
-      onClick,
-      tileClassName,
-      tileContent,
-    };
+    const {
+      activeStartDate,
+      value,
+      valueType,
+      ...dayProps
+    } = this.props;
 
     const days = [];
     for (let day = start; day <= end; day += 1) {
@@ -85,7 +81,7 @@ export default class Days extends PureComponent {
 
       days.push(
         <Day
-          {...getTileActivityFlags(value, valueType, date, 'day')}
+          classes={getTileClasses(value, valueType, date, 'day')}
           currentMonthIndex={monthIndex}
           date={date}
           key={day}
@@ -108,20 +104,7 @@ export default class Days extends PureComponent {
 }
 
 Days.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType.isRequired,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onClick: PropTypes.func,
   showNeighboringMonth: PropTypes.bool,
-  tileClassName: PropTypes.oneOfType([
-    PropTypes.func,
-    isClassName,
-  ]),
-  tileContent: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.node,
-  ]),
-  value: isValue,
-  valueType: PropTypes.string,
+  ...viewProps,
 };

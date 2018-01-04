@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 import Flex from '../Flex';
 import Decade from './Decade';
@@ -8,8 +7,8 @@ import {
   getBeginOfDecade,
   getBeginOfCenturyYear,
 } from '../shared/dates';
-import { getTileActivityFlags } from '../shared/utils';
-import { isClassName, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
+import { getTileClasses } from '../shared/utils';
+import { viewProps } from '../shared/propTypes';
 
 export default class Decades extends PureComponent {
   get start() {
@@ -23,17 +22,13 @@ export default class Decades extends PureComponent {
 
   render() {
     const { end, start } = this;
-    const {
-      maxDate, minDate, onClick, tileClassName, tileContent, value, valueType,
-    } = this.props;
 
-    const decadeProps = {
-      maxDate,
-      minDate,
-      onClick,
-      tileClassName,
-      tileContent,
-    };
+    const {
+      activeStartDate,
+      value,
+      valueType,
+      ...decadeProps
+    } = this.props;
 
     const decades = [];
     for (let decade = start; decade <= end; decade += 10) {
@@ -41,7 +36,7 @@ export default class Decades extends PureComponent {
 
       decades.push(
         <Decade
-          {...getTileActivityFlags(value, valueType, date, 'decade')}
+          classes={getTileClasses(value, valueType, date, 'decade')}
           date={date}
           decade={decade}
           key={decade}
@@ -63,18 +58,5 @@ export default class Decades extends PureComponent {
 }
 
 Decades.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onClick: PropTypes.func,
-  tileClassName: PropTypes.oneOfType([
-    PropTypes.func,
-    isClassName,
-  ]),
-  tileContent: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.node,
-  ]),
-  value: isValue,
-  valueType: PropTypes.string,
+  ...viewProps,
 };
