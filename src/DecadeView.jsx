@@ -7,12 +7,8 @@ import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
 export default class DecadeView extends PureComponent {
   renderYears() {
-    const {
-      ...childProps
-    } = this.props;
-
     return (
-      <Years {...childProps} />
+      <Years {...this.props} />
     );
   }
 
