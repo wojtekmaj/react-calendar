@@ -32,7 +32,7 @@
       background: none;
 
       &:not([disabled]) {
-        &:hover {
+        &:hover, &:focus {
           background-color: rgb(230, 230, 230);
         }
       }
@@ -99,7 +99,7 @@
     }
 
     button&:not([disabled]) {
-      &:hover {
+      &:hover, &:focus {
         background-color: rgb(230, 230, 230);
       }
     }
@@ -109,7 +109,7 @@
       background: @bgcolor;
 
       button&:not([disabled]) {
-        &:hover {
+        &:hover, &:focus {
           background: lighten(@bgcolor, 10%);
         }
       }
@@ -121,7 +121,7 @@
       color: white;
 
       button&:not([disabled]) {
-        &:hover {
+        &:hover, &:focus {
           background: lighten(@bgcolor, 10%);
         }
       }
