@@ -22,6 +22,16 @@ describe('Calendar', () => {
     expect(navigation).toHaveLength(1);
   });
 
+  it('does not render navigation when showNavigation flag is set to false', () => {
+    const component = mount(
+      <Calendar showNavigation={false} />
+    );
+
+    const navigation = component.find('.react-calendar__navigation');
+
+    expect(navigation).toHaveLength(0);
+  });
+
   it('renders month view by default', () => {
     const component = mount(
       <Calendar />

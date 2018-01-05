@@ -7,12 +7,8 @@ import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
 export default class CenturyView extends PureComponent {
   renderDecades() {
-    const {
-      ...childProps
-    } = this.props;
-
     return (
-      <Decades {...childProps} />
+      <Decades {...this.props} />
     );
   }
 

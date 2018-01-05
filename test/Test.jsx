@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Calendar from 'react-calendar/src/entry';
+import Calendar from 'react-calendar/src/entry.nostyle';
+import 'react-calendar/src/Calendar.less';
 
 import DateBonduariesOptions from './DateBonduariesOptions';
 import MaxDetailOptions from './MaxDetailOptions';
@@ -14,6 +15,8 @@ import './Test.less';
 
 const now = new Date();
 
+/* eslint-disable no-console */
+
 export default class Test extends Component {
   state = {
     locale: null,
@@ -22,6 +25,7 @@ export default class Test extends Component {
     minDate: new Date(1995, now.getUTCMonth() + 1, 15, 12),
     minDetail: 'century',
     returnValue: 'start',
+    selectRange: false,
     showNeighboringMonth: false,
     showWeekNumbers: false,
     value: now,
@@ -58,6 +62,7 @@ export default class Test extends Component {
       minDate,
       minDetail,
       returnValue,
+      selectRange,
       showNeighboringMonth,
       showWeekNumbers,
       value,
@@ -92,6 +97,7 @@ export default class Test extends Component {
               locale={locale}
             />
             <ValueOptions
+              selectRange={selectRange}
               setState={setState}
               value={value}
             />
@@ -105,10 +111,8 @@ export default class Test extends Component {
             <form
               onSubmit={(event) => {
                 event.preventDefault();
-                /* eslint-disable no-console */
                 console.error('Calendar triggered submitting the form.');
                 console.log(event);
-                /* eslint-enable no-console */
               }}
             >
               <Calendar
@@ -132,6 +136,7 @@ export default class Test extends Component {
                 onDrillUp={({ activeStartDate, view }) => {
                   console.log('Drilled up to', view, activeStartDate);
                 }}
+                selectRange={selectRange}
                 tileClassName={({ date, view }) => {
                   switch (view) {
                     case 'month':

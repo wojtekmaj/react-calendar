@@ -52,12 +52,12 @@ export const between = (value, min, max) => {
   return value;
 };
 
-export const getTileActivityFlags = (value, valueType, date, dateType) => {
-  const flags = {};
+export const getTileClasses = ({
+  value, valueType, date, dateType, hover,
+} = {}) => {
+  const classes = ['react-calendar__tile'];
   if (!value) {
-    flags.active = false;
-    flags.hasActive = false;
-    return flags;
+    return classes;
   }
 
   if (
@@ -65,14 +65,32 @@ export const getTileActivityFlags = (value, valueType, date, dateType) => {
     (!(value instanceof Array) && !valueType) ||
     (!(date instanceof Array) && !dateType)
   ) {
-    throw new Error('getTileActivityFlags(): Unable to get tile activity flags because one or more required arguments were not passed.');
+    throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
   }
 
   const valueRange = value instanceof Array ? value : getRange(valueType, value);
   const dateRange = date instanceof Array ? date : getRange(dateType, date);
 
-  flags.active = isRangeWithinRange(valueRange, dateRange);
-  flags.hasActive = flags.active ? false : doRangesOverlap(valueRange, dateRange);
+  if (isRangeWithinRange(valueRange, dateRange)) {
+    classes.push('react-calendar__tile--active');
+  } else if (doRangesOverlap(valueRange, dateRange)) {
+    classes.push('react-calendar__tile--hasActive');
+  } else if (
+    hover && (
+      // Date before value
+      (
+        dateRange[1] < valueRange[0] &&
+        isRangeWithinRange([hover, valueRange[0]], dateRange)
+      ) ||
+      // Date after value
+      (
+        dateRange[0] > valueRange[1] &&
+        isRangeWithinRange([valueRange[1], hover], dateRange)
+      )
+    )
+  ) {
+    classes.push('react-calendar__tile--hover');
+  }
 
-  return flags;
+  return classes;
 };

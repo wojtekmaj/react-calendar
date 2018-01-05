@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
 
 import {
@@ -8,19 +7,25 @@ import {
   getISOLocalMonth,
 } from '../shared/dates';
 import { formatMonth } from '../shared/dateFormatter';
-import { isClassName, isMaxDate, isMinDate } from '../shared/propTypes';
+import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__year-view__months__month';
 
 const Month = ({
-  active, date, hasActive, maxDate, minDate, onClick, tileClassName, tileContent,
+  classes,
+  date,
+  maxDate,
+  minDate,
+  onClick,
+  onMouseOver,
+  style,
+  tileClassName,
+  tileContent,
 }) => (
   <button
     className={mergeClassNames(
       className,
-      active && 'react-calendar__tile--active',
-      hasActive && 'react-calendar__tile--hasActive',
-      'react-calendar__tile',
+      ...classes,
       tileClassName instanceof Function ? tileClassName({ date, view: 'year' }) : tileClassName,
     )}
     disabled={
@@ -28,31 +33,20 @@ const Month = ({
       (maxDate && getEndOfMonth(maxDate) < date)
     }
     onClick={onClick && (() => onClick(date))}
-    style={{ flexGrow: 1 }}
+    onMouseOver={onMouseOver && (() => onMouseOver(date))}
+    onFocus={onMouseOver && (() => onMouseOver(date))}
+    style={style}
     type="button"
   >
     <time dateTime={`${getISOLocalMonth(date)}T00:00:00.000`}>
       {formatMonth(date)}
     </time>
-    {tileContent instanceof Function ? tileContent({ date, view: 'year' }) : tileContent}
+    {typeof tileContent === 'function' ? tileContent({ date, view: 'year' }) : tileContent}
   </button>
 );
 
 Month.propTypes = {
-  active: PropTypes.bool.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
-  hasActive: PropTypes.bool.isRequired,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onClick: PropTypes.func,
-  tileClassName: PropTypes.oneOfType([
-    PropTypes.func,
-    isClassName,
-  ]),
-  tileContent: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.node,
-  ]),
+  ...tileProps,
 };
 
 export default Month;

@@ -59,7 +59,6 @@ describe('Flex', () => {
 
     const children = component.children();
 
-    children.forEach(child => expect(child.prop('style').display).toBe('flex'));
     children.forEach(child =>
       expect(parseFloat(child.prop('style').flexBasis)).toBeCloseTo(33.33)
     );

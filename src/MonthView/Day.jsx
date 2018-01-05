@@ -9,18 +9,26 @@ import {
   getISOLocalDate,
   isWeekend,
 } from '../shared/dates';
-import { isClassName, isMaxDate, isMinDate } from '../shared/propTypes';
+import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
 
 const Day = ({
-  active, currentMonthIndex, date, maxDate, minDate, onClick, tileClassName, tileContent,
+  classes,
+  currentMonthIndex,
+  date,
+  maxDate,
+  minDate,
+  onClick,
+  onMouseOver,
+  style,
+  tileClassName,
+  tileContent,
 }) => (
   <button
     className={mergeClassNames(
       className,
-      'react-calendar__tile',
-      active && 'react-calendar__tile--active',
+      ...classes,
       isWeekend(date) && `${className}--weekend`,
       date.getMonth() !== currentMonthIndex && `${className}--neighboringMonth`,
       tileClassName instanceof Function ? tileClassName({ date, view: 'month' }) : tileClassName,
@@ -31,31 +39,21 @@ const Day = ({
     }
     key={date}
     onClick={onClick && (() => onClick(date))}
-    style={{ flexGrow: 1 }}
+    onMouseOver={onMouseOver && (() => onMouseOver(date))}
+    onFocus={onMouseOver && (() => onMouseOver(date))}
+    style={style}
     type="button"
   >
     <time dateTime={`${getISOLocalDate(date)}T00:00:00.000`}>
       {getDay(date)}
     </time>
-    {tileContent instanceof Function ? tileContent({ date, view: 'month' }) : tileContent}
+    {typeof tileContent === 'function' ? tileContent({ date, view: 'month' }) : tileContent}
   </button>
 );
 
 Day.propTypes = {
-  active: PropTypes.bool.isRequired,
   currentMonthIndex: PropTypes.number.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onClick: PropTypes.func,
-  tileClassName: PropTypes.oneOfType([
-    PropTypes.func,
-    isClassName,
-  ]),
-  tileContent: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.node,
-  ]),
+  ...tileProps,
 };
 
 export default Day;

@@ -23,20 +23,17 @@ const Flex = ({
     {...otherProps}
   >
     {React.Children.map(children, (child, index) => (
-      <div
-        style={Object.assign(
+      React.cloneElement(child, Object.assign({}, child.props, {
+        style: Object.assign(
           {
-            display: 'flex',
             flexBasis: toPercent(100 / count),
             overflow: 'hidden',
           },
           offset && (index === 0) && {
             marginLeft: toPercent((100 * offset) / count),
           },
-        )}
-      >
-        {child}
-      </div>
+        ),
+      }))
     ))}
   </div>
 );

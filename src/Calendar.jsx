@@ -53,13 +53,13 @@ export default class Calendar extends Component {
     return [this.getValueFrom(value), this.getValueTo(value)];
   }
 
-  getValueFrom(value) {
+  getValueFrom = (value) => {
     if (!value) {
       return null;
     }
 
     const { maxDate, minDate } = this.props;
-    const rawValueFrom = value instanceof Array ? value[0] : value;
+    const rawValueFrom = value instanceof Array && value.length === 2 ? value[0] : value;
     const valueFromDate = new Date(rawValueFrom);
 
     if (Number.isNaN(valueFromDate.getTime())) {
@@ -71,13 +71,13 @@ export default class Calendar extends Component {
     return between(valueFrom, minDate, maxDate);
   }
 
-  getValueTo(value) {
+  getValueTo = (value) => {
     if (!value) {
       return null;
     }
 
     const { maxDate, minDate } = this.props;
-    const rawValueTo = value instanceof Array ? value[1] : value;
+    const rawValueTo = value instanceof Array && value.length === 2 ? value[1] : value;
     const valueToDate = new Date(rawValueTo);
 
     if (Number.isNaN(valueToDate.getTime())) {
@@ -127,7 +127,9 @@ export default class Calendar extends Component {
 
   state = {
     activeStartDate: this.getActiveStartDate(),
+    hover: null,
     view: this.getView(),
+    value: this.props.value,
   }
 
   componentWillMount() {
@@ -153,21 +155,26 @@ export default class Calendar extends Component {
       nextState.view = this.getView(nextProps);
     }
 
-    const nextValueFrom = this.getValueFrom(nextValue);
-    const valueFrom = this.getValueFrom(value);
-
-    const nextValueTo = this.getValueTo(nextValue);
-    const valueTo = this.getValueTo(value);
-
     if (
       allowedViewChanged ||
-      datesAreDifferent(nextValueFrom, valueFrom) ||
-      datesAreDifferent(nextValueTo, valueTo)
+      datesAreDifferent(...[nextValue, value].map(this.getValueFrom)) ||
+      datesAreDifferent(...[nextValue, value].map(this.getValueTo))
     ) {
       nextState.activeStartDate = this.getActiveStartDate(nextProps);
     }
 
+    if (!nextProps.selectRange && this.props.selectRange) {
+      nextState.hover = null;
+    }
+
     this.setState(nextState);
+  }
+
+  updateValues = (props = this.props) => {
+    this.setState({
+      value: this.props.value,
+      activeStartDate: this.getActiveStartDate(props),
+    });
   }
 
   getActiveStartDate(props = this.props) {
@@ -246,24 +253,69 @@ export default class Calendar extends Component {
     });
   }
 
+  // Makes date range out of two values, ensuring they are in order and cover entire periods.
+  makeDateRange = (value1, value2) => {
+    const rawNextValue = [value1, value2]
+      .sort((a, b) => a.getTime() > b.getTime());
+    return [
+      getBegin(this.valueType, rawNextValue[0]),
+      getEnd(this.valueType, rawNextValue[1]),
+    ];
+  }
+
   onChange = (value) => {
-    callIfDefined(this.props.onChange, this.getProcessedValue(value));
+    const { selectRange } = this.props;
+    const { value: previousValue } = this.state;
+    const valueArray = [].concat(previousValue);
+
+    let nextValue;
+    if (selectRange) {
+      // Range selection turned on
+      if (valueArray.length !== 1) { // 0 or 2 - either way we're starting a new array
+        // First value
+        nextValue = getBegin(this.valueType, value);
+      } else {
+        // Second value
+        nextValue = this.makeDateRange(previousValue, value);
+        callIfDefined(this.props.onChange, nextValue);
+      }
+    } else {
+      // Range selection turned off
+      nextValue = this.getProcessedValue(value);
+      callIfDefined(this.props.onChange, nextValue);
+    }
+
+    this.setState({ value: nextValue });
+  }
+
+  onMouseOver = (value) => {
+    this.setState({ hover: value });
   }
 
   renderContent() {
     const {
-      calendarType, maxDate, minDate, renderChildren, tileClassName, tileContent, value,
+      calendarType,
+      maxDate,
+      minDate,
+      renderChildren,
+      tileClassName,
+      tileContent,
     } = this.props;
-    const { activeStartDate, view } = this.state;
+    const {
+      activeStartDate, hover, value, view,
+    } = this.state;
+    const { onMouseOver, valueType } = this;
 
     const commonProps = {
       activeStartDate,
+      hover,
       maxDate,
       minDate,
+      onMouseOver: this.props.selectRange ? onMouseOver : null,
       tileClassName,
       tileContent: tileContent || renderChildren, // For backwards compatibility
-      value: this.getProcessedValue(value),
-      valueType: this.valueType,
+      value,
+      valueType,
     };
 
     const clickAction = this.drillDownAvailable ? this.drillDown : this.onChange;
@@ -332,8 +384,18 @@ export default class Calendar extends Component {
   }
 
   render() {
+    const { className, selectRange } = this.props;
+    const { value } = this.state;
+    const valueArray = [].concat(value);
+
     return (
-      <div className={mergeClassNames('react-calendar', this.props.className)}>
+      <div
+        className={mergeClassNames(
+          'react-calendar',
+          selectRange && valueArray.length === 1 && 'react-calendar--selectRange',
+          className,
+        )}
+      >
         {this.renderNavigation()}
         {this.renderContent()}
       </div>
@@ -374,6 +436,7 @@ Calendar.propTypes = {
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   renderChildren: PropTypes.func, // For backwards compatibility
   returnValue: PropTypes.oneOf(['start', 'end', 'range']),
+  selectRange: PropTypes.bool,
   showNavigation: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,

@@ -7,12 +7,8 @@ import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
 export default class YearView extends PureComponent {
   renderMonths() {
-    const {
-      ...childProps
-    } = this.props;
-
     return (
-      <Months {...childProps} />
+      <Months {...this.props} />
     );
   }
 

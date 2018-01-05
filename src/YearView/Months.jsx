@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 import Flex from '../Flex';
 import Month from './Month';
 
 import { getYear } from '../shared/dates';
-import { getTileActivityFlags } from '../shared/utils';
-import { isClassName, isMaxDate, isMinDate, isValue } from '../shared/propTypes';
+import { getTileClasses } from '../shared/utils';
+import { tileGroupProps } from '../shared/propTypes';
 
 export default class Months extends PureComponent {
   start = 0
@@ -20,17 +19,14 @@ export default class Months extends PureComponent {
 
   render() {
     const { end, start, year } = this;
-    const {
-      maxDate, minDate, onClick, tileClassName, tileContent, value, valueType,
-    } = this.props;
 
-    const monthProps = {
-      maxDate,
-      minDate,
-      onClick,
-      tileClassName,
-      tileContent,
-    };
+    const {
+      activeStartDate,
+      hover,
+      value,
+      valueType,
+      ...monthProps
+    } = this.props;
 
     const months = [];
     for (let monthIndex = start; monthIndex <= end; monthIndex += 1) {
@@ -38,7 +34,9 @@ export default class Months extends PureComponent {
 
       months.push(
         <Month
-          {...getTileActivityFlags(value, valueType, date, 'month')}
+          classes={getTileClasses({
+            value, valueType, date, dateType: 'month', hover,
+          })}
           date={date}
           key={monthIndex}
           {...monthProps}
@@ -59,18 +57,5 @@ export default class Months extends PureComponent {
 }
 
 Months.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onClick: PropTypes.func,
-  tileClassName: PropTypes.oneOfType([
-    PropTypes.func,
-    isClassName,
-  ]),
-  tileContent: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.node,
-  ]),
-  value: isValue,
-  valueType: PropTypes.string,
+  ...tileGroupProps,
 };
