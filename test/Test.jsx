@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Calendar from 'react-calendar/src/entry';
+import Calendar from 'react-calendar/src/entry.nostyle';
+import 'react-calendar/src/Calendar.less';
 
 import DateBonduariesOptions from './DateBonduariesOptions';
 import MaxDetailOptions from './MaxDetailOptions';

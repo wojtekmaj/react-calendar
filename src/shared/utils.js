@@ -75,16 +75,21 @@ export const getTileClasses = ({
     classes.push('react-calendar__tile--active');
   } else if (doRangesOverlap(valueRange, dateRange)) {
     classes.push('react-calendar__tile--hasActive');
-  } else if (dateRange[1] < valueRange[0]) {
-    // Before value
-    if (hover && isRangeWithinRange([hover, valueRange[0]], dateRange)) {
-      classes.push('react-calendar__tile--hover');
-    }
-  } else if (dateRange[0] > valueRange[1]) {
-    // After value
-    if (hover && isRangeWithinRange([valueRange[1], hover], dateRange)) {
-      classes.push('react-calendar__tile--hover');
-    }
+  } else if (
+    hover && (
+      // Date before value
+      (
+        dateRange[1] < valueRange[0] &&
+        isRangeWithinRange([hover, valueRange[0]], dateRange)
+      ) ||
+      // Date after value
+      (
+        dateRange[0] > valueRange[1] &&
+        isRangeWithinRange([valueRange[1], hover], dateRange)
+      )
+    )
+  ) {
+    classes.push('react-calendar__tile--hover');
   }
 
   return classes;

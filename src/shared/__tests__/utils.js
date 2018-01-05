@@ -208,6 +208,7 @@ describe('getTileClasses', () => {
 
     expect(result.includes('react-calendar__tile--active')).toBe(false);
     expect(result.includes('react-calendar__tile--hasActive')).toBe(false);
+    expect(result.includes('react-calendar__tile--hover')).toBe(false);
   });
 
   it('throws an error when given value but not given other parameters ', () => {
@@ -226,6 +227,7 @@ describe('getTileClasses', () => {
 
     expect(result.includes('react-calendar__tile--active')).toBe(true);
     expect(result.includes('react-calendar__tile--hasActive')).toBe(false);
+    expect(result.includes('react-calendar__tile--hover')).toBe(false);
   });
 
   it('returns active flag set to true when passed a value array equal to date array', () => {
@@ -236,6 +238,7 @@ describe('getTileClasses', () => {
 
     expect(result.includes('react-calendar__tile--active')).toBe(true);
     expect(result.includes('react-calendar__tile--hasActive')).toBe(false);
+    expect(result.includes('react-calendar__tile--hover')).toBe(false);
   });
 
   it('returns hasActive flag set to true when passed a value covering date', () => {
@@ -248,6 +251,35 @@ describe('getTileClasses', () => {
 
     expect(result.includes('react-calendar__tile--active')).toBe(false);
     expect(result.includes('react-calendar__tile--hasActive')).toBe(true);
+    expect(result.includes('react-calendar__tile--hover')).toBe(false);
+  });
+
+  it('returns hover flag set to true when passed a date between value and hover (1)', () => {
+    const result = getTileClasses({
+      value: new Date(2017, 6, 1),
+      valueType: 'month',
+      date: new Date(2017, 3, 1),
+      dateType: 'month',
+      hover: new Date(2017, 0, 1),
+    });
+
+    expect(result.includes('react-calendar__tile--active')).toBe(false);
+    expect(result.includes('react-calendar__tile--hasActive')).toBe(false);
+    expect(result.includes('react-calendar__tile--hover')).toBe(true);
+  });
+
+  it('returns hover flag set to true when passed a date between value and hover (2)', () => {
+    const result = getTileClasses({
+      value: new Date(2017, 0, 1),
+      valueType: 'month',
+      date: new Date(2017, 3, 1),
+      dateType: 'month',
+      hover: new Date(2017, 6, 1),
+    });
+
+    expect(result.includes('react-calendar__tile--active')).toBe(false);
+    expect(result.includes('react-calendar__tile--hasActive')).toBe(false);
+    expect(result.includes('react-calendar__tile--hover')).toBe(true);
   });
 
   it('returns all flags set to false when given value completely unrelated to date', () => {
@@ -260,5 +292,6 @@ describe('getTileClasses', () => {
 
     expect(result.includes('react-calendar__tile--active')).toBe(false);
     expect(result.includes('react-calendar__tile--hasActive')).toBe(false);
+    expect(result.includes('react-calendar__tile--hover')).toBe(false);
   });
 });

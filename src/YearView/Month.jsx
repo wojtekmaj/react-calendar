@@ -41,7 +41,7 @@ const Month = ({
     <time dateTime={`${getISOLocalMonth(date)}T00:00:00.000`}>
       {formatMonth(date)}
     </time>
-    {tileContent instanceof Function ? tileContent({ date, view: 'year' }) : tileContent}
+    {typeof tileContent === 'function' ? tileContent({ date, view: 'year' }) : tileContent}
   </button>
 );
 

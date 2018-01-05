@@ -38,7 +38,7 @@ const Decade = ({
     <time dateTime={`${decade}T00:00:00.000`}>
       {getDecadeLabel(decade)}
     </time>
-    {tileContent instanceof Function ? tileContent({ date, view: 'century' }) : tileContent}
+    {typeof tileContent === 'function' ? tileContent({ date, view: 'century' }) : tileContent}
   </button>
 );
 

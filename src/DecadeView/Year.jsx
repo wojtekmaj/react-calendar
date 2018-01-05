@@ -41,7 +41,7 @@ const Year = ({
     <time dateTime={`${year}T00:00:00.000`}>
       {year}
     </time>
-    {tileContent instanceof Function ? tileContent({ date, view: 'decade' }) : tileContent}
+    {typeof tileContent === 'function' ? tileContent({ date, view: 'decade' }) : tileContent}
   </button>
 );
 

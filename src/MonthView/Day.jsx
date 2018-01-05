@@ -47,7 +47,7 @@ const Day = ({
     <time dateTime={`${getISOLocalDate(date)}T00:00:00.000`}>
       {getDay(date)}
     </time>
-    {tileContent instanceof Function ? tileContent({ date, view: 'month' }) : tileContent}
+    {typeof tileContent === 'function' ? tileContent({ date, view: 'month' }) : tileContent}
   </button>
 );
 
