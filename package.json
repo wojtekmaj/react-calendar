@@ -22,7 +22,8 @@
     ],
     "collectCoverageFrom": [
       "**/src/**.{js,jsx}",
-      "!**/src/entry.js"
+      "!**/src/entry.js",
+      "!**/src/entry.nostyle.js"
     ]
   },
   "keywords": [
