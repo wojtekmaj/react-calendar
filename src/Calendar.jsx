@@ -160,7 +160,7 @@ export default class Calendar extends Component {
       datesAreDifferent(...[nextValue, value].map(this.getValueFrom)) ||
       datesAreDifferent(...[nextValue, value].map(this.getValueTo))
     ) {
-      nextState.activeStartDate = this.getActiveStartDate(nextProps);
+      this.updateValues(nextProps);
     }
 
     if (!nextProps.selectRange && this.props.selectRange) {
@@ -172,7 +172,7 @@ export default class Calendar extends Component {
 
   updateValues = (props = this.props) => {
     this.setState({
-      value: this.props.value,
+      value: props.value,
       activeStartDate: this.getActiveStartDate(props),
     });
   }
