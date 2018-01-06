@@ -270,29 +270,6 @@ export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
 };
 
 /**
- * Returns an array with the beginning and the end of a given range.
- *
- * @param {String} rangeType Range type (e.g. 'day')
- * @param {Date} date Date.
- */
-export const getRange = (rangeType, date) => {
-  switch (rangeType) {
-    case 'century':
-      return getCenturyRange(date);
-    case 'decade':
-      return getDecadeRange(date);
-    case 'year':
-      return getYearRange(date);
-    case 'month':
-      return getMonthRange(date);
-    case 'day':
-      return getDayRange(date);
-    default:
-      throw new Error(`Invalid rangeType: ${rangeType}`);
-  }
-};
-
-/**
  * Returns the beginning of a given range.
  *
  * @param {String} rangeType Range type (e.g. 'day')
@@ -420,6 +397,44 @@ export const getEndPrevious2 = (rangeType, date) => {
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
+};
+
+/**
+ * Returns an array with the beginning and the end of a given range.
+ *
+ * @param {String} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ */
+export const getRange = (rangeType, date) => {
+  switch (rangeType) {
+    case 'century':
+      return getCenturyRange(date);
+    case 'decade':
+      return getDecadeRange(date);
+    case 'year':
+      return getYearRange(date);
+    case 'month':
+      return getMonthRange(date);
+    case 'day':
+      return getDayRange(date);
+    default:
+      throw new Error(`Invalid rangeType: ${rangeType}`);
+  }
+};
+
+/**
+ * Creates a range out of two values, ensuring they are in order and covering entire period ranges.
+ *
+ * @param {String} rangeType Range type (e.g. 'day')
+ * @param {Date} date1 First date.
+ * @param {Date} date2 Second date.
+ */
+export const getValueRange = (rangeType, date1, date2) => {
+  const rawNextValue = [date1, date2].sort((a, b) => a.getTime() > b.getTime());
+  return [
+    getBegin(rangeType, rawNextValue[0]),
+    getEnd(rangeType, rawNextValue[1]),
+  ];
 };
 
 /**

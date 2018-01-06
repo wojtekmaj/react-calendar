@@ -44,6 +44,7 @@ import {
   getEnd,
   getEndPrevious,
   getEndPrevious2,
+  getValueRange,
   getDaysInMonth,
   getCenturyLabel,
   getDecadeLabel,
@@ -1060,6 +1061,26 @@ describe('getEndPrevious2', () => {
     const date = new Date(2017, 0, 1);
 
     expect(() => getEndPrevious2('hamster', date)).toThrow();
+  });
+});
+
+describe('getValueRange', () => {
+  it('returns an array of dates given two ordered dates', () => {
+    const date1 = new Date(2018, 0, 1);
+    const date2 = new Date(2018, 6, 1);
+
+    const range = getValueRange('day', date1, date2);
+
+    expect(range).toEqual([getBeginOfDay(date1), getEndOfDay(date2)]);
+  });
+
+  it('returns an array of dates given two unordered dates', () => {
+    const date1 = new Date(2018, 6, 1);
+    const date2 = new Date(2018, 0, 1);
+
+    const range = getValueRange('day', date1, date2);
+
+    expect(range).toEqual([getBeginOfDay(date2), getEndOfDay(date1)]);
   });
 });
 

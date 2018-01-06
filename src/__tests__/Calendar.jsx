@@ -418,6 +418,46 @@ describe('Calendar', () => {
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
   });
 
+  it('calls onChange function returning a range when selected two pieces of a range', () => {
+    const onChange = jest.fn();
+    const component = mount(
+      <Calendar
+        onChange={onChange}
+        selectRange
+        view="month"
+      />
+    );
+
+    component.instance().onChange(new Date(2018, 0, 1));
+    component.instance().onChange(new Date(2018, 6, 1));
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith([
+      new Date(2018, 0, 1),
+      new Date(2018, 6, 1, 23, 59, 59, 999),
+    ]);
+  });
+
+  it('calls onChange function returning a range when selected reversed two pieces of a range', () => {
+    const onChange = jest.fn();
+    const component = mount(
+      <Calendar
+        onChange={onChange}
+        selectRange
+        view="month"
+      />
+    );
+
+    component.instance().onChange(new Date(2018, 6, 1));
+    component.instance().onChange(new Date(2018, 0, 1));
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith([
+      new Date(2018, 0, 1),
+      new Date(2018, 6, 1, 23, 59, 59, 999),
+    ]);
+  });
+
   it('calls onActiveDateChange on activeStartDate change', () => {
     const onActiveDateChange = jest.fn();
     const component = mount(

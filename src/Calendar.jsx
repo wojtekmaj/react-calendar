@@ -8,7 +8,7 @@ import DecadeView from './DecadeView';
 import YearView from './YearView';
 import MonthView from './MonthView';
 
-import { getBegin, getEnd } from './shared/dates';
+import { getBegin, getEnd, getValueRange } from './shared/dates';
 import { setLocale } from './shared/locales';
 import { isCalendarType, isClassName, isMaxDate, isMinDate, isValue } from './shared/propTypes';
 import { between, callIfDefined, mergeFunctions } from './shared/utils';
@@ -253,30 +253,22 @@ export default class Calendar extends Component {
     });
   }
 
-  // Makes date range out of two values, ensuring they are in order and cover entire periods.
-  makeDateRange = (value1, value2) => {
-    const rawNextValue = [value1, value2]
-      .sort((a, b) => a.getTime() > b.getTime());
-    return [
-      getBegin(this.valueType, rawNextValue[0]),
-      getEnd(this.valueType, rawNextValue[1]),
-    ];
-  }
-
   onChange = (value) => {
     const { selectRange } = this.props;
-    const { value: previousValue } = this.state;
-    const valueArray = [].concat(previousValue);
 
     let nextValue;
     if (selectRange) {
+      const { value: previousValue } = this.state;
       // Range selection turned on
-      if (valueArray.length !== 1) { // 0 or 2 - either way we're starting a new array
+      if (
+        !previousValue ||
+        [].concat(previousValue).length !== 1 // 0 or 2 - either way we're starting a new array
+      ) {
         // First value
         nextValue = getBegin(this.valueType, value);
       } else {
         // Second value
-        nextValue = this.makeDateRange(previousValue, value);
+        nextValue = getValueRange(this.valueType, previousValue, value);
         callIfDefined(this.props.onChange, nextValue);
       }
     } else {
