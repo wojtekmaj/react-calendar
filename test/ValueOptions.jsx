@@ -24,6 +24,11 @@ export default class ValueOptions extends Component {
   setStartValue = (startValue) => {
     const { value } = this.props;
 
+    if (!startValue) {
+      this.setValue(value[1] || startValue);
+      return;
+    }
+
     if (Array.isArray(value)) {
       this.setValue([startValue, value[1]]);
     } else {
