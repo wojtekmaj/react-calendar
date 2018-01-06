@@ -173,7 +173,7 @@ describe('getBeginOfCentury', () => {
 
     const beginOfCentury = getBeginOfCentury(date);
 
-    expect(beginOfCentury.toISOString()).toBe(beginOfCenturyDate.toISOString());
+    expect(beginOfCentury).toEqual(beginOfCenturyDate);
   });
 });
 
@@ -184,7 +184,7 @@ describe('getEndOfCentury', () => {
 
     const endOfCentury = getEndOfCentury(date);
 
-    expect(endOfCentury.toISOString()).toBe(endOfCenturyDate.toISOString());
+    expect(endOfCentury).toEqual(endOfCenturyDate);
   });
 });
 
@@ -197,8 +197,7 @@ describe('getCenturyRange', () => {
     const centuryRange = getCenturyRange(date);
 
     expect(centuryRange).toHaveLength(2);
-    expect(centuryRange[0].toISOString()).toBe(beginOfCenturyDate.toISOString());
-    expect(centuryRange[1].toISOString()).toBe(endOfCenturyDate.toISOString());
+    expect(centuryRange).toEqual([beginOfCenturyDate, endOfCenturyDate]);
   });
 });
 
@@ -209,7 +208,7 @@ describe('getBeginPreviousOfCentury', () => {
 
     const beginOfPreviousCentury = getBeginOfPreviousCentury(date);
 
-    expect(beginOfPreviousCentury.toISOString()).toBe(beginOfPreviousCenturyDate.toISOString());
+    expect(beginOfPreviousCentury).toEqual(beginOfPreviousCenturyDate);
   });
 });
 
@@ -220,7 +219,7 @@ describe('getEndOfPreviousCentury', () => {
 
     const endOfPreviousCentury = getEndOfPreviousCentury(date);
 
-    expect(endOfPreviousCentury.toISOString()).toBe(endOfPreviousCenturyDate.toISOString());
+    expect(endOfPreviousCentury).toEqual(endOfPreviousCenturyDate);
   });
 });
 
@@ -231,7 +230,7 @@ describe('getBeginOfNextCentury', () => {
 
     const beginOfNextCentury = getBeginOfNextCentury(date);
 
-    expect(beginOfNextCentury.toISOString()).toBe(beginOfNextCenturyDate.toISOString());
+    expect(beginOfNextCentury).toEqual(beginOfNextCenturyDate);
   });
 });
 
@@ -258,7 +257,7 @@ describe('getBeginOfDecade', () => {
 
     const beginOfDecade = getBeginOfDecade(date);
 
-    expect(beginOfDecade.toISOString()).toBe(beginOfDecadeDate.toISOString());
+    expect(beginOfDecade).toEqual(beginOfDecadeDate);
   });
 });
 
@@ -269,7 +268,7 @@ describe('getEndOfDecade', () => {
 
     const endOfDecade = getEndOfDecade(date);
 
-    expect(endOfDecade.toISOString()).toBe(endOfDecadeDate.toISOString());
+    expect(endOfDecade).toEqual(endOfDecadeDate);
   });
 });
 
@@ -282,8 +281,7 @@ describe('getDecadeRange', () => {
     const decadeRange = getDecadeRange(date);
 
     expect(decadeRange).toHaveLength(2);
-    expect(decadeRange[0].toISOString()).toBe(beginOfDecadeDate.toISOString());
-    expect(decadeRange[1].toISOString()).toBe(endOfDecadeDate.toISOString());
+    expect(decadeRange).toEqual([beginOfDecadeDate, endOfDecadeDate]);
   });
 });
 
@@ -294,7 +292,7 @@ describe('getBeginPreviousOfDecade', () => {
 
     const beginOfPreviousDecade = getBeginOfPreviousDecade(date);
 
-    expect(beginOfPreviousDecade.toISOString()).toBe(beginOfPreviousDecadeDate.toISOString());
+    expect(beginOfPreviousDecade).toEqual(beginOfPreviousDecadeDate);
   });
 });
 
@@ -305,7 +303,7 @@ describe('getEndOfPreviousDecade', () => {
 
     const endOfPreviousDecade = getEndOfPreviousDecade(date);
 
-    expect(endOfPreviousDecade.toISOString()).toBe(endOfPreviousDecadeDate.toISOString());
+    expect(endOfPreviousDecade).toEqual(endOfPreviousDecadeDate);
   });
 });
 
@@ -316,7 +314,7 @@ describe('getBeginOfNextDecade', () => {
 
     const beginOfNextDecade = getBeginOfNextDecade(date);
 
-    expect(beginOfNextDecade.toISOString()).toBe(beginOfNextDecadeDate.toISOString());
+    expect(beginOfNextDecade).toEqual(beginOfNextDecadeDate);
   });
 });
 
@@ -327,7 +325,7 @@ describe('getBeginOfYear', () => {
 
     const beginOfYear = getBeginOfYear(date);
 
-    expect(beginOfYear.toISOString()).toBe(beginOfYearDate.toISOString());
+    expect(beginOfYear).toEqual(beginOfYearDate);
   });
 });
 
@@ -338,7 +336,7 @@ describe('getEndOfYear', () => {
 
     const endOfYear = getEndOfYear(date);
 
-    expect(endOfYear.toISOString()).toBe(endOfYearDate.toISOString());
+    expect(endOfYear).toEqual(endOfYearDate);
   });
 });
 
@@ -351,8 +349,7 @@ describe('getYearRange', () => {
     const yearRange = getYearRange(date);
 
     expect(yearRange).toHaveLength(2);
-    expect(yearRange[0].toISOString()).toBe(beginOfYearDate.toISOString());
-    expect(yearRange[1].toISOString()).toBe(endOfYearDate.toISOString());
+    expect(yearRange).toEqual([beginOfYearDate, endOfYearDate]);
   });
 });
 
@@ -363,7 +360,7 @@ describe('getBeginPreviousOfYear', () => {
 
     const beginOfPreviousYear = getBeginOfPreviousYear(date);
 
-    expect(beginOfPreviousYear.toISOString()).toBe(beginOfPreviousYearDate.toISOString());
+    expect(beginOfPreviousYear).toEqual(beginOfPreviousYearDate);
   });
 });
 
@@ -374,7 +371,7 @@ describe('getEndOfPreviousYear', () => {
 
     const endOfPreviousYear = getEndOfPreviousYear(date);
 
-    expect(endOfPreviousYear.toISOString()).toBe(endOfPreviousYearDate.toISOString());
+    expect(endOfPreviousYear).toEqual(endOfPreviousYearDate);
   });
 });
 
@@ -385,7 +382,7 @@ describe('getBeginOfNextYear', () => {
 
     const beginOfNextYear = getBeginOfNextYear(date);
 
-    expect(beginOfNextYear.toISOString()).toBe(beginOfNextYearDate.toISOString());
+    expect(beginOfNextYear).toEqual(beginOfNextYearDate);
   });
 });
 
@@ -396,7 +393,7 @@ describe('getBeginOfMonth', () => {
 
     const beginOfMonth = getBeginOfMonth(date);
 
-    expect(beginOfMonth.toISOString()).toBe(beginOfMonthDate.toISOString());
+    expect(beginOfMonth).toEqual(beginOfMonthDate);
   });
 });
 
@@ -407,7 +404,7 @@ describe('getEndOfMonth', () => {
 
     const endOfMonth = getEndOfMonth(date);
 
-    expect(endOfMonth.toISOString()).toBe(endOfMonthDate.toISOString());
+    expect(endOfMonth).toEqual(endOfMonthDate);
   });
 });
 
@@ -418,7 +415,7 @@ describe('getBeginOfWeek', () => {
 
     const beginOfWeek = getBeginOfWeek(date, 'ISO 8601');
 
-    expect(beginOfWeek.toISOString()).toBe(beginOfWeekDate.toISOString());
+    expect(beginOfWeek).toEqual(beginOfWeekDate);
   });
 
   it('returns proper beginning of the week (US)', () => {
@@ -427,7 +424,7 @@ describe('getBeginOfWeek', () => {
 
     const beginOfWeek = getBeginOfWeek(date, 'US');
 
-    expect(beginOfWeek.toISOString()).toBe(beginOfWeekDate.toISOString());
+    expect(beginOfWeek).toEqual(beginOfWeekDate);
   });
 
   it('returns proper beginning of the week (default)', () => {
@@ -436,7 +433,7 @@ describe('getBeginOfWeek', () => {
 
     const beginOfWeek = getBeginOfWeek(date);
 
-    expect(beginOfWeek.toISOString()).toBe(beginOfWeekDate.toISOString());
+    expect(beginOfWeek).toEqual(beginOfWeekDate);
   });
 });
 
@@ -449,8 +446,7 @@ describe('getMonthRange', () => {
     const monthRange = getMonthRange(date);
 
     expect(monthRange).toHaveLength(2);
-    expect(monthRange[0].toISOString()).toBe(beginOfMonthDate.toISOString());
-    expect(monthRange[1].toISOString()).toBe(endOfMonthDate.toISOString());
+    expect(monthRange).toEqual([beginOfMonthDate, endOfMonthDate]);
   });
 });
 
@@ -461,7 +457,7 @@ describe('getBeginPreviousOfMonth', () => {
 
     const beginOfPreviousMonth = getBeginOfPreviousMonth(date);
 
-    expect(beginOfPreviousMonth.toISOString()).toBe(beginOfPreviousMonthDate.toISOString());
+    expect(beginOfPreviousMonth).toEqual(beginOfPreviousMonthDate);
   });
 });
 
@@ -472,7 +468,7 @@ describe('getEndOfPreviousMonth', () => {
 
     const endOfPreviousMonth = getEndOfPreviousMonth(date);
 
-    expect(endOfPreviousMonth.toISOString()).toBe(endOfPreviousMonthDate.toISOString());
+    expect(endOfPreviousMonth).toEqual(endOfPreviousMonthDate);
   });
 });
 
@@ -483,7 +479,7 @@ describe('getBeginOfNextMonth', () => {
 
     const beginOfNextMonth = getBeginOfNextMonth(date);
 
-    expect(beginOfNextMonth.toISOString()).toBe(beginOfNextMonthDate.toISOString());
+    expect(beginOfNextMonth).toEqual(beginOfNextMonthDate);
   });
 });
 
@@ -494,7 +490,7 @@ describe('getBeginOfDay', () => {
 
     const beginOfDay = getBeginOfDay(date);
 
-    expect(beginOfDay.toISOString()).toBe(beginOfDayDate.toISOString());
+    expect(beginOfDay).toEqual(beginOfDayDate);
   });
 });
 
@@ -505,7 +501,7 @@ describe('getEndOfDay', () => {
 
     const endOfDay = getEndOfDay(date);
 
-    expect(endOfDay.toISOString()).toBe(endOfDayDate.toISOString());
+    expect(endOfDay).toEqual(endOfDayDate);
   });
 });
 
@@ -518,8 +514,7 @@ describe('getDayRange', () => {
     const dayRange = getDayRange(date);
 
     expect(dayRange).toHaveLength(2);
-    expect(dayRange[0].toISOString()).toBe(beginOfDayDate.toISOString());
-    expect(dayRange[1].toISOString()).toBe(endOfDayDate.toISOString());
+    expect(dayRange).toEqual([beginOfDayDate, endOfDayDate]);
   });
 });
 
@@ -662,8 +657,7 @@ describe('getRange', () => {
     const centuryRange = getRange('century', date);
 
     expect(centuryRange).toHaveLength(2);
-    expect(centuryRange[0].toISOString()).toBe(beginOfCenturyDate.toISOString());
-    expect(centuryRange[1].toISOString()).toBe(endOfCenturyDate.toISOString());
+    expect(centuryRange).toEqual([beginOfCenturyDate, endOfCenturyDate]);
   });
 
   it('returns proper decade range', () => {
@@ -674,8 +668,7 @@ describe('getRange', () => {
     const decadeRange = getRange('decade', date);
 
     expect(decadeRange).toHaveLength(2);
-    expect(decadeRange[0].toISOString()).toBe(beginOfDecadeDate.toISOString());
-    expect(decadeRange[1].toISOString()).toBe(endOfDecadeDate.toISOString());
+    expect(decadeRange).toEqual([beginOfDecadeDate, endOfDecadeDate]);
   });
 
   it('returns proper year range', () => {
@@ -686,8 +679,7 @@ describe('getRange', () => {
     const yearRange = getRange('year', date);
 
     expect(yearRange).toHaveLength(2);
-    expect(yearRange[0].toISOString()).toBe(beginOfYearDate.toISOString());
-    expect(yearRange[1].toISOString()).toBe(endOfYearDate.toISOString());
+    expect(yearRange).toEqual([beginOfYearDate, endOfYearDate]);
   });
 
   it('returns proper month range', () => {
@@ -698,8 +690,7 @@ describe('getRange', () => {
     const monthRange = getRange('month', date);
 
     expect(monthRange).toHaveLength(2);
-    expect(monthRange[0].toISOString()).toBe(beginOfMonthDate.toISOString());
-    expect(monthRange[1].toISOString()).toBe(endOfMonthDate.toISOString());
+    expect(monthRange).toEqual([beginOfMonthDate, endOfMonthDate]);
   });
 
   it('returns proper day range', () => {
@@ -710,8 +701,7 @@ describe('getRange', () => {
     const dayRange = getRange('day', date);
 
     expect(dayRange).toHaveLength(2);
-    expect(dayRange[0].toISOString()).toBe(beginOfDayDate.toISOString());
-    expect(dayRange[1].toISOString()).toBe(endOfDayDate.toISOString());
+    expect(dayRange).toEqual([beginOfDayDate, endOfDayDate]);
   });
 
   it('throws an error when given unrecognized range type', () => {
@@ -728,7 +718,7 @@ describe('getBegin', () => {
 
     const beginOfCentury = getBegin('century', date);
 
-    expect(beginOfCentury.toISOString()).toBe(beginOfCenturyDate.toISOString());
+    expect(beginOfCentury).toEqual(beginOfCenturyDate);
   });
 
   it('returns proper beginning of the decade', () => {
@@ -737,7 +727,7 @@ describe('getBegin', () => {
 
     const beginOfDecade = getBegin('decade', date);
 
-    expect(beginOfDecade.toISOString()).toBe(beginOfDecadeDate.toISOString());
+    expect(beginOfDecade).toEqual(beginOfDecadeDate);
   });
 
   it('returns proper beginning of the year', () => {
@@ -746,7 +736,7 @@ describe('getBegin', () => {
 
     const beginOfYear = getBegin('year', date);
 
-    expect(beginOfYear.toISOString()).toBe(beginOfYearDate.toISOString());
+    expect(beginOfYear).toEqual(beginOfYearDate);
   });
 
   it('returns proper beginning of the month', () => {
@@ -755,7 +745,7 @@ describe('getBegin', () => {
 
     const monthRange = getBegin('month', date);
 
-    expect(monthRange.toISOString()).toBe(beginOfMonthDate.toISOString());
+    expect(monthRange).toEqual(beginOfMonthDate);
   });
 
   it('returns proper beginning of the day', () => {
@@ -764,7 +754,7 @@ describe('getBegin', () => {
 
     const beginOfDay = getBegin('day', date);
 
-    expect(beginOfDay.toISOString()).toBe(beginOfDayDate.toISOString());
+    expect(beginOfDay).toEqual(beginOfDayDate);
   });
 
   it('throws an error when given unrecognized range type', () => {
@@ -781,7 +771,7 @@ describe('getBeginPrevious', () => {
 
     const beginOfCentury = getBeginPrevious('century', date);
 
-    expect(beginOfCentury.toISOString()).toBe(beginOfCenturyDate.toISOString());
+    expect(beginOfCentury).toEqual(beginOfCenturyDate);
   });
 
   it('returns proper beginning of the previous decade', () => {
@@ -790,7 +780,7 @@ describe('getBeginPrevious', () => {
 
     const beginOfDecade = getBeginPrevious('decade', date);
 
-    expect(beginOfDecade.toISOString()).toBe(beginOfDecadeDate.toISOString());
+    expect(beginOfDecade).toEqual(beginOfDecadeDate);
   });
 
   it('returns proper beginning of the previous year', () => {
@@ -799,7 +789,7 @@ describe('getBeginPrevious', () => {
 
     const beginOfYear = getBeginPrevious('year', date);
 
-    expect(beginOfYear.toISOString()).toBe(beginOfYearDate.toISOString());
+    expect(beginOfYear).toEqual(beginOfYearDate);
   });
 
   it('returns proper beginning of the previous month', () => {
@@ -808,7 +798,7 @@ describe('getBeginPrevious', () => {
 
     const monthRange = getBeginPrevious('month', date);
 
-    expect(monthRange.toISOString()).toBe(beginOfMonthDate.toISOString());
+    expect(monthRange).toEqual(beginOfMonthDate);
   });
 
   it('throws an error when given unrecognized range type', () => {
@@ -825,7 +815,7 @@ describe('getBeginNext', () => {
 
     const beginOfCentury = getBeginNext('century', date);
 
-    expect(beginOfCentury.toISOString()).toBe(beginOfCenturyDate.toISOString());
+    expect(beginOfCentury).toEqual(beginOfCenturyDate);
   });
 
   it('returns proper beginning of the next decade', () => {
@@ -834,7 +824,7 @@ describe('getBeginNext', () => {
 
     const beginOfDecade = getBeginNext('decade', date);
 
-    expect(beginOfDecade.toISOString()).toBe(beginOfDecadeDate.toISOString());
+    expect(beginOfDecade).toEqual(beginOfDecadeDate);
   });
 
   it('returns proper beginning of the next year', () => {
@@ -843,7 +833,7 @@ describe('getBeginNext', () => {
 
     const beginOfYear = getBeginNext('year', date);
 
-    expect(beginOfYear.toISOString()).toBe(beginOfYearDate.toISOString());
+    expect(beginOfYear).toEqual(beginOfYearDate);
   });
 
   it('returns proper beginning of the next month', () => {
@@ -852,7 +842,7 @@ describe('getBeginNext', () => {
 
     const monthRange = getBeginNext('month', date);
 
-    expect(monthRange.toISOString()).toBe(beginOfMonthDate.toISOString());
+    expect(monthRange).toEqual(beginOfMonthDate);
   });
 
   it('throws an error when given unrecognized range type', () => {
@@ -869,7 +859,7 @@ describe('getBeginPrevious2', () => {
 
     const beginOfPreviousCentury = getBeginPrevious2('decade', date);
 
-    expect(beginOfPreviousCentury.toISOString()).toBe(beginOfPreviousCenturyDate.toISOString());
+    expect(beginOfPreviousCentury).toEqual(beginOfPreviousCenturyDate);
   });
 
   it('returns proper beginning of the year 10 years ago', () => {
@@ -878,7 +868,7 @@ describe('getBeginPrevious2', () => {
 
     const beginOfPreviousDecade = getBeginPrevious2('year', date);
 
-    expect(beginOfPreviousDecade.toISOString()).toBe(beginOfPreviousDecadeDate.toISOString());
+    expect(beginOfPreviousDecade).toEqual(beginOfPreviousDecadeDate);
   });
 
   it('returns proper beginning of the month 1 year ago', () => {
@@ -887,7 +877,7 @@ describe('getBeginPrevious2', () => {
 
     const beginOfPreviousYear = getBeginPrevious2('month', date);
 
-    expect(beginOfPreviousYear.toISOString()).toBe(beginOfPreviousYearDate.toISOString());
+    expect(beginOfPreviousYear).toEqual(beginOfPreviousYearDate);
   });
 
   it('throws an error when given unrecognized range type', () => {
@@ -904,7 +894,7 @@ describe('getBeginNext2', () => {
 
     const beginOfNextCentury = getBeginNext2('decade', date);
 
-    expect(beginOfNextCentury.toISOString()).toBe(beginOfNextCenturyDate.toISOString());
+    expect(beginOfNextCentury).toEqual(beginOfNextCenturyDate);
   });
 
   it('returns proper beginning of the year 10 years ahead', () => {
@@ -913,7 +903,7 @@ describe('getBeginNext2', () => {
 
     const beginOfNextDecade = getBeginNext2('year', date);
 
-    expect(beginOfNextDecade.toISOString()).toBe(beginOfNextDecadeDate.toISOString());
+    expect(beginOfNextDecade).toEqual(beginOfNextDecadeDate);
   });
 
   it('returns proper beginning of the month 1 year ahead', () => {
@@ -922,7 +912,7 @@ describe('getBeginNext2', () => {
 
     const beginOfNextYear = getBeginNext2('month', date);
 
-    expect(beginOfNextYear.toISOString()).toBe(beginOfNextYearDate.toISOString());
+    expect(beginOfNextYear).toEqual(beginOfNextYearDate);
   });
 
   it('throws an error when given unrecognized range type', () => {
@@ -939,7 +929,7 @@ describe('getEnd', () => {
 
     const endOfCentury = getEnd('century', date);
 
-    expect(endOfCentury.toISOString()).toBe(endOfCenturyDate.toISOString());
+    expect(endOfCentury).toEqual(endOfCenturyDate);
   });
 
   it('returns proper end of the decade', () => {
@@ -948,7 +938,7 @@ describe('getEnd', () => {
 
     const endOfDecade = getEnd('decade', date);
 
-    expect(endOfDecade.toISOString()).toBe(endOfDecadeDate.toISOString());
+    expect(endOfDecade).toEqual(endOfDecadeDate);
   });
 
   it('returns proper end of the year', () => {
@@ -957,7 +947,7 @@ describe('getEnd', () => {
 
     const endOfYear = getEnd('year', date);
 
-    expect(endOfYear.toISOString()).toBe(endOfYearDate.toISOString());
+    expect(endOfYear).toEqual(endOfYearDate);
   });
 
   it('returns proper end of the month', () => {
@@ -966,7 +956,7 @@ describe('getEnd', () => {
 
     const monthRange = getEnd('month', date);
 
-    expect(monthRange.toISOString()).toBe(endOfMonthDate.toISOString());
+    expect(monthRange).toEqual(endOfMonthDate);
   });
 
   it('returns proper end of the day', () => {
@@ -975,7 +965,7 @@ describe('getEnd', () => {
 
     const endOfDay = getEnd('day', date);
 
-    expect(endOfDay.toISOString()).toBe(endOfDayDate.toISOString());
+    expect(endOfDay).toEqual(endOfDayDate);
   });
 
   it('throws an error when given unrecognized range type', () => {
@@ -992,7 +982,7 @@ describe('getEndPrevious', () => {
 
     const endOfCentury = getEndPrevious('century', date);
 
-    expect(endOfCentury.toISOString()).toBe(endOfCenturyDate.toISOString());
+    expect(endOfCentury).toEqual(endOfCenturyDate);
   });
 
   it('returns proper end of the previous decade', () => {
@@ -1001,7 +991,7 @@ describe('getEndPrevious', () => {
 
     const endOfDecade = getEndPrevious('decade', date);
 
-    expect(endOfDecade.toISOString()).toBe(endOfDecadeDate.toISOString());
+    expect(endOfDecade).toEqual(endOfDecadeDate);
   });
 
   it('returns proper end of the previous year', () => {
@@ -1010,7 +1000,7 @@ describe('getEndPrevious', () => {
 
     const endOfYear = getEndPrevious('year', date);
 
-    expect(endOfYear.toISOString()).toBe(endOfYearDate.toISOString());
+    expect(endOfYear).toEqual(endOfYearDate);
   });
 
   it('returns proper end of the previous month', () => {
@@ -1019,7 +1009,7 @@ describe('getEndPrevious', () => {
 
     const monthRange = getEndPrevious('month', date);
 
-    expect(monthRange.toISOString()).toBe(endOfMonthDate.toISOString());
+    expect(monthRange).toEqual(endOfMonthDate);
   });
 
   it('throws an error when given unrecognized range type', () => {
@@ -1036,7 +1026,7 @@ describe('getEndPrevious2', () => {
 
     const endOfPreviousCentury = getEndPrevious2('decade', date);
 
-    expect(endOfPreviousCentury.toISOString()).toBe(endOfPreviousCenturyDate.toISOString());
+    expect(endOfPreviousCentury).toEqual(endOfPreviousCenturyDate);
   });
 
   it('returns proper end of the year 10 years ago', () => {
@@ -1045,7 +1035,7 @@ describe('getEndPrevious2', () => {
 
     const endOfPreviousDecade = getEndPrevious2('year', date);
 
-    expect(endOfPreviousDecade.toISOString()).toBe(endOfPreviousDecadeDate.toISOString());
+    expect(endOfPreviousDecade).toEqual(endOfPreviousDecadeDate);
   });
 
   it('returns proper end of the month 1 year ago', () => {
@@ -1054,7 +1044,7 @@ describe('getEndPrevious2', () => {
 
     const endOfPreviousYear = getEndPrevious2('month', date);
 
-    expect(endOfPreviousYear.toISOString()).toBe(endOfPreviousYearDate.toISOString());
+    expect(endOfPreviousYear).toEqual(endOfPreviousYearDate);
   });
 
   it('throws an error when given unrecognized range type', () => {
