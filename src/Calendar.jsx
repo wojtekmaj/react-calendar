@@ -292,6 +292,10 @@ export default class Calendar extends Component {
     this.setState({ hover: value });
   }
 
+  onMouseOut = () => {
+    this.setState({ hover: null });
+  }
+
   renderContent() {
     const {
       calendarType,
@@ -386,6 +390,7 @@ export default class Calendar extends Component {
   render() {
     const { className, selectRange } = this.props;
     const { value } = this.state;
+    const { onMouseOut } = this;
     const valueArray = [].concat(value);
 
     return (
@@ -395,6 +400,8 @@ export default class Calendar extends Component {
           selectRange && valueArray.length === 1 && 'react-calendar--selectRange',
           className,
         )}
+        onMouseOut={selectRange ? onMouseOut : null}
+        onBlur={selectRange ? onMouseOut : null}
       >
         {this.renderNavigation()}
         {this.renderContent()}
