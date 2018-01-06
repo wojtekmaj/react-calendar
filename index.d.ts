@@ -31,6 +31,7 @@ declare module "react-calendar" {
     prevLabel?: string | React.ReactElement<any>;
     renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
     returnValue?: "start" | "end" | "range";
+    selectRange?: boolean;
     showNavigation?: boolean;
     showNeighboringMonth?: boolean;
     showWeekNumbers?: boolean;
@@ -57,9 +58,11 @@ declare module "react-calendar" {
 
   export interface DetailViewProps {
     activeStartDate: Date;
+    hover?: Date;
     maxDate?: Date;
     minDate?: Date;
     onClick?: DateCallback;
+    onMouseOver?: DateCallback;
     renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
     tileClassName?: string | string[] | ((props: CalendarTileProperties) => string | string[] | null);
     tileContent?: React.ReactElement<any> | ((props: CalendarTileProperties) => JSX.Element | null);
