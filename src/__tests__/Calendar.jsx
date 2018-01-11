@@ -475,4 +475,29 @@ describe('Calendar', () => {
       view: 'year',
     });
   });
+
+  it('displays calendar with custom weekdays formatting', () => {
+    const component = mount(
+      <Calendar
+        formatShortWeekday={ () => 'Weekday'}
+      />
+    );
+
+    const monthView = component.find('.react-calendar__month-view');
+    const firstWeekdayTile = monthView.find('.react-calendar__month-view__weekdays__weekday').first();
+
+    expect(firstWeekdayTile.text()).toBe('Weekday');
+  });
+
+  it('displays calendar with custom month year navigation label', () => {
+    const component = mount(
+      <Calendar
+        formatMonthYear={ () => 'MonthYear'}
+      />
+    );
+
+    const navigationLabel = component.find('.react-calendar__navigation__label').first();
+
+    expect(navigationLabel.text()).toBe('MonthYear');
+  })
 });
