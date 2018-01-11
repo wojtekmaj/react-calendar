@@ -74,7 +74,7 @@ export default class Navigation extends PureComponent {
   }
 
   get label() {
-    const { activeStartDate: date, view } = this.props;
+    const { formatMonthYear, activeStartDate: date, view } = this.props;
 
     switch (view) {
       case 'century':
@@ -154,6 +154,7 @@ export default class Navigation extends PureComponent {
 }
 
 Navigation.defaultProps = {
+  formatMonthYear: formatMonthYear,
   next2Label: '»',
   nextLabel: '›',
   prev2Label: '«',
@@ -163,6 +164,7 @@ Navigation.defaultProps = {
 Navigation.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   drillUp: PropTypes.func.isRequired,
+  formatMonthYear: PropTypes.func,
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
   next2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),

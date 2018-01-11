@@ -33,7 +33,7 @@ export default class Weekdays extends PureComponent {
 
   render() {
     const { beginOfMonth, year, monthIndex } = this;
-    const { calendarType } = this.props;
+    const { calendarType, formatShortWeekday } = this.props;
 
     const weekdays = [];
 
@@ -70,4 +70,9 @@ Weekdays.propTypes = {
     PropTypes.number,
     PropTypes.instanceOf(Date),
   ]).isRequired,
+  formatShortWeekday: PropTypes.func
 };
+
+Weekdays.defaultProps = {
+  formatShortWeekday: formatShortWeekday
+}

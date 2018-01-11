@@ -86,6 +86,9 @@ Displays a complete, interactive calendar.
 |activeStartDate|The beginning of a period that shall be displayed by default when no value is given. Defaults to today.|`new Date(2017, 0, 1)`|
 |calendarType|Defines which type of calendar should be used. Can be "US" or "ISO 8601". Defaults to "US" for "en-US" locale, "ISO 8601" to all the others.|`"ISO 8601"`|
 |className|Defines class name(s) that will be added along with "react-calendar" to the main React-Calendar `<div>` element.|<ul><li>String: `"class1 class2"`</li><li>Array of strings: `["class1", "class2 class3"]`</li></ul>|
+|formatMonth|Function called to override default formatting of month names. Can be used to use your own formatting function|value => formatDate(value, 'MMM')|
+|formatMonthYear|Function called to override default formatting of month and year in the top navigation section. Can be used to use your own formatting function|value => formatDate(value, 'MMMM YYYY')|
+|formatDateShort|Function called to override default formatting of weekday names. Can be used to use your own formatting function|value => formatDate(value, 'dd')|
 |locale|Defines which locale should be used by the calendar. Can be any [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag). Defaults to user's browser settings.|`"hu-HU"`|
 |maxDate|Defines maximum date that the user can select. Periods partially overlapped by maxDate will also be selectable, although react-calendar will ensure that no later date is selected.|Date: `new Date()`|
 |maxDetail|Defines the most detailed view that the user shall see. View defined here also becomes the one on which clicking an item will select a date and pass it to onChange. Can be "month", "year", "decade" or "century". Defaults to "month".|`"month"`|

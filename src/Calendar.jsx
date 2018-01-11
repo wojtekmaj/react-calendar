@@ -291,6 +291,8 @@ export default class Calendar extends Component {
   renderContent() {
     const {
       calendarType,
+      formatMonth,
+      formatShortWeekday,
       maxDate,
       minDate,
       renderChildren,
@@ -304,6 +306,8 @@ export default class Calendar extends Component {
 
     const commonProps = {
       activeStartDate,
+      formatMonth,
+      formatShortWeekday,
       hover,
       maxDate,
       minDate,
@@ -366,6 +370,7 @@ export default class Calendar extends Component {
         activeRange={this.state.activeRange}
         activeStartDate={this.state.activeStartDate}
         drillUp={this.drillUp}
+        formatMonthYear={this.props.formatMonthYear}
         maxDate={this.props.maxDate}
         minDate={this.props.minDate}
         next2Label={this.props.next2Label}
@@ -415,6 +420,9 @@ Calendar.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date),
   calendarType: isCalendarType,
   className: isClassName,
+  formatMonth: PropTypes.func,
+  formatMonthYear: PropTypes.func,
+  formatShortWeekday: PropTypes.func,
   locale: PropTypes.string,
   maxDate: isMaxDate,
   maxDetail: PropTypes.oneOf(allViews),

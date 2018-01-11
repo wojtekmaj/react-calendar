@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
 
 import {
@@ -14,6 +15,7 @@ const className = 'react-calendar__year-view__months__month';
 const Month = ({
   classes,
   date,
+  formatMonth,
   maxDate,
   minDate,
   onClick,
@@ -47,6 +49,11 @@ const Month = ({
 
 Month.propTypes = {
   ...tileProps,
+  formatMonth: PropTypes.func,
 };
+
+Month.defaultProps = {
+  formatMonth: formatMonth,
+}
 
 export default Month;
