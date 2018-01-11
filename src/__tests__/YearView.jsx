@@ -124,7 +124,7 @@ describe('YearView', () => {
   });
 
   it('displays year view with custom month formatting', () => {
-  	const activeStartDate = new Date(2017, 0, 1);
+    const activeStartDate = new Date(2017, 0, 1);
 
     const component = mount(
       <YearView
@@ -136,5 +136,5 @@ describe('YearView', () => {
     const month = component.find('.react-calendar__year-view__months__month').first();
 
     expect(month.text()).toBe('Month');
-  })
+  });
 });

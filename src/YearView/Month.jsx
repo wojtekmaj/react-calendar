@@ -7,7 +7,7 @@ import {
   getEndOfMonth,
   getISOLocalMonth,
 } from '../shared/dates';
-import { formatMonth } from '../shared/dateFormatter';
+import { formatMonth as defaultFormatMonth } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__year-view__months__month';
@@ -53,7 +53,7 @@ Month.propTypes = {
 };
 
 Month.defaultProps = {
-  formatMonth: formatMonth,
-}
+  formatMonth: defaultFormatMonth,
+};
 
 export default Month;

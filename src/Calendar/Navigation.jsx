@@ -12,7 +12,7 @@ import {
   getEndPrevious2,
   getYear,
 } from '../shared/dates';
-import { formatMonthYear } from '../shared/dateFormatter';
+import { formatMonthYear as defaultFormatMonthYear } from '../shared/dateFormatter';
 import { isView, isViews } from '../shared/propTypes';
 
 export default class Navigation extends PureComponent {
@@ -74,7 +74,7 @@ export default class Navigation extends PureComponent {
   }
 
   get label() {
-    const { formatMonthYear, activeStartDate: date, view } = this.props;
+    const { activeStartDate: date, formatMonthYear, view } = this.props;
 
     switch (view) {
       case 'century':
@@ -154,7 +154,7 @@ export default class Navigation extends PureComponent {
 }
 
 Navigation.defaultProps = {
-  formatMonthYear: formatMonthYear,
+  formatMonthYear: defaultFormatMonthYear,
   next2Label: '»',
   nextLabel: '›',
   prev2Label: '«',

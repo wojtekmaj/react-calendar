@@ -479,7 +479,7 @@ describe('Calendar', () => {
   it('displays calendar with custom weekdays formatting', () => {
     const component = mount(
       <Calendar
-        formatShortWeekday={ () => 'Weekday'}
+        formatShortWeekday={() => 'Weekday'}
       />
     );
 
@@ -492,12 +492,12 @@ describe('Calendar', () => {
   it('displays calendar with custom month year navigation label', () => {
     const component = mount(
       <Calendar
-        formatMonthYear={ () => 'MonthYear'}
+        formatMonthYear={() => 'MonthYear'}
       />
     );
 
     const navigationLabel = component.find('.react-calendar__navigation__label').first();
 
     expect(navigationLabel.text()).toBe('MonthYear');
-  })
+  });
 });

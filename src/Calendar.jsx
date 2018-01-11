@@ -291,8 +291,6 @@ export default class Calendar extends Component {
   renderContent() {
     const {
       calendarType,
-      formatMonth,
-      formatShortWeekday,
       maxDate,
       minDate,
       renderChildren,
@@ -306,8 +304,6 @@ export default class Calendar extends Component {
 
     const commonProps = {
       activeStartDate,
-      formatMonth,
-      formatShortWeekday,
       hover,
       maxDate,
       minDate,
@@ -338,6 +334,7 @@ export default class Calendar extends Component {
       case 'year':
         return (
           <YearView
+            formatMonth={this.props.formatMonth}
             onClick={mergeFunctions(clickAction, this.props.onClickMonth)}
             {...commonProps}
           />
@@ -346,6 +343,7 @@ export default class Calendar extends Component {
         return (
           <MonthView
             calendarType={calendarType}
+            formatShortWeekday={this.props.formatShortWeekday}
             onClick={mergeFunctions(clickAction, this.props.onClickDay)}
             onClickWeekNumber={this.props.onClickWeekNumber}
             showNeighboringMonth={this.props.showNeighboringMonth}

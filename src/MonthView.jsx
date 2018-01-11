@@ -94,6 +94,7 @@ export default class MonthView extends PureComponent {
 MonthView.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType,
+  formatShortWeekday: PropTypes.func,
   maxDate: isMaxDate,
   minDate: isMinDate,
   onChange: PropTypes.func,

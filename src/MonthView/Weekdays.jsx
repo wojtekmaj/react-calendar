@@ -9,7 +9,7 @@ import {
   getMonthIndex,
   getYear,
 } from '../shared/dates';
-import { formatShortWeekday } from '../shared/dateFormatter';
+import { formatShortWeekday as defaultFormatShortWeekday } from '../shared/dateFormatter';
 import { isCalendarType } from '../shared/propTypes';
 
 export default class Weekdays extends PureComponent {
@@ -65,14 +65,14 @@ export default class Weekdays extends PureComponent {
 
 Weekdays.propTypes = {
   calendarType: isCalendarType.isRequired,
+  formatShortWeekday: PropTypes.func,
   month: PropTypes.oneOfType([
     PropTypes.string, // Only strings that are parseable to integer
     PropTypes.number,
     PropTypes.instanceOf(Date),
   ]).isRequired,
-  formatShortWeekday: PropTypes.func
 };
 
 Weekdays.defaultProps = {
-  formatShortWeekday: formatShortWeekday
-}
+  formatShortWeekday: defaultFormatShortWeekday,
+};
