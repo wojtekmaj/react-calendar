@@ -1,6 +1,6 @@
 {
   "name": "react-calendar",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "description": "A component for picking dates or date periods for your React application.",
   "main": "dist/entry.js",
   "types": "./index.d.ts",
@@ -11,14 +11,10 @@
     "build-styles": "lessc ./src/Calendar.less ./src/Calendar.css",
     "copy-styles": "node ./copy-styles.js",
     "prepublishOnly": "npm run build",
-    "preversion": "npm run version-sample && npm run version-test",
     "test": "npm run test-eslint && npm run test-jest",
     "test-eslint": "eslint ./src",
     "test-jest": "jest",
-    "test-jest-coverage": "jest --coverage",
-    "version": "npm run build && git add .",
-    "version-sample": "cd sample && npm version patch",
-    "version-test": "cd test && npm version patch"
+    "test-jest-coverage": "jest --coverage"
   },
   "jest": {
     "setupFiles": [
