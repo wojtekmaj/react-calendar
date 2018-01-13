@@ -1,5 +1,3 @@
-/// <reference types="react" />
-
 declare module "react-calendar" {
   type Detail = "month" | "year" | "decade" | "century"
   type DateCallback = (date: Date) => void
@@ -20,8 +18,8 @@ declare module "react-calendar" {
     maxDetail?: Detail;
     minDate?: Date;
     minDetail?: Detail;
-    next2Label?: string | React.ReactElement<any>;
-    nextLabel?: string | React.ReactElement<any>;
+    next2Label?: string | JSX.Element;
+    nextLabel?: string | JSX.Element;
     onActiveDateChange?: ViewCallback;
     onChange?: DateCallback;
     onClickDay?: DateCallback;
@@ -31,8 +29,8 @@ declare module "react-calendar" {
     onClickYear?: DateCallback;
     onDrillDown?: ViewCallback;
     onDrillUp?: ViewCallback;
-    prev2Label?: string | React.ReactElement<any>;
-    prevLabel?: string | React.ReactElement<any>;
+    prev2Label?: string | JSX.Element;
+    prevLabel?: string | JSX.Element;
     renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
     returnValue?: "start" | "end" | "range";
     selectRange?: boolean;
@@ -40,7 +38,7 @@ declare module "react-calendar" {
     showNeighboringMonth?: boolean;
     showWeekNumbers?: boolean;
     tileClassName?: string | string[] | ((props: CalendarTileProperties) => string | string[] | null);
-    tileContent?: React.ReactElement<any> | ((props: CalendarTileProperties) => JSX.Element | null);
+    tileContent?: JSX.Element | ((props: CalendarTileProperties) => JSX.Element | null);
     value?: Date | Date[];
     view?: Detail;
   }
@@ -69,7 +67,7 @@ declare module "react-calendar" {
     onMouseOver?: DateCallback;
     renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
     tileClassName?: string | string[] | ((props: CalendarTileProperties) => string | string[] | null);
-    tileContent?: React.ReactElement<any> | ((props: CalendarTileProperties) => JSX.Element | null);
+    tileContent?: JSX.Element | ((props: CalendarTileProperties) => JSX.Element | null);
     value?: Date | Date[];
   }
 }
