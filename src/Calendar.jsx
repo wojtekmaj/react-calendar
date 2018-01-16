@@ -254,9 +254,10 @@ export default class Calendar extends Component {
   }
 
   onChange = (value) => {
-    const { selectRange } = this.props;
+    const { onChange, selectRange } = this.props;
 
     let nextValue;
+    let callback;
     if (selectRange) {
       const { value: previousValue } = this.state;
       // Range selection turned on
@@ -269,15 +270,15 @@ export default class Calendar extends Component {
       } else {
         // Second value
         nextValue = getValueRange(this.valueType, previousValue, value);
-        callIfDefined(this.props.onChange, nextValue);
+        callback = () => callIfDefined(onChange, nextValue);
       }
     } else {
       // Range selection turned off
       nextValue = this.getProcessedValue(value);
-      callIfDefined(this.props.onChange, nextValue);
+      callback = () => callIfDefined(onChange, nextValue);
     }
 
-    this.setState({ value: nextValue });
+    this.setState({ value: nextValue }, callback);
   }
 
   onMouseOver = (value) => {
