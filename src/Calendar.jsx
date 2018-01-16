@@ -138,7 +138,8 @@ export default class Calendar extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { locale: nextLocale, value: nextValue } = nextProps;
-    const { locale, value } = this.props;
+    const { locale } = this.props;
+    const { value } = this.state;
 
     if (nextLocale !== locale) {
       setLocale(nextLocale);
