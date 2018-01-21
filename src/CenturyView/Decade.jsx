@@ -1,45 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import mergeClassNames from 'merge-class-names';
+
+import Tile from '../Tile';
 
 import { getBeginOfDecade, getEndOfDecade, getDecadeLabel } from '../shared/dates';
 import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__century-view__decades__decade';
 
-const Decade = ({
-  classes,
-  date,
-  decade,
-  maxDate,
-  minDate,
-  onClick,
-  onMouseOver,
-  style,
-  tileClassName,
-  tileContent,
-}) => (
-  <button
-    className={mergeClassNames(
-      className,
-      ...classes,
-      tileClassName instanceof Function ? tileClassName({ date, view: 'century' }) : tileClassName,
-    )}
-    disabled={
-      (minDate && getBeginOfDecade(minDate) > date) ||
-      (maxDate && getEndOfDecade(maxDate) < date)
-    }
-    onClick={onClick && (() => onClick(date))}
-    onMouseOver={onMouseOver && (() => onMouseOver(date))}
-    onFocus={onMouseOver && (() => onMouseOver(date))}
-    style={style}
-    type="button"
+const Decade = ({ classes, decade, ...otherProps }) => (
+  <Tile
+    {...otherProps}
+    classes={[...classes, className]}
+    dateTime={`${decade}T00:00:00.000`}
+    maxDateTransform={getEndOfDecade}
+    minDateTransform={getBeginOfDecade}
+    view="century"
   >
-    <time dateTime={`${decade}T00:00:00.000`}>
-      {getDecadeLabel(decade)}
-    </time>
-    {typeof tileContent === 'function' ? tileContent({ date, view: 'century' }) : tileContent}
-  </button>
+    {getDecadeLabel(decade)}
+  </Tile>
 );
 
 Decade.propTypes = {

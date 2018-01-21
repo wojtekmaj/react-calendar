@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import mergeClassNames from 'merge-class-names';
+
+import Tile from '../Tile';
 
 import {
   getBeginOfMonth,
@@ -16,35 +17,19 @@ const Month = ({
   classes,
   date,
   formatMonth,
-  maxDate,
-  minDate,
-  onClick,
-  onMouseOver,
-  style,
-  tileClassName,
-  tileContent,
+  ...otherProps
 }) => (
-  <button
-    className={mergeClassNames(
-      className,
-      ...classes,
-      tileClassName instanceof Function ? tileClassName({ date, view: 'year' }) : tileClassName,
-    )}
-    disabled={
-      (minDate && getBeginOfMonth(minDate) > date) ||
-      (maxDate && getEndOfMonth(maxDate) < date)
-    }
-    onClick={onClick && (() => onClick(date))}
-    onMouseOver={onMouseOver && (() => onMouseOver(date))}
-    onFocus={onMouseOver && (() => onMouseOver(date))}
-    style={style}
-    type="button"
+  <Tile
+    {...otherProps}
+    classes={[...classes, className]}
+    date={date}
+    dateTime={`${getISOLocalMonth(date)}T00:00:00.000`}
+    maxDateTransform={getEndOfMonth}
+    minDateTransform={getBeginOfMonth}
+    view="year"
   >
-    <time dateTime={`${getISOLocalMonth(date)}T00:00:00.000`}>
-      {formatMonth(date)}
-    </time>
-    {typeof tileContent === 'function' ? tileContent({ date, view: 'year' }) : tileContent}
-  </button>
+    {formatMonth(date)}
+  </Tile>
 );
 
 Month.propTypes = {

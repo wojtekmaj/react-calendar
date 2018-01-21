@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import mergeClassNames from 'merge-class-names';
+
+import Tile from '../Tile';
 
 import {
   getBeginOfDay,
@@ -17,38 +18,24 @@ const Day = ({
   classes,
   currentMonthIndex,
   date,
-  maxDate,
-  minDate,
-  onClick,
-  onMouseOver,
-  style,
-  tileClassName,
-  tileContent,
+  ...otherProps
 }) => (
-  <button
-    className={mergeClassNames(
-      className,
+  <Tile
+    {...otherProps}
+    classes={[
       ...classes,
-      isWeekend(date) && `${className}--weekend`,
-      date.getMonth() !== currentMonthIndex && `${className}--neighboringMonth`,
-      tileClassName instanceof Function ? tileClassName({ date, view: 'month' }) : tileClassName,
-    )}
-    disabled={
-      (minDate && getBeginOfDay(minDate) > date) ||
-      (maxDate && getEndOfDay(maxDate) < date)
-    }
-    key={date}
-    onClick={onClick && (() => onClick(date))}
-    onMouseOver={onMouseOver && (() => onMouseOver(date))}
-    onFocus={onMouseOver && (() => onMouseOver(date))}
-    style={style}
-    type="button"
+      className,
+      isWeekend(date) ? `${className}--weekend` : null,
+      date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null,
+    ]}
+    date={date}
+    dateTime={`${getISOLocalDate(date)}T00:00:00.000`}
+    maxDateTransform={getEndOfDay}
+    minDateTransform={getBeginOfDay}
+    view="month"
   >
-    <time dateTime={`${getISOLocalDate(date)}T00:00:00.000`}>
-      {getDay(date)}
-    </time>
-    {typeof tileContent === 'function' ? tileContent({ date, view: 'month' }) : tileContent}
-  </button>
+    {getDay(date)}
+  </Tile>
 );
 
 Day.propTypes = {
