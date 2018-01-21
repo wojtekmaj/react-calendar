@@ -8,21 +8,21 @@ import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__decade-view__years__year';
 
-const Year = ({ classes, year, ...otherProps }) => (
+const Year = ({ classes, point, ...otherProps }) => (
   <Tile
     {...otherProps}
     classes={[...classes, className]}
-    dateTime={`${year}T00:00:00.000`}
+    dateTime={`${point}T00:00:00.000`}
     maxDateTransform={getEndOfYear}
     minDateTransform={getBeginOfYear}
     view="decade"
   >
-    {year}
+    {point}
   </Tile>
 );
 
 Year.propTypes = {
-  year: PropTypes.number.isRequired,
+  point: PropTypes.number.isRequired,
   ...tileProps,
 };
 

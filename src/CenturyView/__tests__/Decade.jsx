@@ -8,7 +8,7 @@ import Decade from '../Decade';
 const tileProps = {
   classes: ['react-calendar__tile'],
   date: new Date(2011, 0, 1),
-  decade: 2011,
+  point: 2011,
 };
 
 describe('Decade', () => {

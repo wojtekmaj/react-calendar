@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Flex from '../Flex';
+import TileGroup from '../TileGroup';
 import Day from './Day';
 
 import {
@@ -11,7 +11,6 @@ import {
   getYear,
 } from '../shared/dates';
 import { isCalendarType, tileGroupProps } from '../shared/propTypes';
-import { getTileClasses } from '../shared/utils';
 
 export default class Days extends PureComponent {
   get offset() {
@@ -65,43 +64,35 @@ export default class Days extends PureComponent {
 
   render() {
     const {
-      start, end, year, monthIndex,
+      end,
+      monthIndex,
+      offset,
+      start,
+      year,
     } = this;
 
     const {
       activeStartDate,
-      hover,
-      value,
-      valueType,
-      ...dayProps
+      calendarType,
+      showNeighboringMonth,
+      ...otherProps
     } = this.props;
 
-    const days = [];
-    for (let day = start; day <= end; day += 1) {
-      const date = new Date(year, monthIndex, day);
-
-      days.push(
-        <Day
-          classes={getTileClasses({
-            value, valueType, date, dateType: 'day', hover,
-          })}
-          currentMonthIndex={monthIndex}
-          date={date}
-          key={day}
-          {...dayProps}
-        />,
-      );
-    }
-
     return (
-      <Flex
+      <TileGroup
+        {...otherProps}
         className="react-calendar__month-view__days"
         count={7}
-        offset={this.offset}
-        wrap
-      >
-        {days}
-      </Flex>
+        dateTransform={day => new Date(year, monthIndex, day)}
+        dateType="day"
+        end={end}
+        offset={offset}
+        start={start}
+        tile={Day}
+
+        // Tile props
+        currentMonthIndex={monthIndex}
+      />
     );
   }
 }

@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react';
 
-import Flex from '../Flex';
+import TileGroup from '../TileGroup';
 import Year from './Year';
 
 import { getBeginOfDecadeYear } from '../shared/dates';
-import { getTileClasses } from '../shared/utils';
 import { tileGroupProps } from '../shared/propTypes';
 
 export default class Years extends PureComponent {
@@ -22,37 +21,19 @@ export default class Years extends PureComponent {
 
     const {
       activeStartDate,
-      hover,
-      value,
-      valueType,
-      ...yearProps
+      ...otherProps
     } = this.props;
 
-    const years = [];
-    for (let year = start; year <= end; year += 1) {
-      const date = new Date(year, 0, 1);
-
-      years.push(
-        <Year
-          classes={getTileClasses({
-            value, valueType, date, dateType: 'year', hover,
-          })}
-          date={date}
-          key={year}
-          year={year}
-          {...yearProps}
-        />,
-      );
-    }
-
     return (
-      <Flex
+      <TileGroup
+        {...otherProps}
         className="react-calendar__decade-view__years"
-        count={3}
-        wrap
-      >
-        {years}
-      </Flex>
+        dateTransform={year => new Date(year, 0, 1)}
+        dateType="year"
+        end={end}
+        start={start}
+        tile={Year}
+      />
     );
   }
 }

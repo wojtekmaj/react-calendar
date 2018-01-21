@@ -8,7 +8,7 @@ import Year from '../Year';
 const tileProps = {
   classes: ['react-calendar__tile'],
   date: new Date(2018, 0, 1),
-  year: 2018,
+  point: 2018,
 };
 
 describe('Year', () => {

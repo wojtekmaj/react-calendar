@@ -43,11 +43,11 @@ const Tile = ({
 );
 
 Tile.propTypes = {
+  ...tileProps,
   children: PropTypes.node.isRequired,
   dateTime: PropTypes.string.isRequired,
   maxDateTransform: PropTypes.func.isRequired,
   minDateTransform: PropTypes.func.isRequired,
-  ...tileProps,
 };
 
 export default Tile;
