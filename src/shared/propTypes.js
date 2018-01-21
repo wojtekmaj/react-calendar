@@ -10,13 +10,13 @@ export const isMinDate = (props, propName, componentName) => {
 
   if (minDate) {
     if (!(minDate instanceof Date)) {
-      return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of type \`${typeof minDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`);
+      return new Error(`Invalid prop \`${propName}\` of type \`${typeof minDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`);
     }
 
     const { maxDate } = props;
 
     if (maxDate && minDate > maxDate) {
-      return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of type \`${typeof minDate}\` supplied to \`${componentName}\`, minDate cannot be larger than maxDate.`);
+      return new Error(`Invalid prop \`${propName}\` of type \`${typeof minDate}\` supplied to \`${componentName}\`, minDate cannot be larger than maxDate.`);
     }
   }
 
@@ -29,13 +29,13 @@ export const isMaxDate = (props, propName, componentName) => {
 
   if (maxDate) {
     if (!(maxDate instanceof Date)) {
-      return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`);
+      return new Error(`Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`);
     }
 
     const { minDate } = props;
 
     if (minDate && maxDate < minDate) {
-      return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, maxDate cannot be smaller than minDate.`);
+      return new Error(`Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, maxDate cannot be smaller than minDate.`);
     }
   }
 
@@ -62,7 +62,7 @@ export const isView = (props, propName, componentName) => {
   const allowedViews = views || allViews;
 
   if (allowedViews.indexOf(view) === -1) {
-    return new Error(`Warning: Failed prop type: Invalid prop \`${propName}\` of value \`${view}\` supplied to \`${componentName}\`, expected one of [${['a', 'b', 'c', 'd', 'e'].map(a => `"${a}"`).join(', ')}].`);
+    return new Error(`Invalid prop \`${propName}\` of value \`${view}\` supplied to \`${componentName}\`, expected one of [${['a', 'b', 'c', 'd', 'e'].map(a => `"${a}"`).join(', ')}].`);
   }
 
   // Everything is fine
@@ -72,7 +72,7 @@ export const isView = (props, propName, componentName) => {
 isView.isRequired = (props, propName, componentName) => {
   const view = props[propName];
   if (!view) {
-    return new Error(`Warning: Failed prop type: The prop \`${propName}\` is marked as required in \`${componentName}\`, but its value is \`${view}\`.`);
+    return new Error(`The prop \`${propName}\` is marked as required in \`${componentName}\`, but its value is \`${view}\`.`);
   }
   return isView(props, propName, componentName);
 };
