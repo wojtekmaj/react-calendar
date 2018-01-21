@@ -63,13 +63,7 @@ export default class Days extends PureComponent {
   }
 
   render() {
-    const {
-      end,
-      monthIndex,
-      offset,
-      start,
-      year,
-    } = this;
+    const { monthIndex } = this;
 
     const {
       activeStartDate,
@@ -83,13 +77,12 @@ export default class Days extends PureComponent {
         {...otherProps}
         className="react-calendar__month-view__days"
         count={7}
-        dateTransform={day => new Date(year, monthIndex, day)}
+        dateTransform={day => new Date(this.year, monthIndex, day)}
         dateType="day"
-        end={end}
-        offset={offset}
-        start={start}
+        end={this.end}
+        offset={this.offset}
+        start={this.start}
         tile={Day}
-
         // Tile props
         currentMonthIndex={monthIndex}
       />

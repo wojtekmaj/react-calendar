@@ -17,8 +17,6 @@ export default class Months extends PureComponent {
   }
 
   render() {
-    const { end, start, year } = this;
-
     const {
       activeStartDate,
       ...otherProps
@@ -28,10 +26,10 @@ export default class Months extends PureComponent {
       <TileGroup
         {...otherProps}
         className="react-calendar__year-view__months"
-        dateTransform={monthIndex => new Date(year, monthIndex, 1)}
+        dateTransform={monthIndex => new Date(this.year, monthIndex, 1)}
         dateType="month"
-        end={end}
-        start={start}
+        end={this.end}
+        start={this.start}
         tile={Month}
       />
     );

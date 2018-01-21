@@ -17,8 +17,6 @@ export default class Years extends PureComponent {
   }
 
   render() {
-    const { end, start } = this;
-
     const {
       activeStartDate,
       ...otherProps
@@ -30,8 +28,8 @@ export default class Years extends PureComponent {
         className="react-calendar__decade-view__years"
         dateTransform={year => new Date(year, 0, 1)}
         dateType="year"
-        end={end}
-        start={start}
+        end={this.end}
+        start={this.start}
         tile={Year}
       />
     );

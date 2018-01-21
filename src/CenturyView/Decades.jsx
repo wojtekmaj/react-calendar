@@ -20,8 +20,6 @@ export default class Decades extends PureComponent {
   }
 
   render() {
-    const { end, start } = this;
-
     const {
       activeStartDate,
       ...otherProps
@@ -33,8 +31,8 @@ export default class Decades extends PureComponent {
         className="react-calendar__century-view__decades"
         dateTransform={getBeginOfDecade}
         dateType="decade"
-        end={end}
-        start={start}
+        end={this.end}
+        start={this.start}
         step={10}
         tile={Decade}
       />
