@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import WeekNumber from './WeekNumber';
 import Flex from '../Flex';
 
 import {
@@ -79,23 +80,12 @@ export default class WeekNumbers extends PureComponent {
       >
         {
           weekNumbers.map((weekNumber, weekIndex) => (
-            onClickWeekNumber ?
-              <button
-                className="react-calendar__tile"
-                key={weekNumber}
-                onClick={() => onClickWeekNumber(weekNumber, dates[weekIndex])}
-                style={{ flexGrow: 1 }}
-                type="button"
-              >
-                <span>{weekNumber}</span>
-              </button> :
-              <div
-                className="react-calendar__tile"
-                key={weekNumber}
-                style={{ flexGrow: 1 }}
-              >
-                <span>{weekNumber}</span>
-              </div>
+            <WeekNumber
+              date={dates[weekIndex]}
+              key={weekNumber}
+              onClickWeekNumber={onClickWeekNumber}
+              weekNumber={weekNumber}
+            />
           ))
         }
       </Flex>

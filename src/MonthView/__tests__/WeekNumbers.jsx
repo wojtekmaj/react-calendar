@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import WeekNumbers from '../WeekNumbers';
 
@@ -7,63 +7,63 @@ import WeekNumbers from '../WeekNumbers';
 
 describe('WeekNumbers', () => {
   it('renders proper weekNumbers for a year that starts in week 1 (ISO 8601)', () => {
-    const component = shallow(
+    const component = mount(
       <WeekNumbers
         activeStartDate={new Date(2018, 0, 1)}
         calendarType="ISO 8601"
       />
     );
 
-    const children = component.children();
+    const weekNumbers = component.find('WeekNumber');
 
-    expect(children).toHaveLength(5);
-    expect(children.first().text()).toBe('1');
+    expect(weekNumbers).toHaveLength(5);
+    expect(weekNumbers.first().text()).toBe('1');
   });
 
   it('renders proper weekNumbers for a year that starts on week 52 (ISO 8601)', () => {
-    const component = shallow(
+    const component = mount(
       <WeekNumbers
         activeStartDate={new Date(2017, 0, 1)}
         calendarType="ISO 8601"
       />
     );
 
-    const children = component.children();
+    const weekNumbers = component.find('WeekNumber');
 
-    expect(children).toHaveLength(6);
-    expect(children.first().text()).toBe('52');
+    expect(weekNumbers).toHaveLength(6);
+    expect(weekNumbers.first().text()).toBe('52');
   });
 
   it('renders proper weekNumbers for a year that starts on week 53 (ISO 8601)', () => {
-    const component = shallow(
+    const component = mount(
       <WeekNumbers
         activeStartDate={new Date(2016, 0, 1)}
         calendarType="ISO 8601"
       />
     );
 
-    const children = component.children();
+    const weekNumbers = component.find('WeekNumber');
 
-    expect(children).toHaveLength(5);
-    expect(children.first().text()).toBe('53');
+    expect(weekNumbers).toHaveLength(5);
+    expect(weekNumbers.first().text()).toBe('53');
   });
 
   it('renders proper weekNumbers for a year that starts in week 1 (US)', () => {
-    const component = shallow(
+    const component = mount(
       <WeekNumbers
         activeStartDate={new Date(2017, 0, 1)}
         calendarType="US"
       />
     );
 
-    const children = component.children();
+    const weekNumbers = component.find('WeekNumber');
 
-    expect(children).toHaveLength(5);
-    expect(children.first().text()).toBe('1');
+    expect(weekNumbers).toHaveLength(5);
+    expect(weekNumbers.first().text()).toBe('1');
   });
 
   it('renders static divs as children when not given onClickWeekNumber', () => {
-    const component = shallow(
+    const component = mount(
       <WeekNumbers
         activeStartDate={new Date(2017, 0, 1)}
         calendarType="ISO 8601"
@@ -76,7 +76,7 @@ describe('WeekNumbers', () => {
   });
 
   it('renders buttons as children when given onClickWeekNumber', () => {
-    const component = shallow(
+    const component = mount(
       <WeekNumbers
         activeStartDate={new Date(2017, 0, 1)}
         calendarType="ISO 8601"
@@ -91,7 +91,7 @@ describe('WeekNumbers', () => {
 
   it('calls onClickWeekNumber function with proper arguments when clicked a week number (ISO 8601)', () => {
     const onClickWeekNumber = jest.fn();
-    const component = shallow(
+    const component = mount(
       <WeekNumbers
         activeStartDate={new Date(2017, 0, 1)}
         calendarType="ISO 8601"
@@ -107,7 +107,7 @@ describe('WeekNumbers', () => {
 
   it('calls onClickWeekNumber function with proper arguments when clicked a week number (US)', () => {
     const onClickWeekNumber = jest.fn();
-    const component = shallow(
+    const component = mount(
       <WeekNumbers
         activeStartDate={new Date(2017, 0, 1)}
         calendarType="US"
