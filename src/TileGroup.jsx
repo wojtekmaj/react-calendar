@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Flex from './Flex';
@@ -6,53 +6,49 @@ import Flex from './Flex';
 import { getTileClasses } from './shared/utils';
 import { tileGroupProps } from './shared/propTypes';
 
-export default class TileGroup extends PureComponent {
-  render() {
-    const {
-      className,
-      count,
-      dateTransform,
-      dateType,
-      end,
-      hover,
-      offset,
-      start,
-      step,
-      tile: Tile,
-      value,
-      valueType,
-      ...tileProps
-    } = this.props;
+const TileGroup = ({
+  className,
+  count,
+  dateTransform,
+  dateType,
+  end,
+  hover,
+  offset,
+  start,
+  step,
+  tile: Tile,
+  value,
+  valueType,
+  ...tileProps
+}) => {
+  const tiles = [];
+  for (let point = start; point <= end; point += step) {
+    const date = dateTransform(point);
 
-    const tiles = [];
-    for (let point = start; point <= end; point += step) {
-      const date = dateTransform(point);
-
-      tiles.push(
-        <Tile
-          classes={getTileClasses({
-            value, valueType, date, dateType, hover,
-          })}
-          date={date}
-          point={point}
-          key={point}
-          {...tileProps}
-        />,
-      );
-    }
-
-    return (
-      <Flex
-        className={className}
-        count={count}
-        offset={offset}
-        wrap
-      >
-        {tiles}
-      </Flex>
+    tiles.push(
+      <Tile
+        classes={getTileClasses({
+          value, valueType, date, dateType, hover,
+        })}
+        date={date}
+        point={point}
+        key={point}
+        {...tileProps}
+      />,
     );
   }
-}
+
+  return (
+    <Flex
+      className={className}
+      count={count}
+      offset={offset}
+      wrap
+    >
+      {tiles}
+    </Flex>
+  );
+};
 
 TileGroup.propTypes = {
   ...tileGroupProps,
@@ -69,3 +65,4 @@ TileGroup.defaultProps = {
   step: 1,
 };
 
+export default TileGroup;
