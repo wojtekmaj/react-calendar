@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -15,7 +15,14 @@ import {
 import { formatMonthYear as defaultFormatMonthYear } from '../shared/dateFormatter';
 import { isView, isViews } from '../shared/propTypes';
 
-export default class Navigation extends PureComponent {
+export default class Navigation extends Component {
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.activeStartDate !== this.props.activeStartDate ||
+      nextProps.view !== this.props.view
+    );
+  }
+
   get drillUpAvailable() {
     const { view, views } = this.props;
     return views.indexOf(view) > 0;
