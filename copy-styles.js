@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-fs.copyFile('./src/Calendar.less', 'dist/Calendar.less', (error) => {
+fs.copyFile('src/Calendar.less', 'dist/Calendar.less', (error) => {
   if (error) {
     throw error;
   }
@@ -8,7 +8,7 @@ fs.copyFile('./src/Calendar.less', 'dist/Calendar.less', (error) => {
   console.log('Calendar.less copied successfully.');
 });
 
-fs.copyFile('./src/Calendar.css', 'dist/Calendar.css', (error) => {
+fs.copyFile('src/Calendar.css', 'dist/Calendar.css', (error) => {
   if (error) {
     throw error;
   }
