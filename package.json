@@ -72,8 +72,8 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.0",
-    "jest": "^22.0.6",
-    "jest-cli": "^22.0.6",
+    "jest": "^22.1.4",
+    "jest-cli": "^22.1.4",
     "less": "^2.7.3",
     "react-test-renderer": "^16.2.0"
   },
