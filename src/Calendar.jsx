@@ -162,6 +162,8 @@ export default class Calendar extends Component {
       datesAreDifferent(...[nextValue, value].map(this.getValueTo))
     ) {
       this.updateValues(nextProps);
+    } else {
+      nextState.activeStartDate = this.getActiveStartDate(nextProps);
     }
 
     if (!nextProps.selectRange && this.props.selectRange) {
