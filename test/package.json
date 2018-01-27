@@ -1,6 +1,6 @@
 {
   "name": "react-calendar-test-page",
-  "version": "2.11.2",
+  "version": "2.12.0",
   "description": "A test page for React-Calendar.",
   "private": true,
   "scripts": {
