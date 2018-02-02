@@ -300,6 +300,7 @@ export default class Calendar extends Component {
       renderChildren,
       tileClassName,
       tileContent,
+      tileDisabled,
     } = this.props;
     const {
       activeStartDate, hover, value, view,
@@ -314,6 +315,7 @@ export default class Calendar extends Component {
       onMouseOver: this.props.selectRange ? onMouseOver : null,
       tileClassName,
       tileContent: tileContent || renderChildren, // For backwards compatibility
+      tileDisabled,
       value,
       valueType,
     };
@@ -457,6 +459,7 @@ Calendar.propTypes = {
     PropTypes.func,
     PropTypes.node,
   ]),
+  tileDisabled: PropTypes.func,
   value: PropTypes.oneOfType([
     PropTypes.string,
     isValue,

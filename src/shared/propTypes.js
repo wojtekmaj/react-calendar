@@ -115,4 +115,5 @@ export const tileProps = {
     PropTypes.func,
     PropTypes.node,
   ]),
+  tileDisabled: PropTypes.func,
 };
