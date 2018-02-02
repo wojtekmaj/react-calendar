@@ -39,6 +39,7 @@ declare module "react-calendar" {
     showWeekNumbers?: boolean;
     tileClassName?: string | string[] | ((props: CalendarTileProperties) => string | string[] | null);
     tileContent?: JSX.Element | ((props: CalendarTileProperties) => JSX.Element | null);
+    tileDisabled?: (props: CalendarTileProperties) => boolean;
     value?: Date | Date[];
     view?: Detail;
   }
@@ -68,6 +69,7 @@ declare module "react-calendar" {
     renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
     tileClassName?: string | string[] | ((props: CalendarTileProperties) => string | string[] | null);
     tileContent?: JSX.Element | ((props: CalendarTileProperties) => JSX.Element | null);
+    tileDisabled?: (props: CalendarTileProperties) => boolean;
     value?: Date | Date[];
   }
 }
