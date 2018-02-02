@@ -3,7 +3,17 @@
 ) [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 
 # React-Calendar
-Ultimate date picker for your React application.
+
+<div align="center">
+  <img width="436" heigth="398" src="https://wojtekmaj.home.pl/projekty/react-calendar/react-calendar.jpg">
+</div>
+
+Ultimate calendar for your React app.
+
+* Pick days, months, years, or even decades
+* Supports range selection
+* Supports virtually any language
+* No moment.js needed
 
 ## tl;dr
 * Install by executing `npm install react-calendar` or `yarn add react-calendar`.
