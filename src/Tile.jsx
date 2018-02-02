@@ -29,7 +29,7 @@ const Tile = ({
     disabled={
       (minDate && minDateTransform(minDate) > date) ||
       (maxDate && maxDateTransform(maxDate) < date) ||
-      tileDisabled({ date, view })
+      (tileDisabled && tileDisabled({ date, view }))
     }
     onClick={onClick && (() => onClick(date))}
     onMouseOver={onMouseOver && (() => onMouseOver(date))}
