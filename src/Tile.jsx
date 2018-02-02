@@ -18,6 +18,7 @@ const Tile = ({
   style,
   tileClassName,
   tileContent,
+  tileDisabled,
   view,
 }) => (
   <button
@@ -27,7 +28,8 @@ const Tile = ({
     )}
     disabled={
       (minDate && minDateTransform(minDate) > date) ||
-      (maxDate && maxDateTransform(maxDate) < date)
+      (maxDate && maxDateTransform(maxDate) < date) ||
+      tileDisabled
     }
     onClick={onClick && (() => onClick(date))}
     onMouseOver={onMouseOver && (() => onMouseOver(date))}
@@ -46,6 +48,7 @@ Tile.propTypes = {
   ...tileProps,
   children: PropTypes.node.isRequired,
   dateTime: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
   maxDateTransform: PropTypes.func.isRequired,
   minDateTransform: PropTypes.func.isRequired,
 };
