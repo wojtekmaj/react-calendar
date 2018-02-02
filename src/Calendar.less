@@ -16,7 +16,7 @@
     border: 0;
     outline: none;
 
-    &:not([disabled]) {
+    &:enabled {
       &:hover {
         cursor: pointer;
       }
@@ -31,7 +31,7 @@
       min-width: 44px;
       background: none;
 
-      &:not([disabled]) {
+      &:enabled {
         &:hover, &:focus {
           background-color: rgb(230, 230, 230);
         }
@@ -94,11 +94,11 @@
     padding: .75em .5em;
     background: none;
 
-    button&[disabled] {
+    button&:disabled {
       background-color: rgb(240, 240, 240);
     }
 
-    button&:not([disabled]) {
+    button&:enabled {
       &:hover, &:focus {
         background-color: rgb(230, 230, 230);
       }
@@ -108,7 +108,7 @@
       @bgcolor: lighten(rgb(0, 110, 220), 30%);
       background: @bgcolor;
 
-      button&:not([disabled]) {
+      button&:enabled {
         &:hover, &:focus {
           background: lighten(@bgcolor, 10%);
         }
@@ -120,7 +120,7 @@
       background: @bgcolor;
       color: white;
 
-      button&:not([disabled]) {
+      button&:enabled {
         &:hover, &:focus {
           background: lighten(@bgcolor, 10%);
         }
