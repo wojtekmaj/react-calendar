@@ -24,6 +24,7 @@ export default class YearView extends PureComponent {
 YearView.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   formatMonth: PropTypes.func,
+  locale: PropTypes.string,
   maxDate: isMaxDate,
   minDate: isMinDate,
   onChange: PropTypes.func,

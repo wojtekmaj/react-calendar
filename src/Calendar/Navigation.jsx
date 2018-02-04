@@ -81,7 +81,9 @@ export default class Navigation extends Component {
   }
 
   get label() {
-    const { activeStartDate: date, formatMonthYear, view } = this.props;
+    const {
+      activeStartDate: date, formatMonthYear, locale, view,
+    } = this.props;
 
     switch (view) {
       case 'century':
@@ -91,7 +93,7 @@ export default class Navigation extends Component {
       case 'year':
         return getYear(date);
       case 'month':
-        return formatMonthYear(date);
+        return formatMonthYear(date, locale);
       default:
         throw new Error(`Invalid view: ${view}.`);
     }
@@ -172,6 +174,7 @@ Navigation.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   drillUp: PropTypes.func.isRequired,
   formatMonthYear: PropTypes.func,
+  locale: PropTypes.string,
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
   next2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),

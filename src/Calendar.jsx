@@ -9,7 +9,6 @@ import YearView from './YearView';
 import MonthView from './MonthView';
 
 import { getBegin, getEnd, getValueRange } from './shared/dates';
-import { setLocale } from './shared/locales';
 import { isCalendarType, isClassName, isMaxDate, isMinDate, isValue } from './shared/propTypes';
 import { between, callIfDefined, mergeFunctions } from './shared/utils';
 
@@ -132,18 +131,9 @@ export default class Calendar extends Component {
     value: this.props.value,
   }
 
-  componentWillMount() {
-    setLocale(this.props.locale);
-  }
-
   componentWillReceiveProps(nextProps) {
-    const { locale: nextLocale, value: nextValue } = nextProps;
-    const { locale } = this.props;
+    const { value: nextValue } = nextProps;
     const { value } = this.state;
-
-    if (nextLocale !== locale) {
-      setLocale(nextLocale);
-    }
 
     const nextState = {};
 
@@ -295,6 +285,7 @@ export default class Calendar extends Component {
   renderContent() {
     const {
       calendarType,
+      locale,
       maxDate,
       minDate,
       renderChildren,
@@ -310,6 +301,7 @@ export default class Calendar extends Component {
     const commonProps = {
       activeStartDate,
       hover,
+      locale,
       maxDate,
       minDate,
       onMouseOver: this.props.selectRange ? onMouseOver : null,
@@ -375,6 +367,7 @@ export default class Calendar extends Component {
         activeStartDate={this.state.activeStartDate}
         drillUp={this.drillUp}
         formatMonthYear={this.props.formatMonthYear}
+        locale={this.props.locale}
         maxDate={this.props.maxDate}
         minDate={this.props.minDate}
         next2Label={this.props.next2Label}

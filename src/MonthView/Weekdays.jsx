@@ -14,7 +14,10 @@ import { isCalendarType } from '../shared/propTypes';
 
 export default class Weekdays extends Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.calendarType !== this.props.calendarType;
+    return (
+      nextProps.calendarType !== this.props.calendarType ||
+      nextProps.locale !== this.props.locale
+    );
   }
 
   get beginOfMonth() {
@@ -36,8 +39,8 @@ export default class Weekdays extends Component {
   }
 
   render() {
+    const { calendarType, formatShortWeekday, locale } = this.props;
     const { beginOfMonth, year, monthIndex } = this;
-    const { calendarType, formatShortWeekday } = this.props;
 
     const weekdays = [];
 
@@ -51,7 +54,7 @@ export default class Weekdays extends Component {
           key={weekday}
           style={{ flexGrow: 1 }}
         >
-          {formatShortWeekday(weekdayDate).replace('.', '')}
+          {formatShortWeekday(weekdayDate, locale).replace('.', '')}
         </div>,
       );
     }
@@ -67,16 +70,17 @@ export default class Weekdays extends Component {
   }
 }
 
+Weekdays.defaultProps = {
+  formatShortWeekday: defaultFormatShortWeekday,
+};
+
 Weekdays.propTypes = {
   calendarType: isCalendarType.isRequired,
   formatShortWeekday: PropTypes.func,
+  locale: PropTypes.string,
   month: PropTypes.oneOfType([
     PropTypes.string, // Only strings that are parseable to integer
     PropTypes.number,
     PropTypes.instanceOf(Date),
   ]).isRequired,
-};
-
-Weekdays.defaultProps = {
-  formatShortWeekday: defaultFormatShortWeekday,
 };

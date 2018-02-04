@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import TileGroup from '../TileGroup';
 import Month from './Month';
@@ -38,4 +39,5 @@ export default class Months extends PureComponent {
 
 Months.propTypes = {
   ...tileGroupProps,
+  locale: PropTypes.string,
 };

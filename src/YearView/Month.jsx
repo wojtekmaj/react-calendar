@@ -17,6 +17,7 @@ const Month = ({
   classes,
   date,
   formatMonth,
+  locale,
   ...otherProps
 }) => (
   <Tile
@@ -28,17 +29,18 @@ const Month = ({
     minDateTransform={getBeginOfMonth}
     view="year"
   >
-    {formatMonth(date)}
+    {formatMonth(date, locale)}
   </Tile>
 );
+
+Month.defaultProps = {
+  formatMonth: defaultFormatMonth,
+};
 
 Month.propTypes = {
   ...tileProps,
   formatMonth: PropTypes.func,
-};
-
-Month.defaultProps = {
-  formatMonth: defaultFormatMonth,
+  locale: PropTypes.string,
 };
 
 export default Month;

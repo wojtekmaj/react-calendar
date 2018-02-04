@@ -1,8 +1,6 @@
 import {
   getDefaultLocales,
   getDefaultLocale,
-  getLocale,
-  setLocale,
 } from '../locales';
 
 describe('getDefaultLocales', () => {
@@ -21,20 +19,3 @@ describe('getDefaultLocale', () => {
   });
 });
 
-describe('getLocale', () => {
-  it('returns default locale on initial run', () => {
-    const locale = getLocale();
-
-    expect(locale).toBe('en-US');
-  });
-});
-
-describe('setLocale', () => {
-  it('saves a given locale so that getLocale can read it', () => {
-    setLocale('pl-PL');
-
-    const locale = getLocale();
-
-    expect(locale).toBe('pl-PL');
-  });
-});

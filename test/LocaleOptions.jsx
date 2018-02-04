@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { getLocale } from 'react-calendar/src/shared/locales';
+import { getDefaultLocale } from 'react-calendar/src/shared/locales';
 
 export default class LocaleOptions extends Component {
   onChange = (event) => {
@@ -72,7 +72,7 @@ export default class LocaleOptions extends Component {
             type="text"
             key={locale}
             name="customLocale"
-            defaultValue={locale || getLocale()}
+            defaultValue={locale}
             pattern="^[a-z]{2}-[A-Z0-9]{2,3}$"
           />&nbsp;
           <button
@@ -93,6 +93,10 @@ export default class LocaleOptions extends Component {
     );
   }
 }
+
+LocaleOptions.defaultProps = {
+  locale: getDefaultLocale(),
+};
 
 LocaleOptions.propTypes = {
   locale: PropTypes.string,

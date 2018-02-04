@@ -34,11 +34,11 @@ export default class Test extends Component {
   onChange = value => this.setState({ value })
 
   renderDebugInfo() {
-    const { value } = this.state;
+    const { locale, value } = this.state;
 
     const renderDate = (dateToRender) => {
       if (dateToRender instanceof Date) {
-        return formatDate(dateToRender);
+        return formatDate(dateToRender, locale);
       }
       return dateToRender;
     };

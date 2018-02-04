@@ -5,18 +5,17 @@ import Days from './MonthView/Days';
 import Weekdays from './MonthView/Weekdays';
 import WeekNumbers from './MonthView/WeekNumbers';
 
-import { getLocale } from './shared/locales';
 import { isCalendarType, isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
 export default class MonthView extends PureComponent {
   get calendarType() {
-    const { calendarType } = this.props;
+    const { calendarType, locale } = this.props;
 
     if (calendarType) {
       return calendarType;
     }
 
-    switch (getLocale()) {
+    switch (locale) {
       case 'en-US':
         return 'US';
       default:
@@ -25,14 +24,12 @@ export default class MonthView extends PureComponent {
   }
 
   renderWeekdays() {
-    const { calendarType } = this;
-    const { activeStartDate, formatShortWeekday } = this.props;
-
     return (
       <Weekdays
-        calendarType={calendarType}
-        month={activeStartDate}
-        formatShortWeekday={formatShortWeekday}
+        calendarType={this.calendarType}
+        locale={this.props.locale}
+        month={this.props.activeStartDate}
+        formatShortWeekday={this.props.formatShortWeekday}
       />
     );
   }
@@ -44,14 +41,11 @@ export default class MonthView extends PureComponent {
       return null;
     }
 
-    const { calendarType } = this;
-    const { activeStartDate, onClickWeekNumber } = this.props;
-
     return (
       <WeekNumbers
-        activeStartDate={activeStartDate}
-        calendarType={calendarType}
-        onClickWeekNumber={onClickWeekNumber}
+        activeStartDate={this.props.activeStartDate}
+        calendarType={this.calendarType}
+        onClickWeekNumber={this.props.onClickWeekNumber}
       />
     );
   }
@@ -95,6 +89,7 @@ MonthView.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType,
   formatShortWeekday: PropTypes.func,
+  locale: PropTypes.string,
   maxDate: isMaxDate,
   minDate: isMinDate,
   onChange: PropTypes.func,
