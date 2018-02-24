@@ -3,9 +3,5 @@
 dist
 coverage
 node_modules
-sample/dist
-sample/package-lock.json
-test/dist
-test/package-lock.json
 npm-debug.log
 yarn-error.log

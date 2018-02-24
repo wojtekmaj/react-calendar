@@ -15,7 +15,7 @@
   "dependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
-    "react-calendar": "../",
+    "react-calendar": "latest",
     "react-dom": "^16.2.0"
   },
   "devDependencies": {
