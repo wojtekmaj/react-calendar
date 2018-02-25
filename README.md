@@ -30,18 +30,14 @@ Minimal demo page is included in sample directory.
 
 ### Compatibility
 
-React-Calendar uses modern web technologies. That's why it's so fast, lightweight and easy to style. This, however, comes at a cost of supporting only modern browsers.
+Your project needs to use React 16 or later. If you use older version of React, please refer to the table below to find suitable React-Calendar version.
 
-|Browser|Minimum supported version|
+|React version|Newest supported React-Calendar|
 |----|----|
-|Google Chrome|24|
-|Mozilla Firefox|29|
-|Microsoft Edge|12|
-|Apple Safari|10|
-|Apple Safari (iOS)|10.2|
-|Opera|15|
-|Internet Explorer|11|
-|Samsung Internet|4|
+|>16.0|latest|
+|>15.0|6.7.0|
+
+React-Calendar uses modern web technologies. That's why it's so fast, lightweight and easy to style. This, however, comes at a cost of [supporting only modern browsers](https://caniuse.com/#feat=internationalization).
 
 #### Legacy browsers
 
