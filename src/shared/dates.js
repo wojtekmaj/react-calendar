@@ -11,7 +11,7 @@ export const getYear = (date) => {
 
   const year = parseInt(date, 10);
 
-  if (typeof date === 'string' && !Number.isNaN(year)) {
+  if (typeof date === 'string' && !isNaN(year)) {
     return year;
   }
 
@@ -486,7 +486,7 @@ export const getISOLocalMonth = (value) => {
 
   const date = new Date(value);
 
-  if (Number.isNaN(date.getTime())) {
+  if (isNaN(date.getTime())) {
     throw new Error(`Invalid date: ${value}`);
   }
 
@@ -506,7 +506,7 @@ export const getISOLocalDate = (value) => {
 
   const date = new Date(value);
 
-  if (Number.isNaN(date.getTime())) {
+  if (isNaN(date.getTime())) {
     throw new Error(`Invalid date: ${value}`);
   }
 

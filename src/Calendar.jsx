@@ -61,7 +61,7 @@ export default class Calendar extends Component {
     const rawValueFrom = value instanceof Array && value.length === 2 ? value[0] : value;
     const valueFromDate = new Date(rawValueFrom);
 
-    if (Number.isNaN(valueFromDate.getTime())) {
+    if (isNaN(valueFromDate.getTime())) {
       throw new Error(`Invalid date: ${value}`);
     }
 
@@ -79,7 +79,7 @@ export default class Calendar extends Component {
     const rawValueTo = value instanceof Array && value.length === 2 ? value[1] : value;
     const valueToDate = new Date(rawValueTo);
 
-    if (Number.isNaN(valueToDate.getTime())) {
+    if (isNaN(valueToDate.getTime())) {
       throw new Error(`Invalid date: ${value}`);
     }
 
