@@ -17,6 +17,7 @@
     "jsx-a11y/label-has-for": ["error", { "required": { "some": ["id", "nesting"] }}],
     "max-len": "error",
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["canvas", "element"] }],
+    "no-restricted-globals": "off",
     "prefer-destructuring": "warn",
     "prefer-spread": "warn",
     "react/no-typos": "off",
