@@ -32,7 +32,7 @@ const TileGroup = ({
         })}
         date={date}
         point={point}
-        key={point}
+        key={date.getTime()}
         {...tileProps}
       />,
     );
