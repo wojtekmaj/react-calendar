@@ -119,7 +119,7 @@ Displays a complete, interactive calendar.
 
 ### MonthView, YearView, DecadeView, CenturyView
 
-Displays a given month, year, decade and a century, respecitvely.
+Displays a given month, year, decade and a century, respectively.
 
 #### Props
 
