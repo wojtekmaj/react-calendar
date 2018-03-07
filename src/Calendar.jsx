@@ -151,23 +151,16 @@ export default class Calendar extends Component {
       datesAreDifferent(...[nextValue, value].map(this.getValueFrom)) ||
       datesAreDifferent(...[nextValue, value].map(this.getValueTo))
     ) {
-      this.updateValues(nextProps);
-    } else {
-      nextState.activeStartDate = this.getActiveStartDate(nextProps);
+      nextState.value = nextValue;
     }
+
+    nextState.activeStartDate = this.getActiveStartDate(nextProps);
 
     if (!nextProps.selectRange && this.props.selectRange) {
       nextState.hover = null;
     }
 
     this.setState(nextState);
-  }
-
-  updateValues = (props = this.props) => {
-    this.setState({
-      value: props.value,
-      activeStartDate: this.getActiveStartDate(props),
-    });
   }
 
   getActiveStartDate(props = this.props) {
