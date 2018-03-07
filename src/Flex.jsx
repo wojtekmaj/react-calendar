@@ -15,25 +15,26 @@ const Flex = ({
 }) => (
   <div
     className={className}
-    style={Object.assign({
+    style={{
       display: 'flex',
       flexDirection: direction,
       flexWrap: wrap ? 'wrap' : 'no-wrap',
-    }, style)}
+      ...style,
+    }}
     {...otherProps}
   >
     {React.Children.map(children, (child, index) => (
-      React.cloneElement(child, Object.assign({}, child.props, {
-        style: Object.assign(
-          {
+      React.cloneElement(
+        child,
+        {
+          ...child.props,
+          style: {
             flexBasis: toPercent(100 / count),
             overflow: 'hidden',
+            marginLeft: offset && (index === 0) ? toPercent((100 * offset) / count) : null,
           },
-          offset && (index === 0) && {
-            marginLeft: toPercent((100 * offset) / count),
-          },
-        ),
-      }))
+        },
+      )
     ))}
   </div>
 );

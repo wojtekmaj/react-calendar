@@ -73,9 +73,19 @@ export default class MonthView extends PureComponent {
           showWeekNumbers ? `${className}--weekNumbers` : '',
         ].join(' ')}
       >
-        <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+          }}
+        >
           {this.renderWeekNumbers()}
-          <div style={{ flexGrow: 1 }}>
+          <div
+            style={{
+              flexGrow: 1,
+              width: '100%',
+            }}
+          >
             {this.renderWeekdays()}
             {this.renderDays()}
           </div>
