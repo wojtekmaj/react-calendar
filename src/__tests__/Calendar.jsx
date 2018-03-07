@@ -459,21 +459,39 @@ describe('Calendar', () => {
   });
 
   it('calls onActiveDateChange on activeStartDate change', () => {
+    const activeStartDate = new Date(2017, 0, 1);
+    const newActiveStartDate = new Date(2018, 0, 1);
     const onActiveDateChange = jest.fn();
     const component = mount(
       <Calendar
-        activeStartDate={new Date(2017, 0, 1)}
+        activeStartDate={activeStartDate}
         onActiveDateChange={onActiveDateChange}
         view="year"
       />
     );
 
-    component.instance().setActiveStartDate(new Date(2018, 0, 1));
+    component.instance().setActiveStartDate(newActiveStartDate);
 
     expect(onActiveDateChange).toHaveBeenCalledWith({
-      activeStartDate: new Date(2018, 0, 1),
+      activeStartDate: newActiveStartDate,
       view: 'year',
     });
+  });
+
+  it('changes Calendar view given new activeStartDate value', () => {
+    const activeStartDate = new Date(2017, 0, 1);
+    const newActiveStartDate = new Date(2018, 0, 1);
+    const component = mount(
+      <Calendar activeStartDate={activeStartDate} />
+    );
+
+    component.setProps({ activeStartDate: newActiveStartDate });
+
+    const monthView = component.find('.react-calendar__month-view');
+    const firstDayTile = monthView.find('.react-calendar__tile').first();
+    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
+
+    expect(firstDayTileTimeISO).toBe(getISOLocalDate(newActiveStartDate) + midnightTimestamp);
   });
 
   it('displays calendar with custom weekdays formatting', () => {
