@@ -166,8 +166,8 @@ export default class Calendar extends Component {
   getActiveStartDate(props = this.props) {
     const rangeType = this.getView(props);
     const valueFrom = (
-      this.getValueFrom(props.value) ||
       props.activeStartDate ||
+      this.getValueFrom(props.value) ||
       new Date()
     );
     return getBegin(rangeType, valueFrom);
