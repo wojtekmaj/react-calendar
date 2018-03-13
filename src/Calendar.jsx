@@ -125,15 +125,17 @@ export default class Calendar extends Component {
   }
 
   state = {
-    activeStartDate: this.getActiveStartDate(),
+    activeStartDate: this.getActiveStartDate(
+      this.props, this.props.activeStartDate || this.props.value || new Date(),
+    ),
     hover: null,
     view: this.getView(),
     value: this.props.value,
   }
 
   componentWillReceiveProps(nextProps) {
-    const { value: nextValue } = nextProps;
-    const { value } = this.state;
+    const { activeStartDate: nextActiveStartDate, value: nextValue } = nextProps;
+    const { activeStartDate, value } = this.state;
 
     const nextState = {};
 
@@ -152,9 +154,12 @@ export default class Calendar extends Component {
       datesAreDifferent(...[nextValue, value].map(this.getValueTo))
     ) {
       nextState.value = nextValue;
+      nextState.activeStartDate = this.getActiveStartDate(nextProps, nextValue);
+    } else if (
+      datesAreDifferent(...[nextActiveStartDate, activeStartDate].map(this.getValueFrom))
+    ) {
+      nextState.activeStartDate = this.getActiveStartDate(nextProps, nextActiveStartDate);
     }
-
-    nextState.activeStartDate = this.getActiveStartDate(nextProps);
 
     if (!nextProps.selectRange && this.props.selectRange) {
       nextState.hover = null;
@@ -163,13 +168,8 @@ export default class Calendar extends Component {
     this.setState(nextState);
   }
 
-  getActiveStartDate(props = this.props) {
+  getActiveStartDate(props = this.props, valueFrom) {
     const rangeType = this.getView(props);
-    const valueFrom = (
-      this.getValueFrom(props.value) ||
-      props.activeStartDate ||
-      new Date()
-    );
     return getBegin(rangeType, valueFrom);
   }
 

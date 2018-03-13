@@ -19,10 +19,11 @@ const now = new Date();
 
 export default class Test extends Component {
   state = {
+    activeStartDate: new Date(now.getFullYear(), 0, 1),
     locale: null,
-    maxDate: new Date(now.getUTCFullYear(), now.getUTCMonth() + 1, 15, 12),
+    maxDate: new Date(now.getFullYear(), now.getMonth() + 1, 15, 12),
     maxDetail: 'month',
-    minDate: new Date(1995, now.getUTCMonth() + 1, 15, 12),
+    minDate: new Date(1995, now.getMonth() + 1, 15, 12),
     minDetail: 'century',
     returnValue: 'start',
     selectRange: false,
@@ -56,6 +57,7 @@ export default class Test extends Component {
 
   render() {
     const {
+      activeStartDate,
       locale,
       maxDate,
       maxDetail,
@@ -102,6 +104,7 @@ export default class Test extends Component {
               value={value}
             />
             <ViewOptions
+              activeStartDate={activeStartDate}
               setState={setState}
               showNeighboringMonth={showNeighboringMonth}
               showWeekNumbers={showWeekNumbers}
@@ -116,7 +119,7 @@ export default class Test extends Component {
               }}
             >
               <Calendar
-                activeStartDate={new Date(2017, 0, 1)}
+                activeStartDate={activeStartDate}
                 className="myCustomCalendarClassName"
                 locale={locale}
                 maxDate={maxDate}
@@ -124,17 +127,17 @@ export default class Test extends Component {
                 minDate={minDate}
                 minDetail={minDetail}
                 onChange={this.onChange}
-                onActiveDateChange={({ activeStartDate, view }) => {
-                  console.log('Changed active start date to', view, activeStartDate);
+                onActiveDateChange={({ activeStartDate: newActiveStartDate, view }) => {
+                  console.log('Changed active start date to', view, newActiveStartDate);
                 }}
                 onClickWeekNumber={(weekNumber, date) => {
                   console.log('Clicked week number', weekNumber, date);
                 }}
-                onDrillDown={({ activeStartDate, view }) => {
-                  console.log('Drilled down to', view, activeStartDate);
+                onDrillDown={({ activeStartDate: newActiveStartDate, view }) => {
+                  console.log('Drilled down to', view, newActiveStartDate);
                 }}
-                onDrillUp={({ activeStartDate, view }) => {
-                  console.log('Drilled up to', view, activeStartDate);
+                onDrillUp={({ activeStartDate: newActiveStartDate, view }) => {
+                  console.log('Drilled up to', view, newActiveStartDate);
                 }}
                 selectRange={selectRange}
                 tileClassName={({ date, view }) => {
