@@ -61,6 +61,8 @@ declare module "react-calendar" {
 
   export interface DetailViewProps {
     activeStartDate: Date;
+    calendarType?: "US" | "ISO 8601";
+    locale?: string;
     hover?: Date;
     maxDate?: Date;
     minDate?: Date;
