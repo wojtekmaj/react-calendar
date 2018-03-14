@@ -53,9 +53,7 @@
   "dependencies": {
     "lodash.once": "^4.1.1",
     "merge-class-names": "^1.1.1",
-    "prop-types": "^15.6.0",
-    "react": ">=15.5",
-    "react-dom": ">=15.5"
+    "prop-types": "^15.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -79,7 +77,13 @@
     "jest": "^22.1.4",
     "jest-cli": "^22.1.4",
     "less": "^2.7.3",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-test-renderer": "^16.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=15.5",
+    "react-dom": ">=15.5"
   },
   "files": [
     "LICENSE",
