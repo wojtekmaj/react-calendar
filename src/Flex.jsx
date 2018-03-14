@@ -30,6 +30,7 @@ const Flex = ({
           ...child.props,
           style: {
             flexBasis: toPercent(100 / count),
+            maxWidth: toPercent(100 / count),
             overflow: 'hidden',
             marginLeft: offset && (index === 0) ? toPercent((100 * offset) / count) : null,
           },
