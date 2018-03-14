@@ -1,6 +1,6 @@
 {
   "name": "react-calendar-sample-page",
-  "version": "2.13.3",
+  "version": "2.13.4",
   "description": "A sample page for React-Calendar.",
   "private": true,
   "scripts": {
