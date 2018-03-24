@@ -367,6 +367,7 @@ export default class Calendar extends Component {
         nextLabel={this.props.nextLabel}
         prev2Label={this.props.prev2Label}
         prevLabel={this.props.prevLabel}
+        renderLabel={this.props.renderLabel}
         setActiveStartDate={this.setActiveStartDate}
         view={this.state.view}
         views={this.getLimitedViews()}
@@ -404,6 +405,7 @@ Calendar.defaultProps = {
   showNavigation: true,
   showNeighboringMonth: true,
   view: 'month',
+  renderLabel: label => label,
 };
 
 Calendar.propTypes = {
@@ -431,6 +433,7 @@ Calendar.propTypes = {
   onDrillUp: PropTypes.func,
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  renderLabel: PropTypes.func,
   renderChildren: PropTypes.func, // For backwards compatibility
   returnValue: PropTypes.oneOf(['start', 'end', 'range']),
   selectRange: PropTypes.bool,

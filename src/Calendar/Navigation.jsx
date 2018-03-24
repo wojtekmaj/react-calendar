@@ -82,18 +82,18 @@ export default class Navigation extends Component {
 
   get label() {
     const {
-      activeStartDate: date, formatMonthYear, locale, view,
+      activeStartDate: date, formatMonthYear, locale, view, renderLabel
     } = this.props;
 
     switch (view) {
       case 'century':
-        return getCenturyLabel(date);
+        return renderLabel(getCenturyLabel(date));
       case 'decade':
-        return getDecadeLabel(date);
+        return renderLabel(getDecadeLabel(date));
       case 'year':
-        return getYear(date);
+        return renderLabel(getYear(date));
       case 'month':
-        return formatMonthYear(date, locale);
+        return renderLabel(formatMonthYear(date, locale));
       default:
         throw new Error(`Invalid view: ${view}.`);
     }
