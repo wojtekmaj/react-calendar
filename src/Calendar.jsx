@@ -405,7 +405,6 @@ Calendar.defaultProps = {
   showNavigation: true,
   showNeighboringMonth: true,
   view: 'month',
-  navigationLabel: label => label,
 };
 
 Calendar.propTypes = {
