@@ -55,7 +55,8 @@ export const between = (value, min, max) => {
 export const getTileClasses = ({
   value, valueType, date, dateType, hover,
 } = {}) => {
-  const classes = ['react-calendar__tile'];
+  const className = 'react-calendar__tile';
+  const classes = [className];
   if (!value) {
     return classes;
   }
@@ -70,11 +71,12 @@ export const getTileClasses = ({
 
   const valueRange = value instanceof Array ? value : getRange(valueType, value);
   const dateRange = date instanceof Array ? date : getRange(dateType, date);
+  const now = new Date();
 
   if (isRangeWithinRange(valueRange, dateRange)) {
-    classes.push('react-calendar__tile--active');
+    classes.push(`${className}--active`);
   } else if (doRangesOverlap(valueRange, dateRange)) {
-    classes.push('react-calendar__tile--hasActive');
+    classes.push(`${className}--hasActive`);
   } else if (
     hover && (
       // Date before value
@@ -89,7 +91,11 @@ export const getTileClasses = ({
       )
     )
   ) {
-    classes.push('react-calendar__tile--hover');
+    classes.push(`${className}--hover`);
+  }
+
+  if (isValueWithinRange(now, dateRange)) {
+    classes.push(`${className}--now`);
   }
 
   return classes;

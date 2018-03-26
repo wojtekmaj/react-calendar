@@ -27,7 +27,6 @@ const Day = ({
       className,
       isWeekend(date) ? `${className}--weekend` : null,
       date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null,
-      date.toDateString() === new Date().toDateString() ? 'react-calendar__tile--today' : null,
     ]}
     date={date}
     dateTime={`${getISOLocalDate(date)}T00:00:00.000`}
