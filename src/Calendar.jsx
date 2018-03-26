@@ -365,6 +365,7 @@ export default class Calendar extends Component {
         minDate={this.props.minDate}
         next2Label={this.props.next2Label}
         nextLabel={this.props.nextLabel}
+        navigationLabel={this.props.navigationLabel}
         prev2Label={this.props.prev2Label}
         prevLabel={this.props.prevLabel}
         setActiveStartDate={this.setActiveStartDate}
@@ -404,6 +405,7 @@ Calendar.defaultProps = {
   showNavigation: true,
   showNeighboringMonth: true,
   view: 'month',
+  navigationLabel: label => label,
 };
 
 Calendar.propTypes = {
@@ -418,6 +420,7 @@ Calendar.propTypes = {
   maxDetail: PropTypes.oneOf(allViews),
   minDate: isMinDate,
   minDetail: PropTypes.oneOf(allViews),
+  navigationLabel: PropTypes.func,
   next2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   nextLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   onActiveDateChange: PropTypes.func,

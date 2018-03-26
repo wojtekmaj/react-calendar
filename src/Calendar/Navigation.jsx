@@ -136,7 +136,7 @@ export default class Navigation extends Component {
           style={{ flexGrow: 1 }}
           type="button"
         >
-          {label}
+          {this.props.navigationLabel(label)}
         </button>
         <button
           className={`${className}__arrow ${className}__next-button`}
@@ -179,6 +179,7 @@ Navigation.propTypes = {
   minDate: PropTypes.instanceOf(Date),
   next2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   nextLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  navigationLabel: PropTypes.func,
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   setActiveStartDate: PropTypes.func.isRequired,
