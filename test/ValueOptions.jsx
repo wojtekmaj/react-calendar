@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { isValue } from '../src/shared/propTypes';
@@ -8,7 +8,7 @@ import {
   getEndOfDay,
 } from './shared/dates';
 
-export default class ValueOptions extends Component {
+export default class ValueOptions extends PureComponent {
   get startDate() {
     const { value } = this.props;
     return [].concat(value)[0];

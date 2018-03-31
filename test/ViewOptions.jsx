@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-export default class ViewOptions extends Component {
+export default class ViewOptions extends PureComponent {
   onShowWeekNumbersChange = (event) => {
     const { checked } = event.target;
 

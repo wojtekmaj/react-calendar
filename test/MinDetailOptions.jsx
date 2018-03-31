@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 
-export default class MinDetailOptions extends Component {
+export default class MinDetailOptions extends PureComponent {
   onChange = (event) => {
     const { value } = event.target;
 

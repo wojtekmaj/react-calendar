@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { getISOLocalDate } from './shared/dates';
 
-export default class DateBonduariesOptions extends Component {
+export default class DateBonduariesOptions extends PureComponent {
   onMinChange = (event) => {
     const { value } = event.target;
 

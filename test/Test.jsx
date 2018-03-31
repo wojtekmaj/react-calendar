@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Calendar from 'react-calendar/src/entry.nostyle';
 import 'react-calendar/src/Calendar.less';
 
@@ -17,7 +17,7 @@ const now = new Date();
 
 /* eslint-disable no-console */
 
-export default class Test extends Component {
+export default class Test extends PureComponent {
   state = {
     locale: null,
     maxDate: new Date(now.getUTCFullYear(), now.getUTCMonth() + 1, 15, 12),
