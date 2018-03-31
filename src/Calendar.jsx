@@ -57,6 +57,11 @@ const getValueFrom = (value, minDate, maxDate, maxDetail) => {
   }
 
   const rawValueFrom = value instanceof Array && value.length === 2 ? value[0] : value;
+
+  if (!rawValueFrom) {
+    return null;
+  }
+
   const valueFromDate = new Date(rawValueFrom);
 
   if (isNaN(valueFromDate.getTime())) {
@@ -74,6 +79,11 @@ const getValueTo = (value, minDate, maxDate, maxDetail) => {
   }
 
   const rawValueTo = value instanceof Array && value.length === 2 ? value[1] : value;
+
+  if (!rawValueTo) {
+    return null;
+  }
+
   const valueToDate = new Date(rawValueTo);
 
   if (isNaN(valueToDate.getTime())) {
