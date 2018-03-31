@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import polyfill from 'react-lifecycles-compat';
 import mergeClassNames from 'merge-class-names';
 
 import Navigation from './Calendar/Navigation';
@@ -21,167 +22,167 @@ const datesAreDifferent = (date1, date2) => (
   (date1 && date2 && date1.getTime() !== date2.getTime())
 );
 
+/**
+ * Returns views array with disallowed values cut off.
+ */
+const getLimitedViews = (minDetail, maxDetail) =>
+  allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
+
+const getView = (view, minDetail, maxDetail) => {
+  if (view && getLimitedViews(minDetail, maxDetail).indexOf(view) !== -1) {
+    return view;
+  }
+
+  return getLimitedViews(minDetail, maxDetail).pop();
+};
+
+/**
+ * Determines whether a given view is allowed with currently applied settings.
+ */
+const isViewAllowed = (view, minDetail, maxDetail) => {
+  const views = getLimitedViews(minDetail, maxDetail);
+
+  return views.indexOf(view) !== -1;
+};
+
+/**
+ * Returns value type that can be returned with currently applied settings.
+ */
+const getValueType = maxDetail =>
+  allValueTypes[allViews.indexOf(maxDetail)];
+
+const getValueFrom = (value, minDate, maxDate, maxDetail) => {
+  if (!value) {
+    return null;
+  }
+
+  const rawValueFrom = value instanceof Array && value.length === 2 ? value[0] : value;
+  const valueFromDate = new Date(rawValueFrom);
+
+  if (isNaN(valueFromDate.getTime())) {
+    throw new Error(`Invalid date: ${value}`);
+  }
+
+  const valueFrom = getBegin(getValueType(maxDetail), valueFromDate);
+
+  return between(valueFrom, minDate, maxDate);
+};
+
+const getValueTo = (value, minDate, maxDate, maxDetail) => {
+  if (!value) {
+    return null;
+  }
+
+  const rawValueTo = value instanceof Array && value.length === 2 ? value[1] : value;
+  const valueToDate = new Date(rawValueTo);
+
+  if (isNaN(valueToDate.getTime())) {
+    throw new Error(`Invalid date: ${value}`);
+  }
+
+  const valueTo = getEnd(getValueType(maxDetail), valueToDate);
+
+  return between(valueTo, minDate, maxDate);
+};
+
+const getValueArray = (value, minDate, maxDate, maxDetail) => {
+  if (value instanceof Array) {
+    return value;
+  }
+
+  return [
+    getValueFrom(value, minDate, maxDate, maxDetail),
+    getValueTo(value, minDate, maxDate, maxDetail),
+  ];
+};
+
+const getActiveStartDate = (props) => {
+  const rangeType = getView(props.view, props.minDetail, props.maxDetail);
+  const valueFrom = (
+    getValueFrom(props.value, props.minDate, props.maxDate, props.maxDetail) ||
+    props.activeStartDate ||
+    new Date()
+  );
+  return getBegin(rangeType, valueFrom);
+};
+
 export default class Calendar extends Component {
   get drillDownAvailable() {
-    const views = this.getLimitedViews();
-    const { view } = this.state;
+    const views = getLimitedViews(this.props.minDetail, this.props.maxDetail);
 
-    return views.indexOf(view) < views.length - 1;
+    return views.indexOf(this.state.view) < views.length - 1;
   }
 
   get drillUpAvailable() {
-    const views = this.getLimitedViews();
-    const { view } = this.state;
+    const views = getLimitedViews(this.props.minDetail, this.props.maxDetail);
 
-    return views.indexOf(view) > 0;
+    return views.indexOf(this.state.view) > 0;
   }
 
-  /**
-   * Returns value type that can be returned with currently applied settings.
-   */
   get valueType() {
-    const { maxDetail } = this.props;
-    return allValueTypes[allViews.indexOf(maxDetail)];
-  }
-
-  getValueArray(value) {
-    if (value instanceof Array) {
-      return value;
-    }
-
-    return [this.getValueFrom(value), this.getValueTo(value)];
-  }
-
-  getValueFrom = (value) => {
-    if (!value) {
-      return null;
-    }
-
-    const { maxDate, minDate } = this.props;
-    const rawValueFrom = value instanceof Array && value.length === 2 ? value[0] : value;
-    const valueFromDate = new Date(rawValueFrom);
-
-    if (isNaN(valueFromDate.getTime())) {
-      throw new Error(`Invalid date: ${value}`);
-    }
-
-    const valueFrom = getBegin(this.valueType, valueFromDate);
-
-    return between(valueFrom, minDate, maxDate);
-  }
-
-  getValueTo = (value) => {
-    if (!value) {
-      return null;
-    }
-
-    const { maxDate, minDate } = this.props;
-    const rawValueTo = value instanceof Array && value.length === 2 ? value[1] : value;
-    const valueToDate = new Date(rawValueTo);
-
-    if (isNaN(valueToDate.getTime())) {
-      throw new Error(`Invalid date: ${value}`);
-    }
-
-    const valueTo = getEnd(this.valueType, valueToDate);
-
-    return between(valueTo, minDate, maxDate);
-  }
-
-  /**
-   * Returns views array with disallowed values cut off.
-   */
-  getLimitedViews(props = this.props) {
-    const { minDetail, maxDetail } = props;
-
-    return allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
-  }
-
-  /**
-   * Determines whether a given view is allowed with currently applied settings.
-   */
-  isViewAllowed(props = this.props, view = this.state.view) {
-    const views = this.getLimitedViews(props);
-
-    return views.indexOf(view) !== -1;
+    return getValueType(this.props.maxDetail);
   }
 
   /**
    * Gets current value in a desired format.
    */
   getProcessedValue(value) {
-    const { returnValue } = this.props;
+    const {
+      minDate, maxDate, maxDetail, returnValue,
+    } = this.props;
 
     switch (returnValue) {
       case 'start':
-        return this.getValueFrom(value);
+        return getValueFrom(value, minDate, maxDate, maxDetail);
       case 'end':
-        return this.getValueTo(value);
+        return getValueTo(value, minDate, maxDate, maxDetail);
       case 'range':
-        return this.getValueArray(value);
+        return getValueArray(value, minDate, maxDate, maxDetail);
       default:
         throw new Error('Invalid returnValue.');
     }
   }
 
-  state = {
-    activeStartDate: this.getActiveStartDate(),
-    hover: null,
-    view: this.getView(),
-    value: this.props.value,
-  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const {
+      minDate, maxDate, minDetail, maxDetail,
+    } = nextProps;
 
-  componentWillReceiveProps(nextProps) {
-    const { value: nextValue } = nextProps;
-    const { value } = this.state;
+    const nextState = {
+      activeStartDate: getActiveStartDate(nextProps),
+    };
 
-    const nextState = {};
-
-    const allowedViewChanged = (
-      nextProps.minDetail !== this.props.minDetail ||
-      nextProps.maxDetail !== this.props.maxDetail
-    );
-
-    if (allowedViewChanged && !this.isViewAllowed(nextProps)) {
-      nextState.view = this.getView(nextProps);
+    /**
+     * If the next view is different from the current one, and the previously set view is not
+     * valid based on minDetail and maxDetail, get a new one.
+     */
+    const nextView = getView(nextProps.view, minDetail, maxDetail);
+    if (nextView !== prevState.view && !isViewAllowed(prevState.view, minDetail, maxDetail)) {
+      nextState.view = nextView;
     }
 
+    /**
+     * If the next value is different from the current one  (with an exception of situation in
+     * which values provided are limited by minDate and maxDate so that the dates are the same),
+     * get a new one.
+     */
+    const values = [nextProps.value, prevState.value];
     if (
-      allowedViewChanged ||
-      datesAreDifferent(...[nextValue, value].map(this.getValueFrom)) ||
-      datesAreDifferent(...[nextValue, value].map(this.getValueTo))
+      nextState.view || // Allowed view changed
+      datesAreDifferent(...values.map(value => getValueFrom(value, minDate, maxDate, maxDetail))) ||
+      datesAreDifferent(...values.map(value => getValueTo(value, minDate, maxDate, maxDetail)))
     ) {
-      nextState.value = nextValue;
+      nextState.value = nextProps.value;
     }
 
-    nextState.activeStartDate = this.getActiveStartDate(nextProps);
-
-    if (!nextProps.selectRange && this.props.selectRange) {
+    if (!nextProps.selectRange && prevState.hover) {
       nextState.hover = null;
     }
 
-    this.setState(nextState);
+    return nextState;
   }
 
-  getActiveStartDate(props = this.props) {
-    const rangeType = this.getView(props);
-    const valueFrom = (
-      this.getValueFrom(props.value) ||
-      props.activeStartDate ||
-      new Date()
-    );
-    return getBegin(rangeType, valueFrom);
-  }
-
-  getView(props = this.props) {
-    const { view } = props;
-
-    if (view && this.getLimitedViews(props).indexOf(view) !== -1) {
-      return view;
-    }
-
-    return this.getLimitedViews(props).pop();
-  }
+  state = {};
 
   /**
    * Called when the user uses navigation buttons.
@@ -200,7 +201,7 @@ export default class Calendar extends Component {
       return;
     }
 
-    const views = this.getLimitedViews();
+    const views = getLimitedViews(this.props.minDetail, this.props.maxDetail);
 
     this.setState((prevState) => {
       const nextView = views[views.indexOf(prevState.view) + 1];
@@ -221,7 +222,7 @@ export default class Calendar extends Component {
       return;
     }
 
-    const views = this.getLimitedViews();
+    const views = getLimitedViews(this.props.minDetail, this.props.maxDetail);
 
     this.setState((prevState) => {
       const nextView = views[views.indexOf(prevState.view) - 1];
@@ -369,7 +370,7 @@ export default class Calendar extends Component {
         prevLabel={this.props.prevLabel}
         setActiveStartDate={this.setActiveStartDate}
         view={this.state.view}
-        views={this.getLimitedViews()}
+        views={getLimitedViews(this.props.minDetail, this.props.maxDetail)}
       />
     );
   }
@@ -452,3 +453,5 @@ Calendar.propTypes = {
   ]),
   view: PropTypes.oneOf(allViews),
 };
+
+polyfill(Calendar);
