@@ -430,4 +430,28 @@ describe('Navigation', () => {
     expect(prev2.prop('disabled')).toBe(true);
     expect(prev.prop('disabled')).toBe(true);
   });
+
+  it('renders custom navigation label when given navigationLabel prop', () => {
+    const date = new Date(2017, 0, 1);
+    const label = 'Custom label';
+    const view = 'month';
+
+    const navigationLabel = jest.fn().mockReturnValue(label);
+
+    const component = shallow(
+      <Navigation
+        activeStartDate={date}
+        drillUp={jest.fn()}
+        navigationLabel={navigationLabel}
+        setActiveStartDate={jest.fn()}
+        view={view}
+        views={allViews}
+      />
+    );
+
+    const [, , drillUp] = component.children();
+
+    expect(navigationLabel).toHaveBeenCalledWith({ date, view, label: 'January 2017' });
+    expect(drillUp.props.children.toString()).toBe(label);
+  });
 });
