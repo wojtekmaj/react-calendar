@@ -6,10 +6,11 @@
   "types": "./index.d.ts",
   "es6": "src/entry.js",
   "scripts": {
-    "build": "npm run build-js && npm run copy-styles && npm run build-styles",
+    "build": "npm run build-js && npm run copy-styles && npm run build-styles && npm run copy-types",
     "build-js": "babel src -d dist --ignore **/__tests__",
     "build-styles": "lessc ./dist/Calendar.less ./dist/Calendar.css",
     "copy-styles": "node ./copy-styles.js",
+    "copy-types": "node ./copy-types.js",
     "prepublishOnly": "npm run build",
     "test": "npm run test-eslint && npm run test-jest",
     "test-eslint": "eslint ./src",
