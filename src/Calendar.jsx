@@ -109,8 +109,8 @@ const getValueArray = (value, minDate, maxDate, maxDetail) => {
 const getActiveStartDate = (props) => {
   const rangeType = getView(props.view, props.minDetail, props.maxDetail);
   const valueFrom = (
-    getValueFrom(props.value, props.minDate, props.maxDate, props.maxDetail) ||
     props.activeStartDate ||
+    getValueFrom(props.value, props.minDate, props.maxDate, props.maxDetail) ||
     new Date()
   );
   return getBegin(rangeType, valueFrom);
