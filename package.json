@@ -9,8 +9,9 @@
     "build": "npm run build-js && npm run copy-styles && npm run build-styles",
     "build-js": "babel src -d dist --ignore **/__tests__",
     "build-styles": "lessc ./dist/Calendar.less ./dist/Calendar.css",
+    "clean": "rimraf dist",
     "copy-styles": "node ./copy-styles.js",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build",
     "test": "npm run test-eslint && npm run test-jest",
     "test-eslint": "eslint ./src",
     "test-jest": "jest",
@@ -79,7 +80,8 @@
     "jest-cli": "^22.1.4",
     "less": "^2.7.3",
     "react": "^16.3.0",
-    "react-dom": "^16.3.0"
+    "react-dom": "^16.3.0",
+    "rimraf": "^2.6.2"
   },
   "peerDependencies": {
     "react": ">=15.5",
