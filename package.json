@@ -7,7 +7,7 @@
   "es6": "src/entry.js",
   "scripts": {
     "build": "npm run build-js && npm run copy-styles && npm run build-styles",
-    "build-js": "babel src -d dist --ignore **/__tests__",
+    "build-js": "babel src -d dist --ignore __tests__",
     "build-styles": "lessc ./dist/Calendar.less ./dist/Calendar.css",
     "copy-styles": "node ./copy-styles.js",
     "prepublishOnly": "npm run build",
