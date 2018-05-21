@@ -11,6 +11,7 @@
     "build-styles": "lessc ./dist/Calendar.less ./dist/Calendar.css",
     "copy-styles": "node ./copy-styles.js",
     "prepublishOnly": "npm run build",
+    "postinstall": "postinstall-build build",
     "test": "npm run test-eslint && npm run test-jest",
     "test-eslint": "eslint ./src",
     "test-jest": "jest",
@@ -53,6 +54,7 @@
   "dependencies": {
     "lodash.once": "^4.1.1",
     "merge-class-names": "^1.1.1",
+    "postinstall-build": "^5.0.1",
     "prop-types": "^15.6.0",
     "react-lifecycles-compat": "^1.1.0"
   },
@@ -82,13 +84,15 @@
     "react-dom": "^16.3.0"
   },
   "peerDependencies": {
-    "react": ">=15.5",
-    "react-dom": ">=15.5"
+    "react": ">=14.9",
+    "react-dom": ">=14.9"
   },
   "files": [
     "LICENSE",
     "README.md",
     "index.d.ts",
+    "copy-styles.js",
+    "copy-styles.js",
     "dist/",
     "src/"
   ],

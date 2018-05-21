@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
 import TileGroup from '../TileGroup';
 import Decade from './Decade';
@@ -9,7 +9,7 @@ import {
 } from '../shared/dates';
 import { tileGroupProps } from '../shared/propTypes';
 
-export default class Decades extends PureComponent {
+export default class Decades extends Component {
   get start() {
     const { activeStartDate } = this.props;
     return getBeginOfCenturyYear(activeStartDate);

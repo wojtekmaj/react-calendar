@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Years from './DecadeView/Years';
 
 import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
-export default class DecadeView extends PureComponent {
+export default class DecadeView extends Component {
   renderYears() {
     return (
       <Years {...this.props} />

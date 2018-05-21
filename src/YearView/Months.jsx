@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import TileGroup from '../TileGroup';
@@ -7,7 +7,7 @@ import Month from './Month';
 import { getYear } from '../shared/dates';
 import { tileGroupProps } from '../shared/propTypes';
 
-export default class Months extends PureComponent {
+export default class Months extends Component {
   start = 0
 
   end = 11

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import WeekNumber from './WeekNumber';
@@ -15,7 +15,7 @@ import {
 } from '../shared/dates';
 import { isCalendarType } from '../shared/propTypes';
 
-export default class WeekNumbers extends PureComponent {
+export default class WeekNumbers extends Component {
   get startWeekday() {
     const { activeStartDate, calendarType } = this.props;
     return getDayOfWeek(activeStartDate, calendarType);

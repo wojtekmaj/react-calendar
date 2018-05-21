@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import TileGroup from '../TileGroup';
@@ -12,7 +12,7 @@ import {
 } from '../shared/dates';
 import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 
-export default class Days extends PureComponent {
+export default class Days extends Component {
   get offset() {
     if (this.props.showNeighboringMonth) {
       return 0;
