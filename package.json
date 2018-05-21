@@ -91,6 +91,8 @@
     "LICENSE",
     "README.md",
     "index.d.ts",
+    "copy-styles.js",
+    "copy-styles.js",
     "dist/",
     "src/"
   ],
