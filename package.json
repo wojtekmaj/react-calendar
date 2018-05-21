@@ -84,8 +84,8 @@
     "react-dom": "^16.3.0"
   },
   "peerDependencies": {
-    "react": ">=15.5",
-    "react-dom": ">=15.5"
+    "react": ">=14.9",
+    "react-dom": ">=14.9"
   },
   "files": [
     "LICENSE",
