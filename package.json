@@ -11,6 +11,7 @@
     "build-styles": "lessc ./dist/Calendar.less ./dist/Calendar.css",
     "copy-styles": "node ./copy-styles.js",
     "prepublishOnly": "npm run build",
+    "postinstall": "npm run build",
     "test": "npm run test-eslint && npm run test-jest",
     "test-eslint": "eslint ./src",
     "test-jest": "jest",
