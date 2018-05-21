@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import polyfill from 'react-lifecycles-compat';
 import mergeClassNames from 'merge-class-names';
@@ -65,7 +66,7 @@ const getValueFrom = (value, minDate, maxDate, maxDetail) => {
   const valueFromDate = new Date(rawValueFrom);
 
   if (isNaN(valueFromDate.getTime())) {
-    throw new Error(`Invalid date: ${value}`);
+    throw new Error(`Invalid date:$ {value}`);
   }
 
   const valueFrom = getBegin(getValueType(maxDetail), valueFromDate);
@@ -111,8 +112,7 @@ const getActiveStartDate = (props) => {
   const valueFrom = (
     getValueFrom(props.value, props.minDate, props.maxDate, props.maxDetail) ||
     props.activeStartDate ||
-    new Date()
-  );
+    new Date());
   return getBegin(rangeType, valueFrom);
 };
 
@@ -180,8 +180,7 @@ export default class Calendar extends Component {
     if (
       nextState.view || // Allowed view changed
       datesAreDifferent(...values.map(value => getValueFrom(value, minDate, maxDate, maxDetail))) ||
-      datesAreDifferent(...values.map(value => getValueTo(value, minDate, maxDate, maxDetail)))
-    ) {
+      datesAreDifferent(...values.map(value => getValueTo(value, minDate, maxDate, maxDetail)))) {
       nextState.value = nextProps.value;
     }
 
@@ -198,12 +197,10 @@ export default class Calendar extends Component {
    * Called when the user uses navigation buttons.
    */
   setActiveStartDate = (activeStartDate) => {
-    this.setState({ activeStartDate }, () => {
-      callIfDefined(this.props.onActiveDateChange, {
-        activeStartDate,
-        view: this.state.view,
-      });
-    });
+    this.setState({ activeStartDate }, () => callIfDefined(this.props.onActiveDateChange, {
+      activeStartDate,
+      view: this.state.view,
+    }));
   }
 
   drillDown = (activeStartDate) => {
@@ -219,12 +216,10 @@ export default class Calendar extends Component {
         activeStartDate,
         view: nextView,
       };
-    }, () => {
-      callIfDefined(this.props.onDrillDown, {
-        activeStartDate,
-        view: this.state.view,
-      });
-    });
+    }, () => callIfDefined(this.props.onDrillDown, {
+      activeStartDate,
+      view: this.state.view,
+    }));
   }
 
   drillUp = () => {
@@ -242,12 +237,10 @@ export default class Calendar extends Component {
         activeStartDate,
         view: nextView,
       };
-    }, () => {
-      callIfDefined(this.props.onDrillUp, {
-        activeStartDate: this.state.activeStartDate,
-        view: this.state.view,
-      });
-    });
+    }, () => callIfDefined(this.props.onDrillUp, {
+      activeStartDate: this.state.activeStartDate,
+      view: this.state.view,
+    }));
   }
 
   onChange = (value) => {
@@ -258,21 +251,19 @@ export default class Calendar extends Component {
     if (selectRange) {
       const { value: previousValue } = this.state;
       // Range selection turned on
-      if (
-        !previousValue ||
-        [].concat(previousValue).length !== 1 // 0 or 2 - either way we're starting a new array
+      if (!previousValue || [].concat(previousValue).length !== 1 // 0 or 2 - either way we're starting a new array
       ) {
         // First value
         nextValue = getBegin(this.valueType, value);
       } else {
         // Second value
         nextValue = getValueRange(this.valueType, previousValue, value);
-        callback = () => callIfDefined(onChange, nextValue);
+        callback = callIfDefined(onChange, nextValue);
       }
     } else {
       // Range selection turned off
       nextValue = this.getProcessedValue(value);
-      callback = () => callIfDefined(onChange, nextValue);
+      callback = callIfDefined(onChange, nextValue);
     }
 
     this.setState({ value: nextValue }, callback);
@@ -298,10 +289,12 @@ export default class Calendar extends Component {
       tileDisabled,
     } = this.props;
     const {
-      activeStartDate, hover, value, view,
+      activeStartDate,
+      hover,
+      value,
     } = this.state;
     const { onMouseOver, valueType } = this;
-
+    const view = this.state.view || this.props.view;
     const commonProps = {
       activeStartDate,
       hover,
@@ -322,36 +315,36 @@ export default class Calendar extends Component {
       case 'century':
         return (
           <CenturyView
-            onClick={mergeFunctions(clickAction, this.props.onClickDecade)}
-            {...commonProps}
-          />
+                        onClick={mergeFunctions(clickAction, this.props.onClickDecade)}
+                        {...commonProps}
+                    />
         );
       case 'decade':
         return (
           <DecadeView
-            onClick={mergeFunctions(clickAction, this.props.onClickYear)}
-            {...commonProps}
-          />
+                        onClick={mergeFunctions(clickAction, this.props.onClickYear)}
+                        {...commonProps}
+                    />
         );
       case 'year':
         return (
           <YearView
-            formatMonth={this.props.formatMonth}
-            onClick={mergeFunctions(clickAction, this.props.onClickMonth)}
-            {...commonProps}
-          />
+                        formatMonth={this.props.formatMonth}
+                        onClick={mergeFunctions(clickAction, this.props.onClickMonth)}
+                        {...commonProps}
+                    />
         );
       case 'month':
         return (
           <MonthView
-            calendarType={calendarType}
-            formatShortWeekday={this.props.formatShortWeekday}
-            onClick={mergeFunctions(clickAction, this.props.onClickDay)}
-            onClickWeekNumber={this.props.onClickWeekNumber}
-            showNeighboringMonth={this.props.showNeighboringMonth}
-            showWeekNumbers={this.props.showWeekNumbers}
-            {...commonProps}
-          />
+                        calendarType={calendarType}
+                        formatShortWeekday={this.props.formatShortWeekday}
+                        onClick={mergeFunctions(clickAction, this.props.onClickDay)}
+                        onClickWeekNumber={this.props.onClickWeekNumber}
+                        showNeighboringMonth={this.props.showNeighboringMonth}
+                        showWeekNumbers={this.props.showWeekNumbers}
+                        {...commonProps}
+                    />
         );
       default:
         throw new Error(`Invalid view: ${view}.`);
@@ -466,4 +459,6 @@ Calendar.propTypes = {
   view: PropTypes.oneOf(allViews),
 };
 
-polyfill(Calendar);
+if (polyfill) {
+  polyfill(Calendar);
+}
