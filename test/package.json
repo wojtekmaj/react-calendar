@@ -31,6 +31,6 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.0",
-    "parcel-bundler": "1.5.0"
+    "parcel-bundler": "1.5.1"
   }
 }
