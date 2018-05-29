@@ -161,12 +161,11 @@ export default class Calendar extends Component {
     const nextState = {};
 
     /**
-     * If the newly calculated activeStartDate is different from the one calculated before,
-     * update activeStartDate (for display) and activeStartDateProps (for future comparisons)
+     * If the next activeStartDate is different from the current one, update
+     * activeStartDate (for display) and activeStartDateProps (for future comparisons)
      */
-    if (datesAreDifferent(getActiveStartDate(nextProps), prevState.activeStartDateProps)) {
-      const nextActiveStartDate = getActiveStartDate(nextProps);
-
+    const nextActiveStartDate = getActiveStartDate(nextProps);
+    if (datesAreDifferent(nextActiveStartDate, prevState.activeStartDateProps)) {
       nextState.activeStartDate = nextActiveStartDate;
       nextState.activeStartDateProps = nextActiveStartDate;
     }
@@ -176,8 +175,9 @@ export default class Calendar extends Component {
      * valid based on minDetail and maxDetail, get a new one.
      */
     const nextView = getView(nextProps.view, minDetail, maxDetail);
-    if (nextView !== prevState.view && !isViewAllowed(prevState.view, minDetail, maxDetail)) {
+    if (nextView !== prevState.viewProps && !isViewAllowed(prevState.view, minDetail, maxDetail)) {
       nextState.view = nextView;
+      nextState.viewProps = nextView;
     }
 
     /**
@@ -185,13 +185,14 @@ export default class Calendar extends Component {
      * which values provided are limited by minDate and maxDate so that the dates are the same),
      * get a new one.
      */
-    const values = [nextProps.value, prevState.value];
+    const values = [nextProps.value, prevState.valueProps];
     if (
       nextState.view || // Allowed view changed
       datesAreDifferent(...values.map(value => getValueFrom(value, minDate, maxDate, maxDetail))) ||
       datesAreDifferent(...values.map(value => getValueTo(value, minDate, maxDate, maxDetail)))
     ) {
       nextState.value = nextProps.value;
+      nextState.valueProps = nextProps.value;
     }
 
     if (!nextProps.selectRange && prevState.hover) {
