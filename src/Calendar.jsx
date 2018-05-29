@@ -158,9 +158,18 @@ export default class Calendar extends Component {
       minDate, maxDate, minDetail, maxDetail,
     } = nextProps;
 
-    const nextState = {
-      activeStartDate: getActiveStartDate(nextProps),
-    };
+    const nextState = {};
+
+    /**
+     * If the newly calculated activeStartDate is different from the one calculated before,
+     * update activeStartDate (for display) and activeStartDateProps (for future comparisons)
+     */
+    if (datesAreDifferent(getActiveStartDate(nextProps), prevState.activeStartDateProps)) {
+      const nextActiveStartDate = getActiveStartDate(nextProps);
+
+      nextState.activeStartDate = nextActiveStartDate;
+      nextState.activeStartDateProps = nextActiveStartDate;
+    }
 
     /**
      * If the next view is different from the current one, and the previously set view is not
