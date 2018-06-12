@@ -52,9 +52,7 @@ export const between = (value, min, max) => {
   return value;
 };
 
-const isEqual = (date1, date2) => {
-  return new Date(date1).getTime() === new Date(date2).getTime();
-}
+const isEqual = (date1, date2) => new Date(date1).getTime() === new Date(date2).getTime();
 
 export const getTileClasses = ({
   value, valueType, date, dateType, hover,
@@ -99,9 +97,9 @@ export const getTileClasses = ({
   }
   
   if (isEqual(dateRange[0], valueRange[0])) {
-    classes.push(className + '--rangeStart')
+    classes.push(`${className}--rangeStart`);
   } else if (isEqual(dateRange[1], valueRange[1])) {
-    classes.push(className + '--rangeEnd')
+    classes.push(`${className}--rangeEnd`);
   }
 
   if (isValueWithinRange(now, dateRange)) {
