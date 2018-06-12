@@ -95,7 +95,7 @@ export const getTileClasses = ({
   ) {
     classes.push(`${className}--hover`);
   }
-  
+
   if (isEqual(dateRange[0], valueRange[0])) {
     classes.push(`${className}--rangeStart`);
   } else if (isEqual(dateRange[1], valueRange[1])) {
