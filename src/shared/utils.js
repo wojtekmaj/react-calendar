@@ -98,14 +98,14 @@ export const getTileClasses = ({
 
   const isRangeStart = isEqual(dateRange[0], valueRange[0]);
   const isRangeEnd = isEqual(dateRange[1], valueRange[1]);
-  
+
   if (isRangeStart) {
     classes.push(`${className}--rangeStart`);
   } else if (isRangeEnd) {
     classes.push(`${className}--rangeEnd`);
   }
-  
-  if (isRangeStart && isRangeEnd)
+
+  if (isRangeStart && isRangeEnd) {
     classes.push(`${className}--rangeBothEnds`);
   }
 
