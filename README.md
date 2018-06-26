@@ -30,6 +30,8 @@ Minimal demo page is included in sample directory.
 
 ### Compatibility
 
+Your project needs to use React 15.5 or later.
+
 React-Calendar uses modern web technologies. That's why it's so fast, lightweight and easy to style. This, however, comes at a cost of [supporting only modern browsers](https://caniuse.com/#feat=internationalization).
 
 #### Legacy browsers
