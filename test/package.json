@@ -14,9 +14,9 @@
   "license": "MIT",
   "dependencies": {
     "prop-types": "^15.6.0",
-    "react": "^16.4.0",
+    "react": "^16.4.1",
     "react-calendar": "latest",
-    "react-dom": "^16.4.0"
+    "react-dom": "^16.4.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
