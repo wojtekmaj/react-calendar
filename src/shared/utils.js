@@ -101,7 +101,9 @@ export const getTileClasses = ({
 
   if (isRangeStart) {
     classes.push(`${className}--rangeStart`);
-  } else if (isRangeEnd) {
+  }
+
+  if (isRangeEnd) {
     classes.push(`${className}--rangeEnd`);
   }
 
