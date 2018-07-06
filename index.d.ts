@@ -1,6 +1,7 @@
 declare module "react-calendar" {
   type Detail = "month" | "year" | "decade" | "century"
   type DateCallback = (date: Date) => void
+  type OnChangeDateCallback = (date: Date | Date[]) => void
   type FormatterCallback = (date: Date) => string
   type ViewCallback = (props: ViewCallbackProperties) => void
 
@@ -21,7 +22,7 @@ declare module "react-calendar" {
     next2Label?: string | JSX.Element | null;
     nextLabel?: string | JSX.Element;
     onActiveDateChange?: ViewCallback;
-    onChange?: DateCallback;
+    onChange?: OnChangeDateCallback;
     onClickDay?: DateCallback;
     onClickDecade?: DateCallback;
     onClickMonth?: DateCallback;
