@@ -17,4 +17,3 @@ export const getDefaultLocales = once(() => {
 });
 
 export const getDefaultLocale = once(() => getDefaultLocales()[0]);
-

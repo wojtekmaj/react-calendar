@@ -6,8 +6,8 @@ import { getRange } from './dates';
  *
  * @param {Function[]} functions
  */
-export const mergeFunctions = (...functions) => (...args) =>
-  functions.filter(Boolean).forEach(f => f(...args));
+export const mergeFunctions = (...functions) => (...args) => functions
+  .filter(Boolean).forEach(f => f(...args));
 
 /**
  * Calls a function, if it's defined, with specified arguments
@@ -21,18 +21,18 @@ export const callIfDefined = (fn, ...args) => {
 };
 
 export const isValueWithinRange = (value, range) => (
-  range[0] <= value &&
-  range[1] >= value
+  range[0] <= value
+  && range[1] >= value
 );
 
 export const isRangeWithinRange = (greaterRange, smallerRange) => (
-  greaterRange[0] <= smallerRange[0] &&
-  greaterRange[1] >= smallerRange[1]
+  greaterRange[0] <= smallerRange[0]
+  && greaterRange[1] >= smallerRange[1]
 );
 
 export const doRangesOverlap = (range1, range2) => (
-  isValueWithinRange(range1[0], range2) ||
-  isValueWithinRange(range1[1], range2)
+  isValueWithinRange(range1[0], range2)
+  || isValueWithinRange(range1[1], range2)
 );
 
 /**
@@ -64,9 +64,9 @@ export const getTileClasses = ({
   }
 
   if (
-    !date ||
-    (!(value instanceof Array) && !valueType) ||
-    (!(date instanceof Array) && !dateType)
+    !date
+    || (!(value instanceof Array) && !valueType)
+    || (!(date instanceof Array) && !dateType)
   ) {
     throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
   }
@@ -83,13 +83,13 @@ export const getTileClasses = ({
     hover && (
       // Date before value
       (
-        dateRange[1] < valueRange[0] &&
-        isRangeWithinRange([hover, valueRange[0]], dateRange)
-      ) ||
+        dateRange[1] < valueRange[0]
+        && isRangeWithinRange([hover, valueRange[0]], dateRange)
+      )
       // Date after value
-      (
-        dateRange[0] > valueRange[1] &&
-        isRangeWithinRange([valueRange[1], hover], dateRange)
+      || (
+        dateRange[0] > valueRange[1]
+        && isRangeWithinRange([valueRange[1], hover], dateRange)
       )
     )
   ) {

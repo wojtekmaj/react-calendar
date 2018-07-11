@@ -18,4 +18,3 @@ describe('getDefaultLocale', () => {
     expect(locale).toBe('en-US');
   });
 });
-
