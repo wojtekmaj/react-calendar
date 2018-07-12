@@ -366,7 +366,7 @@ describe('Navigation', () => {
 
     const button = component.find('button.react-calendar__navigation__label');
 
-    expect(button.prop('disabled')).toBe(true);
+    expect(button.prop('disabled')).toBeTruthy();
   });
 
   it('disallows navigating before minDate', () => {
@@ -386,8 +386,8 @@ describe('Navigation', () => {
     const prev2 = arrows.at(0);
     const prev = arrows.at(1);
 
-    expect(prev2.prop('disabled')).toBe(true);
-    expect(prev.prop('disabled')).toBe(true);
+    expect(prev2.prop('disabled')).toBeTruthy();
+    expect(prev.prop('disabled')).toBeTruthy();
   });
 
   it('disallows navigating after maxDate', () => {
@@ -407,8 +407,8 @@ describe('Navigation', () => {
     const next = arrows.at(2);
     const next2 = arrows.at(3);
 
-    expect(next.prop('disabled')).toBe(true);
-    expect(next2.prop('disabled')).toBe(true);
+    expect(next.prop('disabled')).toBeTruthy();
+    expect(next2.prop('disabled')).toBeTruthy();
   });
 
   it('disallows navigating before the year 1000', () => {
@@ -427,8 +427,8 @@ describe('Navigation', () => {
     const prev2 = arrows.at(0);
     const prev = arrows.at(1);
 
-    expect(prev2.prop('disabled')).toBe(true);
-    expect(prev.prop('disabled')).toBe(true);
+    expect(prev2.prop('disabled')).toBeTruthy();
+    expect(prev.prop('disabled')).toBeTruthy();
   });
 
   it('renders custom navigation label when given navigationLabel prop', () => {

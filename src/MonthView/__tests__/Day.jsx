@@ -79,7 +79,7 @@ describe('Day', () => {
       />
     );
 
-    expect(component.find('.react-calendar__tile').prop('disabled')).toBe(true);
+    expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
   });
 
   it('is not disabled when date is after beginning of minDate\'s day', () => {
@@ -103,7 +103,7 @@ describe('Day', () => {
       />
     );
 
-    expect(component.find('.react-calendar__tile').prop('disabled')).toBe(true);
+    expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
   });
 
   it('is not disabled when date is before end of maxDate\'s day', () => {
