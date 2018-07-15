@@ -19,6 +19,7 @@ export default class Navigation extends Component {
   shouldComponentUpdate(nextProps) {
     return (
       nextProps.activeStartDate !== this.props.activeStartDate ||
+      nextProps.locale !== this.props.locale ||
       nextProps.view !== this.props.view
     );
   }
