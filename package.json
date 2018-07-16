@@ -89,7 +89,8 @@
     "jest-cli": "^23.4.1",
     "less": "^3.7.1",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "react-test-renderer": "^16.4.1"
   },
   "peerDependencies": {
     "react": ">=15.5",
