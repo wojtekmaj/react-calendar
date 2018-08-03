@@ -21,7 +21,9 @@ export default class MonthView extends PureComponent {
     }
 
     switch (locale) {
+      case 'en-CA':
       case 'en-US':
+      case 'he-IL':
         return 'US';
       default:
         return 'ISO 8601';
