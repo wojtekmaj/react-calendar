@@ -111,6 +111,7 @@ Displays a complete, interactive calendar.
 |prev2Label|Defines the content of the "previous on higher level" button on the navigation pane. Defaults to "«".|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
 |returnValue|Defines which dates shall be passed by the calendar to the onChange function and onClick{Period} functions. Can be "start", "end" or "range". The latter will cause an array with start and end values to be passed. Defaults to "start".|`"range"`|
 |showNavigation|Defines whether a navigation bar with arrows and title shall be rendered. Defaults to true.|`false`|
+|showFixedNumberOfWeeks|Defines whether to always show fixed number of weeks (6). Forces showNeighboringMonth prop to be true. Defaults to false.|`true`|
 |showNeighboringMonth|Defines whether days from previous or next month shall be rendered if the month doesn't start on the first day of the week or doesn't end on the last day of the week, respectively. Defaults to true.|`false`|
 |selectRange|Defines whether the user shall select two dates forming a range instead of just one. Note: This feature will make React-Calendar return array with two dates regardless of returnValue setting. Defaults to false.|`true`|
 |showWeekNumbers|Defines whether week numbers shall be shown at the left of MonthView or not. Defaults to false.|`true`|

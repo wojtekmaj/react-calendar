@@ -27,6 +27,12 @@ export default class WeekNumbers extends PureComponent {
   }
 
   get numberOfWeeks() {
+    const { showFixedNumberOfWeeks } = this.props;
+
+    if (showFixedNumberOfWeeks) {
+      return 6;
+    }
+
     const days = this.numberOfDays - (7 - this.startWeekday);
     return 1 + Math.ceil(days / 7);
   }
@@ -97,4 +103,5 @@ WeekNumbers.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType.isRequired,
   onClickWeekNumber: PropTypes.func,
+  showFixedNumberOfWeeks: PropTypes.bool,
 };

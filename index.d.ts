@@ -35,6 +35,7 @@ declare module "react-calendar" {
     renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
     returnValue?: "start" | "end" | "range";
     selectRange?: boolean;
+    showFixedNumberOfWeeks?: boolean;
     showNavigation?: boolean;
     showNeighboringMonth?: boolean;
     showWeekNumbers?: boolean;

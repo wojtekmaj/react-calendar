@@ -397,6 +397,7 @@ export default class Calendar extends Component {
           formatShortWeekday,
           onClickDay,
           onClickWeekNumber,
+          showFixedNumberOfWeeks,
           showNeighboringMonth,
           showWeekNumbers,
         } = this.props;
@@ -407,6 +408,7 @@ export default class Calendar extends Component {
             formatShortWeekday={formatShortWeekday}
             onClick={mergeFunctions(clickAction, onClickDay)}
             onClickWeekNumber={onClickWeekNumber}
+            showFixedNumberOfWeeks={showFixedNumberOfWeeks}
             showNeighboringMonth={showNeighboringMonth}
             showWeekNumbers={showWeekNumbers}
             {...commonProps}
@@ -522,6 +524,7 @@ Calendar.propTypes = {
   renderChildren: PropTypes.func, // For backwards compatibility
   returnValue: PropTypes.oneOf(['start', 'end', 'range']),
   selectRange: PropTypes.bool,
+  showFixedNumberOfWeeks: PropTypes.bool,
   showNavigation: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,

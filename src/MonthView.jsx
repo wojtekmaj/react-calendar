@@ -49,13 +49,18 @@ export default class MonthView extends PureComponent {
       return null;
     }
 
-    const { activeStartDate, onClickWeekNumber } = this.props;
+    const {
+      activeStartDate,
+      onClickWeekNumber,
+      showFixedNumberOfWeeks,
+    } = this.props;
 
     return (
       <WeekNumbers
         activeStartDate={activeStartDate}
         calendarType={this.calendarType}
         onClickWeekNumber={onClickWeekNumber}
+        showFixedNumberOfWeeks={showFixedNumberOfWeeks}
       />
     );
   }
@@ -115,6 +120,7 @@ MonthView.propTypes = {
   onChange: PropTypes.func,
   onClickWeekNumber: PropTypes.func,
   setActiveRange: PropTypes.func,
+  showFixedNumberOfWeeks: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
   value: isValue,

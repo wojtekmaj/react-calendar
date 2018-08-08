@@ -26,7 +26,8 @@ export default class Test extends PureComponent {
     minDetail: 'century',
     returnValue: 'start',
     selectRange: false,
-    showNeighboringMonth: false,
+    showFixedNumberOfWeeks: false,
+    showNeighboringMonth: true,
     showWeekNumbers: false,
     value: now,
   }
@@ -56,6 +57,7 @@ export default class Test extends PureComponent {
 
   render() {
     const {
+      showFixedNumberOfWeeks,
       locale,
       maxDate,
       maxDetail,
@@ -102,6 +104,7 @@ export default class Test extends PureComponent {
               value={value}
             />
             <ViewOptions
+              showFixedNumberOfWeeks={showFixedNumberOfWeeks}
               setState={setState}
               showNeighboringMonth={showNeighboringMonth}
               showWeekNumbers={showWeekNumbers}
@@ -118,6 +121,7 @@ export default class Test extends PureComponent {
               <Calendar
                 activeStartDate={new Date(2017, 0, 1)}
                 className="myCustomCalendarClassName"
+                showFixedNumberOfWeeks={showFixedNumberOfWeeks}
                 locale={locale}
                 maxDate={maxDate}
                 maxDetail={maxDetail}
