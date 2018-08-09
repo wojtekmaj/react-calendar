@@ -27,9 +27,9 @@ const Tile = ({
       tileClassName instanceof Function ? tileClassName({ date, view }) : tileClassName,
     )}
     disabled={
-      (minDate && minDateTransform(minDate) > date) ||
-      (maxDate && maxDateTransform(maxDate) < date) ||
-      (tileDisabled && tileDisabled({ date, view }))
+      (minDate && minDateTransform(minDate) > date)
+      || (maxDate && maxDateTransform(maxDate) < date)
+      || (tileDisabled && tileDisabled({ date, view }))
     }
     onClick={onClick && (() => onClick(date))}
     onMouseOver={onMouseOver && (() => onMouseOver(date))}
