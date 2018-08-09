@@ -123,4 +123,27 @@ describe('MonthView', () => {
     expect(firstDayTileContent).toHaveLength(1);
     expect(secondDayTileContent).toHaveLength(0);
   });
+
+  it('does not render WeekNumbers component by default', () => {
+    const activeStartDate = new Date(2017, 0, 1);
+
+    const component = mount(
+      <MonthView activeStartDate={activeStartDate} />
+    );
+
+    expect(component.find('WeekNumbers')).toHaveLength(0);
+  });
+
+  it('renders WeekNumbers component by given showWeekNumbers flag', () => {
+    const activeStartDate = new Date(2017, 0, 1);
+
+    const component = mount(
+      <MonthView
+        activeStartDate={activeStartDate}
+        showWeekNumbers
+      />
+    );
+
+    expect(component.find('WeekNumbers')).toHaveLength(1);
+  });
 });
