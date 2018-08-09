@@ -14,9 +14,11 @@ import { isCalendarType } from '../shared/propTypes';
 
 export default class Weekdays extends Component {
   shouldComponentUpdate(nextProps) {
+    const { calendarType, locale } = this.props;
+
     return (
-      nextProps.calendarType !== this.props.calendarType ||
-      nextProps.locale !== this.props.locale
+      nextProps.calendarType !== calendarType
+      || nextProps.locale !== locale
     );
   }
 
@@ -45,8 +47,9 @@ export default class Weekdays extends Component {
     const weekdays = [];
 
     for (let weekday = 1; weekday <= 7; weekday += 1) {
-      const weekdayDate =
-        new Date(year, monthIndex, weekday - getDayOfWeek(beginOfMonth, calendarType));
+      const weekdayDate = new Date(
+        year, monthIndex, weekday - getDayOfWeek(beginOfMonth, calendarType),
+      );
 
       weekdays.push(
         <div

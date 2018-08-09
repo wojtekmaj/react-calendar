@@ -104,6 +104,7 @@ describe('MonthView', () => {
 
       return null;
     };
+
     const component = mount(
       <MonthView
         activeStartDate={activeStartDate}
