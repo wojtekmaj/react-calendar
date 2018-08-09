@@ -59,9 +59,6 @@ export const getTileClasses = ({
 } = {}) => {
   const className = 'react-calendar__tile';
   const classes = [className];
-  if (!value) {
-    return classes;
-  }
 
   if (
     !date
@@ -71,9 +68,18 @@ export const getTileClasses = ({
     throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
   }
 
-  const valueRange = value instanceof Array ? value : getRange(valueType, value);
-  const dateRange = date instanceof Array ? date : getRange(dateType, date);
   const now = new Date();
+  const dateRange = date instanceof Array ? date : getRange(dateType, date);
+
+  if (isValueWithinRange(now, dateRange)) {
+    classes.push(`${className}--now`);
+  }
+
+  if (!value) {
+    return classes;
+  }
+
+  const valueRange = value instanceof Array ? value : getRange(valueType, value);
 
   if (isRangeWithinRange(valueRange, dateRange)) {
     classes.push(`${className}--active`);
@@ -109,10 +115,6 @@ export const getTileClasses = ({
 
   if (isRangeStart && isRangeEnd) {
     classes.push(`${className}--rangeBothEnds`);
-  }
-
-  if (isValueWithinRange(now, dateRange)) {
-    classes.push(`${className}--now`);
   }
 
   return classes;
