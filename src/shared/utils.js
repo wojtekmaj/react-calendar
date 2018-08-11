@@ -60,11 +60,11 @@ export const getTileClasses = ({
   const className = 'react-calendar__tile';
   const classes = [className];
 
-  if (
-    !date
-    || (!(value instanceof Array) && !valueType)
-    || (!(date instanceof Array) && !dateType)
-  ) {
+  if (!date) {
+    return classes;
+  }
+
+  if (!(date instanceof Array) && !dateType) {
     throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
   }
 
@@ -77,6 +77,10 @@ export const getTileClasses = ({
 
   if (!value) {
     return classes;
+  }
+
+  if (!(value instanceof Array) && !valueType) {
+    throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
   }
 
   const valueRange = value instanceof Array ? value : getRange(valueType, value);

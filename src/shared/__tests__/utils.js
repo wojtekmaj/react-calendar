@@ -211,9 +211,19 @@ describe('getTileClasses', () => {
     expect(result.includes('react-calendar__tile--hover')).toBe(false);
   });
 
-  it('throws an error when given value but not given other parameters ', () => {
+  it('throws an error when given date but not given dateType parameter ', () => {
     expect(
-      () => getTileClasses({ value: new Date(2017, 0, 1) }),
+      () => getTileClasses({ date: new Date(2017, 0, 1) }),
+    ).toThrow();
+  });
+
+  it('throws an error when given date and value but not given valueType parameter ', () => {
+    expect(
+      () => getTileClasses({
+        date: new Date(2017, 0, 1),
+        dateType: 'month',
+        value: new Date(2017, 0, 1),
+      }),
     ).toThrow();
   });
 
