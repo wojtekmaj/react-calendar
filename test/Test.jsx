@@ -46,12 +46,16 @@ export default class Test extends PureComponent {
 
     if (value instanceof Array) {
       return (
-        <p>Chosen date range: {renderDate(value[0])} - {renderDate(value[1])}</p>
+        <p>
+          Chosen date range: {renderDate(value[0])} - {renderDate(value[1])}
+        </p>
       );
     }
 
     return (
-      <p>Chosen date: {value ? renderDate(value) : '(none)'}</p>
+      <p>
+        Chosen date: {value ? renderDate(value) : '(none)'}
+      </p>
     );
   }
 
@@ -75,7 +79,9 @@ export default class Test extends PureComponent {
     return (
       <div className="Test">
         <header>
-          <h1>react-calendar test page</h1>
+          <h1>
+            react-calendar test page
+          </h1>
         </header>
         <div className="Test__container">
           <aside className="Test__container__options">
@@ -144,17 +150,17 @@ export default class Test extends PureComponent {
                 tileClassName={({ date, view }) => {
                   switch (view) {
                     case 'month':
-                      return date.getDay() === 0 || date.getDay() === 6 ?
-                        'red' : null;
+                      return date.getDay() === 0 || date.getDay() === 6
+                        ? 'red' : null;
                     case 'year':
-                      return date.getMonth() === 5 || date.getMonth() === 6 ?
-                        'green' : null;
+                      return date.getMonth() === 5 || date.getMonth() === 6
+                        ? 'green' : null;
                     case 'decade':
-                      return date.getFullYear() === 1991 ?
-                        'pink' : null;
+                      return date.getFullYear() === 1991
+                        ? 'pink' : null;
                     case 'century':
-                      return date.getFullYear() === 1991 ?
-                        'brown' : null;
+                      return date.getFullYear() === 1991
+                        ? 'brown' : null;
                     default:
                       return null;
                   }
@@ -162,21 +168,45 @@ export default class Test extends PureComponent {
                 tileContent={({ date, view }) => {
                   switch (view) {
                     case 'month':
-                      return date.getDay() === 0 ?
-                        <p><small>{'It\'s Sunday!'}</small></p> :
-                        null;
+                      return date.getDay() === 0
+                        ? (
+                          <p>
+                            <small>
+                              {'It\'s Sunday!'}
+                            </small>
+                          </p>
+                        )
+                        : null;
                     case 'year':
-                      return date.getMonth() === 5 || date.getMonth() === 6 ?
-                        <p><small>Holidays</small></p> :
-                        null;
+                      return date.getMonth() === 5 || date.getMonth() === 6
+                        ? (
+                          <p>
+                            <small>
+                              Holidays
+                            </small>
+                          </p>
+                        )
+                        : null;
                     case 'decade':
-                      return date.getFullYear() === 1991 ?
-                        <p><small>{'Developer\'s birthday!'}</small></p> :
-                        null;
+                      return date.getFullYear() === 1991
+                        ? (
+                          <p>
+                            <small>
+                              {'Developer\'s birthday!'}
+                            </small>
+                          </p>
+                        )
+                        : null;
                     case 'century':
-                      return date.getFullYear() === 1991 ?
-                        <p><small>{'The 90\'s'}</small></p> :
-                        null;
+                      return date.getFullYear() === 1991
+                        ? (
+                          <p>
+                            <small>
+                              {'The 90\'s'}
+                            </small>
+                          </p>
+                        )
+                        : null;
                     default:
                       return null;
                   }
