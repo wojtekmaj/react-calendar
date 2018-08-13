@@ -135,6 +135,22 @@ describe('getDayOfWeek', () => {
     expect(dayOfWeek).toBe(0);
   });
 
+  it('returns proper day of the week (Arabic)', () => {
+    const date = new Date(2017, 0, 1);
+
+    const dayOfWeek = getDayOfWeek(date, 'Arabic');
+
+    expect(dayOfWeek).toBe(1);
+  });
+
+  it('returns proper day of the week (Hebrew)', () => {
+    const date = new Date(2017, 0, 1);
+
+    const dayOfWeek = getDayOfWeek(date, 'Hebrew');
+
+    expect(dayOfWeek).toBe(0);
+  });
+
   it('returns proper day of the week (default)', () => {
     const date = new Date(2017, 0, 1);
 
@@ -427,6 +443,24 @@ describe('getBeginOfWeek', () => {
     expect(beginOfWeek).toEqual(beginOfWeekDate);
   });
 
+  it('returns proper beginning of the week (Arabic)', () => {
+    const date = new Date(2016, 0, 1);
+    const beginOfWeekDate = new Date(2015, 11, 26);
+
+    const beginOfWeek = getBeginOfWeek(date, 'Arabic');
+
+    expect(beginOfWeek).toEqual(beginOfWeekDate);
+  });
+
+  it('returns proper beginning of the week (Hebrew)', () => {
+    const date = new Date(2016, 0, 1);
+    const beginOfWeekDate = new Date(2015, 11, 27);
+
+    const beginOfWeek = getBeginOfWeek(date, 'Hebrew');
+
+    expect(beginOfWeek).toEqual(beginOfWeekDate);
+  });
+
   it('returns proper beginning of the week (default)', () => {
     const date = new Date(2017, 0, 1);
     const beginOfWeekDate = new Date(2016, 11, 26);
@@ -642,6 +676,120 @@ describe('getWeekNumber', () => {
       const date = new Date(year, month, currentDate);
 
       const weekNumber = getWeekNumber(date, 'US');
+
+      expect(weekNumber).toBe(53);
+    }
+  });
+
+  it('returns proper week number for a sample week 1 (Arabic)', () => {
+    const year = 2018;
+    const month = 0;
+    const startDate = 1;
+
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
+
+      const weekNumber = getWeekNumber(date, 'Arabic');
+
+      expect(weekNumber).toBe(1);
+    }
+  });
+
+  it('returns proper week number for a sample year starting in week 1 (Arabic)', () => {
+    const year = 2018;
+    const month = 0;
+    const startDate = 1;
+
+    for (let currentWeek = 1; currentWeek <= 52; currentWeek += 1) {
+      const weekOffset = (currentWeek - 1) * 7;
+      const date = new Date(year, month, startDate + weekOffset);
+
+      const weekNumber = getWeekNumber(date, 'Arabic');
+
+      expect(weekNumber).toBe(currentWeek);
+    }
+  });
+
+  it('returns proper week number for a sample week 52 (Arabic)', () => {
+    const year = 2016;
+    const month = 11;
+    const startDate = 26;
+
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
+
+      const weekNumber = getWeekNumber(date, 'Arabic');
+
+      expect(weekNumber).toBe(52);
+    }
+  });
+
+  it('returns proper week number for a sample week 53 (Arabic)', () => {
+    const year = 2015;
+    const month = 11;
+    const startDate = 28;
+
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
+
+      const weekNumber = getWeekNumber(date, 'Arabic');
+
+      expect(weekNumber).toBe(53);
+    }
+  });
+
+  it('returns proper week number for a sample week 1 (Hebrew)', () => {
+    const year = 2018;
+    const month = 0;
+    const startDate = 1;
+
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
+
+      const weekNumber = getWeekNumber(date, 'Hebrew');
+
+      expect(weekNumber).toBe(1);
+    }
+  });
+
+  it('returns proper week number for a sample year starting in week 1 (Hebrew)', () => {
+    const year = 2018;
+    const month = 0;
+    const startDate = 1;
+
+    for (let currentWeek = 1; currentWeek <= 52; currentWeek += 1) {
+      const weekOffset = (currentWeek - 1) * 7;
+      const date = new Date(year, month, startDate + weekOffset);
+
+      const weekNumber = getWeekNumber(date, 'Hebrew');
+
+      expect(weekNumber).toBe(currentWeek);
+    }
+  });
+
+  it('returns proper week number for a sample week 52 (Hebrew)', () => {
+    const year = 2016;
+    const month = 11;
+    const startDate = 26;
+
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
+
+      const weekNumber = getWeekNumber(date, 'Hebrew');
+
+      expect(weekNumber).toBe(52);
+    }
+  });
+
+  it('returns proper week number for a sample week 53 (Hebrew)', () => {
+    const year = 2015;
+    const month = 11;
+    const startDate = 28;
+
+    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
+      const date = new Date(year, month, currentDate);
+
+      const weekNumber = getWeekNumber(date, 'Hebrew');
 
       expect(weekNumber).toBe(53);
     }
@@ -1105,22 +1253,72 @@ describe('getDecadeLabel', () => {
 });
 
 describe('isWeekend', () => {
-  it('returns proper flag', () => {
-    const date1 = new Date(2016, 11, 30);
-    const date2 = new Date(2016, 11, 31);
-    const date3 = new Date(2017, 0, 1);
-    const date4 = new Date(2017, 0, 2);
-
-    const isWeekend1 = isWeekend(date1);
-    const isWeekend2 = isWeekend(date2);
-    const isWeekend3 = isWeekend(date3);
-    const isWeekend4 = isWeekend(date4);
-
-    expect(isWeekend1).toBe(false);
-    expect(isWeekend2).toBe(true);
-    expect(isWeekend3).toBe(true);
-    expect(isWeekend4).toBe(false);
+  /* eslint-disable indent */
+  describe('returns proper flag (ISO 8601)', () => {
+    it.each`
+      date                      | flag
+      ${new Date(2016, 11, 30)} | ${false}
+      ${new Date(2016, 11, 31)} | ${true}
+      ${new Date(2017, 0, 1)}   | ${true}
+      ${new Date(2017, 0, 2)}   | ${false}
+    `('returns $flag for $date',
+    ({ date, flag }) => {
+      expect(isWeekend(date, 'ISO 8601')).toBe(flag);
+    });
   });
+
+  describe('returns proper flag (US)', () => {
+    it.each`
+      date                      | flag
+      ${new Date(2016, 11, 30)} | ${false}
+      ${new Date(2016, 11, 31)} | ${true}
+      ${new Date(2017, 0, 1)}   | ${true}
+      ${new Date(2017, 0, 2)}   | ${false}
+    `('returns $flag for $date',
+    ({ date, flag }) => {
+      expect(isWeekend(date, 'US')).toBe(flag);
+    });
+  });
+
+  describe('returns proper flag (Arabic)', () => {
+    it.each`
+      date                      | flag
+      ${new Date(2016, 11, 30)} | ${true}
+      ${new Date(2016, 11, 31)} | ${true}
+      ${new Date(2017, 0, 1)}   | ${false}
+      ${new Date(2017, 0, 2)}   | ${false}
+    `('returns $flag for $date',
+    ({ date, flag }) => {
+      expect(isWeekend(date, 'Arabic')).toBe(flag);
+    });
+  });
+
+  describe('returns proper flag (Hebrew)', () => {
+    it.each`
+      date                      | flag
+      ${new Date(2016, 11, 30)} | ${true}
+      ${new Date(2016, 11, 31)} | ${true}
+      ${new Date(2017, 0, 1)}   | ${false}
+      ${new Date(2017, 0, 2)}   | ${false}
+    `('returns $flag for $date',
+    ({ date, flag }) => {
+      expect(isWeekend(date, 'Hebrew')).toBe(flag);
+    });
+  });
+
+  describe('returns proper flag (default)', () => {
+    it.each`
+      date                      | flag
+      ${new Date(2016, 11, 30)} | ${false}
+      ${new Date(2016, 11, 31)} | ${true}
+      ${new Date(2017, 0, 1)}   | ${true}
+      ${new Date(2017, 0, 2)}   | ${false}
+    `('returns $flag for $date',
+    ({ date, flag }) => {
+      expect(isWeekend(date)).toBe(flag);
+    });
+  });
+  /* eslint-enable indent */
 });
 
 describe('getISOLocalMonth', () => {

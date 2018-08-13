@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const calendarTypes = ['ISO 8601', 'US'];
+const calendarTypes = ['ISO 8601', 'US', 'Arabic', 'Hebrew'];
 const allViews = ['century', 'decade', 'year', 'month'];
 
 export const isCalendarType = PropTypes.oneOf(calendarTypes);

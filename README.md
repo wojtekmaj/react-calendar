@@ -85,7 +85,7 @@ Displays a complete, interactive calendar.
 |Prop name|Description|Example values|
 |----|----|----|
 |activeStartDate|The beginning of a period that shall be displayed by default when no value is given. Defaults to today.|`new Date(2017, 0, 1)`|
-|calendarType|Defines which type of calendar should be used. Can be "US" or "ISO 8601". Defaults to "US" for "en-US" locale, "ISO 8601" to all the others. Changing to "US" will change the first day of the week from Monday to Sunday.|`"ISO 8601"`|
+|calendarType|Defines which type of calendar should be used. Can be "ISO 8601", "US", "Arabic", or "Hebrew". Defaults to a calendar most commonly used in specific locale. Setting to "US" or "Hebrew" will change the first day of the week to Sunday. Setting to "Arabic" will change the first day of the week to Saturday. Setting to "Arabic" or "Hebrew" will make weekends appear on Friday to Saturday.|`"ISO 8601"`|
 |className|Defines class name(s) that will be added along with "react-calendar" to the main React-Calendar `<div>` element.|<ul><li>String: `"class1 class2"`</li><li>Array of strings: `["class1", "class2 class3"]`</li></ul>|
 |formatMonth|Function called to override default formatting of month names. Can be used to use your own formatting function.|`(value) => formatDate(value, 'MMM')`|
 |formatMonthYear|Function called to override default formatting of month and year in the top navigation section. Can be used to use your own formatting function.|`(value) => formatDate(value, 'MMMM YYYY')`|

@@ -15,6 +15,7 @@ import { tileProps } from '../shared/propTypes';
 const className = 'react-calendar__month-view__days__day';
 
 const Day = ({
+  calendarType,
   classes,
   currentMonthIndex,
   date,
@@ -25,7 +26,7 @@ const Day = ({
     classes={[
       ...classes,
       className,
-      isWeekend(date) ? `${className}--weekend` : null,
+      isWeekend(date, calendarType) ? `${className}--weekend` : null,
       date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null,
     ]}
     date={date}

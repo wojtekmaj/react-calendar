@@ -1,4 +1,5 @@
 declare module "react-calendar" {
+  type CalendarType = "ISO 8601" | "US" | "Arabic" | "Hebrew"
   type Detail = "month" | "year" | "decade" | "century"
   type DateCallback = (date: Date) => void
   type OnChangeDateCallback = (date: Date | Date[]) => void
@@ -9,7 +10,7 @@ declare module "react-calendar" {
 
   export interface CalendarProps {
     activeStartDate?: Date;
-    calendarType?: "US" | "ISO 8601";
+    calendarType?: CalendarType;
     className?: string | string[];
     formatMonth?: FormatterCallback;
     formatMonthYear?: FormatterCallback;
@@ -63,7 +64,7 @@ declare module "react-calendar" {
 
   export interface DetailViewProps {
     activeStartDate: Date;
-    calendarType?: "US" | "ISO 8601";
+    calendarType?: CalendarType;
     locale?: string;
     hover?: Date;
     maxDate?: Date;
