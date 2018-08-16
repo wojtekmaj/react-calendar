@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
+// eslint-disable-next-line import/no-unresolved
 import Calendar from 'react-calendar/src/entry.nostyle';
+// eslint-disable-next-line import/no-unresolved
 import 'react-calendar/src/Calendar.less';
 
 import DateBonduariesOptions from './DateBonduariesOptions';
