@@ -4,25 +4,31 @@ import getUserLocale from 'get-user-locale';
 
 export default class LocaleOptions extends PureComponent {
   onChange = (event) => {
+    const { setState } = this.props;
+
     let { value: locale } = event.target;
 
     if (locale === 'null') {
       locale = null;
     }
 
-    this.props.setState({ locale });
+    setState({ locale });
   }
 
   onCustomChange = (event) => {
+    const { setState } = this.props;
+
     event.preventDefault();
 
     const { value: locale } = event.target.customLocale;
 
-    this.props.setState({ locale });
+    setState({ locale });
   }
 
   resetLocale = () => {
-    this.props.setState({ locale: null });
+    const { setState } = this.props;
+
+    setState({ locale: null });
   }
 
   render() {
@@ -30,7 +36,9 @@ export default class LocaleOptions extends PureComponent {
 
     return (
       <fieldset id="localeOptions">
-        <legend htmlFor="localeOptions">Locale</legend>
+        <legend htmlFor="localeOptions">
+          Locale
+        </legend>
 
         <div>
           <input
@@ -41,7 +49,9 @@ export default class LocaleOptions extends PureComponent {
             type="radio"
             value="null"
           />
-          <label htmlFor="localeDefault">Auto</label>
+          <label htmlFor="localeDefault">
+            Auto
+          </label>
         </div>
         <div>
           <input
@@ -52,7 +62,9 @@ export default class LocaleOptions extends PureComponent {
             type="radio"
             value="en-US"
           />
-          <label htmlFor="localeEnUS">en-US</label>
+          <label htmlFor="localeEnUS">
+            en-US
+          </label>
         </div>
         <div>
           <input
@@ -63,17 +75,23 @@ export default class LocaleOptions extends PureComponent {
             type="radio"
             value="fr-FR"
           />
-          <label htmlFor="localeFrFR">fr-FR</label>
+          <label htmlFor="localeFrFR">
+            fr-FR
+          </label>
         </div>
         <form onSubmit={this.onCustomChange}>
-          <label htmlFor="customLocale">Custom locale:</label>&nbsp;
+          <label htmlFor="customLocale">
+            Custom locale:
+          </label>
+          &nbsp;
           <input
             type="text"
             key={locale}
             name="customLocale"
             defaultValue={locale}
             pattern="^[a-z]{2}-[A-Z0-9]{2,3}$"
-          />&nbsp;
+          />
+          &nbsp;
           <button
             style={{ display: 'none' }}
             type="submit"

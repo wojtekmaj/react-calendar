@@ -5,15 +5,19 @@ import { getISOLocalDate } from './shared/dates';
 
 export default class DateBonduariesOptions extends PureComponent {
   onMinChange = (event) => {
+    const { setState } = this.props;
+
     const { value } = event.target;
 
-    this.props.setState({ minDate: new Date(value) });
+    setState({ minDate: new Date(value) });
   }
 
   onMaxChange = (event) => {
+    const { setState } = this.props;
+
     const { value } = event.target;
 
-    this.props.setState({ maxDate: new Date(value) });
+    setState({ maxDate: new Date(value) });
   }
 
   render() {
@@ -21,16 +25,21 @@ export default class DateBonduariesOptions extends PureComponent {
 
     return (
       <fieldset id="datebonduariesoptions">
-        <legend htmlFor="datebonduariesoptions">Minimum and maximum date</legend>
+        <legend htmlFor="datebonduariesoptions">
+          Minimum and maximum date
+        </legend>
 
         <div>
-          <label htmlFor="minDate">Minimum date</label>
+          <label htmlFor="minDate">
+            Minimum date
+          </label>
           <input
             id="minDate"
             onChange={this.onMinChange}
             type="date"
             value={minDate ? getISOLocalDate(minDate) : ''}
-          />&nbsp;
+          />
+          &nbsp;
           <button
             onClick={() => setState({ minDate: null })}
             type="button"
@@ -39,13 +48,16 @@ export default class DateBonduariesOptions extends PureComponent {
           </button>
         </div>
         <div>
-          <label htmlFor="maxDate">Maximum date</label>
+          <label htmlFor="maxDate">
+            Maximum date
+          </label>
           <input
             id="maxDate"
             onChange={this.onMaxChange}
             type="date"
             value={maxDate ? getISOLocalDate(maxDate) : ''}
-          />&nbsp;
+          />
+          &nbsp;
           <button
             onClick={() => setState({ maxDate: null })}
             type="button"

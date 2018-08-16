@@ -47,14 +47,14 @@ export default class Test extends PureComponent {
     if (value instanceof Array) {
       return (
         <p>
-          Chosen date range: {renderDate(value[0])} - {renderDate(value[1])}
+          {`Chosen date range: ${renderDate(value[0])} - ${renderDate(value[1])}`}
         </p>
       );
     }
 
     return (
       <p>
-        Chosen date: {value ? renderDate(value) : '(none)'}
+        {`Chosen date: ${value ? renderDate(value) : '(none)'}`}
       </p>
     );
   }
