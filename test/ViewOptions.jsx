@@ -3,21 +3,27 @@ import PropTypes from 'prop-types';
 
 export default class ViewOptions extends PureComponent {
   onShowFixedNumberOfWeeksChange = (event) => {
+    const { setState } = this.props;
+
     const { checked } = event.target;
 
-    this.props.setState({ showFixedNumberOfWeeks: checked });
+    setState({ showFixedNumberOfWeeks: checked });
   }
 
   onShowWeekNumbersChange = (event) => {
+    const { setState } = this.props;
+
     const { checked } = event.target;
 
-    this.props.setState({ showWeekNumbers: checked });
+    setState({ showWeekNumbers: checked });
   }
 
   onshowNeighboringMonthChange = (event) => {
+    const { setState } = this.props;
+
     const { checked } = event.target;
 
-    this.props.setState({ showNeighboringMonth: checked });
+    setState({ showNeighboringMonth: checked });
   }
 
   render() {
@@ -76,6 +82,7 @@ export default class ViewOptions extends PureComponent {
 
 ViewOptions.propTypes = {
   setState: PropTypes.func.isRequired,
+  showFixedNumberOfWeeks: PropTypes.bool.isRequired,
   showNeighboringMonth: PropTypes.bool.isRequired,
   showWeekNumbers: PropTypes.bool.isRequired,
 };

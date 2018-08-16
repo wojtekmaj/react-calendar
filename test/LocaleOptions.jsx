@@ -94,7 +94,7 @@ export default class LocaleOptions extends PureComponent {
 }
 
 LocaleOptions.defaultProps = {
-  locale: getDefaultLocale(),
+  locale: getUserLocale(),
 };
 
 LocaleOptions.propTypes = {
