@@ -1,4 +1,4 @@
-import { getDefaultLocale } from './locales';
+import getUserLocale from 'get-user-locale';
 
 const formatterCache = {};
 
@@ -10,7 +10,7 @@ const getFormatter = (options, locale) => {
   if (!locale) {
     // Default parameter is not enough as it does not protect us from null values
     // eslint-disable-next-line no-param-reassign
-    locale = getDefaultLocale();
+    locale = getUserLocale();
   }
 
   const stringifiedOptions = JSON.stringify(options);

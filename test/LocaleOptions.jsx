@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
-import { getDefaultLocale } from 'react-calendar/src/shared/locales';
+import getUserLocale from 'get-user-locale';
 
 export default class LocaleOptions extends PureComponent {
   onChange = (event) => {
