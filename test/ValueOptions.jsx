@@ -2,11 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { isValue } from '../src/shared/propTypes';
-import {
-  getISOLocalDate,
-  getBeginOfDay,
-  getEndOfDay,
-} from './shared/dates';
+import { getISOLocalDateTime } from './shared/dates';
 
 export default class ValueOptions extends PureComponent {
   get startDate() {
@@ -59,12 +55,12 @@ export default class ValueOptions extends PureComponent {
 
   onStartChange = (event) => {
     const { value } = event.target;
-    this.setStartValue(getBeginOfDay(new Date(value)));
+    this.setStartValue(new Date(value));
   }
 
   onEndChange = (event) => {
     const { value } = event.target;
-    this.setEndValue(getEndOfDay(new Date(value)));
+    this.setEndValue(new Date(value));
   }
 
   onSelectRangeChange = (event) => {
@@ -91,8 +87,8 @@ export default class ValueOptions extends PureComponent {
           <input
             id="startDate"
             onChange={this.onStartChange}
-            type="date"
-            value={this.startDate ? getISOLocalDate(this.startDate) : ''}
+            type="datetime-local"
+            value={this.startDate ? getISOLocalDateTime(this.startDate) : ''}
           />
           &nbsp;
           <button
@@ -116,8 +112,8 @@ export default class ValueOptions extends PureComponent {
           <input
             id="endDate"
             onChange={this.onEndChange}
-            type="date"
-            value={this.endDate ? getISOLocalDate(this.endDate) : ''}
+            type="datetime-local"
+            value={this.endDate ? getISOLocalDateTime(this.endDate) : ''}
           />
           &nbsp;
           <button

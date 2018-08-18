@@ -2,9 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import MonthView from '../MonthView';
-import {
-  getISOLocalDate,
-} from '../shared/dates';
+import { getISOLocalDate } from '../shared/dates';
 
 /* eslint-disable comma-dangle */
 
