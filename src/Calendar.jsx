@@ -52,7 +52,7 @@ const isViewAllowed = (view, minDetail, maxDetail) => {
  */
 const getValueType = maxDetail => allValueTypes[allViews.indexOf(maxDetail)];
 
-const getValueFrom = (value, minDate, maxDate, maxDetail) => {
+const getValueFrom = (value) => {
   if (!value) {
     return null;
   }
@@ -69,12 +69,22 @@ const getValueFrom = (value, minDate, maxDate, maxDetail) => {
     throw new Error(`Invalid date: ${value}`);
   }
 
-  const valueFrom = getBegin(getValueType(maxDetail), valueFromDate);
-
-  return between(valueFrom, minDate, maxDate);
+  return valueFromDate;
 };
 
-const getValueTo = (value, minDate, maxDate, maxDetail) => {
+const getDetailValueFrom = (value, minDate, maxDate, maxDetail) => {
+  const valueFrom = getValueFrom(value);
+
+  if (!valueFrom) {
+    return null;
+  }
+
+  const detailValueFrom = getBegin(getValueType(maxDetail), valueFrom);
+
+  return between(detailValueFrom, minDate, maxDate);
+};
+
+const getValueTo = (value) => {
   if (!value) {
     return null;
   }
@@ -91,19 +101,29 @@ const getValueTo = (value, minDate, maxDate, maxDetail) => {
     throw new Error(`Invalid date: ${value}`);
   }
 
-  const valueTo = getEnd(getValueType(maxDetail), valueToDate);
-
-  return between(valueTo, minDate, maxDate);
+  return valueToDate;
 };
 
-const getValueArray = (value, minDate, maxDate, maxDetail) => {
+const getDetailValueTo = (value, minDate, maxDate, maxDetail) => {
+  const valueTo = getValueTo(value);
+
+  if (!valueTo) {
+    return null;
+  }
+
+  const detailValueTo = getEnd(getValueType(maxDetail), valueTo);
+
+  return between(detailValueTo, minDate, maxDate);
+};
+
+const getDetailValueArray = (value, minDate, maxDate, maxDetail) => {
   if (value instanceof Array) {
     return value;
   }
 
   return [
-    getValueFrom(value, minDate, maxDate, maxDetail),
-    getValueTo(value, minDate, maxDate, maxDetail),
+    getDetailValueFrom(value, minDate, maxDate, maxDetail),
+    getDetailValueTo(value, minDate, maxDate, maxDetail),
   ];
 };
 
@@ -120,7 +140,7 @@ const getActiveStartDate = (props) => {
 
   const rangeType = getView(view, minDetail, maxDetail);
   const valueFrom = (
-    getValueFrom(value, minDate, maxDate, maxDetail)
+    getDetailValueFrom(value, minDate, maxDate, maxDetail)
     || activeStartDate
     || new Date()
   );
@@ -162,11 +182,11 @@ export default class Calendar extends Component {
 
     switch (returnValue) {
       case 'start':
-        return getValueFrom(value, minDate, maxDate, maxDetail);
+        return getDetailValueFrom(value, minDate, maxDate, maxDetail);
       case 'end':
-        return getValueTo(value, minDate, maxDate, maxDetail);
+        return getDetailValueTo(value, minDate, maxDate, maxDetail);
       case 'range':
-        return getValueArray(value, minDate, maxDate, maxDetail);
+        return getDetailValueArray(value, minDate, maxDate, maxDetail);
       default:
         throw new Error('Invalid returnValue.');
     }
@@ -200,15 +220,19 @@ export default class Calendar extends Component {
     }
 
     /**
-     * If the next value is different from the current one  (with an exception of situation in
+     * If the next value is different from the current one (with an exception of situation in
      * which values provided are limited by minDate and maxDate so that the dates are the same),
      * get a new one.
      */
     const values = [nextProps.value, prevState.valueProps];
     if (
       nextState.view // Allowed view changed
-      || datesAreDifferent(...values.map(value => getValueFrom(value, minDate, maxDate, maxDetail)))
-      || datesAreDifferent(...values.map(value => getValueTo(value, minDate, maxDate, maxDetail)))
+      || datesAreDifferent(
+        ...values.map(value => getValueFrom(value, minDate, maxDate, maxDetail)),
+      )
+      || datesAreDifferent(
+        ...values.map(value => getValueTo(value, minDate, maxDate, maxDetail)),
+      )
     ) {
       nextState.value = nextProps.value;
       nextState.valueProps = nextProps.value;

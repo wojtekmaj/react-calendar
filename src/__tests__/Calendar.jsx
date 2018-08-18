@@ -277,6 +277,26 @@ describe('Calendar', () => {
     expect(component.state().view).toBe('month');
   });
 
+  it('updates the value if the day previously partially covered is now fully covered', () => {
+    const value = [new Date(2018, 0, 1, 12), new Date(2018, 1, 1)];
+
+    const component = mount(
+      <Calendar
+        value={value}
+      />
+    );
+
+    expect(component.state().value).toBe(value);
+
+    const nextValue = [new Date(2018, 0, 1), new Date(2018, 1, 1)];
+
+    component.setProps({
+      value: nextValue,
+    });
+
+    expect(component.state().value).toBe(nextValue);
+  });
+
   it('calls onChange function returning beginning of selected period by default', () => {
     const onChange = jest.fn();
     const component = mount(
