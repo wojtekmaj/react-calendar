@@ -87,7 +87,7 @@
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.5.0",
     "jest-cli": "^23.5.0",
-    "less": "^3.7.1",
+    "less": "~3.7.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-test-renderer": "^16.4.1"
