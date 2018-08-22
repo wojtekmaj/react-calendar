@@ -1,7 +1,7 @@
 const [
   // eslint-disable-next-line no-unused-vars
   SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY,
-] = Array.from(Array(7), (el, index) => index);
+] = [...Array(7)].map((el, index) => index);
 
 /* Simple getters - getting a property of a given point in time */
 
