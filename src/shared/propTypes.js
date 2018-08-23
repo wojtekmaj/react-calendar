@@ -99,6 +99,7 @@ export const tileGroupProps = {
 };
 
 export const tileProps = {
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
   classes: PropTypes.arrayOf(PropTypes.string).isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
   maxDate: isMaxDate,
