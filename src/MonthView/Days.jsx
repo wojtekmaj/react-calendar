@@ -79,7 +79,6 @@ export default class Days extends PureComponent {
     const { monthIndex } = this;
 
     const {
-      activeStartDate,
       showNeighboringMonth,
       ...otherProps
     } = this.props;
