@@ -14,11 +14,14 @@ import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 
 export default class Days extends PureComponent {
   get offset() {
-    if (this.props.showNeighboringMonth) {
+    const { showFixedNumberOfWeeks, showNeighboringMonth } = this.props;
+
+    if (showFixedNumberOfWeeks || showNeighboringMonth) {
       return 0;
     }
 
     const { activeStartDate, calendarType } = this.props;
+
     return getDayOfWeek(activeStartDate, calendarType);
   }
 
@@ -28,10 +31,13 @@ export default class Days extends PureComponent {
    * true, we need to find the beginning of the week the first day of the month is in.
    */
   get start() {
-    if (this.props.showNeighboringMonth) {
+    const { showFixedNumberOfWeeks, showNeighboringMonth } = this.props;
+
+    if (showFixedNumberOfWeeks || showNeighboringMonth) {
       const { activeStartDate, calendarType } = this.props;
       return -getDayOfWeek(activeStartDate, calendarType) + 1;
     }
+
     return 1;
   }
 
@@ -41,14 +47,21 @@ export default class Days extends PureComponent {
    * is set to true, we need to find the end of the week the last day of the month is in.
    */
   get end() {
-    const { activeStartDate } = this.props;
+    const { activeStartDate, showFixedNumberOfWeeks, showNeighboringMonth } = this.props;
     const daysInMonth = getDaysInMonth(activeStartDate);
-    if (this.props.showNeighboringMonth) {
+
+    if (showFixedNumberOfWeeks) {
+      // Always show 6 weeks
+      return this.start + (6 * 7) - 1;
+    }
+
+    if (showNeighboringMonth) {
       const { year, monthIndex } = this;
       const { calendarType } = this.props;
       const activeEndDate = new Date(year, monthIndex, daysInMonth);
       return daysInMonth + (7 - getDayOfWeek(activeEndDate, calendarType) - 1);
     }
+
     return daysInMonth;
   }
 
@@ -66,8 +79,6 @@ export default class Days extends PureComponent {
     const { monthIndex } = this;
 
     const {
-      activeStartDate,
-      calendarType,
       showNeighboringMonth,
       ...otherProps
     } = this.props;
@@ -92,6 +103,7 @@ export default class Days extends PureComponent {
 
 Days.propTypes = {
   calendarType: isCalendarType.isRequired,
+  showFixedNumberOfWeeks: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
   ...tileGroupProps,
 };

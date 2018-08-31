@@ -30,6 +30,8 @@ Minimal demo page is included in sample directory.
 
 ### Compatibility
 
+Your project needs to use React 15.5 or later.
+
 React-Calendar uses modern web technologies. That's why it's so fast, lightweight and easy to style. This, however, comes at a cost of [supporting only modern browsers](https://caniuse.com/#feat=internationalization).
 
 #### Legacy browsers
@@ -83,7 +85,7 @@ Displays a complete, interactive calendar.
 |Prop name|Description|Example values|
 |----|----|----|
 |activeStartDate|The beginning of a period that shall be displayed by default when no value is given. Defaults to today.|`new Date(2017, 0, 1)`|
-|calendarType|Defines which type of calendar should be used. Can be "US" or "ISO 8601". Defaults to "US" for "en-US" locale, "ISO 8601" to all the others. Changing to "US" will change the first day of the week from Monday to Sunday.|`"ISO 8601"`|
+|calendarType|Defines which type of calendar should be used. Can be "ISO 8601", "US", "Arabic", or "Hebrew". Defaults to a calendar most commonly used in specific locale. Setting to "US" or "Hebrew" will change the first day of the week to Sunday. Setting to "Arabic" will change the first day of the week to Saturday. Setting to "Arabic" or "Hebrew" will make weekends appear on Friday to Saturday.|`"ISO 8601"`|
 |className|Defines class name(s) that will be added along with "react-calendar" to the main React-Calendar `<div>` element.|<ul><li>String: `"class1 class2"`</li><li>Array of strings: `["class1", "class2 class3"]`</li></ul>|
 |formatMonth|Function called to override default formatting of month names. Can be used to use your own formatting function.|`(value) => formatDate(value, 'MMM')`|
 |formatMonthYear|Function called to override default formatting of month and year in the top navigation section. Can be used to use your own formatting function.|`(value) => formatDate(value, 'MMMM YYYY')`|
@@ -109,12 +111,13 @@ Displays a complete, interactive calendar.
 |prev2Label|Defines the content of the "previous on higher level" button on the navigation pane. Defaults to "«".|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
 |returnValue|Defines which dates shall be passed by the calendar to the onChange function and onClick{Period} functions. Can be "start", "end" or "range". The latter will cause an array with start and end values to be passed. Defaults to "start".|`"range"`|
 |showNavigation|Defines whether a navigation bar with arrows and title shall be rendered. Defaults to true.|`false`|
+|showFixedNumberOfWeeks|Defines whether to always show fixed number of weeks (6). Forces showNeighboringMonth prop to be true. Defaults to false.|`true`|
 |showNeighboringMonth|Defines whether days from previous or next month shall be rendered if the month doesn't start on the first day of the week or doesn't end on the last day of the week, respectively. Defaults to true.|`false`|
 |selectRange|Defines whether the user shall select two dates forming a range instead of just one. Note: This feature will make React-Calendar return array with two dates regardless of returnValue setting. Defaults to false.|`true`|
 |showWeekNumbers|Defines whether week numbers shall be shown at the left of MonthView or not. Defaults to false.|`true`|
 |tileClassName|Defines class name(s) that will be applied to a given calendar item (day on month view, month on year view and so on).|<ul><li>String: `"class1 class2"`</li><li>Array of strings: `["class1", "class2 class3"]`</li><li>Function: `({ date, view }) => view === 'month' && date.getDay() === 3 ? 'wednesday' : null`</li></ul>|
 |tileContent|Allows to render custom content within a given calendar item (day on month view, month on year view and so on).|<ul><li>String: `"Sample"`</li><li>React element: `<TileContent />`</li><li>Function: `({ date, view }) => view === 'month' && date.getDay() === 0 ? <p>It's Sunday!</p> : null`</li></ul>|
-|tileDisabled|Pass a function to determine if a certain day should be displayed as disabled.|<ul><li>Function: `({date, view }) => date.getDay() === 0`</li></ul>|
+|tileDisabled|Pass a function to determine if a certain day should be displayed as disabled.|<ul><li>Function: `({activeStartDate, date, view }) => date.getDay() === 0`</li></ul>|
 |value|Defines the value of the calendar.|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`|
 |view|Determines which calendar view shall be opened initially. Does not disable navigation. Can be "month", "year", "decade" or "century". Defaults to the most detailed view allowed.|`"year"`|
 
@@ -153,3 +156,17 @@ The MIT License.
     </td>
   </tr>
 </table>
+
+## Thank you
+
+### Sponsors
+
+Thank you to all our sponsors! [Become a sponsor](https://opencollective.com/react-calendar#sponsor) and get your image on our README on GitHub.
+
+<a href="https://opencollective.com/react-calendar#sponsors" target="_blank"><img src="https://opencollective.com/react-calendar/sponsors.svg?width=890"></a>
+
+### Backers
+
+Thank you to all our backers! [Become a backer](https://opencollective.com/react-calendar#backer) and get your image on our README on GitHub.
+
+<a href="https://opencollective.com/react-calendar#backers" target="_blank"><img src="https://opencollective.com/react-calendar/backers.svg?width=890"></a>

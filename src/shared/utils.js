@@ -6,8 +6,8 @@ import { getRange } from './dates';
  *
  * @param {Function[]} functions
  */
-export const mergeFunctions = (...functions) => (...args) =>
-  functions.filter(Boolean).forEach(f => f(...args));
+export const mergeFunctions = (...functions) => (...args) => functions
+  .filter(Boolean).forEach(f => f(...args));
 
 /**
  * Calls a function, if it's defined, with specified arguments
@@ -21,18 +21,18 @@ export const callIfDefined = (fn, ...args) => {
 };
 
 export const isValueWithinRange = (value, range) => (
-  range[0] <= value &&
-  range[1] >= value
+  range[0] <= value
+  && range[1] >= value
 );
 
 export const isRangeWithinRange = (greaterRange, smallerRange) => (
-  greaterRange[0] <= smallerRange[0] &&
-  greaterRange[1] >= smallerRange[1]
+  greaterRange[0] <= smallerRange[0]
+  && greaterRange[1] >= smallerRange[1]
 );
 
 export const doRangesOverlap = (range1, range2) => (
-  isValueWithinRange(range1[0], range2) ||
-  isValueWithinRange(range1[1], range2)
+  isValueWithinRange(range1[0], range2)
+  || isValueWithinRange(range1[1], range2)
 );
 
 /**
@@ -52,26 +52,38 @@ export const between = (value, min, max) => {
   return value;
 };
 
+const isEqual = (date1, date2) => new Date(date1).getTime() === new Date(date2).getTime();
+
 export const getTileClasses = ({
   value, valueType, date, dateType, hover,
 } = {}) => {
   const className = 'react-calendar__tile';
   const classes = [className];
+
+  if (!date) {
+    return classes;
+  }
+
+  if (!(date instanceof Array) && !dateType) {
+    throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
+  }
+
+  const now = new Date();
+  const dateRange = date instanceof Array ? date : getRange(dateType, date);
+
+  if (isValueWithinRange(now, dateRange)) {
+    classes.push(`${className}--now`);
+  }
+
   if (!value) {
     return classes;
   }
 
-  if (
-    !date ||
-    (!(value instanceof Array) && !valueType) ||
-    (!(date instanceof Array) && !dateType)
-  ) {
+  if (!(value instanceof Array) && !valueType) {
     throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
   }
 
   const valueRange = value instanceof Array ? value : getRange(valueType, value);
-  const dateRange = date instanceof Array ? date : getRange(dateType, date);
-  const now = new Date();
 
   if (isRangeWithinRange(valueRange, dateRange)) {
     classes.push(`${className}--active`);
@@ -81,21 +93,32 @@ export const getTileClasses = ({
     hover && (
       // Date before value
       (
-        dateRange[1] < valueRange[0] &&
-        isRangeWithinRange([hover, valueRange[0]], dateRange)
-      ) ||
+        dateRange[1] < valueRange[0]
+        && isRangeWithinRange([hover, valueRange[0]], dateRange)
+      )
       // Date after value
-      (
-        dateRange[0] > valueRange[1] &&
-        isRangeWithinRange([valueRange[1], hover], dateRange)
+      || (
+        dateRange[0] > valueRange[1]
+        && isRangeWithinRange([valueRange[1], hover], dateRange)
       )
     )
   ) {
     classes.push(`${className}--hover`);
   }
 
-  if (isValueWithinRange(now, dateRange)) {
-    classes.push(`${className}--now`);
+  const isRangeStart = isEqual(dateRange[0], valueRange[0]);
+  const isRangeEnd = isEqual(dateRange[1], valueRange[1]);
+
+  if (isRangeStart) {
+    classes.push(`${className}--rangeStart`);
+  }
+
+  if (isRangeEnd) {
+    classes.push(`${className}--rangeEnd`);
+  }
+
+  if (isRangeStart && isRangeEnd) {
+    classes.push(`${className}--rangeBothEnds`);
   }
 
   return classes;

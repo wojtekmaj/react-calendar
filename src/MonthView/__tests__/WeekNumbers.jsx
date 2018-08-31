@@ -62,6 +62,22 @@ describe('WeekNumbers', () => {
     expect(weekNumbers.first().text()).toBe('1');
   });
 
+  it('renders proper weekNumbers given showFixedNumberOfWeeks flag', () => {
+    // Same config as in first test which gives 5 weeks, except for the flag
+    const component = mount(
+      <WeekNumbers
+        activeStartDate={new Date(2018, 0, 1)}
+        calendarType="ISO 8601"
+        showFixedNumberOfWeeks
+      />
+    );
+
+    const weekNumbers = component.find('WeekNumber');
+
+    expect(weekNumbers).toHaveLength(6);
+    expect(weekNumbers.first().text()).toBe('1');
+  });
+
   it('renders static divs as children when not given onClickWeekNumber', () => {
     const component = mount(
       <WeekNumbers

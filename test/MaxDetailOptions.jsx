@@ -5,9 +5,11 @@ const allViews = ['century', 'decade', 'year', 'month'];
 
 export default class MaxDetailOptions extends PureComponent {
   onChange = (event) => {
+    const { setState } = this.props;
+
     const { value } = event.target;
 
-    this.props.setState({ maxDetail: value });
+    setState({ maxDetail: value });
   }
 
   render() {
@@ -16,7 +18,9 @@ export default class MaxDetailOptions extends PureComponent {
 
     return (
       <fieldset id="detailoptions">
-        <legend htmlFor="viewoptions">Maximum detail</legend>
+        <legend htmlFor="viewoptions">
+          Maximum detail
+        </legend>
 
         <div>
           <input
@@ -28,7 +32,9 @@ export default class MaxDetailOptions extends PureComponent {
             type="radio"
             value="century"
           />
-          <label htmlFor="maxDetailCentury">Century</label>
+          <label htmlFor="maxDetailCentury">
+            Century
+          </label>
         </div>
         <div>
           <input
@@ -40,7 +46,9 @@ export default class MaxDetailOptions extends PureComponent {
             type="radio"
             value="decade"
           />
-          <label htmlFor="maxDetailDecade">Decade</label>
+          <label htmlFor="maxDetailDecade">
+            Decade
+          </label>
         </div>
         <div>
           <input
@@ -52,7 +60,9 @@ export default class MaxDetailOptions extends PureComponent {
             type="radio"
             value="year"
           />
-          <label htmlFor="maxDetailYear">Year</label>
+          <label htmlFor="maxDetailYear">
+            Year
+          </label>
         </div>
         <div>
           <input
@@ -64,7 +74,9 @@ export default class MaxDetailOptions extends PureComponent {
             type="radio"
             value="month"
           />
-          <label htmlFor="maxDetailMonth">Month</label>
+          <label htmlFor="maxDetailMonth">
+            Month
+          </label>
         </div>
       </fieldset>
     );

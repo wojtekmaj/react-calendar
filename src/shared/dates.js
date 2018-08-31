@@ -1,3 +1,8 @@
+const [
+  // eslint-disable-next-line no-unused-vars
+  SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY,
+] = [...Array(7)].map((el, index) => index);
+
 /* Simple getters - getting a property of a given point in time */
 
 export const getYear = (date) => {
@@ -31,6 +36,9 @@ export const getDayOfWeek = (date, calendarType = 'ISO 8601') => {
     case 'ISO 8601':
       // Shifts days of the week so that Monday is 0, Sunday is 6
       return (weekday + 6) % 7;
+    case 'Arabic':
+      return (weekday + 1) % 7;
+    case 'Hebrew':
     case 'US':
       return weekday;
     default:
@@ -247,22 +255,23 @@ export const getDayRange = date => [
 
 /**
  * Gets week number according to ISO 8601 or US standard.
- * In ISO 8601 week 1 is the one with January 4.
+ * In ISO 8601, Arabic and Hebrew week 1 is the one with January 4.
  * In US calendar week 1 is the one with January 1.
  *
  * @param {Date} date Date.
  * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
  */
 export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
-  const beginOfWeek = getBeginOfWeek(date, calendarType);
+  const calendarTypeForWeekNumber = calendarType === 'US' ? 'US' : 'ISO 8601';
+  const beginOfWeek = getBeginOfWeek(date, calendarTypeForWeekNumber);
   let year = getYear(date) + 1;
   let dayInWeekOne;
   let beginOfFirstWeek;
 
   // Look for the first week one that does not come after a given date
   do {
-    dayInWeekOne = new Date(year, 0, calendarType === 'ISO 8601' ? 4 : 1);
-    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarType);
+    dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === 'ISO 8601' ? 4 : 1);
+    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarTypeForWeekNumber);
     year -= 1;
   } while (date - beginOfFirstWeek < 0);
 
@@ -471,9 +480,18 @@ export const getDecadeLabel = date => toYearLabel(getDecadeRange(date));
  *
  * @param {Date} date Date.
  */
-export const isWeekend = (date) => {
-  const weekday = getDayOfWeek(date);
-  return weekday >= 5;
+export const isWeekend = (date, calendarType = 'ISO 8601') => {
+  const weekday = date.getDay();
+  switch (calendarType) {
+    case 'Arabic':
+    case 'Hebrew':
+      return weekday === FRIDAY || weekday === SATURDAY;
+    case 'ISO 8601':
+    case 'US':
+      return weekday === SATURDAY || weekday === SUNDAY;
+    default:
+      throw new Error('Unsupported calendar type.');
+  }
 };
 
 /**

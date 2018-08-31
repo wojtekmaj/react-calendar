@@ -5,9 +5,11 @@ const allViews = ['century', 'decade', 'year', 'month'];
 
 export default class MinDetailOptions extends PureComponent {
   onChange = (event) => {
+    const { setState } = this.props;
+
     const { value } = event.target;
 
-    this.props.setState({ minDetail: value });
+    setState({ minDetail: value });
   }
 
   render() {
@@ -16,7 +18,9 @@ export default class MinDetailOptions extends PureComponent {
 
     return (
       <fieldset id="detailoptions">
-        <legend htmlFor="viewoptions">Minimum detail</legend>
+        <legend htmlFor="viewoptions">
+          Minimum detail
+        </legend>
 
         <div>
           <input
@@ -28,7 +32,9 @@ export default class MinDetailOptions extends PureComponent {
             type="radio"
             value="century"
           />
-          <label htmlFor="minDetailCentury">Century</label>
+          <label htmlFor="minDetailCentury">
+            Century
+          </label>
         </div>
         <div>
           <input
@@ -40,7 +46,9 @@ export default class MinDetailOptions extends PureComponent {
             type="radio"
             value="decade"
           />
-          <label htmlFor="minDetailDecade">Decade</label>
+          <label htmlFor="minDetailDecade">
+            Decade
+          </label>
         </div>
         <div>
           <input
@@ -52,7 +60,9 @@ export default class MinDetailOptions extends PureComponent {
             type="radio"
             value="year"
           />
-          <label htmlFor="minDetailYear">Year</label>
+          <label htmlFor="minDetailYear">
+            Year
+          </label>
         </div>
         <div>
           <input
@@ -64,7 +74,9 @@ export default class MinDetailOptions extends PureComponent {
             type="radio"
             value="month"
           />
-          <label htmlFor="minDetailMonth">Month</label>
+          <label htmlFor="minDetailMonth">
+            Month
+          </label>
         </div>
       </fieldset>
     );

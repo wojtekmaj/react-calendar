@@ -5,6 +5,7 @@ import mergeClassNames from 'merge-class-names';
 import { tileProps } from './shared/propTypes';
 
 const Tile = ({
+  activeStartDate,
   children,
   classes,
   date,
@@ -27,9 +28,9 @@ const Tile = ({
       tileClassName instanceof Function ? tileClassName({ date, view }) : tileClassName,
     )}
     disabled={
-      (minDate && minDateTransform(minDate) > date) ||
-      (maxDate && maxDateTransform(maxDate) < date) ||
-      (tileDisabled && tileDisabled({ date, view }))
+      (minDate && minDateTransform(minDate) > date)
+      || (maxDate && maxDateTransform(maxDate) < date)
+      || (tileDisabled && tileDisabled({ activeStartDate, date, view }))
     }
     onClick={onClick && (() => onClick(date))}
     onMouseOver={onMouseOver && (() => onMouseOver(date))}

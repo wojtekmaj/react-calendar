@@ -17,9 +17,12 @@ import { isView, isViews } from '../shared/propTypes';
 
 export default class Navigation extends Component {
   shouldComponentUpdate(nextProps) {
+    const { activeStartDate, locale, view } = this.props;
+
     return (
-      nextProps.activeStartDate !== this.props.activeStartDate ||
-      nextProps.view !== this.props.view
+      nextProps.activeStartDate !== activeStartDate
+      || nextProps.locale !== locale
+      || nextProps.view !== view
     );
   }
 
@@ -101,7 +104,16 @@ export default class Navigation extends Component {
 
   render() {
     const { label } = this;
-    const { drillUp, view, activeStartDate: date } = this.props;
+    const {
+      activeStartDate: date,
+      drillUp,
+      navigationLabel,
+      next2Label,
+      nextLabel,
+      prev2Label,
+      prevLabel,
+      view,
+    } = this.props;
 
     const className = 'react-calendar__navigation';
 
@@ -110,24 +122,23 @@ export default class Navigation extends Component {
         className={className}
         style={{ display: 'flex' }}
       >
-        {
-          view !== 'century' &&
+        {prev2Label !== null && view !== 'century' && (
           <button
             className={`${className}__arrow ${className}__prev2-button`}
             disabled={this.prev2ButtonDisabled}
             onClick={this.onClickPrevious2}
             type="button"
           >
-            {this.props.prev2Label}
+            {prev2Label}
           </button>
-        }
+        )}
         <button
           className={`${className}__arrow ${className}__prev-button`}
           disabled={this.prevButtonDisabled}
           onClick={this.onClickPrevious}
           type="button"
         >
-          {this.props.prevLabel}
+          {prevLabel}
         </button>
         <button
           className="react-calendar__navigation__label"
@@ -136,9 +147,9 @@ export default class Navigation extends Component {
           style={{ flexGrow: 1 }}
           type="button"
         >
-          {this.props.navigationLabel ?
-            this.props.navigationLabel({ date, view, label }) :
-            label
+          {navigationLabel
+            ? navigationLabel({ date, view, label })
+            : label
           }
         </button>
         <button
@@ -147,19 +158,18 @@ export default class Navigation extends Component {
           onClick={this.onClickNext}
           type="button"
         >
-          {this.props.nextLabel}
+          {nextLabel}
         </button>
-        {
-          view !== 'century' &&
+        {next2Label !== null && view !== 'century' && (
           <button
             className={`${className}__arrow ${className}__next2-button`}
             disabled={this.next2ButtonDisabled}
             onClick={this.onClickNext2}
             type="button"
           >
-            {this.props.next2Label}
+            {next2Label}
           </button>
-        }
+        )}
       </div>
     );
   }

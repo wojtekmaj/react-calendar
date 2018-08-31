@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 
-const calendarTypes = ['ISO 8601', 'US'];
+const calendarTypes = ['ISO 8601', 'US', 'Arabic', 'Hebrew'];
 const allViews = ['century', 'decade', 'year', 'month'];
 
 export const isCalendarType = PropTypes.oneOf(calendarTypes);
 
 export const isMinDate = (props, propName, componentName) => {
-  const minDate = props[propName];
+  const { [propName]: minDate } = props;
 
   if (minDate) {
     if (!(minDate instanceof Date)) {
@@ -25,7 +25,7 @@ export const isMinDate = (props, propName, componentName) => {
 };
 
 export const isMaxDate = (props, propName, componentName) => {
-  const maxDate = props[propName];
+  const { [propName]: maxDate } = props;
 
   if (maxDate) {
     if (!(maxDate instanceof Date)) {
@@ -56,7 +56,7 @@ export const isClassName = PropTypes.oneOfType([
 ]);
 
 export const isView = (props, propName, componentName) => {
-  const view = props[propName];
+  const { [propName]: view } = props;
   const { views } = props;
 
   const allowedViews = views || allViews;
@@ -70,10 +70,12 @@ export const isView = (props, propName, componentName) => {
 };
 
 isView.isRequired = (props, propName, componentName) => {
-  const view = props[propName];
+  const { [propName]: view } = props;
+
   if (!view) {
     return new Error(`The prop \`${propName}\` is marked as required in \`${componentName}\`, but its value is \`${view}\`.`);
   }
+
   return isView(props, propName, componentName);
 };
 
@@ -97,6 +99,7 @@ export const tileGroupProps = {
 };
 
 export const tileProps = {
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
   classes: PropTypes.arrayOf(PropTypes.string).isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
   maxDate: isMaxDate,

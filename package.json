@@ -1,19 +1,20 @@
 {
   "name": "react-calendar",
-  "version": "2.14.0",
+  "version": "2.17.1",
   "description": "Ultimate calendar for your React app.",
   "main": "dist/entry.js",
   "types": "./index.d.ts",
   "es6": "src/entry.js",
   "scripts": {
-    "build": "npm run build-js && npm run copy-styles && npm run build-styles",
-    "build-js": "babel src -d dist --ignore **/__tests__",
+    "build": "yarn run build-js && yarn run copy-styles && yarn run build-styles && yarn run copy-types",
+    "build-js": "babel src -d dist --ignore __tests__",
     "build-styles": "lessc ./dist/Calendar.less ./dist/Calendar.css",
     "clean": "rimraf dist",
     "copy-styles": "node ./copy-styles.js",
+    "copy-types": "node ./copy-types.js",
     "prepublishOnly": "npm run clean && npm run build",
-    "test": "npm run test-eslint && npm run test-jest",
-    "test-eslint": "eslint ./src",
+    "test": "yarn run test-eslint && yarn run test-jest",
+    "test-eslint": "eslint src/ test/ --ext .jsx,.js",
     "test-jest": "jest",
     "test-jest-coverage": "jest --coverage"
   },
@@ -40,7 +41,13 @@
   },
   "contributors": [
     {
+      "name": "Andriy Kuzyk"
+    },
+    {
       "name": "Baldur Árnason"
+    },
+    {
+      "name": "Jack Willis-Craig"
     },
     {
       "name": "Justin Davis"
@@ -48,39 +55,41 @@
     {
       "name": "Kevin Kipp",
       "email": "kevin.kipp@gmail.com"
+    },
+    {
+      "name": "Ritesh Kumar",
+      "email": "rkritesh078@gmail.com"
     }
   ],
   "license": "MIT",
   "dependencies": {
-    "lodash.once": "^4.1.1",
+    "get-user-locale": "^1.1.0",
     "merge-class-names": "^1.1.1",
     "prop-types": "^15.6.0",
-    "react-lifecycles-compat": "^1.1.0"
+    "react-lifecycles-compat": "^3.0.4"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.1",
-    "babel-jest": "^22.1.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-jest": "^23.4.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
-    "babel-plugin-transform-object-assign": "^6.22.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint": "^4.16.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-class-property": "^1.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.6.0",
-    "jest": "^22.1.4",
-    "jest-cli": "^22.1.4",
-    "less": "^2.7.3",
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.5.0",
+    "jest-cli": "^23.5.0",
+    "less": "~3.7.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-test-renderer": "^16.4.1",
     "rimraf": "^2.6.2"
   },
   "peerDependencies": {

@@ -1,6 +1,8 @@
 declare module "react-calendar" {
+  type CalendarType = "ISO 8601" | "US" | "Arabic" | "Hebrew"
   type Detail = "month" | "year" | "decade" | "century"
   type DateCallback = (date: Date) => void
+  type OnChangeDateCallback = (date: Date | Date[]) => void
   type FormatterCallback = (date: Date) => string
   type ViewCallback = (props: ViewCallbackProperties) => void
 
@@ -8,7 +10,7 @@ declare module "react-calendar" {
 
   export interface CalendarProps {
     activeStartDate?: Date;
-    calendarType?: "US" | "ISO 8601";
+    calendarType?: CalendarType;
     className?: string | string[];
     formatMonth?: FormatterCallback;
     formatMonthYear?: FormatterCallback;
@@ -18,10 +20,11 @@ declare module "react-calendar" {
     maxDetail?: Detail;
     minDate?: Date;
     minDetail?: Detail;
-    next2Label?: string | JSX.Element;
+    navigationLabel?: ({date: Date, view: Detail, label: string}) => string | JSX.Element | null;
+    next2Label?: string | JSX.Element | null;
     nextLabel?: string | JSX.Element;
     onActiveDateChange?: ViewCallback;
-    onChange?: DateCallback;
+    onChange?: OnChangeDateCallback;
     onClickDay?: DateCallback;
     onClickDecade?: DateCallback;
     onClickMonth?: DateCallback;
@@ -29,17 +32,18 @@ declare module "react-calendar" {
     onClickYear?: DateCallback;
     onDrillDown?: ViewCallback;
     onDrillUp?: ViewCallback;
-    prev2Label?: string | JSX.Element;
+    prev2Label?: string | JSX.Element | null;
     prevLabel?: string | JSX.Element;
     renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
     returnValue?: "start" | "end" | "range";
     selectRange?: boolean;
+    showFixedNumberOfWeeks?: boolean;
     showNavigation?: boolean;
     showNeighboringMonth?: boolean;
     showWeekNumbers?: boolean;
     tileClassName?: string | string[] | ((props: CalendarTileProperties) => string | string[] | null);
     tileContent?: JSX.Element | ((props: CalendarTileProperties) => JSX.Element | null);
-    tileDisabled?: (props: CalendarTileProperties) => boolean;
+    tileDisabled?: (props: CalendarTileProperties & {activeStartDate: Date}) => boolean;
     value?: Date | Date[];
     view?: Detail;
   }
@@ -61,7 +65,7 @@ declare module "react-calendar" {
 
   export interface DetailViewProps {
     activeStartDate: Date;
-    calendarType?: "US" | "ISO 8601";
+    calendarType?: CalendarType;
     locale?: string;
     hover?: Date;
     maxDate?: Date;

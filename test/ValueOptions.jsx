@@ -2,24 +2,26 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { isValue } from '../src/shared/propTypes';
-import {
-  getISOLocalDate,
-  getBeginOfDay,
-  getEndOfDay,
-} from './shared/dates';
+import { getISOLocalDateTime } from './shared/dates';
 
 export default class ValueOptions extends PureComponent {
   get startDate() {
     const { value } = this.props;
+
     return [].concat(value)[0];
   }
 
   get endDate() {
     const { value } = this.props;
+
     return [].concat(value)[1];
   }
 
-  setValue = value => this.props.setState({ value });
+  setValue = (value) => {
+    const { setState } = this.props;
+
+    setState({ value });
+  }
 
   setStartValue = (startValue) => {
     const { value } = this.props;
@@ -53,18 +55,20 @@ export default class ValueOptions extends PureComponent {
 
   onStartChange = (event) => {
     const { value } = event.target;
-    this.setStartValue(getBeginOfDay(new Date(value)));
+    this.setStartValue(new Date(value));
   }
 
   onEndChange = (event) => {
     const { value } = event.target;
-    this.setEndValue(getEndOfDay(new Date(value)));
+    this.setEndValue(new Date(value));
   }
 
   onSelectRangeChange = (event) => {
+    const { setState } = this.props;
+
     const { checked } = event.target;
 
-    this.props.setState({ selectRange: checked });
+    setState({ selectRange: checked });
   }
 
   render() {
@@ -72,30 +76,58 @@ export default class ValueOptions extends PureComponent {
 
     return (
       <fieldset id="valueOptions">
-        <legend htmlFor="valueOptions">Value options</legend>
+        <legend htmlFor="valueOptions">
+          Value options
+        </legend>
 
         <div>
-          <label htmlFor="startDate">Start date</label>
+          <label htmlFor="startDate">
+            Start date
+          </label>
           <input
             id="startDate"
             onChange={this.onStartChange}
-            type="date"
-            value={this.startDate ? getISOLocalDate(this.startDate) : ''}
-          />&nbsp;
-          <button onClick={() => this.setStartValue(null)}>Clear to null</button>
-          <button onClick={() => this.setStartValue('')}>Clear to empty string</button>
+            type="datetime-local"
+            value={this.startDate ? getISOLocalDateTime(this.startDate) : ''}
+          />
+          &nbsp;
+          <button
+            type="button"
+            onClick={() => this.setStartValue(null)}
+          >
+            Clear to null
+          </button>
+          <button
+            type="button"
+            onClick={() => this.setStartValue('')}
+          >
+            Clear to empty string
+          </button>
         </div>
 
         <div>
-          <label htmlFor="endDate">End date</label>
+          <label htmlFor="endDate">
+            End date
+          </label>
           <input
             id="endDate"
             onChange={this.onEndChange}
-            type="date"
-            value={this.endDate ? getISOLocalDate(this.endDate) : ''}
-          />&nbsp;
-          <button onClick={() => this.setEndValue(null)}>Clear to null</button>
-          <button onClick={() => this.setEndValue('')}>Clear to empty string</button>
+            type="datetime-local"
+            value={this.endDate ? getISOLocalDateTime(this.endDate) : ''}
+          />
+          &nbsp;
+          <button
+            type="button"
+            onClick={() => this.setEndValue(null)}
+          >
+            Clear to null
+          </button>
+          <button
+            type="button"
+            onClick={() => this.setEndValue('')}
+          >
+            Clear to empty string
+          </button>
         </div>
 
         <div>
@@ -105,7 +137,9 @@ export default class ValueOptions extends PureComponent {
             checked={selectRange}
             onChange={this.onSelectRangeChange}
           />
-          <label htmlFor="selectRange">Select range</label>
+          <label htmlFor="selectRange">
+            Select range
+          </label>
         </div>
       </fieldset>
     );
