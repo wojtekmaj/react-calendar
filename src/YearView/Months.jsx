@@ -19,7 +19,6 @@ export default class Months extends PureComponent {
 
   render() {
     const {
-      activeStartDate,
       ...otherProps
     } = this.props;
 
