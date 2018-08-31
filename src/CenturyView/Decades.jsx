@@ -21,7 +21,6 @@ export default class Decades extends PureComponent {
 
   render() {
     const {
-      activeStartDate,
       ...otherProps
     } = this.props;
 
