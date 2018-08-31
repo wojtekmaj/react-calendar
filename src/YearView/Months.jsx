@@ -18,13 +18,9 @@ export default class Months extends PureComponent {
   }
 
   render() {
-    const {
-      ...otherProps
-    } = this.props;
-
     return (
       <TileGroup
-        {...otherProps}
+        {...this.props}
         className="react-calendar__year-view__months"
         dateTransform={monthIndex => new Date(this.year, monthIndex, 1)}
         dateType="month"

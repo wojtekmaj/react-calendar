@@ -20,13 +20,9 @@ export default class Decades extends PureComponent {
   }
 
   render() {
-    const {
-      ...otherProps
-    } = this.props;
-
     return (
       <TileGroup
-        {...otherProps}
+        {...this.props}
         className="react-calendar__century-view__decades"
         dateTransform={getBeginOfDecade}
         dateType="decade"

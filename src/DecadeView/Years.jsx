@@ -17,13 +17,9 @@ export default class Years extends PureComponent {
   }
 
   render() {
-    const {
-      ...otherProps
-    } = this.props;
-
     return (
       <TileGroup
-        {...otherProps}
+        {...this.props}
         className="react-calendar__decade-view__years"
         dateTransform={year => new Date(year, 0, 1)}
         dateType="year"
