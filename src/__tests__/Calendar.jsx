@@ -297,7 +297,7 @@ describe('Calendar', () => {
     expect(component.state().value).toBe(nextValue);
   });
 
-  it('calls onChange function returning beginning of selected period by default', () => {
+  it('calls onChange function returning the beginning of selected period by default', () => {
     const onChange = jest.fn();
     const component = mount(
       <Calendar
@@ -356,7 +356,7 @@ describe('Calendar', () => {
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 23, 59, 59, 999));
   });
 
-  it('calls onChange function returning beginning of selected period when returnValue is set to "range"', () => {
+  it('calls onChange function returning the beginning of selected period when returnValue is set to "range"', () => {
     const onChange = jest.fn();
     const component = mount(
       <Calendar
@@ -374,7 +374,7 @@ describe('Calendar', () => {
     ]);
   });
 
-  it('calls onChange function returning beginning of selected period, but no earlier than minDate', () => {
+  it('calls onChange function returning the beginning of selected period, but no earlier than minDate', () => {
     const onChange = jest.fn();
     const component = mount(
       <Calendar
@@ -390,7 +390,7 @@ describe('Calendar', () => {
     expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
   });
 
-  it('calls onChange function returning beginning of selected period, but no later than maxDate', () => {
+  it('calls onChange function returning the beginning of selected period, but no later than maxDate', () => {
     const onChange = jest.fn();
     const component = mount(
       <Calendar
