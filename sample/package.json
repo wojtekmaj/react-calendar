@@ -14,17 +14,17 @@
   "license": "MIT",
   "dependencies": {
     "prop-types": "^15.6.2",
-    "react": "^16.4.1",
+    "react": "^16.5.0",
     "react-calendar": "latest",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.5.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.6",
+    "babel-eslint": "^9.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "eslint": "^4.19.1",
+    "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
