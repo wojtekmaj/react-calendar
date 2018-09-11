@@ -20,7 +20,7 @@ declare module "react-calendar" {
     maxDetail?: Detail;
     minDate?: Date;
     minDetail?: Detail;
-    navigationLabel?: ({date: Date, view: Detail, label: string}) => string | JSX.Element | null;
+    navigationLabel?: (props: { date: Date, view: Detail, label: string }) => string | JSX.Element | null;
     next2Label?: string | JSX.Element | null;
     nextLabel?: string | JSX.Element;
     onActiveDateChange?: ViewCallback;
