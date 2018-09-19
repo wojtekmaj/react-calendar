@@ -170,3 +170,9 @@ Thank you to all our sponsors! [Become a sponsor](https://opencollective.com/rea
 Thank you to all our backers! [Become a backer](https://opencollective.com/react-calendar#backer) and get your image on our README on GitHub.
 
 <a href="https://opencollective.com/react-calendar#backers" target="_blank"><img src="https://opencollective.com/react-calendar/backers.svg?width=890"></a>
+
+### Top Contributors
+
+Thank you to all our contributors that helped on this project!
+
+[![](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/images/0)](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/links/0)[![](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/images/1)](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/links/1)[![](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/images/2)](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/links/2)[![](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/images/3)](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/links/3)[![](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/images/4)](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/links/4)[![](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/images/5)](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/links/5)[![](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/images/6)](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/links/6)[![](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/images/7)](https://sourcerer.io/fame/gwenaelp/gwenaelp/react-calendar/links/7)
