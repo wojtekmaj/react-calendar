@@ -95,11 +95,11 @@
     padding: .75em .5em;
     background: none;
 
-    button&:disabled {
+    &:disabled {
       background-color: rgb(240, 240, 240);
     }
 
-    button&:enabled {
+    &:enabled {
       &:hover, &:focus {
         background-color: rgb(230, 230, 230);
       }
@@ -109,7 +109,7 @@
       @bgcolor: lighten(rgb(0, 110, 220), 30%);
       background: @bgcolor;
 
-      button&:enabled {
+      &:enabled {
         &:hover, &:focus {
           background: lighten(@bgcolor, 10%);
         }
@@ -121,7 +121,7 @@
       background: @bgcolor;
       color: white;
 
-      button&:enabled {
+      &:enabled {
         &:hover, &:focus {
           background: lighten(@bgcolor, 10%);
         }

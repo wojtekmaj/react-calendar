@@ -109,29 +109,6 @@ body {
             }
           }
 
-          &--hasActive {
-            @bgcolor: lighten(rgb(0, 110, 220), 30%);
-            background: @bgcolor;
-
-            button&:enabled {
-              &:hover, &:focus {
-                background: lighten(@bgcolor, 10%);
-              }
-            }
-          }
-
-          &--active {
-            @bgcolor: rgb(0, 110, 220);
-            background: @bgcolor;
-            color: white;
-
-            button&:enabled {
-              &:hover, &:focus {
-                background: lighten(@bgcolor, 10%);
-              }
-            }
-          }
-
           p {
             margin: 0;
             line-height: 0.75;
