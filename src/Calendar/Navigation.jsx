@@ -129,7 +129,7 @@ export default class Navigation extends Component {
             onClick={this.onClickPrevious2}
             type="button"
           >
-            {prev2Label}
+            {typeof prev2Label === 'function' ? prev2Label({ view }) : prev2Label}
           </button>
         )}
         <button
@@ -138,7 +138,7 @@ export default class Navigation extends Component {
           onClick={this.onClickPrevious}
           type="button"
         >
-          {prevLabel}
+          {typeof prevLabel === 'function' ? prevLabel({ view }) : prevLabel}
         </button>
         <button
           className="react-calendar__navigation__label"
@@ -158,7 +158,7 @@ export default class Navigation extends Component {
           onClick={this.onClickNext}
           type="button"
         >
-          {nextLabel}
+          {typeof nextLabel === 'function' ? nextLabel({ view }) : nextLabel}
         </button>
         {next2Label !== null && view !== 'century' && (
           <button
@@ -167,7 +167,7 @@ export default class Navigation extends Component {
             onClick={this.onClickNext2}
             type="button"
           >
-            {next2Label}
+            {typeof next2Label === 'function' ? next2Label({ view }) : next2Label}
           </button>
         )}
       </div>
