@@ -139,6 +139,29 @@ describe('Navigation', () => {
     expect(next2.props.children).toBe('next2Label');
   });
 
+  it('displays proper user-defined labels with views on prev2, prev, next and next2 buttons', () => {
+    const component = shallow(
+      <Navigation
+        activeStartDate={new Date(2017, 0, 1)}
+        drillUp={jest.fn()}
+        next2Label={({ view }) => `next${view}2`}
+        nextLabel={({ view }) => `next${view}`}
+        prev2Label={({ view }) => `prev${view}2`}
+        prevLabel={({ view }) => `prev${view}`}
+        setActiveStartDate={jest.fn()}
+        view="month"
+        views={allViews}
+      />
+    );
+
+    const [prev2, prev, , next, next2] = component.children();
+
+    expect(prev2.props.children).toBe('prevmonth2');
+    expect(prev.props.children).toBe('prevmonth');
+    expect(next.props.children).toBe('nextmonth');
+    expect(next2.props.children).toBe('nextmonth2');
+  });
+
   it('calls drillUp function on drill up button click', () => {
     const drillUpFn = jest.fn();
     const component = shallow(
