@@ -144,10 +144,10 @@ describe('Navigation', () => {
       <Navigation
         activeStartDate={new Date(2017, 0, 1)}
         drillUp={jest.fn()}
-        next2Label={({ view }) => `next${view}2`}
-        nextLabel={({ view }) => `next${view}`}
-        prev2Label={({ view }) => `prev${view}2`}
-        prevLabel={({ view }) => `prev${view}`}
+        next2Label={view => `next${view}2`}
+        nextLabel={view => `next${view}`}
+        prev2Label={view => `prev${view}2`}
+        prevLabel={view => `prev${view}`}
         setActiveStartDate={jest.fn()}
         view="month"
         views={allViews}
