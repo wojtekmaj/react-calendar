@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import mergeClassNames from 'merge-class-names';
+import React from 'react'
+import PropTypes from 'prop-types'
+import mergeClassNames from 'merge-class-names'
 
-import { tileProps } from './shared/propTypes';
+import { tileProps } from './shared/propTypes'
 
 const Tile = ({
   activeStartDate,
@@ -20,37 +20,35 @@ const Tile = ({
   tileClassName,
   tileContent,
   tileDisabled,
-  view,
+  view
 }) => (
   <div
     className={mergeClassNames(
       classes,
-      tileClassName instanceof Function ? tileClassName({ date, view }) : tileClassName,
+      tileClassName instanceof Function ? tileClassName({ date, view }) : tileClassName
     )}
     disabled={
-      (minDate && minDateTransform(minDate) > date)
-      || (maxDate && maxDateTransform(maxDate) < date)
-      || (tileDisabled && tileDisabled({ activeStartDate, date, view }))
+      (minDate && minDateTransform(minDate) > date) ||
+        (maxDate && maxDateTransform(maxDate) < date) ||
+        (tileDisabled && tileDisabled({ activeStartDate, date, view }))
     }
     onClick={onClick && (() => onClick(date))}
     onMouseOver={onMouseOver && (() => onMouseOver(date))}
     onFocus={onMouseOver && (() => onMouseOver(date))}
-    style={style}
-    type="button"
-  >
+    style={style}>
     <time dateTime={dateTime}>
       {children}
     </time>
     {typeof tileContent === 'function' ? tileContent({ date, view }) : tileContent}
   </div>
-);
+)
 
 Tile.propTypes = {
   ...tileProps,
   children: PropTypes.node.isRequired,
   dateTime: PropTypes.string.isRequired,
   maxDateTransform: PropTypes.func.isRequired,
-  minDateTransform: PropTypes.func.isRequired,
-};
+  minDateTransform: PropTypes.func.isRequired
+}
 
-export default Tile;
+export default Tile
