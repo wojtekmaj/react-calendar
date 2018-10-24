@@ -22,7 +22,7 @@ const Tile = ({
   tileDisabled,
   view,
 }) => (
-  <button
+  <div
     className={mergeClassNames(
       classes,
       tileClassName instanceof Function ? tileClassName({ date, view }) : tileClassName,
@@ -42,7 +42,7 @@ const Tile = ({
       {children}
     </time>
     {typeof tileContent === 'function' ? tileContent({ date, view }) : tileContent}
-  </button>
+  </div>
 );
 
 Tile.propTypes = {
