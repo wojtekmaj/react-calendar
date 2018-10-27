@@ -6,6 +6,7 @@ import Month from '../Month';
 /* eslint-disable comma-dangle, jsx-a11y/mouse-events-have-key-events */
 
 const tileProps = {
+  activeStartDate: new Date(2018, 0, 1),
   classes: ['react-calendar__tile'],
   date: new Date(2018, 0, 1),
 };

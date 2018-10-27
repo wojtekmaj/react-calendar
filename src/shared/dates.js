@@ -439,7 +439,8 @@ export const getRange = (rangeType, date) => {
  * @param {Date} date2 Second date.
  */
 export const getValueRange = (rangeType, date1, date2) => {
-  const rawNextValue = [date1, date2].sort((a, b) => a.getTime() > b.getTime());
+  // Need to change to number and back due to https://bugs.chromium.org/p/v8/issues/detail?id=8379
+  const rawNextValue = [date1, date2].map(d => d.getTime()).sort().map(d => new Date(d));
   return [
     getBegin(rangeType, rawNextValue[0]),
     getEnd(rangeType, rawNextValue[1]),
