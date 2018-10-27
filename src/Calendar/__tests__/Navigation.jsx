@@ -390,6 +390,30 @@ describe('Navigation', () => {
     expect(prev.prop('disabled')).toBeTruthy();
   });
 
+  it('disallows navigating before dynamically set minDate', () => {
+    const component = shallow(
+      <Navigation
+        activeStartDate={new Date(2017, 0, 1)}
+        drillUp={jest.fn()}
+        setActiveStartDate={jest.fn()}
+        view="month"
+        views={allViews}
+      />
+    );
+
+    component.setProps({
+      minDate: new Date(2017, 0, 1),
+    });
+
+    const arrows = component.find('button.react-calendar__navigation__arrow');
+
+    const prev2 = arrows.at(0);
+    const prev = arrows.at(1);
+
+    expect(prev2.prop('disabled')).toBeTruthy();
+    expect(prev.prop('disabled')).toBeTruthy();
+  });
+
   it('disallows navigating after maxDate', () => {
     const component = shallow(
       <Navigation
@@ -401,6 +425,30 @@ describe('Navigation', () => {
         views={allViews}
       />
     );
+
+    const arrows = component.find('button.react-calendar__navigation__arrow');
+
+    const next = arrows.at(2);
+    const next2 = arrows.at(3);
+
+    expect(next.prop('disabled')).toBeTruthy();
+    expect(next2.prop('disabled')).toBeTruthy();
+  });
+
+  it('disallows navigating after dynamically set maxDate', () => {
+    const component = shallow(
+      <Navigation
+        activeStartDate={new Date(2017, 0, 1)}
+        drillUp={jest.fn()}
+        setActiveStartDate={jest.fn()}
+        view="month"
+        views={allViews}
+      />
+    );
+
+    component.setProps({
+      maxDate: new Date(2017, 0, 31),
+    });
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
 
