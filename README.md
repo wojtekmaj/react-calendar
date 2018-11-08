@@ -175,11 +175,4 @@ Thank you to all our backers! [Become a backer](https://opencollective.com/react
 
 Thank you to all our contributors that helped on this project!
 
-[![0](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/images/0)](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/links/0)
-[![1](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/images/1)](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/links/1)
-[![2](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/images/2)](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/links/2)
-[![3](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/images/3)](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/links/3)
-[![4](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/images/4)](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/links/4)
-[![5](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/images/5)](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/links/5)
-[![6](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/images/6)](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/links/6)
-[![7](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/images/7)](https://sourcerer.io/fame/wojtekmaj/wojtekmaj/react-calendar/links/7)
+![Top Contributors](https://opencollective.com/react-calendar/contributors.svg?width=890&button=false)
