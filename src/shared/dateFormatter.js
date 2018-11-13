@@ -45,6 +45,11 @@ export const formatDate = (date, locale) => getFormatter(
   locale,
 )(toSafeHour(date));
 
+export const formatLongDate = (date, locale) => getFormatter(
+  { day: 'numeric', month: 'long', year: 'numeric' },
+  locale,
+)(toSafeHour(date));
+
 export const formatMonthYear = (date, locale) => getFormatter(
   { month: 'long', year: 'numeric' },
   locale,

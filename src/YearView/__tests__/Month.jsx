@@ -29,7 +29,7 @@ describe('Month', () => {
     expect(wrapperClassName.includes('testFunctionClassName')).toBe(true);
   });
 
-  it('renders time component with proper dateTime arguments', () => {
+  it('renders component with proper abbreviation', () => {
     const component = mount(
       <Month
         {...tileProps}
@@ -38,11 +38,11 @@ describe('Month', () => {
       />
     );
 
-    const time = component.find('time');
+    const abbr = component.find('abbr');
 
-    expect(time).toHaveLength(1);
-    expect(time.prop('dateTime')).toBe('2018-01T00:00:00.000');
-    expect(time.text()).toBe('January');
+    expect(abbr).toHaveLength(1);
+    expect(abbr.prop('aria-label')).toBe('January 2018');
+    expect(component.text()).toBe('January');
   });
 
   it('is disabled when date is before beginning of minDate\'s month', () => {
