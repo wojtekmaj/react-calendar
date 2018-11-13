@@ -55,6 +55,11 @@ export const formatMonth = (date, locale) => getFormatter(
   locale,
 )(toSafeHour(date));
 
+export const formatWeekday = (date, locale) => getFormatter(
+  { weekday: 'long' },
+  locale,
+)(toSafeHour(date));
+
 export const formatShortWeekday = (date, locale) => getFormatter(
   { weekday: 'short' },
   locale,

@@ -77,7 +77,7 @@ export default class MonthView extends PureComponent {
       <Weekdays
         calendarType={this.calendarType}
         locale={locale}
-        month={activeStartDate}
+        activeStartDate={activeStartDate}
         formatShortWeekday={formatShortWeekday}
       />
     );
