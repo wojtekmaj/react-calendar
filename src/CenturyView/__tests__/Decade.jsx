@@ -30,7 +30,7 @@ describe('Decade', () => {
     expect(wrapperClassName.includes('testFunctionClassName')).toBe(true);
   });
 
-  it('renders time component with proper dateTime arguments', () => {
+  it('renders component without abbreviation', () => {
     const component = mount(
       <Decade
         {...tileProps}
@@ -39,11 +39,10 @@ describe('Decade', () => {
       />
     );
 
-    const time = component.find('time');
+    const abbr = component.find('abbr');
 
-    expect(time).toHaveLength(1);
-    expect(time.prop('dateTime')).toBe('2011T00:00:00.000');
-    expect(time.text()).toBe('2011 – 2020');
+    expect(abbr).toHaveLength(0);
+    expect(component.text()).toBe('2011 – 2020');
   });
 
   it('is disabled when date is before beginning of minDate\'s decade', () => {

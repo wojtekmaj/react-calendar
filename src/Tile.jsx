@@ -9,7 +9,7 @@ const Tile = ({
   children,
   classes,
   date,
-  dateTime,
+  formatAbbr,
   maxDate,
   maxDateTransform,
   minDate,
@@ -38,9 +38,14 @@ const Tile = ({
     style={style}
     type="button"
   >
-    <time dateTime={dateTime}>
-      {children}
-    </time>
+    {formatAbbr
+      ? (
+        <abbr aria-label={formatAbbr(date)}>
+          {children}
+        </abbr>
+      )
+      : children
+    }
     {typeof tileContent === 'function' ? tileContent({ date, view }) : tileContent}
   </button>
 );
@@ -48,7 +53,7 @@ const Tile = ({
 Tile.propTypes = {
   ...tileProps,
   children: PropTypes.node.isRequired,
-  dateTime: PropTypes.string.isRequired,
+  formatAbbr: PropTypes.func,
   maxDateTransform: PropTypes.func.isRequired,
   minDateTransform: PropTypes.func.isRequired,
 };

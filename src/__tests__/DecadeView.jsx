@@ -5,8 +5,6 @@ import DecadeView from '../DecadeView';
 
 /* eslint-disable comma-dangle */
 
-const midnightTimestamp = 'T00:00:00.000';
-
 describe('DecadeView', () => {
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2011, 0, 1);
@@ -18,9 +16,8 @@ describe('DecadeView', () => {
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
 
-    expect(firstDayTileTimeISO).toBe(activeStartDate.getFullYear() + midnightTimestamp);
+    expect(firstDayTile.text()).toBe(`${activeStartDate.getFullYear()}`);
   });
 
   it('applies tileClassName to its tiles when given a string', () => {

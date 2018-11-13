@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
+import { getBeginOfDecade, getEndOfDecade } from '../shared/dates';
+
 import CenturyView from '../CenturyView';
 
 /* eslint-disable comma-dangle */
-
-const midnightTimestamp = 'T00:00:00.000';
 
 describe('CenturyView', () => {
   it('renders proper view when given activeStartDate', () => {
@@ -18,9 +18,8 @@ describe('CenturyView', () => {
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
 
-    expect(firstDayTileTimeISO).toBe(activeStartDate.getFullYear() + midnightTimestamp);
+    expect(firstDayTile.text()).toBe(`${getBeginOfDecade(activeStartDate).getFullYear()} – ${getEndOfDecade(activeStartDate).getFullYear()}`);
   });
 
   it('applies tileClassName to its tiles when given a string', () => {

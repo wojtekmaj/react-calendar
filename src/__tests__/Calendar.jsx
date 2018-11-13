@@ -2,14 +2,11 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import Calendar from '../Calendar';
-import {
-  getBeginOfMonth,
-  getISOLocalDate,
-} from '../shared/dates';
+import { getBeginOfMonth } from '../shared/dates';
 
 /* eslint-disable comma-dangle */
 
-const midnightTimestamp = 'T00:00:00.000';
+const { format } = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
 describe('Calendar', () => {
   it('renders navigation', () => {
@@ -166,9 +163,9 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
     const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
+    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
 
-    expect(firstDayTileTimeISO).toBe(getISOLocalDate(value) + midnightTimestamp);
+    expect(firstDayTileTimeAbbr).toBe(format(value));
   });
 
   it('displays a view with activeStartDate when no value is given and activeStartDate is given', () => {
@@ -182,9 +179,9 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
     const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
+    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
 
-    expect(firstDayTileTimeISO).toBe(getISOLocalDate(activeStartDate) + midnightTimestamp);
+    expect(firstDayTileTimeAbbr).toBe(format(activeStartDate));
   });
 
   it('displays a view with today\'s date when no value and no activeStartDate is given', () => {
@@ -196,9 +193,9 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
     const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
+    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
 
-    expect(firstDayTileTimeISO).toBe(getISOLocalDate(beginOfCurrentMonth) + midnightTimestamp);
+    expect(firstDayTileTimeAbbr).toBe(format(beginOfCurrentMonth));
   });
 
   it('drills up when allowed', () => {
@@ -509,9 +506,9 @@ describe('Calendar', () => {
 
     const monthView = component.find('.react-calendar__month-view');
     const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
+    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
 
-    expect(firstDayTileTimeISO).toBe(getISOLocalDate(newActiveStartDate) + midnightTimestamp);
+    expect(firstDayTileTimeAbbr).toBe(format(newActiveStartDate));
   });
 
   it('displays calendar with custom weekdays formatting', () => {
