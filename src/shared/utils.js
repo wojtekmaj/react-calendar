@@ -106,8 +106,8 @@ export const getTileClasses = ({
     classes.push(`${className}--hover`);
   }
 
-  const isRangeStart = isEqual(dateRange[0], valueRange[0]);
-  const isRangeEnd = isEqual(dateRange[1], valueRange[1]);
+  const isRangeStart = isValueWithinRange(valueRange[0], dateRange);
+  const isRangeEnd = isValueWithinRange(valueRange[1], dateRange);
 
   if (isRangeStart) {
     classes.push(`${className}--rangeStart`);
