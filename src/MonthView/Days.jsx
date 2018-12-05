@@ -79,6 +79,7 @@ export default class Days extends PureComponent {
     const { monthIndex } = this;
 
     const {
+      showFixedNumberOfWeeks,
       showNeighboringMonth,
       ...otherProps
     } = this.props;
