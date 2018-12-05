@@ -52,8 +52,6 @@ export const between = (value, min, max) => {
   return value;
 };
 
-const isEqual = (date1, date2) => new Date(date1).getTime() === new Date(date2).getTime();
-
 export const getTileClasses = ({
   value, valueType, date, dateType, hover,
 } = {}) => {
