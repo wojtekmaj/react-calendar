@@ -37,6 +37,7 @@ export default class Tile extends Component {
       classes,
       date,
       formatAbbr,
+      locale,
       maxDate,
       maxDateTransform,
       minDate,
@@ -65,7 +66,7 @@ export default class Tile extends Component {
       >
         {formatAbbr
           ? (
-            <abbr aria-label={formatAbbr(date)}>
+            <abbr aria-label={formatAbbr(locale, date)}>
               {children}
             </abbr>
           )

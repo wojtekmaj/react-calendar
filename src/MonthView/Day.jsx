@@ -40,8 +40,8 @@ const Day = ({
 );
 
 Day.propTypes = {
-  currentMonthIndex: PropTypes.number.isRequired,
   ...tileProps,
+  currentMonthIndex: PropTypes.number.isRequired,
 };
 
 export default Day;

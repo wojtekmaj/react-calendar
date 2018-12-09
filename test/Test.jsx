@@ -107,7 +107,7 @@ export default class Test extends PureComponent {
 
     const renderDate = (dateToRender) => {
       if (dateToRender instanceof Date) {
-        return formatDate(dateToRender, locale);
+        return formatDate(locale, dateToRender);
       }
       return dateToRender;
     };

@@ -21,8 +21,8 @@ const Decade = ({ classes, point, ...otherProps }) => (
 );
 
 Decade.propTypes = {
-  point: PropTypes.number.isRequired,
   ...tileProps,
+  point: PropTypes.number.isRequired,
 };
 
 export default Decade;

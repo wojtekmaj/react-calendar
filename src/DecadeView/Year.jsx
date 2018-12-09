@@ -21,8 +21,8 @@ const Year = ({ classes, point, ...otherProps }) => (
 );
 
 Year.propTypes = {
-  point: PropTypes.number.isRequired,
   ...tileProps,
+  point: PropTypes.number.isRequired,
 };
 
 export default Year;

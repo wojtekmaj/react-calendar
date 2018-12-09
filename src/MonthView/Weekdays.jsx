@@ -51,7 +51,7 @@ export default class Weekdays extends Component {
         year, monthIndex, weekday - getDayOfWeek(beginOfMonth, calendarType),
       );
 
-      const abbr = formatWeekday(weekdayDate);
+      const abbr = formatWeekday(locale, weekdayDate);
 
       weekdays.push(
         <div
@@ -60,7 +60,7 @@ export default class Weekdays extends Component {
           style={{ flexGrow: 1 }}
         >
           <abbr title={abbr} aria-label={abbr}>
-            {formatShortWeekday(weekdayDate, locale).replace('.', '')}
+            {formatShortWeekday(locale, weekdayDate).replace('.', '')}
           </abbr>
         </div>,
       );
