@@ -3,8 +3,8 @@
   "version": "2.17.5",
   "description": "Ultimate calendar for your React app.",
   "main": "dist/entry.js",
+  "source": "src/entry.js",
   "types": "./index.d.ts",
-  "es6": "src/entry.js",
   "scripts": {
     "build": "yarn run build-js && yarn run copy-styles && yarn run build-styles && yarn run copy-types",
     "build-js": "babel src -d dist --ignore **/__tests__",
