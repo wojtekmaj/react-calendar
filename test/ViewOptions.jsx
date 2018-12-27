@@ -18,7 +18,7 @@ export default class ViewOptions extends PureComponent {
     setState({ showWeekNumbers: checked });
   }
 
-  onshowNeighboringMonthChange = (event) => {
+  onShowNeighboringMonthChange = (event) => {
     const { setState } = this.props;
 
     const { checked } = event.target;
@@ -57,7 +57,7 @@ export default class ViewOptions extends PureComponent {
             type="checkbox"
             checked={showNeighboringMonth || showFixedNumberOfWeeks}
             disabled={showFixedNumberOfWeeks}
-            onChange={this.onshowNeighboringMonthChange}
+            onChange={this.onShowNeighboringMonthChange}
           />
           <label htmlFor="showNeighboringMonth">
             {'Show neighboring month\'s days'}

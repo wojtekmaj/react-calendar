@@ -2,11 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import MonthView from '../MonthView';
-import { getISOLocalDate } from '../shared/dates';
 
 /* eslint-disable comma-dangle */
 
-const midnightTimestamp = 'T00:00:00.000';
+const { format } = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
 describe('MonthView', () => {
   it('renders proper view when given activeStartDate', () => {
@@ -19,9 +18,9 @@ describe('MonthView', () => {
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
+    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
 
-    expect(firstDayTileTimeISO).toBe(getISOLocalDate(activeStartDate) + midnightTimestamp);
+    expect(firstDayTileTimeAbbr).toBe(format(activeStartDate));
   });
 
   it('applies tileClassName to its tiles when given a string', () => {

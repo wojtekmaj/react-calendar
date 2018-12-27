@@ -2,13 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import YearView from '../YearView';
-import {
-  getISOLocalMonth,
-} from '../shared/dates';
 
 /* eslint-disable comma-dangle */
 
-const midnightTimestamp = 'T00:00:00.000';
+const { format } = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
 
 describe('YearView', () => {
   it('renders proper view when given activeStartDate', () => {
@@ -21,9 +18,9 @@ describe('YearView', () => {
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
-    const firstDayTileTimeISO = firstDayTile.find('time').prop('dateTime');
+    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
 
-    expect(firstDayTileTimeISO).toBe(getISOLocalMonth(activeStartDate) + midnightTimestamp);
+    expect(firstDayTileTimeAbbr).toBe(format(activeStartDate));
   });
 
   it('applies tileClassName to its tiles when given a string', () => {

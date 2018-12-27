@@ -9,7 +9,7 @@ import {
   getMonthIndex,
   getYear,
 } from '../shared/dates';
-import { formatShortWeekday as defaultFormatShortWeekday } from '../shared/dateFormatter';
+import { formatWeekday, formatShortWeekday as defaultFormatShortWeekday } from '../shared/dateFormatter';
 import { isCalendarType } from '../shared/propTypes';
 
 export default class Weekdays extends Component {
@@ -23,9 +23,9 @@ export default class Weekdays extends Component {
   }
 
   get beginOfMonth() {
-    const { month } = this.props;
+    const { activeStartDate } = this.props;
 
-    return getBeginOfMonth(month);
+    return getBeginOfMonth(activeStartDate);
   }
 
   get year() {
@@ -51,13 +51,17 @@ export default class Weekdays extends Component {
         year, monthIndex, weekday - getDayOfWeek(beginOfMonth, calendarType),
       );
 
+      const abbr = formatWeekday(locale, weekdayDate);
+
       weekdays.push(
         <div
           className="react-calendar__month-view__weekdays__weekday"
           key={weekday}
           style={{ flexGrow: 1 }}
         >
-          {formatShortWeekday(weekdayDate, locale).replace('.', '')}
+          <abbr title={abbr} aria-label={abbr}>
+            {formatShortWeekday(locale, weekdayDate).replace('.', '')}
+          </abbr>
         </div>,
       );
     }
@@ -81,9 +85,5 @@ Weekdays.propTypes = {
   calendarType: isCalendarType.isRequired,
   formatShortWeekday: PropTypes.func,
   locale: PropTypes.string,
-  month: PropTypes.oneOfType([
-    PropTypes.string, // Only strings that are parseable to integer
-    PropTypes.number,
-    PropTypes.instanceOf(Date),
-  ]).isRequired,
+  activeStartDate: PropTypes.instanceOf(Date).isRequired,
 };

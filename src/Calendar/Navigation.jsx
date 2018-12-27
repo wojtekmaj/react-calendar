@@ -86,7 +86,7 @@ export default class Navigation extends PureComponent {
       case 'year':
         return getYear(date);
       case 'month':
-        return formatMonthYear(date, locale);
+        return formatMonthYear(locale, date);
       default:
         throw new Error(`Invalid view: ${view}.`);
     }

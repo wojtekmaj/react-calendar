@@ -6,7 +6,7 @@ const formatterCache = {};
  * Gets Intl-based date formatter from formatter cache. If it doesn't exist in cache
  * just yet, it will be created on the fly.
  */
-const getFormatter = (options, locale) => {
+const getFormatter = (locale, options) => {
   if (!locale) {
     // Default parameter is not enough as it does not protect us from null values
     // eslint-disable-next-line no-param-reassign
@@ -20,7 +20,7 @@ const getFormatter = (options, locale) => {
   }
 
   if (!formatterCache[locale][stringifiedOptions]) {
-    formatterCache[locale][stringifiedOptions] = new Intl.DateTimeFormat(locale, options).format;
+    formatterCache[locale][stringifiedOptions] = n => n.toLocaleString(locale, options);
   }
 
   return formatterCache[locale][stringifiedOptions];
@@ -40,22 +40,32 @@ const toSafeHour = (date) => {
   return new Date(safeDate.setHours(12));
 };
 
-export const formatDate = (date, locale) => getFormatter(
+export const formatDate = (locale, date) => getFormatter(
+  locale,
   { day: 'numeric', month: 'numeric', year: 'numeric' },
-  locale,
 )(toSafeHour(date));
 
-export const formatMonthYear = (date, locale) => getFormatter(
+export const formatLongDate = (locale, date) => getFormatter(
+  locale,
+  { day: 'numeric', month: 'long', year: 'numeric' },
+)(toSafeHour(date));
+
+export const formatMonthYear = (locale, date) => getFormatter(
+  locale,
   { month: 'long', year: 'numeric' },
-  locale,
 )(toSafeHour(date));
 
-export const formatMonth = (date, locale) => getFormatter(
+export const formatMonth = (locale, date) => getFormatter(
+  locale,
   { month: 'long' },
-  locale,
 )(toSafeHour(date));
 
-export const formatShortWeekday = (date, locale) => getFormatter(
-  { weekday: 'short' },
+export const formatWeekday = (locale, date) => getFormatter(
   locale,
+  { weekday: 'long' },
+)(toSafeHour(date));
+
+export const formatShortWeekday = (locale, date) => getFormatter(
+  locale,
+  { weekday: 'short' },
 )(toSafeHour(date));

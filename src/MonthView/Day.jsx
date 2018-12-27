@@ -7,9 +7,9 @@ import {
   getBeginOfDay,
   getDay,
   getEndOfDay,
-  getISOLocalDate,
   isWeekend,
 } from '../shared/dates';
+import { formatLongDate } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
@@ -30,7 +30,7 @@ const Day = ({
       date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null,
     ]}
     date={date}
-    dateTime={`${getISOLocalDate(date)}T00:00:00.000`}
+    formatAbbr={formatLongDate}
     maxDateTransform={getEndOfDay}
     minDateTransform={getBeginOfDay}
     view="month"
@@ -40,8 +40,8 @@ const Day = ({
 );
 
 Day.propTypes = {
-  currentMonthIndex: PropTypes.number.isRequired,
   ...tileProps,
+  currentMonthIndex: PropTypes.number.isRequired,
 };
 
 export default Day;

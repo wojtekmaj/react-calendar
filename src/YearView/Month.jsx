@@ -6,9 +6,11 @@ import Tile from '../Tile';
 import {
   getBeginOfMonth,
   getEndOfMonth,
-  getISOLocalMonth,
 } from '../shared/dates';
-import { formatMonth as defaultFormatMonth } from '../shared/dateFormatter';
+import {
+  formatMonth as defaultFormatMonth,
+  formatMonthYear,
+} from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__year-view__months__month';
@@ -24,12 +26,13 @@ const Month = ({
     {...otherProps}
     classes={[...classes, className]}
     date={date}
-    dateTime={`${getISOLocalMonth(date)}T00:00:00.000`}
+    formatAbbr={formatMonthYear}
+    locale={locale}
     maxDateTransform={getEndOfMonth}
     minDateTransform={getBeginOfMonth}
     view="year"
   >
-    {formatMonth(date, locale)}
+    {formatMonth(locale, date)}
   </Tile>
 );
 
@@ -40,7 +43,6 @@ Month.defaultProps = {
 Month.propTypes = {
   ...tileProps,
   formatMonth: PropTypes.func,
-  locale: PropTypes.string,
 };
 
 export default Month;

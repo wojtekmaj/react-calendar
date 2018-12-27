@@ -23,6 +23,7 @@ export default class CenturyView extends PureComponent {
 
 CenturyView.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
+  locale: PropTypes.string,
   maxDate: isMaxDate,
   minDate: isMinDate,
   onChange: PropTypes.func,

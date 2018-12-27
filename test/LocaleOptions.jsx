@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import getUserLocale from 'get-user-locale';
 
 export default class LocaleOptions extends PureComponent {
   onChange = (event) => {
@@ -79,6 +78,19 @@ export default class LocaleOptions extends PureComponent {
             fr-FR
           </label>
         </div>
+        <div>
+          <input
+            checked={locale === 'ar-EG'}
+            id="localeArEG"
+            name="locale"
+            onChange={this.onChange}
+            type="radio"
+            value="ar-EG"
+          />
+          <label htmlFor="localeArEG">
+            ar-EG
+          </label>
+        </div>
         <form onSubmit={this.onCustomChange}>
           <label htmlFor="customLocale">
             Custom locale:
@@ -110,10 +122,6 @@ export default class LocaleOptions extends PureComponent {
     );
   }
 }
-
-LocaleOptions.defaultProps = {
-  locale: getUserLocale(),
-};
 
 LocaleOptions.propTypes = {
   locale: PropTypes.string,

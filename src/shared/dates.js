@@ -439,7 +439,7 @@ export const getRange = (rangeType, date) => {
  * @param {Date} date2 Second date.
  */
 export const getValueRange = (rangeType, date1, date2) => {
-  const rawNextValue = [date1, date2].sort();
+  const rawNextValue = [date1, date2].sort((a, b) => a - b);
   return [
     getBegin(rangeType, rawNextValue[0]),
     getEnd(rangeType, rawNextValue[1]),
