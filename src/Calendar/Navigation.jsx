@@ -16,6 +16,14 @@ import { formatMonthYear as defaultFormatMonthYear } from '../shared/dateFormatt
 import { isView, isViews } from '../shared/propTypes';
 
 export default class Navigation extends PureComponent {
+  componentDidMount() {
+    document.addEventListener('keydown', this.handkeKeyDown, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handkeKeyDown, false);
+  }
+
   get drillUpAvailable() {
     const { view, views } = this.props;
     return views.indexOf(view) > 0;
@@ -71,6 +79,15 @@ export default class Navigation extends PureComponent {
   onClickNext2 = () => {
     const { activeStartDate: date, view, setActiveStartDate } = this.props;
     setActiveStartDate(getBeginNext2(view, date));
+  }
+
+
+  handkeKeyDown = (event) => {
+    switch (event.keyCode) {
+      case 38: this.onClickPrevious(); break; // Up
+      case 40: this.onClickNext(); break; // Down
+      default:
+    }
   }
 
   get label() {

@@ -70,6 +70,14 @@ class MyApp extends Component {
 }
 ```
 
+### Keyboard Actions
+
+|  Key         | Action                                               |
+|--------------|------------------------------------------------------|
+|  Enter       | Select the date in focus                             |
+|  Up/Down     | Move backward (up) and forward (down) by one month   |
+
+
 ### Custom styling
 
 If you don't want to use default React-Calendar styling to build upon it, you can import React-Calendar by using `import Calendar from 'react-calendar/dist/entry.nostyle';` instead.
