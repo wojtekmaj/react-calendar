@@ -82,7 +82,7 @@ export default class Navigation extends PureComponent {
   }
 
 
-  handkeKeyDown = (event) => {
+  handleKeyDown = (event) => {
     switch (event.keyCode) {
       case 38: this.onClickPrevious(); break; // Up
       case 40: this.onClickNext(); break; // Down
