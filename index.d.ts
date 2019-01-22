@@ -3,7 +3,7 @@ declare module "react-calendar" {
   type Detail = "month" | "year" | "decade" | "century"
   type DateCallback = (date: Date) => void
   type OnChangeDateCallback = (date: Date | Date[]) => void
-  type FormatterCallback = (date: Date) => string
+  type FormatterCallback = (locale: string, date: Date) => string
   type ViewCallback = (props: ViewCallbackProperties) => void
 
   export default function Calendar(props: CalendarProps): JSX.Element;
