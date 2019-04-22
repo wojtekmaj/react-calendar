@@ -5,15 +5,10 @@ import Weekdays from '../Weekdays';
 
 /* eslint-disable comma-dangle */
 
-const weekdaysProps = {
-  activeStartDate: new Date(2018, 0, 1),
-};
-
 describe('Weekdays', () => {
   it('renders proper weekdays (ISO 8601)', () => {
     const component = mount(
       <Weekdays
-        {...weekdaysProps}
         calendarType="ISO 8601"
       />
     );
@@ -30,7 +25,6 @@ describe('Weekdays', () => {
   it('renders proper weekdays (US)', () => {
     const component = mount(
       <Weekdays
-        {...weekdaysProps}
         calendarType="US"
       />
     );

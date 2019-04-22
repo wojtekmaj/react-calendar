@@ -180,16 +180,20 @@ export default class Calendar extends Component {
       minDate, maxDate, maxDetail, returnValue,
     } = this.props;
 
-    switch (returnValue) {
-      case 'start':
-        return getDetailValueFrom(value, minDate, maxDate, maxDetail);
-      case 'end':
-        return getDetailValueTo(value, minDate, maxDate, maxDetail);
-      case 'range':
-        return getDetailValueArray(value, minDate, maxDate, maxDetail);
-      default:
-        throw new Error('Invalid returnValue.');
-    }
+    const processFunction = (() => {
+      switch (returnValue) {
+        case 'start':
+          return getDetailValueFrom;
+        case 'end':
+          return getDetailValueTo;
+        case 'range':
+          return getDetailValueArray;
+        default:
+          throw new Error('Invalid returnValue.');
+      }
+    })();
+
+    return processFunction(value, minDate, maxDate, maxDetail);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
