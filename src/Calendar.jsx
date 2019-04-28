@@ -464,11 +464,10 @@ export default class Calendar extends Component {
       prev2Label,
       prevLabel,
     } = this.props;
-    const { activeRange, activeStartDate, view } = this.state;
+    const { activeStartDate, view } = this.state;
 
     return (
       <Navigation
-        activeRange={activeRange}
         activeStartDate={activeStartDate}
         drillUp={this.drillUp}
         formatMonthYear={formatMonthYear}
