@@ -24,10 +24,15 @@ export default function Navigation({
   locale,
   maxDate,
   minDate,
+  navigationAriaLabel,
   navigationLabel,
+  next2AriaLabel,
   next2Label,
+  nextAriaLabel,
   nextLabel,
+  prev2AriaLabel,
   prev2Label,
+  prevAriaLabel,
   prevLabel,
   setActiveStartDate,
   view,
@@ -107,6 +112,7 @@ export default function Navigation({
           disabled={prev2ButtonDisabled}
           onClick={onClickPrevious2}
           type="button"
+          aria-label={prev2AriaLabel}
         >
           {prev2Label}
         </button>
@@ -116,6 +122,7 @@ export default function Navigation({
         disabled={prevButtonDisabled}
         onClick={onClickPrevious}
         type="button"
+        aria-label={prevAriaLabel}
       >
         {prevLabel}
       </button>
@@ -125,6 +132,7 @@ export default function Navigation({
         disabled={!drillUpAvailable}
         style={{ flexGrow: 1 }}
         type="button"
+        aria-label={navigationAriaLabel}
       >
         {navigationLabel
           ? navigationLabel({ date, view, label })
@@ -136,6 +144,7 @@ export default function Navigation({
         disabled={nextButtonDisabled}
         onClick={onClickNext}
         type="button"
+        aria-label={nextAriaLabel}
       >
         {nextLabel}
       </button>
@@ -145,6 +154,7 @@ export default function Navigation({
           disabled={next2ButtonDisabled}
           onClick={onClickNext2}
           type="button"
+          aria-label={next2AriaLabel}
         >
           {next2Label}
         </button>
@@ -155,9 +165,14 @@ export default function Navigation({
 
 Navigation.defaultProps = {
   formatMonthYear: defaultFormatMonthYear,
+  navigationAriaLabel: '',
+  next2AriaLabel: '',
   next2Label: '»',
+  nextAriaLabel: '',
   nextLabel: '›',
+  prev2AriaLabel: '',
   prev2Label: '«',
+  prevAriaLabel: '',
   prevLabel: '‹',
 };
 
@@ -168,10 +183,15 @@ Navigation.propTypes = {
   locale: PropTypes.string,
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
+  next2AriaLabel: PropTypes.string,
   next2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  nextAriaLabel: PropTypes.string,
   nextLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  navigationAriaLabel: PropTypes.string,
   navigationLabel: PropTypes.func,
+  prev2AriaLabel: PropTypes.string,
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  prevAriaLabel: PropTypes.string,
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   setActiveStartDate: PropTypes.func.isRequired,
   view: isView.isRequired,
