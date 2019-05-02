@@ -96,8 +96,8 @@ Displays a complete, interactive calendar.
 |minDate|Defines minimum date that the user can select. Periods partially overlapped by minDate will also be selectable, although react-calendar will ensure that no earlier date is selected.|Date: `new Date()`|
 |minDetail|Defines the least detailed view that the user shall see. Can be "month", "year", "decade" or "century". Defaults to "century".|`"century"`|
 |navigationLabel|Defines the content of a label rendered on calendar navigation bar.|``({ date, view, label }) => `Current view: ${view}, date: ${date.toLocaleDateString()}` ``|
-|nextLabel|Defines the content of the "next" button on the navigation pane. Defaults to "›".|<ul><li>String: `"›"`</li><li>React element: `<NextIcon />`</li></ul>|
-|next2Label|Defines the content of the "next on higher level" button on the navigation pane. Defaults to "»". |<ul><li>String: `"»"`</li><li>React element: `<DoubleNextIcon />`</li></ul>|
+|nextLabel|Defines the content of the "next" button on the navigation pane. Defaults to "›".|<ul><li>String: `"›"`</li><li>React element: `<NextIcon />`</li><li>Function: `(view) => 'Next ' + view`</li></ul>|
+|next2Label|Defines the content of the "next on higher level" button on the navigation pane. Defaults to "»". |<ul><li>String: `"»"`</li><li>React element: `<DoubleNextIcon />`</li><li>Function: `(view) => 'Next ' + view`</li></ul>|
 |onActiveDateChange|Function called when the user navigates from one view to another using previous/next button.|`({ activeStartDate, view }) => alert('Changed view to: ', activeStartDate, view)`|
 |onChange|Function called when the user clicks an item (day on month view, month on year view and so on) on the most detailed view available.|`(value) => alert('New date is: ', value)`|
 |onClickDay|Function called when the user clicks a day.|`(value) => alert('Clicked day: ', value)`|
@@ -107,8 +107,8 @@ Displays a complete, interactive calendar.
 |onClickYear|Function called when the user clicks a year.|`(value) => alert('Clicked year: ', value)`|
 |onDrillDown|Function called when the user drills down by clicking a tile.|`({ activeStartDate, view }) => alert('Drilled down to: ', activeStartDate, view)`|
 |onDrillUp|Function called when the user drills up by clicking drill up button.|`({ activeStartDate, view }) => alert('Drilled up to: ', activeStartDate, view)`|
-|prevLabel|Defines the content of the "previous" button on the navigation pane. Defaults to "‹".|<ul><li>String: `"‹"`</li><li>React element: `<PreviousIcon />`</li></ul>|
-|prev2Label|Defines the content of the "previous on higher level" button on the navigation pane. Defaults to "«".|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
+|prevLabel|Defines the content of the "previous" button on the navigation pane. Defaults to "‹".|<ul><li>String: `"‹"`</li><li>React element: `<PreviousIcon />`</li><li>Function: `(view) => 'Prev ' + view`</li></ul>|
+|prev2Label|Defines the content of the "previous on higher level" button on the navigation pane. Defaults to "«".|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li><li>Function: `(view) => 'Prev ' + view`</li></ul>|
 |returnValue|Defines which dates shall be passed by the calendar to the onChange function and onClick{Period} functions. Can be "start", "end" or "range". The latter will cause an array with start and end values to be passed. Defaults to "start".|`"range"`|
 |showNavigation|Defines whether a navigation bar with arrows and title shall be rendered. Defaults to true.|`false`|
 |showFixedNumberOfWeeks|Defines whether to always show fixed number of weeks (6). Forces showNeighboringMonth prop to be true. Defaults to false.|`true`|

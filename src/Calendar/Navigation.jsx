@@ -119,7 +119,7 @@ export default class Navigation extends PureComponent {
             onClick={this.onClickPrevious2}
             type="button"
           >
-            {prev2Label}
+            {typeof prev2Label === 'function' ? prev2Label(view) : prev2Label}
           </button>
         )}
         <button
@@ -128,7 +128,7 @@ export default class Navigation extends PureComponent {
           onClick={this.onClickPrevious}
           type="button"
         >
-          {prevLabel}
+          {typeof prevLabel === 'function' ? prevLabel(view) : prevLabel}
         </button>
         <button
           className="react-calendar__navigation__label"
@@ -148,7 +148,7 @@ export default class Navigation extends PureComponent {
           onClick={this.onClickNext}
           type="button"
         >
-          {nextLabel}
+          {typeof nextLabel === 'function' ? nextLabel(view) : nextLabel}
         </button>
         {next2Label !== null && view !== 'century' && (
           <button
@@ -157,7 +157,7 @@ export default class Navigation extends PureComponent {
             onClick={this.onClickNext2}
             type="button"
           >
-            {next2Label}
+            {typeof next2Label === 'function' ? next2Label(view) : next2Label}
           </button>
         )}
       </div>
@@ -180,11 +180,11 @@ Navigation.propTypes = {
   locale: PropTypes.string,
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
-  next2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  nextLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  next2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
+  nextLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
   navigationLabel: PropTypes.func,
-  prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
+  prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
   setActiveStartDate: PropTypes.func.isRequired,
   view: isView.isRequired,
   views: isViews.isRequired,
