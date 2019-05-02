@@ -5,6 +5,7 @@ import Tile from '../Tile';
 
 import { getBeginOfDecade, getDecadeLabel, getEndOfDecade } from '../shared/dates';
 import { tileProps } from '../shared/propTypes';
+import TileHOC from '../shared/TileHOC';
 
 const className = 'react-calendar__century-view__decades__decade';
 
@@ -25,4 +26,4 @@ Decade.propTypes = {
   point: PropTypes.number.isRequired,
 };
 
-export default Decade;
+export default TileHOC(Decade);

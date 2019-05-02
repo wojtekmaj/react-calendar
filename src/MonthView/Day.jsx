@@ -11,6 +11,7 @@ import {
 } from '../shared/dates';
 import { formatLongDate } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
+import TileHOC from '../shared/TileHOC';
 
 const className = 'react-calendar__month-view__days__day';
 
@@ -44,4 +45,4 @@ Day.propTypes = {
   currentMonthIndex: PropTypes.number.isRequired,
 };
 
-export default Day;
+export default TileHOC(Day);

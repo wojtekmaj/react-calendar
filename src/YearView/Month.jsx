@@ -12,6 +12,7 @@ import {
   formatMonthYear,
 } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
+import TileHOC from '../shared/TileHOC';
 
 const className = 'react-calendar__year-view__months__month';
 
@@ -45,4 +46,4 @@ Month.propTypes = {
   formatMonth: PropTypes.func,
 };
 
-export default Month;
+export default TileHOC(Month);
