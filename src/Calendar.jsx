@@ -503,6 +503,7 @@ export default class Calendar extends Component {
           className,
         )}
         onMouseLeave={selectRange ? onMouseLeave : null}
+        onBlur={selectRange ? onMouseLeave : null}
       >
         {this.renderNavigation()}
         {this.renderContent()}
