@@ -9,21 +9,21 @@ import TileHOC from '../shared/TileHOC';
 
 const className = 'react-calendar__decade-view__years__year';
 
-const Year = ({ classes, point, ...otherProps }) => (
-  <Tile
-    {...otherProps}
-    classes={[...classes, className]}
-    maxDateTransform={getEndOfYear}
-    minDateTransform={getBeginOfYear}
-    view="decade"
-  >
-    {point}
-  </Tile>
-);
+export default function Year({ classes, point, ...otherProps }) {
+  return (
+    <Tile
+      {...otherProps}
+      classes={[].concat(classes, className)}
+      maxDateTransform={getEndOfYear}
+      minDateTransform={getBeginOfYear}
+      view="decade"
+    >
+      {point}
+    </Tile>
+  );
+}
 
 Year.propTypes = {
   ...tileProps,
   point: PropTypes.number.isRequired,
 };
-
-export default TileHOC(Year);

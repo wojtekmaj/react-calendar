@@ -16,26 +16,28 @@ import TileHOC from '../shared/TileHOC';
 
 const className = 'react-calendar__year-view__months__month';
 
-const Month = ({
+export default function Month({
   classes,
   date,
   formatMonth,
   locale,
   ...otherProps
-}) => (
-  <Tile
-    {...otherProps}
-    classes={[...classes, className]}
-    date={date}
-    formatAbbr={formatMonthYear}
-    locale={locale}
-    maxDateTransform={getEndOfMonth}
-    minDateTransform={getBeginOfMonth}
-    view="year"
-  >
-    {formatMonth(locale, date)}
-  </Tile>
-);
+}) {
+  return (
+    <Tile
+      {...otherProps}
+      classes={[].concat(classes, className)}
+      date={date}
+      formatAbbr={formatMonthYear}
+      locale={locale}
+      maxDateTransform={getEndOfMonth}
+      minDateTransform={getBeginOfMonth}
+      view="year"
+    >
+      {formatMonth(locale, date)}
+    </Tile>
+  );
+}
 
 Month.defaultProps = {
   formatMonth: defaultFormatMonth,
@@ -45,5 +47,3 @@ Month.propTypes = {
   ...tileProps,
   formatMonth: PropTypes.func,
 };
-
-export default TileHOC(Month);

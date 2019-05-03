@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -15,69 +15,78 @@ import {
 import { formatMonthYear as defaultFormatMonthYear } from '../shared/dateFormatter';
 import { isView, isViews } from '../shared/propTypes';
 
-export default class Navigation extends PureComponent {
-  get drillUpAvailable() {
-    const { view, views } = this.props;
-    return views.indexOf(view) > 0;
-  }
+const className = 'react-calendar__navigation';
 
-  get prevButtonDisabled() {
-    const { activeStartDate: date, minDate, view } = this.props;
-    const previousActiveStartDate = getBeginPrevious(view, date);
+export default function Navigation({
+  activeStartDate: date,
+  drillUp,
+  formatMonthYear,
+  locale,
+  maxDate,
+  minDate,
+  navigationAriaLabel,
+  navigationLabel,
+  next2AriaLabel,
+  next2Label,
+  nextAriaLabel,
+  nextLabel,
+  prev2AriaLabel,
+  prev2Label,
+  prevAriaLabel,
+  prevLabel,
+  setActiveStartDate,
+  view,
+  views,
+}) {
+  const drillUpAvailable = views.indexOf(view) > 0;
+  const shouldShowPrevNext2Buttons = view !== 'century';
+
+  const previousActiveStartDate = getBeginPrevious(view, date);
+  const previousActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginPrevious2(view, date);
+  const nextActiveStartDate = getBeginNext(view, date);
+  const nextActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginNext2(view, date);
+
+  const prevButtonDisabled = (() => {
     if (previousActiveStartDate.getFullYear() < 1000) {
       return true;
     }
     const previousActiveEndDate = getEndPrevious(view, date);
     return minDate && minDate >= previousActiveEndDate;
-  }
+  })();
 
-  get prev2ButtonDisabled() {
-    const { activeStartDate: date, minDate, view } = this.props;
-    const previousActiveStartDate = getBeginPrevious2(view, date);
-    if (previousActiveStartDate.getFullYear() < 1000) {
+  const prev2ButtonDisabled = shouldShowPrevNext2Buttons && (() => {
+    if (previousActiveStartDate2.getFullYear() < 1000) {
       return true;
     }
     const previousActiveEndDate = getEndPrevious2(view, date);
     return minDate && minDate >= previousActiveEndDate;
+  })();
+
+  const nextButtonDisabled = maxDate && maxDate <= nextActiveStartDate;
+
+  const next2ButtonDisabled = (
+    shouldShowPrevNext2Buttons
+    && maxDate
+    && maxDate <= nextActiveStartDate2
+  );
+
+  function onClickPrevious() {
+    setActiveStartDate(previousActiveStartDate);
   }
 
-  get nextButtonDisabled() {
-    const { activeStartDate: date, maxDate, view } = this.props;
-    const nextActiveStartDate = getBeginNext(view, date);
-    return maxDate && maxDate <= nextActiveStartDate;
+  function onClickPrevious2() {
+    setActiveStartDate(previousActiveStartDate2);
   }
 
-  get next2ButtonDisabled() {
-    const { activeStartDate: date, maxDate, view } = this.props;
-    const nextActiveStartDate = getBeginNext2(view, date);
-    return maxDate && maxDate <= nextActiveStartDate;
+  function onClickNext() {
+    setActiveStartDate(nextActiveStartDate);
   }
 
-  onClickPrevious = () => {
-    const { activeStartDate: date, view, setActiveStartDate } = this.props;
-    setActiveStartDate(getBeginPrevious(view, date));
+  function onClickNext2() {
+    setActiveStartDate(nextActiveStartDate2);
   }
 
-  onClickNext = () => {
-    const { activeStartDate: date, view, setActiveStartDate } = this.props;
-    setActiveStartDate(getBeginNext(view, date));
-  }
-
-  onClickPrevious2 = () => {
-    const { activeStartDate: date, view, setActiveStartDate } = this.props;
-    setActiveStartDate(getBeginPrevious2(view, date));
-  }
-
-  onClickNext2 = () => {
-    const { activeStartDate: date, view, setActiveStartDate } = this.props;
-    setActiveStartDate(getBeginNext2(view, date));
-  }
-
-  get label() {
-    const {
-      activeStartDate: date, formatMonthYear, locale, view,
-    } = this.props;
-
+  const label = (() => {
     switch (view) {
       case 'century':
         return getCenturyLabel(date);
@@ -90,86 +99,80 @@ export default class Navigation extends PureComponent {
       default:
         throw new Error(`Invalid view: ${view}.`);
     }
-  }
+  })();
 
-  render() {
-    const { label } = this;
-    const {
-      activeStartDate: date,
-      drillUp,
-      navigationLabel,
-      next2Label,
-      nextLabel,
-      prev2Label,
-      prevLabel,
-      view,
-    } = this.props;
-
-    const className = 'react-calendar__navigation';
-
-    return (
-      <div
-        className={className}
-        style={{ display: 'flex' }}
+  return (
+    <div
+      className={className}
+      style={{ display: 'flex' }}
+    >
+      {prev2Label !== null && shouldShowPrevNext2Buttons && (
+        <button
+          className={`${className}__arrow ${className}__prev2-button`}
+          disabled={prev2ButtonDisabled}
+          onClick={onClickPrevious2}
+          type="button"
+          aria-label={prev2AriaLabel}
+        >
+          {prev2Label}
+        </button>
+      )}
+      <button
+        className={`${className}__arrow ${className}__prev-button`}
+        disabled={prevButtonDisabled}
+        onClick={onClickPrevious}
+        type="button"
+        aria-label={prevAriaLabel}
       >
-        {prev2Label !== null && view !== 'century' && (
-          <button
-            className={`${className}__arrow ${className}__prev2-button`}
-            disabled={this.prev2ButtonDisabled}
-            onClick={this.onClickPrevious2}
-            type="button"
-          >
-            {prev2Label}
-          </button>
-        )}
+        {prevLabel}
+      </button>
+      <button
+        className="react-calendar__navigation__label"
+        onClick={drillUp}
+        disabled={!drillUpAvailable}
+        style={{ flexGrow: 1 }}
+        type="button"
+        aria-label={navigationAriaLabel}
+      >
+        {navigationLabel
+          ? navigationLabel({ date, view, label })
+          : label
+        }
+      </button>
+      <button
+        className={`${className}__arrow ${className}__next-button`}
+        disabled={nextButtonDisabled}
+        onClick={onClickNext}
+        type="button"
+        aria-label={nextAriaLabel}
+      >
+        {nextLabel}
+      </button>
+      {next2Label !== null && shouldShowPrevNext2Buttons && (
         <button
-          className={`${className}__arrow ${className}__prev-button`}
-          disabled={this.prevButtonDisabled}
-          onClick={this.onClickPrevious}
+          className={`${className}__arrow ${className}__next2-button`}
+          disabled={next2ButtonDisabled}
+          onClick={onClickNext2}
           type="button"
+          aria-label={next2AriaLabel}
         >
-          {prevLabel}
+          {next2Label}
         </button>
-        <button
-          className="react-calendar__navigation__label"
-          onClick={drillUp}
-          disabled={!this.drillUpAvailable}
-          style={{ flexGrow: 1 }}
-          type="button"
-        >
-          {navigationLabel
-            ? navigationLabel({ date, view, label })
-            : label
-          }
-        </button>
-        <button
-          className={`${className}__arrow ${className}__next-button`}
-          disabled={this.nextButtonDisabled}
-          onClick={this.onClickNext}
-          type="button"
-        >
-          {nextLabel}
-        </button>
-        {next2Label !== null && view !== 'century' && (
-          <button
-            className={`${className}__arrow ${className}__next2-button`}
-            disabled={this.next2ButtonDisabled}
-            onClick={this.onClickNext2}
-            type="button"
-          >
-            {next2Label}
-          </button>
-        )}
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
 
 Navigation.defaultProps = {
   formatMonthYear: defaultFormatMonthYear,
+  navigationAriaLabel: '',
+  next2AriaLabel: '',
   next2Label: '»',
+  nextAriaLabel: '',
   nextLabel: '›',
+  prev2AriaLabel: '',
   prev2Label: '«',
+  prevAriaLabel: '',
   prevLabel: '‹',
 };
 
@@ -180,10 +183,15 @@ Navigation.propTypes = {
   locale: PropTypes.string,
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
+  next2AriaLabel: PropTypes.string,
   next2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  nextAriaLabel: PropTypes.string,
   nextLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  navigationAriaLabel: PropTypes.string,
   navigationLabel: PropTypes.func,
+  prev2AriaLabel: PropTypes.string,
   prev2Label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  prevAriaLabel: PropTypes.string,
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   setActiveStartDate: PropTypes.func.isRequired,
   view: isView.isRequired,

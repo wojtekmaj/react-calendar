@@ -180,16 +180,20 @@ export default class Calendar extends Component {
       minDate, maxDate, maxDetail, returnValue,
     } = this.props;
 
-    switch (returnValue) {
-      case 'start':
-        return getDetailValueFrom(value, minDate, maxDate, maxDetail);
-      case 'end':
-        return getDetailValueTo(value, minDate, maxDate, maxDetail);
-      case 'range':
-        return getDetailValueArray(value, minDate, maxDate, maxDetail);
-      default:
-        throw new Error('Invalid returnValue.');
-    }
+    const processFunction = (() => {
+      switch (returnValue) {
+        case 'start':
+          return getDetailValueFrom;
+        case 'end':
+          return getDetailValueTo;
+        case 'range':
+          return getDetailValueArray;
+        default:
+          throw new Error('Invalid returnValue.');
+      }
+    })();
+
+    return processFunction(value, minDate, maxDate, maxDetail);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -461,10 +465,15 @@ export default class Calendar extends Component {
       maxDetail,
       minDate,
       minDetail,
-      next2Label,
-      nextLabel,
+      navigationAriaLabel,
       navigationLabel,
+      next2AriaLabel,
+      next2Label,
+      nextAriaLabel,
+      nextLabel,
+      prev2AriaLabel,
       prev2Label,
+      prevAriaLabel,
       prevLabel,
     } = this.props;
     const { activeStartDate, view } = this.state;
@@ -477,10 +486,15 @@ export default class Calendar extends Component {
         locale={locale}
         maxDate={maxDate}
         minDate={minDate}
-        next2Label={next2Label}
-        nextLabel={nextLabel}
+        navigationAriaLabel={navigationAriaLabel}
         navigationLabel={navigationLabel}
+        next2AriaLabel={next2AriaLabel}
+        next2Label={next2Label}
+        nextAriaLabel={nextAriaLabel}
+        nextLabel={nextLabel}
+        prev2AriaLabel={prev2AriaLabel}
         prev2Label={prev2Label}
+        prevAriaLabel={prevAriaLabel}
         prevLabel={prevLabel}
         setActiveStartDate={this.setActiveStartDate}
         view={view}
@@ -533,8 +547,11 @@ Calendar.propTypes = {
   maxDetail: PropTypes.oneOf(allViews),
   minDate: isMinDate,
   minDetail: PropTypes.oneOf(allViews),
+  navigationAriaLabel: PropTypes.string,
   navigationLabel: PropTypes.func,
+  next2AriaLabel: PropTypes.string,
   next2Label: PropTypes.node,
+  nextAriaLabel: PropTypes.string,
   nextLabel: PropTypes.node,
   onActiveDateChange: PropTypes.func,
   onChange: PropTypes.func,
@@ -545,7 +562,9 @@ Calendar.propTypes = {
   onClickYear: PropTypes.func,
   onDrillDown: PropTypes.func,
   onDrillUp: PropTypes.func,
+  prev2AriaLabel: PropTypes.string,
   prev2Label: PropTypes.node,
+  prevAriaLabel: PropTypes.string,
   prevLabel: PropTypes.node,
   renderChildren: PropTypes.func, // For backwards compatibility
   returnValue: PropTypes.oneOf(['start', 'end', 'range']),
