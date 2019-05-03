@@ -71,13 +71,12 @@ export default class MonthView extends PureComponent {
   }
 
   renderWeekdays() {
-    const { activeStartDate, formatShortWeekday, locale } = this.props;
+    const { formatShortWeekday, locale } = this.props;
 
     return (
       <Weekdays
         calendarType={this.calendarType}
         locale={locale}
-        activeStartDate={activeStartDate}
         formatShortWeekday={formatShortWeekday}
       />
     );

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 
 import TileGroup from '../TileGroup';
 import Year from './Year';
@@ -6,29 +6,22 @@ import Year from './Year';
 import { getBeginOfDecadeYear } from '../shared/dates';
 import { tileGroupProps } from '../shared/propTypes';
 
-export default class Years extends PureComponent {
-  get start() {
-    const { activeStartDate } = this.props;
-    return getBeginOfDecadeYear(activeStartDate);
-  }
+export default function Years(props) {
+  const { activeStartDate } = props;
+  const start = getBeginOfDecadeYear(activeStartDate);
+  const end = start + 9;
 
-  get end() {
-    return this.start + 9;
-  }
-
-  render() {
-    return (
-      <TileGroup
-        {...this.props}
-        className="react-calendar__decade-view__years"
-        dateTransform={year => new Date(year, 0, 1)}
-        dateType="year"
-        end={this.end}
-        start={this.start}
-        tile={Year}
-      />
-    );
-  }
+  return (
+    <TileGroup
+      {...props}
+      className="react-calendar__decade-view__years"
+      dateTransform={year => new Date(year, 0, 1)}
+      dateType="year"
+      end={end}
+      start={start}
+      tile={Year}
+    />
+  );
 }
 
 Years.propTypes = {

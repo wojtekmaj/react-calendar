@@ -14,34 +14,34 @@ import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
 
-const Day = ({
+export default function Day({
   calendarType,
   classes,
   currentMonthIndex,
   date,
   ...otherProps
-}) => (
-  <Tile
-    {...otherProps}
-    classes={[
-      ...classes,
-      className,
-      isWeekend(date, calendarType) ? `${className}--weekend` : null,
-      date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null,
-    ]}
-    date={date}
-    formatAbbr={formatLongDate}
-    maxDateTransform={getEndOfDay}
-    minDateTransform={getBeginOfDay}
-    view="month"
-  >
-    {getDay(date)}
-  </Tile>
-);
+}) {
+  return (
+    <Tile
+      {...otherProps}
+      classes={[].concat(
+        classes,
+        className,
+        isWeekend(date, calendarType) ? `${className}--weekend` : null,
+        date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null,
+      )}
+      date={date}
+      formatAbbr={formatLongDate}
+      maxDateTransform={getEndOfDay}
+      minDateTransform={getBeginOfDay}
+      view="month"
+    >
+      {getDay(date)}
+    </Tile>
+  );
+}
 
 Day.propTypes = {
   ...tileProps,
   currentMonthIndex: PropTypes.number.isRequired,
 };
-
-export default Day;
