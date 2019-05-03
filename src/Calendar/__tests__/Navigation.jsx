@@ -139,6 +139,31 @@ describe('Navigation', () => {
     expect(next2.props.children).toBe('next2Label');
   });
 
+  it('displays proper user-defined ARIA labels on prev2, prev, navigation, next and next2 buttons', () => {
+    const component = shallow(
+      <Navigation
+        activeStartDate={new Date(2017, 0, 1)}
+        drillUp={jest.fn()}
+        navigationAriaLabel="navigationAriaLabel"
+        next2AriaLabel="next2AriaLabel"
+        nextAriaLabel="nextAriaLabel"
+        prev2AriaLabel="prev2AriaLabel"
+        prevAriaLabel="prevAriaLabel"
+        setActiveStartDate={jest.fn()}
+        view="month"
+        views={allViews}
+      />
+    );
+
+    const [prev2, prev, navigation, next, next2] = component.children();
+
+    expect(prev2.props['aria-label']).toBe('prev2AriaLabel');
+    expect(prev.props['aria-label']).toBe('prevAriaLabel');
+    expect(navigation.props['aria-label']).toBe('navigationAriaLabel');
+    expect(next.props['aria-label']).toBe('nextAriaLabel');
+    expect(next2.props['aria-label']).toBe('next2AriaLabel');
+  });
+
   it('calls drillUp function on drill up button click', () => {
     const drillUpFn = jest.fn();
     const component = shallow(
