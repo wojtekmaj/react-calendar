@@ -9,7 +9,7 @@ import TileHOC from '../shared/TileHOC';
 
 const className = 'react-calendar__decade-view__years__year';
 
-export default function Year({ classes, point, ...otherProps }) {
+function Year({ classes, point, ...otherProps }) {
   return (
     <Tile
       {...otherProps}
@@ -27,3 +27,5 @@ Year.propTypes = {
   ...tileProps,
   point: PropTypes.number.isRequired,
 };
+
+export default TileHOC(Year);

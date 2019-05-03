@@ -15,7 +15,7 @@ import TileHOC from '../shared/TileHOC';
 
 const className = 'react-calendar__month-view__days__day';
 
-export default function Day({
+function Day({
   calendarType,
   classes,
   currentMonthIndex,
@@ -46,3 +46,5 @@ Day.propTypes = {
   ...tileProps,
   currentMonthIndex: PropTypes.number.isRequired,
 };
+
+export default TileHOC(Day);
