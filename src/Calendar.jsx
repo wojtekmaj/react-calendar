@@ -348,10 +348,13 @@ export default class Calendar extends Component {
   }
 
   onMouseOver = (value) => {
-    const { hover } = this.state;
-    if ((hover && hover.getTime()) !== value.getTime()) {
-      this.setState({ hover: value });
-    }
+    this.setState((prevState) => {
+      if (prevState.hover && (prevState.hover.getTime() === value.getTime())) {
+        return null;
+      }
+
+      return { hover: value };
+    });
   }
 
   onMouseLeave = () => {
@@ -373,7 +376,7 @@ export default class Calendar extends Component {
     const {
       activeStartDate, hover, value, view,
     } = this.state;
-    const { onMouseOver, valueType } = this;
+    const { onMouseLeave, onMouseOver, valueType } = this;
 
     const commonProps = {
       activeStartDate,
@@ -381,6 +384,7 @@ export default class Calendar extends Component {
       locale,
       maxDate,
       minDate,
+      onMouseLeave,
       onMouseOver: selectRange ? onMouseOver : null,
       tileClassName,
       tileContent: tileContent || renderChildren, // For backwards compatibility
@@ -516,7 +520,6 @@ export default class Calendar extends Component {
           selectRange && valueArray.length === 1 && 'react-calendar--selectRange',
           className,
         )}
-        onMouseLeave={selectRange ? onMouseLeave : null}
         onBlur={selectRange ? onMouseLeave : null}
       >
         {this.renderNavigation()}

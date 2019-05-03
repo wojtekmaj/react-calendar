@@ -13,8 +13,10 @@ export default class DecadeView extends PureComponent {
   }
 
   render() {
+    const { onMouseLeave } = this.props;
+
     return (
-      <div className="react-calendar__decade-view">
+      <div className="react-calendar__decade-view" onMouseLeave={onMouseLeave}>
         {this.renderYears()}
       </div>
     );

@@ -13,8 +13,10 @@ export default class YearView extends PureComponent {
   }
 
   render() {
+    const { onMouseLeave } = this.props;
+
     return (
-      <div className="react-calendar__year-view">
+      <div className="react-calendar__year-view" onMouseLeave={onMouseLeave}>
         {this.renderMonths()}
       </div>
     );

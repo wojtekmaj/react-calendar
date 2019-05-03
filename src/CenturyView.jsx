@@ -13,8 +13,10 @@ export default class CenturyView extends PureComponent {
   }
 
   render() {
+    const { onMouseLeave } = this.props;
+
     return (
-      <div className="react-calendar__century-view">
+      <div className="react-calendar__century-view" onMouseLeave={onMouseLeave}>
         {this.renderDecades()}
       </div>
     );

@@ -122,7 +122,7 @@ export default class MonthView extends PureComponent {
   }
 
   render() {
-    const { showWeekNumbers } = this.props;
+    const { onMouseLeave, showWeekNumbers } = this.props;
 
     const className = 'react-calendar__month-view';
 
@@ -132,6 +132,7 @@ export default class MonthView extends PureComponent {
           className,
           showWeekNumbers ? `${className}--weekNumbers` : '',
         ].join(' ')}
+        onMouseLeave={onMouseLeave}
       >
         <div
           style={{
