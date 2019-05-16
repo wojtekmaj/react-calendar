@@ -21,7 +21,9 @@ declare module "react-calendar" {
     minDate?: Date;
     minDetail?: Detail;
     navigationLabel?: (props: { date: Date, view: Detail, label: string }) => string | JSX.Element | null;
+    next2AriaLabel?: string;
     next2Label?: string | JSX.Element | null;
+    nextAriaLabel?: string;
     nextLabel?: string | JSX.Element;
     onActiveDateChange?: ViewCallback;
     onChange?: OnChangeDateCallback;
@@ -32,7 +34,9 @@ declare module "react-calendar" {
     onClickYear?: DateCallback;
     onDrillDown?: ViewCallback;
     onDrillUp?: ViewCallback;
+    prev2AriaLabel?: string;
     prev2Label?: string | JSX.Element | null;
+    prevAriaLabel?: string;
     prevLabel?: string | JSX.Element;
     renderChildren?: (props: CalendarTileProperties) => JSX.Element | null; // For backwards compatibility
     returnValue?: "start" | "end" | "range";
