@@ -99,7 +99,7 @@ Displays a complete, interactive calendar.
 |navigationLabel|Defines the content of a label rendered on calendar navigation bar.|``({ date, view, label }) => `Current view: ${view}, date: ${date.toLocaleDateString()}` ``|
 |nextAriaLabel|Defines `aria-label` attribute of the "next" button on the navigation pane.|`"Next"`|
 |nextLabel|Defines the content of the "next" button on the navigation pane. Defaults to "›".|<ul><li>String: `"›"`</li><li>React element: `<NextIcon />`</li></ul>|
-|nextAriaLabel|Defines `aria-label` attribute of the "next on higher level" button on the navigation pane.|`"Jump forwards"`|
+|next2AriaLabel|Defines `aria-label` attribute of the "next on higher level" button on the navigation pane.|`"Jump forwards"`|
 |next2Label|Defines the content of the "next on higher level" button on the navigation pane. Defaults to "»". |<ul><li>String: `"»"`</li><li>React element: `<DoubleNextIcon />`</li></ul>|
 |onActiveDateChange|Function called when the user navigates from one view to another using previous/next button.|`({ activeStartDate, view }) => alert('Changed view to: ', activeStartDate, view)`|
 |onChange|Function called when the user clicks an item (day on month view, month on year view and so on) on the most detailed view available.|`(value) => alert('New date is: ', value)`|
@@ -112,7 +112,7 @@ Displays a complete, interactive calendar.
 |onDrillUp|Function called when the user drills up by clicking drill up button.|`({ activeStartDate, view }) => alert('Drilled up to: ', activeStartDate, view)`|
 |prevAriaLabel|Defines `aria-label` attribute of the "previous" button on the navigation pane.|`"Previous"`|
 |prevLabel|Defines the content of the "previous" button on the navigation pane. Defaults to "‹".|<ul><li>String: `"‹"`</li><li>React element: `<PreviousIcon />`</li></ul>|
-|prevAriaLabel|Defines `aria-label` attribute of the "previous on higher level" button on the navigation pane.|`"Jump backwards"`|
+|prev2AriaLabel|Defines `aria-label` attribute of the "previous on higher level" button on the navigation pane.|`"Jump backwards"`|
 |prev2Label|Defines the content of the "previous on higher level" button on the navigation pane. Defaults to "«".|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
 |returnValue|Defines which dates shall be passed by the calendar to the onChange function and onClick{Period} functions. Can be "start", "end" or "range". The latter will cause an array with start and end values to be passed. Defaults to "start".|`"range"`|
 |showNavigation|Defines whether a navigation bar with arrows and title shall be rendered. Defaults to true.|`false`|
