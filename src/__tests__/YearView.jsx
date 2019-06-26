@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 
 import YearView from '../YearView';
 
-/* eslint-disable comma-dangle */
+/* eslint-disable comma-dangle, react/prop-types */
 
 const { format } = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
 
@@ -91,7 +91,6 @@ describe('YearView', () => {
 
   it('renders tileContent in its tiles conditionally when given a function that returns a node', () => {
     const activeStartDate = new Date(2017, 0, 1);
-    // eslint-disable-next-line react/prop-types
     const tileContentFn = ({ date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
         return (

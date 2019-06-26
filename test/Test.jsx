@@ -15,7 +15,7 @@ import './Test.less';
 
 const now = new Date();
 
-/* eslint-disable no-console */
+/* eslint-disable no-console, react/prop-types */
 
 const tileClassName = ({ date, view }) => {
   switch (view) {

@@ -5,7 +5,7 @@ import { getBeginOfDecade, getEndOfDecade } from '../shared/dates';
 
 import CenturyView from '../CenturyView';
 
-/* eslint-disable comma-dangle */
+/* eslint-disable comma-dangle, react/prop-types */
 
 describe('CenturyView', () => {
   it('renders proper view when given activeStartDate', () => {
@@ -90,7 +90,6 @@ describe('CenturyView', () => {
 
   it('renders tileContent in its tiles conditionally when given a function that returns a node', () => {
     const activeStartDate = new Date(2001, 0, 1);
-    // eslint-disable-next-line react/prop-types
     const tileContentFn = ({ date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
         return (
