@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import Calendar from 'react-calendar';
 
 import './Sample.less';
@@ -32,5 +31,3 @@ export default class Sample extends Component {
     );
   }
 }
-
-render(<Sample />, document.getElementById('react-container'));
