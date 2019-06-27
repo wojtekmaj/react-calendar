@@ -1,126 +1,119 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class LocaleOptions extends PureComponent {
-  onChange = (event) => {
-    const { setState } = this.props;
+export default function LocaleOptions({
+  locale,
+  setState,
+}) {
+  function onChange(event) {
+    let { value: nextLocale } = event.target;
 
-    let { value: locale } = event.target;
-
-    if (locale === 'null') {
-      locale = null;
+    if (nextLocale === 'null') {
+      nextLocale = null;
     }
 
-    setState({ locale });
+    setState({ locale: nextLocale });
   }
 
-  onCustomChange = (event) => {
-    const { setState } = this.props;
-
+  function onCustomChange(event) {
     event.preventDefault();
 
-    const { value: locale } = event.target.customLocale;
+    const { value: nextLocale } = event.target.customLocale;
 
-    setState({ locale });
+    setState({ locale: nextLocale });
   }
 
-  resetLocale = () => {
-    const { setState } = this.props;
-
+  function resetLocale() {
     setState({ locale: null });
   }
 
-  render() {
-    const { locale } = this.props;
+  return (
+    <fieldset id="localeOptions">
+      <legend htmlFor="localeOptions">
+        Locale
+      </legend>
 
-    return (
-      <fieldset id="localeOptions">
-        <legend htmlFor="localeOptions">
-          Locale
-        </legend>
-
-        <div>
-          <input
-            checked={locale === null}
-            id="localeDefault"
-            name="locale"
-            onChange={this.onChange}
-            type="radio"
-            value="null"
-          />
-          <label htmlFor="localeDefault">
-            Auto
-          </label>
-        </div>
-        <div>
-          <input
-            checked={locale === 'en-US'}
-            id="localeEnUS"
-            name="locale"
-            onChange={this.onChange}
-            type="radio"
-            value="en-US"
-          />
-          <label htmlFor="localeEnUS">
-            en-US
-          </label>
-        </div>
-        <div>
-          <input
-            checked={locale === 'fr-FR'}
-            id="localeFrFR"
-            name="locale"
-            onChange={this.onChange}
-            type="radio"
-            value="fr-FR"
-          />
-          <label htmlFor="localeFrFR">
-            fr-FR
-          </label>
-        </div>
-        <div>
-          <input
-            checked={locale === 'ar-EG'}
-            id="localeArEG"
-            name="locale"
-            onChange={this.onChange}
-            type="radio"
-            value="ar-EG"
-          />
-          <label htmlFor="localeArEG">
-            ar-EG
-          </label>
-        </div>
-        <form onSubmit={this.onCustomChange}>
-          <label htmlFor="customLocale">
-            Custom locale:
-          </label>
-          &nbsp;
-          <input
-            type="text"
-            key={locale}
-            name="customLocale"
-            defaultValue={locale}
-            pattern="^[a-z]{2}-[A-Z0-9]{2,3}$"
-          />
-          &nbsp;
-          <button
-            style={{ display: 'none' }}
-            type="submit"
-          >
-            Set locale
-          </button>
-          <button
-            disabled={locale === null}
-            onClick={this.resetLocale}
-            type="button"
-          >
-            Reset locale
-          </button>
-        </form>
-      </fieldset>
-    );
-  }
+      <div>
+        <input
+          checked={locale === null}
+          id="localeDefault"
+          name="locale"
+          onChange={onChange}
+          type="radio"
+          value="null"
+        />
+        <label htmlFor="localeDefault">
+          Auto
+        </label>
+      </div>
+      <div>
+        <input
+          checked={locale === 'en-US'}
+          id="localeEnUS"
+          name="locale"
+          onChange={onChange}
+          type="radio"
+          value="en-US"
+        />
+        <label htmlFor="localeEnUS">
+          en-US
+        </label>
+      </div>
+      <div>
+        <input
+          checked={locale === 'fr-FR'}
+          id="localeFrFR"
+          name="locale"
+          onChange={onChange}
+          type="radio"
+          value="fr-FR"
+        />
+        <label htmlFor="localeFrFR">
+          fr-FR
+        </label>
+      </div>
+      <div>
+        <input
+          checked={locale === 'ar-EG'}
+          id="localeArEG"
+          name="locale"
+          onChange={onChange}
+          type="radio"
+          value="ar-EG"
+        />
+        <label htmlFor="localeArEG">
+          ar-EG
+        </label>
+      </div>
+      <form onSubmit={onCustomChange}>
+        <label htmlFor="customLocale">
+          Custom locale:
+        </label>
+        &nbsp;
+        <input
+          type="text"
+          key={locale}
+          name="customLocale"
+          defaultValue={locale}
+          pattern="^[a-z]{2}-[A-Z0-9]{2,3}$"
+        />
+        &nbsp;
+        <button
+          style={{ display: 'none' }}
+          type="submit"
+        >
+          Set locale
+        </button>
+        <button
+          disabled={locale === null}
+          onClick={resetLocale}
+          type="button"
+        >
+          Reset locale
+        </button>
+      </form>
+    </fieldset>
+  );
 }
 
 LocaleOptions.propTypes = {
