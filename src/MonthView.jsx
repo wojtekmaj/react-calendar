@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Days from './MonthView/Days';
@@ -12,12 +12,23 @@ import {
   isValue,
 } from './shared/propTypes';
 
-export default class MonthView extends PureComponent {
-  get calendarType() {
-    const { calendarType, locale } = this.props;
+export default function MonthView(props) {
+  const {
+    activeStartDate,
+    locale,
+    showFixedNumberOfWeeks,
+  } = props;
+  const {
+    calendarType: calendarTypeProps,
+    formatShortWeekday,
+    onClickWeekNumber,
+    showWeekNumbers,
+    ...childProps
+  } = props;
 
-    if (calendarType) {
-      return calendarType;
+  const calendarType = (() => {
+    if (calendarTypeProps) {
+      return calendarTypeProps;
     }
 
     switch (locale) {
@@ -68,91 +79,70 @@ export default class MonthView extends PureComponent {
       default:
         return 'ISO 8601';
     }
-  }
+  })();
 
-  renderWeekdays() {
-    const { formatShortWeekday, locale } = this.props;
-
+  function renderWeekdays() {
     return (
       <Weekdays
-        calendarType={this.calendarType}
+        calendarType={calendarType}
         locale={locale}
         formatShortWeekday={formatShortWeekday}
       />
     );
   }
 
-  renderWeekNumbers() {
-    const { showWeekNumbers } = this.props;
-
+  function renderWeekNumbers() {
     if (!showWeekNumbers) {
       return null;
     }
 
-    const {
-      activeStartDate,
-      onClickWeekNumber,
-      showFixedNumberOfWeeks,
-    } = this.props;
-
     return (
       <WeekNumbers
         activeStartDate={activeStartDate}
-        calendarType={this.calendarType}
+        calendarType={calendarType}
         onClickWeekNumber={onClickWeekNumber}
         showFixedNumberOfWeeks={showFixedNumberOfWeeks}
       />
     );
   }
 
-  renderDays() {
-    const {
-      calendarType,
-      onClickWeekNumber,
-      showWeekNumbers,
-      ...childProps
-    } = this.props;
-
+  function renderDays() {
     return (
       <Days
-        calendarType={this.calendarType}
+        calendarType={calendarType}
         {...childProps}
       />
     );
   }
 
-  render() {
-    const { showWeekNumbers } = this.props;
+  const className = 'react-calendar__month-view';
 
-    const className = 'react-calendar__month-view';
-
-    return (
+  return (
+    <div
+      className={[
+        className,
+        showWeekNumbers ? `${className}--weekNumbers` : '',
+      ].join(' ')}
+    >
       <div
-        className={[
-          className,
-          showWeekNumbers ? `${className}--weekNumbers` : '',
-        ].join(' ')}
+        style={{
+          display: 'flex',
+          alignItems: 'flex-end',
+        }}
       >
+        {renderWeekNumbers()}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'flex-end',
+            flexGrow: 1,
+            width: '100%',
           }}
         >
-          {this.renderWeekNumbers()}
-          <div
-            style={{
-              flexGrow: 1,
-              width: '100%',
-            }}
-          >
-            {this.renderWeekdays()}
-            {this.renderDays()}
-          </div>
+          {renderWeekdays()}
+          {renderDays()}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 MonthView.propTypes = {

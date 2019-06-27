@@ -1,33 +1,17 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import Decades from './CenturyView/Decades';
 
-import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
-
-export default class CenturyView extends PureComponent {
-  renderDecades() {
+export default function CenturyView(props) {
+  function renderDecades() {
     return (
-      <Decades {...this.props} />
+      <Decades {...props} />
     );
   }
 
-  render() {
-    return (
-      <div className="react-calendar__century-view">
-        {this.renderDecades()}
-      </div>
-    );
-  }
+  return (
+    <div className="react-calendar__century-view">
+      {renderDecades()}
+    </div>
+  );
 }
-
-CenturyView.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  locale: PropTypes.string,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onChange: PropTypes.func,
-  setActiveRange: PropTypes.func,
-  value: isValue,
-  valueType: PropTypes.string,
-};

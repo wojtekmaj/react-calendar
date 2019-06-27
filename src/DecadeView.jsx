@@ -1,33 +1,17 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import Years from './DecadeView/Years';
 
-import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
-
-export default class DecadeView extends PureComponent {
-  renderYears() {
+export default function DecadeView(props) {
+  function renderYears() {
     return (
-      <Years {...this.props} />
+      <Years {...props} />
     );
   }
 
-  render() {
-    return (
-      <div className="react-calendar__decade-view">
-        {this.renderYears()}
-      </div>
-    );
-  }
+  return (
+    <div className="react-calendar__decade-view">
+      {renderYears()}
+    </div>
+  );
 }
-
-DecadeView.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  locale: PropTypes.string,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onChange: PropTypes.func,
-  setActiveRange: PropTypes.func,
-  value: isValue,
-  valueType: PropTypes.string,
-};
