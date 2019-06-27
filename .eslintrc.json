@@ -7,7 +7,7 @@
   },
   "parser": "babel-eslint",
   "rules": {
-    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/label-has-associated-control": ["error", { "required": { "some": ["id", "nesting"] }}],
     "jsx-a11y/label-has-for": ["error", { "required": { "some": ["id", "nesting"] }}],
     "no-restricted-globals": "off",
     "prefer-destructuring": "warn",
