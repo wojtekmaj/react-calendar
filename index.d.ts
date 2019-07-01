@@ -2,6 +2,7 @@ declare module "react-calendar" {
   type CalendarType = "ISO 8601" | "US" | "Arabic" | "Hebrew"
   type Detail = "month" | "year" | "decade" | "century"
   type DateCallback = (date: Date) => void
+  type ClickWeekNumberCallback = (weekNumber: number, date: Date) => void
   type OnChangeDateCallback = (date: Date | Date[]) => void
   type FormatterCallback = (locale: string, date: Date) => string
   type ViewCallback = (props: ViewCallbackProperties) => void
@@ -30,7 +31,7 @@ declare module "react-calendar" {
     onClickDay?: DateCallback;
     onClickDecade?: DateCallback;
     onClickMonth?: DateCallback;
-    onClickWeekNumber?: DateCallback;
+    onClickWeekNumber?: ClickWeekNumberCallback;
     onClickYear?: DateCallback;
     onDrillDown?: ViewCallback;
     onDrillUp?: ViewCallback;
