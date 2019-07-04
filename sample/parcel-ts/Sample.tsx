@@ -10,11 +10,11 @@ interface State {
 export default class Sample extends Component<{}, State> {
   state = {
     value: new Date(),
-  }
+  };
 
   onChange = (value: Date | Date[]) => {
     this.setState({ value });
-  };
+  }
 
   render() {
     const { value } = this.state;
