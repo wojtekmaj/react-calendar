@@ -94,7 +94,7 @@ Displays a complete, interactive calendar.
 |maxDate|Maximum date that the user can select. Periods partially overlapped by maxDate will also be selectable, although React-Calendar will ensure that no later date is selected.|n/a|Date: `new Date()`|
 |maxDetail|The most detailed view that the user shall see. View defined here also becomes the one on which clicking an item will select a date and pass it to onChange. Can be `"month"`, `"year"`, `"decade"` or `"century"`.|`"month"`|`"year"`|
 |minDate|Minimum date that the user can select. Periods partially overlapped by minDate will also be selectable, although React-Calendar will ensure that no earlier date is selected.|n/a|Date: `new Date()`|
-|minDetail|The least detailed view that the user shall see. Can be `"month"`, `"year"`, `"decade"` or `"century"`|`"century"`|`"decade"`|
+|minDetail|The least detailed view that the user shall see. Can be `"month"`, `"year"`, `"decade"` or `"century"`.|`"century"`|`"decade"`|
 |navigationAriaLabel|`aria-label` attribute of a label rendered on calendar navigation bar.|n/a|`"Go up"`|
 |navigationLabel|Content of a label rendered on calendar navigation bar.|(default label)|``({ date, view, label }) => `Current view: ${view}, date: ${date.toLocaleDateString()}` ``|
 |nextAriaLabel|`aria-label` attribute of the "next" button on the navigation pane.|n/a|`"Next"`|
