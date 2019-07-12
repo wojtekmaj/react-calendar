@@ -6,6 +6,20 @@
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
 
+  &--doubleView {
+    width: 700px;
+
+    .react-calendar__viewContainer {
+      display: flex;
+      margin: -.5em;
+
+      > * {
+        width: 50%;
+        margin: .5em;
+      }
+    }
+  }
+
   &, & *, & *:before, & *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;

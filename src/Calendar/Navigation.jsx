@@ -20,7 +20,7 @@ import { isView, isViews } from '../shared/propTypes';
 const className = 'react-calendar__navigation';
 
 export default function Navigation({
-  activeStartDate: date,
+  activeStartDate,
   drillUp,
   formatMonthYear,
   formatYear,
@@ -38,22 +38,26 @@ export default function Navigation({
   prevAriaLabel,
   prevLabel,
   setActiveStartDate,
+  showDoubleView,
   view,
   views,
 }) {
   const drillUpAvailable = views.indexOf(view) > 0;
   const shouldShowPrevNext2Buttons = view !== 'century';
 
-  const previousActiveStartDate = getBeginPrevious(view, date);
-  const previousActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginPrevious2(view, date);
-  const nextActiveStartDate = getBeginNext(view, date);
-  const nextActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginNext2(view, date);
+  const previousActiveStartDate = getBeginPrevious(view, activeStartDate);
+  const previousActiveStartDate2 = (
+    shouldShowPrevNext2Buttons
+    && getBeginPrevious2(view, activeStartDate)
+  );
+  const nextActiveStartDate = getBeginNext(view, activeStartDate);
+  const nextActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginNext2(view, activeStartDate);
 
   const prevButtonDisabled = (() => {
     if (previousActiveStartDate.getFullYear() < 1000) {
       return true;
     }
-    const previousActiveEndDate = getEndPrevious(view, date);
+    const previousActiveEndDate = getEndPrevious(view, activeStartDate);
     return minDate && minDate >= previousActiveEndDate;
   })();
 
@@ -61,7 +65,7 @@ export default function Navigation({
     if (previousActiveStartDate2.getFullYear() < 1000) {
       return true;
     }
-    const previousActiveEndDate = getEndPrevious2(view, date);
+    const previousActiveEndDate = getEndPrevious2(view, activeStartDate);
     return minDate && minDate >= previousActiveEndDate;
   })();
 
@@ -89,20 +93,28 @@ export default function Navigation({
     setActiveStartDate(nextActiveStartDate2);
   }
 
-  const label = (() => {
-    switch (view) {
-      case 'century':
-        return getCenturyLabel(locale, formatYear, date);
-      case 'decade':
-        return getDecadeLabel(locale, formatYear, date);
-      case 'year':
-        return formatYear(locale, date);
-      case 'month':
-        return formatMonthYear(locale, date);
-      default:
-        throw new Error(`Invalid view: ${view}.`);
-    }
-  })();
+  function renderLabel(date) {
+    const label = (() => {
+      switch (view) {
+        case 'century':
+          return getCenturyLabel(locale, formatYear, date);
+        case 'decade':
+          return getDecadeLabel(locale, formatYear, date);
+        case 'year':
+          return formatYear(locale, date);
+        case 'month':
+          return formatMonthYear(locale, date);
+        default:
+          throw new Error(`Invalid view: ${view}.`);
+      }
+    })();
+
+    return (
+      navigationLabel
+        ? navigationLabel({ date, view, label })
+        : label
+    );
+  }
 
   return (
     <div
@@ -137,9 +149,15 @@ export default function Navigation({
         style={{ flexGrow: 1 }}
         type="button"
       >
-        {navigationLabel
-          ? navigationLabel({ date, view, label })
-          : label}
+        {renderLabel(activeStartDate)}
+        {showDoubleView && (
+          <>
+            {' '}
+            –
+            {' '}
+            {renderLabel(nextActiveStartDate)}
+          </>
+        )}
       </button>
       <button
         aria-label={nextAriaLabel}
@@ -198,6 +216,7 @@ Navigation.propTypes = {
   prevAriaLabel: PropTypes.string,
   prevLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   setActiveStartDate: PropTypes.func.isRequired,
+  showDoubleView: PropTypes.bool,
   view: isView.isRequired,
   views: isViews.isRequired,
 };
