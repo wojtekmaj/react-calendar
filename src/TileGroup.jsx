@@ -6,7 +6,7 @@ import Flex from './Flex';
 import { getTileClasses } from './shared/utils';
 import { tileGroupProps } from './shared/propTypes';
 
-const TileGroup = ({
+export default function TileGroup({
   className,
   count,
   dateTransform,
@@ -20,7 +20,7 @@ const TileGroup = ({
   value,
   valueType,
   ...tileProps
-}) => {
+}) {
   const tiles = [];
   for (let point = start; point <= end; point += step) {
     const date = dateTransform(point);
@@ -48,7 +48,7 @@ const TileGroup = ({
       {tiles}
     </Flex>
   );
-};
+}
 
 TileGroup.propTypes = {
   ...tileGroupProps,
@@ -64,5 +64,3 @@ TileGroup.defaultProps = {
   count: 3,
   step: 1,
 };
-
-export default TileGroup;
