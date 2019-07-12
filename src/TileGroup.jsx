@@ -56,8 +56,8 @@ TileGroup.propTypes = {
   count: PropTypes.number,
   dateTransform: PropTypes.func.isRequired,
   offset: PropTypes.number,
-  tile: PropTypes.func.isRequired,
   step: PropTypes.number,
+  tile: PropTypes.func.isRequired,
 };
 
 TileGroup.defaultProps = {

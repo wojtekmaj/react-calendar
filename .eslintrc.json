@@ -13,7 +13,8 @@
     "prefer-destructuring": "warn",
     "prefer-spread": "warn",
     "react/require-default-props": "off",
-    "react/sort-comp": "off"
+    "react/sort-comp": "off",
+    "react/sort-prop-types": "error"
   },
   "overrides": [
     {
