@@ -39,7 +39,7 @@ describe('Calendar', () => {
     expect(monthView).toHaveLength(1);
   });
 
-  it('renders maximum allowed view when given maxDetail', () => {
+  it('renders maximum allowed view given maxDetail', () => {
     const component = mount(
       <Calendar maxDetail="year" />
     );
@@ -49,7 +49,7 @@ describe('Calendar', () => {
     expect(yearView).toHaveLength(1);
   });
 
-  it('renders maximum allowed view when given view that is not allowed', () => {
+  it('renders maximum allowed view given view that is not allowed', () => {
     const component = mount(
       <Calendar
         maxDetail="year"
@@ -78,7 +78,7 @@ describe('Calendar', () => {
     expect(yearView).toHaveLength(1);
   });
 
-  it('renders maximum allowed view when given changed maxDetail', () => {
+  it('renders maximum allowed view given changed maxDetail', () => {
     const component = mount(
       <Calendar
         maxDetail="month"
@@ -94,7 +94,7 @@ describe('Calendar', () => {
     expect(yearView).toHaveLength(1);
   });
 
-  it('renders month view when given view = "month"', () => {
+  it('renders month view given view = "month"', () => {
     const component = mount(
       <Calendar view="month" />
     );
@@ -104,7 +104,7 @@ describe('Calendar', () => {
     expect(monthView).toHaveLength(1);
   });
 
-  it('renders month view with week numbers when given view = "month" and showWeekNumbers flag set to true', () => {
+  it('renders month view with week numbers given view = "month" and showWeekNumbers flag set to true', () => {
     const component = mount(
       <Calendar
         showWeekNumbers
@@ -117,7 +117,7 @@ describe('Calendar', () => {
     expect(monthView).toHaveLength(1);
   });
 
-  it('renders year view when given view = "year"', () => {
+  it('renders year view given view = "year"', () => {
     const component = mount(
       <Calendar view="year" />
     );
@@ -127,7 +127,7 @@ describe('Calendar', () => {
     expect(yearView).toHaveLength(1);
   });
 
-  it('renders decade view when given view = "decade"', () => {
+  it('renders decade view given view = "decade"', () => {
     const component = mount(
       <Calendar view="decade" />
     );
@@ -137,7 +137,7 @@ describe('Calendar', () => {
     expect(decadeView).toHaveLength(1);
   });
 
-  it('renders century view when given view = "century"', () => {
+  it('renders century view given view = "century"', () => {
     const component = mount(
       <Calendar view="century" />
     );
@@ -191,6 +191,26 @@ describe('Calendar', () => {
     const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
 
     expect(firstDayTileTimeAbbr).toBe(format(beginOfCurrentMonth));
+  });
+
+  it('renders two views given showDoubleView flag is set to true', () => {
+    const component = mount(
+      <Calendar showDoubleView />
+    );
+
+    const monthView = component.find('.react-calendar__month-view');
+
+    expect(monthView).toHaveLength(2);
+  });
+
+  it('passes showDoubleView flag to Navigation', () => {
+    const component = mount(
+      <Calendar showDoubleView />
+    );
+
+    const navigation = component.find('Navigation');
+
+    expect(navigation.prop('showDoubleView')).toBeTruthy();
   });
 
   it('drills up when allowed', () => {

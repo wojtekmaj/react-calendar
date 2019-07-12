@@ -116,6 +116,23 @@ describe('Navigation', () => {
     expect(drillUp.text()).toBe('2001 – 2100');
   });
 
+  it('displays proper title for month view given showDouble flags is set to true', () => {
+    const component = shallow(
+      <Navigation
+        activeStartDate={new Date(2017, 0, 1)}
+        drillUp={jest.fn()}
+        setActiveStartDate={jest.fn()}
+        showDoubleView
+        view="month"
+        views={allViews}
+      />
+    );
+
+    const drillUp = component.find('.react-calendar__navigation__label');
+
+    expect(drillUp.text()).toBe('January 2017 – February 2017');
+  });
+
   it('displays proper user-defined labels on prev2, prev, next and next2 buttons', () => {
     const component = shallow(
       <Navigation
