@@ -63,9 +63,9 @@ describe('Navigation', () => {
       />
     );
 
-    const [, , drillUp] = component.children();
+    const drillUp = component.find('.react-calendar__navigation__label');
 
-    expect(drillUp.props.children.toString()).toBe('January 2017');
+    expect(drillUp.text()).toBe('January 2017');
   });
 
   it('displays proper title for year view', () => {
@@ -79,9 +79,9 @@ describe('Navigation', () => {
       />
     );
 
-    const [, , drillUp] = component.children();
+    const drillUp = component.find('.react-calendar__navigation__label');
 
-    expect(drillUp.props.children.toString()).toBe('2017');
+    expect(drillUp.text()).toBe('2017');
   });
 
   it('displays proper title for decade view', () => {
@@ -95,9 +95,9 @@ describe('Navigation', () => {
       />
     );
 
-    const [, , drillUp] = component.children();
+    const drillUp = component.find('.react-calendar__navigation__label');
 
-    expect(drillUp.props.children.toString()).toBe('2011 – 2020');
+    expect(drillUp.text()).toBe('2011 – 2020');
   });
 
   it('displays proper title for century view', () => {
@@ -111,9 +111,9 @@ describe('Navigation', () => {
       />
     );
 
-    const [, drillUp] = component.children();
+    const drillUp = component.find('.react-calendar__navigation__label');
 
-    expect(drillUp.props.children.toString()).toBe('2001 – 2100');
+    expect(drillUp.text()).toBe('2001 – 2100');
   });
 
   it('displays proper user-defined labels on prev2, prev, next and next2 buttons', () => {
@@ -522,9 +522,9 @@ describe('Navigation', () => {
       />
     );
 
-    const [, , drillUp] = component.children();
+    const drillUp = component.find('.react-calendar__navigation__label');
 
     expect(navigationLabel).toHaveBeenCalledWith({ date, view, label: 'January 2017' });
-    expect(drillUp.props.children.toString()).toBe(label);
+    expect(drillUp.text()).toBe(label);
   });
 });
