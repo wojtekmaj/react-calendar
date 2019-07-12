@@ -15,6 +15,7 @@ import {
 } from './shared/propTypes';
 import { between, callIfDefined, mergeFunctions } from './shared/utils';
 
+const baseClassName = 'react-calendar';
 const allViews = ['century', 'decade', 'year', 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
 
@@ -348,10 +349,16 @@ export default class Calendar extends Component {
   }
 
   onMouseOver = (value) => {
-    this.setState({ hover: value });
+    this.setState((prevState) => {
+      if (prevState.hover && (prevState.hover.getTime() === value.getTime())) {
+        return null;
+      }
+
+      return { hover: value };
+    });
   }
 
-  onMouseOut = () => {
+  onMouseLeave = () => {
     this.setState({ hover: null });
   }
 
@@ -429,6 +436,7 @@ export default class Calendar extends Component {
           showNeighboringMonth,
           showWeekNumbers,
         } = this.props;
+        const { onMouseLeave } = this;
 
         return (
           <MonthView
@@ -436,6 +444,7 @@ export default class Calendar extends Component {
             formatShortWeekday={formatShortWeekday}
             onClick={mergeFunctions(clickAction, onClickDay)}
             onClickWeekNumber={onClickWeekNumber}
+            onMouseLeave={onMouseLeave}
             showFixedNumberOfWeeks={showFixedNumberOfWeeks}
             showNeighboringMonth={showNeighboringMonth}
             showWeekNumbers={showWeekNumbers}
@@ -503,21 +512,25 @@ export default class Calendar extends Component {
   render() {
     const { className, selectRange } = this.props;
     const { value } = this.state;
-    const { onMouseOut } = this;
+    const { onMouseLeave } = this;
     const valueArray = [].concat(value);
 
     return (
       <div
         className={mergeClassNames(
-          'react-calendar',
-          selectRange && valueArray.length === 1 && 'react-calendar--selectRange',
+          baseClassName,
+          selectRange && valueArray.length === 1 && `${baseClassName}--selectRange`,
           className,
         )}
-        onMouseOut={selectRange ? onMouseOut : null}
-        onBlur={selectRange ? onMouseOut : null}
       >
         {this.renderNavigation()}
-        {this.renderContent()}
+        <div
+          className={`${baseClassName}__viewContainer`}
+          onBlur={selectRange ? onMouseLeave : null}
+          onMouseLeave={selectRange ? onMouseLeave : null}
+        >
+          {this.renderContent()}
+        </div>
       </div>
     );
   }

@@ -17,6 +17,7 @@ export default function Weekdays(props) {
     calendarType,
     formatShortWeekday,
     locale,
+    onMouseLeave,
   } = props;
 
   const anyDate = new Date();
@@ -49,6 +50,8 @@ export default function Weekdays(props) {
     <Flex
       className="react-calendar__month-view__weekdays"
       count={7}
+      onFocus={onMouseLeave}
+      onMouseOver={onMouseLeave}
     >
       {weekdays}
     </Flex>
@@ -63,4 +66,5 @@ Weekdays.propTypes = {
   calendarType: isCalendarType.isRequired,
   formatShortWeekday: PropTypes.func,
   locale: PropTypes.string,
+  onMouseLeave: PropTypes.func,
 };

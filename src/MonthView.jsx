@@ -16,6 +16,7 @@ export default function MonthView(props) {
   const {
     activeStartDate,
     locale,
+    onMouseLeave,
     showFixedNumberOfWeeks,
   } = props;
   const {
@@ -86,6 +87,7 @@ export default function MonthView(props) {
       <Weekdays
         calendarType={calendarType}
         locale={locale}
+        onMouseLeave={onMouseLeave}
         formatShortWeekday={formatShortWeekday}
       />
     );
@@ -101,6 +103,7 @@ export default function MonthView(props) {
         activeStartDate={activeStartDate}
         calendarType={calendarType}
         onClickWeekNumber={onClickWeekNumber}
+        onMouseLeave={onMouseLeave}
         showFixedNumberOfWeeks={showFixedNumberOfWeeks}
       />
     );
@@ -154,6 +157,7 @@ MonthView.propTypes = {
   minDate: isMinDate,
   onChange: PropTypes.func,
   onClickWeekNumber: PropTypes.func,
+  onMouseLeave: PropTypes.func,
   setActiveRange: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,

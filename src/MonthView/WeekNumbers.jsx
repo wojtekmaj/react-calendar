@@ -20,6 +20,7 @@ export default function WeekNumbers(props) {
     activeStartDate,
     calendarType,
     onClickWeekNumber,
+    onMouseLeave,
     showFixedNumberOfWeeks,
   } = props;
 
@@ -57,6 +58,8 @@ export default function WeekNumbers(props) {
       count={numberOfWeeks}
       direction="column"
       style={{ flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }}
+      onFocus={onMouseLeave}
+      onMouseOver={onMouseLeave}
     >
       {
         weekNumbers.map((weekNumber, weekIndex) => (
@@ -76,5 +79,6 @@ WeekNumbers.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType.isRequired,
   onClickWeekNumber: PropTypes.func,
+  onMouseLeave: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
 };
