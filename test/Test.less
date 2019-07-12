@@ -133,6 +133,30 @@ body {
           &.brown {
             background-color: fade(brown, 20%);
           }
+
+          &--active {
+            @bgcolor: rgb(0, 110, 220);
+
+            &.react-calendar__tile--now {
+              background-color: mix(@bgcolor, lighten(rgb(25, 150, 25), 30%));
+            }
+
+            &.red {
+              background-color: mix(@bgcolor, fade(red, 60%), 60%);
+            }
+
+            &.green {
+              background-color: mix(@bgcolor, fade(green, 60%), 60%);
+            }
+
+            &.pink {
+              background-color: mix(@bgcolor, fade(pink, 60%), 60%);
+            }
+
+            &.brown {
+              background-color: mix(@bgcolor, fade(brown, 60%), 60%);
+            }
+          }
         }
       }
 
