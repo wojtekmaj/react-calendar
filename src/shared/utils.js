@@ -92,12 +92,12 @@ export const getTileClasses = ({
       // Date before value
       (
         dateRange[1] < valueRange[0]
-        && isRangeWithinRange([hover, valueRange[0]], dateRange)
+        && doRangesOverlap(dateRange, [hover, valueRange[0]])
       )
       // Date after value
       || (
         dateRange[0] > valueRange[1]
-        && isRangeWithinRange([valueRange[1], hover], dateRange)
+        && doRangesOverlap(dateRange, [valueRange[1], hover])
       )
     )
   ) {
