@@ -17,8 +17,8 @@ export default function MaxDetailOptions({ maxDetail, minDetail, setState }) {
   const minDetailIndex = allViews.indexOf(minDetail);
 
   return (
-    <fieldset id="detailoptions">
-      <legend htmlFor="viewoptions">
+    <fieldset id="maxdetailoptions">
+      <legend htmlFor="maxdetailoptions">
         Maximum detail
       </legend>
 
@@ -27,13 +27,13 @@ export default function MaxDetailOptions({ maxDetail, minDetail, setState }) {
           <input
             checked={maxDetail === view}
             disabled={minDetailIndex > index}
-            id={view}
+            id={`max-${view}`}
             name="maxDetail"
             onChange={onChange}
             type="radio"
             value={view}
           />
-          <label htmlFor={view}>
+          <label htmlFor={`max-${view}`}>
             {upperCaseFirstLetter(view)}
           </label>
         </div>

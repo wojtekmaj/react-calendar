@@ -93,6 +93,7 @@ export default function LocaleOptions({
         <input
           type="text"
           key={locale}
+          id="customLocale"
           name="customLocale"
           defaultValue={locale}
           pattern="^[a-z]{2}-[A-Z0-9]{2,3}$"
