@@ -57,15 +57,15 @@ export default function WeekNumbers(props) {
       className="react-calendar__month-view__weekNumbers"
       count={numberOfWeeks}
       direction="column"
-      style={{ flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }}
       onFocus={onMouseLeave}
       onMouseOver={onMouseLeave}
+      style={{ flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }}
     >
       {
         weekNumbers.map((weekNumber, weekIndex) => (
           <WeekNumber
-            date={dates[weekIndex]}
             key={weekNumber}
+            date={dates[weekIndex]}
             onClickWeekNumber={onClickWeekNumber}
             weekNumber={weekNumber}
           />

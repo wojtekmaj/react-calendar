@@ -167,8 +167,8 @@ export default class Test extends PureComponent {
               setState={setState}
             />
             <LocaleOptions
-              setState={setState}
               locale={locale}
+              setState={setState}
             />
             <ValueOptions
               selectRange={selectRange}
@@ -176,8 +176,8 @@ export default class Test extends PureComponent {
               value={value}
             />
             <ViewOptions
-              showFixedNumberOfWeeks={showFixedNumberOfWeeks}
               setState={setState}
+              showFixedNumberOfWeeks={showFixedNumberOfWeeks}
               showNeighboringMonth={showNeighboringMonth}
               showWeekNumbers={showWeekNumbers}
             />
@@ -193,16 +193,15 @@ export default class Test extends PureComponent {
               <Calendar
                 activeStartDate={new Date(2017, 0, 1)}
                 className="myCustomCalendarClassName"
-                showFixedNumberOfWeeks={showFixedNumberOfWeeks}
                 locale={locale}
                 maxDate={maxDate}
                 maxDetail={maxDetail}
                 minDate={minDate}
                 minDetail={minDetail}
-                onChange={this.onChange}
                 onActiveDateChange={({ activeStartDate, view }) => {
                   console.log('Changed active start date to', view, activeStartDate);
                 }}
+                onChange={this.onChange}
                 onClickWeekNumber={(weekNumber, date) => {
                   console.log('Clicked week number', weekNumber, date);
                 }}
@@ -212,12 +211,13 @@ export default class Test extends PureComponent {
                 onDrillUp={({ activeStartDate, view }) => {
                   console.log('Drilled up to', view, activeStartDate);
                 }}
-                selectRange={selectRange}
-                tileClassName={tileClassName}
-                tileContent={tileContent}
                 returnValue={returnValue}
+                selectRange={selectRange}
+                showFixedNumberOfWeeks={showFixedNumberOfWeeks}
                 showNeighboringMonth={showNeighboringMonth}
                 showWeekNumbers={showWeekNumbers}
+                tileClassName={tileClassName}
+                tileContent={tileContent}
                 value={value}
               />
             </form>

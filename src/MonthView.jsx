@@ -86,9 +86,9 @@ export default function MonthView(props) {
     return (
       <Weekdays
         calendarType={calendarType}
+        formatShortWeekday={formatShortWeekday}
         locale={locale}
         onMouseLeave={onMouseLeave}
-        formatShortWeekday={formatShortWeekday}
       />
     );
   }

@@ -76,14 +76,14 @@ export default function ValueOptions({
         />
         &nbsp;
         <button
-          type="button"
           onClick={() => setStartValue(null)}
+          type="button"
         >
           Clear to null
         </button>
         <button
-          type="button"
           onClick={() => setStartValue('')}
+          type="button"
         >
           Clear to empty string
         </button>
@@ -101,14 +101,14 @@ export default function ValueOptions({
         />
         &nbsp;
         <button
-          type="button"
           onClick={() => setEndValue(null)}
+          type="button"
         >
           Clear to null
         </button>
         <button
-          type="button"
           onClick={() => setEndValue('')}
+          type="button"
         >
           Clear to empty string
         </button>
@@ -116,10 +116,10 @@ export default function ValueOptions({
 
       <div>
         <input
-          id="selectRange"
-          type="checkbox"
           checked={selectRange}
+          id="selectRange"
           onChange={onSelectRangeChange}
+          type="checkbox"
         />
         <label htmlFor="selectRange">
           Select range

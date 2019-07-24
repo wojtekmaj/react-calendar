@@ -108,31 +108,31 @@ export default function Navigation({
     >
       {prev2Label !== null && shouldShowPrevNext2Buttons && (
         <button
+          aria-label={prev2AriaLabel}
           className={`${className}__arrow ${className}__prev2-button`}
           disabled={prev2ButtonDisabled}
           onClick={onClickPrevious2}
           type="button"
-          aria-label={prev2AriaLabel}
         >
           {prev2Label}
         </button>
       )}
       <button
+        aria-label={prevAriaLabel}
         className={`${className}__arrow ${className}__prev-button`}
         disabled={prevButtonDisabled}
         onClick={onClickPrevious}
         type="button"
-        aria-label={prevAriaLabel}
       >
         {prevLabel}
       </button>
       <button
+        aria-label={navigationAriaLabel}
         className="react-calendar__navigation__label"
-        onClick={drillUp}
         disabled={!drillUpAvailable}
+        onClick={drillUp}
         style={{ flexGrow: 1 }}
         type="button"
-        aria-label={navigationAriaLabel}
       >
         {navigationLabel
           ? navigationLabel({ date, view, label })
@@ -140,21 +140,21 @@ export default function Navigation({
         }
       </button>
       <button
+        aria-label={nextAriaLabel}
         className={`${className}__arrow ${className}__next-button`}
         disabled={nextButtonDisabled}
         onClick={onClickNext}
         type="button"
-        aria-label={nextAriaLabel}
       >
         {nextLabel}
       </button>
       {next2Label !== null && shouldShowPrevNext2Buttons && (
         <button
+          aria-label={next2AriaLabel}
           className={`${className}__arrow ${className}__next2-button`}
           disabled={next2ButtonDisabled}
           onClick={onClickNext2}
           type="button"
-          aria-label={next2AriaLabel}
         >
           {next2Label}
         </button>

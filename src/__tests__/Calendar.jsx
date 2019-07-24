@@ -108,8 +108,8 @@ describe('Calendar', () => {
   it('renders month view with week numbers when given view = "month" and showWeekNumbers flag set to true', () => {
     const component = mount(
       <Calendar
-        view="month"
         showWeekNumbers
+        view="month"
       />
     );
 

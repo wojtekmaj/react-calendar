@@ -33,10 +33,10 @@ export default function ViewOptions({
 
       <div>
         <input
-          id="showFixedNumberOfWeeks"
-          type="checkbox"
           checked={showFixedNumberOfWeeks}
+          id="showFixedNumberOfWeeks"
           onChange={onShowFixedNumberOfWeeksChange}
+          type="checkbox"
         />
         <label htmlFor="showFixedNumberOfWeeks">
           Show fixed number of weeks
@@ -45,11 +45,11 @@ export default function ViewOptions({
 
       <div>
         <input
-          id="showNeighboringMonth"
-          type="checkbox"
           checked={showNeighboringMonth || showFixedNumberOfWeeks}
           disabled={showFixedNumberOfWeeks}
+          id="showNeighboringMonth"
           onChange={onShowNeighboringMonthChange}
+          type="checkbox"
         />
         <label htmlFor="showNeighboringMonth">
           {'Show neighboring month\'s days'}
@@ -58,10 +58,10 @@ export default function ViewOptions({
 
       <div>
         <input
-          id="showWeekNumbers"
-          type="checkbox"
           checked={showWeekNumbers}
+          id="showWeekNumbers"
           onChange={onShowWeekNumbersChange}
+          type="checkbox"
         />
         <label htmlFor="showWeekNumbers">
           Show week numbers

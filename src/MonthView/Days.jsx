@@ -64,14 +64,13 @@ export default function Days(props) {
       {...otherProps}
       className="react-calendar__month-view__days"
       count={7}
+      currentMonthIndex={monthIndex}
       dateTransform={day => new Date(year, monthIndex, day)}
       dateType="day"
       end={end}
       offset={offset}
       start={start}
       tile={Day}
-      // Tile props
-      currentMonthIndex={monthIndex}
     />
   );
 }

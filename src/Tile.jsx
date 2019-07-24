@@ -59,8 +59,8 @@ export default class Tile extends Component {
           || (tileDisabled && tileDisabled({ activeStartDate, date, view }))
         }
         onClick={onClick && (() => onClick(date))}
-        onMouseOver={onMouseOver && (() => onMouseOver(date))}
         onFocus={onMouseOver && (() => onMouseOver(date))}
+        onMouseOver={onMouseOver && (() => onMouseOver(date))}
         style={style}
         type="button"
       >

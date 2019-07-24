@@ -91,12 +91,12 @@ export default function LocaleOptions({
         </label>
         &nbsp;
         <input
-          type="text"
           key={locale}
+          defaultValue={locale}
           id="customLocale"
           name="customLocale"
-          defaultValue={locale}
           pattern="^[a-z]{2}-[A-Z0-9]{2,3}$"
+          type="text"
         />
         &nbsp;
         <button

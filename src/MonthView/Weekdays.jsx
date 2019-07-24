@@ -36,10 +36,10 @@ export default function Weekdays(props) {
 
     weekdays.push(
       <div
-        className="react-calendar__month-view__weekdays__weekday"
         key={weekday}
+        className="react-calendar__month-view__weekdays__weekday"
       >
-        <abbr title={abbr} aria-label={abbr}>
+        <abbr aria-label={abbr} title={abbr}>
           {formatShortWeekday(locale, weekdayDate).replace('.', '')}
         </abbr>
       </div>,
