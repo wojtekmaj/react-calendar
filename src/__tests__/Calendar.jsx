@@ -102,7 +102,6 @@ describe('Calendar', () => {
     const monthView = component.find('.react-calendar__month-view');
 
     expect(monthView).toHaveLength(1);
-    expect(component.state().view).toBe('month');
   });
 
   it('renders month view with week numbers when given view = "month" and showWeekNumbers flag set to true', () => {
@@ -116,7 +115,6 @@ describe('Calendar', () => {
     const monthView = component.find('.react-calendar__month-view--weekNumbers');
 
     expect(monthView).toHaveLength(1);
-    expect(component.state().view).toBe('month');
   });
 
   it('renders year view when given view = "year"', () => {
@@ -127,7 +125,6 @@ describe('Calendar', () => {
     const yearView = component.find('.react-calendar__year-view');
 
     expect(yearView).toHaveLength(1);
-    expect(component.state().view).toBe('year');
   });
 
   it('renders decade view when given view = "decade"', () => {
@@ -138,7 +135,6 @@ describe('Calendar', () => {
     const decadeView = component.find('.react-calendar__decade-view');
 
     expect(decadeView).toHaveLength(1);
-    expect(component.state().view).toBe('decade');
   });
 
   it('renders century view when given view = "century"', () => {
@@ -149,7 +145,6 @@ describe('Calendar', () => {
     const centuryView = component.find('.react-calendar__century-view');
 
     expect(centuryView).toHaveLength(1);
-    expect(component.state().view).toBe('century');
   });
 
   it('displays a view with a given value when value is given', () => {
