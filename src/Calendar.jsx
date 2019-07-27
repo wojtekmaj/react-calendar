@@ -31,14 +31,6 @@ const datesAreDifferent = (date1, date2) => (
 const getLimitedViews = (minDetail, maxDetail) => allViews
   .slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
 
-const getView = (view, minDetail, maxDetail) => {
-  if (view && getLimitedViews(minDetail, maxDetail).indexOf(view) !== -1) {
-    return view;
-  }
-
-  return getLimitedViews(minDetail, maxDetail).pop();
-};
-
 /**
  * Determines whether a given view is allowed with currently applied settings.
  */
@@ -46,6 +38,18 @@ const isViewAllowed = (view, minDetail, maxDetail) => {
   const views = getLimitedViews(minDetail, maxDetail);
 
   return views.indexOf(view) !== -1;
+};
+
+/**
+ * Gets either provided view if allowed by minDetail and maxDetail, or gets
+ * the default view if not allowed.
+ */
+const getView = (view, minDetail, maxDetail) => {
+  if (isViewAllowed(view, minDetail, maxDetail)) {
+    return view;
+  }
+
+  return getLimitedViews(minDetail, maxDetail).pop();
 };
 
 /**
