@@ -101,7 +101,7 @@ Displays a complete, interactive calendar.
 |nextLabel|Content of the "next" button on the navigation pane.|`"›"`|<ul><li>String: `"›"`</li><li>React element: `<NextIcon />`</li></ul>|
 |next2AriaLabel|`aria-label` attribute of the "next on higher level" button on the navigation pane.|n/a|`"Jump forwards"`|
 |next2Label|Content of the "next on higher level" button on the navigation pane.|`"»"`|<ul><li>String: `"»"`</li><li>React element: `<DoubleNextIcon />`</li></ul>|
-|onActiveDateChange|Function called when the user navigates from one view to another using previous/next button.|n/a|`({ activeStartDate, view }) => alert('Changed view to: ', activeStartDate, view)`|
+|onActiveStartDateChange|Function called when the user navigates from one view to another using previous/next button.|n/a|`({ activeStartDate, view }) => alert('Changed view to: ', activeStartDate, view)`|
 |onChange|Function called when the user clicks an item (day on month view, month on year view and so on) on the most detailed view available.|n/a|`(value) => alert('New date is: ', value)`|
 |onClickDay|Function called when the user clicks a day.|n/a|`(value) => alert('Clicked day: ', value)`|
 |onClickDecade|Function called when the user clicks a decade.|n/a|`(value) => alert('Clicked decade: ', value)`|

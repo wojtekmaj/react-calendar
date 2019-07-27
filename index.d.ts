@@ -26,7 +26,7 @@ declare module "react-calendar" {
     next2Label?: string | JSX.Element | null;
     nextAriaLabel?: string;
     nextLabel?: string | JSX.Element;
-    onActiveDateChange?: ViewCallback;
+    onActiveStartDateChange?: ViewCallback;
     onChange?: OnChangeDateCallback;
     onClickDay?: DateCallback;
     onClickDecade?: DateCallback;

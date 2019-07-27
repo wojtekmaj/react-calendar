@@ -85,10 +85,11 @@ const tileContent = ({ date, view }) => {
 
 export default class Test extends PureComponent {
   state = {
+    activeStartDate: new Date(now.getFullYear(), now.getMonth()),
     locale: null,
-    maxDate: new Date(now.getUTCFullYear(), now.getUTCMonth() + 1, 15, 12),
+    maxDate: new Date(now.getFullYear(), now.getMonth() + 1, 15, 12),
     maxDetail: 'month',
-    minDate: new Date(1995, now.getUTCMonth() + 1, 15, 12),
+    minDate: new Date(1995, now.getMonth() + 1, 15, 12),
     minDetail: 'century',
     returnValue: 'start',
     selectRange: false,
@@ -96,9 +97,15 @@ export default class Test extends PureComponent {
     showNeighboringMonth: true,
     showWeekNumbers: false,
     value: now,
+    view: 'month',
   }
 
-  onChange = value => this.setState({ value })
+  onChange = value => this.setState({ value });
+
+  onViewOrDateChange = ({ activeStartDate, view }) => {
+    console.log('Changed view to', view, activeStartDate);
+    this.setState({ activeStartDate, view });
+  };
 
   renderDebugInfo() {
     const { locale, value } = this.state;
@@ -127,7 +134,7 @@ export default class Test extends PureComponent {
 
   render() {
     const {
-      showFixedNumberOfWeeks,
+      activeStartDate,
       locale,
       maxDate,
       maxDetail,
@@ -135,12 +142,42 @@ export default class Test extends PureComponent {
       minDetail,
       returnValue,
       selectRange,
+      showFixedNumberOfWeeks,
       showNeighboringMonth,
       showWeekNumbers,
       value,
+      view,
     } = this.state;
 
     const setState = state => this.setState(state);
+
+    const commonProps = {
+      className: 'myCustomCalendarClassName',
+      locale,
+      maxDate,
+      maxDetail,
+      minDate,
+      minDetail,
+      onActiveStartDateChange: this.onViewOrDateChange,
+      onChange: this.onChange,
+      onClickWeekNumber: (weekNumber, date) => {
+        console.log('Clicked week number', weekNumber, date);
+      },
+      onDrillDown: ({ activeStartDate: nextActiveStartDate, view: nextView }) => {
+        console.log('Drilled down to', nextView, nextActiveStartDate);
+      },
+      onDrillUp: ({ activeStartDate: nextActiveStartDate, view: nextView }) => {
+        console.log('Drilled up to', nextView, nextActiveStartDate);
+      },
+      onViewChange: this.onViewOrDateChange,
+      returnValue,
+      selectRange,
+      showFixedNumberOfWeeks,
+      showNeighboringMonth,
+      showWeekNumbers,
+      tileClassName,
+      tileContent,
+    };
 
     return (
       <div className="Test">
@@ -190,35 +227,19 @@ export default class Test extends PureComponent {
                 console.log(event);
               }}
             >
+              <p>Controlled:</p>
               <Calendar
-                activeStartDate={new Date(2017, 0, 1)}
-                className="myCustomCalendarClassName"
-                locale={locale}
-                maxDate={maxDate}
-                maxDetail={maxDetail}
-                minDate={minDate}
-                minDetail={minDetail}
-                onActiveDateChange={({ activeStartDate, view }) => {
-                  console.log('Changed active start date to', view, activeStartDate);
-                }}
-                onChange={this.onChange}
-                onClickWeekNumber={(weekNumber, date) => {
-                  console.log('Clicked week number', weekNumber, date);
-                }}
-                onDrillDown={({ activeStartDate, view }) => {
-                  console.log('Drilled down to', view, activeStartDate);
-                }}
-                onDrillUp={({ activeStartDate, view }) => {
-                  console.log('Drilled up to', view, activeStartDate);
-                }}
-                returnValue={returnValue}
-                selectRange={selectRange}
-                showFixedNumberOfWeeks={showFixedNumberOfWeeks}
-                showNeighboringMonth={showNeighboringMonth}
-                showWeekNumbers={showWeekNumbers}
-                tileClassName={tileClassName}
-                tileContent={tileContent}
+                {...commonProps}
+                activeStartDate={activeStartDate}
                 value={value}
+                view={view}
+              />
+              <p>Uncontrolled:</p>
+              <Calendar
+                {...commonProps}
+                defaultActiveStartDate={activeStartDate}
+                defaultValue={value}
+                defaultView={view}
               />
             </form>
             {this.renderDebugInfo()}
