@@ -61,7 +61,7 @@ export const isView = (props, propName, componentName) => {
 
   const allowedViews = views || allViews;
 
-  if (allowedViews.indexOf(view) === -1) {
+  if (view !== undefined && allowedViews.indexOf(view) === -1) {
     return new Error(`Invalid prop \`${propName}\` of value \`${view}\` supplied to \`${componentName}\`, expected one of [${allowedViews.map(a => `"${a}"`).join(', ')}].`);
   }
 
