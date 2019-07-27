@@ -210,6 +210,7 @@ describe('Calendar', () => {
 
   it('calls onDrillUp on drill up', () => {
     const onDrillUp = jest.fn();
+
     const component = mount(
       <Calendar
         activeStartDate={new Date(2017, 6, 1)}
@@ -227,13 +228,18 @@ describe('Calendar', () => {
   });
 
   it('refuses to drill up when already on minimum allowed detail', () => {
+    const onDrillUp = jest.fn();
+
     const component = mount(
-      <Calendar view="century" />
+      <Calendar
+        onDrillUp={onDrillUp}
+        view="century"
+      />
     );
 
     component.instance().drillUp();
 
-    expect(component.state().view).toBe('century');
+    expect(onDrillUp).not.toHaveBeenCalled();
   });
 
   it('drills down when allowed', () => {
@@ -248,6 +254,7 @@ describe('Calendar', () => {
 
   it('calls onDrillDown on drill down', () => {
     const onDrillDown = jest.fn();
+
     const component = mount(
       <Calendar
         activeStartDate={new Date(2001, 0, 1)}
@@ -265,13 +272,18 @@ describe('Calendar', () => {
   });
 
   it('refuses to drill down when already on minimum allowed detail', () => {
+    const onDrillDown = jest.fn();
+
     const component = mount(
-      <Calendar view="month" />
+      <Calendar
+        onDrillDown={onDrillDown}
+        view="month"
+      />
     );
 
-    component.instance().drillDown();
+    component.instance().drillUp();
 
-    expect(component.state().view).toBe('month');
+    expect(onDrillDown).not.toHaveBeenCalled();
   });
 
   it('updates the value if the day previously partially covered is now fully covered', () => {
