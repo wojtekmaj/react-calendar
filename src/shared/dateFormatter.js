@@ -1,8 +1,8 @@
 import getUserLocale from 'get-user-locale';
 
-const getFormatter = options => (locale, date) => (
-  date.toLocaleString(locale || getUserLocale(), options)
-);
+function getFormatter(options) {
+  return (locale, date) => date.toLocaleString(locale || getUserLocale(), options);
+}
 
 /**
  * Changes the hour in a Date to ensure right date formatting even if DST is messed up.
@@ -13,14 +13,14 @@ const getFormatter = options => (locale, date) => (
  *
  * @param {Date} date Date.
  */
-const toSafeHour = (date) => {
+function toSafeHour(date) {
   const safeDate = new Date(date);
   return new Date(safeDate.setHours(12));
-};
+}
 
-const getSafeFormatter = options => (locale, date) => (
-  getFormatter(options)(locale, toSafeHour(date))
-);
+function getSafeFormatter(options) {
+  return (locale, date) => getFormatter(options)(locale, toSafeHour(date));
+}
 
 const formatDateOptions = { day: 'numeric', month: 'numeric', year: 'numeric' };
 const formatLongDateOptions = { day: 'numeric', month: 'long', year: 'numeric' };

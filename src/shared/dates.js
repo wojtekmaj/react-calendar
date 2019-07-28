@@ -5,7 +5,7 @@ const [
 
 /* Simple getters - getting a property of a given point in time */
 
-export const getYear = (date) => {
+export function getYear(date) {
   if (date instanceof Date) {
     return date.getFullYear();
   }
@@ -21,15 +21,15 @@ export const getYear = (date) => {
   }
 
   throw new Error(`Failed to get year from date: ${date}.`);
-};
+}
 
-export const getMonth = date => date.getMonth() + 1;
+export function getMonth(date) { return date.getMonth() + 1; }
 
-export const getMonthIndex = date => date.getMonth();
+export function getMonthIndex(date) { return date.getMonth(); }
 
-export const getDay = date => date.getDate();
+export function getDay(date) { return date.getDate(); }
 
-export const getDayOfWeek = (date, calendarType = 'ISO 8601') => {
+export function getDayOfWeek(date, calendarType = 'ISO 8601') {
   const weekday = date.getDay();
 
   switch (calendarType) {
@@ -44,146 +44,152 @@ export const getDayOfWeek = (date, calendarType = 'ISO 8601') => {
     default:
       throw new Error('Unsupported calendar type.');
   }
-};
+}
 
 /* Complex getters - getting a property somehow related to a given point in time */
 
-export const getBeginOfCenturyYear = (date) => {
+export function getBeginOfCenturyYear(date) {
   const year = getYear(date) - 1;
   return year + (-year % 100) + 1;
-};
+}
 
-export const getBeginOfCentury = (date) => {
+export function getBeginOfCentury(date) {
   const beginOfCenturyYear = getBeginOfCenturyYear(date);
   return new Date(beginOfCenturyYear, 0, 1);
-};
+}
 
-export const getEndOfCentury = (date) => {
+export function getEndOfCentury(date) {
   const beginOfCenturyYear = getBeginOfCenturyYear(date);
   return new Date(beginOfCenturyYear + 100, 0, 1, 0, 0, 0, -1);
-};
+}
 
-export const getCenturyRange = date => [
-  getBeginOfCentury(date),
-  getEndOfCentury(date),
-];
+export function getCenturyRange(date) {
+  return [
+    getBeginOfCentury(date),
+    getEndOfCentury(date),
+  ];
+}
 
-export const getBeginOfPreviousCentury = (date) => {
+export function getBeginOfPreviousCentury(date) {
   const previousCenturyYear = getYear(date) - 100;
   return getBeginOfCentury(previousCenturyYear);
-};
+}
 
-export const getEndOfPreviousCentury = (date) => {
+export function getEndOfPreviousCentury(date) {
   const previousCenturyYear = getYear(date) - 100;
   return getEndOfCentury(previousCenturyYear);
-};
+}
 
-export const getBeginOfNextCentury = (date) => {
+export function getBeginOfNextCentury(date) {
   const nextCenturyYear = getYear(date) + 100;
   return getBeginOfCentury(nextCenturyYear);
-};
+}
 
-export const getBeginOfDecadeYear = (date) => {
+export function getBeginOfDecadeYear(date) {
   const year = getYear(date) - 1;
   return year + (-year % 10) + 1;
-};
+}
 
-export const getBeginOfDecade = (date) => {
+export function getBeginOfDecade(date) {
   const beginOfDecadeYear = getBeginOfDecadeYear(date);
   return new Date(beginOfDecadeYear, 0, 1);
-};
+}
 
-export const getEndOfDecade = (date) => {
+export function getEndOfDecade(date) {
   const beginOfDecadeYear = getBeginOfDecadeYear(date);
   return new Date(beginOfDecadeYear + 10, 0, 1, 0, 0, 0, -1);
-};
+}
 
-export const getDecadeRange = date => [
-  getBeginOfDecade(date),
-  getEndOfDecade(date),
-];
+export function getDecadeRange(date) {
+  return [
+    getBeginOfDecade(date),
+    getEndOfDecade(date),
+  ];
+}
 
-export const getBeginOfPreviousDecade = (date, offset = 10) => {
+export function getBeginOfPreviousDecade(date, offset = 10) {
   const previousDecadeYear = getBeginOfDecadeYear(date) - offset;
   return getBeginOfDecade(previousDecadeYear);
-};
+}
 
-export const getEndOfPreviousDecade = (date, offset = 10) => {
+export function getEndOfPreviousDecade(date, offset = 10) {
   const previousDecadeYear = getBeginOfDecadeYear(date) - offset;
   return getEndOfDecade(previousDecadeYear);
-};
+}
 
-export const getBeginOfNextDecade = (date, offset = 10) => {
+export function getBeginOfNextDecade(date, offset = 10) {
   const nextDecadeYear = getBeginOfDecadeYear(date) + offset;
   return getBeginOfDecade(nextDecadeYear);
-};
+}
 
 /**
  * Returns the beginning of a given year.
  *
  * @param {Date} date Date.
  */
-export const getBeginOfYear = (date) => {
+export function getBeginOfYear(date) {
   const year = getYear(date);
   return new Date(year, 0, 1);
-};
+}
 
 /**
  * Returns the end of a given year.
  *
  * @param {Date} date Date.
  */
-export const getEndOfYear = (date) => {
+export function getEndOfYear(date) {
   const year = getYear(date);
   return new Date(year + 1, 0, 1, 0, 0, 0, -1);
-};
+}
 
 /**
  * Returns an array with the beginning and the end of a given year.
  *
  * @param {Date} date Date.
  */
-export const getYearRange = date => [
-  getBeginOfYear(date),
-  getEndOfYear(date),
-];
+export function getYearRange(date) {
+  return [
+    getBeginOfYear(date),
+    getEndOfYear(date),
+  ];
+}
 
-export const getBeginOfPreviousYear = (date, offset = 1) => {
+export function getBeginOfPreviousYear(date, offset = 1) {
   const previousYear = getYear(date) - offset;
   return getBeginOfYear(previousYear);
-};
+}
 
-export const getEndOfPreviousYear = (date, offset = 1) => {
+export function getEndOfPreviousYear(date, offset = 1) {
   const previousYear = getYear(date) - offset;
   return getEndOfYear(previousYear);
-};
+}
 
-export const getBeginOfNextYear = (date, offset = 1) => {
+export function getBeginOfNextYear(date, offset = 1) {
   const nextYear = getYear(date) + offset;
   return getBeginOfYear(nextYear);
-};
+}
 
 /**
  * Returns the beginning of a given month.
  *
  * @param {Date} date Date.
  */
-export const getBeginOfMonth = (date) => {
+export function getBeginOfMonth(date) {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   return new Date(year, monthIndex, 1);
-};
+}
 
 /**
  * Returns the end of a given month.
  *
  * @param {Date} date Date.
  */
-export const getEndOfMonth = (date) => {
+export function getEndOfMonth(date) {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   return new Date(year, monthIndex + 1, 1, 0, 0, 0, -1);
-};
+}
 
 /**
  * Returns the beginning of a given week.
@@ -191,67 +197,71 @@ export const getEndOfMonth = (date) => {
  * @param {Date} date Date.
  * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
  */
-export const getBeginOfWeek = (date, calendarType = 'ISO 8601') => {
+export function getBeginOfWeek(date, calendarType = 'ISO 8601') {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   const day = date.getDate() - getDayOfWeek(date, calendarType);
   return new Date(year, monthIndex, day);
-};
+}
 
 /**
  * Returns an array with the beginning and the end of a given month.
  *
  * @param {Date} date Date.
  */
-export const getMonthRange = date => [
-  getBeginOfMonth(date),
-  getEndOfMonth(date),
-];
+export function getMonthRange(date) {
+  return [
+    getBeginOfMonth(date),
+    getEndOfMonth(date),
+  ];
+}
 
-const getDifferentMonth = (date, offset) => {
+function getDifferentMonth(date, offset) {
   const year = getYear(date);
   const previousMonthIndex = getMonthIndex(date) + offset;
   return new Date(year, previousMonthIndex, 1);
-};
+}
 
-export const getBeginOfPreviousMonth = (date, offset = 1) => {
+export function getBeginOfPreviousMonth(date, offset = 1) {
   const previousMonth = getDifferentMonth(date, -offset);
   return getBeginOfMonth(previousMonth);
-};
+}
 
-export const getEndOfPreviousMonth = (date, offset = 1) => {
+export function getEndOfPreviousMonth(date, offset = 1) {
   const previousMonth = getDifferentMonth(date, -offset);
   return getEndOfMonth(previousMonth);
-};
+}
 
-export const getBeginOfNextMonth = (date, offset = 1) => {
+export function getBeginOfNextMonth(date, offset = 1) {
   const nextMonth = getDifferentMonth(date, offset);
   return getBeginOfMonth(nextMonth);
-};
+}
 
-export const getBeginOfDay = (date) => {
+export function getBeginOfDay(date) {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   const day = getDay(date);
   return new Date(year, monthIndex, day);
-};
+}
 
-export const getEndOfDay = (date) => {
+export function getEndOfDay(date) {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   const day = getDay(date);
   return new Date(year, monthIndex, day + 1, 0, 0, 0, -1);
-};
+}
 
 /**
  * Returns an array with the beginning and the end of a given day.
  *
  * @param {Date} date Date.
  */
-export const getDayRange = date => [
-  getBeginOfDay(date),
-  getEndOfDay(date),
-];
+export function getDayRange(date) {
+  return [
+    getBeginOfDay(date),
+    getEndOfDay(date),
+  ];
+}
 
 /**
  * Gets week number according to ISO 8601 or US standard.
@@ -261,7 +271,7 @@ export const getDayRange = date => [
  * @param {Date} date Date.
  * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
  */
-export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
+export function getWeekNumber(date, calendarType = 'ISO 8601') {
   const calendarTypeForWeekNumber = calendarType === 'US' ? 'US' : 'ISO 8601';
   const beginOfWeek = getBeginOfWeek(date, calendarTypeForWeekNumber);
   let year = getYear(date) + 1;
@@ -276,7 +286,7 @@ export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
   } while (date - beginOfFirstWeek < 0);
 
   return Math.round((beginOfWeek - beginOfFirstWeek) / (8.64e7 * 7)) + 1;
-};
+}
 
 /**
  * Returns the beginning of a given range.
@@ -284,7 +294,7 @@ export const getWeekNumber = (date, calendarType = 'ISO 8601') => {
  * @param {String} rangeType Range type (e.g. 'day')
  * @param {Date} date Date.
  */
-export const getBegin = (rangeType, date) => {
+export function getBegin(rangeType, date) {
   switch (rangeType) {
     case 'century':
       return getBeginOfCentury(date);
@@ -299,9 +309,9 @@ export const getBegin = (rangeType, date) => {
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
-};
+}
 
-export const getBeginPrevious = (rangeType, date) => {
+export function getBeginPrevious(rangeType, date) {
   switch (rangeType) {
     case 'century':
       return getBeginOfPreviousCentury(date);
@@ -314,9 +324,9 @@ export const getBeginPrevious = (rangeType, date) => {
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
-};
+}
 
-export const getBeginNext = (rangeType, date) => {
+export function getBeginNext(rangeType, date) {
   switch (rangeType) {
     case 'century':
       return getBeginOfNextCentury(date);
@@ -329,7 +339,7 @@ export const getBeginNext = (rangeType, date) => {
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
-};
+}
 
 export const getBeginPrevious2 = (rangeType, date) => {
   switch (rangeType) {
@@ -363,7 +373,7 @@ export const getBeginNext2 = (rangeType, date) => {
  * @param {String} rangeType Range type (e.g. 'day')
  * @param {Date} date Date.
  */
-export const getEnd = (rangeType, date) => {
+export function getEnd(rangeType, date) {
   switch (rangeType) {
     case 'century':
       return getEndOfCentury(date);
@@ -378,9 +388,9 @@ export const getEnd = (rangeType, date) => {
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
-};
+}
 
-export const getEndPrevious = (rangeType, date) => {
+export function getEndPrevious(rangeType, date) {
   switch (rangeType) {
     case 'century':
       return getEndOfPreviousCentury(date);
@@ -393,7 +403,7 @@ export const getEndPrevious = (rangeType, date) => {
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
-};
+}
 
 export const getEndPrevious2 = (rangeType, date) => {
   switch (rangeType) {
@@ -414,7 +424,7 @@ export const getEndPrevious2 = (rangeType, date) => {
  * @param {String} rangeType Range type (e.g. 'day')
  * @param {Date} date Date.
  */
-export const getRange = (rangeType, date) => {
+export function getRange(rangeType, date) {
   switch (rangeType) {
     case 'century':
       return getCenturyRange(date);
@@ -429,7 +439,7 @@ export const getRange = (rangeType, date) => {
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
-};
+}
 
 /**
  * Creates a range out of two values, ensuring they are in order and covering entire period ranges.
@@ -438,26 +448,28 @@ export const getRange = (rangeType, date) => {
  * @param {Date} date1 First date.
  * @param {Date} date2 Second date.
  */
-export const getValueRange = (rangeType, date1, date2) => {
+export function getValueRange(rangeType, date1, date2) {
   const rawNextValue = [date1, date2].sort((a, b) => a - b);
   return [
     getBegin(rangeType, rawNextValue[0]),
     getEnd(rangeType, rawNextValue[1]),
   ];
-};
+}
 
 /**
  * Returns a number of days in a month of a given date.
  *
  * @param {Date} date Date.
  */
-export const getDaysInMonth = (date) => {
+export function getDaysInMonth(date) {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   return new Date(year, monthIndex + 1, 0).getDate();
-};
+}
 
-const toYearLabel = ([start, end]) => `${getYear(start)} – ${getYear(end)}`;
+function toYearLabel([start, end]) {
+  return `${getYear(start)} – ${getYear(end)}`;
+}
 
 /**
  * Returns a string labelling a century of a given date.
@@ -465,7 +477,9 @@ const toYearLabel = ([start, end]) => `${getYear(start)} – ${getYear(end)}`;
  *
  * @param {Date|String|Number} date Date or a year as a string or as a number.
  */
-export const getCenturyLabel = date => toYearLabel(getCenturyRange(date));
+export function getCenturyLabel(date) {
+  return toYearLabel(getCenturyRange(date));
+}
 
 /**
  * Returns a string labelling a century of a given date.
@@ -473,14 +487,16 @@ export const getCenturyLabel = date => toYearLabel(getCenturyRange(date));
  *
  * @param {Date|String|Number} date Date or a year as a string or as a number.
  */
-export const getDecadeLabel = date => toYearLabel(getDecadeRange(date));
+export function getDecadeLabel(date) {
+  return toYearLabel(getDecadeRange(date));
+}
 
 /**
  * Returns a boolean determining whether a given date is on Saturday or Sunday.
  *
  * @param {Date} date Date.
  */
-export const isWeekend = (date, calendarType = 'ISO 8601') => {
+export function isWeekend(date, calendarType = 'ISO 8601') {
   const weekday = date.getDay();
   switch (calendarType) {
     case 'Arabic':
@@ -492,12 +508,12 @@ export const isWeekend = (date, calendarType = 'ISO 8601') => {
     default:
       throw new Error('Unsupported calendar type.');
   }
-};
+}
 
 /**
  * Returns local month in ISO-like format (YYYY-MM).
  */
-export const getISOLocalMonth = (value) => {
+export function getISOLocalMonth(value) {
   if (!value) {
     return value;
   }
@@ -512,12 +528,12 @@ export const getISOLocalMonth = (value) => {
   const month = `0${getMonth(date)}`.slice(-2);
 
   return `${year}-${month}`;
-};
+}
 
 /**
  * Returns local date in ISO-like format (YYYY-MM-DD).
  */
-export const getISOLocalDate = (value) => {
+export function getISOLocalDate(value) {
   if (!value) {
     return value;
   }
@@ -533,4 +549,4 @@ export const getISOLocalDate = (value) => {
   const day = `0${getDay(date)}`.slice(-2);
 
   return `${year}-${month}-${day}`;
-};
+}
