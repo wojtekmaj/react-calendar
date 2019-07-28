@@ -580,8 +580,8 @@ Calendar.propTypes = {
   prev2Label: PropTypes.node,
   prevAriaLabel: PropTypes.string,
   prevLabel: PropTypes.node,
-  renderChildren: PropTypes.func,
-  returnValue: PropTypes.oneOf(['start', 'end', 'range']), // For backwards compatibility
+  renderChildren: PropTypes.func, // For backwards compatibility
+  returnValue: PropTypes.oneOf(['start', 'end', 'range']),
   selectRange: PropTypes.bool,
   showFixedNumberOfWeeks: PropTypes.bool,
   showNavigation: PropTypes.bool,
