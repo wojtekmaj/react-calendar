@@ -50,20 +50,27 @@ export default class Tile extends Component {
     } = this.props;
     const { tileClassName, tileContent } = this.state;
 
+    const ComponentType = onClick ? 'button' : 'div';
+
+    const sharedProps = {
+      className: mergeClassNames(classes, tileClassName),
+      style,
+    };
+
+    const specificProps = ComponentType === 'button' ? {
+      disabled:
+        (minDate && minDateTransform(minDate) > date)
+        || (maxDate && maxDateTransform(maxDate) < date)
+        || (tileDisabled && tileDisabled({ activeStartDate, date, view })),
+      onClick: onClick && (() => onClick(date)),
+      onFocus: onMouseOver && (() => onMouseOver(date)),
+      onMouseOver: onMouseOver && (() => onMouseOver(date)),
+      type: 'button',
+    } : {};
+
+
     return (
-      <button
-        className={mergeClassNames(classes, tileClassName)}
-        disabled={
-          (minDate && minDateTransform(minDate) > date)
-          || (maxDate && maxDateTransform(maxDate) < date)
-          || (tileDisabled && tileDisabled({ activeStartDate, date, view }))
-        }
-        onClick={onClick && (() => onClick(date))}
-        onFocus={onMouseOver && (() => onMouseOver(date))}
-        onMouseOver={onMouseOver && (() => onMouseOver(date))}
-        style={style}
-        type="button"
-      >
+      <ComponentType {...sharedProps} {...specificProps}>
         {formatAbbr
           ? (
             <abbr aria-label={formatAbbr(locale, date)}>
@@ -73,7 +80,7 @@ export default class Tile extends Component {
           : children
         }
         {tileContent}
-      </button>
+      </ComponentType>
     );
   }
 }
