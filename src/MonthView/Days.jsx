@@ -11,6 +11,7 @@ import {
   getYear,
 } from '../shared/dates';
 import { isCalendarType, tileGroupProps } from '../shared/propTypes';
+import { isRTL } from '../shared/utils';
 
 export default function Days(props) {
   const {
@@ -68,6 +69,7 @@ export default function Days(props) {
       dateTransform={day => new Date(year, monthIndex, day)}
       dateType="day"
       end={end}
+      isRTL={isRTL(calendarType)}
       offset={offset}
       start={start}
       tile={Day}

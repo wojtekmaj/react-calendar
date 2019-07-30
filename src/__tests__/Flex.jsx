@@ -84,4 +84,24 @@ describe('Flex', () => {
     children.forEach(child => expect(parseFloat(child.prop('style').flexBasis)).toBeCloseTo(33.33));
     expect(parseFloat(children.first().prop('style').marginLeft)).toBeCloseTo(33.33);
   });
+
+  describe('right-to-left support', () => {
+    it('properly sizes and positions all the elements', () => {
+      const component = shallow(
+        <Flex count={3} isRTL offset={1}>
+          <div>
+            Hey
+          </div>
+          <div>
+            Hi
+          </div>
+        </Flex>
+      );
+
+      const children = component.children();
+
+      children.forEach(child => expect(parseFloat(child.prop('style').flexBasis)).toBeCloseTo(33.33));
+      expect(parseFloat(children.first().prop('style').marginRight)).toBeCloseTo(33.33);
+    });
+  });
 });
