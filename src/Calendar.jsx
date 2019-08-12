@@ -153,54 +153,6 @@ const getActiveStartDate = (props) => {
 };
 
 export default class Calendar extends Component {
-  get drillDownAvailable() {
-    const { maxDetail, minDetail } = this.props;
-    const { view } = this.state;
-
-    const views = getLimitedViews(minDetail, maxDetail);
-
-    return views.indexOf(view) < views.length - 1;
-  }
-
-  get drillUpAvailable() {
-    const { maxDetail, minDetail } = this.props;
-    const { view } = this.state;
-
-    const views = getLimitedViews(minDetail, maxDetail);
-
-    return views.indexOf(view) > 0;
-  }
-
-  get valueType() {
-    const { maxDetail } = this.props;
-
-    return getValueType(maxDetail);
-  }
-
-  /**
-   * Gets current value in a desired format.
-   */
-  getProcessedValue(value) {
-    const {
-      minDate, maxDate, maxDetail, returnValue,
-    } = this.props;
-
-    const processFunction = (() => {
-      switch (returnValue) {
-        case 'start':
-          return getDetailValueFrom;
-        case 'end':
-          return getDetailValueTo;
-        case 'range':
-          return getDetailValueArray;
-        default:
-          throw new Error('Invalid returnValue.');
-      }
-    })();
-
-    return processFunction(value, minDate, maxDate, maxDetail);
-  }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     const {
       minDate, maxDate, minDetail, maxDetail,
@@ -255,6 +207,54 @@ export default class Calendar extends Component {
   }
 
   state = {};
+
+  get drillDownAvailable() {
+    const { maxDetail, minDetail } = this.props;
+    const { view } = this.state;
+
+    const views = getLimitedViews(minDetail, maxDetail);
+
+    return views.indexOf(view) < views.length - 1;
+  }
+
+  get drillUpAvailable() {
+    const { maxDetail, minDetail } = this.props;
+    const { view } = this.state;
+
+    const views = getLimitedViews(minDetail, maxDetail);
+
+    return views.indexOf(view) > 0;
+  }
+
+  get valueType() {
+    const { maxDetail } = this.props;
+
+    return getValueType(maxDetail);
+  }
+
+  /**
+   * Gets current value in a desired format.
+   */
+  getProcessedValue(value) {
+    const {
+      minDate, maxDate, maxDetail, returnValue,
+    } = this.props;
+
+    const processFunction = (() => {
+      switch (returnValue) {
+        case 'start':
+          return getDetailValueFrom;
+        case 'end':
+          return getDetailValueTo;
+        case 'range':
+          return getDetailValueArray;
+        default:
+          throw new Error('Invalid returnValue.');
+      }
+    })();
+
+    return processFunction(value, minDate, maxDate, maxDetail);
+  }
 
   /**
    * Called when the user uses navigation buttons.
