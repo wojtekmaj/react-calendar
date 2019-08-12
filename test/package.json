@@ -13,7 +13,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "get-user-locale": "^1.1.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-calendar": "latest",
