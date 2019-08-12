@@ -77,8 +77,7 @@ export default class Tile extends Component {
               {children}
             </abbr>
           )
-          : children
-        }
+          : children}
         {tileContent}
       </ComponentType>
     );

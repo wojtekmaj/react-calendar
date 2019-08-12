@@ -136,8 +136,7 @@ export default function Navigation({
       >
         {navigationLabel
           ? navigationLabel({ date, view, label })
-          : label
-        }
+          : label}
       </button>
       <button
         aria-label={nextAriaLabel}
