@@ -12,8 +12,6 @@
     }],
     "jsx-a11y/label-has-associated-control": ["error", { "required": { "some": ["id", "nesting"] }}],
     "no-restricted-globals": "off",
-    "prefer-destructuring": "warn",
-    "prefer-spread": "warn",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-sort-props": ["error", {
       "reservedFirst": ["key"]
