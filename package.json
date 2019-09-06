@@ -1,6 +1,6 @@
 {
   "name": "react-calendar",
-  "version": "2.19.1",
+  "version": "2.19.2",
   "description": "Ultimate calendar for your React app.",
   "main": "dist/entry.js",
   "source": "src/entry.js",
