@@ -401,20 +401,22 @@ export default class Calendar extends Component {
 
     switch (view) {
       case 'century': {
-        const { onClickDecade } = this.props;
+        const { formatYear, onClickDecade } = this.props;
 
         return (
           <CenturyView
+            formatYear={formatYear}
             onClick={mergeFunctions(clickAction, onClickDecade)}
             {...commonProps}
           />
         );
       }
       case 'decade': {
-        const { onClickYear } = this.props;
+        const { formatYear, onClickYear } = this.props;
 
         return (
           <DecadeView
+            formatYear={formatYear}
             onClick={mergeFunctions(clickAction, onClickYear)}
             {...commonProps}
           />
@@ -470,6 +472,7 @@ export default class Calendar extends Component {
 
     const {
       formatMonthYear,
+      formatYear,
       locale,
       maxDate,
       maxDetail,
@@ -493,6 +496,7 @@ export default class Calendar extends Component {
         activeStartDate={activeStartDate}
         drillUp={this.drillUp}
         formatMonthYear={formatMonthYear}
+        formatYear={formatYear}
         locale={locale}
         maxDate={maxDate}
         minDate={minDate}
@@ -556,6 +560,7 @@ Calendar.propTypes = {
   formatMonth: PropTypes.func,
   formatMonthYear: PropTypes.func,
   formatShortWeekday: PropTypes.func,
+  formatYear: PropTypes.func,
   locale: PropTypes.string,
   maxDate: isMaxDate,
   maxDetail: PropTypes.oneOf(allViews),

@@ -1236,7 +1236,7 @@ describe('getCenturyLabel', () => {
   it('returns proper label for the century a given date is in', () => {
     const date = new Date(2017, 0, 1);
 
-    const centuryLabel = getCenturyLabel(date);
+    const centuryLabel = getCenturyLabel('en-US', undefined, date);
 
     expect(centuryLabel).toBe('2001 – 2100');
   });
@@ -1246,7 +1246,7 @@ describe('getDecadeLabel', () => {
   it('returns proper label for the decade a given date is in', () => {
     const date = new Date(2017, 0, 1);
 
-    const decadeLabel = getDecadeLabel(date);
+    const decadeLabel = getDecadeLabel('en-US', undefined, date);
 
     expect(decadeLabel).toBe('2011 – 2020');
   });

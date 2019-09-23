@@ -16,6 +16,7 @@ declare module "react-calendar" {
     formatMonth?: FormatterCallback;
     formatMonthYear?: FormatterCallback;
     formatShortWeekday?: FormatterCallback;
+    formatYear?: FormatterCallback;
     locale?: string;
     maxDate?: Date;
     maxDetail?: Detail;

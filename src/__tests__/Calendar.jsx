@@ -281,185 +281,187 @@ describe('Calendar', () => {
     expect(onDrillDown).not.toHaveBeenCalled();
   });
 
-  it('calls onChange function returning the beginning of selected period by default', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        onChange={onChange}
-        view="month"
-      />
-    );
+  describe('calls onChange properly', () => {
+    it('calls onChange function returning the beginning of selected period by default', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          onChange={onChange}
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1));
 
-    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
-  });
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
+    });
 
-  it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        onChange={onChange}
-        returnValue="start"
-        view="month"
-      />
-    );
+    it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          onChange={onChange}
+          returnValue="start"
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1));
 
-    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
-  });
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
+    });
 
-  it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        onChange={onChange}
-        returnValue="start"
-        view="month"
-      />
-    );
+    it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          onChange={onChange}
+          returnValue="start"
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1));
 
-    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
-  });
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
+    });
 
-  it('calls onChange function returning the end of the selected period when returnValue is set to "end"', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        onChange={onChange}
-        returnValue="end"
-        view="month"
-      />
-    );
+    it('calls onChange function returning the end of the selected period when returnValue is set to "end"', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          onChange={onChange}
+          returnValue="end"
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1));
 
-    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 23, 59, 59, 999));
-  });
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 23, 59, 59, 999));
+    });
 
-  it('calls onChange function returning the beginning of selected period when returnValue is set to "range"', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        onChange={onChange}
-        returnValue="range"
-        view="month"
-      />
-    );
+    it('calls onChange function returning the beginning of selected period when returnValue is set to "range"', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          onChange={onChange}
+          returnValue="range"
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1));
 
-    expect(onChange).toHaveBeenCalledWith([
-      new Date(2017, 0, 1),
-      new Date(2017, 0, 1, 23, 59, 59, 999),
-    ]);
-  });
+      expect(onChange).toHaveBeenCalledWith([
+        new Date(2017, 0, 1),
+        new Date(2017, 0, 1, 23, 59, 59, 999),
+      ]);
+    });
 
-  it('calls onChange function returning the beginning of selected period, but no earlier than minDate', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        minDate={new Date(2017, 0, 1, 12)}
-        onChange={onChange}
-        returnValue="start"
-        view="month"
-      />
-    );
+    it('calls onChange function returning the beginning of selected period, but no earlier than minDate', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          minDate={new Date(2017, 0, 1, 12)}
+          onChange={onChange}
+          returnValue="start"
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1));
 
-    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
-  });
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+    });
 
-  it('calls onChange function returning the beginning of selected period, but no later than maxDate', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        maxDate={new Date(2017, 0, 1, 12)}
-        onChange={onChange}
-        returnValue="start"
-        view="month"
-      />
-    );
+    it('calls onChange function returning the beginning of selected period, but no later than maxDate', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          maxDate={new Date(2017, 0, 1, 12)}
+          onChange={onChange}
+          returnValue="start"
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2017, 0, 2));
+      component.instance().onChange(new Date(2017, 0, 2));
 
-    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
-  });
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+    });
 
-  it('calls onChange function returning the end of selected period, but no earlier than minDate', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        minDate={new Date(2017, 0, 2, 12)}
-        onChange={onChange}
-        returnValue="end"
-        view="month"
-      />
-    );
+    it('calls onChange function returning the end of selected period, but no earlier than minDate', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          minDate={new Date(2017, 0, 2, 12)}
+          onChange={onChange}
+          returnValue="end"
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1));
 
-    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 2, 12));
-  });
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 2, 12));
+    });
 
-  it('calls onChange function returning the end of selected period, but no later than maxDate', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        maxDate={new Date(2017, 0, 1, 12)}
-        onChange={onChange}
-        returnValue="end"
-        view="month"
-      />
-    );
+    it('calls onChange function returning the end of selected period, but no later than maxDate', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          maxDate={new Date(2017, 0, 1, 12)}
+          onChange={onChange}
+          returnValue="end"
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2017, 0, 2));
+      component.instance().onChange(new Date(2017, 0, 2));
 
-    expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
-  });
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+    });
 
-  it('calls onChange function returning a range when selected two pieces of a range', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        onChange={onChange}
-        selectRange
-        view="month"
-      />
-    );
+    it('calls onChange function returning a range when selected two pieces of a range', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          onChange={onChange}
+          selectRange
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2018, 0, 1));
-    component.instance().onChange(new Date(2018, 6, 1));
+      component.instance().onChange(new Date(2018, 0, 1));
+      component.instance().onChange(new Date(2018, 6, 1));
 
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith([
-      new Date(2018, 0, 1),
-      new Date(2018, 6, 1, 23, 59, 59, 999),
-    ]);
-  });
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledWith([
+        new Date(2018, 0, 1),
+        new Date(2018, 6, 1, 23, 59, 59, 999),
+      ]);
+    });
 
-  it('calls onChange function returning a range when selected reversed two pieces of a range', () => {
-    const onChange = jest.fn();
-    const component = mount(
-      <Calendar
-        onChange={onChange}
-        selectRange
-        view="month"
-      />
-    );
+    it('calls onChange function returning a range when selected reversed two pieces of a range', () => {
+      const onChange = jest.fn();
+      const component = mount(
+        <Calendar
+          onChange={onChange}
+          selectRange
+          view="month"
+        />
+      );
 
-    component.instance().onChange(new Date(2018, 6, 1));
-    component.instance().onChange(new Date(2018, 0, 1));
+      component.instance().onChange(new Date(2018, 6, 1));
+      component.instance().onChange(new Date(2018, 0, 1));
 
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith([
-      new Date(2018, 0, 1),
-      new Date(2018, 6, 1, 23, 59, 59, 999),
-    ]);
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledWith([
+        new Date(2018, 0, 1),
+        new Date(2018, 6, 1, 23, 59, 59, 999),
+      ]);
+    });
   });
 
   it('calls onActiveDateChange on activeStartDate change', () => {
@@ -511,15 +513,100 @@ describe('Calendar', () => {
     expect(firstWeekdayTile.text()).toBe('Weekday');
   });
 
-  it('displays calendar with custom month year navigation label', () => {
-    const component = mount(
-      <Calendar
-        formatMonthYear={() => 'MonthYear'}
-      />
-    );
+  describe('formats tiles properly', () => {
+    it('displays calendar with custom month formatting', () => {
+      const component = mount(
+        <Calendar
+          formatMonth={() => 'Month'}
+          view="year"
+        />
+      );
 
-    const navigationLabel = component.find('.react-calendar__navigation__label').first();
+      const yearView = component.find('.react-calendar__year-view');
+      const firstMonthTile = yearView.find('.react-calendar__year-view__months__month').first();
 
-    expect(navigationLabel.text()).toBe('MonthYear');
+      expect(firstMonthTile.text()).toBe('Month');
+    });
+
+    it('displays calendar with custom year formatting on decade view', () => {
+      const component = mount(
+        <Calendar
+          formatYear={() => 'Year'}
+          view="decade"
+        />
+      );
+
+      const decadeView = component.find('.react-calendar__decade-view');
+      const firstYearTile = decadeView.find('.react-calendar__decade-view__years__year').first();
+
+      expect(firstYearTile.text()).toBe('Year');
+    });
+
+    it('displays calendar with custom year formatting on century view', () => {
+      const component = mount(
+        <Calendar
+          formatYear={() => 'Year'}
+          view="century"
+        />
+      );
+
+      const centuryView = component.find('.react-calendar__century-view');
+      const firstDecadeTile = centuryView.find('.react-calendar__century-view__decades__decade').first();
+
+      expect(firstDecadeTile.text()).toBe('Year – Year');
+    });
+  });
+
+  describe('formats navigation label properly', () => {
+    it('displays calendar with custom month year navigation label', () => {
+      const component = mount(
+        <Calendar
+          formatMonthYear={() => 'MonthYear'}
+        />
+      );
+
+      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+
+      expect(navigationLabel.text()).toBe('MonthYear');
+    });
+
+    it('displays calendar with custom year navigation label', () => {
+      const component = mount(
+        <Calendar
+          formatYear={() => 'Year'}
+          view="year"
+        />
+      );
+
+      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+
+      expect(navigationLabel.text()).toBe('Year');
+    });
+
+    it('displays calendar with custom decade navigation label', () => {
+      const component = mount(
+        <Calendar
+          formatYear={() => 'Year'}
+          view="decade"
+        />
+      );
+
+      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+
+      expect(navigationLabel.text()).toBe('Year – Year');
+    });
+
+    it('displays calendar with custom century navigation label', () => {
+      const component = mount(
+        <Calendar
+          formatYear={() => 'Year'}
+          view="century"
+        />
+      );
+
+      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+
+      expect(navigationLabel.text()).toBe('Year – Year');
+    });
   });
 });

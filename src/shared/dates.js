@@ -1,3 +1,5 @@
+import { formatYear as defaultFormatYear } from './dateFormatter';
+
 const [
   // eslint-disable-next-line no-unused-vars
   SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY,
@@ -467,8 +469,8 @@ export function getDaysInMonth(date) {
   return new Date(year, monthIndex + 1, 0).getDate();
 }
 
-function toYearLabel([start, end]) {
-  return `${getYear(start)} – ${getYear(end)}`;
+function toYearLabel(locale, formatYear = defaultFormatYear, [start, end]) {
+  return `${formatYear(locale, start)} – ${formatYear(locale, end)}`;
 }
 
 /**
@@ -477,8 +479,8 @@ function toYearLabel([start, end]) {
  *
  * @param {Date|String|Number} date Date or a year as a string or as a number.
  */
-export function getCenturyLabel(date) {
-  return toYearLabel(getCenturyRange(date));
+export function getCenturyLabel(locale, formatYear, date) {
+  return toYearLabel(locale, formatYear, getCenturyRange(date));
 }
 
 /**
@@ -487,8 +489,8 @@ export function getCenturyLabel(date) {
  *
  * @param {Date|String|Number} date Date or a year as a string or as a number.
  */
-export function getDecadeLabel(date) {
-  return toYearLabel(getDecadeRange(date));
+export function getDecadeLabel(locale, formatYear, date) {
+  return toYearLabel(locale, formatYear, getDecadeRange(date));
 }
 
 /**
