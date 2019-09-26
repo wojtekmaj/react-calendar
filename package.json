@@ -68,8 +68,7 @@
   "dependencies": {
     "get-user-locale": "^1.2.0",
     "merge-class-names": "^1.1.1",
-    "prop-types": "^15.6.0",
-    "react-lifecycles-compat": "^3.0.4"
+    "prop-types": "^15.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -95,8 +94,8 @@
     "rimraf": "^2.6.2"
   },
   "peerDependencies": {
-    "react": ">=15.5",
-    "react-dom": ">=15.5"
+    "react": ">=16.3",
+    "react-dom": ">=16.3"
   },
   "files": [
     "LICENSE",
