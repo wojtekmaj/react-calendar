@@ -462,21 +462,21 @@ describe('Calendar', () => {
     ]);
   });
 
-  it('calls onActiveDateChange on activeStartDate change', () => {
+  it('calls onActiveStartDateChange on activeStartDate change', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const newActiveStartDate = new Date(2018, 0, 1);
-    const onActiveDateChange = jest.fn();
+    const onActiveStartDateChange = jest.fn();
     const component = mount(
       <Calendar
         activeStartDate={activeStartDate}
-        onActiveDateChange={onActiveDateChange}
+        onActiveStartDateChange={onActiveStartDateChange}
         view="year"
       />
     );
 
     component.instance().setActiveStartDate(newActiveStartDate);
 
-    expect(onActiveDateChange).toHaveBeenCalledWith({
+    expect(onActiveStartDateChange).toHaveBeenCalledWith({
       activeStartDate: newActiveStartDate,
       view: 'year',
     });
