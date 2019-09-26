@@ -24,6 +24,12 @@ Minimal demo page is included in sample directory.
 
 [Online demo](http://projects.wojtekmaj.pl/react-calendar/) is also available!
 
+## Before you continue
+
+React-Calendar is under constant development. This documentation is written for React-Calendar 3.x branch. If you want to see documentation for other versions of React-Calendar, use dropdown on top of GitHub page to switch to an appropriate tag. Here are quick links to the newest docs from each branch:
+
+* [v2.x](https://github.com/wojtekmaj/react-pdf/blob/v2.x/README.md)
+
 ## Getting started
 
 ### Compatibility
