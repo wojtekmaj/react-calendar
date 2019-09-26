@@ -93,6 +93,7 @@ export default class Test extends PureComponent {
     minDetail: 'century',
     returnValue: 'start',
     selectRange: false,
+    showDoubleView: false,
     showFixedNumberOfWeeks: false,
     showNeighboringMonth: true,
     showWeekNumbers: false,
@@ -142,6 +143,7 @@ export default class Test extends PureComponent {
       minDetail,
       returnValue,
       selectRange,
+      showDoubleView,
       showFixedNumberOfWeeks,
       showNeighboringMonth,
       showWeekNumbers,
@@ -172,6 +174,7 @@ export default class Test extends PureComponent {
       onViewChange: this.onViewOrDateChange,
       returnValue,
       selectRange,
+      showDoubleView,
       showFixedNumberOfWeeks,
       showNeighboringMonth,
       showWeekNumbers,
@@ -214,6 +217,7 @@ export default class Test extends PureComponent {
             />
             <ViewOptions
               setState={setState}
+              showDoubleView={showDoubleView}
               showFixedNumberOfWeeks={showFixedNumberOfWeeks}
               showNeighboringMonth={showNeighboringMonth}
               showWeekNumbers={showWeekNumbers}
