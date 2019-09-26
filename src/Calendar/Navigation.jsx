@@ -10,9 +10,11 @@ import {
   getBeginPrevious2,
   getEndPrevious,
   getEndPrevious2,
-  getYear,
 } from '../shared/dates';
-import { formatMonthYear as defaultFormatMonthYear } from '../shared/dateFormatter';
+import {
+  formatMonthYear as defaultFormatMonthYear,
+  formatYear as defaultFormatYear,
+} from '../shared/dateFormatter';
 import { isView, isViews } from '../shared/propTypes';
 
 const className = 'react-calendar__navigation';
@@ -21,6 +23,7 @@ export default function Navigation({
   activeStartDate: date,
   drillUp,
   formatMonthYear,
+  formatYear,
   locale,
   maxDate,
   minDate,
@@ -89,11 +92,11 @@ export default function Navigation({
   const label = (() => {
     switch (view) {
       case 'century':
-        return getCenturyLabel(date);
+        return getCenturyLabel(locale, formatYear, date);
       case 'decade':
-        return getDecadeLabel(date);
+        return getDecadeLabel(locale, formatYear, date);
       case 'year':
-        return getYear(date);
+        return formatYear(locale, date);
       case 'month':
         return formatMonthYear(locale, date);
       default:
@@ -164,6 +167,7 @@ export default function Navigation({
 
 Navigation.defaultProps = {
   formatMonthYear: defaultFormatMonthYear,
+  formatYear: defaultFormatYear,
   navigationAriaLabel: '',
   next2AriaLabel: '',
   next2Label: '»',
@@ -179,6 +183,7 @@ Navigation.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   drillUp: PropTypes.func.isRequired,
   formatMonthYear: PropTypes.func,
+  formatYear: PropTypes.func,
   locale: PropTypes.string,
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
