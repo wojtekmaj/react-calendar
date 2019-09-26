@@ -105,6 +105,17 @@
       }
     }
 
+    &--now {
+      @bgcolor: lighten(rgb(220, 220, 0), 30%);
+      background: @bgcolor;
+
+      &:enabled {
+        &:hover, &:focus {
+          background: lighten(@bgcolor, 10%);
+        }
+      }
+    }
+
     &--hasActive {
       @bgcolor: lighten(rgb(0, 110, 220), 30%);
       background: @bgcolor;
