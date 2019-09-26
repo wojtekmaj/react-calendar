@@ -44,12 +44,12 @@ export default function ValueOptions({
 
   function onStartChange(event) {
     const { value: nextValue } = event.target;
-    setStartValue(new Date(nextValue));
+    setStartValue(nextValue ? new Date(nextValue) : null);
   }
 
   function onEndChange(event) {
     const { value: nextValue } = event.target;
-    setEndValue(new Date(nextValue));
+    setEndValue(nextValue ? new Date(nextValue) : null);
   }
 
   function onSelectRangeChange(event) {
