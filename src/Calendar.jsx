@@ -8,7 +8,9 @@ import DecadeView from './DecadeView';
 import YearView from './YearView';
 import MonthView from './MonthView';
 
-import { getBegin, getEnd, getValueRange } from './shared/dates';
+import {
+  getBegin, getBeginNext, getEnd, getValueRange,
+} from './shared/dates';
 import {
   isCalendarType, isClassName, isMaxDate, isMinDate, isValue, isView,
 } from './shared/propTypes';
@@ -352,9 +354,9 @@ export default class Calendar extends Component {
     this.setState({ hover: null });
   }
 
-  renderContent() {
+  renderContent(next) {
     const {
-      activeStartDate,
+      activeStartDate: currentActiveStartDate,
       onMouseOver,
       valueType,
       value,
@@ -372,6 +374,12 @@ export default class Calendar extends Component {
       tileDisabled,
     } = this.props;
     const { hover } = this;
+
+    const activeStartDate = (
+      next
+        ? getBeginNext(view, currentActiveStartDate)
+        : currentActiveStartDate
+    );
 
     const commonProps = {
       activeStartDate,
@@ -428,6 +436,7 @@ export default class Calendar extends Component {
           formatShortWeekday,
           onClickDay,
           onClickWeekNumber,
+          showDoubleView,
           showFixedNumberOfWeeks,
           showNeighboringMonth,
           showWeekNumbers,
@@ -441,7 +450,7 @@ export default class Calendar extends Component {
             onClick={mergeFunctions(clickAction, onClickDay)}
             onClickWeekNumber={onClickWeekNumber}
             onMouseLeave={onMouseLeave}
-            showFixedNumberOfWeeks={showFixedNumberOfWeeks}
+            showFixedNumberOfWeeks={showFixedNumberOfWeeks || showDoubleView}
             showNeighboringMonth={showNeighboringMonth}
             showWeekNumbers={showWeekNumbers}
             {...commonProps}
@@ -479,6 +488,7 @@ export default class Calendar extends Component {
       prev2Label,
       prevAriaLabel,
       prevLabel,
+      showDoubleView,
     } = this.props;
 
     return (
@@ -501,6 +511,7 @@ export default class Calendar extends Component {
         prevAriaLabel={prevAriaLabel}
         prevLabel={prevLabel}
         setActiveStartDate={this.setActiveStartDate}
+        showDoubleView={showDoubleView}
         view={view}
         views={getLimitedViews(minDetail, maxDetail)}
       />
@@ -508,7 +519,7 @@ export default class Calendar extends Component {
   }
 
   render() {
-    const { className, selectRange } = this.props;
+    const { className, selectRange, showDoubleView } = this.props;
     const { onMouseLeave, value } = this;
     const valueArray = [].concat(value);
 
@@ -517,6 +528,7 @@ export default class Calendar extends Component {
         className={mergeClassNames(
           baseClassName,
           selectRange && valueArray.length === 1 && `${baseClassName}--selectRange`,
+          showDoubleView && `${baseClassName}--doubleView`,
           className,
         )}
       >
@@ -527,6 +539,7 @@ export default class Calendar extends Component {
           onMouseLeave={selectRange ? onMouseLeave : null}
         >
           {this.renderContent()}
+          {showDoubleView && this.renderContent(true)}
         </div>
       </div>
     );
@@ -586,6 +599,7 @@ Calendar.propTypes = {
   renderChildren: PropTypes.func, // For backwards compatibility
   returnValue: PropTypes.oneOf(['start', 'end', 'range']),
   selectRange: PropTypes.bool,
+  showDoubleView: PropTypes.bool,
   showFixedNumberOfWeeks: PropTypes.bool,
   showNavigation: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,

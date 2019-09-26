@@ -126,6 +126,7 @@ Displays a complete, interactive calendar.
 |prev2AriaLabel|`aria-label` attribute of the "previous on higher level" button on the navigation pane.|n/a|`"Jump backwards"`|
 |prev2Label|Content of the "previous on higher level" button on the navigation pane.| `"«"`|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
 |returnValue|Which dates shall be passed by the calendar to the onChange function and onClick{Period} functions. Can be `"start"`, `"end"` or `"range"`. The latter will cause an array with start and end values to be passed.|`"start"`|`"range"`|
+|showDoubleView|Whether to show two months/years/… at a time instead of one. Forces `showFixedNumberOfWeeks` prop to be `true`.|`false`|`true`|
 |showFixedNumberOfWeeks|Whether to always show fixed number of weeks (6). Forces `showNeighboringMonth` prop to be `true`.|`false`|`true`|
 |showNavigation|Whether a navigation bar with arrows and title shall be rendered.|`true`|`false`|
 |showNeighboringMonth|Whether days from previous or next month shall be rendered if the month doesn't start on the first day of the week or doesn't end on the last day of the week, respectively.|`true`|`false`|
