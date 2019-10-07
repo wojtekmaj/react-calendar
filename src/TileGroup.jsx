@@ -19,6 +19,7 @@ export default function TileGroup({
   tile: Tile,
   value,
   valueType,
+  isRTL,
   ...tileProps
 }) {
   const tiles = [];
@@ -42,6 +43,7 @@ export default function TileGroup({
     <Flex
       className={className}
       count={count}
+      isRTL={isRTL}
       offset={offset}
       wrap
     >
@@ -55,6 +57,7 @@ TileGroup.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date),
   count: PropTypes.number,
   dateTransform: PropTypes.func.isRequired,
+  isRTL: PropTypes.bool,
   offset: PropTypes.number,
   step: PropTypes.number,
   tile: PropTypes.func.isRequired,

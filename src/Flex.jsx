@@ -9,6 +9,7 @@ export default function Flex({
   children,
   className,
   direction,
+  isRTL,
   count,
   offset,
   style,
@@ -35,7 +36,7 @@ export default function Flex({
               flexBasis: toPercent(100 / count),
               maxWidth: toPercent(100 / count),
               overflow: 'hidden',
-              marginLeft: offset && (index === 0) ? toPercent((100 * offset) / count) : null,
+              [isRTL ? 'marginRight' : 'marginLeft']: offset && (index === 0) ? toPercent((100 * offset) / count) : null,
             },
           },
         )
@@ -49,6 +50,7 @@ Flex.propTypes = {
   className: PropTypes.string,
   count: PropTypes.number.isRequired,
   direction: PropTypes.string,
+  isRTL: PropTypes.bool,
   offset: PropTypes.number,
   style: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string,
