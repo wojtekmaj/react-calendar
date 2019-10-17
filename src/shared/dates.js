@@ -65,8 +65,9 @@ export function getDayOfWeek(date, calendarType = 'ISO 8601') {
   }
 }
 
-/* Complex getters - getting a property somehow related to a given point in time */
-
+/**
+ * Century
+ */
 export function getBeginOfCenturyYear(date) {
   const year = getYear(date) - 1;
   return year + (-year % 100) + 1;
@@ -88,6 +89,9 @@ export const getEndOfPreviousCentury = makeGetEdgeOfNeighbor(getYear, getEndOfCe
 export const getBeginOfNextCentury = makeGetEdgeOfNeighbor(getYear, getBeginOfCentury, 100);
 export const getEndOfNextCentury = makeGetEdgeOfNeighbor(getYear, getEndOfCentury, 100);
 
+/**
+ * Decade
+ */
 export function getBeginOfDecadeYear(date) {
   const year = getYear(date) - 1;
   return year + (-year % 10) + 1;
@@ -123,6 +127,10 @@ export const getEndOfNextDecade = makeGetEdgeOfNeighbor(
 );
 
 /**
+ * Year
+ */
+
+/**
  * Returns the beginning of a given year.
  *
  * @param {Date} date Date.
@@ -154,6 +162,10 @@ export const getBeginOfNextYear = makeGetEdgeOfNeighbor(getYear, getBeginOfYear,
 export const getEndOfNextYear = makeGetEdgeOfNeighbor(getYear, getEndOfYear, 1);
 
 /**
+ * Month
+ */
+
+/**
  * Returns the beginning of a given month.
  *
  * @param {Date} date Date.
@@ -175,18 +187,6 @@ export function getEndOfMonth(date) {
   return new Date(year, monthIndex + 1, 1, 0, 0, 0, -1);
 }
 
-/**
- * Returns the beginning of a given week.
- *
- * @param {Date} date Date.
- * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
- */
-export function getBeginOfWeek(date, calendarType = 'ISO 8601') {
-  const year = getYear(date);
-  const monthIndex = getMonthIndex(date);
-  const day = date.getDate() - getDayOfWeek(date, calendarType);
-  return new Date(year, monthIndex, day);
-}
 
 /**
  * Returns an array with the beginning and the end of a given month.
@@ -209,26 +209,22 @@ export const getEndOfPreviousMonth = makeGetEdgeOfNeighborMonth(getEndOfMonth, -
 export const getBeginOfNextMonth = makeGetEdgeOfNeighborMonth(getBeginOfMonth, 1);
 export const getEndOfNextMonth = makeGetEdgeOfNeighborMonth(getEndOfMonth, 1);
 
-export function getBeginOfDay(date) {
-  const year = getYear(date);
-  const monthIndex = getMonthIndex(date);
-  const day = getDay(date);
-  return new Date(year, monthIndex, day);
-}
-
-export function getEndOfDay(date) {
-  const year = getYear(date);
-  const monthIndex = getMonthIndex(date);
-  const day = getDay(date);
-  return new Date(year, monthIndex, day + 1, 0, 0, 0, -1);
-}
+/**
+ * Week
+ */
 
 /**
- * Returns an array with the beginning and the end of a given day.
+ * Returns the beginning of a given week.
  *
  * @param {Date} date Date.
+ * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
  */
-export const getDayRange = makeGetRange([getBeginOfDay, getEndOfDay]);
+export function getBeginOfWeek(date, calendarType = 'ISO 8601') {
+  const year = getYear(date);
+  const monthIndex = getMonthIndex(date);
+  const day = date.getDate() - getDayOfWeek(date, calendarType);
+  return new Date(year, monthIndex, day);
+}
 
 /**
  * Gets week number according to ISO 8601 or US standard.
@@ -254,6 +250,35 @@ export function getWeekNumber(date, calendarType = 'ISO 8601') {
 
   return Math.round((beginOfWeek - beginOfFirstWeek) / (8.64e7 * 7)) + 1;
 }
+
+/**
+ * Day
+ */
+
+export function getBeginOfDay(date) {
+  const year = getYear(date);
+  const monthIndex = getMonthIndex(date);
+  const day = getDay(date);
+  return new Date(year, monthIndex, day);
+}
+
+export function getEndOfDay(date) {
+  const year = getYear(date);
+  const monthIndex = getMonthIndex(date);
+  const day = getDay(date);
+  return new Date(year, monthIndex, day + 1, 0, 0, 0, -1);
+}
+
+/**
+ * Returns an array with the beginning and the end of a given day.
+ *
+ * @param {Date} date Date.
+ */
+export const getDayRange = makeGetRange([getBeginOfDay, getEndOfDay]);
+
+/**
+ * Others
+ */
 
 /**
  * Returns the beginning of a given range.
