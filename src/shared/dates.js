@@ -5,6 +5,10 @@ const [
   SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY,
 ] = [...Array(7)].map((el, index) => index);
 
+function isValidDate(date) {
+  return !isNaN(date.getTime());
+}
+
 function makeGetRange(functions) {
   return function getRange(date) {
     functions.map(fn => fn(date));
@@ -508,7 +512,7 @@ export function getISOLocalMonth(value) {
 
   const date = new Date(value);
 
-  if (isNaN(date.getTime())) {
+  if (!isValidDate(date)) {
     throw new Error(`Invalid date: ${value}`);
   }
 
@@ -528,7 +532,7 @@ export function getISOLocalDate(value) {
 
   const date = new Date(value);
 
-  if (isNaN(date.getTime())) {
+  if (!isValidDate(date)) {
     throw new Error(`Invalid date: ${value}`);
   }
 
