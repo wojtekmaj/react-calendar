@@ -288,74 +288,50 @@ export function getWeekNumber(date, calendarType = 'ISO 8601') {
  */
 export function getBegin(rangeType, date) {
   switch (rangeType) {
-    case 'century':
-      return getBeginOfCentury(date);
-    case 'decade':
-      return getBeginOfDecade(date);
-    case 'year':
-      return getBeginOfYear(date);
-    case 'month':
-      return getBeginOfMonth(date);
-    case 'day':
-      return getBeginOfDay(date);
-    default:
-      throw new Error(`Invalid rangeType: ${rangeType}`);
+    case 'century': return getBeginOfCentury(date);
+    case 'decade': return getBeginOfDecade(date);
+    case 'year': return getBeginOfYear(date);
+    case 'month': return getBeginOfMonth(date);
+    case 'day': return getBeginOfDay(date);
+    default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
 export function getBeginPrevious(rangeType, date) {
   switch (rangeType) {
-    case 'century':
-      return getBeginOfPreviousCentury(date);
-    case 'decade':
-      return getBeginOfPreviousDecade(date);
-    case 'year':
-      return getBeginOfPreviousYear(date);
-    case 'month':
-      return getBeginOfPreviousMonth(date);
-    default:
-      throw new Error(`Invalid rangeType: ${rangeType}`);
+    case 'century': return getBeginOfPreviousCentury(date);
+    case 'decade': return getBeginOfPreviousDecade(date);
+    case 'year': return getBeginOfPreviousYear(date);
+    case 'month': return getBeginOfPreviousMonth(date);
+    default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
 export function getBeginNext(rangeType, date) {
   switch (rangeType) {
-    case 'century':
-      return getBeginOfNextCentury(date);
-    case 'decade':
-      return getBeginOfNextDecade(date);
-    case 'year':
-      return getBeginOfNextYear(date);
-    case 'month':
-      return getBeginOfNextMonth(date);
-    default:
-      throw new Error(`Invalid rangeType: ${rangeType}`);
+    case 'century': return getBeginOfNextCentury(date);
+    case 'decade': return getBeginOfNextDecade(date);
+    case 'year': return getBeginOfNextYear(date);
+    case 'month': return getBeginOfNextMonth(date);
+    default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
 export const getBeginPrevious2 = (rangeType, date) => {
   switch (rangeType) {
-    case 'decade':
-      return getBeginOfPreviousDecade(date, 100);
-    case 'year':
-      return getBeginOfPreviousYear(date, 10);
-    case 'month':
-      return getBeginOfPreviousMonth(date, 12);
-    default:
-      throw new Error(`Invalid rangeType: ${rangeType}`);
+    case 'decade': return getBeginOfPreviousDecade(date, 100);
+    case 'year': return getBeginOfPreviousYear(date, 10);
+    case 'month': return getBeginOfPreviousMonth(date, 12);
+    default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
 
 export const getBeginNext2 = (rangeType, date) => {
   switch (rangeType) {
-    case 'decade':
-      return getBeginOfNextDecade(date, 100);
-    case 'year':
-      return getBeginOfNextYear(date, 10);
-    case 'month':
-      return getBeginOfNextMonth(date, 12);
-    default:
-      throw new Error(`Invalid rangeType: ${rangeType}`);
+    case 'decade': return getBeginOfNextDecade(date, 100);
+    case 'year': return getBeginOfNextYear(date, 10);
+    case 'month': return getBeginOfNextMonth(date, 12);
+    default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
 
@@ -367,46 +343,31 @@ export const getBeginNext2 = (rangeType, date) => {
  */
 export function getEnd(rangeType, date) {
   switch (rangeType) {
-    case 'century':
-      return getEndOfCentury(date);
-    case 'decade':
-      return getEndOfDecade(date);
-    case 'year':
-      return getEndOfYear(date);
-    case 'month':
-      return getEndOfMonth(date);
-    case 'day':
-      return getEndOfDay(date);
-    default:
-      throw new Error(`Invalid rangeType: ${rangeType}`);
+    case 'century': return getEndOfCentury(date);
+    case 'decade': return getEndOfDecade(date);
+    case 'year': return getEndOfYear(date);
+    case 'month': return getEndOfMonth(date);
+    case 'day': return getEndOfDay(date);
+    default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
 export function getEndPrevious(rangeType, date) {
   switch (rangeType) {
-    case 'century':
-      return getEndOfPreviousCentury(date);
-    case 'decade':
-      return getEndOfPreviousDecade(date);
-    case 'year':
-      return getEndOfPreviousYear(date);
-    case 'month':
-      return getEndOfPreviousMonth(date);
-    default:
-      throw new Error(`Invalid rangeType: ${rangeType}`);
+    case 'century': return getEndOfPreviousCentury(date);
+    case 'decade': return getEndOfPreviousDecade(date);
+    case 'year': return getEndOfPreviousYear(date);
+    case 'month': return getEndOfPreviousMonth(date);
+    default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
 export const getEndPrevious2 = (rangeType, date) => {
   switch (rangeType) {
-    case 'decade':
-      return getEndOfPreviousDecade(date, 100);
-    case 'year':
-      return getEndOfPreviousYear(date, 10);
-    case 'month':
-      return getEndOfPreviousMonth(date, 12);
-    default:
-      throw new Error(`Invalid rangeType: ${rangeType}`);
+    case 'decade': return getEndOfPreviousDecade(date, 100);
+    case 'year': return getEndOfPreviousYear(date, 10);
+    case 'month': return getEndOfPreviousMonth(date, 12);
+    default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
 
@@ -418,18 +379,12 @@ export const getEndPrevious2 = (rangeType, date) => {
  */
 export function getRange(rangeType, date) {
   switch (rangeType) {
-    case 'century':
-      return getCenturyRange(date);
-    case 'decade':
-      return getDecadeRange(date);
-    case 'year':
-      return getYearRange(date);
-    case 'month':
-      return getMonthRange(date);
-    case 'day':
-      return getDayRange(date);
-    default:
-      throw new Error(`Invalid rangeType: ${rangeType}`);
+    case 'century': return getCenturyRange(date);
+    case 'decade': return getDecadeRange(date);
+    case 'year': return getYearRange(date);
+    case 'month': return getMonthRange(date);
+    case 'day': return getDayRange(date);
+    default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
