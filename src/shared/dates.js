@@ -10,8 +10,8 @@ function isValidDate(date) {
 }
 
 function makeGetRange(functions) {
-  return function getRange(date) {
-    functions.map(fn => fn(date));
+  return function makeGetRangeInternal(date) {
+    return functions.map(fn => fn(date));
   };
 }
 
