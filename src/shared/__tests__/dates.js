@@ -217,7 +217,7 @@ describe('getCenturyRange', () => {
   });
 });
 
-describe('getBeginPreviousOfCentury', () => {
+describe('getBeginOfPreviousCentury', () => {
   it('returns proper beginning of the previous century', () => {
     const date = new Date(2017, 0, 1);
     const beginOfPreviousCenturyDate = new Date(1901, 0, 1);
@@ -301,7 +301,7 @@ describe('getDecadeRange', () => {
   });
 });
 
-describe('getBeginPreviousOfDecade', () => {
+describe('getBeginOfPreviousDecade', () => {
   it('returns proper beginning of the previous decade', () => {
     const date = new Date(2017, 0, 1);
     const beginOfPreviousDecadeDate = new Date(2001, 0, 1);
@@ -369,7 +369,7 @@ describe('getYearRange', () => {
   });
 });
 
-describe('getBeginPreviousOfYear', () => {
+describe('getBeginOfPreviousYear', () => {
   it('returns proper beginning of the previous year', () => {
     const date = new Date(2017, 0, 1);
     const beginOfPreviousYearDate = new Date(2016, 0, 1);
@@ -484,7 +484,7 @@ describe('getMonthRange', () => {
   });
 });
 
-describe('getBeginPreviousOfMonth', () => {
+describe('getBeginOfPreviousMonth', () => {
   it('returns proper beginning of the previous month', () => {
     const date = new Date(2017, 0, 1);
     const beginOfPreviousMonthDate = new Date(2016, 11, 1);
