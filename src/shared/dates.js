@@ -15,6 +15,12 @@ function makeGetRange(functions) {
   };
 }
 
+function makeGetEnd(getBeginOfNextPeriod) {
+  return function makeGetEndInternal(date) {
+    return new Date(getBeginOfNextPeriod(date).getTime() - 1);
+  };
+}
+
 function makeGetEdgeOfNeighbor(getPeriod, getEdgeOfPeriod, defaultOffset) {
   return function makeGetEdgeOfNeighborInternal(date, offset = defaultOffset) {
     const previousPeriod = getPeriod(date) + offset;
@@ -77,17 +83,14 @@ export function getBeginOfCentury(date) {
   const beginOfCenturyYear = getBeginOfCenturyYear(date);
   return new Date(beginOfCenturyYear, 0, 1);
 }
+export const getBeginOfPreviousCentury = makeGetEdgeOfNeighbor(getYear, getBeginOfCentury, -100);
+export const getBeginOfNextCentury = makeGetEdgeOfNeighbor(getYear, getBeginOfCentury, 100);
 
-export function getEndOfCentury(date) {
-  const beginOfCenturyYear = getBeginOfCenturyYear(date);
-  return new Date(beginOfCenturyYear + 100, 0, 1, 0, 0, 0, -1);
-}
+export const getEndOfCentury = makeGetEnd(getBeginOfNextCentury);
+export const getEndOfPreviousCentury = makeGetEdgeOfNeighbor(getYear, getEndOfCentury, -100);
+export const getEndOfNextCentury = makeGetEdgeOfNeighbor(getYear, getEndOfCentury, 100);
 
 export const getCenturyRange = makeGetRange([getBeginOfCentury, getEndOfCentury]);
-export const getBeginOfPreviousCentury = makeGetEdgeOfNeighbor(getYear, getBeginOfCentury, -100);
-export const getEndOfPreviousCentury = makeGetEdgeOfNeighbor(getYear, getEndOfCentury, -100);
-export const getBeginOfNextCentury = makeGetEdgeOfNeighbor(getYear, getBeginOfCentury, 100);
-export const getEndOfNextCentury = makeGetEdgeOfNeighbor(getYear, getEndOfCentury, 100);
 
 /**
  * Decade
@@ -101,99 +104,46 @@ export function getBeginOfDecade(date) {
   const beginOfDecadeYear = getBeginOfDecadeYear(date);
   return new Date(beginOfDecadeYear, 0, 1);
 }
+export const getBeginOfPreviousDecade = makeGetEdgeOfNeighbor(
+  getBeginOfDecadeYear, getBeginOfDecade, -10,
+);
+export const getBeginOfNextDecade = makeGetEdgeOfNeighbor(
+  getBeginOfDecadeYear, getBeginOfDecade, 10,
+);
 
 export function getEndOfDecade(date) {
   const beginOfDecadeYear = getBeginOfDecadeYear(date);
   return new Date(beginOfDecadeYear + 10, 0, 1, 0, 0, 0, -1);
 }
-
-/**
- * Returns an array with the beginning and the end of a given decade.
- *
- * @param {Date} date Date.
- */
-export const getDecadeRange = makeGetRange([getBeginOfDecade, getEndOfDecade]);
-export const getBeginOfPreviousDecade = makeGetEdgeOfNeighbor(
-  getBeginOfDecadeYear, getBeginOfDecade, -10,
-);
 export const getEndOfPreviousDecade = makeGetEdgeOfNeighbor(
   getBeginOfDecadeYear, getEndOfDecade, -10,
-);
-export const getBeginOfNextDecade = makeGetEdgeOfNeighbor(
-  getBeginOfDecadeYear, getBeginOfDecade, 10,
 );
 export const getEndOfNextDecade = makeGetEdgeOfNeighbor(
   getBeginOfDecadeYear, getEndOfDecade, 10,
 );
 
+export const getDecadeRange = makeGetRange([getBeginOfDecade, getEndOfDecade]);
+
 /**
  * Year
  */
 
-/**
- * Returns the beginning of a given year.
- *
- * @param {Date} date Date.
- */
 export function getBeginOfYear(date) {
   const year = getYear(date);
   return new Date(year, 0, 1);
 }
-
-/**
- * Returns the end of a given year.
- *
- * @param {Date} date Date.
- */
-export function getEndOfYear(date) {
-  const year = getYear(date);
-  return new Date(year + 1, 0, 1, 0, 0, 0, -1);
-}
-
-/**
- * Returns an array with the beginning and the end of a given year.
- *
- * @param {Date} date Date.
- */
-export const getYearRange = makeGetRange([getBeginOfYear, getEndOfYear]);
 export const getBeginOfPreviousYear = makeGetEdgeOfNeighbor(getYear, getBeginOfYear, -1);
-export const getEndOfPreviousYear = makeGetEdgeOfNeighbor(getYear, getEndOfYear, -1);
 export const getBeginOfNextYear = makeGetEdgeOfNeighbor(getYear, getBeginOfYear, 1);
+
+export const getEndOfYear = makeGetEnd(getBeginOfNextYear);
+export const getEndOfPreviousYear = makeGetEdgeOfNeighbor(getYear, getEndOfYear, -1);
 export const getEndOfNextYear = makeGetEdgeOfNeighbor(getYear, getEndOfYear, 1);
+
+export const getYearRange = makeGetRange([getBeginOfYear, getEndOfYear]);
 
 /**
  * Month
  */
-
-/**
- * Returns the beginning of a given month.
- *
- * @param {Date} date Date.
- */
-export function getBeginOfMonth(date) {
-  const year = getYear(date);
-  const monthIndex = getMonthIndex(date);
-  return new Date(year, monthIndex, 1);
-}
-
-/**
- * Returns the end of a given month.
- *
- * @param {Date} date Date.
- */
-export function getEndOfMonth(date) {
-  const year = getYear(date);
-  const monthIndex = getMonthIndex(date);
-  return new Date(year, monthIndex + 1, 1, 0, 0, 0, -1);
-}
-
-
-/**
- * Returns an array with the beginning and the end of a given month.
- *
- * @param {Date} date Date.
- */
-export const getMonthRange = makeGetRange([getBeginOfMonth, getEndOfMonth]);
 
 function makeGetEdgeOfNeighborMonth(getEdgeOfPeriod, defaultOffset) {
   return function getBeginOfPreviousMonth(date, offset = defaultOffset) {
@@ -204,10 +154,19 @@ function makeGetEdgeOfNeighborMonth(getEdgeOfPeriod, defaultOffset) {
   };
 }
 
+export function getBeginOfMonth(date) {
+  const year = getYear(date);
+  const monthIndex = getMonthIndex(date);
+  return new Date(year, monthIndex, 1);
+}
 export const getBeginOfPreviousMonth = makeGetEdgeOfNeighborMonth(getBeginOfMonth, -1);
-export const getEndOfPreviousMonth = makeGetEdgeOfNeighborMonth(getEndOfMonth, -1);
 export const getBeginOfNextMonth = makeGetEdgeOfNeighborMonth(getBeginOfMonth, 1);
+
+export const getEndOfMonth = makeGetEnd(getBeginOfNextMonth);
+export const getEndOfPreviousMonth = makeGetEdgeOfNeighborMonth(getEndOfMonth, -1);
 export const getEndOfNextMonth = makeGetEdgeOfNeighborMonth(getEndOfMonth, 1);
+
+export const getMonthRange = makeGetRange([getBeginOfMonth, getEndOfMonth]);
 
 /**
  * Week
@@ -269,11 +228,6 @@ export function getEndOfDay(date) {
   return new Date(year, monthIndex, day + 1, 0, 0, 0, -1);
 }
 
-/**
- * Returns an array with the beginning and the end of a given day.
- *
- * @param {Date} date Date.
- */
 export const getDayRange = makeGetRange([getBeginOfDay, getEndOfDay]);
 
 /**
