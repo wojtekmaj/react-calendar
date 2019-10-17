@@ -5,6 +5,12 @@ const [
   SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY,
 ] = [...Array(7)].map((el, index) => index);
 
+function makeGetRange(functions) {
+  return function getRange(date) {
+    functions.map(fn => fn(date));
+  };
+}
+
 /* Simple getters - getting a property of a given point in time */
 
 export function getYear(date) {
@@ -102,12 +108,7 @@ export function getEndOfDecade(date) {
   return new Date(beginOfDecadeYear + 10, 0, 1, 0, 0, 0, -1);
 }
 
-export function getDecadeRange(date) {
-  return [
-    getBeginOfDecade(date),
-    getEndOfDecade(date),
-  ];
-}
+export const getDecadeRange = makeGetRange([getBeginOfDecade, getEndOfDecade]);
 
 export function getBeginOfPreviousDecade(date, offset = 10) {
   const previousDecadeYear = getBeginOfDecadeYear(date) - offset;
@@ -149,12 +150,7 @@ export function getEndOfYear(date) {
  *
  * @param {Date} date Date.
  */
-export function getYearRange(date) {
-  return [
-    getBeginOfYear(date),
-    getEndOfYear(date),
-  ];
-}
+export const getYearRange = makeGetRange([getBeginOfYear, getEndOfYear]);
 
 export function getBeginOfPreviousYear(date, offset = 1) {
   const previousYear = getYear(date) - offset;
@@ -211,12 +207,7 @@ export function getBeginOfWeek(date, calendarType = 'ISO 8601') {
  *
  * @param {Date} date Date.
  */
-export function getMonthRange(date) {
-  return [
-    getBeginOfMonth(date),
-    getEndOfMonth(date),
-  ];
-}
+export const getMonthRange = makeGetRange([getBeginOfMonth, getEndOfMonth]);
 
 function getDifferentMonth(date, offset) {
   const year = getYear(date);
@@ -258,12 +249,7 @@ export function getEndOfDay(date) {
  *
  * @param {Date} date Date.
  */
-export function getDayRange(date) {
-  return [
-    getBeginOfDay(date),
-    getEndOfDay(date),
-  ];
-}
+export const getDayRange = makeGetRange([getBeginOfDay, getEndOfDay]);
 
 /**
  * Gets week number according to ISO 8601 or US standard.
