@@ -1,9 +1,9 @@
+import { CALENDAR_TYPES, WEEKDAYS } from './const';
 import { formatYear as defaultFormatYear } from './dateFormatter';
 
-const [
-  // eslint-disable-next-line no-unused-vars
-  SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY,
-] = [...Array(7)].map((el, index) => index);
+const SUNDAY = WEEKDAYS[0];
+const FRIDAY = WEEKDAYS[5];
+const SATURDAY = WEEKDAYS[6];
 
 function isValidDate(date) {
   return !isNaN(date.getTime());
@@ -54,17 +54,17 @@ export function getMonthIndex(date) { return date.getMonth(); }
 
 export function getDay(date) { return date.getDate(); }
 
-export function getDayOfWeek(date, calendarType = 'ISO 8601') {
+export function getDayOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   const weekday = date.getDay();
 
   switch (calendarType) {
-    case 'ISO 8601':
+    case CALENDAR_TYPES.ISO_8601:
       // Shifts days of the week so that Monday is 0, Sunday is 6
       return (weekday + 6) % 7;
-    case 'Arabic':
+    case CALENDAR_TYPES.ARABIC:
       return (weekday + 1) % 7;
-    case 'Hebrew':
-    case 'US':
+    case CALENDAR_TYPES.HEBREW:
+    case CALENDAR_TYPES.US:
       return weekday;
     default:
       throw new Error('Unsupported calendar type.');
@@ -178,7 +178,7 @@ export const getMonthRange = makeGetRange([getBeginOfMonth, getEndOfMonth]);
  * @param {Date} date Date.
  * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
  */
-export function getBeginOfWeek(date, calendarType = 'ISO 8601') {
+export function getBeginOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   const day = date.getDate() - getDayOfWeek(date, calendarType);
@@ -193,8 +193,12 @@ export function getBeginOfWeek(date, calendarType = 'ISO 8601') {
  * @param {Date} date Date.
  * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
  */
-export function getWeekNumber(date, calendarType = 'ISO 8601') {
-  const calendarTypeForWeekNumber = calendarType === 'US' ? 'US' : 'ISO 8601';
+export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
+  const calendarTypeForWeekNumber = (
+    calendarType === CALENDAR_TYPES.US
+      ? CALENDAR_TYPES.US
+      : CALENDAR_TYPES.ISO_8601
+  );
   const beginOfWeek = getBeginOfWeek(date, calendarTypeForWeekNumber);
   let year = getYear(date) + 1;
   let dayInWeekOne;
@@ -202,7 +206,7 @@ export function getWeekNumber(date, calendarType = 'ISO 8601') {
 
   // Look for the first week one that does not come after a given date
   do {
-    dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === 'ISO 8601' ? 4 : 1);
+    dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === CALENDAR_TYPES.ISO_8601 ? 4 : 1);
     beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarTypeForWeekNumber);
     year -= 1;
   } while (date - beginOfFirstWeek < 0);
@@ -399,14 +403,14 @@ export function getDecadeLabel(locale, formatYear, date) {
  *
  * @param {Date} date Date.
  */
-export function isWeekend(date, calendarType = 'ISO 8601') {
+export function isWeekend(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   const weekday = date.getDay();
   switch (calendarType) {
-    case 'Arabic':
-    case 'Hebrew':
+    case CALENDAR_TYPES.ARABIC:
+    case CALENDAR_TYPES.HEBREW:
       return weekday === FRIDAY || weekday === SATURDAY;
-    case 'ISO 8601':
-    case 'US':
+    case CALENDAR_TYPES.ISO_8601:
+    case CALENDAR_TYPES.US:
       return weekday === SATURDAY || weekday === SUNDAY;
     default:
       throw new Error('Unsupported calendar type.');
