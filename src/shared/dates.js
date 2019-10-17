@@ -201,20 +201,17 @@ function getDifferentMonth(date, offset) {
   return new Date(year, previousMonthIndex, 1);
 }
 
-export function getBeginOfPreviousMonth(date, offset = 1) {
-  const previousMonth = getDifferentMonth(date, -offset);
-  return getBeginOfMonth(previousMonth);
+function makeGetEdgeOfNeighborMonth(getEdgeOfPeriod, defaultOffset) {
+  return function getBeginOfPreviousMonth(date, offset = defaultOffset) {
+    const previousMonth = getDifferentMonth(date, offset);
+    return getEdgeOfPeriod(previousMonth);
+  };
 }
 
-export function getEndOfPreviousMonth(date, offset = 1) {
-  const previousMonth = getDifferentMonth(date, -offset);
-  return getEndOfMonth(previousMonth);
-}
-
-export function getBeginOfNextMonth(date, offset = 1) {
-  const nextMonth = getDifferentMonth(date, offset);
-  return getBeginOfMonth(nextMonth);
-}
+export const getBeginOfPreviousMonth = makeGetEdgeOfNeighborMonth(getBeginOfMonth, -1);
+export const getEndOfPreviousMonth = makeGetEdgeOfNeighborMonth(getEndOfMonth, -1);
+export const getBeginOfNextMonth = makeGetEdgeOfNeighborMonth(getBeginOfMonth, 1);
+export const getEndOfNextMonth = makeGetEdgeOfNeighborMonth(getEndOfMonth, 1);
 
 export function getBeginOfDay(date) {
   const year = getYear(date);
@@ -303,7 +300,7 @@ export const getBeginPrevious2 = (rangeType, date) => {
   switch (rangeType) {
     case 'decade': return getBeginOfPreviousDecade(date, -100);
     case 'year': return getBeginOfPreviousYear(date, -10);
-    case 'month': return getBeginOfPreviousMonth(date, 12);
+    case 'month': return getBeginOfPreviousMonth(date, -12);
     default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
@@ -348,7 +345,7 @@ export const getEndPrevious2 = (rangeType, date) => {
   switch (rangeType) {
     case 'decade': return getEndOfPreviousDecade(date, -100);
     case 'year': return getEndOfPreviousYear(date, -10);
-    case 'month': return getEndOfPreviousMonth(date, 12);
+    case 'month': return getEndOfPreviousMonth(date, -12);
     default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
