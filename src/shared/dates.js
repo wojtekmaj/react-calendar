@@ -368,8 +368,10 @@ export function getDaysInMonth(date) {
   return new Date(year, monthIndex + 1, 0).getDate();
 }
 
-function toYearLabel(locale, formatYear = defaultFormatYear, [start, end]) {
-  return `${formatYear(locale, start)} – ${formatYear(locale, end)}`;
+function toYearLabel(locale, formatYear = defaultFormatYear, dates) {
+  return dates
+    .map(date => formatYear(locale, date))
+    .join(' – ');
 }
 
 /**
