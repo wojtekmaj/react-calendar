@@ -195,15 +195,11 @@ export function getBeginOfWeek(date, calendarType = 'ISO 8601') {
  */
 export const getMonthRange = makeGetRange([getBeginOfMonth, getEndOfMonth]);
 
-function getDifferentMonth(date, offset) {
-  const year = getYear(date);
-  const previousMonthIndex = getMonthIndex(date) + offset;
-  return new Date(year, previousMonthIndex, 1);
-}
-
 function makeGetEdgeOfNeighborMonth(getEdgeOfPeriod, defaultOffset) {
   return function getBeginOfPreviousMonth(date, offset = defaultOffset) {
-    const previousMonth = getDifferentMonth(date, offset);
+    const year = getYear(date);
+    const previousMonthIndex = getMonthIndex(date) + offset;
+    const previousMonth = new Date(year, previousMonthIndex, 1);
     return getEdgeOfPeriod(previousMonth);
   };
 }
