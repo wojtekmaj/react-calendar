@@ -103,6 +103,11 @@ export function getEndOfDecade(date) {
   return new Date(beginOfDecadeYear + 10, 0, 1, 0, 0, 0, -1);
 }
 
+/**
+ * Returns an array with the beginning and the end of a given decade.
+ *
+ * @param {Date} date Date.
+ */
 export const getDecadeRange = makeGetRange([getBeginOfDecade, getEndOfDecade]);
 export const getBeginOfPreviousDecade = makeGetEdgeOfNeighbor(
   getBeginOfDecadeYear, getBeginOfDecade, -10,
