@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import WeekNumbers from '../WeekNumbers';
+import WeekNumbers from './WeekNumbers';
 
 /* eslint-disable comma-dangle */
 

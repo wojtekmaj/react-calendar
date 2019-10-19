@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import DecadeView from '../DecadeView';
+import DecadeView from './DecadeView';
 
 /* eslint-disable comma-dangle, react/prop-types */
 

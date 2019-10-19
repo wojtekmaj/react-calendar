@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Year from '../Year';
+import Month from './Month';
 
 /* eslint-disable comma-dangle, jsx-a11y/mouse-events-have-key-events */
 
@@ -9,13 +9,12 @@ const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
   classes: ['react-calendar__tile'],
   date: new Date(2018, 0, 1),
-  point: 2018,
 };
 
-describe('Year', () => {
+describe('Month', () => {
   it('applies given classNames properly', () => {
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
         classes={['react-calendar__tile', 'react-calendar__tile--flag']}
         tileClassName={() => 'testFunctionClassName'}
@@ -26,40 +25,41 @@ describe('Year', () => {
 
     expect(wrapperClassName.includes('react-calendar__tile')).toBe(true);
     expect(wrapperClassName.includes('react-calendar__tile--flag')).toBe(true);
-    expect(wrapperClassName.includes('react-calendar__decade-view__years__year')).toBe(true);
+    expect(wrapperClassName.includes('react-calendar__year-view__months__month')).toBe(true);
     expect(wrapperClassName.includes('testFunctionClassName')).toBe(true);
   });
 
-  it('renders component without abbreviation', () => {
+  it('renders component with proper abbreviation', () => {
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
         date={new Date(2018, 0, 1)}
-        year={2018}
+        month={2018}
       />
     );
 
     const abbr = component.find('abbr');
 
-    expect(abbr).toHaveLength(0);
-    expect(component.text()).toBe('2018');
+    expect(abbr).toHaveLength(1);
+    expect(abbr.prop('aria-label')).toBe('January 2018');
+    expect(component.text()).toBe('January');
   });
 
-  it('is disabled when date is before beginning of minDate\'s year', () => {
+  it('is disabled when date is before beginning of minDate\'s month', () => {
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
-        date={new Date(2018, 0, 1)}
-        minDate={new Date(2019, 0, 1)}
+        date={new Date(2018, 6, 1)}
+        minDate={new Date(2018, 7, 1)}
       />
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
   });
 
-  it('is not disabled when date is after beginning of minDate\'s year', () => {
+  it('is not disabled when date is after beginning of minDate\'s month', () => {
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
         date={new Date(2018, 0, 1)}
         minDate={new Date(2018, 0, 1)}
@@ -69,21 +69,21 @@ describe('Year', () => {
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
   });
 
-  it('is disabled when date is after end of maxDate\'s year', () => {
+  it('is disabled when date is after end of maxDate\'s month', () => {
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
-        date={new Date(2018, 0, 1)}
-        maxDate={new Date(2017, 0, 1)}
+        date={new Date(2018, 6, 1)}
+        maxDate={new Date(2018, 5, 1)}
       />
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
   });
 
-  it('is not disabled when date is before end of maxDate\'s year', () => {
+  it('is not disabled when date is before end of maxDate\'s month', () => {
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
         date={new Date(2018, 0, 1)}
         maxDate={new Date(2018, 0, 1)}
@@ -98,7 +98,7 @@ describe('Year', () => {
     const onClick = jest.fn();
 
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
         date={date}
         onClick={onClick}
@@ -116,7 +116,7 @@ describe('Year', () => {
     const onMouseOver = jest.fn();
 
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
         date={date}
         onMouseOver={onMouseOver}
@@ -134,7 +134,7 @@ describe('Year', () => {
     const onMouseOver = jest.fn();
 
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
         date={date}
         onMouseOver={onMouseOver}
@@ -149,7 +149,7 @@ describe('Year', () => {
 
   it('renders tileContent properly', () => {
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
         tileContent={<div className="testContent" />}
       />
@@ -166,7 +166,7 @@ describe('Year', () => {
     tileContent.mockReturnValue(<div className="testContent" />);
 
     const component = mount(
-      <Year
+      <Month
         {...tileProps}
         date={date}
         tileContent={tileContent}
@@ -176,7 +176,7 @@ describe('Year', () => {
     const testContent = component.find('.testContent');
 
     expect(tileContent).toHaveBeenCalled();
-    expect(tileContent).toHaveBeenCalledWith({ date, view: 'decade' });
+    expect(tileContent).toHaveBeenCalledWith({ date, view: 'year' });
     expect(testContent).toHaveLength(1);
   });
 });
