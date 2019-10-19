@@ -1,33 +1,32 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import YearView from '../YearView';
+import { getBeginOfDecade, getEndOfDecade } from './shared/dates';
+
+import CenturyView from './CenturyView';
 
 /* eslint-disable comma-dangle, react/prop-types */
 
-const { format } = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
-
-describe('YearView', () => {
+describe('CenturyView', () => {
   it('renders proper view when given activeStartDate', () => {
-    const activeStartDate = new Date(2017, 0, 1);
+    const activeStartDate = new Date(2001, 0, 1);
     const component = mount(
-      <YearView
+      <CenturyView
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
       />
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
-    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
 
-    expect(firstDayTileTimeAbbr).toBe(format(activeStartDate));
+    expect(firstDayTile.text()).toBe(`${getBeginOfDecade(activeStartDate).getFullYear()} – ${getEndOfDecade(activeStartDate).getFullYear()}`);
   });
 
   it('applies tileClassName to its tiles when given a string', () => {
-    const activeStartDate = new Date(2017, 0, 1);
+    const activeStartDate = new Date(2001, 0, 1);
     const tileClassName = 'testClassName';
     const component = mount(
-      <YearView
+      <CenturyView
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileClassName={tileClassName}
@@ -41,7 +40,7 @@ describe('YearView', () => {
   });
 
   it('applies tileClassName to its tiles conditionally when given a function that returns a string', () => {
-    const activeStartDate = new Date(2017, 0, 1);
+    const activeStartDate = new Date(2001, 0, 1);
     const tileClassNameFn = ({ date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
         return 'firstDayOfTheMonth';
@@ -50,7 +49,7 @@ describe('YearView', () => {
       return null;
     };
     const component = mount(
-      <YearView
+      <CenturyView
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileClassName={tileClassNameFn}
@@ -69,12 +68,12 @@ describe('YearView', () => {
   });
 
   it('renders tileContent in its tiles when given a node', () => {
-    const activeStartDate = new Date(2017, 0, 1);
+    const activeStartDate = new Date(2001, 0, 1);
     const tileContent = (
       <div className="testContent" />
     );
     const component = mount(
-      <YearView
+      <CenturyView
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileContent={tileContent}
@@ -90,7 +89,7 @@ describe('YearView', () => {
   });
 
   it('renders tileContent in its tiles conditionally when given a function that returns a node', () => {
-    const activeStartDate = new Date(2017, 0, 1);
+    const activeStartDate = new Date(2001, 0, 1);
     const tileContentFn = ({ date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
         return (
@@ -101,7 +100,7 @@ describe('YearView', () => {
       return null;
     };
     const component = mount(
-      <YearView
+      <CenturyView
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileContent={tileContentFn}
@@ -117,20 +116,5 @@ describe('YearView', () => {
 
     expect(firstDayTileContent).toHaveLength(1);
     expect(secondDayTileContent).toHaveLength(0);
-  });
-
-  it('displays year view with custom month formatting', () => {
-    const activeStartDate = new Date(2017, 0, 1);
-
-    const component = mount(
-      <YearView
-        activeStartDate={activeStartDate}
-        formatMonth={() => 'Month'}
-      />
-    );
-
-    const month = component.find('.react-calendar__year-view__months__month').first();
-
-    expect(month.text()).toBe('Month');
   });
 });

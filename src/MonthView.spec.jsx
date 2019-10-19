@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import MonthView from '../MonthView';
+import MonthView from './MonthView';
 
 /* eslint-disable comma-dangle, react/prop-types */
 
