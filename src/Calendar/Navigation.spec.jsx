@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Navigation from '../Navigation';
+import Navigation from './Navigation';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 

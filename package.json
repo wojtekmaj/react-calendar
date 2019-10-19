@@ -7,7 +7,7 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "yarn build-js && yarn copy-styles && yarn build-styles && yarn copy-types",
-    "build-js": "babel src -d dist --ignore **/__tests__,**/**/__tests__",
+    "build-js": "babel src -d dist --ignore **/*.spec.js,**/*.spec.jsx",
     "build-styles": "lessc ./dist/Calendar.less ./dist/Calendar.css",
     "clean": "rimraf dist",
     "copy-styles": "node ./copy-styles.js",

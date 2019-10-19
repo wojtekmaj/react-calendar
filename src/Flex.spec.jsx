@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Flex from '../Flex';
+import Flex from './Flex';
 
 /* eslint-disable comma-dangle */
 

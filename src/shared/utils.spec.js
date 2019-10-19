@@ -5,7 +5,7 @@ import {
   doRangesOverlap,
   between,
   getTileClasses,
-} from '../utils';
+} from './utils';
 
 describe('mergeFunctions', () => {
   it('returns a function when called', () => {

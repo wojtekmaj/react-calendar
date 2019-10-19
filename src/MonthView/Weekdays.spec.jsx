@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Weekdays from '../Weekdays';
+import Weekdays from './Weekdays';
 
 /* eslint-disable comma-dangle */
 

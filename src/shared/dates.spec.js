@@ -51,7 +51,7 @@ import {
   isWeekend,
   getISOLocalMonth,
   getISOLocalDate,
-} from '../dates';
+} from './dates';
 
 describe('getYear', () => {
   it('returns proper year for a given date', () => {
