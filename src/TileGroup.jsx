@@ -40,7 +40,7 @@ export default function TileGroup({
 
   return (
     <Flex
-      className={className}
+      className={`${className} ${className}--${tiles.length / count}weeks`}
       count={count}
       offset={offset}
       wrap
