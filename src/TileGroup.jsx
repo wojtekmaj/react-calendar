@@ -8,14 +8,14 @@ import { tileGroupProps } from './shared/propTypes';
 
 export default function TileGroup({
   className,
-  count,
+  count = 3,
   dateTransform,
   dateType,
   end,
   hover,
   offset,
   start,
-  step,
+  step = 1,
   tile: Tile,
   value,
   valueType,
@@ -58,9 +58,4 @@ TileGroup.propTypes = {
   offset: PropTypes.number,
   step: PropTypes.number,
   tile: PropTypes.func.isRequired,
-};
-
-TileGroup.defaultProps = {
-  count: 3,
-  step: 1,
 };

@@ -15,7 +15,7 @@ import { isCalendarType } from '../shared/propTypes';
 export default function Weekdays(props) {
   const {
     calendarType,
-    formatShortWeekday,
+    formatShortWeekday = defaultFormatShortWeekday,
     locale,
     onMouseLeave,
   } = props;
@@ -57,10 +57,6 @@ export default function Weekdays(props) {
     </Flex>
   );
 }
-
-Weekdays.defaultProps = {
-  formatShortWeekday: defaultFormatShortWeekday,
-};
 
 Weekdays.propTypes = {
   calendarType: isCalendarType.isRequired,
