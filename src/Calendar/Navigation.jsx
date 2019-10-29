@@ -22,21 +22,21 @@ const className = 'react-calendar__navigation';
 export default function Navigation({
   activeStartDate,
   drillUp,
-  formatMonthYear,
-  formatYear,
+  formatMonthYear = defaultFormatMonthYear,
+  formatYear = defaultFormatYear,
   locale,
   maxDate,
   minDate,
-  navigationAriaLabel,
+  navigationAriaLabel = '',
   navigationLabel,
-  next2AriaLabel,
-  next2Label,
-  nextAriaLabel,
-  nextLabel,
-  prev2AriaLabel,
-  prev2Label,
-  prevAriaLabel,
-  prevLabel,
+  next2AriaLabel = '',
+  next2Label = '»',
+  nextAriaLabel = '',
+  nextLabel = '›',
+  prev2AriaLabel = '',
+  prev2Label = '«',
+  prevAriaLabel = '',
+  prevLabel = '‹',
   setActiveStartDate,
   showDoubleView,
   view,
@@ -182,20 +182,6 @@ export default function Navigation({
     </div>
   );
 }
-
-Navigation.defaultProps = {
-  formatMonthYear: defaultFormatMonthYear,
-  formatYear: defaultFormatYear,
-  navigationAriaLabel: '',
-  next2AriaLabel: '',
-  next2Label: '»',
-  nextAriaLabel: '',
-  nextLabel: '›',
-  prev2AriaLabel: '',
-  prev2Label: '«',
-  prevAriaLabel: '',
-  prevLabel: '‹',
-};
 
 Navigation.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
