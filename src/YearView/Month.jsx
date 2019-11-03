@@ -18,7 +18,7 @@ const className = 'react-calendar__year-view__months__month';
 export default function Month({
   classes,
   date,
-  formatMonth,
+  formatMonth = defaultFormatMonth,
   locale,
   ...otherProps
 }) {
@@ -37,10 +37,6 @@ export default function Month({
     </Tile>
   );
 }
-
-Month.defaultProps = {
-  formatMonth: defaultFormatMonth,
-};
 
 Month.propTypes = {
   ...tileProps,
