@@ -12,7 +12,7 @@ const className = 'react-calendar__century-view__decades__decade';
 export default function Decade({
   classes,
   date,
-  formatYear,
+  formatYear = defaultFormatYear,
   locale,
   ...otherProps
 }) {
@@ -30,10 +30,6 @@ export default function Decade({
     </Tile>
   );
 }
-
-Decade.defaultProps = {
-  formatYear: defaultFormatYear,
-};
 
 Decade.propTypes = {
   ...tileProps,
