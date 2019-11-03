@@ -111,10 +111,7 @@ export const getBeginOfNextDecade = makeGetEdgeOfNeighbor(
   getBeginOfDecadeYear, getBeginOfDecade, 10,
 );
 
-export function getEndOfDecade(date) {
-  const beginOfDecadeYear = getBeginOfDecadeYear(date);
-  return new Date(beginOfDecadeYear + 10, 0, 1, 0, 0, 0, -1);
-}
+export const getEndOfDecade = makeGetEnd(getBeginOfNextDecade);
 export const getEndOfPreviousDecade = makeGetEdgeOfNeighbor(
   getBeginOfDecadeYear, getEndOfDecade, -10,
 );
