@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  getYear,
+  getMonth,
+  getDate,
+  getDaysInMonth,
+} from '@wojtekmaj/date-utils';
 
 import WeekNumber from './WeekNumber';
 import Flex from '../Flex';
 
 import {
   getBeginOfWeek,
-  getDay,
   getDayOfWeek,
-  getDaysInMonth,
-  getMonthIndex,
   getWeekNumber,
-  getYear,
 } from '../shared/dates';
 import { isCalendarType } from '../shared/propTypes';
 
@@ -38,8 +40,8 @@ export default function WeekNumbers(props) {
 
   const dates = (() => {
     const year = getYear(activeStartDate);
-    const monthIndex = getMonthIndex(activeStartDate);
-    const day = getDay(activeStartDate);
+    const monthIndex = getMonth(activeStartDate);
+    const day = getDate(activeStartDate);
 
     const result = [];
     for (let index = 0; index < numberOfWeeks; index += 1) {

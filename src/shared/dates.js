@@ -1,3 +1,40 @@
+import {
+  getYear,
+  getMonth as getMonthIndex,
+
+  getCenturyStart,
+  getPreviousCenturyStart,
+  getNextCenturyStart,
+  getCenturyEnd,
+  getPreviousCenturyEnd,
+  getCenturyRange,
+
+  getDecadeStart,
+  getPreviousDecadeStart,
+  getNextDecadeStart,
+  getDecadeEnd,
+  getPreviousDecadeEnd,
+  getDecadeRange,
+
+  getYearStart,
+  getPreviousYearStart,
+  getNextYearStart,
+  getYearEnd,
+  getPreviousYearEnd,
+  getYearRange,
+
+  getMonthStart,
+  getPreviousMonthStart,
+  getNextMonthStart,
+  getMonthEnd,
+  getPreviousMonthEnd,
+  getMonthRange,
+
+  getDayStart,
+  getDayEnd,
+  getDayRange,
+} from '@wojtekmaj/date-utils';
+
 import { CALENDAR_TYPES, WEEKDAYS } from './const';
 import { formatYear as defaultFormatYear } from './dateFormatter';
 
@@ -5,54 +42,7 @@ const SUNDAY = WEEKDAYS[0];
 const FRIDAY = WEEKDAYS[5];
 const SATURDAY = WEEKDAYS[6];
 
-function isValidDate(date) {
-  return !isNaN(date.getTime());
-}
-
-function makeGetRange(functions) {
-  return function makeGetRangeInternal(date) {
-    return functions.map(fn => fn(date));
-  };
-}
-
-function makeGetEnd(getBeginOfNextPeriod) {
-  return function makeGetEndInternal(date) {
-    return new Date(getBeginOfNextPeriod(date).getTime() - 1);
-  };
-}
-
-function makeGetEdgeOfNeighbor(getPeriod, getEdgeOfPeriod, defaultOffset) {
-  return function makeGetEdgeOfNeighborInternal(date, offset = defaultOffset) {
-    const previousPeriod = getPeriod(date) + offset;
-    return getEdgeOfPeriod(previousPeriod);
-  };
-}
-
 /* Simple getters - getting a property of a given point in time */
-
-export function getYear(date) {
-  if (date instanceof Date) {
-    return date.getFullYear();
-  }
-
-  if (typeof date === 'number') {
-    return date;
-  }
-
-  const year = parseInt(date, 10);
-
-  if (typeof date === 'string' && !isNaN(year)) {
-    return year;
-  }
-
-  throw new Error(`Failed to get year from date: ${date}.`);
-}
-
-export function getMonth(date) { return date.getMonth() + 1; }
-
-export function getMonthIndex(date) { return date.getMonth(); }
-
-export function getDay(date) { return date.getDate(); }
 
 export function getDayOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   const weekday = date.getDay();
@@ -74,96 +64,19 @@ export function getDayOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
 /**
  * Century
  */
+
 export function getBeginOfCenturyYear(date) {
-  const year = getYear(date) - 1;
-  return year + (-year % 100) + 1;
+  const beginOfCentury = getCenturyStart(date);
+  return getYear(beginOfCentury);
 }
-
-export function getBeginOfCentury(date) {
-  const beginOfCenturyYear = getBeginOfCenturyYear(date);
-  return new Date(beginOfCenturyYear, 0, 1);
-}
-export const getBeginOfPreviousCentury = makeGetEdgeOfNeighbor(getYear, getBeginOfCentury, -100);
-export const getBeginOfNextCentury = makeGetEdgeOfNeighbor(getYear, getBeginOfCentury, 100);
-
-export const getEndOfCentury = makeGetEnd(getBeginOfNextCentury);
-export const getEndOfPreviousCentury = makeGetEdgeOfNeighbor(getYear, getEndOfCentury, -100);
-export const getEndOfNextCentury = makeGetEdgeOfNeighbor(getYear, getEndOfCentury, 100);
-
-export const getCenturyRange = makeGetRange([getBeginOfCentury, getEndOfCentury]);
 
 /**
  * Decade
  */
 export function getBeginOfDecadeYear(date) {
-  const year = getYear(date) - 1;
-  return year + (-year % 10) + 1;
+  const beginOfDecade = getDecadeStart(date);
+  return getYear(beginOfDecade);
 }
-
-export function getBeginOfDecade(date) {
-  const beginOfDecadeYear = getBeginOfDecadeYear(date);
-  return new Date(beginOfDecadeYear, 0, 1);
-}
-export const getBeginOfPreviousDecade = makeGetEdgeOfNeighbor(
-  getBeginOfDecadeYear, getBeginOfDecade, -10,
-);
-export const getBeginOfNextDecade = makeGetEdgeOfNeighbor(
-  getBeginOfDecadeYear, getBeginOfDecade, 10,
-);
-
-export const getEndOfDecade = makeGetEnd(getBeginOfNextDecade);
-export const getEndOfPreviousDecade = makeGetEdgeOfNeighbor(
-  getBeginOfDecadeYear, getEndOfDecade, -10,
-);
-export const getEndOfNextDecade = makeGetEdgeOfNeighbor(
-  getBeginOfDecadeYear, getEndOfDecade, 10,
-);
-
-export const getDecadeRange = makeGetRange([getBeginOfDecade, getEndOfDecade]);
-
-/**
- * Year
- */
-
-export function getBeginOfYear(date) {
-  const year = getYear(date);
-  return new Date(year, 0, 1);
-}
-export const getBeginOfPreviousYear = makeGetEdgeOfNeighbor(getYear, getBeginOfYear, -1);
-export const getBeginOfNextYear = makeGetEdgeOfNeighbor(getYear, getBeginOfYear, 1);
-
-export const getEndOfYear = makeGetEnd(getBeginOfNextYear);
-export const getEndOfPreviousYear = makeGetEdgeOfNeighbor(getYear, getEndOfYear, -1);
-export const getEndOfNextYear = makeGetEdgeOfNeighbor(getYear, getEndOfYear, 1);
-
-export const getYearRange = makeGetRange([getBeginOfYear, getEndOfYear]);
-
-/**
- * Month
- */
-
-function makeGetEdgeOfNeighborMonth(getEdgeOfPeriod, defaultOffset) {
-  return function getBeginOfPreviousMonth(date, offset = defaultOffset) {
-    const year = getYear(date);
-    const previousMonthIndex = getMonthIndex(date) + offset;
-    const previousMonth = new Date(year, previousMonthIndex, 1);
-    return getEdgeOfPeriod(previousMonth);
-  };
-}
-
-export function getBeginOfMonth(date) {
-  const year = getYear(date);
-  const monthIndex = getMonthIndex(date);
-  return new Date(year, monthIndex, 1);
-}
-export const getBeginOfPreviousMonth = makeGetEdgeOfNeighborMonth(getBeginOfMonth, -1);
-export const getBeginOfNextMonth = makeGetEdgeOfNeighborMonth(getBeginOfMonth, 1);
-
-export const getEndOfMonth = makeGetEnd(getBeginOfNextMonth);
-export const getEndOfPreviousMonth = makeGetEdgeOfNeighborMonth(getEndOfMonth, -1);
-export const getEndOfNextMonth = makeGetEdgeOfNeighborMonth(getEndOfMonth, 1);
-
-export const getMonthRange = makeGetRange([getBeginOfMonth, getEndOfMonth]);
 
 /**
  * Week
@@ -212,26 +125,6 @@ export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
 }
 
 /**
- * Day
- */
-
-export function getBeginOfDay(date) {
-  const year = getYear(date);
-  const monthIndex = getMonthIndex(date);
-  const day = getDay(date);
-  return new Date(year, monthIndex, day);
-}
-
-export function getEndOfDay(date) {
-  const year = getYear(date);
-  const monthIndex = getMonthIndex(date);
-  const day = getDay(date);
-  return new Date(year, monthIndex, day + 1, 0, 0, 0, -1);
-}
-
-export const getDayRange = makeGetRange([getBeginOfDay, getEndOfDay]);
-
-/**
  * Others
  */
 
@@ -243,49 +136,49 @@ export const getDayRange = makeGetRange([getBeginOfDay, getEndOfDay]);
  */
 export function getBegin(rangeType, date) {
   switch (rangeType) {
-    case 'century': return getBeginOfCentury(date);
-    case 'decade': return getBeginOfDecade(date);
-    case 'year': return getBeginOfYear(date);
-    case 'month': return getBeginOfMonth(date);
-    case 'day': return getBeginOfDay(date);
+    case 'century': return getCenturyStart(date);
+    case 'decade': return getDecadeStart(date);
+    case 'year': return getYearStart(date);
+    case 'month': return getMonthStart(date);
+    case 'day': return getDayStart(date);
     default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
 export function getBeginPrevious(rangeType, date) {
   switch (rangeType) {
-    case 'century': return getBeginOfPreviousCentury(date);
-    case 'decade': return getBeginOfPreviousDecade(date);
-    case 'year': return getBeginOfPreviousYear(date);
-    case 'month': return getBeginOfPreviousMonth(date);
+    case 'century': return getPreviousCenturyStart(date);
+    case 'decade': return getPreviousDecadeStart(date);
+    case 'year': return getPreviousYearStart(date);
+    case 'month': return getPreviousMonthStart(date);
     default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
 export function getBeginNext(rangeType, date) {
   switch (rangeType) {
-    case 'century': return getBeginOfNextCentury(date);
-    case 'decade': return getBeginOfNextDecade(date);
-    case 'year': return getBeginOfNextYear(date);
-    case 'month': return getBeginOfNextMonth(date);
+    case 'century': return getNextCenturyStart(date);
+    case 'decade': return getNextDecadeStart(date);
+    case 'year': return getNextYearStart(date);
+    case 'month': return getNextMonthStart(date);
     default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
 export const getBeginPrevious2 = (rangeType, date) => {
   switch (rangeType) {
-    case 'decade': return getBeginOfPreviousDecade(date, -100);
-    case 'year': return getBeginOfPreviousYear(date, -10);
-    case 'month': return getBeginOfPreviousMonth(date, -12);
+    case 'decade': return getPreviousDecadeStart(date, -100);
+    case 'year': return getPreviousYearStart(date, -10);
+    case 'month': return getPreviousMonthStart(date, -12);
     default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
 
 export const getBeginNext2 = (rangeType, date) => {
   switch (rangeType) {
-    case 'decade': return getBeginOfNextDecade(date, 100);
-    case 'year': return getBeginOfNextYear(date, 10);
-    case 'month': return getBeginOfNextMonth(date, 12);
+    case 'decade': return getNextDecadeStart(date, 100);
+    case 'year': return getNextYearStart(date, 10);
+    case 'month': return getNextMonthStart(date, 12);
     default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
@@ -298,30 +191,30 @@ export const getBeginNext2 = (rangeType, date) => {
  */
 export function getEnd(rangeType, date) {
   switch (rangeType) {
-    case 'century': return getEndOfCentury(date);
-    case 'decade': return getEndOfDecade(date);
-    case 'year': return getEndOfYear(date);
-    case 'month': return getEndOfMonth(date);
-    case 'day': return getEndOfDay(date);
+    case 'century': return getCenturyEnd(date);
+    case 'decade': return getDecadeEnd(date);
+    case 'year': return getYearEnd(date);
+    case 'month': return getMonthEnd(date);
+    case 'day': return getDayEnd(date);
     default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
 export function getEndPrevious(rangeType, date) {
   switch (rangeType) {
-    case 'century': return getEndOfPreviousCentury(date);
-    case 'decade': return getEndOfPreviousDecade(date);
-    case 'year': return getEndOfPreviousYear(date);
-    case 'month': return getEndOfPreviousMonth(date);
+    case 'century': return getPreviousCenturyEnd(date);
+    case 'decade': return getPreviousDecadeEnd(date);
+    case 'year': return getPreviousYearEnd(date);
+    case 'month': return getPreviousMonthEnd(date);
     default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
 export const getEndPrevious2 = (rangeType, date) => {
   switch (rangeType) {
-    case 'decade': return getEndOfPreviousDecade(date, -100);
-    case 'year': return getEndOfPreviousYear(date, -10);
-    case 'month': return getEndOfPreviousMonth(date, -12);
+    case 'decade': return getPreviousDecadeEnd(date, -100);
+    case 'year': return getPreviousYearEnd(date, -10);
+    case 'month': return getPreviousMonthEnd(date, -12);
     default: throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 };
@@ -356,17 +249,6 @@ export function getValueRange(rangeType, date1, date2) {
     getBegin(rangeType, rawNextValue[0]),
     getEnd(rangeType, rawNextValue[1]),
   ];
-}
-
-/**
- * Returns a number of days in a month of a given date.
- *
- * @param {Date} date Date.
- */
-export function getDaysInMonth(date) {
-  const year = getYear(date);
-  const monthIndex = getMonthIndex(date);
-  return new Date(year, monthIndex + 1, 0).getDate();
 }
 
 function toYearLabel(locale, formatYear = defaultFormatYear, dates) {
@@ -412,45 +294,4 @@ export function isWeekend(date, calendarType = CALENDAR_TYPES.ISO_8601) {
     default:
       throw new Error('Unsupported calendar type.');
   }
-}
-
-/**
- * Returns local month in ISO-like format (YYYY-MM).
- */
-export function getISOLocalMonth(value) {
-  if (!value) {
-    return value;
-  }
-
-  const date = new Date(value);
-
-  if (!isValidDate(date)) {
-    throw new Error(`Invalid date: ${value}`);
-  }
-
-  const year = getYear(date);
-  const month = `0${getMonth(date)}`.slice(-2);
-
-  return `${year}-${month}`;
-}
-
-/**
- * Returns local date in ISO-like format (YYYY-MM-DD).
- */
-export function getISOLocalDate(value) {
-  if (!value) {
-    return value;
-  }
-
-  const date = new Date(value);
-
-  if (!isValidDate(date)) {
-    throw new Error(`Invalid date: ${value}`);
-  }
-
-  const year = getYear(date);
-  const month = `0${getMonth(date)}`.slice(-2);
-  const day = `0${getDay(date)}`.slice(-2);
-
-  return `${year}-${month}-${day}`;
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { getMonthStart } from '@wojtekmaj/date-utils';
 
 import Calendar from './Calendar';
-import { getBeginOfMonth } from './shared/dates';
 
 /* eslint-disable comma-dangle */
 
@@ -181,7 +181,7 @@ describe('Calendar', () => {
 
   it('displays a view with today\'s date when no value and no activeStartDate is given', () => {
     const today = new Date();
-    const beginOfCurrentMonth = getBeginOfMonth(today);
+    const beginOfCurrentMonth = getMonthStart(today);
     const component = mount(
       <Calendar showNeighboringMonth={false} />
     );

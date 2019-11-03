@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getDecadeStart, getDecadeEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile';
 
-import { getBeginOfDecade, getDecadeLabel, getEndOfDecade } from '../shared/dates';
+import { getDecadeLabel } from '../shared/dates';
 import { formatYear as defaultFormatYear } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
@@ -22,8 +23,8 @@ export default function Decade({
       classes={[].concat(classes, className)}
       date={date}
       locale={locale}
-      maxDateTransform={getEndOfDecade}
-      minDateTransform={getBeginOfDecade}
+      maxDateTransform={getDecadeEnd}
+      minDateTransform={getDecadeStart}
       view="century"
     >
       {getDecadeLabel(locale, formatYear, date)}
