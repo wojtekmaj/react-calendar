@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  getYear,
+  getMonth,
+  getMonthStart,
+} from '@wojtekmaj/date-utils';
 
 import Flex from '../Flex';
 
-import {
-  getBeginOfMonth,
-  getDayOfWeek,
-  getMonthIndex,
-  getYear,
-} from '../shared/dates';
+import { getDayOfWeek } from '../shared/dates';
 import { formatWeekday, formatShortWeekday as defaultFormatShortWeekday } from '../shared/dateFormatter';
 import { isCalendarType } from '../shared/propTypes';
 
@@ -21,9 +21,9 @@ export default function Weekdays(props) {
   } = props;
 
   const anyDate = new Date();
-  const beginOfMonth = getBeginOfMonth(anyDate);
+  const beginOfMonth = getMonthStart(anyDate);
   const year = getYear(beginOfMonth);
-  const monthIndex = getMonthIndex(beginOfMonth);
+  const monthIndex = getMonth(beginOfMonth);
 
   const weekdays = [];
 

@@ -1,39 +1,10 @@
+import { getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
+
 import {
-  getYear,
-  getMonth,
-  getMonthIndex,
-  getDay,
   getDayOfWeek,
   getBeginOfCenturyYear,
-  getBeginOfCentury,
-  getEndOfCentury,
-  getCenturyRange,
-  getBeginOfPreviousCentury,
-  getEndOfPreviousCentury,
-  getBeginOfNextCentury,
   getBeginOfDecadeYear,
-  getBeginOfDecade,
-  getEndOfDecade,
-  getDecadeRange,
-  getBeginOfPreviousDecade,
-  getEndOfPreviousDecade,
-  getBeginOfNextDecade,
-  getBeginOfYear,
-  getEndOfYear,
-  getYearRange,
-  getBeginOfPreviousYear,
-  getEndOfPreviousYear,
-  getBeginOfNextYear,
-  getBeginOfMonth,
-  getEndOfMonth,
   getBeginOfWeek,
-  getMonthRange,
-  getBeginOfPreviousMonth,
-  getEndOfPreviousMonth,
-  getBeginOfNextMonth,
-  getBeginOfDay,
-  getEndOfDay,
-  getDayRange,
   getWeekNumber,
   getRange,
   getBegin,
@@ -45,78 +16,10 @@ import {
   getEndPrevious,
   getEndPrevious2,
   getValueRange,
-  getDaysInMonth,
   getCenturyLabel,
   getDecadeLabel,
   isWeekend,
-  getISOLocalMonth,
-  getISOLocalDate,
 } from './dates';
-
-describe('getYear', () => {
-  it('returns proper year for a given date', () => {
-    const date = new Date(2017, 0, 1);
-
-    const year = getYear(date);
-
-    expect(year).toBe(2017);
-  });
-
-  it('returns proper year for a given number', () => {
-    const date = 2017;
-
-    const year = getYear(date);
-
-    expect(year).toBe(2017);
-  });
-
-  it('returns proper year for a given string', () => {
-    const date = '2017';
-
-    const year = getYear(date);
-
-    expect(year).toBe(2017);
-  });
-
-  it('throws an error when given nonsense data', () => {
-    const text = 'wololo';
-    const flag = true;
-
-    expect(() => getYear(text)).toThrow();
-    expect(() => getYear(flag)).toThrow();
-    expect(() => getYear()).toThrow();
-  });
-});
-
-describe('getMonth', () => {
-  it('returns proper month', () => {
-    const date = new Date(2017, 0, 1);
-
-    const monthIndex = getMonth(date);
-
-    expect(monthIndex).toBe(1);
-  });
-});
-
-describe('getMonthIndex', () => {
-  it('returns proper month index', () => {
-    const date = new Date(2017, 0, 1);
-
-    const monthIndex = getMonthIndex(date);
-
-    expect(monthIndex).toBe(0);
-  });
-});
-
-describe('getDay', () => {
-  it('returns proper day', () => {
-    const date = new Date(2017, 0, 1);
-
-    const day = getDay(date);
-
-    expect(day).toBe(1);
-  });
-});
 
 describe('getDayOfWeek', () => {
   it('returns proper day of the week (ISO 8601)', () => {
@@ -182,74 +85,6 @@ describe('getBeginOfCenturyYear', () => {
   });
 });
 
-describe('getBeginOfCentury', () => {
-  it('returns proper beginning of the century', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfCenturyDate = new Date(2001, 0, 1);
-
-    const beginOfCentury = getBeginOfCentury(date);
-
-    expect(beginOfCentury).toEqual(beginOfCenturyDate);
-  });
-});
-
-describe('getEndOfCentury', () => {
-  it('returns proper end of the century', () => {
-    const date = new Date(2017, 0, 1);
-    const endOfCenturyDate = new Date(2100, 11, 31, 23, 59, 59, 999);
-
-    const endOfCentury = getEndOfCentury(date);
-
-    expect(endOfCentury).toEqual(endOfCenturyDate);
-  });
-});
-
-describe('getCenturyRange', () => {
-  it('returns proper century date range', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfCenturyDate = new Date(2001, 0, 1);
-    const endOfCenturyDate = new Date(2100, 11, 31, 23, 59, 59, 999);
-
-    const centuryRange = getCenturyRange(date);
-
-    expect(centuryRange).toHaveLength(2);
-    expect(centuryRange).toEqual([beginOfCenturyDate, endOfCenturyDate]);
-  });
-});
-
-describe('getBeginOfPreviousCentury', () => {
-  it('returns proper beginning of the previous century', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfPreviousCenturyDate = new Date(1901, 0, 1);
-
-    const beginOfPreviousCentury = getBeginOfPreviousCentury(date);
-
-    expect(beginOfPreviousCentury).toEqual(beginOfPreviousCenturyDate);
-  });
-});
-
-describe('getEndOfPreviousCentury', () => {
-  it('returns proper end of the previous century', () => {
-    const date = new Date(2017, 0, 1);
-    const endOfPreviousCenturyDate = new Date(2000, 11, 31, 23, 59, 59, 999);
-
-    const endOfPreviousCentury = getEndOfPreviousCentury(date);
-
-    expect(endOfPreviousCentury).toEqual(endOfPreviousCenturyDate);
-  });
-});
-
-describe('getBeginOfNextCentury', () => {
-  it('returns proper beginning of the next century', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfNextCenturyDate = new Date(2101, 0, 1);
-
-    const beginOfNextCentury = getBeginOfNextCentury(date);
-
-    expect(beginOfNextCentury).toEqual(beginOfNextCenturyDate);
-  });
-});
-
 describe('getBeginOfDecadeYear', () => {
   it('returns proper year of the beginning of the decade', () => {
     const date1 = new Date(2017, 0, 1);
@@ -263,164 +98,6 @@ describe('getBeginOfDecadeYear', () => {
     expect(beginOfDecadeYear1).toBe(2011);
     expect(beginOfDecadeYear2).toBe(2001);
     expect(beginOfDecadeYear3).toBe(1991);
-  });
-});
-
-describe('getBeginOfDecade', () => {
-  it('returns proper beginning of the decade', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfDecadeDate = new Date(2011, 0, 1);
-
-    const beginOfDecade = getBeginOfDecade(date);
-
-    expect(beginOfDecade).toEqual(beginOfDecadeDate);
-  });
-});
-
-describe('getEndOfDecade', () => {
-  it('returns proper end of the decade', () => {
-    const date = new Date(2017, 0, 1);
-    const endOfDecadeDate = new Date(2020, 11, 31, 23, 59, 59, 999);
-
-    const endOfDecade = getEndOfDecade(date);
-
-    expect(endOfDecade).toEqual(endOfDecadeDate);
-  });
-});
-
-describe('getDecadeRange', () => {
-  it('returns proper decade date range', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfDecadeDate = new Date(2011, 0, 1);
-    const endOfDecadeDate = new Date(2020, 11, 31, 23, 59, 59, 999);
-
-    const decadeRange = getDecadeRange(date);
-
-    expect(decadeRange).toHaveLength(2);
-    expect(decadeRange).toEqual([beginOfDecadeDate, endOfDecadeDate]);
-  });
-});
-
-describe('getBeginOfPreviousDecade', () => {
-  it('returns proper beginning of the previous decade', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfPreviousDecadeDate = new Date(2001, 0, 1);
-
-    const beginOfPreviousDecade = getBeginOfPreviousDecade(date);
-
-    expect(beginOfPreviousDecade).toEqual(beginOfPreviousDecadeDate);
-  });
-});
-
-describe('getEndOfPreviousDecade', () => {
-  it('returns proper end of the previous decade', () => {
-    const date = new Date(2017, 0, 1);
-    const endOfPreviousDecadeDate = new Date(2010, 11, 31, 23, 59, 59, 999);
-
-    const endOfPreviousDecade = getEndOfPreviousDecade(date);
-
-    expect(endOfPreviousDecade).toEqual(endOfPreviousDecadeDate);
-  });
-});
-
-describe('getBeginOfNextDecade', () => {
-  it('returns proper beginning of the next decade', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfNextDecadeDate = new Date(2021, 0, 1);
-
-    const beginOfNextDecade = getBeginOfNextDecade(date);
-
-    expect(beginOfNextDecade).toEqual(beginOfNextDecadeDate);
-  });
-});
-
-describe('getBeginOfYear', () => {
-  it('returns proper beginning of the year', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfYearDate = new Date(2017, 0, 1);
-
-    const beginOfYear = getBeginOfYear(date);
-
-    expect(beginOfYear).toEqual(beginOfYearDate);
-  });
-});
-
-describe('getEndOfYear', () => {
-  it('returns proper end of the year', () => {
-    const date = new Date(2017, 0, 1);
-    const endOfYearDate = new Date(2017, 11, 31, 23, 59, 59, 999);
-
-    const endOfYear = getEndOfYear(date);
-
-    expect(endOfYear).toEqual(endOfYearDate);
-  });
-});
-
-describe('getYearRange', () => {
-  it('returns proper year date range', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfYearDate = new Date(2017, 0, 1);
-    const endOfYearDate = new Date(2017, 11, 31, 23, 59, 59, 999);
-
-    const yearRange = getYearRange(date);
-
-    expect(yearRange).toHaveLength(2);
-    expect(yearRange).toEqual([beginOfYearDate, endOfYearDate]);
-  });
-});
-
-describe('getBeginOfPreviousYear', () => {
-  it('returns proper beginning of the previous year', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfPreviousYearDate = new Date(2016, 0, 1);
-
-    const beginOfPreviousYear = getBeginOfPreviousYear(date);
-
-    expect(beginOfPreviousYear).toEqual(beginOfPreviousYearDate);
-  });
-});
-
-describe('getEndOfPreviousYear', () => {
-  it('returns proper end of the previous year', () => {
-    const date = new Date(2017, 0, 1);
-    const endOfPreviousYearDate = new Date(2016, 11, 31, 23, 59, 59, 999);
-
-    const endOfPreviousYear = getEndOfPreviousYear(date);
-
-    expect(endOfPreviousYear).toEqual(endOfPreviousYearDate);
-  });
-});
-
-describe('getBeginOfNextYear', () => {
-  it('returns proper beginning of the next year', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfNextYearDate = new Date(2018, 0, 1);
-
-    const beginOfNextYear = getBeginOfNextYear(date);
-
-    expect(beginOfNextYear).toEqual(beginOfNextYearDate);
-  });
-});
-
-describe('getBeginOfMonth', () => {
-  it('returns proper beginning of the month', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfMonthDate = new Date(2017, 0, 1);
-
-    const beginOfMonth = getBeginOfMonth(date);
-
-    expect(beginOfMonth).toEqual(beginOfMonthDate);
-  });
-});
-
-describe('getEndOfMonth', () => {
-  it('returns proper end of the month', () => {
-    const date = new Date(2017, 0, 1);
-    const endOfMonthDate = new Date(2017, 0, 31, 23, 59, 59, 999);
-
-    const endOfMonth = getEndOfMonth(date);
-
-    expect(endOfMonth).toEqual(endOfMonthDate);
   });
 });
 
@@ -468,87 +145,6 @@ describe('getBeginOfWeek', () => {
     const beginOfWeek = getBeginOfWeek(date);
 
     expect(beginOfWeek).toEqual(beginOfWeekDate);
-  });
-});
-
-describe('getMonthRange', () => {
-  it('returns proper month date range', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfMonthDate = new Date(2017, 0, 1);
-    const endOfMonthDate = new Date(2017, 0, 31, 23, 59, 59, 999);
-
-    const monthRange = getMonthRange(date);
-
-    expect(monthRange).toHaveLength(2);
-    expect(monthRange).toEqual([beginOfMonthDate, endOfMonthDate]);
-  });
-});
-
-describe('getBeginOfPreviousMonth', () => {
-  it('returns proper beginning of the previous month', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfPreviousMonthDate = new Date(2016, 11, 1);
-
-    const beginOfPreviousMonth = getBeginOfPreviousMonth(date);
-
-    expect(beginOfPreviousMonth).toEqual(beginOfPreviousMonthDate);
-  });
-});
-
-describe('getEndOfPreviousMonth', () => {
-  it('returns proper end of the previous month', () => {
-    const date = new Date(2017, 0, 1);
-    const endOfPreviousMonthDate = new Date(2016, 11, 31, 23, 59, 59, 999);
-
-    const endOfPreviousMonth = getEndOfPreviousMonth(date);
-
-    expect(endOfPreviousMonth).toEqual(endOfPreviousMonthDate);
-  });
-});
-
-describe('getBeginOfNextMonth', () => {
-  it('returns proper beginning of the next month', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfNextMonthDate = new Date(2017, 1, 1);
-
-    const beginOfNextMonth = getBeginOfNextMonth(date);
-
-    expect(beginOfNextMonth).toEqual(beginOfNextMonthDate);
-  });
-});
-
-describe('getBeginOfDay', () => {
-  it('returns proper beginning of the day', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfDayDate = new Date(2017, 0, 1);
-
-    const beginOfDay = getBeginOfDay(date);
-
-    expect(beginOfDay).toEqual(beginOfDayDate);
-  });
-});
-
-describe('getEndOfDay', () => {
-  it('returns proper end of the day', () => {
-    const date = new Date(2017, 0, 1);
-    const endOfDayDate = new Date(2017, 0, 1, 23, 59, 59, 999);
-
-    const endOfDay = getEndOfDay(date);
-
-    expect(endOfDay).toEqual(endOfDayDate);
-  });
-});
-
-describe('getDayRange', () => {
-  it('returns proper day date range', () => {
-    const date = new Date(2017, 0, 1);
-    const beginOfDayDate = new Date(2017, 0, 1);
-    const endOfDayDate = new Date(2017, 0, 1, 23, 59, 59, 999);
-
-    const dayRange = getDayRange(date);
-
-    expect(dayRange).toHaveLength(2);
-    expect(dayRange).toEqual([beginOfDayDate, endOfDayDate]);
   });
 });
 
@@ -1209,7 +805,7 @@ describe('getValueRange', () => {
 
     const range = getValueRange('day', date1, date2);
 
-    expect(range).toEqual([getBeginOfDay(date1), getEndOfDay(date2)]);
+    expect(range).toEqual([getDayStart(date1), getDayEnd(date2)]);
   });
 
   it('returns an array of dates given two unordered dates', () => {
@@ -1218,17 +814,7 @@ describe('getValueRange', () => {
 
     const range = getValueRange('day', date1, date2);
 
-    expect(range).toEqual([getBeginOfDay(date2), getEndOfDay(date1)]);
-  });
-});
-
-describe('getDaysInMonth', () => {
-  it('returns proper number of days in a month', () => {
-    const date = new Date(2017, 0, 1);
-
-    const daysInMonth = getDaysInMonth(date);
-
-    expect(daysInMonth).toBe(31);
+    expect(range).toEqual([getDayStart(date2), getDayEnd(date1)]);
   });
 });
 
@@ -1319,48 +905,4 @@ describe('isWeekend', () => {
     });
   });
   /* eslint-enable indent */
-});
-
-describe('getISOLocalMonth', () => {
-  it('returns proper ISO month', () => {
-    const date = new Date(Date.UTC(2017, 0, 1));
-
-    const ISOMonth = getISOLocalMonth(date);
-
-    expect(ISOMonth).toBe('2017-01');
-  });
-
-  it('returns nothing when given nothing', () => {
-    expect(getISOLocalMonth()).toBeUndefined();
-  });
-
-  it('throws an error when given nonsense data', () => {
-    const text = 'wololo';
-    const fn = () => {};
-
-    expect(() => getISOLocalMonth(text)).toThrow();
-    expect(() => getISOLocalMonth(fn)).toThrow();
-  });
-});
-
-describe('getISOLocalDate', () => {
-  it('returns proper ISO date', () => {
-    const date = new Date(Date.UTC(2017, 0, 1));
-
-    const ISODate = getISOLocalDate(date);
-
-    expect(ISODate).toBe('2017-01-01');
-  });
-
-  it('returns nothing when given nothing', () => {
-    expect(getISOLocalDate()).toBeUndefined();
-  });
-
-  it('throws an error when given nonsense data', () => {
-    const text = 'wololo';
-    const fn = () => {};
-
-    expect(() => getISOLocalDate(text)).toThrow();
-    expect(() => getISOLocalDate(fn)).toThrow();
-  });
 });

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getYearStart, getYearEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile';
 
-import { getBeginOfYear, getEndOfYear } from '../shared/dates';
 import { formatYear as defaultFormatYear } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
@@ -22,8 +22,8 @@ export default function Year({
       classes={[].concat(classes, className)}
       date={date}
       locale={locale}
-      maxDateTransform={getEndOfYear}
-      minDateTransform={getBeginOfYear}
+      maxDateTransform={getYearEnd}
+      minDateTransform={getYearStart}
       view="decade"
     >
       {formatYear(locale, date)}

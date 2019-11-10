@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getDate, getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile';
 
-import {
-  getBeginOfDay,
-  getDay,
-  getEndOfDay,
-  isWeekend,
-} from '../shared/dates';
+import { isWeekend } from '../shared/dates';
 import { formatLongDate } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
@@ -32,11 +28,11 @@ export default function Day({
       )}
       date={date}
       formatAbbr={formatLongDate}
-      maxDateTransform={getEndOfDay}
-      minDateTransform={getBeginOfDay}
+      maxDateTransform={getDayEnd}
+      minDateTransform={getDayStart}
       view="month"
     >
-      {getDay(date)}
+      {getDate(date)}
     </Tile>
   );
 }
