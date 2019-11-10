@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-
-import { getBeginOfDecade, getEndOfDecade } from './shared/dates';
+import { getDecadeStart, getDecadeEnd } from '@wojtekmaj/date-utils';
 
 import CenturyView from './CenturyView';
 
@@ -19,7 +18,7 @@ describe('CenturyView', () => {
 
     const firstDayTile = component.find('.react-calendar__tile').first();
 
-    expect(firstDayTile.text()).toBe(`${getBeginOfDecade(activeStartDate).getFullYear()} – ${getEndOfDecade(activeStartDate).getFullYear()}`);
+    expect(firstDayTile.text()).toBe(`${getDecadeStart(activeStartDate).getFullYear()} – ${getDecadeEnd(activeStartDate).getFullYear()}`);
   });
 
   it('applies tileClassName to its tiles when given a string', () => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getYear } from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup';
 import Month from './Month';
 
-import { getYear } from '../shared/dates';
 import { tileGroupProps } from '../shared/propTypes';
 
 export default function Months(props) {

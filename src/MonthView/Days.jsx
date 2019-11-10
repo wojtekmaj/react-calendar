@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  getYear,
+  getMonth,
+  getDaysInMonth,
+} from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup';
 import Day from './Day';
 
-import {
-  getDayOfWeek,
-  getDaysInMonth,
-  getMonthIndex,
-  getYear,
-} from '../shared/dates';
+import { getDayOfWeek } from '../shared/dates';
 import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 
 export default function Days(props) {
@@ -24,7 +24,7 @@ export default function Days(props) {
   } = props;
 
   const year = getYear(activeStartDate);
-  const monthIndex = getMonthIndex(activeStartDate);
+  const monthIndex = getMonth(activeStartDate);
 
   const hasFixedNumberOfWeeks = showFixedNumberOfWeeks || showNeighboringMonth;
   const dayOfWeek = getDayOfWeek(activeStartDate, calendarType);

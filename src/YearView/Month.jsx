@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getMonthStart, getMonthEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile';
 
-import {
-  getBeginOfMonth,
-  getEndOfMonth,
-} from '../shared/dates';
 import {
   formatMonth as defaultFormatMonth,
   formatMonthYear,
@@ -29,8 +26,8 @@ export default function Month({
       date={date}
       formatAbbr={formatMonthYear}
       locale={locale}
-      maxDateTransform={getEndOfMonth}
-      minDateTransform={getBeginOfMonth}
+      maxDateTransform={getMonthEnd}
+      minDateTransform={getMonthStart}
       view="year"
     >
       {formatMonth(locale, date)}
