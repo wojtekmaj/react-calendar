@@ -7,6 +7,7 @@ import { tileProps } from './shared/propTypes';
 export default class Tile extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const {
+      activeStartDate,
       date,
       tileClassName,
       tileContent,
@@ -16,12 +17,20 @@ export default class Tile extends Component {
     const nextState = {};
 
     if (tileClassName !== prevState.tileClassNameProps) {
-      nextState.tileClassName = typeof tileClassName === 'function' ? tileClassName({ date, view }) : tileClassName;
+      nextState.tileClassName = (
+        typeof tileClassName === 'function'
+          ? tileClassName({ activeStartDate, date, view })
+          : tileClassName
+      );
       nextState.tileClassNameProps = tileClassName;
     }
 
     if (tileContent !== prevState.tileContentProps) {
-      nextState.tileContent = typeof tileContent === 'function' ? tileContent({ date, view }) : tileContent;
+      nextState.tileContent = (
+        typeof tileContent === 'function'
+          ? tileContent({ activeStartDate, date, view })
+          : tileContent
+      );
       nextState.tileContentProps = tileContent;
     }
 
