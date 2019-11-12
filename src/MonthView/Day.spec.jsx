@@ -209,4 +209,26 @@ describe('Day', () => {
     });
     expect(testContent).toHaveLength(1);
   });
+
+  it('uses formatLongDate if given', () => {
+    const locale = 'en-US';
+    const date = new Date(2018, 0, 1);
+    const formatLongDate = jest.fn();
+    formatLongDate.mockReturnValue('Mock format');
+
+    const component = mount(
+      <Day
+        {...tileProps}
+        date={date}
+        formatLongDate={formatLongDate}
+        locale={locale}
+      />
+    );
+
+    const abbr = component.find('abbr');
+
+    expect(formatLongDate).toHaveBeenCalled();
+    expect(formatLongDate).toHaveBeenCalledWith(locale, date);
+    expect(abbr.prop('aria-label')).toBe('Mock format');
+  });
 });
