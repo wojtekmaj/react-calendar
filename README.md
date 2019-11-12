@@ -107,7 +107,7 @@ Displays a complete, interactive calendar.
 |defaultValue|Calendar value that shall be selected initially. If you wish to use React-Calendar in a controlled way, use `value` instead.|n/a|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`|
 |defaultView|Determines which calendar view shall be opened initially. Does not disable navigation. Can be `"month"`, `"year"`, `"decade"` or `"century"`. If you wish to use React-Calendar in a controlled way, use `view` instead.|The most detailed view allowed|`"year"`|
 |formatMonth|Function called to override default formatting of month names. Can be used to use your own formatting function.|(default formatter)|`(locale, date) => formatDate(date, 'MMM')`|
-|formatMonthYear|Function called to override default formatting of month and year in the top navigation section. Can be used to use your own formatting function.|(default formatter)|`(locale, date) => formatDate(date, 'MMMM YYYY')`|
+|formatMonthYear|Function called to override default formatting of months and years. Can be used to use your own formatting function.|(default formatter)|`(locale, date) => formatDate(date, 'MMMM YYYY')`|
 |formatShortWeekday|Function called to override default formatting of weekday names. Can be used to use your own formatting function.|(default formatter)|`(locale, date) => formatDate(date, 'dd')`|
 |formatYear|Function called to override default formatting of year in the top navigation section. Can be used to use your own formatting function.|(default formatter)|`(locale, date) => formatDate(date, 'YYYY')`|
 |locale|Locale that should be used by the calendar. Can be any [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag).|User's browser settings|`"hu-HU"`|

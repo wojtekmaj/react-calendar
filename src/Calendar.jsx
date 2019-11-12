@@ -421,11 +421,12 @@ export default class Calendar extends Component {
         );
       }
       case 'year': {
-        const { formatMonth, onClickMonth } = this.props;
+        const { formatMonth, formatMonthYear, onClickMonth } = this.props;
 
         return (
           <YearView
             formatMonth={formatMonth}
+            formatMonthYear={formatMonthYear}
             onClick={mergeFunctions(clickAction, onClickMonth)}
             {...commonProps}
           />

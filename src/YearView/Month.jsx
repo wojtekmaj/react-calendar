@@ -6,7 +6,7 @@ import Tile from '../Tile';
 
 import {
   formatMonth as defaultFormatMonth,
-  formatMonthYear,
+  formatMonthYear as defaultFormatMonthYear,
 } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
@@ -16,6 +16,7 @@ export default function Month({
   classes,
   date,
   formatMonth = defaultFormatMonth,
+  formatMonthYear = defaultFormatMonthYear,
   locale,
   ...otherProps
 }) {
@@ -38,4 +39,5 @@ export default function Month({
 Month.propTypes = {
   ...tileProps,
   formatMonth: PropTypes.func,
+  formatMonthYear: PropTypes.func,
 };
