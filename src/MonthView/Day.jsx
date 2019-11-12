@@ -5,12 +5,13 @@ import { getDate, getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
 import Tile from '../Tile';
 
 import { isWeekend } from '../shared/dates';
-import { formatLongDate } from '../shared/dateFormatter';
+import { formatLongDate as defaultFormatLongDate } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
 
 export default function Day({
+  formatLongDate = defaultFormatLongDate,
   calendarType,
   classes,
   currentMonthIndex,
@@ -40,4 +41,5 @@ export default function Day({
 Day.propTypes = {
   ...tileProps,
   currentMonthIndex: PropTypes.number.isRequired,
+  formatLongDate: PropTypes.func,
 };
