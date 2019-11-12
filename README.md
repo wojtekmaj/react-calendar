@@ -34,7 +34,7 @@ React-Calendar is under constant development. This documentation is written for 
 
 ### Compatibility
 
-Your project needs to use React 15.5 or later.
+Your project needs to use React 16.3 or later.
 
 React-Calendar uses modern web technologies. That's why it's so fast, lightweight and easy to style. This, however, comes at a cost of [supporting only modern browsers](https://caniuse.com/#feat=internationalization).
 
