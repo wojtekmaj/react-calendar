@@ -183,4 +183,48 @@ describe('Month', () => {
     });
     expect(testContent).toHaveLength(1);
   });
+
+  it('uses formatMonth if given', () => {
+    const locale = 'en-US';
+    const date = new Date(2018, 0, 1);
+    const formatMonth = jest.fn();
+    formatMonth.mockReturnValue('Mock format');
+
+    const component = mount(
+      <Month
+        {...tileProps}
+        date={date}
+        formatMonth={formatMonth}
+        locale={locale}
+      />
+    );
+
+    const tile = component.find('Tile');
+
+    expect(formatMonth).toHaveBeenCalled();
+    expect(formatMonth).toHaveBeenCalledWith(locale, date);
+    expect(tile.text()).toBe('Mock format');
+  });
+
+  it('uses formatMonthYear if given', () => {
+    const locale = 'en-US';
+    const date = new Date(2018, 0, 1);
+    const formatMonthYear = jest.fn();
+    formatMonthYear.mockReturnValue('Mock format');
+
+    const component = mount(
+      <Month
+        {...tileProps}
+        date={date}
+        formatMonthYear={formatMonthYear}
+        locale={locale}
+      />
+    );
+
+    const abbr = component.find('abbr');
+
+    expect(formatMonthYear).toHaveBeenCalled();
+    expect(formatMonthYear).toHaveBeenCalledWith(locale, date);
+    expect(abbr.prop('aria-label')).toBe('Mock format');
+  });
 });
