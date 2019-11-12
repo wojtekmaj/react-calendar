@@ -190,6 +190,12 @@ export default class Calendar extends Component {
     return getView(viewProps || viewState, minDetail, maxDetail);
   }
 
+  get views() {
+    const { minDetail, maxDetail } = this.props;
+
+    return getLimitedViews(minDetail, maxDetail);
+  }
+
   get hover() {
     const { selectRange } = this.props;
     const { hover } = this.state;
@@ -198,19 +204,13 @@ export default class Calendar extends Component {
   }
 
   get drillDownAvailable() {
-    const { view } = this;
-    const { maxDetail, minDetail } = this.props;
-
-    const views = getLimitedViews(minDetail, maxDetail);
+    const { view, views } = this;
 
     return views.indexOf(view) < views.length - 1;
   }
 
   get drillUpAvailable() {
-    const { view } = this;
-    const { maxDetail, minDetail } = this.props;
-
-    const views = getLimitedViews(minDetail, maxDetail);
+    const { view, views } = this;
 
     return views.indexOf(view) > 0;
   }
@@ -278,10 +278,8 @@ export default class Calendar extends Component {
       return;
     }
 
-    const { view } = this;
-    const { maxDetail, minDetail, onDrillDown } = this.props;
-
-    const views = getLimitedViews(minDetail, maxDetail);
+    const { view, views } = this;
+    const { onDrillDown } = this.props;
 
     const nextView = views[views.indexOf(view) + 1];
 
@@ -298,10 +296,8 @@ export default class Calendar extends Component {
       return;
     }
 
-    const { activeStartDate, view } = this;
-    const { maxDetail, minDetail, onDrillUp } = this.props;
-
-    const views = getLimitedViews(minDetail, maxDetail);
+    const { activeStartDate, view, views } = this;
+    const { onDrillUp } = this.props;
 
     const nextView = views[views.indexOf(view) - 1];
     const nextActiveStartDate = getBegin(nextView, activeStartDate);
@@ -472,15 +468,13 @@ export default class Calendar extends Component {
       return null;
     }
 
-    const { activeStartDate, view } = this;
+    const { activeStartDate, view, views } = this;
     const {
       formatMonthYear,
       formatYear,
       locale,
       maxDate,
-      maxDetail,
       minDate,
-      minDetail,
       navigationAriaLabel,
       navigationLabel,
       next2AriaLabel,
@@ -516,7 +510,7 @@ export default class Calendar extends Component {
         setActiveStartDate={this.setActiveStartDate}
         showDoubleView={showDoubleView}
         view={view}
-        views={getLimitedViews(minDetail, maxDetail)}
+        views={views}
       />
     );
   }
