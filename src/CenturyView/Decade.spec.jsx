@@ -183,4 +183,26 @@ describe('Decade', () => {
     });
     expect(testContent).toHaveLength(1);
   });
+
+  it('uses formatYear if given', () => {
+    const locale = 'en-US';
+    const date = new Date(2018, 0, 1);
+    const formatYear = jest.fn();
+    formatYear.mockReturnValue('Mock format');
+
+    const component = mount(
+      <Decade
+        {...tileProps}
+        date={date}
+        formatYear={formatYear}
+        locale={locale}
+      />
+    );
+
+    const tile = component.find('Tile');
+
+    expect(formatYear).toHaveBeenCalledTimes(2);
+    expect(formatYear).toHaveBeenCalledWith(locale, new Date(2011, 0, 1));
+    expect(tile.text()).toBe('Mock format – Mock format');
+  });
 });
