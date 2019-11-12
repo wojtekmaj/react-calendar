@@ -176,7 +176,11 @@ describe('Decade', () => {
     const testContent = component.find('.testContent');
 
     expect(tileContent).toHaveBeenCalled();
-    expect(tileContent).toHaveBeenCalledWith({ date, view: 'century' });
+    expect(tileContent).toHaveBeenCalledWith({
+      activeStartDate: tileProps.activeStartDate,
+      date,
+      view: 'century',
+    });
     expect(testContent).toHaveLength(1);
   });
 });
