@@ -202,7 +202,11 @@ describe('Day', () => {
     const testContent = component.find('.testContent');
 
     expect(tileContent).toHaveBeenCalled();
-    expect(tileContent).toHaveBeenCalledWith({ date, view: 'month' });
+    expect(tileContent).toHaveBeenCalledWith({
+      activeStartDate: tileProps.activeStartDate,
+      date,
+      view: 'month',
+    });
     expect(testContent).toHaveLength(1);
   });
 });
