@@ -14,19 +14,17 @@ const className = 'react-calendar__year-view__months__month';
 
 export default function Month({
   classes,
-  date,
   formatMonth = defaultFormatMonth,
   formatMonthYear = defaultFormatMonthYear,
-  locale,
   ...otherProps
 }) {
+  const { date, locale } = otherProps;
+
   return (
     <Tile
       {...otherProps}
       classes={[].concat(classes, className)}
-      date={date}
       formatAbbr={formatMonthYear}
-      locale={locale}
       maxDateTransform={getMonthEnd}
       minDateTransform={getMonthStart}
       view="year"

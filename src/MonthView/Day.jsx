@@ -15,9 +15,10 @@ export default function Day({
   calendarType,
   classes,
   currentMonthIndex,
-  date,
   ...otherProps
 }) {
+  const { date } = otherProps;
+
   return (
     <Tile
       {...otherProps}
@@ -27,7 +28,6 @@ export default function Day({
         isWeekend(date, calendarType) ? `${className}--weekend` : null,
         date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null,
       )}
-      date={date}
       formatAbbr={formatLongDate}
       maxDateTransform={getDayEnd}
       minDateTransform={getDayStart}

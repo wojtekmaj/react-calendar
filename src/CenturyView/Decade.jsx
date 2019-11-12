@@ -12,17 +12,15 @@ const className = 'react-calendar__century-view__decades__decade';
 
 export default function Decade({
   classes,
-  date,
   formatYear = defaultFormatYear,
-  locale,
   ...otherProps
 }) {
+  const { date, locale } = otherProps;
+
   return (
     <Tile
       {...otherProps}
       classes={[].concat(classes, className)}
-      date={date}
-      locale={locale}
       maxDateTransform={getDecadeEnd}
       minDateTransform={getDecadeStart}
       view="century"
