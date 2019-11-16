@@ -138,6 +138,7 @@ Displays a complete, interactive calendar.
 |tileDisabled|Pass a function to determine if a certain day should be displayed as disabled.|n/a|<ul><li>Function: `({activeStartDate, date, view }) => date.getDay() === 0`</li></ul>|
 |value|Calendar value. Can be either one value or an array of two values. If you wish to use React-Calendar in an uncontrolled way, use `defaultValue` instead.|n/a|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`|
 |view|Determines which calendar view shall be opened. Does not disable navigation. Can be `"month"`, `"year"`, `"decade"` or `"century"`. If you wish to use React-Calendar in an uncontrolled way, use `defaultView` instead.|The most detailed view allowed|`"year"`|
+|weekNumbersLabel|Label to render above week numbers. Only applicable if `showWeekNumbers` prop is `true`.| `null` | `"Weeks"`
 
 ### MonthView, YearView, DecadeView, CenturyView
 
