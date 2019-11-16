@@ -6,28 +6,31 @@ export default function WeekNumber({
   onClickWeekNumber,
   weekNumber,
 }) {
+  const props = {
+    className: 'react-calendar__tile',
+    style: { flexGrow: 1 },
+  };
+
+  const children = (
+    <span>
+      {weekNumber}
+    </span>
+  );
+
   return (
     onClickWeekNumber
       ? (
         <button
-          className="react-calendar__tile"
+          {...props}
           onClick={() => onClickWeekNumber(weekNumber, date)}
-          style={{ flexGrow: 1 }}
           type="button"
         >
-          <span>
-            {weekNumber}
-          </span>
+          {children}
         </button>
       )
       : (
-        <div
-          className="react-calendar__tile"
-          style={{ flexGrow: 1 }}
-        >
-          <span>
-            {weekNumber}
-          </span>
+        <div {...props}>
+          {children}
         </div>
       )
   );
