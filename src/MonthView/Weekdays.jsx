@@ -12,6 +12,8 @@ import { getDayOfWeek } from '../shared/dates';
 import { formatWeekday, formatShortWeekday as defaultFormatShortWeekday } from '../shared/dateFormatter';
 import { isCalendarType } from '../shared/propTypes';
 
+const className = 'react-calendar__month-view__weekdays';
+
 export default function Weekdays(props) {
   const {
     calendarType,
@@ -37,7 +39,7 @@ export default function Weekdays(props) {
     weekdays.push(
       <div
         key={weekday}
-        className="react-calendar__month-view__weekdays__weekday"
+        className={`${className}__weekday`}
       >
         <abbr aria-label={abbr} title={abbr}>
           {formatShortWeekday(locale, weekdayDate).replace('.', '')}
@@ -48,7 +50,7 @@ export default function Weekdays(props) {
 
   return (
     <Flex
-      className="react-calendar__month-view__weekdays"
+      className={className}
       count={7}
       onFocus={onMouseLeave}
       onMouseOver={onMouseLeave}

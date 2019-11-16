@@ -143,7 +143,7 @@ export default function Navigation({
       </button>
       <button
         aria-label={navigationAriaLabel}
-        className="react-calendar__navigation__label"
+        className={`${className}__label`}
         disabled={!drillUpAvailable}
         onClick={drillUp}
         style={{ flexGrow: 1 }}
