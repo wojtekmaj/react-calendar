@@ -568,7 +568,10 @@ Calendar.propTypes = {
   formatMonth: PropTypes.func,
   formatMonthYear: PropTypes.func,
   formatShortWeekday: PropTypes.func,
-  hover: PropTypes.func,
+  hover: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.oneOf([null]),
+  ]),
   keepUsingActiveStartDate: PropTypes.bool,
   locale: PropTypes.string,
   maxDate: isMaxDate,
