@@ -357,16 +357,21 @@ export default class Calendar extends Component {
   }
 
   onMouseOver = (value) => {
+    const { onMouseOverTile } = this.props
+    callIfDefined(onMouseOverTile, value)
     this.setState((prevState) => {
       if (prevState.hover && (prevState.hover.getTime() === value.getTime())) {
         return null;
       }
+
 
       return { hover: value };
     });
   }
 
   onMouseLeave = () => {
+    const { onMouseOutTile } = this.props
+    callIfDefined(onMouseOutTile)
     this.setState({ hover: null });
   }
 

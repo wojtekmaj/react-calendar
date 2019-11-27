@@ -534,6 +534,28 @@ describe('Calendar', () => {
     expect(firstWeekdayTile.text()).toBe('Weekday');
   });
 
+  it('calls onTileOver / onTileOut function if provided with the current hovered date', () => {
+    const onOver = jest.fn();
+    const onOut = jest.fn();
+
+    const component = mount(
+      <Calendar
+        onMouseOverTile={onOver}
+        onMouseOutTile={onOut}
+        selectRange
+        view="month"
+      />
+    );
+    const viewContainer = component.find('.react-calendar__viewContainer')
+    const monthView = component.find('.react-calendar__month-view');
+    const firstDayTile = monthView.find('.react-calendar__tile').first();
+    firstDayTile.simulate('mouseover');
+    viewContainer.simulate('mouseleave');
+
+    expect(onOver).toHaveBeenCalledTimes(1);
+    expect(onOut).toHaveBeenCalledTimes(1);
+  });
+
   it('displays calendar with custom month year navigation label', () => {
     const component = mount(
       <Calendar
