@@ -135,6 +135,7 @@ const getDetailValueArray = (value, minDate, maxDate, maxDetail) => {
 const getActiveStartDate = (props) => {
   const {
     activeStartDate,
+    keepUsingActiveStartDate,
     maxDate,
     maxDetail,
     minDate,
@@ -144,9 +145,14 @@ const getActiveStartDate = (props) => {
   } = props;
 
   const rangeType = getView(view, minDetail, maxDetail);
-  const valueFrom = (
+
+  const valueFrom = keepUsingActiveStartDate ? (
     getDetailValueFrom(value, minDate, maxDate, maxDetail)
     || activeStartDate
+    || new Date()
+  ) : (
+    activeStartDate
+    || getDetailValueFrom(value, minDate, maxDate, maxDetail)
     || new Date()
   );
   return getBegin(rangeType, valueFrom);
@@ -541,6 +547,7 @@ export default class Calendar extends Component {
 }
 
 Calendar.defaultProps = {
+  keepUsingActiveStartDate: false,
   maxDetail: 'month',
   minDetail: 'century',
   returnValue: 'start',
@@ -553,6 +560,7 @@ Calendar.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date),
   calendarType: isCalendarType,
   className: isClassName,
+  keepUsingActiveStartDate: PropTypes.bool,
   formatMonth: PropTypes.func,
   formatMonthYear: PropTypes.func,
   formatShortWeekday: PropTypes.func,
