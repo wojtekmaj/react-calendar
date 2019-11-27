@@ -498,6 +498,29 @@ describe('Calendar', () => {
     expect(firstDayTileTimeAbbr).toBe(format(newActiveStartDate));
   });
 
+  it('does not changes Calendar view given new value', () => {
+    const getFirstDayTileLabel = (cmp) => {
+      const monthView = cmp.find('.react-calendar__month-view');
+      const firstDayTile = monthView.find('.react-calendar__tile').first();
+      const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
+      return firstDayTileTimeAbbr;
+    };
+
+    const activeStartDate = new Date(2017, 0, 1);
+    const expectedFirstDate = new Date(2016, 11, 26);
+    const nextValue = new Date(2017, 3, 1);
+
+    const component = mount(
+      <Calendar activeStartDate={activeStartDate} keepUsingActiveStartDate view="month" />
+    );
+
+    expect(getFirstDayTileLabel(component)).toBe(format(expectedFirstDate));
+
+    component.setProps({ value: nextValue });
+
+    expect(getFirstDayTileLabel(component)).toBe(format(expectedFirstDate));
+  });
+
   it('displays calendar with custom weekdays formatting', () => {
     const component = mount(
       <Calendar

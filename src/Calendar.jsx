@@ -147,14 +147,12 @@ const getActiveStartDate = (props) => {
   const rangeType = getView(view, minDetail, maxDetail);
 
   const valueFrom = keepUsingActiveStartDate ? (
-    getDetailValueFrom(value, minDate, maxDate, maxDetail)
-    || activeStartDate
-    || new Date()
-  ) : (
     activeStartDate
     || getDetailValueFrom(value, minDate, maxDate, maxDetail)
-    || new Date()
-  );
+  ) : (
+    getDetailValueFrom(value, minDate, maxDate, maxDetail)
+    || activeStartDate
+  ) || new Date();
   return getBegin(rangeType, valueFrom);
 };
 
@@ -383,16 +381,16 @@ export default class Calendar extends Component {
       tileClassName,
       tileContent,
       tileDisabled,
-      hover: hoverFromProps
+      hover,
     } = this.props;
     const {
-      activeStartDate, hover, value, view,
+      activeStartDate, hover: hoverFromState, value, view,
     } = this.state;
     const { onMouseOver, valueType } = this;
 
     const commonProps = {
       activeStartDate,
-      hover: selectRange ? hoverFromProps || hover : null,
+      hover: selectRange ? hover || hoverFromState : null,
       locale,
       maxDate,
       minDate,
@@ -548,7 +546,7 @@ export default class Calendar extends Component {
 }
 
 Calendar.defaultProps = {
-  hoverFromProps: undefined,
+  hover: undefined,
   keepUsingActiveStartDate: false,
   maxDetail: 'month',
   minDetail: 'century',
@@ -562,11 +560,11 @@ Calendar.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date),
   calendarType: isCalendarType,
   className: isClassName,
-  keepUsingActiveStartDate: PropTypes.bool,
   formatMonth: PropTypes.func,
   formatMonthYear: PropTypes.func,
   formatShortWeekday: PropTypes.func,
-  hoverFromProps: PropTypes.func,
+  hover: PropTypes.func,
+  keepUsingActiveStartDate: PropTypes.bool,
   locale: PropTypes.string,
   maxDate: isMaxDate,
   maxDetail: PropTypes.oneOf(allViews),
@@ -587,8 +585,8 @@ Calendar.propTypes = {
   onClickYear: PropTypes.func,
   onDrillDown: PropTypes.func,
   onDrillUp: PropTypes.func,
-  onMouseOverTile: PropTypes.func,
   onMouseOutTile: PropTypes.func,
+  onMouseOverTile: PropTypes.func,
   prev2AriaLabel: PropTypes.string,
   prev2Label: PropTypes.node,
   prevAriaLabel: PropTypes.string,
