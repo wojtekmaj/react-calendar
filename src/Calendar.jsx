@@ -383,6 +383,7 @@ export default class Calendar extends Component {
       tileClassName,
       tileContent,
       tileDisabled,
+      hover: hoverFromProps
     } = this.props;
     const {
       activeStartDate, hover, value, view,
@@ -391,7 +392,7 @@ export default class Calendar extends Component {
 
     const commonProps = {
       activeStartDate,
-      hover,
+      hover: selectRange ? hoverFromProps || hover : null,
       locale,
       maxDate,
       minDate,
@@ -547,6 +548,7 @@ export default class Calendar extends Component {
 }
 
 Calendar.defaultProps = {
+  hoverFromProps: undefined,
   keepUsingActiveStartDate: false,
   maxDetail: 'month',
   minDetail: 'century',
@@ -564,6 +566,7 @@ Calendar.propTypes = {
   formatMonth: PropTypes.func,
   formatMonthYear: PropTypes.func,
   formatShortWeekday: PropTypes.func,
+  hoverFromProps: PropTypes.func,
   locale: PropTypes.string,
   maxDate: isMaxDate,
   maxDetail: PropTypes.oneOf(allViews),
@@ -584,6 +587,8 @@ Calendar.propTypes = {
   onClickYear: PropTypes.func,
   onDrillDown: PropTypes.func,
   onDrillUp: PropTypes.func,
+  onMouseOverTile: PropTypes.func,
+  onMouseOutTile: PropTypes.func,
   prev2AriaLabel: PropTypes.string,
   prev2Label: PropTypes.node,
   prevAriaLabel: PropTypes.string,
