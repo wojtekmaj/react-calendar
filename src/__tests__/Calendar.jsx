@@ -540,13 +540,13 @@ describe('Calendar', () => {
 
     const component = mount(
       <Calendar
-        onMouseOverTile={onOver}
         onMouseOutTile={onOut}
+        onMouseOverTile={onOver}
         selectRange
         view="month"
       />
     );
-    const viewContainer = component.find('.react-calendar__viewContainer')
+    const viewContainer = component.find('.react-calendar__viewContainer');
     const monthView = component.find('.react-calendar__month-view');
     const firstDayTile = monthView.find('.react-calendar__tile').first();
     firstDayTile.simulate('mouseover');
