@@ -16,6 +16,8 @@ declare module "react-calendar" {
     formatMonth?: FormatterCallback;
     formatMonthYear?: FormatterCallback;
     formatShortWeekday?: FormatterCallback;
+    hover?: Date
+    keepUsingActiveStartDate?: boolean
     locale?: string;
     maxDate?: Date;
     maxDetail?: Detail;
