@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 
 import Year from './Year';
 
-/* eslint-disable comma-dangle, jsx-a11y/mouse-events-have-key-events */
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 
 const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
@@ -19,7 +19,7 @@ describe('Year', () => {
         {...tileProps}
         classes={['react-calendar__tile', 'react-calendar__tile--flag']}
         tileClassName={() => 'testFunctionClassName'}
-      />
+      />,
     );
 
     const wrapperClassName = component.find('.react-calendar__tile').prop('className');
@@ -36,7 +36,7 @@ describe('Year', () => {
         {...tileProps}
         date={new Date(2018, 0, 1)}
         year={2018}
-      />
+      />,
     );
 
     const abbr = component.find('abbr');
@@ -51,7 +51,7 @@ describe('Year', () => {
         {...tileProps}
         date={new Date(2018, 0, 1)}
         minDate={new Date(2019, 0, 1)}
-      />
+      />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
@@ -63,7 +63,7 @@ describe('Year', () => {
         {...tileProps}
         date={new Date(2018, 0, 1)}
         minDate={new Date(2018, 0, 1)}
-      />
+      />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
@@ -75,7 +75,7 @@ describe('Year', () => {
         {...tileProps}
         date={new Date(2018, 0, 1)}
         maxDate={new Date(2017, 0, 1)}
-      />
+      />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
@@ -87,7 +87,7 @@ describe('Year', () => {
         {...tileProps}
         date={new Date(2018, 0, 1)}
         maxDate={new Date(2018, 0, 1)}
-      />
+      />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
@@ -102,7 +102,7 @@ describe('Year', () => {
         {...tileProps}
         date={date}
         onClick={onClick}
-      />
+      />,
     );
 
     component.find('.react-calendar__tile').simulate('click');
@@ -120,7 +120,7 @@ describe('Year', () => {
         {...tileProps}
         date={date}
         onMouseOver={onMouseOver}
-      />
+      />,
     );
 
     component.find('.react-calendar__tile').simulate('mouseOver');
@@ -138,7 +138,7 @@ describe('Year', () => {
         {...tileProps}
         date={date}
         onMouseOver={onMouseOver}
-      />
+      />,
     );
 
     component.find('.react-calendar__tile').simulate('focus');
@@ -152,7 +152,7 @@ describe('Year', () => {
       <Year
         {...tileProps}
         tileContent={<div className="testContent" />}
-      />
+      />,
     );
 
     const testContent = component.find('.testContent');
@@ -170,7 +170,7 @@ describe('Year', () => {
         {...tileProps}
         date={date}
         tileContent={tileContent}
-      />
+      />,
     );
 
     const testContent = component.find('.testContent');
@@ -196,7 +196,7 @@ describe('Year', () => {
         date={date}
         formatYear={formatYear}
         locale={locale}
-      />
+      />,
     );
 
     const tile = component.find('Tile');

@@ -1,20 +1,25 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import MonthView from './MonthView';
 
-/* eslint-disable comma-dangle, react/prop-types */
+/* eslint-disable react/prop-types */
 
 const { format } = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
 describe('MonthView', () => {
+  const defaultProps = {
+    activeStartDate: new Date(2017, 0, 1),
+  };
+
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const component = mount(
       <MonthView
+        {...defaultProps}
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
-      />
+      />,
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
@@ -24,14 +29,13 @@ describe('MonthView', () => {
   });
 
   it('applies tileClassName to its tiles when given a string', () => {
-    const activeStartDate = new Date(2017, 0, 1);
     const tileClassName = 'testClassName';
     const component = mount(
       <MonthView
-        activeStartDate={activeStartDate}
+        {...defaultProps}
         showNeighboringMonth={false}
         tileClassName={tileClassName}
-      />
+      />,
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
@@ -51,10 +55,11 @@ describe('MonthView', () => {
     };
     const component = mount(
       <MonthView
+        {...defaultProps}
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileClassName={tileClassNameFn}
-      />
+      />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -69,16 +74,15 @@ describe('MonthView', () => {
   });
 
   it('renders tileContent in its tiles when given a node', () => {
-    const activeStartDate = new Date(2017, 0, 1);
     const tileContent = (
       <div className="testContent" />
     );
     const component = mount(
       <MonthView
-        activeStartDate={activeStartDate}
+        {...defaultProps}
         showNeighboringMonth={false}
         tileContent={tileContent}
-      />
+      />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -103,10 +107,11 @@ describe('MonthView', () => {
 
     const component = mount(
       <MonthView
+        {...defaultProps}
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileContent={tileContentFn}
-      />
+      />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -121,25 +126,53 @@ describe('MonthView', () => {
   });
 
   it('does not render WeekNumbers component by default', () => {
-    const activeStartDate = new Date(2017, 0, 1);
-
     const component = mount(
-      <MonthView activeStartDate={activeStartDate} />
+      <MonthView
+        {...defaultProps}
+      />,
     );
 
     expect(component.find('WeekNumbers')).toHaveLength(0);
   });
 
   it('renders WeekNumbers component by given showWeekNumbers flag', () => {
-    const activeStartDate = new Date(2017, 0, 1);
-
     const component = mount(
       <MonthView
-        activeStartDate={activeStartDate}
+        {...defaultProps}
         showWeekNumbers
-      />
+      />,
     );
 
     expect(component.find('WeekNumbers')).toHaveLength(1);
+  });
+
+  it('passes formatShortWeekday flag to Weekdays component', () => {
+    const formatShortWeekday = () => 'Weekday';
+
+    const component = shallow(
+      <MonthView
+        {...defaultProps}
+        formatShortWeekday={formatShortWeekday}
+      />,
+    );
+
+    const weekdays = component.find('Weekdays');
+
+    expect(weekdays.prop('formatShortWeekday')).toBe(formatShortWeekday);
+  });
+
+  it('passes formatLongDate flag to Days component', () => {
+    const formatLongDate = () => 'Long date';
+
+    const component = shallow(
+      <MonthView
+        {...defaultProps}
+        formatLongDate={formatLongDate}
+      />,
+    );
+
+    const days = component.find('Days');
+
+    expect(days.prop('formatLongDate')).toBe(formatLongDate);
   });
 });

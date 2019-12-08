@@ -5,18 +5,20 @@ import Navigation from './Navigation';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 
-/* eslint-disable comma-dangle */
-
 describe('Navigation', () => {
+  const defaultProps = {
+    activeStartDate: new Date(2017, 0, 1),
+    drillUp: () => {},
+    setActiveStartDate: () => {},
+    views: allViews,
+  };
+
   it('renders prev2, prev, drill up, next and next2 buttons', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
+        {...defaultProps}
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     const children = component.children();
@@ -34,12 +36,9 @@ describe('Navigation', () => {
   it('renders prev, drill up, next and buttons only for century view', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
+        {...defaultProps}
         view="century"
-        views={allViews}
-      />
+      />,
     );
 
     const children = component.children();
@@ -55,12 +54,9 @@ describe('Navigation', () => {
   it('displays proper title for month view', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
+        {...defaultProps}
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     const drillUp = component.find('.react-calendar__navigation__label');
@@ -71,12 +67,9 @@ describe('Navigation', () => {
   it('displays proper title for year view', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
+        {...defaultProps}
         view="year"
-        views={allViews}
-      />
+      />,
     );
 
     const drillUp = component.find('.react-calendar__navigation__label');
@@ -87,12 +80,9 @@ describe('Navigation', () => {
   it('displays proper title for decade view', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
+        {...defaultProps}
         view="decade"
-        views={allViews}
-      />
+      />,
     );
 
     const drillUp = component.find('.react-calendar__navigation__label');
@@ -103,12 +93,9 @@ describe('Navigation', () => {
   it('displays proper title for century view', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
+        {...defaultProps}
         view="century"
-        views={allViews}
-      />
+      />,
     );
 
     const drillUp = component.find('.react-calendar__navigation__label');
@@ -119,13 +106,10 @@ describe('Navigation', () => {
   it('displays proper title for month view given showDouble flags is set to true', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
+        {...defaultProps}
         showDoubleView
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     const drillUp = component.find('.react-calendar__navigation__label');
@@ -136,16 +120,13 @@ describe('Navigation', () => {
   it('displays proper user-defined labels on prev2, prev, next and next2 buttons', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
+        {...defaultProps}
         next2Label="next2Label"
         nextLabel="nextLabel"
         prev2Label="prev2Label"
         prevLabel="prevLabel"
-        setActiveStartDate={jest.fn()}
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     const [prev2, prev, , next, next2] = component.children();
@@ -159,17 +140,14 @@ describe('Navigation', () => {
   it('displays proper user-defined ARIA labels on prev2, prev, navigation, next and next2 buttons', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
+        {...defaultProps}
         navigationAriaLabel="navigationAriaLabel"
         next2AriaLabel="next2AriaLabel"
         nextAriaLabel="nextAriaLabel"
         prev2AriaLabel="prev2AriaLabel"
         prevAriaLabel="prevAriaLabel"
-        setActiveStartDate={jest.fn()}
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     const [prev2, prev, navigation, next, next2] = component.children();
@@ -185,12 +163,10 @@ describe('Navigation', () => {
     const drillUpFn = jest.fn();
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
+        {...defaultProps}
         drillUp={drillUpFn}
-        setActiveStartDate={jest.fn()}
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     const button = component.find('button.react-calendar__navigation__label');
@@ -204,12 +180,10 @@ describe('Navigation', () => {
     const setActiveStartDateFn = jest.fn();
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
+        {...defaultProps}
         setActiveStartDate={setActiveStartDateFn}
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
@@ -231,12 +205,10 @@ describe('Navigation', () => {
 
   const monthViewComponent = shallow(
     <Navigation
-      activeStartDate={new Date(2017, 0, 1)}
-      drillUp={jest.fn()}
+      {...defaultProps}
       setActiveStartDate={monthSetActiveStartDateFn}
       view="month"
-      views={allViews}
-    />
+    />,
   );
 
   const monthViewArrows = monthViewComponent.find('button.react-calendar__navigation__arrow');
@@ -277,12 +249,10 @@ describe('Navigation', () => {
 
   const yearViewComponent = shallow(
     <Navigation
-      activeStartDate={new Date(2017, 0, 1)}
-      drillUp={jest.fn()}
+      {...defaultProps}
       setActiveStartDate={yearSetActiveStartDateFn}
       view="year"
-      views={allViews}
-    />
+    />,
   );
 
   const yearViewArrows = yearViewComponent.find('button.react-calendar__navigation__arrow');
@@ -323,12 +293,10 @@ describe('Navigation', () => {
 
   const decadeViewComponent = shallow(
     <Navigation
-      activeStartDate={new Date(2017, 0, 1)}
-      drillUp={jest.fn()}
+      {...defaultProps}
       setActiveStartDate={decadeSetActiveStartDateFn}
       view="decade"
-      views={allViews}
-    />
+    />,
   );
 
   const decadeViewArrows = decadeViewComponent.find('button.react-calendar__navigation__arrow');
@@ -369,12 +337,10 @@ describe('Navigation', () => {
 
   const centuryViewComponent = shallow(
     <Navigation
-      activeStartDate={new Date(2017, 0, 1)}
-      drillUp={jest.fn()}
+      {...defaultProps}
       setActiveStartDate={centurySetActiveStartDateFn}
       view="century"
-      views={allViews}
-    />
+    />,
   );
 
   const centuryViewArrows = centuryViewComponent.find('button.react-calendar__navigation__arrow');
@@ -398,12 +364,9 @@ describe('Navigation', () => {
   it('correctly marks drillUp button as disabled when already on top allowed view', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
+        {...defaultProps}
         view="century"
-        views={allViews}
-      />
+      />,
     );
 
     const button = component.find('button.react-calendar__navigation__label');
@@ -414,13 +377,10 @@ describe('Navigation', () => {
   it('disallows navigating before minDate', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
+        {...defaultProps}
         minDate={new Date(2017, 0, 1)}
-        setActiveStartDate={jest.fn()}
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
@@ -435,12 +395,9 @@ describe('Navigation', () => {
   it('disallows navigating before dynamically set minDate', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
+        {...defaultProps}
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     component.setProps({
@@ -459,13 +416,10 @@ describe('Navigation', () => {
   it('disallows navigating after maxDate', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
+        {...defaultProps}
         maxDate={new Date(2017, 0, 31)}
-        setActiveStartDate={jest.fn()}
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
@@ -480,12 +434,9 @@ describe('Navigation', () => {
   it('disallows navigating after dynamically set maxDate', () => {
     const component = shallow(
       <Navigation
-        activeStartDate={new Date(2017, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
+        {...defaultProps}
         view="month"
-        views={allViews}
-      />
+      />,
     );
 
     component.setProps({
@@ -504,12 +455,10 @@ describe('Navigation', () => {
   it('disallows navigating before the year 1000', () => {
     const component = shallow(
       <Navigation
+        {...defaultProps}
         activeStartDate={new Date(1000, 0, 1)}
-        drillUp={jest.fn()}
-        setActiveStartDate={jest.fn()}
         view="year"
-        views={allViews}
-      />
+      />,
     );
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
@@ -530,18 +479,74 @@ describe('Navigation', () => {
 
     const component = shallow(
       <Navigation
+        {...defaultProps}
         activeStartDate={date}
-        drillUp={jest.fn()}
         navigationLabel={navigationLabel}
-        setActiveStartDate={jest.fn()}
         view={view}
-        views={allViews}
-      />
+      />,
     );
 
     const drillUp = component.find('.react-calendar__navigation__label');
 
     expect(navigationLabel).toHaveBeenCalledWith({ date, view, label: 'January 2017' });
     expect(drillUp.text()).toBe(label);
+  });
+
+  describe('formats navigation label properly', () => {
+    it('displays calendar with custom month year navigation label', () => {
+      const component = shallow(
+        <Navigation
+          {...defaultProps}
+          formatMonthYear={() => 'MonthYear'}
+          view="month"
+        />,
+      );
+
+      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+
+      expect(navigationLabel.text()).toBe('MonthYear');
+    });
+
+    it('displays calendar with custom year navigation label', () => {
+      const component = shallow(
+        <Navigation
+          {...defaultProps}
+          formatYear={() => 'Year'}
+          view="year"
+        />,
+      );
+
+      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+
+      expect(navigationLabel.text()).toBe('Year');
+    });
+
+    it('displays calendar with custom decade navigation label', () => {
+      const component = shallow(
+        <Navigation
+          {...defaultProps}
+          formatYear={() => 'Year'}
+          view="decade"
+        />,
+      );
+
+      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+
+      expect(navigationLabel.text()).toBe('Year – Year');
+    });
+
+    it('displays calendar with custom century navigation label', () => {
+      const component = shallow(
+        <Navigation
+          {...defaultProps}
+          formatYear={() => 'Year'}
+          view="century"
+        />,
+      );
+
+      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+
+      expect(navigationLabel.text()).toBe('Year – Year');
+    });
   });
 });

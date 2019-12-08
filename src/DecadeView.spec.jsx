@@ -1,18 +1,23 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import DecadeView from './DecadeView';
 
-/* eslint-disable comma-dangle, react/prop-types */
+/* eslint-disable react/prop-types */
 
 describe('DecadeView', () => {
+  const defaultProps = {
+    activeStartDate: new Date(2017, 0, 1),
+  };
+
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2011, 0, 1);
     const component = mount(
       <DecadeView
+        {...defaultProps}
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
-      />
+      />,
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
@@ -21,14 +26,13 @@ describe('DecadeView', () => {
   });
 
   it('applies tileClassName to its tiles when given a string', () => {
-    const activeStartDate = new Date(2011, 0, 1);
     const tileClassName = 'testClassName';
     const component = mount(
       <DecadeView
-        activeStartDate={activeStartDate}
+        {...defaultProps}
         showNeighboringMonth={false}
         tileClassName={tileClassName}
-      />
+      />,
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
@@ -48,10 +52,11 @@ describe('DecadeView', () => {
     };
     const component = mount(
       <DecadeView
+        {...defaultProps}
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileClassName={tileClassNameFn}
-      />
+      />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -66,16 +71,15 @@ describe('DecadeView', () => {
   });
 
   it('renders tileContent in its tiles when given a node', () => {
-    const activeStartDate = new Date(2011, 0, 1);
     const tileContent = (
       <div className="testContent" />
     );
     const component = mount(
       <DecadeView
-        activeStartDate={activeStartDate}
+        {...defaultProps}
         showNeighboringMonth={false}
         tileContent={tileContent}
-      />
+      />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -99,10 +103,11 @@ describe('DecadeView', () => {
     };
     const component = mount(
       <DecadeView
+        {...defaultProps}
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileContent={tileContentFn}
-      />
+      />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -114,5 +119,20 @@ describe('DecadeView', () => {
 
     expect(firstDayTileContent).toHaveLength(1);
     expect(secondDayTileContent).toHaveLength(0);
+  });
+
+  it('passes formatYear flag to Years component', () => {
+    const formatYear = () => 'Year';
+
+    const component = shallow(
+      <DecadeView
+        {...defaultProps}
+        formatYear={formatYear}
+      />,
+    );
+
+    const years = component.find('Years');
+
+    expect(years.prop('formatYear')).toBe(formatYear);
   });
 });

@@ -3,15 +3,18 @@ import { mount } from 'enzyme';
 
 import WeekNumbers from './WeekNumbers';
 
-/* eslint-disable comma-dangle */
-
 describe('WeekNumbers', () => {
+  const defaultProps = {
+    activeStartDate: new Date(2017, 0, 1),
+  };
+
   it('renders proper weekNumbers for a year that starts in week 1 (ISO 8601)', () => {
     const component = mount(
       <WeekNumbers
+        {...defaultProps}
         activeStartDate={new Date(2018, 0, 1)}
         calendarType="ISO 8601"
-      />
+      />,
     );
 
     const weekNumbers = component.find('WeekNumber');
@@ -23,9 +26,10 @@ describe('WeekNumbers', () => {
   it('renders proper weekNumbers for a year that starts on week 52 (ISO 8601)', () => {
     const component = mount(
       <WeekNumbers
+        {...defaultProps}
         activeStartDate={new Date(2017, 0, 1)}
         calendarType="ISO 8601"
-      />
+      />,
     );
 
     const weekNumbers = component.find('WeekNumber');
@@ -37,9 +41,10 @@ describe('WeekNumbers', () => {
   it('renders proper weekNumbers for a year that starts on week 53 (ISO 8601)', () => {
     const component = mount(
       <WeekNumbers
+        {...defaultProps}
         activeStartDate={new Date(2016, 0, 1)}
         calendarType="ISO 8601"
-      />
+      />,
     );
 
     const weekNumbers = component.find('WeekNumber');
@@ -51,9 +56,10 @@ describe('WeekNumbers', () => {
   it('renders proper weekNumbers for a year that starts in week 1 (US)', () => {
     const component = mount(
       <WeekNumbers
+        {...defaultProps}
         activeStartDate={new Date(2017, 0, 1)}
         calendarType="US"
-      />
+      />,
     );
 
     const weekNumbers = component.find('WeekNumber');
@@ -66,10 +72,11 @@ describe('WeekNumbers', () => {
     // Same config as in first test which gives 5 weeks, except for the flag
     const component = mount(
       <WeekNumbers
+        {...defaultProps}
         activeStartDate={new Date(2018, 0, 1)}
         calendarType="ISO 8601"
         showFixedNumberOfWeeks
-      />
+      />,
     );
 
     const weekNumbers = component.find('WeekNumber');
@@ -81,9 +88,9 @@ describe('WeekNumbers', () => {
   it('renders static divs as children when not given onClickWeekNumber', () => {
     const component = mount(
       <WeekNumbers
-        activeStartDate={new Date(2017, 0, 1)}
+        {...defaultProps}
         calendarType="ISO 8601"
-      />
+      />,
     );
 
     const children = component.find('div.react-calendar__tile');
@@ -94,10 +101,10 @@ describe('WeekNumbers', () => {
   it('renders buttons as children when given onClickWeekNumber', () => {
     const component = mount(
       <WeekNumbers
-        activeStartDate={new Date(2017, 0, 1)}
+        {...defaultProps}
         calendarType="ISO 8601"
         onClickWeekNumber={jest.fn()}
-      />
+      />,
     );
 
     const children = component.find('button.react-calendar__tile');
@@ -109,10 +116,10 @@ describe('WeekNumbers', () => {
     const onClickWeekNumber = jest.fn();
     const component = mount(
       <WeekNumbers
-        activeStartDate={new Date(2017, 0, 1)}
+        {...defaultProps}
         calendarType="ISO 8601"
         onClickWeekNumber={onClickWeekNumber}
-      />
+      />,
     );
 
     const children = component.find('button.react-calendar__tile');
@@ -125,10 +132,10 @@ describe('WeekNumbers', () => {
     const onClickWeekNumber = jest.fn();
     const component = mount(
       <WeekNumbers
-        activeStartDate={new Date(2017, 0, 1)}
+        {...defaultProps}
         calendarType="US"
         onClickWeekNumber={onClickWeekNumber}
-      />
+      />,
     );
 
     const children = component.find('button.react-calendar__tile');
