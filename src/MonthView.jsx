@@ -72,14 +72,12 @@ export default function MonthView(props) {
     showFixedNumberOfWeeks,
   } = props;
   const {
-    calendarType: calendarTypeProps,
+    calendarType = getCalendarTypeFromLocale(locale),
     formatShortWeekday,
     onClickWeekNumber,
     showWeekNumbers,
     ...childProps
   } = props;
-
-  const calendarType = calendarTypeProps || getCalendarTypeFromLocale(locale);
 
   function renderWeekdays() {
     return (
