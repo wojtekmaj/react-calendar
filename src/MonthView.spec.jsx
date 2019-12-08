@@ -146,6 +146,36 @@ describe('MonthView', () => {
     expect(component.find('WeekNumbers')).toHaveLength(1);
   });
 
+  it('passes calendarType to Weekdays component', () => {
+    const calendarType = 'ISO 8601';
+
+    const component = shallow(
+      <MonthView
+        {...defaultProps}
+        calendarType={calendarType}
+      />,
+    );
+
+    const weekdays = component.find('Weekdays');
+
+    expect(weekdays.prop('calendarType')).toBe(calendarType);
+  });
+
+  it('passes derived calendarType to Weekdays component if calendarType is not given', () => {
+    const locale = 'en-US';
+
+    const component = shallow(
+      <MonthView
+        {...defaultProps}
+        locale={locale}
+      />,
+    );
+
+    const weekdays = component.find('Weekdays');
+
+    expect(weekdays.prop('calendarType')).toBe('US');
+  });
+
   it('passes formatShortWeekday flag to Weekdays component', () => {
     const formatShortWeekday = () => 'Weekday';
 
@@ -159,6 +189,36 @@ describe('MonthView', () => {
     const weekdays = component.find('Weekdays');
 
     expect(weekdays.prop('formatShortWeekday')).toBe(formatShortWeekday);
+  });
+
+  it('passes calendarType to Days component', () => {
+    const calendarType = 'ISO 8601';
+
+    const component = shallow(
+      <MonthView
+        {...defaultProps}
+        calendarType={calendarType}
+      />,
+    );
+
+    const days = component.find('Days');
+
+    expect(days.prop('calendarType')).toBe(calendarType);
+  });
+
+  it('passes derived calendarType to Days component if calendarType is not given', () => {
+    const locale = 'en-US';
+
+    const component = shallow(
+      <MonthView
+        {...defaultProps}
+        locale={locale}
+      />,
+    );
+
+    const days = component.find('Days');
+
+    expect(days.prop('calendarType')).toBe('US');
   });
 
   it('passes formatLongDate flag to Days component', () => {
