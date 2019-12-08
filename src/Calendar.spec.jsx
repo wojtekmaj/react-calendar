@@ -1,166 +1,173 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { getMonthStart } from '@wojtekmaj/date-utils';
 
 import Calendar from './Calendar';
 
-/* eslint-disable comma-dangle */
-
-const { format } = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
-
 describe('Calendar', () => {
-  it('renders navigation', () => {
-    const component = mount(
-      <Calendar />
+  it('renders Navigation by default', () => {
+    const component = shallow(
+      <Calendar />,
     );
 
-    const navigation = component.find('.react-calendar__navigation');
+    const navigation = component.find('Navigation');
 
     expect(navigation).toHaveLength(1);
   });
 
-  it('does not render navigation when showNavigation flag is set to false', () => {
-    const component = mount(
-      <Calendar showNavigation={false} />
+  it('does not render Navigation when showNavigation flag is set to false', () => {
+    const component = shallow(
+      <Calendar showNavigation={false} />,
     );
 
-    const navigation = component.find('.react-calendar__navigation');
+    const navigation = component.find('Navigation');
 
     expect(navigation).toHaveLength(0);
   });
 
-  it('renders month view by default', () => {
-    const component = mount(
-      <Calendar />
-    );
+  describe('renders views properly', () => {
+    it('renders MonthView by default', () => {
+      const component = shallow(
+        <Calendar />,
+      );
 
-    const monthView = component.find('.react-calendar__month-view');
+      const monthView = component.find('MonthView');
 
-    expect(monthView).toHaveLength(1);
+      expect(monthView).toHaveLength(1);
+    });
+
+    it('renders MonthView when given view = "month"', () => {
+      const component = shallow(
+        <Calendar view="month" />,
+      );
+
+      const monthView = component.find('MonthView');
+
+      expect(monthView).toHaveLength(1);
+    });
+
+    it('renders YearView when given view = "year"', () => {
+      const component = mount(
+        <Calendar view="year" />,
+      );
+
+      const yearView = component.find('YearView');
+
+      expect(yearView).toHaveLength(1);
+    });
+
+    it('renders DecadeView when given view = "decade"', () => {
+      const component = mount(
+        <Calendar view="decade" />,
+      );
+
+      const decadeView = component.find('DecadeView');
+
+      expect(decadeView).toHaveLength(1);
+    });
+
+    it('renders CenturyView when given view = "century"', () => {
+      const component = mount(
+        <Calendar view="century" />,
+      );
+
+      const centuryView = component.find('CenturyView');
+
+      expect(centuryView).toHaveLength(1);
+    });
+
+    it('renders maximum allowed view when given maxDetail', () => {
+      const component = shallow(
+        <Calendar maxDetail="year" />,
+      );
+
+      const yearView = component.find('YearView');
+
+      expect(yearView).toHaveLength(1);
+    });
+
+    it('renders maximum allowed view when given view that is not allowed', () => {
+      const component = shallow(
+        <Calendar
+          maxDetail="year"
+          view="month"
+        />,
+      );
+
+      const yearView = component.find('YearView');
+
+      expect(yearView).toHaveLength(1);
+    });
+
+    it('renders maximum allowed view when attempting to externally switch to a view that is not allowed', () => {
+      const component = shallow(
+        <Calendar
+          maxDetail="year"
+          view="year"
+        />,
+      );
+
+      component.setProps({ view: 'month' });
+      component.update();
+
+      const yearView = component.find('YearView');
+
+      expect(yearView).toHaveLength(1);
+    });
+
+    it('renders maximum allowed view when given changed maxDetail', () => {
+      const component = shallow(
+        <Calendar
+          maxDetail="month"
+          view="month"
+        />,
+      );
+
+      component.setProps({ maxDetail: 'year' });
+      component.update();
+
+      const yearView = component.find('YearView');
+
+      expect(yearView).toHaveLength(1);
+    });
   });
 
-  it('renders maximum allowed view when given maxDetail', () => {
-    const component = mount(
-      <Calendar maxDetail="year" />
-    );
-
-    const yearView = component.find('.react-calendar__year-view');
-
-    expect(yearView).toHaveLength(1);
-  });
-
-  it('renders maximum allowed view when given view that is not allowed', () => {
-    const component = mount(
+  it('does not pass showWeekNumbers flag to MonthView component by default', () => {
+    const component = shallow(
       <Calendar
-        maxDetail="year"
         view="month"
-      />
+      />,
     );
 
-    const yearView = component.find('.react-calendar__year-view');
+    const monthView = component.find('MonthView');
 
-    expect(yearView).toHaveLength(1);
+    expect(monthView.prop('showWeekNumbers')).toBeFalsy();
   });
 
-  it('renders maximum allowed view when attempting to externally switch to a view that is not allowed', () => {
-    const component = mount(
-      <Calendar
-        maxDetail="year"
-        view="year"
-      />
-    );
-
-    component.setProps({ view: 'month' });
-    component.update();
-
-    const yearView = component.find('.react-calendar__year-view');
-
-    expect(yearView).toHaveLength(1);
-  });
-
-  it('renders maximum allowed view when given changed maxDetail', () => {
-    const component = mount(
-      <Calendar
-        maxDetail="month"
-        view="month"
-      />
-    );
-
-    component.setProps({ maxDetail: 'year' });
-    component.update();
-
-    const yearView = component.find('.react-calendar__year-view');
-
-    expect(yearView).toHaveLength(1);
-  });
-
-  it('renders month view when given view = "month"', () => {
-    const component = mount(
-      <Calendar view="month" />
-    );
-
-    const monthView = component.find('.react-calendar__month-view');
-
-    expect(monthView).toHaveLength(1);
-  });
-
-  it('renders month view with week numbers when given view = "month" and showWeekNumbers flag set to true', () => {
-    const component = mount(
+  it('passes showWeekNumbers flag to MonthView component given showWeekNumbers flag', () => {
+    const component = shallow(
       <Calendar
         showWeekNumbers
         view="month"
-      />
+      />,
     );
 
-    const monthView = component.find('.react-calendar__month-view--weekNumbers');
+    const monthView = component.find('MonthView');
 
-    expect(monthView).toHaveLength(1);
-  });
-
-  it('renders year view when given view = "year"', () => {
-    const component = mount(
-      <Calendar view="year" />
-    );
-
-    const yearView = component.find('.react-calendar__year-view');
-
-    expect(yearView).toHaveLength(1);
-  });
-
-  it('renders decade view when given view = "decade"', () => {
-    const component = mount(
-      <Calendar view="decade" />
-    );
-
-    const decadeView = component.find('.react-calendar__decade-view');
-
-    expect(decadeView).toHaveLength(1);
-  });
-
-  it('renders century view when given view = "century"', () => {
-    const component = mount(
-      <Calendar view="century" />
-    );
-
-    const centuryView = component.find('.react-calendar__century-view');
-
-    expect(centuryView).toHaveLength(1);
+    expect(monthView.prop('showWeekNumbers')).toBeTruthy();
   });
 
   it('displays a view with a given value when value is given', () => {
-    const value = new Date(2017, 0, 1);
+    const value = new Date(2017, 0, 15);
     const component = mount(
       <Calendar
-        showNeighboringMonth={false}
         value={value}
-      />
+      />,
     );
 
-    const monthView = component.find('.react-calendar__month-view');
-    const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
+    const monthView = component.find('MonthView');
 
-    expect(firstDayTileTimeAbbr).toBe(format(value));
+    expect(monthView.prop('activeStartDate')).toEqual(new Date(2017, 0, 1));
   });
 
   it('displays a view with activeStartDate when no value is given and activeStartDate is given', () => {
@@ -168,117 +175,116 @@ describe('Calendar', () => {
     const component = mount(
       <Calendar
         activeStartDate={activeStartDate}
-        showNeighboringMonth={false}
-      />
+      />,
     );
 
-    const monthView = component.find('.react-calendar__month-view');
-    const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
+    const monthView = component.find('MonthView');
 
-    expect(firstDayTileTimeAbbr).toBe(format(activeStartDate));
+    expect(monthView.prop('activeStartDate')).toEqual(activeStartDate);
   });
 
   it('displays a view with today\'s date when no value and no activeStartDate is given', () => {
     const today = new Date();
     const beginOfCurrentMonth = getMonthStart(today);
     const component = mount(
-      <Calendar showNeighboringMonth={false} />
+      <Calendar />,
     );
 
-    const monthView = component.find('.react-calendar__month-view');
-    const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
+    const monthView = component.find('MonthView');
 
-    expect(firstDayTileTimeAbbr).toBe(format(beginOfCurrentMonth));
+    expect(monthView.prop('activeStartDate')).toEqual(beginOfCurrentMonth);
   });
 
-  it('drills up when allowed', () => {
-    const component = mount(
-      <Calendar view="month" />
-    );
+  describe('handles drill up properly', () => {
+    it('drills up when allowed', () => {
+      const component = mount(
+        <Calendar view="month" />,
+      );
 
-    component.instance().drillUp();
+      component.instance().drillUp();
 
-    expect(component.state().view).toBe('year');
-  });
+      expect(component.state().view).toBe('year');
+    });
 
-  it('calls onDrillUp on drill up', () => {
-    const onDrillUp = jest.fn();
+    it('calls onDrillUp on drill up', () => {
+      const onDrillUp = jest.fn();
 
-    const component = mount(
-      <Calendar
-        activeStartDate={new Date(2017, 6, 1)}
-        onDrillUp={onDrillUp}
-        view="month"
-      />
-    );
+      const component = mount(
+        <Calendar
+          activeStartDate={new Date(2017, 6, 1)}
+          onDrillUp={onDrillUp}
+          view="month"
+        />,
+      );
 
-    component.instance().drillUp();
+      component.instance().drillUp();
 
-    expect(onDrillUp).toHaveBeenCalledWith({
-      activeStartDate: new Date(2017, 0, 1),
-      view: 'year',
+      expect(onDrillUp).toHaveBeenCalledWith({
+        activeStartDate: new Date(2017, 0, 1),
+        view: 'year',
+      });
+    });
+
+    it('refuses to drill up when already on minimum allowed detail', () => {
+      const onDrillUp = jest.fn();
+
+      const component = mount(
+        <Calendar
+          onDrillUp={onDrillUp}
+          view="century"
+        />,
+      );
+
+      component.instance().drillUp();
+
+      expect(onDrillUp).not.toHaveBeenCalled();
     });
   });
 
-  it('refuses to drill up when already on minimum allowed detail', () => {
-    const onDrillUp = jest.fn();
+  describe('handles drill down properly', () => {
+    it('drills down when allowed', () => {
+      const component = mount(
+        <Calendar view="century" />,
+      );
 
-    const component = mount(
-      <Calendar
-        onDrillUp={onDrillUp}
-        view="century"
-      />
-    );
+      component.instance().drillDown(new Date(2011, 0, 1));
 
-    component.instance().drillUp();
-
-    expect(onDrillUp).not.toHaveBeenCalled();
-  });
-
-  it('drills down when allowed', () => {
-    const component = mount(
-      <Calendar view="century" />
-    );
-
-    component.instance().drillDown(new Date(2011, 0, 1));
-
-    expect(component.state().view).toBe('decade');
-  });
-
-  it('calls onDrillDown on drill down', () => {
-    const onDrillDown = jest.fn();
-
-    const component = mount(
-      <Calendar
-        activeStartDate={new Date(2001, 0, 1)}
-        onDrillDown={onDrillDown}
-        view="century"
-      />
-    );
-
-    component.instance().drillDown(new Date(2011, 0, 1));
-
-    expect(onDrillDown).toHaveBeenCalledWith({
-      activeStartDate: new Date(2011, 0, 1),
-      view: 'decade',
+      expect(component.state().view).toBe('decade');
     });
-  });
 
-  it('refuses to drill down when already on minimum allowed detail', () => {
-    const onDrillDown = jest.fn();
+    it('calls onDrillDown on drill down', () => {
+      const onDrillDown = jest.fn();
 
-    const component = mount(
-      <Calendar
-        onDrillDown={onDrillDown}
-        view="month"
-      />
-    );
+      const component = mount(
+        <Calendar
+          activeStartDate={new Date(2001, 0, 1)}
+          onDrillDown={onDrillDown}
+          view="century"
+        />,
+      );
 
-    component.instance().drillUp();
+      component.instance().drillDown(new Date(2011, 0, 1));
 
-    expect(onDrillDown).not.toHaveBeenCalled();
+      expect(onDrillDown).toHaveBeenCalledWith({
+        activeStartDate: new Date(2011, 0, 1),
+        view: 'decade',
+      });
+    });
+
+    it('refuses to drill down when already on minimum allowed detail', () => {
+      const onDrillDown = jest.fn();
+
+      const component = mount(
+        <Calendar
+          onDrillDown={onDrillDown}
+          view="month"
+        />,
+      );
+
+      component.instance().drillUp();
+
+      expect(onDrillDown).not.toHaveBeenCalled();
+    });
   });
 
   describe('calls onChange properly', () => {
@@ -288,7 +294,7 @@ describe('Calendar', () => {
         <Calendar
           onChange={onChange}
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2017, 0, 1));
@@ -303,7 +309,7 @@ describe('Calendar', () => {
           onChange={onChange}
           returnValue="start"
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2017, 0, 1));
@@ -318,7 +324,7 @@ describe('Calendar', () => {
           onChange={onChange}
           returnValue="start"
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2017, 0, 1));
@@ -333,7 +339,7 @@ describe('Calendar', () => {
           onChange={onChange}
           returnValue="end"
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2017, 0, 1));
@@ -348,7 +354,7 @@ describe('Calendar', () => {
           onChange={onChange}
           returnValue="range"
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2017, 0, 1));
@@ -367,7 +373,7 @@ describe('Calendar', () => {
           onChange={onChange}
           returnValue="start"
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2017, 0, 1));
@@ -383,7 +389,7 @@ describe('Calendar', () => {
           onChange={onChange}
           returnValue="start"
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2017, 0, 2));
@@ -399,7 +405,7 @@ describe('Calendar', () => {
           onChange={onChange}
           returnValue="end"
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2017, 0, 1));
@@ -415,7 +421,7 @@ describe('Calendar', () => {
           onChange={onChange}
           returnValue="end"
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2017, 0, 2));
@@ -430,7 +436,7 @@ describe('Calendar', () => {
           onChange={onChange}
           selectRange
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2018, 0, 1));
@@ -450,7 +456,7 @@ describe('Calendar', () => {
           onChange={onChange}
           selectRange
           view="month"
-        />
+        />,
       );
 
       component.instance().onChange(new Date(2018, 6, 1));
@@ -473,7 +479,7 @@ describe('Calendar', () => {
         activeStartDate={activeStartDate}
         onActiveStartDateChange={onActiveStartDateChange}
         view="year"
-      />
+      />,
     );
 
     component.instance().setActiveStartDate(newActiveStartDate);
@@ -488,125 +494,107 @@ describe('Calendar', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const newActiveStartDate = new Date(2018, 0, 1);
     const component = mount(
-      <Calendar activeStartDate={activeStartDate} />
+      <Calendar activeStartDate={activeStartDate} />,
     );
 
     component.setProps({ activeStartDate: newActiveStartDate });
 
-    const monthView = component.find('.react-calendar__month-view');
-    const firstDayTile = monthView.find('.react-calendar__tile').first();
-    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
+    const monthView = component.find('MonthView');
 
-    expect(firstDayTileTimeAbbr).toBe(format(newActiveStartDate));
+    expect(monthView.prop('activeStartDate')).toEqual(newActiveStartDate);
   });
 
-  it('displays calendar with custom weekdays formatting', () => {
-    const component = mount(
+  it('passes formatMonthYear to Navigation component', () => {
+    const formatMonthYear = () => 'Month year';
+    const component = shallow(
       <Calendar
-        formatShortWeekday={() => 'Weekday'}
-      />
+        formatMonthYear={formatMonthYear}
+      />,
     );
 
-    const monthView = component.find('.react-calendar__month-view');
-    const firstWeekdayTile = monthView.find('.react-calendar__month-view__weekdays__weekday').first();
+    const navigation = component.find('Navigation');
 
-    expect(firstWeekdayTile.text()).toBe('Weekday');
+    expect(navigation.prop('formatMonthYear')).toBe(formatMonthYear);
   });
 
-  describe('formats tiles properly', () => {
-    it('displays calendar with custom month formatting', () => {
-      const component = mount(
-        <Calendar
-          formatMonth={() => 'Month'}
-          view="year"
-        />
-      );
+  it('passes formatYear to Navigation component', () => {
+    const formatYear = () => 'Year';
+    const component = shallow(
+      <Calendar
+        formatYear={formatYear}
+      />,
+    );
 
-      const yearView = component.find('.react-calendar__year-view');
-      const firstMonthTile = yearView.find('.react-calendar__year-view__months__month').first();
+    const navigation = component.find('Navigation');
 
-      expect(firstMonthTile.text()).toBe('Month');
-    });
-
-    it('displays calendar with custom year formatting on decade view', () => {
-      const component = mount(
-        <Calendar
-          formatYear={() => 'Year'}
-          view="decade"
-        />
-      );
-
-      const decadeView = component.find('.react-calendar__decade-view');
-      const firstYearTile = decadeView.find('.react-calendar__decade-view__years__year').first();
-
-      expect(firstYearTile.text()).toBe('Year');
-    });
-
-    it('displays calendar with custom year formatting on century view', () => {
-      const component = mount(
-        <Calendar
-          formatYear={() => 'Year'}
-          view="century"
-        />
-      );
-
-      const centuryView = component.find('.react-calendar__century-view');
-      const firstDecadeTile = centuryView.find('.react-calendar__century-view__decades__decade').first();
-
-      expect(firstDecadeTile.text()).toBe('Year – Year');
-    });
+    expect(navigation.prop('formatYear')).toBe(formatYear);
   });
 
-  describe('formats navigation label properly', () => {
-    it('displays calendar with custom month year navigation label', () => {
-      const component = mount(
-        <Calendar
-          formatMonthYear={() => 'MonthYear'}
-        />
-      );
+  it('passes formatLongDate to MonthView component', () => {
+    const formatLongDate = () => 'Long date';
+    const component = shallow(
+      <Calendar
+        formatLongDate={formatLongDate}
+      />,
+    );
 
-      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+    const monthView = component.find('MonthView');
 
-      expect(navigationLabel.text()).toBe('MonthYear');
-    });
+    expect(monthView.prop('formatLongDate')).toBe(formatLongDate);
+  });
 
-    it('displays calendar with custom year navigation label', () => {
-      const component = mount(
-        <Calendar
-          formatYear={() => 'Year'}
-          view="year"
-        />
-      );
+  it('passes formatShortWeekday to MonthView component', () => {
+    const formatShortWeekday = () => 'Weekday';
+    const component = shallow(
+      <Calendar
+        formatShortWeekday={formatShortWeekday}
+      />,
+    );
 
-      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+    const monthView = component.find('MonthView');
 
-      expect(navigationLabel.text()).toBe('Year');
-    });
+    expect(monthView.prop('formatShortWeekday')).toBe(formatShortWeekday);
+  });
 
-    it('displays calendar with custom decade navigation label', () => {
-      const component = mount(
-        <Calendar
-          formatYear={() => 'Year'}
-          view="decade"
-        />
-      );
+  it('passes formatMonth to YearView component', () => {
+    const formatMonth = () => 'Month';
+    const component = shallow(
+      <Calendar
+        formatMonth={formatMonth}
+        view="year"
+      />,
+    );
 
-      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+    const yearView = component.find('YearView');
 
-      expect(navigationLabel.text()).toBe('Year – Year');
-    });
+    expect(yearView.prop('formatMonth')).toBe(formatMonth);
+  });
 
-    it('displays calendar with custom century navigation label', () => {
-      const component = mount(
-        <Calendar
-          formatYear={() => 'Year'}
-          view="century"
-        />
-      );
+  it('passes formatYear to DecadeView component', () => {
+    const formatYear = () => 'Year';
+    const component = shallow(
+      <Calendar
+        formatYear={formatYear}
+        view="decade"
+      />,
+    );
 
-      const navigationLabel = component.find('.react-calendar__navigation__label').first();
+    const decadeView = component.find('DecadeView');
 
-      expect(navigationLabel.text()).toBe('Year – Year');
-    });
+    expect(decadeView.prop('formatYear')).toBe(formatYear);
+  });
+
+  it('passes formatYear to CenturyView component', () => {
+    const formatYear = () => 'Year';
+    const component = shallow(
+      <Calendar
+        formatYear={formatYear}
+        view="century"
+      />,
+    );
+
+    const centuryView = component.find('CenturyView');
+
+    expect(centuryView.prop('formatYear')).toBe(formatYear);
   });
 });

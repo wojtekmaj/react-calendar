@@ -3,8 +3,6 @@ import { shallow } from 'enzyme';
 
 import Flex from './Flex';
 
-/* eslint-disable comma-dangle */
-
 describe('Flex', () => {
   it('styles itself properly with wrap flag set to false', () => {
     const noWrapComponent = shallow(
@@ -18,7 +16,7 @@ describe('Flex', () => {
         <div>
           Hello
         </div>
-      </Flex>
+      </Flex>,
     );
 
     expect(noWrapComponent.prop('style').display).toBe('flex');
@@ -37,7 +35,7 @@ describe('Flex', () => {
         <div>
           Hello
         </div>
-      </Flex>
+      </Flex>,
     );
 
     expect(wrapComponent.prop('style').display).toBe('flex');
@@ -56,7 +54,7 @@ describe('Flex', () => {
         <div>
           Hello
         </div>
-      </Flex>
+      </Flex>,
     );
 
     const children = component.children();
@@ -76,7 +74,7 @@ describe('Flex', () => {
         <div>
           Hi
         </div>
-      </Flex>
+      </Flex>,
     );
 
     const children = component.children();

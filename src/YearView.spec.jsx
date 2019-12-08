@@ -1,20 +1,25 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import YearView from './YearView';
 
-/* eslint-disable comma-dangle, react/prop-types */
+/* eslint-disable react/prop-types */
 
 const { format } = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
 
 describe('YearView', () => {
+  const defaultProps = {
+    activeStartDate: new Date(2017, 0, 1),
+  };
+
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const component = mount(
       <YearView
+        {...defaultProps}
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
-      />
+      />,
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
@@ -24,14 +29,13 @@ describe('YearView', () => {
   });
 
   it('applies tileClassName to its tiles when given a string', () => {
-    const activeStartDate = new Date(2017, 0, 1);
     const tileClassName = 'testClassName';
     const component = mount(
       <YearView
-        activeStartDate={activeStartDate}
+        {...defaultProps}
         showNeighboringMonth={false}
         tileClassName={tileClassName}
-      />
+      />,
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
@@ -51,10 +55,11 @@ describe('YearView', () => {
     };
     const component = mount(
       <YearView
+        {...defaultProps}
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileClassName={tileClassNameFn}
-      />
+      />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -69,16 +74,15 @@ describe('YearView', () => {
   });
 
   it('renders tileContent in its tiles when given a node', () => {
-    const activeStartDate = new Date(2017, 0, 1);
     const tileContent = (
       <div className="testContent" />
     );
     const component = mount(
       <YearView
-        activeStartDate={activeStartDate}
+        {...defaultProps}
         showNeighboringMonth={false}
         tileContent={tileContent}
-      />
+      />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -102,10 +106,11 @@ describe('YearView', () => {
     };
     const component = mount(
       <YearView
+        {...defaultProps}
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileContent={tileContentFn}
-      />
+      />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -120,17 +125,30 @@ describe('YearView', () => {
   });
 
   it('displays year view with custom month formatting', () => {
-    const activeStartDate = new Date(2017, 0, 1);
-
     const component = mount(
       <YearView
-        activeStartDate={activeStartDate}
+        {...defaultProps}
         formatMonth={() => 'Month'}
-      />
+      />,
     );
 
     const month = component.find('.react-calendar__year-view__months__month').first();
 
     expect(month.text()).toBe('Month');
+  });
+
+  it('passes formatMonth flag to Days component', () => {
+    const formatMonth = () => 'Month';
+
+    const component = shallow(
+      <YearView
+        {...defaultProps}
+        formatMonth={formatMonth}
+      />,
+    );
+
+    const months = component.find('Months');
+
+    expect(months.prop('formatMonth')).toBe(formatMonth);
   });
 });
