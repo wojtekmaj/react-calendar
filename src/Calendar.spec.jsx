@@ -157,6 +157,19 @@ describe('Calendar', () => {
     expect(monthView.prop('showWeekNumbers')).toBeTruthy();
   });
 
+  it('passes showNeighboringMonth flag to MonthView component given showNeighboringMonth flag', () => {
+    const component = shallow(
+      <Calendar
+        showNeighboringMonth
+        view="month"
+      />,
+    );
+
+    const monthView = component.find('MonthView');
+
+    expect(monthView.prop('showNeighboringMonth')).toBeTruthy();
+  });
+
   it('displays a view with a given value when value is given', () => {
     const value = new Date(2017, 0, 15);
     const component = mount(
