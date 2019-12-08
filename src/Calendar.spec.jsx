@@ -170,9 +170,22 @@ describe('Calendar', () => {
     expect(monthView.prop('showNeighboringMonth')).toBeTruthy();
   });
 
+  it('displays a view with a given value when defaultValue is given', () => {
+    const defaultValue = new Date(2017, 0, 15);
+    const component = shallow(
+      <Calendar
+        defaultValue={defaultValue}
+      />,
+    );
+
+    const monthView = component.find('MonthView');
+
+    expect(monthView.prop('activeStartDate')).toEqual(new Date(2017, 0, 1));
+  });
+
   it('displays a view with a given value when value is given', () => {
     const value = new Date(2017, 0, 15);
-    const component = mount(
+    const component = shallow(
       <Calendar
         value={value}
       />,
@@ -183,9 +196,37 @@ describe('Calendar', () => {
     expect(monthView.prop('activeStartDate')).toEqual(new Date(2017, 0, 1));
   });
 
+  it('displays a view with defaultActiveStartDate when value is given and defaultActiveStartDate is given', () => {
+    const defaultActiveStartDate = new Date(2017, 0, 1);
+    const value = new Date(2018, 0, 15);
+    const component = shallow(
+      <Calendar
+        defaultActiveStartDate={defaultActiveStartDate}
+        value={value}
+      />,
+    );
+
+    const monthView = component.find('MonthView');
+
+    expect(monthView.prop('activeStartDate')).toEqual(defaultActiveStartDate);
+  });
+
+  it('displays a view with defaultActiveStartDate when no value is given and defaultActiveStartDate is given', () => {
+    const defaultActiveStartDate = new Date(2017, 0, 1);
+    const component = shallow(
+      <Calendar
+        defaultActiveStartDate={defaultActiveStartDate}
+      />,
+    );
+
+    const monthView = component.find('MonthView');
+
+    expect(monthView.prop('activeStartDate')).toEqual(defaultActiveStartDate);
+  });
+
   it('displays a view with activeStartDate when no value is given and activeStartDate is given', () => {
     const activeStartDate = new Date(2017, 0, 1);
-    const component = mount(
+    const component = shallow(
       <Calendar
         activeStartDate={activeStartDate}
       />,
@@ -199,7 +240,7 @@ describe('Calendar', () => {
   it('displays a view with today\'s date when no value and no activeStartDate is given', () => {
     const today = new Date();
     const beginOfCurrentMonth = getMonthStart(today);
-    const component = mount(
+    const component = shallow(
       <Calendar />,
     );
 

@@ -130,6 +130,9 @@ const getDetailValueArray = (value, minDate, maxDate, maxDetail) => {
 const getActiveStartDate = (props) => {
   const {
     activeStartDate,
+    defaultActiveStartDate,
+    defaultValue,
+    defaultView,
     maxDate,
     maxDetail,
     minDate,
@@ -138,10 +141,10 @@ const getActiveStartDate = (props) => {
     view,
   } = props;
 
-  const rangeType = getView(view, minDetail, maxDetail);
+  const rangeType = getView(view || defaultView, minDetail, maxDetail);
   const valueFrom = (
-    activeStartDate,
-    getDetailValueFrom(value, minDate, maxDate, maxDetail)
+    activeStartDate || defaultActiveStartDate
+    || getDetailValueFrom(value || defaultValue, minDate, maxDate, maxDetail)
     || new Date()
   );
   return getBegin(rangeType, valueFrom);
@@ -152,7 +155,7 @@ const isSingleValue = value => value && [].concat(value).length === 1;
 export default class Calendar extends Component {
   state = {
     /* eslint-disable react/destructuring-assignment */
-    activeStartDate: this.props.defaultActiveStartDate || getActiveStartDate(this.props),
+    activeStartDate: getActiveStartDate(this.props),
     view: this.props.defaultView,
     value: this.props.defaultValue,
     /* eslint-enable react/destructuring-assignment */
