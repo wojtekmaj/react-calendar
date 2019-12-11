@@ -4,33 +4,27 @@ import mergeClassNames from 'merge-class-names';
 
 import { tileProps } from './shared/propTypes';
 
+function getValue(nextProps, prop) {
+  const { activeStartDate, date, view } = nextProps;
+
+  return typeof prop === 'function'
+    ? prop({ activeStartDate, date, view })
+    : prop;
+}
+
 export default class Tile extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {
-      activeStartDate,
-      date,
-      tileClassName,
-      tileContent,
-      view,
-    } = nextProps;
+    const { tileClassName, tileContent } = nextProps;
 
     const nextState = {};
 
     if (tileClassName !== prevState.tileClassNameProps) {
-      nextState.tileClassName = (
-        typeof tileClassName === 'function'
-          ? tileClassName({ activeStartDate, date, view })
-          : tileClassName
-      );
+      nextState.tileClassName = getValue(nextProps, tileClassName);
       nextState.tileClassNameProps = tileClassName;
     }
 
     if (tileContent !== prevState.tileContentProps) {
-      nextState.tileContent = (
-        typeof tileContent === 'function'
-          ? tileContent({ activeStartDate, date, view })
-          : tileContent
-      );
+      nextState.tileContent = getValue(nextProps, tileContent);
       nextState.tileContentProps = tileContent;
     }
 
