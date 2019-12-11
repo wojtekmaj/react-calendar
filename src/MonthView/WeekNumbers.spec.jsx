@@ -125,7 +125,7 @@ describe('WeekNumbers', () => {
     const children = component.find('button.react-calendar__tile');
 
     children.first().simulate('click');
-    expect(onClickWeekNumber).toHaveBeenCalledWith(52, new Date(2016, 11, 26));
+    expect(onClickWeekNumber).toHaveBeenCalledWith(52, new Date(2016, 11, 26), expect.any(Object));
   });
 
   it('calls onClickWeekNumber function with proper arguments when clicked a week number (US)', () => {
@@ -141,6 +141,6 @@ describe('WeekNumbers', () => {
     const children = component.find('button.react-calendar__tile');
 
     children.first().simulate('click');
-    expect(onClickWeekNumber).toHaveBeenCalledWith(1, new Date(2017, 0, 1));
+    expect(onClickWeekNumber).toHaveBeenCalledWith(1, new Date(2017, 0, 1), expect.any(Object));
   });
 });
