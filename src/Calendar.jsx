@@ -72,33 +72,24 @@ const getValuePiece = (value, index) => {
   return valueDate;
 };
 
-const getValueFrom = value => getValuePiece(value, 0);
+const getDetailValue = (value, minDate, maxDate, maxDetail, index) => {
+  const valuePiece = getValuePiece(value, index);
 
-const getValueTo = value => getValuePiece(value, 1);
-
-const getDetailValueFrom = (value, minDate, maxDate, maxDetail) => {
-  const valueFrom = getValueFrom(value);
-
-  if (!valueFrom) {
+  if (!valuePiece) {
     return null;
   }
 
-  const detailValueFrom = getBegin(getValueType(maxDetail), valueFrom);
+  const valueType = getValueType(maxDetail);
+  const detailValueFrom = [getBegin, getEnd][index](valueType, valuePiece);
 
   return between(detailValueFrom, minDate, maxDate);
 };
 
-const getDetailValueTo = (value, minDate, maxDate, maxDetail) => {
-  const valueTo = getValueTo(value);
+const getDetailValueFrom = (value, minDate, maxDate, maxDetail) =>
+  getDetailValue(value, minDate, maxDate, maxDetail, 0);
 
-  if (!valueTo) {
-    return null;
-  }
-
-  const detailValueTo = getEnd(getValueType(maxDetail), valueTo);
-
-  return between(detailValueTo, minDate, maxDate);
-};
+const getDetailValueTo = (value, minDate, maxDate, maxDetail) =>
+  getDetailValue(value, minDate, maxDate, maxDetail, 1);
 
 const getDetailValueArray = (value, minDate, maxDate, maxDetail) => {
   if (value instanceof Array) {
