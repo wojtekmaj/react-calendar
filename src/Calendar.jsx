@@ -261,7 +261,7 @@ export default class Calendar extends Component {
   /**
    * Called when the user uses navigation buttons.
    */
-  setActiveStartDateAndView = (activeStartDate, view, cb) => {
+  setActiveStartDateAndView = (activeStartDate, view, callback) => {
     const { onActiveStartDateChange, onViewChange } = this.props;
 
     this.setState({ activeStartDate, view }, () => {
@@ -271,7 +271,7 @@ export default class Calendar extends Component {
       };
       callIfDefined(onActiveStartDateChange, args);
       callIfDefined(onViewChange, args);
-      callIfDefined(cb, args);
+      callIfDefined(callback, args);
     });
   }
 
