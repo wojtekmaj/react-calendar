@@ -72,7 +72,9 @@ const getValue = (value, index) => {
   return valueDate;
 };
 
-const getDetailValue = ({ value, minDate, maxDate, maxDetail }, index) => {
+const getDetailValue = ({
+  value, minDate, maxDate, maxDetail,
+}, index) => {
   const valuePiece = getValue(value, index);
 
   if (!valuePiece) {
@@ -85,9 +87,9 @@ const getDetailValue = ({ value, minDate, maxDate, maxDetail }, index) => {
   return between(detailValueFrom, minDate, maxDate);
 };
 
-const getDetailValueFrom = (args) => getDetailValue(args, 0);
+const getDetailValueFrom = args => getDetailValue(args, 0);
 
-const getDetailValueTo = (args) => getDetailValue(args, 1);
+const getDetailValueTo = args => getDetailValue(args, 1);
 
 const getDetailValueArray = (args) => {
   const { value } = args;
@@ -116,7 +118,9 @@ const getActiveStartDate = (props) => {
   const rangeType = getView(view || defaultView, minDetail, maxDetail);
   const valueFrom = (
     activeStartDate || defaultActiveStartDate
-    || getDetailValueFrom({ value: value || defaultValue, minDate, maxDate, maxDetail })
+    || getDetailValueFrom({
+      value: value || defaultValue, minDate, maxDate, maxDetail,
+    })
     || new Date()
   );
   return getBegin(rangeType, valueFrom);
@@ -211,7 +215,9 @@ export default class Calendar extends Component {
       }
     })();
 
-    return processFunction({ value, minDate, maxDate, maxDetail });
+    return processFunction({
+      value, minDate, maxDate, maxDetail,
+    });
   }
 
   /**
