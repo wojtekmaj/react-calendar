@@ -121,10 +121,8 @@ const getDetailValueArray = (value, minDate, maxDate, maxDetail) => {
     return value;
   }
 
-  return [
-    getDetailValueFrom(value, minDate, maxDate, maxDetail),
-    getDetailValueTo(value, minDate, maxDate, maxDetail),
-  ];
+  return [getDetailValueFrom, getDetailValueTo]
+    .map(fn => fn(value, minDate, maxDate, maxDetail));
 };
 
 const getActiveStartDate = (props) => {
