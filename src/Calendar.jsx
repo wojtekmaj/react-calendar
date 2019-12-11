@@ -366,7 +366,6 @@ export default class Calendar extends Component {
       locale,
       maxDate,
       minDate,
-      renderChildren,
       selectRange,
       tileClassName,
       tileContent,
@@ -388,7 +387,7 @@ export default class Calendar extends Component {
       minDate,
       onMouseOver: selectRange ? onMouseOver : null,
       tileClassName,
-      tileContent: tileContent || renderChildren, // For backwards compatibility
+      tileContent,
       tileDisabled,
       value,
       valueType,
@@ -597,7 +596,6 @@ Calendar.propTypes = {
   prev2Label: PropTypes.node,
   prevAriaLabel: PropTypes.string,
   prevLabel: PropTypes.node,
-  renderChildren: PropTypes.func, // For backwards compatibility
   returnValue: PropTypes.oneOf(['start', 'end', 'range']),
   selectRange: PropTypes.bool,
   showDoubleView: PropTypes.bool,
