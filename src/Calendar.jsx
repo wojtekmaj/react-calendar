@@ -52,7 +52,7 @@ const getView = (view, minDetail, maxDetail) => {
  */
 const getValueType = maxDetail => allValueTypes[allViews.indexOf(maxDetail)];
 
-const getValuePiece = (value, index) => {
+const getValue = (value, index) => {
   if (!value) {
     return null;
   }
@@ -72,8 +72,8 @@ const getValuePiece = (value, index) => {
   return valueDate;
 };
 
-const getDetailValue = (value, minDate, maxDate, maxDetail, index) => {
-  const valuePiece = getValuePiece(value, index);
+const getDetailValue = ({ value, minDate, maxDate, maxDetail }, index) => {
+  const valuePiece = getValue(value, index);
 
   if (!valuePiece) {
     return null;
@@ -85,19 +85,16 @@ const getDetailValue = (value, minDate, maxDate, maxDetail, index) => {
   return between(detailValueFrom, minDate, maxDate);
 };
 
-const getDetailValueFrom = (value, minDate, maxDate, maxDetail) =>
-  getDetailValue(value, minDate, maxDate, maxDetail, 0);
+const getDetailValueFrom = (args) => getDetailValue(args, 0);
 
-const getDetailValueTo = (value, minDate, maxDate, maxDetail) =>
-  getDetailValue(value, minDate, maxDate, maxDetail, 1);
+const getDetailValueTo = (args) => getDetailValue(args, 1);
 
-const getDetailValueArray = (value, minDate, maxDate, maxDetail) => {
+const getDetailValueArray = (args) => {
   if (value instanceof Array) {
     return value;
   }
 
-  return [getDetailValueFrom, getDetailValueTo]
-    .map(fn => fn(value, minDate, maxDate, maxDetail));
+  return [getDetailValueFrom, getDetailValueTo].map(fn => fn(args));
 };
 
 const getActiveStartDate = (props) => {
@@ -117,7 +114,7 @@ const getActiveStartDate = (props) => {
   const rangeType = getView(view || defaultView, minDetail, maxDetail);
   const valueFrom = (
     activeStartDate || defaultActiveStartDate
-    || getDetailValueFrom(value || defaultValue, minDate, maxDate, maxDetail)
+    || getDetailValueFrom({ value: value || defaultValue, minDate, maxDate, maxDetail })
     || new Date()
   );
   return getBegin(rangeType, valueFrom);
@@ -212,7 +209,7 @@ export default class Calendar extends Component {
       }
     })();
 
-    return processFunction(value, minDate, maxDate, maxDetail);
+    return processFunction({ value, minDate, maxDate, maxDetail });
   }
 
   /**
