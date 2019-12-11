@@ -90,6 +90,8 @@ const getDetailValueFrom = (args) => getDetailValue(args, 0);
 const getDetailValueTo = (args) => getDetailValue(args, 1);
 
 const getDetailValueArray = (args) => {
+  const { value } = args;
+
   if (value instanceof Array) {
     return value;
   }
