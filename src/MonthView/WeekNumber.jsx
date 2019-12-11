@@ -22,7 +22,7 @@ export default function WeekNumber({
       ? (
         <button
           {...props}
-          onClick={() => onClickWeekNumber(weekNumber, date)}
+          onClick={(event) => onClickWeekNumber(weekNumber, date, event)}
           type="button"
         >
           {children}
