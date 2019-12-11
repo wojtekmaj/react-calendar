@@ -261,18 +261,17 @@ export default class Calendar extends Component {
   /**
    * Called when the user uses navigation buttons.
    */
-  setActiveStartDateAndView = (activeStartDate, view) => {
+  setActiveStartDateAndView = (activeStartDate, view, callback) => {
     const { onActiveStartDateChange, onViewChange } = this.props;
 
     this.setState({ activeStartDate, view }, () => {
-      callIfDefined(onActiveStartDateChange, {
+      const args = {
         activeStartDate,
         view,
-      });
-      callIfDefined(onViewChange, {
-        activeStartDate,
-        view,
-      });
+      };
+      callIfDefined(onActiveStartDateChange, args);
+      callIfDefined(onViewChange, args);
+      callIfDefined(callback, args);
     });
   }
 
@@ -286,12 +285,7 @@ export default class Calendar extends Component {
 
     const nextView = views[views.indexOf(view) + 1];
 
-    this.setActiveStartDateAndView(nextActiveStartDate, nextView);
-
-    callIfDefined(onDrillDown, {
-      activeStartDate: nextActiveStartDate,
-      view: nextView,
-    });
+    this.setActiveStartDateAndView(nextActiveStartDate, nextView, onDrillDown);
   }
 
   drillUp = () => {
@@ -305,12 +299,7 @@ export default class Calendar extends Component {
     const nextView = views[views.indexOf(view) - 1];
     const nextActiveStartDate = getBegin(nextView, activeStartDate);
 
-    this.setActiveStartDateAndView(nextActiveStartDate, nextView);
-
-    callIfDefined(onDrillUp, {
-      activeStartDate: nextActiveStartDate,
-      view: nextView,
-    });
+    this.setActiveStartDateAndView(nextActiveStartDate, nextView, onDrillUp);
   }
 
   onChange = (value) => {
