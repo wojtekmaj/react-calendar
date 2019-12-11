@@ -319,15 +319,15 @@ export default class Calendar extends Component {
     let nextValue;
     let callback;
     if (selectRange) {
-      const { value: previousValue } = this;
       // Range selection turned on
+      const { value: previousValue, valueType } = this;
       if (!isSingleValue(previousValue)) {
         // Value has 0 or 2 elements - either way we're starting a new array
         // First value
-        nextValue = getBegin(this.valueType, value);
+        nextValue = getBegin(valueType, value);
       } else {
         // Second value
-        nextValue = getValueRange(this.valueType, previousValue, value);
+        nextValue = getValueRange(valueType, previousValue, value);
         callback = () => callIfDefined(onChange, nextValue);
       }
     } else {
