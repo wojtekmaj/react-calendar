@@ -1,50 +1,10 @@
 import {
-  mergeFunctions,
   isValueWithinRange,
   isRangeWithinRange,
   doRangesOverlap,
   between,
   getTileClasses,
 } from './utils';
-
-describe('mergeFunctions', () => {
-  it('returns a function when called', () => {
-    const testFunction1 = jest.fn();
-    const testFunction2 = jest.fn();
-
-    const mergedFunctions = mergeFunctions(testFunction1, testFunction2);
-
-    expect(mergedFunctions).toBeInstanceOf(Function);
-  });
-
-  it('calls all functions passed to it upon creation of a merged function exactly once', () => {
-    const testFunction1 = jest.fn();
-    const testFunction2 = jest.fn();
-
-    const mergedFunctions = mergeFunctions(testFunction1, testFunction2);
-
-    mergedFunctions();
-
-    expect(testFunction1).toHaveBeenCalledTimes(1);
-    expect(testFunction2).toHaveBeenCalledTimes(1);
-  });
-
-  it('passes the same arguments to all functions passed to it upon creation of a merged function', () => {
-    const arg1 = 'hello';
-    const arg2 = null;
-    const arg3 = 42;
-
-    const testFunction1 = jest.fn();
-    const testFunction2 = jest.fn();
-
-    const mergedFunctions = mergeFunctions(testFunction1, testFunction2);
-
-    mergedFunctions(arg1, arg2, arg3);
-
-    expect(testFunction1).toHaveBeenCalledWith(arg1, arg2, arg3);
-    expect(testFunction2).toHaveBeenCalledWith(arg1, arg2, arg3);
-  });
-});
 
 describe('isValueWithinRange', () => {
   it('returns true for a value between range bonduaries', () => {

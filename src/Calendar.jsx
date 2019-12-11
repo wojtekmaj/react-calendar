@@ -14,7 +14,7 @@ import {
 import {
   isCalendarType, isClassName, isMaxDate, isMinDate, isValue, isView,
 } from './shared/propTypes';
-import { between, callIfDefined, mergeFunctions } from './shared/utils';
+import { between, callIfDefined } from './shared/utils';
 
 const baseClassName = 'react-calendar';
 const allViews = ['century', 'decade', 'year', 'month'];
@@ -281,6 +281,8 @@ export default class Calendar extends Component {
       return;
     }
 
+    this.onClickTile(nextActiveStartDate);
+
     const { view, views } = this;
     const { onDrillDown } = this.props;
 
@@ -316,6 +318,8 @@ export default class Calendar extends Component {
   onChange = (value) => {
     const { onChange, selectRange } = this.props;
 
+    this.onClickTile(value);
+
     let nextValue;
     let callback;
     if (selectRange) {
@@ -337,6 +341,33 @@ export default class Calendar extends Component {
     }
 
     this.setState({ value: nextValue }, callback);
+  }
+
+  onClickTile = (value) => {
+    const { view } = this;
+    const {
+      onClickDay,
+      onClickDecade,
+      onClickMonth,
+      onClickYear,
+    } = this.props;
+
+    const cb = (() => {
+      switch (view) {
+        case 'century':
+          return onClickDecade;
+        case 'decade':
+          return onClickYear;
+        case 'year':
+          return onClickMonth;
+        case 'month':
+          return onClickDay;
+        default:
+          throw new Error(`Invalid view: ${view}.`);
+      }
+    })();
+
+    callIfDefined(cb, value);
   }
 
   onMouseOver = (value) => {
@@ -380,12 +411,15 @@ export default class Calendar extends Component {
         : currentActiveStartDate
     );
 
+    const onClick = this.drillDownAvailable ? this.drillDown : this.onChange;
+
     const commonProps = {
       activeStartDate,
       hover,
       locale,
       maxDate,
       minDate,
+      onClick,
       onMouseOver: selectRange ? onMouseOver : null,
       tileClassName,
       tileContent: tileContent || renderChildren, // For backwards compatibility
@@ -394,39 +428,34 @@ export default class Calendar extends Component {
       valueType,
     };
 
-    const clickAction = this.drillDownAvailable ? this.drillDown : this.onChange;
-
     switch (view) {
       case 'century': {
-        const { formatYear, onClickDecade } = this.props;
+        const { formatYear } = this.props;
 
         return (
           <CenturyView
             formatYear={formatYear}
-            onClick={mergeFunctions(clickAction, onClickDecade)}
             {...commonProps}
           />
         );
       }
       case 'decade': {
-        const { formatYear, onClickYear } = this.props;
+        const { formatYear } = this.props;
 
         return (
           <DecadeView
             formatYear={formatYear}
-            onClick={mergeFunctions(clickAction, onClickYear)}
             {...commonProps}
           />
         );
       }
       case 'year': {
-        const { formatMonth, formatMonthYear, onClickMonth } = this.props;
+        const { formatMonth, formatMonthYear } = this.props;
 
         return (
           <YearView
             formatMonth={formatMonth}
             formatMonthYear={formatMonthYear}
-            onClick={mergeFunctions(clickAction, onClickMonth)}
             {...commonProps}
           />
         );
@@ -435,7 +464,6 @@ export default class Calendar extends Component {
         const {
           formatLongDate,
           formatShortWeekday,
-          onClickDay,
           onClickWeekNumber,
           showDoubleView,
           showFixedNumberOfWeeks,
@@ -449,7 +477,6 @@ export default class Calendar extends Component {
             calendarType={calendarType}
             formatLongDate={formatLongDate}
             formatShortWeekday={formatShortWeekday}
-            onClick={mergeFunctions(clickAction, onClickDay)}
             onClickWeekNumber={onClickWeekNumber}
             onMouseLeave={onMouseLeave}
             showFixedNumberOfWeeks={showFixedNumberOfWeeks || showDoubleView}
