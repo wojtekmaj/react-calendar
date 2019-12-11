@@ -44,7 +44,7 @@ const getView = (view, minDetail, maxDetail) => {
     return view;
   }
 
-  return getLimitedViews(minDetail, maxDetail).pop();
+  return maxDetail;
 };
 
 /**
