@@ -1,15 +1,6 @@
 import { getRange } from './dates';
 
 /**
- * Returns a function that, when called, calls all the functions
- * passed to it, applying its arguments to them.
- *
- * @param {Function[]} functions
- */
-export const mergeFunctions = (...functions) => (...args) => functions
-  .filter(Boolean).forEach(f => f(...args));
-
-/**
  * Calls a function, if it's defined, with specified arguments
  * @param {Function} fn
  * @param {Object} args
