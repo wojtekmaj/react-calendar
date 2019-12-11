@@ -52,77 +52,53 @@ const getView = (view, minDetail, maxDetail) => {
  */
 const getValueType = maxDetail => allValueTypes[allViews.indexOf(maxDetail)];
 
-const getValueFrom = (value) => {
+const getValue = (value, index) => {
   if (!value) {
     return null;
   }
 
-  const rawValueFrom = value instanceof Array && value.length === 2 ? value[0] : value;
+  const rawValue = value instanceof Array && value.length === 2 ? value[index] : value;
 
-  if (!rawValueFrom) {
+  if (!rawValue) {
     return null;
   }
 
-  const valueFromDate = new Date(rawValueFrom);
+  const valueDate = new Date(rawValue);
 
-  if (isNaN(valueFromDate.getTime())) {
+  if (isNaN(valueDate.getTime())) {
     throw new Error(`Invalid date: ${value}`);
   }
 
-  return valueFromDate;
+  return valueDate;
 };
 
-const getDetailValueFrom = (value, minDate, maxDate, maxDetail) => {
-  const valueFrom = getValueFrom(value);
+const getDetailValue = ({
+  value, minDate, maxDate, maxDetail,
+}, index) => {
+  const valuePiece = getValue(value, index);
 
-  if (!valueFrom) {
+  if (!valuePiece) {
     return null;
   }
 
-  const detailValueFrom = getBegin(getValueType(maxDetail), valueFrom);
+  const valueType = getValueType(maxDetail);
+  const detailValueFrom = [getBegin, getEnd][index](valueType, valuePiece);
 
   return between(detailValueFrom, minDate, maxDate);
 };
 
-const getValueTo = (value) => {
-  if (!value) {
-    return null;
-  }
+const getDetailValueFrom = args => getDetailValue(args, 0);
 
-  const rawValueTo = value instanceof Array && value.length === 2 ? value[1] : value;
+const getDetailValueTo = args => getDetailValue(args, 1);
 
-  if (!rawValueTo) {
-    return null;
-  }
+const getDetailValueArray = (args) => {
+  const { value } = args;
 
-  const valueToDate = new Date(rawValueTo);
-
-  if (isNaN(valueToDate.getTime())) {
-    throw new Error(`Invalid date: ${value}`);
-  }
-
-  return valueToDate;
-};
-
-const getDetailValueTo = (value, minDate, maxDate, maxDetail) => {
-  const valueTo = getValueTo(value);
-
-  if (!valueTo) {
-    return null;
-  }
-
-  const detailValueTo = getEnd(getValueType(maxDetail), valueTo);
-
-  return between(detailValueTo, minDate, maxDate);
-};
-
-const getDetailValueArray = (value, minDate, maxDate, maxDetail) => {
   if (value instanceof Array) {
     return value;
   }
 
-  return [getDetailValueFrom, getDetailValueTo]
-    .map(fn => fn(value, minDate, maxDate, maxDetail));
+  return [getDetailValueFrom, getDetailValueTo].map(fn => fn(args));
 };
 
 const getActiveStartDate = (props) => {
@@ -142,7 +118,9 @@ const getActiveStartDate = (props) => {
   const rangeType = getView(view || defaultView, minDetail, maxDetail);
   const valueFrom = (
     activeStartDate || defaultActiveStartDate
-    || getDetailValueFrom(value || defaultValue, minDate, maxDate, maxDetail)
+    || getDetailValueFrom({
+      value: value || defaultValue, minDate, maxDate, maxDetail,
+    })
     || new Date()
   );
   return getBegin(rangeType, valueFrom);
@@ -237,7 +215,9 @@ export default class Calendar extends Component {
       }
     })();
 
-    return processFunction(value, minDate, maxDate, maxDetail);
+    return processFunction({
+      value, minDate, maxDate, maxDetail,
+    });
   }
 
   /**
