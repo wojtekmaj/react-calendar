@@ -5,7 +5,7 @@ import Days from './MonthView/Days';
 import Weekdays from './MonthView/Weekdays';
 import WeekNumbers from './MonthView/WeekNumbers';
 
-import { CALENDAR_TYPES } from './shared/const';
+import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const';
 import {
   isCalendarType,
   isMaxDate,
@@ -14,54 +14,11 @@ import {
 } from './shared/propTypes';
 
 function getCalendarTypeFromLocale(locale) {
-  switch (locale) {
-    case 'en-CA':
-    case 'en-US':
-    case 'es-AR':
-    case 'es-BO':
-    case 'es-CL':
-    case 'es-CO':
-    case 'es-CR':
-    case 'es-DO':
-    case 'es-EC':
-    case 'es-GT':
-    case 'es-HN':
-    case 'es-MX':
-    case 'es-NI':
-    case 'es-PA':
-    case 'es-PE':
-    case 'es-PR':
-    case 'es-SV':
-    case 'es-VE':
-    case 'pt-BR':
-      return CALENDAR_TYPES.US;
-    // ar-LB, ar-MA intentionally missing
-    case 'ar':
-    case 'ar-AE':
-    case 'ar-BH':
-    case 'ar-DZ':
-    case 'ar-EG':
-    case 'ar-IQ':
-    case 'ar-JO':
-    case 'ar-KW':
-    case 'ar-LY':
-    case 'ar-OM':
-    case 'ar-QA':
-    case 'ar-SA':
-    case 'ar-SD':
-    case 'ar-SY':
-    case 'ar-YE':
-    case 'dv':
-    case 'dv-MV':
-    case 'ps':
-    case 'ps-AR':
-      return CALENDAR_TYPES.ARABIC;
-    case 'he':
-    case 'he-IL':
-      return CALENDAR_TYPES.HEBREW;
-    default:
-      return CALENDAR_TYPES.ISO_8601;
-  }
+  return (
+    Object.keys(CALENDAR_TYPE_LOCALES)
+      .find(calendarType => CALENDAR_TYPE_LOCALES[calendarType].includes(locale))
+    || CALENDAR_TYPES.ISO_8601
+  );
 }
 
 export default function MonthView(props) {
