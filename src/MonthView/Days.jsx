@@ -53,7 +53,8 @@ export default function Days(props) {
 
     if (showNeighboringMonth) {
       const activeEndDate = new Date(year, monthIndex, daysInMonth);
-      return daysInMonth + (7 - getDayOfWeek(activeEndDate, calendarType) - 1);
+      const daysUntilEndOfTheWeek = 7 - getDayOfWeek(activeEndDate, calendarType) - 1;
+      return daysInMonth + daysUntilEndOfTheWeek;
     }
 
     return daysInMonth;
