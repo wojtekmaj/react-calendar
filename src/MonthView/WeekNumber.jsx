@@ -39,5 +39,5 @@ export default function WeekNumber({
 WeekNumber.propTypes = {
   date: PropTypes.instanceOf(Date).isRequired,
   onClickWeekNumber: PropTypes.func,
-  weekNumber: PropTypes.number.isRequired,
+  weekNumber: PropTypes.node.isRequired,
 };
