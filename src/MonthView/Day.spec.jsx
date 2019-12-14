@@ -134,7 +134,7 @@ describe('Day', () => {
     component.find('.react-calendar__tile').simulate('click');
 
     expect(onClick).toHaveBeenCalled();
-    expect(onClick).toHaveBeenCalledWith(date);
+    expect(onClick).toHaveBeenCalledWith(date, expect.any(Object));
   });
 
   it('calls onMouseOver callback when hovered and sends proper date as an argument', () => {

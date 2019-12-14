@@ -253,12 +253,12 @@ export default class Calendar extends Component {
     });
   }
 
-  drillDown = (nextActiveStartDate) => {
+  drillDown = (nextActiveStartDate, event) => {
     if (!this.drillDownAvailable) {
       return;
     }
 
-    this.onClickTile(nextActiveStartDate);
+    this.onClickTile(nextActiveStartDate, event);
 
     const { view, views } = this;
     const { onDrillDown } = this.props;
@@ -282,10 +282,10 @@ export default class Calendar extends Component {
     this.setActiveStartDateAndView(nextActiveStartDate, nextView, onDrillUp);
   }
 
-  onChange = (value) => {
+  onChange = (value, event) => {
     const { onChange, selectRange } = this.props;
 
-    this.onClickTile(value);
+    this.onClickTile(value, event);
 
     let nextValue;
     let callback;
@@ -310,7 +310,7 @@ export default class Calendar extends Component {
     this.setState({ value: nextValue }, callback);
   }
 
-  onClickTile = (value) => {
+  onClickTile = (value, event) => {
     const { view } = this;
     const {
       onClickDay,
@@ -319,7 +319,7 @@ export default class Calendar extends Component {
       onClickYear,
     } = this.props;
 
-    const cb = (() => {
+    const callback = (() => {
       switch (view) {
         case 'century':
           return onClickDecade;
@@ -334,7 +334,7 @@ export default class Calendar extends Component {
       }
     })();
 
-    callIfDefined(cb, value);
+    callIfDefined(callback, value, event);
   }
 
   onMouseOver = (value) => {

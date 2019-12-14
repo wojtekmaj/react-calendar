@@ -123,13 +123,13 @@ Displays a complete, interactive calendar.
 |next2AriaLabel|`aria-label` attribute of the "next on higher level" button on the navigation pane.|n/a|`"Jump forwards"`|
 |next2Label|Content of the "next on higher level" button on the navigation pane.|`"»"`|<ul><li>String: `"»"`</li><li>React element: `<DoubleNextIcon />`</li></ul>|
 |onActiveStartDateChange|Function called when the user navigates from one view to another using previous/next button.|n/a|`({ activeStartDate, view }) => alert('Changed view to: ', activeStartDate, view)`|
-|onChange|Function called when the user clicks an item (day on month view, month on year view and so on) on the most detailed view available.|n/a|`(value) => alert('New date is: ', value)`|
+|onChange|Function called when the user clicks an item (day on month view, month on year view and so on) on the most detailed view available.|n/a|`(value, event) => alert('New date is: ', value)`|
 |onViewChange|Function called when the user navigates from one view to another using drill up button or by clicking a tile.|n/a|`({ activeStartDate, view }) => alert('New view is: ', view)`|
-|onClickDay|Function called when the user clicks a day.|n/a|`(value) => alert('Clicked day: ', value)`|
-|onClickDecade|Function called when the user clicks a decade.|n/a|`(value) => alert('Clicked decade: ', value)`|
-|onClickMonth|Function called when the user clicks a month.|n/a|`(value) => alert('Clicked month: ', value)`|
-|onClickWeekNumber|Function called when the user clicks a week number.|n/a|`(weekNumber, date) => alert('Clicked week: ', weekNumber, 'that starts on: ', date)`|
-|onClickYear|Function called when the user clicks a year.|n/a|`(value) => alert('Clicked year: ', value)`|
+|onClickDay|Function called when the user clicks a day.|n/a|`(value, event) => alert('Clicked day: ', value)`|
+|onClickDecade|Function called when the user clicks a decade.|n/a|`(value, event) => alert('Clicked decade: ', value)`|
+|onClickMonth|Function called when the user clicks a month.|n/a|`(value, event) => alert('Clicked month: ', value)`|
+|onClickWeekNumber|Function called when the user clicks a week number.|n/a|`(weekNumber, date, event) => alert('Clicked week: ', weekNumber, 'that starts on: ', date)`|
+|onClickYear|Function called when the user clicks a year.|n/a|`(value, event) => alert('Clicked year: ', value)`|
 |onDrillDown|Function called when the user drills down by clicking a tile.|n/a|`({ activeStartDate, view }) => alert('Drilled down to: ', activeStartDate, view)`|
 |onDrillUp|Function called when the user drills up by clicking drill up button.|n/a|`({ activeStartDate, view }) => alert('Drilled up to: ', activeStartDate, view)`|
 |prevAriaLabel|`aria-label` attribute of the "previous" button on the navigation pane.|n/a|`"Previous"`|
