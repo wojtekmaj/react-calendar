@@ -2,18 +2,16 @@
   "name": "react-calendar",
   "version": "3.0.0-beta.4",
   "description": "Ultimate calendar for your React app.",
-  "main": "dist/umd/entry.js",
-  "module": "dist/esm/entry.js",
-  "source": "src/entry.js",
+  "main": "dist/umd/index.js",
+  "module": "dist/esm/index.js",
+  "source": "src/index.js",
   "sideEffects": false,
   "scripts": {
     "build": "yarn build-js-all && yarn copy-styles && yarn build-styles",
     "build-js-all": "yarn build-js-esm && yarn build-js-umd",
     "build-js-esm": "cross-env BABEL_ENV=production-esm babel src -d dist/esm --ignore **/*.spec.js,**/*.spec.jsx",
     "build-js-umd": "cross-env BABEL_ENV=production-umd babel src -d dist/umd --ignore **/*.spec.js,**/*.spec.jsx",
-    "build-styles": "yarn build-styles-esm && yarn build-styles-umd",
-    "build-styles-esm": "lessc ./dist/esm/Calendar.less ./dist/esm/Calendar.css",
-    "build-styles-umd": "lessc ./dist/umd/Calendar.less ./dist/umd/Calendar.css",
+    "build-styles": "lessc ./dist/Calendar.less ./dist/Calendar.css",
     "clean": "rimraf dist",
     "copy-styles": "node ./copy-styles.js",
     "jest": "jest",
@@ -28,8 +26,7 @@
     ],
     "collectCoverageFrom": [
       "**/src/**.{js,jsx}",
-      "!**/src/entry.js",
-      "!**/src/entry.nostyle.js"
+      "!**/src/index.js"
     ]
   },
   "keywords": [

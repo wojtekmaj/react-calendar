@@ -78,14 +78,10 @@ Check the [sample directory](https://github.com/wojtekmaj/react-calendar/tree/ma
 
 ### Custom styling
 
-If you don't want to use default React-Calendar styling to build upon it, you can import React-Calendar by using:
+If you want to use default React-Calendar styling to build upon it, you can import React-Calendar's styles by using:
 
 ```js
-// using ES6 modules
-import Calendar from 'react-calendar/dist/esm/entry.nostyle';
-
-// using CommonJS modules
-import Calendar from 'react-calendar/dist/umd/entry.nostyle';
+import 'react-calendar/dist/Calendar.css';
 ```
 
 instead.
