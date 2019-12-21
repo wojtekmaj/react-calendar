@@ -153,7 +153,7 @@ export default class Calendar extends Component {
       return valueState;
     }
 
-    return valueProps || valueState;
+    return valueProps !== undefined ? valueProps : valueState;
   }
 
   get valueType() {
