@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
 
 import Navigation from './Calendar/Navigation';
-import CenturyView from './CenturyView';
-import DecadeView from './DecadeView';
-import YearView from './YearView';
-import MonthView from './MonthView';
+import View from './Calendar/View';
 
 import {
   getBegin, getBeginNext, getEnd, getValueRange,
@@ -354,22 +351,33 @@ export default class Calendar extends Component {
   renderContent(next) {
     const {
       activeStartDate: currentActiveStartDate,
+      hover,
+      onMouseLeave,
       onMouseOver,
-      valueType,
       value,
+      valueType,
       view,
     } = this;
     const {
       calendarType,
+      formatLongDate,
+      formatMonth,
+      formatMonthYear,
+      formatShortWeekday,
+      formatYear,
       locale,
       maxDate,
       minDate,
+      onClickWeekNumber,
       selectRange,
+      showDoubleView,
+      showFixedNumberOfWeeks,
+      showNeighboringMonth,
+      showWeekNumbers,
       tileClassName,
       tileContent,
       tileDisabled,
     } = this.props;
-    const { hover } = this;
 
     const activeStartDate = (
       next
@@ -379,82 +387,38 @@ export default class Calendar extends Component {
 
     const onClick = this.drillDownAvailable ? this.drillDown : this.onChange;
 
-    const commonProps = {
+    const props = {
       activeStartDate,
+      calendarType,
+      formatLongDate,
+      formatMonth,
+      formatMonthYear,
+      formatShortWeekday,
+      formatYear,
       hover,
       locale,
       maxDate,
       minDate,
       onClick,
-      onMouseOver: selectRange ? onMouseOver : null,
+      onClickWeekNumber,
+      onMouseLeave,
+      onMouseOver,
+      selectRange,
+      showDoubleView,
+      showFixedNumberOfWeeks,
+      showNeighboringMonth,
+      showWeekNumbers,
       tileClassName,
       tileContent,
       tileDisabled,
       value,
       valueType,
+      view,
     };
 
-    switch (view) {
-      case 'century': {
-        const { formatYear } = this.props;
-
-        return (
-          <CenturyView
-            formatYear={formatYear}
-            {...commonProps}
-          />
-        );
-      }
-      case 'decade': {
-        const { formatYear } = this.props;
-
-        return (
-          <DecadeView
-            formatYear={formatYear}
-            {...commonProps}
-          />
-        );
-      }
-      case 'year': {
-        const { formatMonth, formatMonthYear } = this.props;
-
-        return (
-          <YearView
-            formatMonth={formatMonth}
-            formatMonthYear={formatMonthYear}
-            {...commonProps}
-          />
-        );
-      }
-      case 'month': {
-        const {
-          formatLongDate,
-          formatShortWeekday,
-          onClickWeekNumber,
-          showDoubleView,
-          showFixedNumberOfWeeks,
-          showNeighboringMonth,
-          showWeekNumbers,
-        } = this.props;
-        const { onMouseLeave } = this;
-
-        return (
-          <MonthView
-            calendarType={calendarType}
-            formatLongDate={formatLongDate}
-            formatShortWeekday={formatShortWeekday}
-            onClickWeekNumber={onClickWeekNumber}
-            onMouseLeave={onMouseLeave}
-            showFixedNumberOfWeeks={showFixedNumberOfWeeks || showDoubleView}
-            showNeighboringMonth={showNeighboringMonth}
-            showWeekNumbers={showWeekNumbers}
-            {...commonProps}
-          />
-        );
-      }
-      default:
-        throw new Error(`Invalid view: ${view}.`);
-    }
+    return (
+      <View {...props} />
+    );
   }
 
   renderNavigation() {
@@ -464,7 +428,13 @@ export default class Calendar extends Component {
       return null;
     }
 
-    const { activeStartDate, view, views } = this;
+    const {
+      activeStartDate,
+      drillUp,
+      setActiveStartDate,
+      view,
+      views,
+    } = this;
     const {
       formatMonthYear,
       formatYear,
@@ -484,30 +454,32 @@ export default class Calendar extends Component {
       showDoubleView,
     } = this.props;
 
+    const props = {
+      activeStartDate,
+      drillUp,
+      formatMonthYear,
+      formatYear,
+      locale,
+      maxDate,
+      minDate,
+      navigationAriaLabel,
+      navigationLabel,
+      next2AriaLabel,
+      next2Label,
+      nextAriaLabel,
+      nextLabel,
+      prev2AriaLabel,
+      prev2Label,
+      prevAriaLabel,
+      prevLabel,
+      setActiveStartDate,
+      showDoubleView,
+      view,
+      views,
+    };
+
     return (
-      <Navigation
-        activeStartDate={activeStartDate}
-        drillUp={this.drillUp}
-        formatMonthYear={formatMonthYear}
-        formatYear={formatYear}
-        locale={locale}
-        maxDate={maxDate}
-        minDate={minDate}
-        navigationAriaLabel={navigationAriaLabel}
-        navigationLabel={navigationLabel}
-        next2AriaLabel={next2AriaLabel}
-        next2Label={next2Label}
-        nextAriaLabel={nextAriaLabel}
-        nextLabel={nextLabel}
-        prev2AriaLabel={prev2AriaLabel}
-        prev2Label={prev2Label}
-        prevAriaLabel={prevAriaLabel}
-        prevLabel={prevLabel}
-        setActiveStartDate={this.setActiveStartDate}
-        showDoubleView={showDoubleView}
-        view={view}
-        views={views}
-      />
+      <Navigation {...props} />
     );
   }
 

@@ -25,126 +25,29 @@ describe('Calendar', () => {
     expect(navigation).toHaveLength(0);
   });
 
-  describe('renders views properly', () => {
-    it('renders MonthView by default', () => {
-      const component = shallow(
-        <Calendar />,
-      );
+  it('renders View properly', () => {
+    const component = shallow(
+      <Calendar />,
+    );
 
-      const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-      expect(monthView).toHaveLength(1);
-    });
-
-    it('renders MonthView when given view = "month"', () => {
-      const component = shallow(
-        <Calendar view="month" />,
-      );
-
-      const monthView = component.find('MonthView');
-
-      expect(monthView).toHaveLength(1);
-    });
-
-    it('renders YearView when given view = "year"', () => {
-      const component = mount(
-        <Calendar view="year" />,
-      );
-
-      const yearView = component.find('YearView');
-
-      expect(yearView).toHaveLength(1);
-    });
-
-    it('renders DecadeView when given view = "decade"', () => {
-      const component = mount(
-        <Calendar view="decade" />,
-      );
-
-      const decadeView = component.find('DecadeView');
-
-      expect(decadeView).toHaveLength(1);
-    });
-
-    it('renders CenturyView when given view = "century"', () => {
-      const component = mount(
-        <Calendar view="century" />,
-      );
-
-      const centuryView = component.find('CenturyView');
-
-      expect(centuryView).toHaveLength(1);
-    });
-
-    it('renders maximum allowed view when given maxDetail', () => {
-      const component = shallow(
-        <Calendar maxDetail="year" />,
-      );
-
-      const yearView = component.find('YearView');
-
-      expect(yearView).toHaveLength(1);
-    });
-
-    it('renders maximum allowed view when given view that is not allowed', () => {
-      const component = shallow(
-        <Calendar
-          maxDetail="year"
-          view="month"
-        />,
-      );
-
-      const yearView = component.find('YearView');
-
-      expect(yearView).toHaveLength(1);
-    });
-
-    it('renders maximum allowed view when attempting to externally switch to a view that is not allowed', () => {
-      const component = shallow(
-        <Calendar
-          maxDetail="year"
-          view="year"
-        />,
-      );
-
-      component.setProps({ view: 'month' });
-      component.update();
-
-      const yearView = component.find('YearView');
-
-      expect(yearView).toHaveLength(1);
-    });
-
-    it('renders maximum allowed view when given changed maxDetail', () => {
-      const component = shallow(
-        <Calendar
-          maxDetail="month"
-          view="month"
-        />,
-      );
-
-      component.setProps({ maxDetail: 'year' });
-      component.update();
-
-      const yearView = component.find('YearView');
-
-      expect(yearView).toHaveLength(1);
-    });
+    expect(view).toHaveLength(1);
   });
 
-  it('does not pass showWeekNumbers flag to MonthView component by default', () => {
+  it('does not pass showWeekNumbers flag to View component by default', () => {
     const component = shallow(
       <Calendar
         view="month"
       />,
     );
 
-    const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-    expect(monthView.prop('showWeekNumbers')).toBeFalsy();
+    expect(view.prop('showWeekNumbers')).toBeFalsy();
   });
 
-  it('passes showWeekNumbers flag to MonthView component given showWeekNumbers flag', () => {
+  it('passes showWeekNumbers flag to View component given showWeekNumbers flag', () => {
     const component = shallow(
       <Calendar
         showWeekNumbers
@@ -152,12 +55,12 @@ describe('Calendar', () => {
       />,
     );
 
-    const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-    expect(monthView.prop('showWeekNumbers')).toBeTruthy();
+    expect(view.prop('showWeekNumbers')).toBeTruthy();
   });
 
-  it('passes showNeighboringMonth flag to MonthView component given showNeighboringMonth flag', () => {
+  it('passes showNeighboringMonth flag to View component given showNeighboringMonth flag', () => {
     const component = shallow(
       <Calendar
         showNeighboringMonth
@@ -165,9 +68,9 @@ describe('Calendar', () => {
       />,
     );
 
-    const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-    expect(monthView.prop('showNeighboringMonth')).toBeTruthy();
+    expect(view.prop('showNeighboringMonth')).toBeTruthy();
   });
 
   it('displays a view with a given value when defaultValue is given', () => {
@@ -178,9 +81,9 @@ describe('Calendar', () => {
       />,
     );
 
-    const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-    expect(monthView.prop('activeStartDate')).toEqual(new Date(2017, 0, 1));
+    expect(view.prop('activeStartDate')).toEqual(new Date(2017, 0, 1));
   });
 
   it('displays a view with a given value when value is given', () => {
@@ -191,9 +94,9 @@ describe('Calendar', () => {
       />,
     );
 
-    const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-    expect(monthView.prop('activeStartDate')).toEqual(new Date(2017, 0, 1));
+    expect(view.prop('activeStartDate')).toEqual(new Date(2017, 0, 1));
   });
 
   it('displays a view with defaultActiveStartDate when value is given and defaultActiveStartDate is given', () => {
@@ -206,9 +109,9 @@ describe('Calendar', () => {
       />,
     );
 
-    const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-    expect(monthView.prop('activeStartDate')).toEqual(defaultActiveStartDate);
+    expect(view.prop('activeStartDate')).toEqual(defaultActiveStartDate);
   });
 
   it('displays a view with defaultActiveStartDate when no value is given and defaultActiveStartDate is given', () => {
@@ -219,9 +122,9 @@ describe('Calendar', () => {
       />,
     );
 
-    const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-    expect(monthView.prop('activeStartDate')).toEqual(defaultActiveStartDate);
+    expect(view.prop('activeStartDate')).toEqual(defaultActiveStartDate);
   });
 
   it('displays a view with activeStartDate when no value is given and activeStartDate is given', () => {
@@ -232,9 +135,9 @@ describe('Calendar', () => {
       />,
     );
 
-    const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-    expect(monthView.prop('activeStartDate')).toEqual(activeStartDate);
+    expect(view.prop('activeStartDate')).toEqual(activeStartDate);
   });
 
   it('displays a view with today\'s date when no value and no activeStartDate is given', () => {
@@ -244,9 +147,9 @@ describe('Calendar', () => {
       <Calendar />,
     );
 
-    const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-    expect(monthView.prop('activeStartDate')).toEqual(beginOfCurrentMonth);
+    expect(view.prop('activeStartDate')).toEqual(beginOfCurrentMonth);
   });
 
   describe('handles drill up properly', () => {
@@ -553,9 +456,9 @@ describe('Calendar', () => {
 
     component.setProps({ activeStartDate: newActiveStartDate });
 
-    const monthView = component.find('MonthView');
+    const view = component.find('View');
 
-    expect(monthView.prop('activeStartDate')).toEqual(newActiveStartDate);
+    expect(view.prop('activeStartDate')).toEqual(newActiveStartDate);
   });
 
   it('passes formatMonthYear to Navigation component', () => {
@@ -584,33 +487,7 @@ describe('Calendar', () => {
     expect(navigation.prop('formatYear')).toBe(formatYear);
   });
 
-  it('passes formatLongDate to MonthView component', () => {
-    const formatLongDate = () => 'Long date';
-    const component = shallow(
-      <Calendar
-        formatLongDate={formatLongDate}
-      />,
-    );
-
-    const monthView = component.find('MonthView');
-
-    expect(monthView.prop('formatLongDate')).toBe(formatLongDate);
-  });
-
-  it('passes formatShortWeekday to MonthView component', () => {
-    const formatShortWeekday = () => 'Weekday';
-    const component = shallow(
-      <Calendar
-        formatShortWeekday={formatShortWeekday}
-      />,
-    );
-
-    const monthView = component.find('MonthView');
-
-    expect(monthView.prop('formatShortWeekday')).toBe(formatShortWeekday);
-  });
-
-  it('passes formatMonth to YearView component', () => {
+  it('passes formatMonth to View component', () => {
     const formatMonth = () => 'Month';
     const component = shallow(
       <Calendar
@@ -619,36 +496,45 @@ describe('Calendar', () => {
       />,
     );
 
-    const yearView = component.find('YearView');
+    const view = component.find('View');
 
-    expect(yearView.prop('formatMonth')).toBe(formatMonth);
+    expect(view.prop('formatMonth')).toBe(formatMonth);
   });
 
-  it('passes formatYear to DecadeView component', () => {
+  it('passes formatYear to View component', () => {
     const formatYear = () => 'Year';
     const component = shallow(
+      <Calendar formatYear={formatYear} />,
+    );
+
+    const view = component.find('View');
+
+    expect(view.prop('formatYear')).toBe(formatYear);
+  });
+
+  it('passes formatLongDate to View component', () => {
+    const formatLongDate = () => 'Long date';
+    const component = shallow(
       <Calendar
-        formatYear={formatYear}
-        view="decade"
+        formatLongDate={formatLongDate}
       />,
     );
 
-    const decadeView = component.find('DecadeView');
+    const view = component.find('View');
 
-    expect(decadeView.prop('formatYear')).toBe(formatYear);
+    expect(view.prop('formatLongDate')).toBe(formatLongDate);
   });
 
-  it('passes formatYear to CenturyView component', () => {
-    const formatYear = () => 'Year';
+  it('passes formatShortWeekday to View component', () => {
+    const formatShortWeekday = () => 'Weekday';
     const component = shallow(
       <Calendar
-        formatYear={formatYear}
-        view="century"
+        formatShortWeekday={formatShortWeekday}
       />,
     );
 
-    const centuryView = component.find('CenturyView');
+    const view = component.find('View');
 
-    expect(centuryView.prop('formatYear')).toBe(formatYear);
+    expect(view.prop('formatShortWeekday')).toBe(formatShortWeekday);
   });
 });
