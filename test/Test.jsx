@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Calendar from 'react-calendar/src/entry.nostyle';
+import Calendar from 'react-calendar/src';
 import 'react-calendar/src/Calendar.less';
 
 import DateBonduariesOptions from './DateBonduariesOptions';
