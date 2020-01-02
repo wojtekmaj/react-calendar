@@ -226,13 +226,13 @@ export default class Calendar extends Component {
   setActiveStartDate = (activeStartDate) => {
     const { onActiveStartDateChange } = this.props;
 
-    this.setState({ activeStartDate }, () => {
-      const { view } = this;
+    this.setState({ activeStartDate });
 
-      callIfDefined(onActiveStartDateChange, {
-        activeStartDate,
-        view,
-      });
+    const { view } = this;
+
+    callIfDefined(onActiveStartDateChange, {
+      activeStartDate,
+      view,
     });
   }
 
@@ -242,15 +242,16 @@ export default class Calendar extends Component {
   setActiveStartDateAndView = (activeStartDate, view, callback) => {
     const { onActiveStartDateChange, onViewChange } = this.props;
 
-    this.setState({ activeStartDate, view }, () => {
-      const args = {
-        activeStartDate,
-        view,
-      };
-      callIfDefined(onActiveStartDateChange, args);
-      callIfDefined(onViewChange, args);
-      callIfDefined(callback, args);
-    });
+    this.setState({ activeStartDate, view });
+
+    const args = {
+      activeStartDate,
+      view,
+    };
+
+    callIfDefined(onActiveStartDateChange, args);
+    callIfDefined(onViewChange, args);
+    callIfDefined(callback, args);
   }
 
   drillDown = (nextActiveStartDate, event) => {
@@ -307,7 +308,8 @@ export default class Calendar extends Component {
       callback = () => callIfDefined(onChange, nextValue);
     }
 
-    this.setState({ value: nextValue }, callback);
+    this.setState({ value: nextValue });
+    callback && callback()
   }
 
   onClickTile = (value, event) => {
