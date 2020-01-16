@@ -343,6 +343,38 @@ describe('Calendar', () => {
     });
   });
 
+  describe('handles active start date change properly', () => {
+    it('changes active start date when allowed', () => {
+      const component = mount(
+        <Calendar />,
+      );
+
+      component.instance().setActiveStartDate(new Date(2019, 0, 1));
+
+      expect(component.state().activeStartDate).toEqual(new Date(2019, 0, 1));
+    });
+
+    it('calls onActiveStartDateChange on activeStartDate change', () => {
+      const activeStartDate = new Date(2017, 0, 1);
+      const newActiveStartDate = new Date(2018, 0, 1);
+      const onActiveStartDateChange = jest.fn();
+      const component = mount(
+        <Calendar
+          activeStartDate={activeStartDate}
+          onActiveStartDateChange={onActiveStartDateChange}
+          view="year"
+        />,
+      );
+
+      component.instance().setActiveStartDate(newActiveStartDate);
+
+      expect(onActiveStartDateChange).toHaveBeenCalledWith({
+        activeStartDate: newActiveStartDate,
+        view: 'year',
+      });
+    });
+  });
+
   describe('calls onChange properly', () => {
     it('calls onChange function returning the beginning of selected period by default', () => {
       const onChange = jest.fn();
@@ -523,26 +555,6 @@ describe('Calendar', () => {
         new Date(2018, 0, 1),
         new Date(2018, 6, 1, 23, 59, 59, 999),
       ]);
-    });
-  });
-
-  it('calls onActiveStartDateChange on activeStartDate change', () => {
-    const activeStartDate = new Date(2017, 0, 1);
-    const newActiveStartDate = new Date(2018, 0, 1);
-    const onActiveStartDateChange = jest.fn();
-    const component = mount(
-      <Calendar
-        activeStartDate={activeStartDate}
-        onActiveStartDateChange={onActiveStartDateChange}
-        view="year"
-      />,
-    );
-
-    component.instance().setActiveStartDate(newActiveStartDate);
-
-    expect(onActiveStartDateChange).toHaveBeenCalledWith({
-      activeStartDate: newActiveStartDate,
-      view: 'year',
     });
   });
 
