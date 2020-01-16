@@ -572,6 +572,43 @@ describe('Calendar', () => {
     expect(monthView.prop('activeStartDate')).toEqual(newActiveStartDate);
   });
 
+  it('changes activeStartDate given new value', () => {
+    const value = new Date(2018, 1, 15);
+    const newValue = new Date(2018, 0, 15);
+    const newActiveStartDate = new Date(2018, 0, 1);
+    const component = mount(
+      <Calendar value={value} />,
+    );
+
+    component.setProps({ value: newValue });
+
+    const monthView = component.find('MonthView');
+
+    expect(monthView.prop('activeStartDate')).toEqual(newActiveStartDate);
+  });
+
+  it('changes activeStartDate given new value', () => {
+    const value = new Date(2018, 1, 15);
+    const newValue = new Date(2018, 0, 15);
+    const newActiveStartDate = new Date(2018, 0, 1);
+
+    const onActiveStartDateChange = jest.fn();
+
+    const component = mount(
+      <Calendar
+        onActiveStartDateChange={onActiveStartDateChange}
+        value={value}
+      />,
+    );
+
+    component.instance().onChange(newValue);
+    component.update();
+
+    const monthView = component.find('MonthView');
+
+    expect(monthView.prop('activeStartDate')).toEqual(newActiveStartDate);
+  });
+
   it('passes formatMonthYear to Navigation component', () => {
     const formatMonthYear = () => 'Month year';
     const component = shallow(

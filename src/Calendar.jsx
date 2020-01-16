@@ -101,12 +101,8 @@ const getDetailValueArray = (args) => {
   return [getDetailValueFrom, getDetailValueTo].map(fn => fn(args));
 };
 
-const getActiveStartDate = (props) => {
+function getActiveStartDate(props) {
   const {
-    activeStartDate,
-    defaultActiveStartDate,
-    defaultValue,
-    defaultView,
     maxDate,
     maxDetail,
     minDate,
@@ -115,25 +111,54 @@ const getActiveStartDate = (props) => {
     view,
   } = props;
 
-  const rangeType = getView(view || defaultView, minDetail, maxDetail);
+  const rangeType = getView(view, minDetail, maxDetail);
   const valueFrom = (
-    activeStartDate || defaultActiveStartDate
-    || getDetailValueFrom({
-      value: value || defaultValue, minDate, maxDate, maxDetail,
+    getDetailValueFrom({
+      value, minDate, maxDate, maxDetail,
     })
     || new Date()
   );
+
   return getBegin(rangeType, valueFrom);
-};
+}
+
+function getInitialActiveStartDate(props) {
+  const {
+    activeStartDate,
+    defaultActiveStartDate,
+    defaultValue,
+    defaultView,
+    maxDetail,
+    minDetail,
+    value,
+    view,
+    ...otherProps
+  } = props;
+
+  const rangeType = getView(view, minDetail, maxDetail);
+  const valueFrom = activeStartDate || defaultActiveStartDate;
+
+  if (valueFrom) {
+    return getBegin(rangeType, valueFrom);
+  }
+
+  return getActiveStartDate({
+    maxDetail,
+    minDetail,
+    value: value || defaultValue,
+    view: view || defaultView,
+    ...otherProps,
+  });
+}
 
 const isSingleValue = value => value && [].concat(value).length === 1;
 
 export default class Calendar extends Component {
   state = {
     /* eslint-disable react/destructuring-assignment */
-    activeStartDate: getActiveStartDate(this.props),
-    view: this.props.defaultView,
+    activeStartDate: getInitialActiveStartDate(this.props),
     value: this.props.defaultValue,
+    view: this.props.defaultView,
     /* eslint-enable react/destructuring-assignment */
   };
 
@@ -307,7 +332,13 @@ export default class Calendar extends Component {
       callback = () => callIfDefined(onChange, nextValue);
     }
 
+    const nextActiveStartDate = getActiveStartDate({
+      ...this.props,
+      value: nextValue,
+    });
+
     this.setState({ value: nextValue }, callback);
+    this.setActiveStartDate(nextActiveStartDate);
   }
 
   onClickTile = (value, event) => {
