@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { getMonthStart } from '@wojtekmaj/date-utils';
 
 import Calendar from './Calendar';
@@ -47,7 +47,7 @@ describe('Calendar', () => {
     });
 
     it('renders YearView when given view = "year"', () => {
-      const component = mount(
+      const component = shallow(
         <Calendar view="year" />,
       );
 
@@ -57,7 +57,7 @@ describe('Calendar', () => {
     });
 
     it('renders DecadeView when given view = "decade"', () => {
-      const component = mount(
+      const component = shallow(
         <Calendar view="decade" />,
       );
 
@@ -67,7 +67,7 @@ describe('Calendar', () => {
     });
 
     it('renders CenturyView when given view = "century"', () => {
-      const component = mount(
+      const component = shallow(
         <Calendar view="century" />,
       );
 
@@ -253,7 +253,7 @@ describe('Calendar', () => {
 
   describe('handles drill up properly', () => {
     it('drills up when allowed', () => {
-      const component = mount(
+      const component = shallow(
         <Calendar view="month" />,
       );
 
@@ -265,7 +265,7 @@ describe('Calendar', () => {
     it('calls onDrillUp on drill up', () => {
       const onDrillUp = jest.fn();
 
-      const component = mount(
+      const component = shallow(
         <Calendar
           activeStartDate={new Date(2017, 6, 1)}
           onDrillUp={onDrillUp}
@@ -284,7 +284,7 @@ describe('Calendar', () => {
     it('refuses to drill up when already on minimum allowed detail', () => {
       const onDrillUp = jest.fn();
 
-      const component = mount(
+      const component = shallow(
         <Calendar
           onDrillUp={onDrillUp}
           view="century"
@@ -299,7 +299,7 @@ describe('Calendar', () => {
 
   describe('handles drill down properly', () => {
     it('drills down when allowed', () => {
-      const component = mount(
+      const component = shallow(
         <Calendar view="century" />,
       );
 
@@ -311,7 +311,7 @@ describe('Calendar', () => {
     it('calls onDrillDown on drill down', () => {
       const onDrillDown = jest.fn();
 
-      const component = mount(
+      const component = shallow(
         <Calendar
           activeStartDate={new Date(2001, 0, 1)}
           onDrillDown={onDrillDown}
@@ -330,7 +330,7 @@ describe('Calendar', () => {
     it('refuses to drill down when already on minimum allowed detail', () => {
       const onDrillDown = jest.fn();
 
-      const component = mount(
+      const component = shallow(
         <Calendar
           onDrillDown={onDrillDown}
           view="month"
@@ -345,7 +345,7 @@ describe('Calendar', () => {
 
   describe('handles active start date change properly', () => {
     it('changes active start date when allowed', () => {
-      const component = mount(
+      const component = shallow(
         <Calendar />,
       );
 
@@ -358,7 +358,7 @@ describe('Calendar', () => {
       const activeStartDate = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2018, 0, 1);
       const onActiveStartDateChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           activeStartDate={activeStartDate}
           onActiveStartDateChange={onActiveStartDateChange}
@@ -378,7 +378,7 @@ describe('Calendar', () => {
   describe('calls onChange properly', () => {
     it('calls onChange function returning the beginning of selected period by default', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           onChange={onChange}
           view="month"
@@ -392,7 +392,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           onChange={onChange}
           returnValue="start"
@@ -407,7 +407,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           onChange={onChange}
           returnValue="start"
@@ -422,7 +422,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the end of the selected period when returnValue is set to "end"', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           onChange={onChange}
           returnValue="end"
@@ -437,7 +437,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of selected period when returnValue is set to "range"', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           onChange={onChange}
           returnValue="range"
@@ -455,7 +455,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of selected period, but no earlier than minDate', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           minDate={new Date(2017, 0, 1, 12)}
           onChange={onChange}
@@ -471,7 +471,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of selected period, but no later than maxDate', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           maxDate={new Date(2017, 0, 1, 12)}
           onChange={onChange}
@@ -487,7 +487,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the end of selected period, but no earlier than minDate', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           minDate={new Date(2017, 0, 2, 12)}
           onChange={onChange}
@@ -503,7 +503,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the end of selected period, but no later than maxDate', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           maxDate={new Date(2017, 0, 1, 12)}
           onChange={onChange}
@@ -519,7 +519,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning a range when selected two pieces of a range', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           onChange={onChange}
           selectRange
@@ -539,7 +539,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning a range when selected reversed two pieces of a range', () => {
       const onChange = jest.fn();
-      const component = mount(
+      const component = shallow(
         <Calendar
           onChange={onChange}
           selectRange
@@ -561,7 +561,7 @@ describe('Calendar', () => {
   it('changes Calendar view given new activeStartDate value', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const newActiveStartDate = new Date(2018, 0, 1);
-    const component = mount(
+    const component = shallow(
       <Calendar activeStartDate={activeStartDate} />,
     );
 
