@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getUserLocale } from 'get-user-locale';
 
 import {
   getCenturyLabel,
@@ -135,7 +136,9 @@ export default function Navigation({
         type="button"
       >
         {navigationLabel
-          ? navigationLabel({ date, view, label })
+          ? navigationLabel({
+            locale: locale || getUserLocale(), date, view, label,
+          })
           : label}
       </button>
       <button
