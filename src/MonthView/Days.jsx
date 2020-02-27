@@ -52,7 +52,9 @@ export default function Days(props) {
     const daysInMonth = getDaysInMonth(activeStartDate);
 
     if (showNeighboringMonth) {
-      const activeEndDate = new Date(year, monthIndex, daysInMonth);
+      const activeEndDate = new Date();
+      activeEndDate.setFullYear(year, monthIndex, daysInMonth);
+      activeEndDate.setHours(0, 0, 0, 0);
       const daysUntilEndOfTheWeek = 7 - getDayOfWeek(activeEndDate, calendarType) - 1;
       return daysInMonth + daysUntilEndOfTheWeek;
     }
@@ -66,7 +68,12 @@ export default function Days(props) {
       className="react-calendar__month-view__days"
       count={7}
       currentMonthIndex={monthIndex}
-      dateTransform={day => new Date(year, monthIndex, day)}
+      dateTransform={(day) => {
+        const date = new Date();
+        date.setFullYear(year, monthIndex, day);
+        date.setHours(0, 0, 0, 0);
+        return date;
+      }}
       dateType="day"
       end={end}
       offset={offset}
