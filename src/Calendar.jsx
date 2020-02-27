@@ -101,12 +101,8 @@ const getDetailValueArray = (args) => {
   return [getDetailValueFrom, getDetailValueTo].map(fn => fn(args));
 };
 
-const getActiveStartDate = (props) => {
+function getActiveStartDate(props) {
   const {
-    activeStartDate,
-    defaultActiveStartDate,
-    defaultValue,
-    defaultView,
     maxDate,
     maxDetail,
     minDate,
@@ -115,25 +111,54 @@ const getActiveStartDate = (props) => {
     view,
   } = props;
 
-  const rangeType = getView(view || defaultView, minDetail, maxDetail);
+  const rangeType = getView(view, minDetail, maxDetail);
   const valueFrom = (
-    activeStartDate || defaultActiveStartDate
-    || getDetailValueFrom({
-      value: value || defaultValue, minDate, maxDate, maxDetail,
+    getDetailValueFrom({
+      value, minDate, maxDate, maxDetail,
     })
     || new Date()
   );
+
   return getBegin(rangeType, valueFrom);
-};
+}
+
+function getInitialActiveStartDate(props) {
+  const {
+    activeStartDate,
+    defaultActiveStartDate,
+    defaultValue,
+    defaultView,
+    maxDetail,
+    minDetail,
+    value,
+    view,
+    ...otherProps
+  } = props;
+
+  const rangeType = getView(view, minDetail, maxDetail);
+  const valueFrom = activeStartDate || defaultActiveStartDate;
+
+  if (valueFrom) {
+    return getBegin(rangeType, valueFrom);
+  }
+
+  return getActiveStartDate({
+    maxDetail,
+    minDetail,
+    value: value || defaultValue,
+    view: view || defaultView,
+    ...otherProps,
+  });
+}
 
 const isSingleValue = value => value && [].concat(value).length === 1;
 
 export default class Calendar extends Component {
   state = {
     /* eslint-disable react/destructuring-assignment */
-    activeStartDate: getActiveStartDate(this.props),
-    view: this.props.defaultView,
+    activeStartDate: this.props.defaultActiveStartDate,
     value: this.props.defaultValue,
+    view: this.props.defaultView,
     /* eslint-enable react/destructuring-assignment */
   };
 
@@ -141,7 +166,7 @@ export default class Calendar extends Component {
     const { activeStartDate: activeStartDateProps } = this.props;
     const { activeStartDate: activeStartDateState } = this.state;
 
-    return activeStartDateProps || activeStartDateState;
+    return activeStartDateProps || activeStartDateState || getInitialActiveStartDate(this.props);
   }
 
   get value() {
@@ -220,37 +245,40 @@ export default class Calendar extends Component {
     });
   }
 
-  /**
-   * Called when the user uses navigation buttons.
-   */
-  setActiveStartDate = (activeStartDate) => {
-    const { onActiveStartDateChange } = this.props;
+  setStateAndCallCallbacks = (nextState, callback) => {
+    const {
+      onActiveStartDateChange, onChange, onViewChange, selectRange,
+    } = this.props;
 
-    this.setState({ activeStartDate }, () => {
-      const { view } = this;
+    this.setState(nextState, () => {
+      const args = {
+        activeStartDate: nextState.activeStartDate || this.activeStartDate,
+        view: nextState.view || this.view,
+      };
 
-      callIfDefined(onActiveStartDateChange, {
-        activeStartDate,
-        view,
-      });
+      if ('activeStartDate' in nextState) {
+        callIfDefined(onActiveStartDateChange, args);
+      }
+
+      if ('view' in nextState) {
+        callIfDefined(onViewChange, args);
+      }
+
+      if ('value' in nextState) {
+        if (!selectRange || !isSingleValue(nextState.value)) {
+          callIfDefined(onChange, nextState.value);
+        }
+      }
+
+      callIfDefined(callback, args);
     });
   }
 
   /**
    * Called when the user uses navigation buttons.
    */
-  setActiveStartDateAndView = (activeStartDate, view, callback) => {
-    const { onActiveStartDateChange, onViewChange } = this.props;
-
-    this.setState({ activeStartDate, view }, () => {
-      const args = {
-        activeStartDate,
-        view,
-      };
-      callIfDefined(onActiveStartDateChange, args);
-      callIfDefined(onViewChange, args);
-      callIfDefined(callback, args);
-    });
+  setActiveStartDate = (activeStartDate) => {
+    this.setStateAndCallCallbacks({ activeStartDate });
   }
 
   drillDown = (nextActiveStartDate, event) => {
@@ -265,7 +293,10 @@ export default class Calendar extends Component {
 
     const nextView = views[views.indexOf(view) + 1];
 
-    this.setActiveStartDateAndView(nextActiveStartDate, nextView, onDrillDown);
+    this.setStateAndCallCallbacks({
+      activeStartDate: nextActiveStartDate,
+      view: nextView,
+    }, onDrillDown);
   }
 
   drillUp = () => {
@@ -279,16 +310,18 @@ export default class Calendar extends Component {
     const nextView = views[views.indexOf(view) - 1];
     const nextActiveStartDate = getBegin(nextView, activeStartDate);
 
-    this.setActiveStartDateAndView(nextActiveStartDate, nextView, onDrillUp);
+    this.setStateAndCallCallbacks({
+      activeStartDate: nextActiveStartDate,
+      view: nextView,
+    }, onDrillUp);
   }
 
   onChange = (value, event) => {
-    const { onChange, selectRange } = this.props;
+    const { selectRange } = this.props;
 
     this.onClickTile(value, event);
 
     let nextValue;
-    let callback;
     if (selectRange) {
       // Range selection turned on
       const { value: previousValue, valueType } = this;
@@ -299,15 +332,21 @@ export default class Calendar extends Component {
       } else {
         // Second value
         nextValue = getValueRange(valueType, previousValue, value);
-        callback = () => callIfDefined(onChange, nextValue);
       }
     } else {
       // Range selection turned off
       nextValue = this.getProcessedValue(value);
-      callback = () => callIfDefined(onChange, nextValue);
     }
 
-    this.setState({ value: nextValue }, callback);
+    const nextActiveStartDate = getActiveStartDate({
+      ...this.props,
+      value: nextValue,
+    });
+
+    this.setStateAndCallCallbacks({
+      activeStartDate: nextActiveStartDate,
+      value: nextValue,
+    });
   }
 
   onClickTile = (value, event) => {
