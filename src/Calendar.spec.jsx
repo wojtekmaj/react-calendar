@@ -25,6 +25,94 @@ describe('Calendar', () => {
     expect(navigation).toHaveLength(0);
   });
 
+  it('uses given value when passed value using value prop', () => {
+    const component = shallow(
+      <Calendar value={new Date(2019, 0, 1)} />,
+    );
+
+    expect(component.instance().value).toEqual(new Date(2019, 0, 1));
+  });
+
+  it('uses given value when passed value using defaultValue prop', () => {
+    const component = shallow(
+      <Calendar defaultValue={new Date(2019, 0, 1)} />,
+    );
+
+    expect(component.instance().value).toEqual(new Date(2019, 0, 1));
+  });
+
+  it('renders given view when passed view using view prop', () => {
+    const component = shallow(
+      <Calendar view="century" />,
+    );
+
+    expect(component.instance().view).toBe('century');
+  });
+
+  it('renders given view when passed view using defaultView prop', () => {
+    const component = shallow(
+      <Calendar defaultView="century" />,
+    );
+
+    expect(component.instance().view).toBe('century');
+  });
+
+  it('renders given active start date when passed active start date using activeStartDate prop', () => {
+    const component = shallow(
+      <Calendar activeStartDate={new Date(2019, 0, 1)} />,
+    );
+
+    expect(component.instance().activeStartDate).toEqual(new Date(2019, 0, 1));
+  });
+
+  it('renders given active start date when passed active start date using activeStartDate prop', () => {
+    const component = shallow(
+      <Calendar defaultActiveStartDate={new Date(2019, 0, 1)} />,
+    );
+
+    expect(component.instance().activeStartDate).toEqual(new Date(2019, 0, 1));
+  });
+
+  it('changes activeStartDate when updating value via props change', () => {
+    const value = new Date(2018, 1, 15);
+    const newValue = new Date(2018, 0, 15);
+    const newActiveStartDate = new Date(2018, 0, 1);
+
+    const component = shallow(
+      <Calendar value={value} />,
+    );
+
+    component.setProps({ value: newValue });
+
+    expect(component.instance().activeStartDate).toEqual(newActiveStartDate);
+  });
+
+  it('changes activeStartDate when updating value via onChange', () => {
+    const value = new Date(2018, 1, 15);
+    const newValue = new Date(2018, 0, 15);
+    const newActiveStartDate = new Date(2018, 0, 1);
+
+    const component = shallow(
+      <Calendar value={value} />,
+    );
+
+    component.instance().onChange(newValue);
+
+    expect(component.instance().activeStartDate).toEqual(newActiveStartDate);
+  });
+
+  it('changes Calendar view given new activeStartDate value', () => {
+    const activeStartDate = new Date(2017, 0, 1);
+    const newActiveStartDate = new Date(2018, 0, 1);
+    const component = shallow(
+      <Calendar activeStartDate={activeStartDate} />,
+    );
+
+    component.setProps({ activeStartDate: newActiveStartDate });
+
+    expect(component.instance().activeStartDate).toEqual(newActiveStartDate);
+  });
+
   describe('renders views properly', () => {
     it('renders MonthView by default', () => {
       const component = shallow(
@@ -108,7 +196,6 @@ describe('Calendar', () => {
       );
 
       component.setProps({ view: 'month' });
-      component.update();
 
       const yearView = component.find('YearView');
 
@@ -254,15 +341,17 @@ describe('Calendar', () => {
   describe('handles drill up properly', () => {
     it('drills up when allowed', () => {
       const component = shallow(
-        <Calendar view="month" />,
+        <Calendar />,
       );
+
+      component.setState({ view: 'month' });
 
       component.instance().drillUp();
 
-      expect(component.state().view).toBe('year');
+      expect(component.instance().view).toBe('year');
     });
 
-    it('calls onDrillUp on drill up', () => {
+    it('calls onDrillUp on drill up properly given view prop', () => {
       const onDrillUp = jest.fn();
 
       const component = shallow(
@@ -272,6 +361,26 @@ describe('Calendar', () => {
           view="month"
         />,
       );
+
+      component.instance().drillUp();
+
+      expect(onDrillUp).toHaveBeenCalledWith({
+        activeStartDate: new Date(2017, 0, 1),
+        view: 'year',
+      });
+    });
+
+    it('calls onDrillUp on drill up properly when not given view prop', () => {
+      const onDrillUp = jest.fn();
+
+      const component = shallow(
+        <Calendar
+          activeStartDate={new Date(2017, 6, 1)}
+          onDrillUp={onDrillUp}
+        />,
+      );
+
+      component.setState({ view: 'month' });
 
       component.instance().drillUp();
 
@@ -300,15 +409,17 @@ describe('Calendar', () => {
   describe('handles drill down properly', () => {
     it('drills down when allowed', () => {
       const component = shallow(
-        <Calendar view="century" />,
+        <Calendar />,
       );
+
+      component.setState({ view: 'century' });
 
       component.instance().drillDown(new Date(2011, 0, 1));
 
-      expect(component.state().view).toBe('decade');
+      expect(component.instance().view).toBe('decade');
     });
 
-    it('calls onDrillDown on drill down', () => {
+    it('calls onDrillDown on drill down given view prop', () => {
       const onDrillDown = jest.fn();
 
       const component = shallow(
@@ -318,6 +429,26 @@ describe('Calendar', () => {
           view="century"
         />,
       );
+
+      component.instance().drillDown(new Date(2011, 0, 1));
+
+      expect(onDrillDown).toHaveBeenCalledWith({
+        activeStartDate: new Date(2011, 0, 1),
+        view: 'decade',
+      });
+    });
+
+    it('calls onDrillDown on drill down when not given view prop', () => {
+      const onDrillDown = jest.fn();
+
+      const component = shallow(
+        <Calendar
+          activeStartDate={new Date(2001, 0, 1)}
+          onDrillDown={onDrillDown}
+        />,
+      );
+
+      component.setState({ view: 'century' });
 
       component.instance().drillDown(new Date(2011, 0, 1));
 
@@ -351,7 +482,7 @@ describe('Calendar', () => {
 
       component.instance().setActiveStartDate(new Date(2019, 0, 1));
 
-      expect(component.state().activeStartDate).toEqual(new Date(2019, 0, 1));
+      expect(component.instance().activeStartDate).toEqual(new Date(2019, 0, 1));
     });
 
     it('calls onActiveStartDateChange on activeStartDate change', () => {
@@ -517,6 +648,21 @@ describe('Calendar', () => {
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
     });
 
+    it('does not call onChange function returning a range when selected one piece of a range', () => {
+      const onChange = jest.fn();
+      const component = shallow(
+        <Calendar
+          onChange={onChange}
+          selectRange
+          view="month"
+        />,
+      );
+
+      component.instance().onChange(new Date(2018, 0, 1));
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
     it('calls onChange function returning a range when selected two pieces of a range', () => {
       const onChange = jest.fn();
       const component = shallow(
@@ -556,20 +702,6 @@ describe('Calendar', () => {
         new Date(2018, 6, 1, 23, 59, 59, 999),
       ]);
     });
-  });
-
-  it('changes Calendar view given new activeStartDate value', () => {
-    const activeStartDate = new Date(2017, 0, 1);
-    const newActiveStartDate = new Date(2018, 0, 1);
-    const component = shallow(
-      <Calendar activeStartDate={activeStartDate} />,
-    );
-
-    component.setProps({ activeStartDate: newActiveStartDate });
-
-    const monthView = component.find('MonthView');
-
-    expect(monthView.prop('activeStartDate')).toEqual(newActiveStartDate);
   });
 
   it('passes formatMonthYear to Navigation component', () => {
