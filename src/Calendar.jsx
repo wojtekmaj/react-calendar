@@ -156,7 +156,7 @@ const isSingleValue = value => value && [].concat(value).length === 1;
 export default class Calendar extends Component {
   state = {
     /* eslint-disable react/destructuring-assignment */
-    activeStartDate: getInitialActiveStartDate(this.props),
+    activeStartDate: this.props.defaultActiveStartDate,
     value: this.props.defaultValue,
     view: this.props.defaultView,
     /* eslint-enable react/destructuring-assignment */
@@ -166,7 +166,7 @@ export default class Calendar extends Component {
     const { activeStartDate: activeStartDateProps } = this.props;
     const { activeStartDate: activeStartDateState } = this.state;
 
-    return activeStartDateProps || activeStartDateState;
+    return activeStartDateProps || activeStartDateState || getInitialActiveStartDate(this.props);
   }
 
   get value() {
@@ -254,10 +254,26 @@ export default class Calendar extends Component {
     this.setState({ activeStartDate }, () => {
       const { view } = this;
 
-      callIfDefined(onActiveStartDateChange, {
+      const args = {
         activeStartDate,
         view,
-      });
+      };
+      callIfDefined(onActiveStartDateChange, args);
+    });
+  }
+
+  setActiveStartDateAndValue = (activeStartDate, value, callback) => {
+    const { onActiveStartDateChange } = this.props;
+
+    this.setState({ activeStartDate, value }, () => {
+      const { view } = this;
+
+      const args = {
+        activeStartDate,
+        view,
+      };
+      callIfDefined(onActiveStartDateChange, args);
+      callIfDefined(callback, value);
     });
   }
 
@@ -337,8 +353,7 @@ export default class Calendar extends Component {
       value: nextValue,
     });
 
-    this.setState({ value: nextValue }, callback);
-    this.setActiveStartDate(nextActiveStartDate);
+    this.setActiveStartDateAndValue(nextActiveStartDate, nextValue, callback);
   }
 
   onClickTile = (value, event) => {
