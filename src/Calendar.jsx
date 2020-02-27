@@ -245,53 +245,40 @@ export default class Calendar extends Component {
     });
   }
 
+  setStateAndCallCallbacks = (nextState, callback) => {
+    const {
+      onActiveStartDateChange, onChange, onViewChange, selectRange,
+    } = this.props;
+
+    this.setState(nextState, () => {
+      const args = {
+        activeStartDate: nextState.activeStartDate || this.activeStartDate,
+        view: nextState.view || this.view,
+      };
+
+      if ('activeStartDate' in nextState) {
+        callIfDefined(onActiveStartDateChange, args);
+      }
+
+      if ('view' in nextState) {
+        callIfDefined(onViewChange, args);
+      }
+
+      if ('value' in nextState) {
+        if (!selectRange || !isSingleValue(nextState.value)) {
+          callIfDefined(onChange, nextState.value);
+        }
+      }
+
+      callIfDefined(callback, args);
+    });
+  }
+
   /**
    * Called when the user uses navigation buttons.
    */
   setActiveStartDate = (activeStartDate) => {
-    const { onActiveStartDateChange } = this.props;
-
-    this.setState({ activeStartDate }, () => {
-      const { view } = this;
-
-      const args = {
-        activeStartDate,
-        view,
-      };
-      callIfDefined(onActiveStartDateChange, args);
-    });
-  }
-
-  setActiveStartDateAndValue = (activeStartDate, value, callback) => {
-    const { onActiveStartDateChange } = this.props;
-
-    this.setState({ activeStartDate, value }, () => {
-      const { view } = this;
-
-      const args = {
-        activeStartDate,
-        view,
-      };
-      callIfDefined(onActiveStartDateChange, args);
-      callIfDefined(callback, value);
-    });
-  }
-
-  /**
-   * Called when the user uses navigation buttons.
-   */
-  setActiveStartDateAndView = (activeStartDate, view, callback) => {
-    const { onActiveStartDateChange, onViewChange } = this.props;
-
-    this.setState({ activeStartDate, view }, () => {
-      const args = {
-        activeStartDate,
-        view,
-      };
-      callIfDefined(onActiveStartDateChange, args);
-      callIfDefined(onViewChange, args);
-      callIfDefined(callback, args);
-    });
+    this.setStateAndCallCallbacks({ activeStartDate });
   }
 
   drillDown = (nextActiveStartDate, event) => {
@@ -306,7 +293,10 @@ export default class Calendar extends Component {
 
     const nextView = views[views.indexOf(view) + 1];
 
-    this.setActiveStartDateAndView(nextActiveStartDate, nextView, onDrillDown);
+    this.setStateAndCallCallbacks({
+      activeStartDate: nextActiveStartDate,
+      view: nextView,
+    }, onDrillDown);
   }
 
   drillUp = () => {
@@ -320,16 +310,18 @@ export default class Calendar extends Component {
     const nextView = views[views.indexOf(view) - 1];
     const nextActiveStartDate = getBegin(nextView, activeStartDate);
 
-    this.setActiveStartDateAndView(nextActiveStartDate, nextView, onDrillUp);
+    this.setStateAndCallCallbacks({
+      activeStartDate: nextActiveStartDate,
+      view: nextView,
+    }, onDrillUp);
   }
 
   onChange = (value, event) => {
-    const { onChange, selectRange } = this.props;
+    const { selectRange } = this.props;
 
     this.onClickTile(value, event);
 
     let nextValue;
-    let callback;
     if (selectRange) {
       // Range selection turned on
       const { value: previousValue, valueType } = this;
@@ -340,12 +332,10 @@ export default class Calendar extends Component {
       } else {
         // Second value
         nextValue = getValueRange(valueType, previousValue, value);
-        callback = () => callIfDefined(onChange, nextValue);
       }
     } else {
       // Range selection turned off
       nextValue = this.getProcessedValue(value);
-      callback = () => callIfDefined(onChange, nextValue);
     }
 
     const nextActiveStartDate = getActiveStartDate({
@@ -353,7 +343,10 @@ export default class Calendar extends Component {
       value: nextValue,
     });
 
-    this.setActiveStartDateAndValue(nextActiveStartDate, nextValue, callback);
+    this.setStateAndCallCallbacks({
+      activeStartDate: nextActiveStartDate,
+      value: nextValue,
+    });
   }
 
   onClickTile = (value, event) => {

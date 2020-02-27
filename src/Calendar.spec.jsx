@@ -351,7 +351,7 @@ describe('Calendar', () => {
       expect(component.instance().view).toBe('year');
     });
 
-    it('calls onDrillUp on drill up', () => {
+    it('calls onDrillUp on drill up properly given view prop', () => {
       const onDrillUp = jest.fn();
 
       const component = shallow(
@@ -361,6 +361,26 @@ describe('Calendar', () => {
           view="month"
         />,
       );
+
+      component.instance().drillUp();
+
+      expect(onDrillUp).toHaveBeenCalledWith({
+        activeStartDate: new Date(2017, 0, 1),
+        view: 'year',
+      });
+    });
+
+    it('calls onDrillUp on drill up properly when not given view prop', () => {
+      const onDrillUp = jest.fn();
+
+      const component = shallow(
+        <Calendar
+          activeStartDate={new Date(2017, 6, 1)}
+          onDrillUp={onDrillUp}
+        />,
+      );
+
+      component.setState({ view: 'month' });
 
       component.instance().drillUp();
 
@@ -399,7 +419,7 @@ describe('Calendar', () => {
       expect(component.instance().view).toBe('decade');
     });
 
-    it('calls onDrillDown on drill down', () => {
+    it('calls onDrillDown on drill down given view prop', () => {
       const onDrillDown = jest.fn();
 
       const component = shallow(
@@ -409,6 +429,26 @@ describe('Calendar', () => {
           view="century"
         />,
       );
+
+      component.instance().drillDown(new Date(2011, 0, 1));
+
+      expect(onDrillDown).toHaveBeenCalledWith({
+        activeStartDate: new Date(2011, 0, 1),
+        view: 'decade',
+      });
+    });
+
+    it('calls onDrillDown on drill down when not given view prop', () => {
+      const onDrillDown = jest.fn();
+
+      const component = shallow(
+        <Calendar
+          activeStartDate={new Date(2001, 0, 1)}
+          onDrillDown={onDrillDown}
+        />,
+      );
+
+      component.setState({ view: 'century' });
 
       component.instance().drillDown(new Date(2011, 0, 1));
 
@@ -606,6 +646,21 @@ describe('Calendar', () => {
       component.instance().onChange(new Date(2017, 0, 2));
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+    });
+
+    it('does not call onChange function returning a range when selected one piece of a range', () => {
+      const onChange = jest.fn();
+      const component = shallow(
+        <Calendar
+          onChange={onChange}
+          selectRange
+          view="month"
+        />,
+      );
+
+      component.instance().onChange(new Date(2018, 0, 1));
+
+      expect(onChange).not.toHaveBeenCalled();
     });
 
     it('calls onChange function returning a range when selected two pieces of a range', () => {
