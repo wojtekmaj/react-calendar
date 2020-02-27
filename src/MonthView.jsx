@@ -6,12 +6,7 @@ import Weekdays from './MonthView/Weekdays';
 import WeekNumbers from './MonthView/WeekNumbers';
 
 import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const';
-import {
-  isCalendarType,
-  isMaxDate,
-  isMinDate,
-  isValue,
-} from './shared/propTypes';
+import { isCalendarType } from './shared/propTypes';
 
 function getCalendarTypeFromLocale(locale) {
   return (
@@ -107,15 +102,8 @@ MonthView.propTypes = {
   calendarType: isCalendarType,
   formatShortWeekday: PropTypes.func,
   locale: PropTypes.string,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onChange: PropTypes.func,
   onClickWeekNumber: PropTypes.func,
   onMouseLeave: PropTypes.func,
-  setActiveRange: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
-  showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
-  value: isValue,
-  valueType: PropTypes.string,
 };
