@@ -474,7 +474,7 @@ describe('Navigation', () => {
     const date = new Date(2017, 0, 1);
     const label = 'Custom label';
     const view = 'month';
-    const locale = 'en-US';
+    const locale = 'de-DE';
 
     const navigationLabel = jest.fn().mockReturnValue(label);
 
