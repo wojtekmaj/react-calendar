@@ -137,7 +137,10 @@ export default function Navigation({
       >
         {navigationLabel
           ? navigationLabel({
-            locale: locale || getUserLocale(), date, view, label,
+            locale: locale || getUserLocale(),
+            date,
+            view,
+            label,
           })
           : label}
       </button>
