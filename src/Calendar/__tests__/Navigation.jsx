@@ -530,7 +530,7 @@ describe('Navigation', () => {
       locale,
       date,
       view,
-      label: 'January 2017',
+      label: 'Januar 2017',
     });
     expect(drillUp.props.children.toString()).toBe(label);
   });
