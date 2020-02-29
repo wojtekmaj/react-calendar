@@ -494,7 +494,7 @@ describe('Navigation', () => {
       locale,
       date,
       view,
-      label: 'January 2017',
+      label: 'Januar 2017',
     });
     expect(drillUp.text()).toBe(label);
   });
