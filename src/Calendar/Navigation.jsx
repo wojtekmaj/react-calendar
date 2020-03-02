@@ -113,10 +113,10 @@ export default function Navigation({
     return (
       navigationLabel
         ? navigationLabel({
-          locale: locale || getUserLocale(),
           date,
-          view,
           label,
+          locale: locale || getUserLocale(),
+          view,
         })
         : label
     );
