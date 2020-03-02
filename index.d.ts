@@ -21,7 +21,7 @@ declare module "react-calendar" {
     maxDetail?: Detail;
     minDate?: Date;
     minDetail?: Detail;
-    navigationLabel?: (props: { date: Date, view: Detail, label: string }) => string | JSX.Element | null;
+    navigationLabel?: (props: { locale: string, date: Date, view: Detail, label: string }) => string | JSX.Element | null;
     next2AriaLabel?: string;
     next2Label?: string | JSX.Element | null;
     nextAriaLabel?: string;
