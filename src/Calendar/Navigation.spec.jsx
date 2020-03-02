@@ -474,6 +474,7 @@ describe('Navigation', () => {
     const date = new Date(2017, 0, 1);
     const label = 'Custom label';
     const view = 'month';
+    const locale = 'de-DE';
 
     const navigationLabel = jest.fn().mockReturnValue(label);
 
@@ -481,6 +482,7 @@ describe('Navigation', () => {
       <Navigation
         {...defaultProps}
         activeStartDate={date}
+        locale={locale}
         navigationLabel={navigationLabel}
         view={view}
       />,
@@ -488,7 +490,12 @@ describe('Navigation', () => {
 
     const drillUp = component.find('.react-calendar__navigation__label');
 
-    expect(navigationLabel).toHaveBeenCalledWith({ date, view, label: 'January 2017' });
+    expect(navigationLabel).toHaveBeenCalledWith({
+      locale,
+      date,
+      view,
+      label: 'Januar 2017',
+    });
     expect(drillUp.text()).toBe(label);
   });
 
