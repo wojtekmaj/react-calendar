@@ -100,7 +100,7 @@ Displays a complete, interactive calendar.
 |calendarType|Type of calendar that should be used. Can be `"ISO 8601"`, `"US"`, `"Arabic"`, or `"Hebrew"`. Setting to `"US"` or `"Hebrew"` will change the first day of the week to Sunday. Setting to `"Arabic"` will change the first day of the week to Saturday. Setting to `"Arabic"` or `"Hebrew"` will make weekends appear on Friday to Saturday.|Type of calendar most commonly used in a given locale|`"ISO 8601"`|
 |className|Class name(s) that will be added along with `"react-calendar"` to the main React-Calendar `<div>` element.|n/a|<ul><li>String: `"class1 class2"`</li><li>Array of strings: `["class1", "class2 class3"]`</li></ul>|
 |defaultActiveStartDate|The beginning of a period that shall be displayed by default. If you wish to use React-Calendar in a controlled way, use `activeStartDate` instead.|(today)|`new Date(2017, 0, 1)`|
-|defaultValue|Calendar value that shall be selected initially. If you wish to use React-Calendar in a controlled way, use `value` instead.|n/a|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`|
+|defaultValue|Calendar value that shall be selected initially. Can be either one value or an array of two values. If you wish to use React-Calendar in a controlled way, use `value` instead.|n/a|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`|
 |defaultView|Determines which calendar view shall be opened initially. Does not disable navigation. Can be `"month"`, `"year"`, `"decade"` or `"century"`. If you wish to use React-Calendar in a controlled way, use `view` instead.|The most detailed view allowed|`"year"`|
 |formatLongDate|Function called to override default formatting of day tiles. Can be used to use your own formatting function.|(default formatter)|`(locale, date) => formatDate(date, 'dd MMM YYYY')`|
 |formatMonth|Function called to override default formatting of month names. Can be used to use your own formatting function.|(default formatter)|`(locale, date) => formatDate(date, 'MMM')`|
@@ -142,7 +142,7 @@ Displays a complete, interactive calendar.
 |tileClassName|Class name(s) that will be applied to a given calendar item (day on month view, month on year view and so on).|n/a|<ul><li>String: `"class1 class2"`</li><li>Array of strings: `["class1", "class2 class3"]`</li><li>Function: `({ activeStartDate, date, view }) => view === 'month' && date.getDay() === 3 ? 'wednesday' : null`</li></ul>|
 |tileContent|Allows to render custom content within a given calendar item (day on month view, month on year view and so on).|n/a|<ul><li>String: `"Sample"`</li><li>React element: `<TileContent />`</li><li>Function: `({ activeStartDate, date, view }) => view === 'month' && date.getDay() === 0 ? <p>It's Sunday!</p> : null`</li></ul>|
 |tileDisabled|Pass a function to determine if a certain day should be displayed as disabled.|n/a|<ul><li>Function: `({activeStartDate, date, view }) => date.getDay() === 0`</li></ul>|
-|value|Calendar value. If you wish to use React-Calendar in an uncontrolled way, use `defaultValue` instead.|n/a|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`|
+|value|Calendar value. Can be either one value or an array of two values. If you wish to use React-Calendar in an uncontrolled way, use `defaultValue` instead.|n/a|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`|
 |view|Determines which calendar view shall be opened. Does not disable navigation. Can be `"month"`, `"year"`, `"decade"` or `"century"`. If you wish to use React-Calendar in an uncontrolled way, use `defaultView` instead.|The most detailed view allowed|`"year"`|
 
 ### MonthView, YearView, DecadeView, CenturyView
@@ -160,7 +160,7 @@ Displays a given month, year, decade and a century, respectively.
 |onClick|Function called when the user clicks an item (day on month view, month on year view and so on).|n/a|`(value) => alert('New date is: ', value)`|
 |tileClassName|Class name(s) that will be applied to a given calendar item (day on month view, month on year view and so on).|n/a|<ul><li>String: `"class1 class2"`</li><li>Array of strings: `["class1", "class2 class3"]`</li><li>Function: `({ date, view }) => view === 'month' && date.getDay() === 3 ? 'saturday' : null`</li></ul>|
 |tileContent|Allows to render custom content within a given item (day on month view, month on year view and so on). Note: For tiles with custom content you might want to set fixed height of `react-calendar__tile` to ensure consistent layout.|n/a|`({ date, view }) => view === 'month' && date.getDay() === 0 ? <p>It's Sunday!</p> : null`|
-|value|Calendar value.|n/a|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`</li><li>String: `2017-01-01`</li><li>An array of strings: `['2017-01-01', '2017-08-01']`</li></ul>|
+|value|Calendar value. Can be either one value or an array of two values.|n/a|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`</li><li>String: `2017-01-01`</li><li>An array of strings: `['2017-01-01', '2017-08-01']`</li></ul>|
 
 ## License
 
