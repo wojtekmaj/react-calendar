@@ -59,9 +59,11 @@ export default function MonthView(props) {
   }
 
   function renderDays() {
+    const { weeksToShow } = props;
     return (
       <Days
         calendarType={calendarType}
+        weeksToShow={weeksToShow}
         {...childProps}
       />
     );
@@ -106,4 +108,5 @@ MonthView.propTypes = {
   onMouseLeave: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
+  weeksToShow: PropTypes.number,
 };

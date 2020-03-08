@@ -16,6 +16,7 @@ export default function Days(props) {
   const {
     activeStartDate,
     calendarType,
+    weeksToShow,
   } = props;
   const {
     showFixedNumberOfWeeks,
@@ -44,6 +45,10 @@ export default function Days(props) {
    * is set to true, we need to find the end of the week the last day of the month is in.
    */
   const end = (() => {
+    if (Number.isInteger(weeksToShow) && weeksToShow > 0) {
+      return start + (weeksToShow * 7) - 1;
+    }
+
     if (showFixedNumberOfWeeks) {
       // Always show 6 weeks
       return start + (6 * 7) - 1;
