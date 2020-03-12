@@ -155,13 +155,17 @@ export default function Navigation({
         style={{ flexGrow: 1 }}
         type="button"
       >
-        {renderLabel(activeStartDate)}
+        <span className={`${className}__activeStartDateLabel`}>
+          {renderLabel(activeStartDate)}
+        </span>
         {showDoubleView && (
           <>
-            {' '}
-            –
-            {' '}
-            {renderLabel(nextActiveStartDate)}
+            <span className={`${className}__doubleViewDatesSeparator`}>
+              -
+            </span>
+            <span className={`${className}__nextActiveStartDateLabel`}>
+              {renderLabel(nextActiveStartDate)}
+            </span>
           </>
         )}
       </button>
