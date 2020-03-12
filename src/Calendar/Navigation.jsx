@@ -162,7 +162,7 @@ export default function Navigation({
           <>
             <span className={`${className}__doubleViewDatesSeparator`}>
               {' '}
-              -
+              –
               {' '}
             </span>
             <span className={`${className}__nextActiveStartDateLabel`}>
