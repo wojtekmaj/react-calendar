@@ -1,39 +1,13 @@
 import { getRange } from './dates';
 
 /**
- * Calls a function, if it's defined, with specified arguments
- * @param {Function} fn
- * @param {Object} args
- */
-export const callIfDefined = (fn, ...args) => {
-  if (fn && typeof fn === 'function') {
-    fn(...args);
-  }
-};
-
-export const isValueWithinRange = (value, range) => (
-  range[0] <= value
-  && range[1] >= value
-);
-
-export const isRangeWithinRange = (greaterRange, smallerRange) => (
-  greaterRange[0] <= smallerRange[0]
-  && greaterRange[1] >= smallerRange[1]
-);
-
-export const doRangesOverlap = (range1, range2) => (
-  isValueWithinRange(range1[0], range2)
-  || isValueWithinRange(range1[1], range2)
-);
-
-/**
  * Returns a value no smaller than min and no larger than max.
  *
  * @param {*} value Value to return.
  * @param {*} min Minimum return value.
  * @param {*} max Maximum return value.
  */
-export const between = (value, min, max) => {
+export function between(value, min, max) {
   if (min && min > value) {
     return min;
   }
@@ -41,11 +15,43 @@ export const between = (value, min, max) => {
     return max;
   }
   return value;
-};
+}
 
-export const getTileClasses = ({
+/**
+ * Calls a function, if it's defined, with specified arguments
+ * @param {Function} fn
+ * @param {Object} args
+ */
+export function callIfDefined(fn, ...args) {
+  if (fn && typeof fn === 'function') {
+    fn(...args);
+  }
+}
+
+export function isValueWithinRange(value, range) {
+  return (
+    range[0] <= value
+    && range[1] >= value
+  );
+}
+
+export function isRangeWithinRange(greaterRange, smallerRange) {
+  return (
+    greaterRange[0] <= smallerRange[0]
+    && greaterRange[1] >= smallerRange[1]
+  );
+}
+
+export function doRangesOverlap(range1, range2) {
+  return (
+    isValueWithinRange(range1[0], range2)
+    || isValueWithinRange(range1[1], range2)
+  );
+}
+
+export function getTileClasses({
   value, valueType, date, dateType, hover,
-} = {}) => {
+} = {}) {
   const className = 'react-calendar__tile';
   const classes = [className];
 
@@ -111,4 +117,4 @@ export const getTileClasses = ({
   }
 
   return classes;
-};
+}
