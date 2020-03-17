@@ -90,6 +90,8 @@ Displays a complete, interactive calendar.
 |formatMonth|Function called to override default formatting of month names. Can be used to use your own formatting function.|(default formatter)|`(locale, date) => formatDate(date, 'MMM')`|
 |formatMonthYear|Function called to override default formatting of month and year in the top navigation section. Can be used to use your own formatting function.|(default formatter)|`(locale, date) => formatDate(date, 'MMMM YYYY')`|
 |formatShortWeekday|Function called to override default formatting of weekday names. Can be used to use your own formatting function.|(default formatter)|`(locale, date) => formatDate(date, 'dd')`|
+|hover|Date currently hovered, to bypass intern mechanism. If value is undefined, the default behaviour will be set|`undefined`|`Date` or `null` or `undefined`
+|keepUsingActiveStartDate|Always use the `activeStartDate` as the beginning of the period that should be displayed by default|`false`|`true` or `false`
 |locale|Locale that should be used by the calendar. Can be any [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag).|User's browser settings|`"hu-HU"`|
 |maxDate|Maximum date that the user can select. Periods partially overlapped by maxDate will also be selectable, although React-Calendar will ensure that no later date is selected.|n/a|Date: `new Date()`|
 |maxDetail|The most detailed view that the user shall see. View defined here also becomes the one on which clicking an item will select a date and pass it to onChange. Can be `"month"`, `"year"`, `"decade"` or `"century"`.|`"month"`|`"year"`|
@@ -110,6 +112,8 @@ Displays a complete, interactive calendar.
 |onClickYear|Function called when the user clicks a year.|n/a|`(value) => alert('Clicked year: ', value)`|
 |onDrillDown|Function called when the user drills down by clicking a tile.|n/a|`({ activeStartDate, view }) => alert('Drilled down to: ', activeStartDate, view)`|
 |onDrillUp|Function called when the user drills up by clicking drill up button.|n/a|`({ activeStartDate, view }) => alert('Drilled up to: ', activeStartDate, view)`|
+|onMouseOutTile|Function called when the user hovers on a tile|n/a|`(value) => alert('Hovered date: ', date)`
+|onMouseOverTile|Function called when the user moves out of the tiles|n/a|`() => alert('Out !')`
 |prevAriaLabel|`aria-label` attribute of the "previous" button on the navigation pane.|n/a|`"Previous"`|
 |prevLabel|Content of the "previous" button on the navigation pane.|`"‹"`|<ul><li>String: `"‹"`</li><li>React element: `<PreviousIcon />`</li></ul>|
 |prev2AriaLabel|`aria-label` attribute of the "previous on higher level" button on the navigation pane.|n/a|`"Jump backwards"`|

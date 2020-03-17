@@ -16,6 +16,8 @@ declare module "react-calendar" {
     formatMonth?: FormatterCallback;
     formatMonthYear?: FormatterCallback;
     formatShortWeekday?: FormatterCallback;
+    hover?: Date | null
+    keepUsingActiveStartDate?: boolean
     locale?: string;
     maxDate?: Date;
     maxDetail?: Detail;
@@ -35,6 +37,8 @@ declare module "react-calendar" {
     onClickYear?: DateCallback;
     onDrillDown?: ViewCallback;
     onDrillUp?: ViewCallback;
+    onMouseOverTile?: DateCallback;
+    onMouseOutTile?: () => void;
     prev2AriaLabel?: string;
     prev2Label?: string | JSX.Element | null;
     prevAriaLabel?: string;

@@ -135,6 +135,7 @@ const getDetailValueArray = (value, minDate, maxDate, maxDetail) => {
 const getActiveStartDate = (props) => {
   const {
     activeStartDate,
+    keepUsingActiveStartDate,
     maxDate,
     maxDetail,
     minDate,
@@ -144,11 +145,14 @@ const getActiveStartDate = (props) => {
   } = props;
 
   const rangeType = getView(view, minDetail, maxDetail);
-  const valueFrom = (
+
+  const valueFrom = keepUsingActiveStartDate ? (
+    activeStartDate
+    || getDetailValueFrom(value, minDate, maxDate, maxDetail)
+  ) : (
     getDetailValueFrom(value, minDate, maxDate, maxDetail)
     || activeStartDate
-    || new Date()
-  );
+  ) || new Date();
   return getBegin(rangeType, valueFrom);
 };
 
@@ -353,16 +357,21 @@ export default class Calendar extends Component {
   }
 
   onMouseOver = (value) => {
+    const { onMouseOverTile } = this.props;
+    callIfDefined(onMouseOverTile, value);
     this.setState((prevState) => {
       if (prevState.hover && (prevState.hover.getTime() === value.getTime())) {
         return null;
       }
+
 
       return { hover: value };
     });
   }
 
   onMouseLeave = () => {
+    const { onMouseOutTile } = this.props;
+    callIfDefined(onMouseOutTile);
     this.setState({ hover: null });
   }
 
@@ -377,15 +386,16 @@ export default class Calendar extends Component {
       tileClassName,
       tileContent,
       tileDisabled,
+      hover,
     } = this.props;
     const {
-      activeStartDate, hover, value, view,
+      activeStartDate, hover: hoverFromState, value, view,
     } = this.state;
     const { onMouseOver, valueType } = this;
 
     const commonProps = {
       activeStartDate,
-      hover,
+      hover: selectRange ? hover || hoverFromState : null,
       locale,
       maxDate,
       minDate,
@@ -541,6 +551,8 @@ export default class Calendar extends Component {
 }
 
 Calendar.defaultProps = {
+  hover: undefined,
+  keepUsingActiveStartDate: false,
   maxDetail: 'month',
   minDetail: 'century',
   returnValue: 'start',
@@ -556,6 +568,11 @@ Calendar.propTypes = {
   formatMonth: PropTypes.func,
   formatMonthYear: PropTypes.func,
   formatShortWeekday: PropTypes.func,
+  hover: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.oneOf([null]),
+  ]),
+  keepUsingActiveStartDate: PropTypes.bool,
   locale: PropTypes.string,
   maxDate: isMaxDate,
   maxDetail: PropTypes.oneOf(allViews),
@@ -576,6 +593,8 @@ Calendar.propTypes = {
   onClickYear: PropTypes.func,
   onDrillDown: PropTypes.func,
   onDrillUp: PropTypes.func,
+  onMouseOutTile: PropTypes.func,
+  onMouseOverTile: PropTypes.func,
   prev2AriaLabel: PropTypes.string,
   prev2Label: PropTypes.node,
   prevAriaLabel: PropTypes.string,

@@ -498,6 +498,29 @@ describe('Calendar', () => {
     expect(firstDayTileTimeAbbr).toBe(format(newActiveStartDate));
   });
 
+  it('does not changes Calendar view given new value', () => {
+    const getFirstDayTileLabel = (cmp) => {
+      const monthView = cmp.find('.react-calendar__month-view');
+      const firstDayTile = monthView.find('.react-calendar__tile').first();
+      const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
+      return firstDayTileTimeAbbr;
+    };
+
+    const activeStartDate = new Date(2017, 0, 1);
+    const expectedFirstDate = new Date(2016, 11, 26);
+    const nextValue = new Date(2017, 3, 1);
+
+    const component = mount(
+      <Calendar activeStartDate={activeStartDate} keepUsingActiveStartDate view="month" />
+    );
+
+    expect(getFirstDayTileLabel(component)).toBe(format(expectedFirstDate));
+
+    component.setProps({ value: nextValue });
+
+    expect(getFirstDayTileLabel(component)).toBe(format(expectedFirstDate));
+  });
+
   it('displays calendar with custom weekdays formatting', () => {
     const component = mount(
       <Calendar
@@ -509,6 +532,28 @@ describe('Calendar', () => {
     const firstWeekdayTile = monthView.find('.react-calendar__month-view__weekdays__weekday').first();
 
     expect(firstWeekdayTile.text()).toBe('Weekday');
+  });
+
+  it('calls onTileOver / onTileOut function if provided with the current hovered date', () => {
+    const onOver = jest.fn();
+    const onOut = jest.fn();
+
+    const component = mount(
+      <Calendar
+        onMouseOutTile={onOut}
+        onMouseOverTile={onOver}
+        selectRange
+        view="month"
+      />
+    );
+    const viewContainer = component.find('.react-calendar__viewContainer');
+    const monthView = component.find('.react-calendar__month-view');
+    const firstDayTile = monthView.find('.react-calendar__tile').first();
+    firstDayTile.simulate('mouseover');
+    viewContainer.simulate('mouseleave');
+
+    expect(onOver).toHaveBeenCalledTimes(1);
+    expect(onOut).toHaveBeenCalledTimes(1);
   });
 
   it('displays calendar with custom month year navigation label', () => {
