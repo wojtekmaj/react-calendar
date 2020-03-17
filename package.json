@@ -1,7 +1,7 @@
 {
-  "name": "react-calendar",
+  "name": "@jdmswong/react-calendar",
   "version": "3.0.0-beta.6",
-  "description": "Ultimate calendar for your React app.",
+  "description": "Ultimate calendar for your React app. Forked from react-calendar",
   "main": "dist/umd/index.js",
   "module": "dist/esm/index.js",
   "source": "src/index.js",
