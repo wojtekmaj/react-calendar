@@ -504,6 +504,64 @@ describe('Calendar', () => {
         view: 'year',
       });
     });
+
+    it('does not call onActiveStartDateChange on activeStartDate change if value is the same as before', () => {
+      const activeStartDate = new Date(2017, 0, 1);
+      const newActiveStartDate = activeStartDate;
+      const onActiveStartDateChange = jest.fn();
+      const component = shallow(
+        <Calendar
+          activeStartDate={activeStartDate}
+          onActiveStartDateChange={onActiveStartDateChange}
+          view="year"
+        />,
+      );
+
+      component.instance().setActiveStartDate(newActiveStartDate);
+
+      expect(onActiveStartDateChange).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('handles view change properly', () => {
+    it('calls onViewChange on view change', () => {
+      const activeStartDate = new Date(2017, 0, 1);
+      const view = 'year';
+      const newView = 'month';
+      const onViewChange = jest.fn();
+      const component = shallow(
+        <Calendar
+          activeStartDate={activeStartDate}
+          onViewChange={onViewChange}
+          view={view}
+        />,
+      );
+
+      component.instance().setStateAndCallCallbacks({ view: newView });
+
+      expect(onViewChange).toHaveBeenCalledWith({
+        activeStartDate,
+        view: newView,
+      });
+    });
+
+    it('does not call onViewChange on view change if value is the same as before', () => {
+      const activeStartDate = new Date(2017, 0, 1);
+      const view = 'year';
+      const newView = view;
+      const onViewChange = jest.fn();
+      const component = shallow(
+        <Calendar
+          activeStartDate={activeStartDate}
+          onViewChange={onViewChange}
+          view={view}
+        />,
+      );
+
+      component.instance().setStateAndCallCallbacks({ view: newView });
+
+      expect(onViewChange).not.toHaveBeenCalled();
+    });
   });
 
   describe('calls onChange properly', () => {

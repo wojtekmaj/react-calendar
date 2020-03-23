@@ -247,8 +247,18 @@ export default class Calendar extends Component {
 
   setStateAndCallCallbacks = (nextState, callback) => {
     const {
+      activeStartDate: previousActiveStartDate,
+      view: previousView,
+    } = this;
+
+    const {
       onActiveStartDateChange, onChange, onViewChange, selectRange,
     } = this.props;
+
+    const prevState = {
+      activeStartDate: previousActiveStartDate,
+      view: previousView,
+    };
 
     this.setState(nextState, () => {
       const args = {
@@ -256,15 +266,19 @@ export default class Calendar extends Component {
         view: nextState.view || this.view,
       };
 
-      if ('activeStartDate' in nextState) {
+      function shouldUpdate(key) {
+        return key in nextState && nextState[key] !== prevState[key];
+      }
+
+      if (shouldUpdate('activeStartDate')) {
         callIfDefined(onActiveStartDateChange, args);
       }
 
-      if ('view' in nextState) {
+      if (shouldUpdate('view')) {
         callIfDefined(onViewChange, args);
       }
 
-      if ('value' in nextState) {
+      if (shouldUpdate('value')) {
         if (!selectRange || !isSingleValue(nextState.value)) {
           callIfDefined(onChange, nextState.value);
         }
