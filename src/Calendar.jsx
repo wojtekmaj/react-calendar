@@ -255,7 +255,7 @@ export default class Calendar extends Component {
       onActiveStartDateChange, onChange, onViewChange, selectRange,
     } = this.props;
 
-    const prevState = {
+    const prevArgs = {
       activeStartDate: previousActiveStartDate,
       view: previousView,
     };
@@ -267,7 +267,20 @@ export default class Calendar extends Component {
       };
 
       function shouldUpdate(key) {
-        return key in nextState && nextState[key] !== prevState[key];
+        return (
+          // Key must exist, and…
+          key in nextState
+          && (
+            // …key changed from undefined to defined or the other way around, or…
+            typeof nextState[key] !== typeof prevArgs[key]
+            // …value changed.
+            || (
+              nextState[key] instanceof Date
+                ? nextState[key].getTime() !== prevArgs[key].getTime()
+                : nextState[key] !== prevArgs[key]
+            )
+          )
+        );
       }
 
       if (shouldUpdate('activeStartDate')) {
