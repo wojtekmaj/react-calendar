@@ -247,8 +247,18 @@ export default class Calendar extends Component {
 
   setStateAndCallCallbacks = (nextState, callback) => {
     const {
+      activeStartDate: previousActiveStartDate,
+      view: previousView,
+    } = this;
+
+    const {
       onActiveStartDateChange, onChange, onViewChange, selectRange,
     } = this.props;
+
+    const prevArgs = {
+      activeStartDate: previousActiveStartDate,
+      view: previousView,
+    };
 
     this.setState(nextState, () => {
       const args = {
@@ -256,15 +266,32 @@ export default class Calendar extends Component {
         view: nextState.view || this.view,
       };
 
-      if ('activeStartDate' in nextState) {
+      function shouldUpdate(key) {
+        return (
+          // Key must exist, and…
+          key in nextState
+          && (
+            // …key changed from undefined to defined or the other way around, or…
+            typeof nextState[key] !== typeof prevArgs[key]
+            // …value changed.
+            || (
+              nextState[key] instanceof Date
+                ? nextState[key].getTime() !== prevArgs[key].getTime()
+                : nextState[key] !== prevArgs[key]
+            )
+          )
+        );
+      }
+
+      if (shouldUpdate('activeStartDate')) {
         callIfDefined(onActiveStartDateChange, args);
       }
 
-      if ('view' in nextState) {
+      if (shouldUpdate('view')) {
         callIfDefined(onViewChange, args);
       }
 
-      if ('value' in nextState) {
+      if (shouldUpdate('value')) {
         if (!selectRange || !isSingleValue(nextState.value)) {
           callIfDefined(onChange, nextState.value);
         }
