@@ -61,6 +61,10 @@ export function getDayOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   }
 }
 
+export function getWeekOfMonth(date) {
+  return Math.floor((getDayOfWeek(date) + date.getDate() - 1) / 7);
+}
+
 /**
  * Century
  */

@@ -9,13 +9,14 @@ import {
 import TileGroup from '../TileGroup';
 import Day from './Day';
 
-import { getDayOfWeek } from '../shared/dates';
+import {getDayOfWeek, getWeekOfMonth} from '../shared/dates';
 import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 
 export default function Days(props) {
   const {
     activeStartDate,
     calendarType,
+    value,
     weeksToShow,
   } = props;
   const {
@@ -37,7 +38,8 @@ export default function Days(props) {
    * month, we obviously start on day one, but if showNeighboringMonth is set to
    * true, we need to find the beginning of the week the first day of the month is in.
    */
-  const start = (hasFixedNumberOfWeeks ? -dayOfWeek : 0) + 1;
+  const start = (weeksToShow ? (getWeekOfMonth(value) - 1) * 7 : 0)
+    + (hasFixedNumberOfWeeks ? -dayOfWeek : 0) + 1;
 
   /**
    * Defines on which day of the month the grid shall end. If we simply show current
