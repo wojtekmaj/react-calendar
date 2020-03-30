@@ -631,21 +631,6 @@ describe('Calendar', () => {
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
     });
 
-    it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
-      const onChange = jest.fn();
-      const component = shallow(
-        <Calendar
-          onChange={onChange}
-          returnValue="start"
-          view="month"
-        />,
-      );
-
-      component.instance().onChange(new Date(2017, 0, 1));
-
-      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
-    });
-
     it('calls onChange function returning the end of the selected period when returnValue is set to "end"', () => {
       const onChange = jest.fn();
       const component = shallow(
