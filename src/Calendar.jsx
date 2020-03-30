@@ -23,36 +23,39 @@ const allValueTypes = [...allViews.slice(1), 'day'];
 /**
  * Returns views array with disallowed values cut off.
  */
-const getLimitedViews = (minDetail, maxDetail) => allViews
-  .slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
+function getLimitedViews(minDetail, maxDetail) {
+  return allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
+}
 
 /**
  * Determines whether a given view is allowed with currently applied settings.
  */
-const isViewAllowed = (view, minDetail, maxDetail) => {
+function isViewAllowed(view, minDetail, maxDetail) {
   const views = getLimitedViews(minDetail, maxDetail);
 
   return views.indexOf(view) !== -1;
-};
+}
 
 /**
  * Gets either provided view if allowed by minDetail and maxDetail, or gets
  * the default view if not allowed.
  */
-const getView = (view, minDetail, maxDetail) => {
+function getView(view, minDetail, maxDetail) {
   if (isViewAllowed(view, minDetail, maxDetail)) {
     return view;
   }
 
   return maxDetail;
-};
+}
 
 /**
  * Returns value type that can be returned with currently applied settings.
  */
-const getValueType = maxDetail => allValueTypes[allViews.indexOf(maxDetail)];
+function getValueType(maxDetail) {
+  return allValueTypes[allViews.indexOf(maxDetail)];
+}
 
-const getValue = (value, index) => {
+function getValue(value, index) {
   if (!value) {
     return null;
   }
@@ -70,11 +73,11 @@ const getValue = (value, index) => {
   }
 
   return valueDate;
-};
+}
 
-const getDetailValue = ({
+function getDetailValue({
   value, minDate, maxDate, maxDetail,
-}, index) => {
+}, index) {
   const valuePiece = getValue(value, index);
 
   if (!valuePiece) {
@@ -85,7 +88,7 @@ const getDetailValue = ({
   const detailValueFrom = [getBegin, getEnd][index](valueType, valuePiece);
 
   return between(detailValueFrom, minDate, maxDate);
-};
+}
 
 const getDetailValueFrom = args => getDetailValue(args, 0);
 
@@ -229,14 +232,10 @@ export default class Calendar extends Component {
 
     const processFunction = (() => {
       switch (returnValue) {
-        case 'start':
-          return getDetailValueFrom;
-        case 'end':
-          return getDetailValueTo;
-        case 'range':
-          return getDetailValueArray;
-        default:
-          throw new Error('Invalid returnValue.');
+        case 'start': return getDetailValueFrom;
+        case 'end': return getDetailValueTo;
+        case 'range': return getDetailValueArray;
+        default: throw new Error('Invalid returnValue.');
       }
     })();
 
