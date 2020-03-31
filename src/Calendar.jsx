@@ -439,7 +439,7 @@ export default class Calendar extends Component {
     const activeStartDate = (
       next
         ? getBeginNext(view, currentActiveStartDate)
-        : currentActiveStartDate
+        : getBegin(view, currentActiveStartDate)
     );
 
     const onClick = this.drillDownAvailable ? this.drillDown : this.onChange;
