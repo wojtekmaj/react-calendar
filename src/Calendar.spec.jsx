@@ -1,8 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { getMonthStart } from '@wojtekmaj/date-utils';
 
 import Calendar from './Calendar';
+
+const { format } = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
 describe('Calendar', () => {
   it('renders Navigation by default', () => {
@@ -336,6 +338,32 @@ describe('Calendar', () => {
 
       expect(monthView.prop('activeStartDate')).toEqual(beginOfCurrentMonth);
     });
+
+    it('displays days on the correct weekdays when given a defaultActiveStartDate', () => {
+      const defaultActiveStartDate = new Date(2012, 5, 6)
+      const component = mount(
+        <Calendar defaultActiveStartDate={defaultActiveStartDate}/>
+      );
+
+      const firstDayTile = component.find('.react-calendar__tile').first();
+      const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
+  
+      // The date of the first Monday that this calendar should show is May 28, 2012.
+      expect(firstDayTileTimeAbbr).toBe(format(new Date(2012, 4, 28)));
+    })
+
+    it('displays days on the correct weekdays when given an activeStartDate', () => {
+      const activeStartDate = new Date(2012, 5, 6)
+      const component = mount(
+        <Calendar activeStartDate={activeStartDate}/>
+      );
+
+      const firstDayTile = component.find('.react-calendar__tile').first();
+      const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
+  
+      // The date of the first Monday that this calendar should show is May 28, 2012.
+      expect(firstDayTileTimeAbbr).toBe(format(new Date(2012, 4, 28)));
+    })
   });
 
   describe('handles drill up properly', () => {
