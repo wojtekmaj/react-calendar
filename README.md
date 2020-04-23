@@ -115,9 +115,9 @@ Displays a complete, interactive calendar.
 |navigationAriaLabel|`aria-label` attribute of a label rendered on calendar navigation bar.|n/a|`"Go up"`|
 |navigationLabel|Content of a label rendered on calendar navigation bar.|(default label)|``({ date, label, locale, view }) => `Current view: ${view}, date: ${date.toLocaleDateString(locale)}` ``|
 |nextAriaLabel|`aria-label` attribute of the "next" button on the navigation pane.|n/a|`"Next"`|
-|nextLabel|Content of the "next" button on the navigation pane.|`"›"`|<ul><li>String: `"›"`</li><li>React element: `<NextIcon />`</li></ul>|
+|nextLabel|Content of the "next" button on the navigation pane. Setting the value explicitly to null will hide the icon.|`"›"`|<ul><li>String: `"›"`</li><li>React element: `<NextIcon />`</li></ul>|
 |next2AriaLabel|`aria-label` attribute of the "next on higher level" button on the navigation pane.|n/a|`"Jump forwards"`|
-|next2Label|Content of the "next on higher level" button on the navigation pane.|`"»"`|<ul><li>String: `"»"`</li><li>React element: `<DoubleNextIcon />`</li></ul>|
+|next2Label|Content of the "next on higher level" button on the navigation pane. Setting the value explicitly to null will hide the icon.|`"»"`|<ul><li>String: `"»"`</li><li>React element: `<DoubleNextIcon />`</li></ul>|
 |onActiveStartDateChange|Function called when the user navigates from one view to another using previous/next button.|n/a|`({ activeStartDate, view }) => alert('Changed view to: ', activeStartDate, view)`|
 |onChange|Function called when the user clicks an item (day on month view, month on year view and so on) on the most detailed view available.|n/a|`(value, event) => alert('New date is: ', value)`|
 |onViewChange|Function called when the user navigates from one view to another using drill up button or by clicking a tile.|n/a|`({ activeStartDate, view }) => alert('New view is: ', view)`|
@@ -129,9 +129,9 @@ Displays a complete, interactive calendar.
 |onDrillDown|Function called when the user drills down by clicking a tile.|n/a|`({ activeStartDate, view }) => alert('Drilled down to: ', activeStartDate, view)`|
 |onDrillUp|Function called when the user drills up by clicking drill up button.|n/a|`({ activeStartDate, view }) => alert('Drilled up to: ', activeStartDate, view)`|
 |prevAriaLabel|`aria-label` attribute of the "previous" button on the navigation pane.|n/a|`"Previous"`|
-|prevLabel|Content of the "previous" button on the navigation pane.|`"‹"`|<ul><li>String: `"‹"`</li><li>React element: `<PreviousIcon />`</li></ul>|
+|prevLabel|Content of the "previous" button on the navigation pane. Setting the value explicitly to null will hide the icon.|`"‹"`|<ul><li>String: `"‹"`</li><li>React element: `<PreviousIcon />`</li></ul>|
 |prev2AriaLabel|`aria-label` attribute of the "previous on higher level" button on the navigation pane.|n/a|`"Jump backwards"`|
-|prev2Label|Content of the "previous on higher level" button on the navigation pane.| `"«"`|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
+|prev2Label|Content of the "previous on higher level" button on the navigation pane. Setting the value explicitly to null will hide the icon.| `"«"`|<ul><li>String: `"«"`</li><li>React element: `<DoublePreviousIcon />`</li></ul>|
 |returnValue|Which dates shall be passed by the calendar to the onChange function and onClick{Period} functions. Can be `"start"`, `"end"` or `"range"`. The latter will cause an array with start and end values to be passed.|`"start"`|`"range"`|
 |showDoubleView|Whether to show two months/years/… at a time instead of one. Forces `showFixedNumberOfWeeks` prop to be `true`.|`false`|`true`|
 |showFixedNumberOfWeeks|Whether to always show fixed number of weeks (6). Forces `showNeighboringMonth` prop to be `true`.|`false`|`true`|
