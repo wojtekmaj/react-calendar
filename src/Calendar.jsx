@@ -14,7 +14,7 @@ import {
 import {
   isCalendarType, isClassName, isMaxDate, isMinDate, isValue, isView,
 } from './shared/propTypes';
-import { between, callIfDefined } from './shared/utils';
+import { between } from './shared/utils';
 
 const baseClassName = 'react-calendar';
 const allViews = ['century', 'decade', 'year', 'month'];
@@ -283,20 +283,20 @@ export default class Calendar extends Component {
       }
 
       if (shouldUpdate('activeStartDate')) {
-        callIfDefined(onActiveStartDateChange, args);
+        if (onActiveStartDateChange) onActiveStartDateChange(args);
       }
 
       if (shouldUpdate('view')) {
-        callIfDefined(onViewChange, args);
+        if (onViewChange) onViewChange(args);
       }
 
       if (shouldUpdate('value')) {
         if (!selectRange || !isSingleValue(nextState.value)) {
-          callIfDefined(onChange, nextState.value);
+          if (onChange) onChange(nextState.value);
         }
       }
 
-      callIfDefined(callback, args);
+      if (callback) callback(args);
     });
   }
 
@@ -399,7 +399,7 @@ export default class Calendar extends Component {
       }
     })();
 
-    callIfDefined(callback, value, event);
+    if (callback) callback(value, event);
   }
 
   onMouseOver = (value) => {

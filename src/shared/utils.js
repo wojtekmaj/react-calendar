@@ -17,17 +17,6 @@ export function between(value, min, max) {
   return value;
 }
 
-/**
- * Calls a function, if it's defined, with specified arguments
- * @param {Function} fn
- * @param {Object} args
- */
-export function callIfDefined(fn, ...args) {
-  if (fn && typeof fn === 'function') {
-    fn(...args);
-  }
-}
-
 export function isValueWithinRange(value, range) {
   return (
     range[0] <= value
