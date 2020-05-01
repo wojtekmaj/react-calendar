@@ -4,7 +4,6 @@ import {
   isRangeWithinRange,
   doRangesOverlap,
   getTileClasses,
-  callIfDefined,
 } from './utils';
 
 describe('between', () => {
@@ -40,18 +39,6 @@ describe('between', () => {
     const result = between(value, null, undefined);
 
     expect(result).toBe(value);
-  });
-});
-
-describe('callIfDefined', () => {
-  it('calls given function if defined', () => {
-    const fn = jest.fn();
-    const arg1 = 'hi';
-    const arg2 = 'hello';
-
-    callIfDefined(fn, arg1, arg2);
-
-    expect(fn).toHaveBeenCalledWith(arg1, arg2);
   });
 });
 
