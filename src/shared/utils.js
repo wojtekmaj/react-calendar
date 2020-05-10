@@ -90,6 +90,27 @@ export function getTileClasses({
     classes.push(`${className}--hover`);
   }
 
+  if (hover) {
+    const hoverRange = [
+      Math.min(valueRange[0], hover),
+      Math.max(valueRange[1], hover),
+    ];
+    const isHoverRangeStart = isValueWithinRange(hoverRange[0], dateRange);
+    const isHoverRangeEnd = isValueWithinRange(hoverRange[1], dateRange);
+
+    if (isHoverRangeStart) {
+      classes.push(`${className}--hoverRangeStart`);
+    }
+
+    if (isHoverRangeEnd) {
+      classes.push(`${className}--hoverRangeEnd`);
+    }
+
+    if (isHoverRangeStart && isHoverRangeEnd) {
+      classes.push(`${className}--hoverRangeBothEnds`);
+    }
+  }
+
   const isRangeStart = isValueWithinRange(valueRange[0], dateRange);
   const isRangeEnd = isValueWithinRange(valueRange[1], dateRange);
 
