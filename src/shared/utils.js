@@ -38,6 +38,33 @@ export function doRangesOverlap(range1, range2) {
   );
 }
 
+function getRangeClassNames(valueRange, dateRange, baseClassName) {
+  const isRange = doRangesOverlap(dateRange, valueRange);
+
+  const classes = [];
+
+  if (isRange) {
+    classes.push(baseClassName);
+
+    const isRangeStart = isValueWithinRange(valueRange[0], dateRange);
+    const isRangeEnd = isValueWithinRange(valueRange[1], dateRange);
+
+    if (isRangeStart) {
+      classes.push(`${baseClassName}Start`);
+    }
+
+    if (isRangeEnd) {
+      classes.push(`${baseClassName}End`);
+    }
+
+    if (isRangeStart && isRangeEnd) {
+      classes.push(`${baseClassName}BothEnds`);
+    }
+  }
+
+  return classes;
+}
+
 export function getTileClasses({
   value, valueType, date, dateType, hover,
 } = {}) {
@@ -73,36 +100,17 @@ export function getTileClasses({
     classes.push(`${className}--active`);
   } else if (doRangesOverlap(valueRange, dateRange)) {
     classes.push(`${className}--hasActive`);
-  } else if (
-    hover && (
-      // Date before value
-      (
-        dateRange[1] < valueRange[0]
-        && doRangesOverlap(dateRange, [hover, valueRange[0]])
-      )
-      // Date after value
-      || (
-        dateRange[0] > valueRange[1]
-        && doRangesOverlap(dateRange, [valueRange[1], hover])
-      )
-    )
-  ) {
-    classes.push(`${className}--hover`);
   }
 
-  const isRangeStart = isValueWithinRange(valueRange[0], dateRange);
-  const isRangeEnd = isValueWithinRange(valueRange[1], dateRange);
+  const valueRangeClassNames = getRangeClassNames(valueRange, dateRange, `${className}--range`);
 
-  if (isRangeStart) {
-    classes.push(`${className}--rangeStart`);
-  }
+  classes.push(...valueRangeClassNames);
 
-  if (isRangeEnd) {
-    classes.push(`${className}--rangeEnd`);
-  }
+  if (hover) {
+    const hoverRange = hover > valueRange[1] ? [valueRange[1], hover] : [hover, valueRange[0]];
+    const hoverRangeClassNames = getRangeClassNames(hoverRange, dateRange, `${className}--hover`);
 
-  if (isRangeStart && isRangeEnd) {
-    classes.push(`${className}--rangeBothEnds`);
+    classes.push(...hoverRangeClassNames);
   }
 
   return classes;
