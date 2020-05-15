@@ -154,7 +154,7 @@ function getInitialActiveStartDate(props) {
   });
 }
 
-const isSingleValue = value => value && [].concat(value).length === 1;
+const getIsSingleValue = value => value && [].concat(value).length === 1;
 
 export default class Calendar extends Component {
   state = {
@@ -177,7 +177,7 @@ export default class Calendar extends Component {
     const { value: valueState } = this.state;
 
     // In the middle of range selection, use value from state
-    if (selectRange && isSingleValue(valueState)) {
+    if (selectRange && getIsSingleValue(valueState)) {
       return valueState;
     }
 
@@ -251,7 +251,11 @@ export default class Calendar extends Component {
     } = this;
 
     const {
-      onActiveStartDateChange, onChange, onViewChange, selectRange,
+      allowPartialRange,
+      onActiveStartDateChange,
+      onChange,
+      onViewChange,
+      selectRange,
     } = this.props;
 
     const prevArgs = {
@@ -291,8 +295,18 @@ export default class Calendar extends Component {
       }
 
       if (shouldUpdate('value')) {
-        if (!selectRange || !isSingleValue(nextState.value)) {
-          if (onChange) onChange(nextState.value);
+        if (onChange) {
+          if (selectRange) {
+            const isSingleValue = getIsSingleValue(nextState.value);
+
+            if (!isSingleValue) {
+              onChange(nextState.value);
+            } else if (allowPartialRange) {
+              onChange([nextState.value]);
+            }
+          } else {
+            onChange(nextState.value);
+          }
         }
       }
 
@@ -351,7 +365,7 @@ export default class Calendar extends Component {
     if (selectRange) {
       // Range selection turned on
       const { value: previousValue, valueType } = this;
-      if (!isSingleValue(previousValue)) {
+      if (!getIsSingleValue(previousValue)) {
         // Value has 0 or 2 elements - either way we're starting a new array
         // First value
         nextValue = getBegin(valueType, value);
@@ -620,6 +634,7 @@ const isLooseValue = PropTypes.oneOfType([
 
 Calendar.propTypes = {
   activeStartDate: isActiveStartDate,
+  allowPartialRange: PropTypes.bool,
   calendarType: isCalendarType,
   className: isClassName,
   defaultActiveStartDate: isActiveStartDate,
