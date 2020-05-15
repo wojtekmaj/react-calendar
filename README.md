@@ -51,26 +51,20 @@ Add React-Calendar to your project by executing `npm install react-calendar` or 
 Here's an example of basic usage:
 
 ```js
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 
-class MyApp extends Component {
-  state = {
-    date: new Date(),
-  }
+function MyApp() {
+  const [value, onChange] = useState(new Date());
 
-  onChange = date => this.setState({ date })
-
-  render() {
-    return (
-      <div>
-        <Calendar
-          onChange={this.onChange}
-          value={this.state.date}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Calendar
+        onChange={onChange}
+        value={value}
+      />
+    </div>
+  );
 }
 ```
 
