@@ -756,7 +756,7 @@ describe('Calendar', () => {
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
     });
 
-    it('does not call onChange function returning a range when selected one piece of a range', () => {
+    it('does not call onChange function returning a range when selected one piece of a range by default', () => {
       const onChange = jest.fn();
       const component = shallow(
         <Calendar
@@ -769,6 +769,41 @@ describe('Calendar', () => {
       component.instance().onChange(new Date(2018, 0, 1));
 
       expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('does not call onChange function returning a range when selected one piece of a range given allowPartialRange = false', () => {
+      const onChange = jest.fn();
+      const component = shallow(
+        <Calendar
+          allowPartialRange={false}
+          onChange={onChange}
+          selectRange
+          view="month"
+        />,
+      );
+
+      component.instance().onChange(new Date(2018, 0, 1));
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('calls onChange function returning a partial range when selected one piece of a range given allowPartialRange = true', () => {
+      const onChange = jest.fn();
+      const component = shallow(
+        <Calendar
+          allowPartialRange
+          onChange={onChange}
+          selectRange
+          view="month"
+        />,
+      );
+
+      component.instance().onChange(new Date(2018, 0, 1));
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledWith([
+        new Date(2018, 0, 1),
+      ]);
     });
 
     it('calls onChange function returning a range when selected two pieces of a range', () => {
