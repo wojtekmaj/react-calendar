@@ -435,7 +435,6 @@ export default class Calendar extends Component {
           showFixedNumberOfWeeks,
           showNeighboringMonth,
           showWeekNumbers,
-          selectRange
         } = this.props;
         const { onMouseLeave } = this;
 
