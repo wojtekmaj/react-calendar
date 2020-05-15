@@ -122,6 +122,36 @@ export default function Navigation({
     );
   }
 
+  function renderButton() {
+    const labelClassName = `${className}__label`;
+    return (
+      <button
+        aria-label={navigationAriaLabel}
+        className={labelClassName}
+        disabled={!drillUpAvailable}
+        onClick={drillUp}
+        style={{ flexGrow: 1 }}
+        type="button"
+      >
+        <span className={`${labelClassName}__labelText ${labelClassName}__labelText--from`}>
+          {renderLabel(activeStartDate)}
+        </span>
+        {showDoubleView && (
+          <>
+            <span className={`${labelClassName}__divider`}>
+              {' '}
+              –
+              {' '}
+            </span>
+            <span className={`${labelClassName}__labelText ${labelClassName}__labelText--to`}>
+              {renderLabel(nextActiveStartDate)}
+            </span>
+          </>
+        )}
+      </button>
+    );
+  }
+
   return (
     <div
       className={className}
@@ -147,24 +177,7 @@ export default function Navigation({
       >
         {prevLabel}
       </button>
-      <button
-        aria-label={navigationAriaLabel}
-        className={`${className}__label`}
-        disabled={!drillUpAvailable}
-        onClick={drillUp}
-        style={{ flexGrow: 1 }}
-        type="button"
-      >
-        {renderLabel(activeStartDate)}
-        {showDoubleView && (
-          <>
-            {' '}
-            –
-            {' '}
-            {renderLabel(nextActiveStartDate)}
-          </>
-        )}
-      </button>
+      {renderButton()}
       <button
         aria-label={nextAriaLabel}
         className={`${className}__arrow ${className}__next-button`}
