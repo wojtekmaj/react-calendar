@@ -634,6 +634,7 @@ const isLooseValue = PropTypes.oneOfType([
 
 Calendar.propTypes = {
   activeStartDate: isActiveStartDate,
+  allowPartialRange: PropTypes.bool,
   calendarType: isCalendarType,
   className: isClassName,
   defaultActiveStartDate: isActiveStartDate,
