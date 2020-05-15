@@ -224,34 +224,6 @@ describe('getTileClasses', () => {
     expect(result.includes('react-calendar__tile--hover')).toBe(false);
   });
 
-  it('returns hover flag set to true when passed a date between value and hover (1)', () => {
-    const result = getTileClasses({
-      value: new Date(2017, 6, 1),
-      valueType: 'month',
-      date: new Date(2017, 3, 1),
-      dateType: 'month',
-      hover: new Date(2017, 0, 1),
-    });
-
-    expect(result.includes('react-calendar__tile--active')).toBe(false);
-    expect(result.includes('react-calendar__tile--hasActive')).toBe(false);
-    expect(result.includes('react-calendar__tile--hover')).toBe(true);
-  });
-
-  it('returns hover flag set to true when passed a date between value and hover (2)', () => {
-    const result = getTileClasses({
-      value: new Date(2017, 0, 1),
-      valueType: 'month',
-      date: new Date(2017, 3, 1),
-      dateType: 'month',
-      hover: new Date(2017, 6, 1),
-    });
-
-    expect(result.includes('react-calendar__tile--active')).toBe(false);
-    expect(result.includes('react-calendar__tile--hasActive')).toBe(false);
-    expect(result.includes('react-calendar__tile--hover')).toBe(true);
-  });
-
   it('returns all flags set to false when given value completely unrelated to date', () => {
     const result = getTileClasses({
       value: new Date(2017, 6, 1),
@@ -262,6 +234,104 @@ describe('getTileClasses', () => {
 
     expect(result.includes('react-calendar__tile--active')).toBe(false);
     expect(result.includes('react-calendar__tile--hasActive')).toBe(false);
-    expect(result.includes('react-calendar__tile--hover')).toBe(false);
+  });
+
+  describe('range classes', () => {
+    it('returns range flag set to true when passed a date within value array', () => {
+      const result = getTileClasses({
+        value: [new Date(2017, 0, 1), new Date(2017, 6, 1)],
+        valueType: 'month',
+        date: new Date(2017, 3, 1),
+        dateType: 'month',
+      });
+
+      expect(result.includes('react-calendar__tile--range')).toBe(true);
+      expect(result.includes('react-calendar__tile--rangeStart')).toBe(false);
+      expect(result.includes('react-calendar__tile--rangeEnd')).toBe(false);
+    });
+
+    it('returns range & rangeStart flags set to true when passed a date equal to value start', () => {
+      const result = getTileClasses({
+        value: [new Date(2017, 0, 1), new Date(2017, 6, 1)],
+        valueType: 'month',
+        date: new Date(2017, 0, 1),
+        dateType: 'month',
+      });
+
+      expect(result.includes('react-calendar__tile--range')).toBe(true);
+      expect(result.includes('react-calendar__tile--rangeStart')).toBe(true);
+      expect(result.includes('react-calendar__tile--rangeEnd')).toBe(false);
+    });
+
+    it('returns range & rangeEnd flags set to true when passed a date equal to value end', () => {
+      const result = getTileClasses({
+        value: [new Date(2017, 0, 1), new Date(2017, 6, 1)],
+        valueType: 'month',
+        date: new Date(2017, 6, 1),
+        dateType: 'month',
+      });
+
+      expect(result.includes('react-calendar__tile--range')).toBe(true);
+      expect(result.includes('react-calendar__tile--rangeStart')).toBe(false);
+      expect(result.includes('react-calendar__tile--rangeEnd')).toBe(true);
+    });
+  });
+
+  describe('hover classes', () => {
+    it('returns hover flag set to true when passed a date between value and hover (1)', () => {
+      const result = getTileClasses({
+        value: new Date(2017, 6, 1),
+        valueType: 'month',
+        date: new Date(2017, 3, 1),
+        dateType: 'month',
+        hover: new Date(2017, 0, 1),
+      });
+
+      expect(result.includes('react-calendar__tile--hover')).toBe(true);
+      expect(result.includes('react-calendar__tile--hoverStart')).toBe(false);
+      expect(result.includes('react-calendar__tile--hoverEnd')).toBe(false);
+    });
+
+    it('returns hover flag set to true when passed a date between value and hover (2)', () => {
+      const result = getTileClasses({
+        value: new Date(2017, 0, 1),
+        valueType: 'month',
+        date: new Date(2017, 3, 1),
+        dateType: 'month',
+        hover: new Date(2017, 6, 1),
+      });
+
+      expect(result.includes('react-calendar__tile--hover')).toBe(true);
+      expect(result.includes('react-calendar__tile--hoverStart')).toBe(false);
+      expect(result.includes('react-calendar__tile--hoverEnd')).toBe(false);
+    });
+
+    it('returns hover & hoverStart flags set to true when passed a date equal to hover', () => {
+      const result = getTileClasses({
+        value: new Date(2017, 0, 1),
+        valueType: 'month',
+        date: new Date(2017, 0, 1),
+        dateType: 'month',
+        hover: new Date(2017, 6, 1),
+      });
+
+      expect(result.includes('react-calendar__tile--hover')).toBe(true);
+      expect(result.includes('react-calendar__tile--hoverStart')).toBe(true);
+      expect(result.includes('react-calendar__tile--hoverEnd')).toBe(false);
+    });
+
+    it('returns hover & hoverEnd flags set to true when passed a date equal to hover', () => {
+      const result = getTileClasses({
+        value: new Date(2017, 0, 1),
+        valueType: 'month',
+        date: new Date(2017, 6, 1),
+        dateType: 'month',
+        hover: new Date(2017, 6, 1),
+      });
+
+      expect(result.includes('react-calendar__tile--hover')).toBe(true);
+      expect(result.includes('react-calendar__tile--hoverStart')).toBe(false);
+      expect(result.includes('react-calendar__tile--hoverEnd')).toBe(true);
+    });
   });
 });
