@@ -97,6 +97,7 @@ Displays a complete, interactive calendar.
 |Prop name|Description|Default value|Example values|
 |----|----|----|----|
 |activeStartDate|The beginning of a period that shall be displayed. If you wish to use React-Calendar in an uncontrolled way, use `defaultActiveStartDate` instead.|(today)|`new Date(2017, 0, 1)`|
+|allowPartialRange|Whether to call onChange with only partial result given `selectRange` prop.|`false`|`true`|
 |calendarType|Type of calendar that should be used. Can be `"ISO 8601"`, `"US"`, `"Arabic"`, or `"Hebrew"`. Setting to `"US"` or `"Hebrew"` will change the first day of the week to Sunday. Setting to `"Arabic"` will change the first day of the week to Saturday. Setting to `"Arabic"` or `"Hebrew"` will make weekends appear on Friday to Saturday.|Type of calendar most commonly used in a given locale|`"ISO 8601"`|
 |className|Class name(s) that will be added along with `"react-calendar"` to the main React-Calendar `<div>` element.|n/a|<ul><li>String: `"class1 class2"`</li><li>Array of strings: `["class1", "class2 class3"]`</li></ul>|
 |defaultActiveStartDate|The beginning of a period that shall be displayed by default. If you wish to use React-Calendar in a controlled way, use `activeStartDate` instead.|(today)|`new Date(2017, 0, 1)`|
