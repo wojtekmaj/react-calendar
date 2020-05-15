@@ -523,7 +523,7 @@ export default class Calendar extends Component {
             formatLongDate={formatLongDate}
             formatShortWeekday={formatShortWeekday}
             onClickWeekNumber={onClickWeekNumber}
-            onMouseLeave={onMouseLeave}
+            onMouseLeave={selectRange ? onMouseLeave : null}
             showFixedNumberOfWeeks={showFixedNumberOfWeeks || showDoubleView}
             showNeighboringMonth={showNeighboringMonth}
             showWeekNumbers={showWeekNumbers}
