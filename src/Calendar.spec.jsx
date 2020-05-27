@@ -611,13 +611,11 @@ describe('Calendar', () => {
     });
 
     it('does not call onViewChange on view change if value is the same as before', () => {
-      const activeStartDate = new Date(2017, 0, 1);
       const view = 'year';
       const newView = 'year';
       const onViewChange = jest.fn();
       const component = shallow(
         <Calendar
-          activeStartDate={activeStartDate}
           onViewChange={onViewChange}
           view={view}
         />,
