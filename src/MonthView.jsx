@@ -46,17 +46,6 @@ export default function MonthView(props) {
     );
   }
 
-  function renderWeekdays() {
-    return (
-      <Weekdays
-        calendarType={calendarType}
-        formatShortWeekday={formatShortWeekday}
-        locale={locale}
-        onMouseLeave={onMouseLeave}
-      />
-    );
-  }
-
   function renderWeekNumbers() {
     if (!showWeekNumbers) {
       return null;
@@ -69,6 +58,17 @@ export default function MonthView(props) {
         onClickWeekNumber={onClickWeekNumber}
         onMouseLeave={onMouseLeave}
         showFixedNumberOfWeeks={showFixedNumberOfWeeks}
+      />
+    );
+  }
+
+  function renderWeekdays() {
+    return (
+      <Weekdays
+        calendarType={calendarType}
+        formatShortWeekday={formatShortWeekday}
+        locale={locale}
+        onMouseLeave={onMouseLeave}
       />
     );
   }
