@@ -567,6 +567,23 @@ describe('Calendar', () => {
 
       expect(onActiveStartDateChange).not.toHaveBeenCalled();
     });
+
+    it('does not call onActiveStartDateChange on activeStartDate change if value is the same as previously inherited', () => {
+      const value = new Date(2017, 0, 1);
+      const newActiveStartDate = new Date(2017, 0, 1);
+      const onActiveStartDateChange = jest.fn();
+      const component = shallow(
+        <Calendar
+          onActiveStartDateChange={onActiveStartDateChange}
+          value={value}
+          view="year"
+        />,
+      );
+
+      component.instance().setActiveStartDate(newActiveStartDate);
+
+      expect(onActiveStartDateChange).not.toHaveBeenCalled();
+    });
   });
 
   describe('handles view change properly', () => {
