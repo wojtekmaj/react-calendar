@@ -514,11 +514,13 @@ describe('Calendar', () => {
     });
 
     it('calls onActiveStartDateChange on activeStartDate initial set', () => {
+      const value = new Date(2019, 0, 15);
       const newActiveStartDate = new Date(2018, 0, 1);
       const onActiveStartDateChange = jest.fn();
       const component = shallow(
         <Calendar
           onActiveStartDateChange={onActiveStartDateChange}
+          value={value}
           view="year"
         />,
       );
@@ -527,11 +529,13 @@ describe('Calendar', () => {
 
       expect(onActiveStartDateChange).toHaveBeenCalledWith({
         activeStartDate: newActiveStartDate,
+        value,
         view: 'year',
       });
     });
 
     it('calls onActiveStartDateChange on activeStartDate change', () => {
+      const value = new Date(2019, 0, 15);
       const activeStartDate = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2018, 0, 1);
       const onActiveStartDateChange = jest.fn();
@@ -539,6 +543,7 @@ describe('Calendar', () => {
         <Calendar
           activeStartDate={activeStartDate}
           onActiveStartDateChange={onActiveStartDateChange}
+          value={value}
           view="year"
         />,
       );
@@ -547,6 +552,7 @@ describe('Calendar', () => {
 
       expect(onActiveStartDateChange).toHaveBeenCalledWith({
         activeStartDate: newActiveStartDate,
+        value,
         view: 'year',
       });
     });
@@ -588,6 +594,7 @@ describe('Calendar', () => {
 
   describe('handles view change properly', () => {
     it('calls onViewChange on view initial set', () => {
+      const value = new Date(2019, 0, 15);
       const activeStartDate = new Date(2017, 0, 1);
       const newView = 'year';
       const onViewChange = jest.fn();
@@ -595,6 +602,7 @@ describe('Calendar', () => {
         <Calendar
           activeStartDate={activeStartDate}
           onViewChange={onViewChange}
+          value={value}
         />,
       );
 
@@ -602,11 +610,13 @@ describe('Calendar', () => {
 
       expect(onViewChange).toHaveBeenCalledWith({
         activeStartDate,
+        value,
         view: newView,
       });
     });
 
     it('calls onViewChange on view change', () => {
+      const value = new Date(2019, 0, 15);
       const activeStartDate = new Date(2017, 0, 1);
       const view = 'year';
       const newView = 'month';
@@ -615,6 +625,7 @@ describe('Calendar', () => {
         <Calendar
           activeStartDate={activeStartDate}
           onViewChange={onViewChange}
+          value={value}
           view={view}
         />,
       );
@@ -623,6 +634,7 @@ describe('Calendar', () => {
 
       expect(onViewChange).toHaveBeenCalledWith({
         activeStartDate,
+        value,
         view: newView,
       });
     });
