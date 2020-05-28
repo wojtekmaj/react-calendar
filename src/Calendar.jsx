@@ -266,6 +266,7 @@ export default class Calendar extends Component {
     this.setState(nextState, () => {
       const args = {
         activeStartDate: nextState.activeStartDate || this.activeStartDate,
+        value: nextState.value || this.value,
         view: nextState.view || this.view,
       };
 
