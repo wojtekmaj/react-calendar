@@ -244,7 +244,7 @@ export default class Calendar extends Component {
     });
   }
 
-  setStateAndCallCallbacks = (nextState, callback) => {
+  setStateAndCallCallbacks = (nextState, event, callback) => {
     const {
       activeStartDate: previousActiveStartDate,
       view: previousView,
@@ -301,12 +301,12 @@ export default class Calendar extends Component {
             const isSingleValue = getIsSingleValue(nextState.value);
 
             if (!isSingleValue) {
-              onChange(nextState.value);
+              onChange(nextState.value, event);
             } else if (allowPartialRange) {
-              onChange([nextState.value]);
+              onChange([nextState.value], event);
             }
           } else {
-            onChange(nextState.value);
+            onChange(nextState.value, event);
           }
         }
       }
@@ -337,7 +337,7 @@ export default class Calendar extends Component {
     this.setStateAndCallCallbacks({
       activeStartDate: nextActiveStartDate,
       view: nextView,
-    }, onDrillDown);
+    }, undefined, onDrillDown);
   }
 
   drillUp = () => {
@@ -354,7 +354,7 @@ export default class Calendar extends Component {
     this.setStateAndCallCallbacks({
       activeStartDate: nextActiveStartDate,
       view: nextView,
-    }, onDrillUp);
+    }, undefined, onDrillUp);
   }
 
   onChange = (value, event) => {
@@ -384,10 +384,12 @@ export default class Calendar extends Component {
       value: nextValue,
     });
 
+    event.persist();
+
     this.setStateAndCallCallbacks({
       activeStartDate: nextActiveStartDate,
       value: nextValue,
-    });
+    }, event);
   }
 
   onClickTile = (value, event) => {

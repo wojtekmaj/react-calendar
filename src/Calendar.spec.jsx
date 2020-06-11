@@ -6,6 +6,10 @@ import Calendar from './Calendar';
 
 const { format } = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
+const event = document.createEvent('MouseEvent');
+event.initEvent('click', true, true);
+event.persist = () => {};
+
 describe('Calendar', () => {
   it('renders Navigation by default', () => {
     const component = shallow(
@@ -98,7 +102,7 @@ describe('Calendar', () => {
       <Calendar value={value} />,
     );
 
-    component.instance().onChange(newValue);
+    component.instance().onChange(newValue, event);
 
     expect(component.instance().activeStartDate).toEqual(newActiveStartDate);
   });
@@ -666,9 +670,9 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1), event);
 
-      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1), event);
     });
 
     it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
@@ -681,9 +685,9 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1), event);
 
-      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1));
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1), event);
     });
 
     it('calls onChange function returning the end of the selected period when returnValue is set to "end"', () => {
@@ -696,9 +700,9 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1), event);
 
-      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 23, 59, 59, 999));
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 23, 59, 59, 999), event);
     });
 
     it('calls onChange function returning the beginning of selected period when returnValue is set to "range"', () => {
@@ -711,12 +715,12 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1), event);
 
       expect(onChange).toHaveBeenCalledWith([
         new Date(2017, 0, 1),
         new Date(2017, 0, 1, 23, 59, 59, 999),
-      ]);
+      ], event);
     });
 
     it('calls onChange function returning the beginning of selected period, but no earlier than minDate', () => {
@@ -730,9 +734,9 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1), event);
 
-      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12), event);
     });
 
     it('calls onChange function returning the beginning of selected period, but no later than maxDate', () => {
@@ -746,9 +750,9 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2017, 0, 2));
+      component.instance().onChange(new Date(2017, 0, 2), event);
 
-      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12), event);
     });
 
     it('calls onChange function returning the end of selected period, but no earlier than minDate', () => {
@@ -762,9 +766,9 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2017, 0, 1));
+      component.instance().onChange(new Date(2017, 0, 1), event);
 
-      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 2, 12));
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 2, 12), event);
     });
 
     it('calls onChange function returning the end of selected period, but no later than maxDate', () => {
@@ -778,9 +782,9 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2017, 0, 2));
+      component.instance().onChange(new Date(2017, 0, 2), event);
 
-      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12));
+      expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12), event);
     });
 
     it('does not call onChange function returning a range when selected one piece of a range by default', () => {
@@ -793,7 +797,7 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2018, 0, 1));
+      component.instance().onChange(new Date(2018, 0, 1), event);
 
       expect(onChange).not.toHaveBeenCalled();
     });
@@ -809,7 +813,7 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2018, 0, 1));
+      component.instance().onChange(new Date(2018, 0, 1), event);
 
       expect(onChange).not.toHaveBeenCalled();
     });
@@ -825,12 +829,12 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2018, 0, 1));
+      component.instance().onChange(new Date(2018, 0, 1), event);
 
       expect(onChange).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith([
         new Date(2018, 0, 1),
-      ]);
+      ], event);
     });
 
     it('calls onChange function returning a range when selected two pieces of a range', () => {
@@ -843,14 +847,14 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2018, 0, 1));
-      component.instance().onChange(new Date(2018, 6, 1));
+      component.instance().onChange(new Date(2018, 0, 1), event);
+      component.instance().onChange(new Date(2018, 6, 1), event);
 
       expect(onChange).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith([
         new Date(2018, 0, 1),
         new Date(2018, 6, 1, 23, 59, 59, 999),
-      ]);
+      ], event);
     });
 
     it('calls onChange function returning a range when selected reversed two pieces of a range', () => {
@@ -863,14 +867,14 @@ describe('Calendar', () => {
         />,
       );
 
-      component.instance().onChange(new Date(2018, 6, 1));
-      component.instance().onChange(new Date(2018, 0, 1));
+      component.instance().onChange(new Date(2018, 6, 1), event);
+      component.instance().onChange(new Date(2018, 0, 1), event);
 
       expect(onChange).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith([
         new Date(2018, 0, 1),
         new Date(2018, 6, 1, 23, 59, 59, 999),
-      ]);
+      ], event);
     });
   });
 
