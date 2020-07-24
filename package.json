@@ -5,7 +5,7 @@
   "main": "dist/umd/index.js",
   "module": "dist/esm/index.js",
   "source": "src/index.js",
-  "sideEffects": false,
+  "sideEffects": ["*.css"],
   "scripts": {
     "build": "yarn build-js-all && yarn copy-styles && yarn build-styles",
     "build-js-all": "yarn build-js-esm && yarn build-js-umd",
