@@ -114,5 +114,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/wojtekmaj/react-calendar.git"
-  }
+  },
+  "funding": "https://github.com/wojtekmaj/react-calendar?sponsor=1"
 }
