@@ -68,7 +68,7 @@ function MyApp() {
 }
 ```
 
-Check the [sample directory](https://github.com/wojtekmaj/react-calendar/tree/master/sample) in this repository for a full working example. For more examples and more advanced use cases, check [Recipes](https://github.com/wojtekmaj/react-calendar/wiki/Recipes) in React-Calendar Wiki.
+Check the [sample directory](https://github.com/wojtekmaj/react-calendar/tree/master/sample) in this repository for a full working example. For more examples and more advanced use cases, check [Recipes](https://github.com/wojtekmaj/react-calendar/wiki/Recipes) in [React-Calendar Wiki](https://github.com/wojtekmaj/react-calendar/wiki).
 
 ### Custom styling
 
@@ -156,6 +156,10 @@ Displays a given month, year, decade and a century, respectively.
 |tileClassName|Class name(s) that will be applied to a given calendar item (day on month view, month on year view and so on).|n/a|<ul><li>String: `"class1 class2"`</li><li>Array of strings: `["class1", "class2 class3"]`</li><li>Function: `({ date, view }) => view === 'month' && date.getDay() === 3 ? 'saturday' : null`</li></ul>|
 |tileContent|Allows to render custom content within a given item (day on month view, month on year view and so on). Note: For tiles with custom content you might want to set fixed height of `react-calendar__tile` to ensure consistent layout.|n/a|`({ date, view }) => view === 'month' && date.getDay() === 0 ? <p>It's Sunday!</p> : null`|
 |value|Calendar value. Can be either one value or an array of two values.|n/a|<ul><li>Date: `new Date()`</li><li>An array of dates: `[new Date(2017, 0, 1), new Date(2017, 7, 1)]`</li><li>String: `2017-01-01`</li><li>An array of strings: `['2017-01-01', '2017-08-01']`</li></ul>|
+
+## Useful links
+
+* [React-Calendar Wiki](https://github.com/wojtekmaj/react-calendar/wiki)
 
 ## License
 
