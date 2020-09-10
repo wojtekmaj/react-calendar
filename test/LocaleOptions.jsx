@@ -95,7 +95,7 @@ export default function LocaleOptions({
           defaultValue={locale}
           id="customLocale"
           name="customLocale"
-          pattern="^[a-z]{2}-[A-Z0-9]{2,3}$"
+          pattern="^[a-z]{2}(-[A-Z0-9]{2,3})?$"
           type="text"
         />
         &nbsp;
