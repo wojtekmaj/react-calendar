@@ -4,8 +4,8 @@
   "description": "A test page for React-Calendar.",
   "private": true,
   "scripts": {
-    "build": "parcel build index.html --public-url ./",
-    "start": "parcel index.html"
+    "build": "NODE_ENV=production webpack",
+    "start": "NODE_ENV=development webpack-dev-server"
   },
   "author": {
     "name": "Wojciech Maj",
@@ -16,7 +16,7 @@
     "@wojtekmaj/date-utils": "^1.0.2",
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
-    "react-calendar": "latest",
+    "react-calendar": "portal:../",
     "react-dom": "^16.5.0"
   },
   "devDependencies": {
