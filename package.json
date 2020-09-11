@@ -8,6 +8,10 @@
   "sideEffects": [
     "*.css"
   ],
+  "workspaces": [
+    ".",
+    "test"
+  ],
   "scripts": {
     "build": "yarn build-js-all && yarn copy-styles && yarn build-styles",
     "build-js-all": "yarn build-js-esm && yarn build-js-umd",
