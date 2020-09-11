@@ -6,7 +6,8 @@
   "module": "dist/esm/index.js",
   "source": "src/index.js",
   "sideEffects": [
-    "*.css"
+    "*.css",
+    "*.less"
   ],
   "scripts": {
     "build": "yarn build-js-all && yarn copy-styles && yarn build-styles",

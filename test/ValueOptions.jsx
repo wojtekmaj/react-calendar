@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getISOLocalDateTime } from '@wojtekmaj/date-utils';
 
-import { isValue } from '../src/shared/propTypes';
+import { isValue } from './shared/propTypes';
 
 export default function ValueOptions({
   selectRange,
