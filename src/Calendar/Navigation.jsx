@@ -168,6 +168,7 @@ export default function Navigation({
           {prev2Label}
         </button>
       )}
+      {prevLabel !== null && (
       <button
         aria-label={prevAriaLabel}
         className={`${className}__arrow ${className}__prev-button`}
@@ -177,7 +178,9 @@ export default function Navigation({
       >
         {prevLabel}
       </button>
+      )}
       {renderButton()}
+      {nextLabel !== null && (
       <button
         aria-label={nextAriaLabel}
         className={`${className}__arrow ${className}__next-button`}
@@ -187,6 +190,7 @@ export default function Navigation({
       >
         {nextLabel}
       </button>
+      )}
       {next2Label !== null && shouldShowPrevNext2Buttons && (
         <button
           aria-label={next2AriaLabel}
