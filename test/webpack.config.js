@@ -20,12 +20,13 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    symlinks: false,
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude: /node_modules(?!\/react-calendar)/,
         use: [
           {
             loader: 'babel-loader',
