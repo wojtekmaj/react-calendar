@@ -169,27 +169,27 @@ export default function Navigation({
         </button>
       )}
       {prevLabel !== null && (
-      <button
-        aria-label={prevAriaLabel}
-        className={`${className}__arrow ${className}__prev-button`}
-        disabled={prevButtonDisabled}
-        onClick={onClickPrevious}
-        type="button"
-      >
-        {prevLabel}
-      </button>
+        <button
+          aria-label={prevAriaLabel}
+          className={`${className}__arrow ${className}__prev-button`}
+          disabled={prevButtonDisabled}
+          onClick={onClickPrevious}
+          type="button"
+        >
+          {prevLabel}
+        </button>
       )}
       {renderButton()}
       {nextLabel !== null && (
-      <button
-        aria-label={nextAriaLabel}
-        className={`${className}__arrow ${className}__next-button`}
-        disabled={nextButtonDisabled}
-        onClick={onClickNext}
-        type="button"
-      >
-        {nextLabel}
-      </button>
+        <button
+          aria-label={nextAriaLabel}
+          className={`${className}__arrow ${className}__next-button`}
+          disabled={nextButtonDisabled}
+          onClick={onClickNext}
+          type="button"
+        >
+          {nextLabel}
+        </button>
       )}
       {next2Label !== null && shouldShowPrevNext2Buttons && (
         <button
