@@ -11,6 +11,18 @@ event.initEvent('click', true, true);
 event.persist = () => {};
 
 describe('Calendar', () => {
+  it('applies className to its wrapper when given a string', () => {
+    const className = 'testClassName';
+
+    const component = shallow(
+      <Calendar className={className} />,
+    );
+
+    const wrapperClassName = component.find('.react-calendar').prop('className');
+
+    expect(wrapperClassName.includes(className)).toBe(true);
+  });
+
   it('renders Navigation by default', () => {
     const component = shallow(
       <Calendar />,
