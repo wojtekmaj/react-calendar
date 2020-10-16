@@ -52,6 +52,13 @@ export const isMaxDate = (props, propName, componentName) => {
   return null;
 };
 
+export const isRef = PropTypes.oneOfType([
+  PropTypes.func,
+  PropTypes.shape({
+    current: PropTypes.any,
+  }),
+]);
+
 export const isValue = PropTypes.oneOfType([
   PropTypes.instanceOf(Date),
   PropTypes.arrayOf(PropTypes.instanceOf(Date)),

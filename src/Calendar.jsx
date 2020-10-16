@@ -12,7 +12,7 @@ import {
   getBegin, getBeginNext, getEnd, getValueRange,
 } from './shared/dates';
 import {
-  isCalendarType, isClassName, isMaxDate, isMinDate, isValue, isView,
+  isCalendarType, isClassName, isMaxDate, isMinDate, isRef, isValue, isView,
 } from './shared/propTypes';
 import { between } from './shared/utils';
 
@@ -594,7 +594,12 @@ export default class Calendar extends Component {
   }
 
   render() {
-    const { className, selectRange, showDoubleView } = this.props;
+    const {
+      className,
+      inputRef,
+      selectRange,
+      showDoubleView,
+    } = this.props;
     const { onMouseLeave, value } = this;
     const valueArray = [].concat(value);
 
@@ -606,6 +611,7 @@ export default class Calendar extends Component {
           showDoubleView && `${baseClassName}--doubleView`,
           className,
         )}
+        ref={inputRef}
       >
         {this.renderNavigation()}
         <div
@@ -648,6 +654,7 @@ Calendar.propTypes = {
   formatMonthYear: PropTypes.func,
   formatShortWeekday: PropTypes.func,
   formatYear: PropTypes.func,
+  inputRef: isRef,
   locale: PropTypes.string,
   maxDate: isMaxDate,
   maxDetail: PropTypes.oneOf(allViews),

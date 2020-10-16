@@ -23,6 +23,17 @@ describe('Calendar', () => {
     expect(wrapperClassName.includes(className)).toBe(true);
   });
 
+  it('passes container element to inputRef properly', () => {
+    const inputRef = jest.fn();
+
+    mount(
+      <Calendar inputRef={inputRef} />,
+    );
+
+    expect(inputRef).toHaveBeenCalled();
+    expect(inputRef.mock.calls[0][0]).toBeInstanceOf(HTMLElement);
+  });
+
   it('renders Navigation by default', () => {
     const component = shallow(
       <Calendar />,
