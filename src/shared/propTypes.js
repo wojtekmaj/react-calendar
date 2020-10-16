@@ -7,6 +7,11 @@ const allViews = ['century', 'decade', 'year', 'month'];
 
 export const isCalendarType = PropTypes.oneOf(calendarTypes);
 
+export const isClassName = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.arrayOf(PropTypes.string),
+]);
+
 export const isMinDate = (props, propName, componentName) => {
   const { [propName]: minDate } = props;
 
@@ -53,11 +58,6 @@ export const isValue = PropTypes.oneOfType([
 ]);
 
 export const isViews = PropTypes.arrayOf(PropTypes.oneOf(allViews));
-
-export const isClassName = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.arrayOf(PropTypes.string),
-]);
 
 export const isView = (props, propName, componentName) => {
   const { [propName]: view } = props;
