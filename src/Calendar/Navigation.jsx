@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getUserLocale } from 'get-user-locale';
 
@@ -76,6 +76,14 @@ export default function Navigation({
   const next2ButtonDisabled =
     shouldShowPrevNext2Buttons && maxDate && maxDate < nextActiveStartDate2;
 
+  // Make sure the navigation is not navigable at the first render
+  // so that the calendar takes the initial focus.
+  const [tabIndex, setTabIndex] = useState(-1);
+  useEffect(() => {
+    setTabIndex(-1);
+    setTimeout(() => setTabIndex(0), 0);
+  }, [view]);
+
   function onClickPrevious() {
     setActiveStartDate(previousActiveStartDate, 'prev');
   }
@@ -128,6 +136,7 @@ export default function Navigation({
         disabled={!drillUpAvailable}
         onClick={drillUp}
         style={{ flexGrow: 1 }}
+        tabIndex={tabIndex}
         type="button"
       >
         <span className={`${labelClassName}__labelText ${labelClassName}__labelText--from`}>
@@ -153,6 +162,7 @@ export default function Navigation({
           className={`${className}__arrow ${className}__prev2-button`}
           disabled={prev2ButtonDisabled}
           onClick={onClickPrevious2}
+          tabIndex={tabIndex}
           type="button"
         >
           {prev2Label}
@@ -164,6 +174,7 @@ export default function Navigation({
           className={`${className}__arrow ${className}__prev-button`}
           disabled={prevButtonDisabled}
           onClick={onClickPrevious}
+          tabIndex={tabIndex}
           type="button"
         >
           {prevLabel}
@@ -176,6 +187,7 @@ export default function Navigation({
           className={`${className}__arrow ${className}__next-button`}
           disabled={nextButtonDisabled}
           onClick={onClickNext}
+          tabIndex={tabIndex}
           type="button"
         >
           {nextLabel}
@@ -187,6 +199,7 @@ export default function Navigation({
           className={`${className}__arrow ${className}__next2-button`}
           disabled={next2ButtonDisabled}
           onClick={onClickNext2}
+          tabIndex={tabIndex}
           type="button"
         >
           {next2Label}

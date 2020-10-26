@@ -69,6 +69,7 @@ export default class Tile extends Component {
       minDateTransform,
       onClick,
       onMouseOver,
+      isFocusable,
       style,
       tileDisabled,
       view,
@@ -87,6 +88,7 @@ export default class Tile extends Component {
         onFocus={onMouseOver ? () => onMouseOver(date) : undefined}
         onMouseOver={onMouseOver ? () => onMouseOver(date) : undefined}
         style={style}
+        tabIndex={isFocusable ? 0 : -1}
         type="button"
       >
         {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}
