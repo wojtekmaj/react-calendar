@@ -61,7 +61,7 @@ export default class Tile extends Component {
           || (maxDate && maxDateTransform(maxDate) < date)
           || (tileDisabled && tileDisabled({ activeStartDate, date, view }))
         }
-        onClick={onClick && (event => onClick(date, event))}
+        onClick={onClick && ((event) => onClick(date, event))}
         onFocus={onMouseOver && (() => onMouseOver(date))}
         onMouseOver={onMouseOver && (() => onMouseOver(date))}
         style={style}

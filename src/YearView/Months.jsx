@@ -17,7 +17,7 @@ export default function Months(props) {
     <TileGroup
       {...props}
       className="react-calendar__year-view__months"
-      dateTransform={monthIndex => new Date(year, monthIndex, 1)}
+      dateTransform={(monthIndex) => new Date(year, monthIndex, 1)}
       dateType="month"
       end={end}
       start={start}

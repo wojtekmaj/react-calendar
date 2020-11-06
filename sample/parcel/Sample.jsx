@@ -8,7 +8,7 @@ export default class Sample extends Component {
     value: new Date(),
   }
 
-  onChange = value => this.setState({ value })
+  onChange = (value) => this.setState({ value })
 
   render() {
     const { value } = this.state;

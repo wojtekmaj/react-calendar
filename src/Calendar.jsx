@@ -90,9 +90,9 @@ function getDetailValue({
   return between(detailValueFrom, minDate, maxDate);
 }
 
-const getDetailValueFrom = args => getDetailValue(args, 0);
+const getDetailValueFrom = (args) => getDetailValue(args, 0);
 
-const getDetailValueTo = args => getDetailValue(args, 1);
+const getDetailValueTo = (args) => getDetailValue(args, 1);
 
 const getDetailValueArray = (args) => {
   const { value } = args;
@@ -101,7 +101,7 @@ const getDetailValueArray = (args) => {
     return value;
   }
 
-  return [getDetailValueFrom, getDetailValueTo].map(fn => fn(args));
+  return [getDetailValueFrom, getDetailValueTo].map((fn) => fn(args));
 };
 
 function getActiveStartDate(props) {
@@ -154,7 +154,7 @@ function getInitialActiveStartDate(props) {
   });
 }
 
-const getIsSingleValue = value => value && [].concat(value).length === 1;
+const getIsSingleValue = (value) => value && [].concat(value).length === 1;
 
 export default class Calendar extends Component {
   state = {

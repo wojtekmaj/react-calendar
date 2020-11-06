@@ -15,7 +15,7 @@ export default function Years(props) {
     <TileGroup
       {...props}
       className="react-calendar__decade-view__years"
-      dateTransform={year => new Date(year, 0, 1)}
+      dateTransform={(year) => new Date(year, 0, 1)}
       dateType="year"
       end={end}
       start={start}
