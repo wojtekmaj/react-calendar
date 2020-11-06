@@ -79,7 +79,7 @@ describe('Flex', () => {
 
     const children = component.children();
 
-    children.forEach(child => expect(parseFloat(child.prop('style').flexBasis)).toBeCloseTo(33.33));
+    children.forEach((child) => expect(parseFloat(child.prop('style').flexBasis)).toBeCloseTo(33.33));
     expect(parseFloat(children.first().prop('style').marginLeft)).toBeCloseTo(33.33);
   });
 });

@@ -52,7 +52,7 @@ export default function WeekNumbers(props) {
     return result;
   })();
 
-  const weekNumbers = dates.map(date => getWeekNumber(date, calendarType));
+  const weekNumbers = dates.map((date) => getWeekNumber(date, calendarType));
 
   return (
     <Flex

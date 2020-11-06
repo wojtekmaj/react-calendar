@@ -253,7 +253,7 @@ export function getValueRange(rangeType, date1, date2) {
 
 function toYearLabel(locale, formatYear = defaultFormatYear, dates) {
   return dates
-    .map(date => formatYear(locale, date))
+    .map((date) => formatYear(locale, date))
     .join(' – ');
 }
 

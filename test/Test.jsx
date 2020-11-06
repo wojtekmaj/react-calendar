@@ -101,7 +101,7 @@ export default class Test extends PureComponent {
     view: 'month',
   }
 
-  onChange = value => this.setState({ value });
+  onChange = (value) => this.setState({ value });
 
   onViewOrDateChange = ({ activeStartDate, view }) => {
     console.log('Changed view to', view, activeStartDate);
@@ -151,7 +151,7 @@ export default class Test extends PureComponent {
       view,
     } = this.state;
 
-    const setState = state => this.setState(state);
+    const setState = (state) => this.setState(state);
 
     const commonProps = {
       className: 'myCustomCalendarClassName',

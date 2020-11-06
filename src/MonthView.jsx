@@ -11,7 +11,7 @@ import { isCalendarType } from './shared/propTypes';
 function getCalendarTypeFromLocale(locale) {
   return (
     Object.keys(CALENDAR_TYPE_LOCALES)
-      .find(calendarType => CALENDAR_TYPE_LOCALES[calendarType].includes(locale))
+      .find((calendarType) => CALENDAR_TYPE_LOCALES[calendarType].includes(locale))
     || CALENDAR_TYPES.ISO_8601
   );
 }

@@ -9,8 +9,8 @@ describe('<Tile /> component', () => {
     children: '',
     classes: [],
     date: new Date(2019, 0, 1),
-    maxDateTransform: date => date,
-    minDateTransform: date => date,
+    maxDateTransform: (date) => date,
+    minDateTransform: (date) => date,
   };
 
   it('renders button properly', () => {
