@@ -55,6 +55,7 @@ export const isMaxDate = (props, propName, componentName) => {
 export const isRef = PropTypes.oneOfType([
   PropTypes.func,
   PropTypes.shape({
+    // eslint-disable-next-line react/forbid-prop-types
     current: PropTypes.any,
   }),
 ]);

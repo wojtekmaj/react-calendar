@@ -1,32 +1,10 @@
 {
-  "extends": "airbnb",
-  "env": {
-    "browser": true,
-    "es6": true
-  },
+  "extends": "wojtekmaj/react",
   "parser": "babel-eslint",
   "rules": {
-    "jsx-a11y/label-has-associated-control": ["error", { "required": { "some": ["id", "nesting"] }}],
-    "no-restricted-globals": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/jsx-sort-props": ["error", {
-      "reservedFirst": ["key"]
-    }],
-    "react/require-default-props": "off",
-    "react/sort-prop-types": "error",
-    "react/state-in-constructor": ["error", "never"]
+    "no-restricted-globals": "off"
   },
   "overrides": [
-    {
-      "files": [
-        "**/*.spec.js",
-        "**/*.spec.jsx",
-        "**/__tests__/*"
-      ],
-      "env": {
-        "jest": true
-      }
-    },
     {
       "files": [
         "sample/**",
