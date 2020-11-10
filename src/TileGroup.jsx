@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Flex from './Flex';
-
 import { getTileClasses } from './shared/utils';
 import { tileGroupProps } from './shared/propTypes';
 
 export default function TileGroup({
   className,
-  count = 3,
   dateTransform,
   dateType,
   end,
@@ -22,8 +19,9 @@ export default function TileGroup({
   ...tileProps
 }) {
   const tiles = [];
-  for (let point = start; point <= end; point += step) {
+  for (let point = start, i = 0; point <= end; point += step, i++) {
     const date = dateTransform(point);
+    const style = i === 0 && offset ? { gridColumn: offset + 1 } : null;
 
     tiles.push(
       <Tile
@@ -33,27 +31,24 @@ export default function TileGroup({
         })}
         date={date}
         point={point}
+        style={style}
         {...tileProps}
       />,
     );
   }
 
   return (
-    <Flex
+    <div
       className={className}
-      count={count}
-      offset={offset}
-      wrap
     >
       {tiles}
-    </Flex>
+    </div>
   );
 }
 
 TileGroup.propTypes = {
   ...tileGroupProps,
   activeStartDate: PropTypes.instanceOf(Date),
-  count: PropTypes.number,
   dateTransform: PropTypes.func.isRequired,
   offset: PropTypes.number,
   step: PropTypes.number,

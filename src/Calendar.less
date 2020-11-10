@@ -83,6 +83,9 @@
     }
 
     &__days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+
       &__day {
         &--weekend {
           color: rgb(209, 0, 0);
@@ -101,6 +104,13 @@
     .react-calendar__tile {
       padding: 2em .5em;
     }
+  }
+
+  &__year-view__months,
+  &__decade-view__years,
+  &__century-view__decades {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   &__tile {
