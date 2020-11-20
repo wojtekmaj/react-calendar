@@ -78,8 +78,6 @@ If you want to use default React-Calendar styling to build upon it, you can impo
 import 'react-calendar/dist/Calendar.css';
 ```
 
-instead.
-
 ## User guide
 
 ### Calendar
