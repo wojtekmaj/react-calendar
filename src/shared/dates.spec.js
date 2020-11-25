@@ -839,7 +839,6 @@ describe('getDecadeLabel', () => {
 });
 
 describe('isWeekend', () => {
-  /* eslint-disable indent */
   describe('returns proper flag (ISO 8601)', () => {
     it.each`
       date                      | flag
@@ -847,8 +846,9 @@ describe('isWeekend', () => {
       ${new Date(2016, 11, 31)} | ${true}
       ${new Date(2017, 0, 1)}   | ${true}
       ${new Date(2017, 0, 2)}   | ${false}
-    `('returns $flag for $date',
-    ({ date, flag }) => {
+    `('returns $flag for $date', ({
+      date, flag,
+    }) => {
       expect(isWeekend(date, 'ISO 8601')).toBe(flag);
     });
   });
@@ -860,8 +860,9 @@ describe('isWeekend', () => {
       ${new Date(2016, 11, 31)} | ${true}
       ${new Date(2017, 0, 1)}   | ${true}
       ${new Date(2017, 0, 2)}   | ${false}
-    `('returns $flag for $date',
-    ({ date, flag }) => {
+    `('returns $flag for $date', ({
+      date, flag,
+    }) => {
       expect(isWeekend(date, 'US')).toBe(flag);
     });
   });
@@ -873,8 +874,9 @@ describe('isWeekend', () => {
       ${new Date(2016, 11, 31)} | ${true}
       ${new Date(2017, 0, 1)}   | ${false}
       ${new Date(2017, 0, 2)}   | ${false}
-    `('returns $flag for $date',
-    ({ date, flag }) => {
+    `('returns $flag for $date', ({
+      date, flag,
+    }) => {
       expect(isWeekend(date, 'Arabic')).toBe(flag);
     });
   });
@@ -886,8 +888,9 @@ describe('isWeekend', () => {
       ${new Date(2016, 11, 31)} | ${true}
       ${new Date(2017, 0, 1)}   | ${false}
       ${new Date(2017, 0, 2)}   | ${false}
-    `('returns $flag for $date',
-    ({ date, flag }) => {
+    `('returns $flag for $date', ({
+      date, flag,
+    }) => {
       expect(isWeekend(date, 'Hebrew')).toBe(flag);
     });
   });
@@ -899,10 +902,10 @@ describe('isWeekend', () => {
       ${new Date(2016, 11, 31)} | ${true}
       ${new Date(2017, 0, 1)}   | ${true}
       ${new Date(2017, 0, 2)}   | ${false}
-    `('returns $flag for $date',
-    ({ date, flag }) => {
+    `('returns $flag for $date', ({
+      date, flag,
+    }) => {
       expect(isWeekend(date)).toBe(flag);
     });
   });
-  /* eslint-enable indent */
 });
