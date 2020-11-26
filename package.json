@@ -100,8 +100,8 @@
     "rimraf": "^3.0.0"
   },
   "peerDependencies": {
-    "react": ">=16.3",
-    "react-dom": ">=16.3"
+    "react": "^16.3.0 || ^17.0.0-0",
+    "react-dom": "^16.3.0 || ^17.0.0-0"
   },
   "files": [
     "LICENSE",
