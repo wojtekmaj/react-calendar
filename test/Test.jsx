@@ -99,6 +99,7 @@ export default class Test extends PureComponent {
     showWeekNumbers: false,
     value: now,
     view: 'month',
+    weekNumbersLabel: 'Weeks',
   }
 
   onChange = (value) => this.setState({ value });
@@ -149,6 +150,7 @@ export default class Test extends PureComponent {
       showWeekNumbers,
       value,
       view,
+      weekNumbersLabel,
     } = this.state;
 
     const setState = (state) => this.setState(state);
@@ -180,6 +182,7 @@ export default class Test extends PureComponent {
       showWeekNumbers,
       tileClassName,
       tileContent,
+      weekNumbersLabel,
     };
 
     return (

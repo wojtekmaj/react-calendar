@@ -135,7 +135,7 @@ describe('MonthView', () => {
     expect(component.find('WeekNumbers')).toHaveLength(0);
   });
 
-  it('renders WeekNumbers component by given showWeekNumbers flag', () => {
+  it('renders WeekNumbers component given showWeekNumbers flag', () => {
     const component = mount(
       <MonthView
         {...defaultProps}
@@ -144,6 +144,59 @@ describe('MonthView', () => {
     );
 
     expect(component.find('WeekNumbers')).toHaveLength(1);
+  });
+
+  it('does not render WeekNumbers label by default', () => {
+    const component = mount(
+      <MonthView
+        {...defaultProps}
+      />,
+    );
+
+    const weekNumbersLabel = component.find('.react-calendar__month-view__weekNumbersLabel');
+
+    expect(weekNumbersLabel).toHaveLength(0);
+  });
+
+  it('does not render WeekNumbers label given showWeekNumbers flag but no weekNumbersLabel', () => {
+    const component = mount(
+      <MonthView
+        {...defaultProps}
+        showWeekNumbers
+      />,
+    );
+
+    const weekNumbersLabel = component.find('.react-calendar__month-view__weekNumbersLabel');
+
+    expect(weekNumbersLabel).toHaveLength(0);
+  });
+
+  it('does not render WeekNumbers label given weekNumbersLabel but no showWeekNumbers flag', () => {
+    const component = mount(
+      <MonthView
+        {...defaultProps}
+        weekNumbersLabel="Weeks"
+      />,
+    );
+
+    const weekNumbersLabel = component.find('.react-calendar__month-view__weekNumbersLabel');
+
+    expect(weekNumbersLabel).toHaveLength(0);
+  });
+
+  it('renders week numbers label given showWeekNumbers and weekNumbersLabel', () => {
+    const component = mount(
+      <MonthView
+        {...defaultProps}
+        showWeekNumbers
+        weekNumbersLabel="Weeks"
+      />,
+    );
+
+    const weekNumbersLabel = component.find('.react-calendar__month-view__weekNumbersLabel');
+
+    expect(weekNumbersLabel).toHaveLength(1);
+    expect(weekNumbersLabel.text()).toBe('Weeks');
   });
 
   it('passes calendarType to Weekdays component', () => {
