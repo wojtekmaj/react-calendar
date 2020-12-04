@@ -3,8 +3,6 @@ import { mount, shallow } from 'enzyme';
 
 import MonthView from './MonthView';
 
-/* eslint-disable react/prop-types */
-
 const { format } = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
 describe('MonthView', () => {

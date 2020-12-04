@@ -4,8 +4,6 @@ import { getDecadeStart, getDecadeEnd } from '@wojtekmaj/date-utils';
 
 import CenturyView from './CenturyView';
 
-/* eslint-disable react/prop-types */
-
 describe('CenturyView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),

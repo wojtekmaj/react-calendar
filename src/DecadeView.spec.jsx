@@ -3,8 +3,6 @@ import { mount, shallow } from 'enzyme';
 
 import DecadeView from './DecadeView';
 
-/* eslint-disable react/prop-types */
-
 describe('DecadeView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
