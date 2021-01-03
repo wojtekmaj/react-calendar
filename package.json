@@ -1,6 +1,6 @@
 {
   "name": "react-calendar",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "description": "Ultimate calendar for your React app.",
   "main": "dist/umd/index.js",
   "module": "dist/esm/index.js",
