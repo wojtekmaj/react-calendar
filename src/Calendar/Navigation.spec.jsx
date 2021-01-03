@@ -452,11 +452,14 @@ describe('Navigation', () => {
     expect(next2.prop('disabled')).toBeTruthy();
   });
 
-  it('disallows navigating before the year 1000', () => {
+  it('disallows navigating before the year 0', () => {
+    const activeStartDate = new Date();
+    activeStartDate.setFullYear(0, 0, 1);
+
     const component = shallow(
       <Navigation
         {...defaultProps}
-        activeStartDate={new Date(1000, 0, 1)}
+        activeStartDate={activeStartDate}
         view="year"
       />,
     );

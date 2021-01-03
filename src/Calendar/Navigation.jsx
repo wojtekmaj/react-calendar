@@ -55,7 +55,7 @@ export default function Navigation({
   const nextActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginNext2(view, activeStartDate);
 
   const prevButtonDisabled = (() => {
-    if (previousActiveStartDate.getFullYear() < 1000) {
+    if (previousActiveStartDate.getFullYear() < 0) {
       return true;
     }
     const previousActiveEndDate = getEndPrevious(view, activeStartDate);
@@ -63,7 +63,7 @@ export default function Navigation({
   })();
 
   const prev2ButtonDisabled = shouldShowPrevNext2Buttons && (() => {
-    if (previousActiveStartDate2.getFullYear() < 1000) {
+    if (previousActiveStartDate2.getFullYear() < 0) {
       return true;
     }
     const previousActiveEndDate = getEndPrevious2(view, activeStartDate);
