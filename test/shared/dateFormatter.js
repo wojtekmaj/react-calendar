@@ -1,5 +1,3 @@
-/* eslint-disable import/prefer-default-export */
-
 import getUserLocale from 'get-user-locale';
 
 function getFormatter(options) {
