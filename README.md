@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/react-calendar.svg)](https://www.npmjs.com/package/react-calendar) ![downloads](https://img.shields.io/npm/dt/react-calendar.svg) [![CI](https://github.com/wojtekmaj/react-calendar/workflows/CI/badge.svg)](https://github.com/wojtekmaj/react-calendar/actions) ![dependencies](https://img.shields.io/david/wojtekmaj/react-calendar.svg) ![dev dependencies](https://img.shields.io/david/dev/wojtekmaj/react-calendar.svg) [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+[![npm](https://img.shields.io/npm/v/react-calendar.svg)](https://www.npmjs.com/package/react-calendar) ![downloads](https://img.shields.io/npm/dt/react-calendar.svg) [![CI](https://github.com/wojtekmaj/react-calendar/workflows/CI/badge.svg)](https://github.com/wojtekmaj/react-calendar/actions) [![Meercode CI Score](https://meercode.io/badge/wojtekmaj/react-calendar?type=ci-score&branch=master)](https://meercode.io/wojtekmaj/react-calendar) ![dependencies](https://img.shields.io/david/wojtekmaj/react-calendar.svg) ![dev dependencies](https://img.shields.io/david/dev/wojtekmaj/react-calendar.svg) [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 
 # React-Calendar
 
@@ -197,4 +197,4 @@ Thank you to all our backers! [Become a backer](https://opencollective.com/react
 
 Thank you to all our contributors that helped on this project!
 
-![Top Contributors](https://opencollective.com/react-calendar/contributors.svg?width=890&button=false) [![Meercode CI Score](https://meercode.io/badge/wojtekmaj/react-calendar?type=ci-score&branch=master)](https://meercode.io/wojtekmaj/react-calendar)
+![Top Contributors](https://opencollective.com/react-calendar/contributors.svg?width=890&button=false)
