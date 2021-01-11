@@ -197,4 +197,4 @@ Thank you to all our backers! [Become a backer](https://opencollective.com/react
 
 Thank you to all our contributors that helped on this project!
 
-![Top Contributors](https://opencollective.com/react-calendar/contributors.svg?width=890&button=false)
+![Top Contributors](https://opencollective.com/react-calendar/contributors.svg?width=890&button=false) [![Meercode CI Score](https://meercode.io/badge/wojtekmaj/react-calendar?type=ci-score&branch=master)](https://meercode.io/wojtekmaj/react-calendar)
