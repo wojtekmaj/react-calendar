@@ -6,5 +6,5 @@ render(
   <StrictMode>
     <Test />
   </StrictMode>,
-  document.getElementById('react-container'),
+  document.getElementById('react-root'),
 );
