@@ -75,12 +75,12 @@ export function getTileClasses({
     return classes;
   }
 
-  if (!(date instanceof Array) && !dateType) {
+  if (!(Array.isArray(date)) && !dateType) {
     throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
   }
 
   const now = new Date();
-  const dateRange = date instanceof Array ? date : getRange(dateType, date);
+  const dateRange = Array.isArray(date) ? date : getRange(dateType, date);
 
   if (isValueWithinRange(now, dateRange)) {
     classes.push(`${className}--now`);
@@ -90,11 +90,11 @@ export function getTileClasses({
     return classes;
   }
 
-  if (!(value instanceof Array) && !valueType) {
+  if (!(Array.isArray(value)) && !valueType) {
     throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
   }
 
-  const valueRange = value instanceof Array ? value : getRange(valueType, value);
+  const valueRange = Array.isArray(value) ? value : getRange(valueType, value);
 
   if (isRangeWithinRange(valueRange, dateRange)) {
     classes.push(`${className}--active`);

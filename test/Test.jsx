@@ -118,7 +118,7 @@ export default class Test extends PureComponent {
       return dateToRender;
     };
 
-    if (value instanceof Array) {
+    if (Array.isArray(value)) {
       return (
         <p>
           {`Chosen date range: ${renderDate(value[0])} - ${renderDate(value[1])}`}

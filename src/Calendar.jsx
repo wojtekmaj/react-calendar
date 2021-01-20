@@ -63,7 +63,7 @@ function getValue(value, index) {
     return null;
   }
 
-  const rawValue = value instanceof Array && value.length === 2 ? value[index] : value;
+  const rawValue = Array.isArray(value) && value.length === 2 ? value[index] : value;
 
   if (!rawValue) {
     return null;
@@ -100,7 +100,7 @@ const getDetailValueTo = (args) => getDetailValue(args, 1);
 const getDetailValueArray = (args) => {
   const { value } = args;
 
-  if (value instanceof Array) {
+  if (Array.isArray(value)) {
     return value;
   }
 
