@@ -7,11 +7,15 @@ function upperCaseFirstLetter(str) {
   return str.slice(0, 1).toUpperCase() + str.slice(1);
 }
 
-export default function MinDetailOptions({ maxDetail, minDetail, setState }) {
+export default function MinDetailOptions({
+  maxDetail,
+  minDetail,
+  setMinDetail,
+}) {
   function onChange(event) {
     const { value } = event.target;
 
-    setState({ minDetail: value });
+    setMinDetail(value);
   }
 
   const maxDetailIndex = allViews.indexOf(maxDetail);
@@ -45,5 +49,5 @@ export default function MinDetailOptions({ maxDetail, minDetail, setState }) {
 MinDetailOptions.propTypes = {
   maxDetail: PropTypes.oneOf(allViews).isRequired,
   minDetail: PropTypes.oneOf(allViews).isRequired,
-  setState: PropTypes.func.isRequired,
+  setMinDetail: PropTypes.func.isRequired,
 };

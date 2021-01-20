@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function ViewOptions({
-  setState,
+  setShowDoubleView,
+  setShowFixedNumberOfWeeks,
+  setShowNeighboringMonth,
+  setShowWeekNumbers,
   showDoubleView,
   showFixedNumberOfWeeks,
   showNeighboringMonth,
@@ -11,25 +14,25 @@ export default function ViewOptions({
   function onShowDoubleViewChange(event) {
     const { checked } = event.target;
 
-    setState({ showDoubleView: checked });
+    setShowDoubleView(checked);
   }
 
   function onShowFixedNumberOfWeeksChange(event) {
     const { checked } = event.target;
 
-    setState({ showFixedNumberOfWeeks: checked });
+    setShowFixedNumberOfWeeks(checked);
   }
 
   function onShowWeekNumbersChange(event) {
     const { checked } = event.target;
 
-    setState({ showWeekNumbers: checked });
+    setShowWeekNumbers(checked);
   }
 
   function onShowNeighboringMonthChange(event) {
     const { checked } = event.target;
 
-    setState({ showNeighboringMonth: checked });
+    setShowNeighboringMonth(checked);
   }
 
   return (
@@ -92,7 +95,10 @@ export default function ViewOptions({
 }
 
 ViewOptions.propTypes = {
-  setState: PropTypes.func.isRequired,
+  setShowDoubleView: PropTypes.func.isRequired,
+  setShowFixedNumberOfWeeks: PropTypes.func.isRequired,
+  setShowNeighboringMonth: PropTypes.func.isRequired,
+  setShowWeekNumbers: PropTypes.func.isRequired,
   showDoubleView: PropTypes.bool.isRequired,
   showFixedNumberOfWeeks: PropTypes.bool.isRequired,
   showNeighboringMonth: PropTypes.bool.isRequired,

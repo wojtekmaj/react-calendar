@@ -5,18 +5,19 @@ import { getISOLocalDateTime } from '@wojtekmaj/date-utils';
 export default function DateBonduariesOptions({
   maxDate,
   minDate,
-  setState,
+  setMaxDate,
+  setMinDate,
 }) {
   function onMinChange(event) {
     const { value } = event.target;
 
-    setState({ minDate: new Date(value) });
+    setMinDate(new Date(value));
   }
 
   function onMaxChange(event) {
     const { value } = event.target;
 
-    setState({ maxDate: new Date(value) });
+    setMaxDate(new Date(value));
   }
 
   return (
@@ -37,7 +38,7 @@ export default function DateBonduariesOptions({
         />
         &nbsp;
         <button
-          onClick={() => setState({ minDate: null })}
+          onClick={() => setMinDate(null)}
           type="button"
         >
           Clear
@@ -55,7 +56,7 @@ export default function DateBonduariesOptions({
         />
         &nbsp;
         <button
-          onClick={() => setState({ maxDate: null })}
+          onClick={() => setMaxDate(null)}
           type="button"
         >
           Clear
@@ -68,5 +69,6 @@ export default function DateBonduariesOptions({
 DateBonduariesOptions.propTypes = {
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
-  setState: PropTypes.func.isRequired,
+  setMaxDate: PropTypes.func.isRequired,
+  setMinDate: PropTypes.func.isRequired,
 };

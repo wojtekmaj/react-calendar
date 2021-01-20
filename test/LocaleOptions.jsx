@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function LocaleOptions({
   locale,
-  setState,
+  setLocale,
 }) {
   function onChange(event) {
     let { value: nextLocale } = event.target;
@@ -12,7 +12,7 @@ export default function LocaleOptions({
       nextLocale = null;
     }
 
-    setState({ locale: nextLocale });
+    setLocale(nextLocale);
   }
 
   function onCustomChange(event) {
@@ -20,11 +20,11 @@ export default function LocaleOptions({
 
     const { value: nextLocale } = event.target.customLocale;
 
-    setState({ locale: nextLocale });
+    setLocale(nextLocale);
   }
 
   function resetLocale() {
-    setState({ locale: null });
+    setLocale(null);
   }
 
   return (
@@ -119,5 +119,5 @@ export default function LocaleOptions({
 
 LocaleOptions.propTypes = {
   locale: PropTypes.string,
-  setState: PropTypes.func.isRequired,
+  setLocale: PropTypes.func.isRequired,
 };

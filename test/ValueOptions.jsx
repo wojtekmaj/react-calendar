@@ -6,15 +6,12 @@ import { isValue } from './shared/propTypes';
 
 export default function ValueOptions({
   selectRange,
-  setState,
+  setSelectRange,
+  setValue,
   value,
 }) {
   const startDate = [].concat(value)[0];
   const endDate = [].concat(value)[1];
-
-  function setValue(nextValue) {
-    setState({ value: nextValue });
-  }
 
   function setStartValue(startValue) {
     if (!startValue) {
@@ -55,7 +52,7 @@ export default function ValueOptions({
   function onSelectRangeChange(event) {
     const { checked } = event.target;
 
-    setState({ selectRange: checked });
+    setSelectRange(checked);
   }
 
   return (
@@ -131,7 +128,8 @@ export default function ValueOptions({
 
 ValueOptions.propTypes = {
   selectRange: PropTypes.bool,
-  setState: PropTypes.func.isRequired,
+  setSelectRange: PropTypes.func.isRequired,
+  setValue: PropTypes.func.isRequired,
   value: PropTypes.oneOfType([
     PropTypes.string,
     isValue,
