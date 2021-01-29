@@ -38,7 +38,7 @@ export default function DateBonduariesOptions({
         />
         &nbsp;
         <button
-          onClick={() => setMinDate(null)}
+          onClick={() => setMinDate(undefined)}
           type="button"
         >
           Clear
@@ -56,7 +56,7 @@ export default function DateBonduariesOptions({
         />
         &nbsp;
         <button
-          onClick={() => setMaxDate(null)}
+          onClick={() => setMaxDate(undefined)}
           type="button"
         >
           Clear
