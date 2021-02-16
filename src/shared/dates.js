@@ -86,7 +86,7 @@ export function getBeginOfDecadeYear(date) {
  * Returns the beginning of a given week.
  *
  * @param {Date} date Date.
- * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
+ * @param {string} calendarType Calendar type. Can be ISO 8601 or US.
  */
 export function getBeginOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   const year = getYear(date);
@@ -101,7 +101,7 @@ export function getBeginOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
  * In US calendar week 1 is the one with January 1.
  *
  * @param {Date} date Date.
- * @param {String} calendarType Calendar type. Can be ISO 8601 or US.
+ * @param {string} calendarType Calendar type. Can be ISO 8601 or US.
  */
 export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   const calendarTypeForWeekNumber = (
@@ -131,7 +131,7 @@ export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
 /**
  * Returns the beginning of a given range.
  *
- * @param {String} rangeType Range type (e.g. 'day')
+ * @param {string} rangeType Range type (e.g. 'day')
  * @param {Date} date Date.
  */
 export function getBegin(rangeType, date) {
@@ -186,7 +186,7 @@ export const getBeginNext2 = (rangeType, date) => {
 /**
  * Returns the end of a given range.
  *
- * @param {String} rangeType Range type (e.g. 'day')
+ * @param {string} rangeType Range type (e.g. 'day')
  * @param {Date} date Date.
  */
 export function getEnd(rangeType, date) {
@@ -222,7 +222,7 @@ export const getEndPrevious2 = (rangeType, date) => {
 /**
  * Returns an array with the beginning and the end of a given range.
  *
- * @param {String} rangeType Range type (e.g. 'day')
+ * @param {string} rangeType Range type (e.g. 'day')
  * @param {Date} date Date.
  */
 export function getRange(rangeType, date) {
@@ -239,7 +239,7 @@ export function getRange(rangeType, date) {
 /**
  * Creates a range out of two values, ensuring they are in order and covering entire period ranges.
  *
- * @param {String} rangeType Range type (e.g. 'day')
+ * @param {string} rangeType Range type (e.g. 'day')
  * @param {Date} date1 First date.
  * @param {Date} date2 Second date.
  */
