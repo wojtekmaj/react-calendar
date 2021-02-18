@@ -74,7 +74,7 @@ export default function MonthView(props) {
       className={[
         className,
         showWeekNumbers ? `${className}--weekNumbers` : '',
-      ].join(' ')}
+      ].filter(Boolean).join(' ')}
     >
       <div
         style={{
