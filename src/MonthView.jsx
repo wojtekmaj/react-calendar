@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import mergeClassNames from 'merge-class-names';
 
 import Days from './MonthView/Days';
 import Weekdays from './MonthView/Weekdays';
@@ -71,10 +72,7 @@ export default function MonthView(props) {
 
   return (
     <div
-      className={[
-        className,
-        showWeekNumbers ? `${className}--weekNumbers` : '',
-      ].join(' ')}
+      className={mergeClassNames(className, showWeekNumbers ? `${className}--weekNumbers` : '')}
     >
       <div
         style={{
