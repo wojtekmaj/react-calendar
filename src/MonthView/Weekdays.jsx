@@ -34,7 +34,7 @@ export default function Weekdays(props) {
     const weekdayDate = new Date(
       year, monthIndex, weekday - getDayOfWeek(beginOfMonth, calendarType),
     );
-    
+
     const weekdayClassName = `${className}__weekday`;
     const abbr = formatWeekday(locale, weekdayDate);
 
