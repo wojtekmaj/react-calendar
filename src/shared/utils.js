@@ -75,7 +75,7 @@ export function getTileClasses({
     return classes;
   }
 
-  if (!(Array.isArray(date)) && !dateType) {
+  if (!Array.isArray(date) && !dateType) {
     throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
   }
 
@@ -90,7 +90,7 @@ export function getTileClasses({
     return classes;
   }
 
-  if (!(Array.isArray(value)) && !valueType) {
+  if (!Array.isArray(value) && !valueType) {
     throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
   }
 
