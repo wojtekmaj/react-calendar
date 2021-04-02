@@ -13,6 +13,7 @@ import { tileProps } from '../shared/propTypes';
 const className = 'react-calendar__year-view__months__month';
 
 export default function Month({
+  activeTabDate,
   classes,
   formatMonth = defaultFormatMonth,
   formatMonthYear = defaultFormatMonthYear,
@@ -25,6 +26,9 @@ export default function Month({
       {...otherProps}
       classes={[].concat(classes, className)}
       formatAbbr={formatMonthYear}
+      isFocusable={
+        activeTabDate.getMonth() === date.getMonth() && activeTabDate.getFullYear() === date.getFullYear()
+      }
       maxDateTransform={getMonthEnd}
       minDateTransform={getMonthStart}
       view="year"

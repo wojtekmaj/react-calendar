@@ -47,6 +47,7 @@ export default class Tile extends Component {
       minDateTransform,
       onClick,
       onMouseOver,
+      isFocusable,
       style,
       tileDisabled,
       view,
@@ -65,6 +66,7 @@ export default class Tile extends Component {
         onFocus={onMouseOver && (() => onMouseOver(date))}
         onMouseOver={onMouseOver && (() => onMouseOver(date))}
         style={style}
+        tabIndex={isFocusable ? 0 : -1}
         type="button"
       >
         {formatAbbr

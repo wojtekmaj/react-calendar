@@ -11,6 +11,7 @@ const className = 'react-calendar__decade-view__years__year';
 
 export default function Year({
   classes,
+  activeTabDate,
   formatYear = defaultFormatYear,
   ...otherProps
 }) {
@@ -20,6 +21,7 @@ export default function Year({
     <Tile
       {...otherProps}
       classes={[].concat(classes, className)}
+      isFocusable={activeTabDate.getFullYear() === date.getFullYear()}
       maxDateTransform={getYearEnd}
       minDateTransform={getYearStart}
       view="decade"

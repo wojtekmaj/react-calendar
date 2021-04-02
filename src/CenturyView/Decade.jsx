@@ -11,6 +11,7 @@ import { tileProps } from '../shared/propTypes';
 const className = 'react-calendar__century-view__decades__decade';
 
 export default function Decade({
+  activeTabDate,
   classes,
   formatYear = defaultFormatYear,
   ...otherProps
@@ -21,6 +22,9 @@ export default function Decade({
     <Tile
       {...otherProps}
       classes={[].concat(classes, className)}
+      isFocusable={
+        activeTabDate <= getDecadeEnd(date) && activeTabDate > getDecadeStart(date)
+      }
       maxDateTransform={getDecadeEnd}
       minDateTransform={getDecadeStart}
       view="century"

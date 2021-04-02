@@ -11,6 +11,7 @@ import { tileProps } from '../shared/propTypes';
 const className = 'react-calendar__month-view__days__day';
 
 export default function Day({
+  activeTabDate,
   formatLongDate = defaultFormatLongDate,
   calendarType,
   classes,
@@ -29,6 +30,9 @@ export default function Day({
         date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null,
       )}
       formatAbbr={formatLongDate}
+      isFocusable={
+        activeTabDate.getTime() === date.getTime() && date.getMonth() === currentMonthIndex
+      }
       maxDateTransform={getDayEnd}
       minDateTransform={getDayStart}
       view="month"
