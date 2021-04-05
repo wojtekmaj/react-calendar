@@ -42,8 +42,9 @@ export default function Navigation({
   showDoubleView,
   view,
   views,
+  overrideDrillUp,
 }) {
-  const drillUpAvailable = views.indexOf(view) > 0;
+  const drillUpAvailable = views.indexOf(view) > 0 || overrideDrillUp;
   const shouldShowPrevNext2Buttons = view !== 'century';
 
   const previousActiveStartDate = getBeginPrevious(view, activeStartDate);
@@ -70,7 +71,7 @@ export default function Navigation({
     return minDate && minDate >= previousActiveEndDate;
   })();
 
-  const nextButtonDisabled = maxDate && maxDate < nextActiveStartDate;
+  const nextButtonDisabled = maxDate && maxDate <= nextActiveStartDate;
   const next2ButtonDisabled = (
     shouldShowPrevNext2Buttons
     && maxDate
@@ -219,6 +220,7 @@ Navigation.propTypes = {
   next2Label: PropTypes.node,
   nextAriaLabel: PropTypes.string,
   nextLabel: PropTypes.node,
+  overrideDrillUp: PropTypes.bool,
   prev2AriaLabel: PropTypes.string,
   prev2Label: PropTypes.node,
   prevAriaLabel: PropTypes.string,
