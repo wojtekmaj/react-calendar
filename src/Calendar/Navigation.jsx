@@ -75,7 +75,7 @@ export default function Navigation({
   const next2ButtonDisabled = (
     shouldShowPrevNext2Buttons
     && maxDate
-    && maxDate < nextActiveStartDate2
+    && maxDate <= nextActiveStartDate2
   );
 
   function onClickPrevious() {
