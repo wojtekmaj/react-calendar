@@ -217,6 +217,8 @@ Navigation.propTypes = {
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
   navigationAriaLabel: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  navigationButtonProps: PropTypes.object,
   navigationLabel: PropTypes.func,
   next2AriaLabel: PropTypes.string,
   next2Label: PropTypes.node,

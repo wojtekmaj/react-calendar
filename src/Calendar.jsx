@@ -678,8 +678,9 @@ Calendar.propTypes = {
   minDate: isMinDate,
   minDetail: PropTypes.oneOf(allViews),
   navigationAriaLabel: PropTypes.string,
-  navigationLabel: PropTypes.func,
+  // eslint-disable-next-line react/forbid-prop-types
   navigationButtonProps: PropTypes.object,
+  navigationLabel: PropTypes.func,
   next2AriaLabel: PropTypes.string,
   next2Label: PropTypes.node,
   nextAriaLabel: PropTypes.string,
