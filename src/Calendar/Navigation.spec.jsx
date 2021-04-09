@@ -560,17 +560,35 @@ describe('Navigation', () => {
     });
   });
 
-  it('renders custom navigation button props when given navigationButtonProps prop', () => {
-    const navigationButtonProps = { tabIndex: "-1" };
+  describe('when given navigationButtonProps prop', () => {
+    it('renders custom navigation button props', () => {
+      const navigationButtonProps = { tabIndex: "-1", 'data-test-id': "navigation-button" };
+  
+      const component = shallow(
+        <Navigation
+          {...defaultProps}
+          navigationButtonProps={navigationButtonProps}
+        />,
+      );
+  
+      const drillUp = component.find('.react-calendar__navigation__label');
+      expect(drillUp.prop('tabIndex')).toBe("-1");
+      expect(drillUp.prop('data-test-id')).toBe("navigation-button");
+    });
 
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        navigationButtonProps={navigationButtonProps}
-      />,
-    );
-
-    const drillUp = component.find('.react-calendar__navigation__label');
-    expect(drillUp.prop('tabIndex')).toBe("-1");
+    it('renders doesn\'t overwrite other props', () => {
+      const navigationButtonProps = { className: 'custom-class-name' };
+  
+      const component = shallow(
+        <Navigation
+          {...defaultProps}
+          navigationButtonProps={navigationButtonProps}
+        />,
+      );
+  
+      const drillUp = component.find('.react-calendar__navigation__label');
+      expect(drillUp.exists()).toBeTruthy();
+      expect(drillUp.prop('className')).not.toBe("custom-class-name");
+    });
   });
 });

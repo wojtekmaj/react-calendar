@@ -127,13 +127,13 @@ export default function Navigation({
     const labelClassName = `${className}__label`;
     return (
       <button
+        {...navigationButtonProps}
         aria-label={navigationAriaLabel}
         className={labelClassName}
         disabled={!drillUpAvailable}
         onClick={drillUp}
         style={{ flexGrow: 1 }}
         type="button"
-        {...navigationButtonProps}
       >
         <span className={`${labelClassName}__labelText ${labelClassName}__labelText--from`}>
           {renderLabel(activeStartDate)}
