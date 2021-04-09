@@ -30,6 +30,7 @@ export default function Navigation({
   minDate,
   navigationAriaLabel = '',
   navigationLabel,
+  navigationButtonProps = {},
   next2AriaLabel = '',
   next2Label = '»',
   nextAriaLabel = '',
@@ -132,6 +133,7 @@ export default function Navigation({
         onClick={drillUp}
         style={{ flexGrow: 1 }}
         type="button"
+        {...navigationButtonProps}
       >
         <span className={`${labelClassName}__labelText ${labelClassName}__labelText--from`}>
           {renderLabel(activeStartDate)}

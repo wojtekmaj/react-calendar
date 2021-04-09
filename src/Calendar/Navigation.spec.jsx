@@ -559,4 +559,18 @@ describe('Navigation', () => {
       expect(navigationLabel.text()).toBe('Year – Year');
     });
   });
+
+  it('renders custom navigation button props when given navigationButtonProps prop', () => {
+    const navigationButtonProps = { tabIndex: "-1" };
+
+    const component = shallow(
+      <Navigation
+        {...defaultProps}
+        navigationButtonProps={navigationButtonProps}
+      />,
+    );
+
+    const drillUp = component.find('.react-calendar__navigation__label');
+    expect(drillUp.prop('tabIndex')).toBe("-1");
+  });
 });

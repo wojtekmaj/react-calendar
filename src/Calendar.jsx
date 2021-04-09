@@ -568,6 +568,7 @@ export default class Calendar extends Component {
       minDate,
       navigationAriaLabel,
       navigationLabel,
+      navigationButtonProps,
       next2AriaLabel,
       next2Label,
       nextAriaLabel,
@@ -590,6 +591,7 @@ export default class Calendar extends Component {
         minDate={minDate}
         navigationAriaLabel={navigationAriaLabel}
         navigationLabel={navigationLabel}
+        navigationButtonProps={navigationButtonProps}
         next2AriaLabel={next2AriaLabel}
         next2Label={next2Label}
         nextAriaLabel={nextAriaLabel}
@@ -677,6 +679,7 @@ Calendar.propTypes = {
   minDetail: PropTypes.oneOf(allViews),
   navigationAriaLabel: PropTypes.string,
   navigationLabel: PropTypes.func,
+  navigationButtonProps: PropTypes.object,
   next2AriaLabel: PropTypes.string,
   next2Label: PropTypes.node,
   nextAriaLabel: PropTypes.string,
