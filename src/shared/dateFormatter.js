@@ -23,17 +23,19 @@ function getSafeFormatter(options) {
 }
 
 const formatDateOptions = { day: 'numeric', month: 'numeric', year: 'numeric' };
+const formatDayOptions = { day: 'numeric' };
 const formatLongDateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
 const formatMonthOptions = { month: 'long' };
 const formatMonthYearOptions = { month: 'long', year: 'numeric' };
-const formatYearOptions = { year: 'numeric' };
 const formatShortWeekdayOptions = { weekday: 'short' };
 const formatWeekdayOptions = { weekday: 'long' };
+const formatYearOptions = { year: 'numeric' };
 
 export const formatDate = getSafeFormatter(formatDateOptions);
+export const formatDay = getSafeFormatter(formatDayOptions);
 export const formatLongDate = getSafeFormatter(formatLongDateOptions);
 export const formatMonth = getSafeFormatter(formatMonthOptions);
 export const formatMonthYear = getSafeFormatter(formatMonthYearOptions);
-export const formatYear = getSafeFormatter(formatYearOptions);
 export const formatShortWeekday = getSafeFormatter(formatShortWeekdayOptions);
 export const formatWeekday = getSafeFormatter(formatWeekdayOptions);
+export const formatYear = getSafeFormatter(formatYearOptions);

@@ -219,6 +219,21 @@ describe('MonthView', () => {
     expect(days.prop('calendarType')).toBe('US');
   });
 
+  it('passes formatDay flag to Days component', () => {
+    const formatDay = () => 'Day';
+
+    const component = shallow(
+      <MonthView
+        {...defaultProps}
+        formatDay={formatDay}
+      />,
+    );
+
+    const days = component.find('Days');
+
+    expect(days.prop('formatDay')).toBe(formatDay);
+  });
+
   it('passes formatLongDate flag to Days component', () => {
     const formatLongDate = () => 'Long date';
 

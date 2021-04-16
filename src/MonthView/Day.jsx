@@ -1,23 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getDate, getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
+import { getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile';
 
 import { isWeekend } from '../shared/dates';
-import { formatLongDate as defaultFormatLongDate } from '../shared/dateFormatter';
+import {
+  formatDay as defaultFormatDay,
+  formatLongDate as defaultFormatLongDate,
+} from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__days__day';
 
 export default function Day({
+  formatDay = defaultFormatDay,
   formatLongDate = defaultFormatLongDate,
   calendarType,
   classes,
   currentMonthIndex,
   ...otherProps
 }) {
-  const { date } = otherProps;
+  const { date, locale } = otherProps;
 
   return (
     <Tile
@@ -33,7 +37,7 @@ export default function Day({
       minDateTransform={getDayStart}
       view="month"
     >
-      {getDate(date)}
+      {formatDay(locale, date)}
     </Tile>
   );
 }
@@ -41,5 +45,6 @@ export default function Day({
 Day.propTypes = {
   ...tileProps,
   currentMonthIndex: PropTypes.number.isRequired,
+  formatDay: PropTypes.func,
   formatLongDate: PropTypes.func,
 };

@@ -523,6 +523,7 @@ export default class Calendar extends Component {
       }
       case 'month': {
         const {
+          formatDay,
           formatLongDate,
           formatShortWeekday,
           onClickWeekNumber,
@@ -536,6 +537,7 @@ export default class Calendar extends Component {
         return (
           <MonthView
             calendarType={calendarType}
+            formatDay={formatDay}
             formatLongDate={formatLongDate}
             formatShortWeekday={formatShortWeekday}
             onClickWeekNumber={onClickWeekNumber}
@@ -664,6 +666,7 @@ Calendar.propTypes = {
   defaultActiveStartDate: isActiveStartDate,
   defaultValue: isLooseValue,
   defaultView: isView,
+  formatDay: PropTypes.func,
   formatLongDate: PropTypes.func,
   formatMonth: PropTypes.func,
   formatMonthYear: PropTypes.func,

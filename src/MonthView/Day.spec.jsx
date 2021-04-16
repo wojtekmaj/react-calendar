@@ -210,6 +210,28 @@ describe('Day', () => {
     expect(testContent).toHaveLength(1);
   });
 
+  it('uses formatDay if given', () => {
+    const locale = 'en-US';
+    const date = new Date(2018, 0, 1);
+    const formatDay = jest.fn();
+    formatDay.mockReturnValue('Mock format');
+
+    const component = mount(
+      <Day
+        {...tileProps}
+        date={date}
+        formatDay={formatDay}
+        locale={locale}
+      />,
+    );
+
+    const tile = component.find('Tile');
+
+    expect(formatDay).toHaveBeenCalled();
+    expect(formatDay).toHaveBeenCalledWith(locale, date);
+    expect(tile.text()).toBe('Mock format');
+  });
+
   it('uses formatLongDate if given', () => {
     const locale = 'en-US';
     const date = new Date(2018, 0, 1);

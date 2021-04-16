@@ -927,6 +927,19 @@ describe('Calendar', () => {
     expect(navigation.prop('formatYear')).toBe(formatYear);
   });
 
+  it('passes formatDay to MonthView component', () => {
+    const formatDay = () => 'Day';
+    const component = shallow(
+      <Calendar
+        formatDay={formatDay}
+      />,
+    );
+
+    const monthView = component.find('MonthView');
+
+    expect(monthView.prop('formatDay')).toBe(formatDay);
+  });
+
   it('passes formatLongDate to MonthView component', () => {
     const formatLongDate = () => 'Long date';
     const component = shallow(
