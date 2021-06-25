@@ -153,10 +153,7 @@ export default function Navigation({
   }
 
   return (
-    <div
-      className={className}
-      style={{ display: 'flex' }}
-    >
+    <div className={className}>
       {prev2Label !== null && shouldShowPrevNext2Buttons && (
         <button
           aria-label={prev2AriaLabel}
