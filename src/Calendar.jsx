@@ -570,6 +570,7 @@ export default class Calendar extends Component {
       minDate,
       navigationAriaLabel,
       navigationLabel,
+      navigationButtonProps,
       next2AriaLabel,
       next2Label,
       nextAriaLabel,
@@ -592,6 +593,7 @@ export default class Calendar extends Component {
         minDate={minDate}
         navigationAriaLabel={navigationAriaLabel}
         navigationLabel={navigationLabel}
+        navigationButtonProps={navigationButtonProps}
         next2AriaLabel={next2AriaLabel}
         next2Label={next2Label}
         nextAriaLabel={nextAriaLabel}
@@ -679,6 +681,8 @@ Calendar.propTypes = {
   minDate: isMinDate,
   minDetail: PropTypes.oneOf(allViews),
   navigationAriaLabel: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  navigationButtonProps: PropTypes.object,
   navigationLabel: PropTypes.func,
   next2AriaLabel: PropTypes.string,
   next2Label: PropTypes.node,

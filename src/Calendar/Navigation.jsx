@@ -30,6 +30,7 @@ export default function Navigation({
   minDate,
   navigationAriaLabel = '',
   navigationLabel,
+  navigationButtonProps = {},
   next2AriaLabel = '',
   next2Label = '»',
   nextAriaLabel = '',
@@ -126,6 +127,7 @@ export default function Navigation({
     const labelClassName = `${className}__label`;
     return (
       <button
+        {...navigationButtonProps}
         aria-label={navigationAriaLabel}
         className={labelClassName}
         disabled={!drillUpAvailable}
@@ -212,6 +214,8 @@ Navigation.propTypes = {
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
   navigationAriaLabel: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  navigationButtonProps: PropTypes.object,
   navigationLabel: PropTypes.func,
   next2AriaLabel: PropTypes.string,
   next2Label: PropTypes.node,

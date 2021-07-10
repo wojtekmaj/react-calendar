@@ -11,6 +11,7 @@ describe('Navigation', () => {
     drillUp: () => {},
     setActiveStartDate: () => {},
     views: allViews,
+    view: 'month',
   };
 
   it('renders prev2, prev, drill up, next and next2 buttons', () => {
@@ -557,6 +558,38 @@ describe('Navigation', () => {
       const navigationLabel = component.find('.react-calendar__navigation__label').first();
 
       expect(navigationLabel.text()).toBe('Year – Year');
+    });
+  });
+
+  describe('when given navigationButtonProps prop', () => {
+    it('renders custom navigation button props', () => {
+      const navigationButtonProps = { tabIndex: '-1', 'data-test-id': 'navigation-button' };
+
+      const component = shallow(
+        <Navigation
+          {...defaultProps}
+          navigationButtonProps={navigationButtonProps}
+        />,
+      );
+
+      const drillUp = component.find('.react-calendar__navigation__label');
+      expect(drillUp.prop('tabIndex')).toBe('-1');
+      expect(drillUp.prop('data-test-id')).toBe('navigation-button');
+    });
+
+    it('renders doesn\'t overwrite other props', () => {
+      const navigationButtonProps = { className: 'custom-class-name' };
+
+      const component = shallow(
+        <Navigation
+          {...defaultProps}
+          navigationButtonProps={navigationButtonProps}
+        />,
+      );
+
+      const drillUp = component.find('.react-calendar__navigation__label');
+      expect(drillUp.exists()).toBeTruthy();
+      expect(drillUp.prop('className')).not.toBe('custom-class-name');
     });
   });
 });
