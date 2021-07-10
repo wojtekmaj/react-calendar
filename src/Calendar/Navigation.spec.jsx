@@ -360,7 +360,6 @@ describe('Navigation', () => {
 
     expect(centurySetActiveStartDateFn).toHaveBeenCalledWith(new Date(2101, 0, 1));
   });
-
   it('correctly marks drillUp button as disabled when already on top allowed view', () => {
     const component = shallow(
       <Navigation
@@ -373,7 +372,6 @@ describe('Navigation', () => {
 
     expect(button.prop('disabled')).toBeTruthy();
   });
-
   it('disallows navigating before minDate', () => {
     const component = shallow(
       <Navigation
