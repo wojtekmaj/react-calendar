@@ -128,6 +128,7 @@ export default function Navigation({
     return (
       <button
         aria-label={navigationAriaLabel}
+        aria-live={navigationAriaLive}
         className={labelClassName}
         disabled={!drillUpAvailable}
         onClick={drillUp}
