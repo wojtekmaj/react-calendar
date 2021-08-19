@@ -137,6 +137,20 @@ describe('Navigation', () => {
     expect(next2.props.children).toBe('next2Label');
   });
 
+  it('uses proper user-defined ARIA live on navigation button', () => {
+    const component = shallow(
+      <Navigation
+        {...defaultProps}
+        navigationAriaLive="polite"
+        view="month"
+      />,
+    );
+
+    const [, , navigation] = component.children();
+
+    expect(navigation.props['aria-live']).toBe('polite');
+  });
+
   it('displays proper user-defined ARIA labels on prev2, prev, navigation, next and next2 buttons', () => {
     const component = shallow(
       <Navigation
