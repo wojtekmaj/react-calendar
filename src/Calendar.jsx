@@ -569,6 +569,7 @@ export default class Calendar extends Component {
       maxDate,
       minDate,
       navigationAriaLabel,
+      navigationAriaLive,
       navigationLabel,
       next2AriaLabel,
       next2Label,
@@ -591,6 +592,7 @@ export default class Calendar extends Component {
         maxDate={maxDate}
         minDate={minDate}
         navigationAriaLabel={navigationAriaLabel}
+        navigationAriaLive={navigationAriaLive}
         navigationLabel={navigationLabel}
         next2AriaLabel={next2AriaLabel}
         next2Label={next2Label}

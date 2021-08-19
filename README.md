@@ -108,6 +108,7 @@ Displays a complete, interactive calendar.
 |minDate|Minimum date that the user can select. Periods partially overlapped by minDate will also be selectable, although React-Calendar will ensure that no earlier date is selected.|n/a|Date: `new Date()`|
 |minDetail|The least detailed view that the user shall see. Can be `"month"`, `"year"`, `"decade"` or `"century"`.|`"century"`|`"decade"`|
 |navigationAriaLabel|`aria-label` attribute of a label rendered on calendar navigation bar.|n/a|`"Go up"`|
+|navigationAriaLive|`aria-live` attribute of a label rendered on calendar navigation bar.|`undefined`|`"polite"`|
 |navigationLabel|Content of a label rendered on calendar navigation bar.|(default label)|``({ date, label, locale, view }) => `Current view: ${view}, date: ${date.toLocaleDateString(locale)}` ``|
 |nextAriaLabel|`aria-label` attribute of the "next" button on the navigation pane.|n/a|`"Next"`|
 |nextLabel|Content of the "next" button on the navigation pane. Setting the value explicitly to null will hide the icon.|`"›"`|<ul><li>String: `"›"`</li><li>React element: `<NextIcon />`</li></ul>|
