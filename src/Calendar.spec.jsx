@@ -459,6 +459,17 @@ describe('Calendar', () => {
 
       expect(onDrillUp).not.toHaveBeenCalled();
     });
+    it('drill up cycles correctly to maximum detail view when already at minimum detail view', () => {
+      const component = shallow(
+        <Calendar
+          overrideDrillUp
+        />,
+      );
+      component.setState({ view: 'century' });
+      component.instance().drillUp();
+
+      expect(component.instance().view).toBe('month');
+    });
   });
 
   describe('handles drill down properly', () => {

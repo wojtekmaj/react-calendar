@@ -354,18 +354,25 @@ export default class Calendar extends Component {
   }
 
   drillUp = () => {
-    if (!this.drillUpAvailable) {
+    const { activeStartDate, view, views } = this;
+    const {
+      onDrillUp,
+      maxDetail,
+      overrideDrillUp,
+      minDate,
+    } = this.props;
+    if (!this.drillUpAvailable && !overrideDrillUp) {
       return;
     }
-
-    const { activeStartDate, view, views } = this;
-    const { onDrillUp } = this.props;
-
-    const nextView = views[views.indexOf(view) - 1];
+    let nextView = -1;
+    if (!this.drillUpAvailable && overrideDrillUp) {
+      nextView = views[views.indexOf(maxDetail)];
+    } else {
+      nextView = views[views.indexOf(view) - 1];
+    }
     const nextActiveStartDate = getBegin(nextView, activeStartDate);
-
     this.setStateAndCallCallbacks({
-      activeStartDate: nextActiveStartDate,
+      activeStartDate: nextActiveStartDate < minDate ? minDate : nextActiveStartDate,
       view: nextView,
     }, undefined, onDrillUp);
   }
@@ -575,6 +582,7 @@ export default class Calendar extends Component {
       next2Label,
       nextAriaLabel,
       nextLabel,
+      overrideDrillUp,
       prev2AriaLabel,
       prev2Label,
       prevAriaLabel,
@@ -598,6 +606,7 @@ export default class Calendar extends Component {
         next2Label={next2Label}
         nextAriaLabel={nextAriaLabel}
         nextLabel={nextLabel}
+        overrideDrillUp={overrideDrillUp}
         prev2AriaLabel={prev2AriaLabel}
         prev2Label={prev2Label}
         prevAriaLabel={prevAriaLabel}
@@ -649,6 +658,7 @@ Calendar.defaultProps = {
   maxDetail: 'month',
   minDate: defaultMinDate,
   minDetail: 'century',
+  overrideDrillUp: false,
   returnValue: 'start',
   showNavigation: true,
   showNeighboringMonth: true,
@@ -696,6 +706,7 @@ Calendar.propTypes = {
   onDrillDown: PropTypes.func,
   onDrillUp: PropTypes.func,
   onViewChange: PropTypes.func,
+  overrideDrillUp: PropTypes.bool,
   prev2AriaLabel: PropTypes.string,
   prev2Label: PropTypes.node,
   prevAriaLabel: PropTypes.string,

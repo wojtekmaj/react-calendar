@@ -124,6 +124,7 @@ Displays a complete, interactive calendar.
 |onClickYear|Function called when the user clicks a year.|n/a|`(value, event) => alert('Clicked year: ', value)`|
 |onDrillDown|Function called when the user drills down by clicking a tile.|n/a|`({ activeStartDate, view }) => alert('Drilled down to: ', activeStartDate, view)`|
 |onDrillUp|Function called when the user drills up by clicking drill up button.|n/a|`({ activeStartDate, view }) => alert('Drilled up to: ', activeStartDate, view)`|
+|overrideDrillUp|Determines whether the calendar cycles between the minimum detail view and maximum view when clicking the drill up button|`false`|`true`
 |prevAriaLabel|`aria-label` attribute of the "previous" button on the navigation pane.|n/a|`"Previous"`|
 |prevLabel|Content of the "previous" button on the navigation pane. Setting the value explicitly to null will hide the icon.|`"‹"`|<ul><li>String: `"‹"`</li><li>React element: `<PreviousIcon />`</li></ul>|
 |prev2AriaLabel|`aria-label` attribute of the "previous on higher level" button on the navigation pane.|n/a|`"Jump backwards"`|
