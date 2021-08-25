@@ -71,12 +71,11 @@ export default function Navigation({
     return minDate && minDate >= previousActiveEndDate;
   })();
 
-  const nextButtonDisabled = maxDate && maxDate <= nextActiveStartDate;
-
+  const nextButtonDisabled = maxDate && maxDate < nextActiveStartDate;
   const next2ButtonDisabled = (
     shouldShowPrevNext2Buttons
     && maxDate
-    && maxDate <= nextActiveStartDate2
+    && maxDate < nextActiveStartDate2
   );
 
   function onClickPrevious() {
