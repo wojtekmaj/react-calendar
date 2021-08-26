@@ -232,7 +232,7 @@ describe('Navigation', () => {
 
     prev2.simulate('click');
 
-    expect(monthSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2016, 0, 1));
+    expect(monthSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2016, 0, 1), 'prev2');
   });
 
   it('jumps 1 month back on prev button click for month view', () => {
@@ -240,7 +240,7 @@ describe('Navigation', () => {
 
     prev.simulate('click');
 
-    expect(monthSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2016, 11, 1));
+    expect(monthSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2016, 11, 1), 'prev');
   });
 
   it('jumps 1 month forward on next button click for month view', () => {
@@ -248,7 +248,7 @@ describe('Navigation', () => {
 
     next.simulate('click');
 
-    expect(monthSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2017, 1, 1));
+    expect(monthSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2017, 1, 1), 'next');
   });
 
   it('jumps 12 months forward on next2 button click for month view', () => {
@@ -256,7 +256,7 @@ describe('Navigation', () => {
 
     next2.simulate('click');
 
-    expect(monthSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2018, 0, 1));
+    expect(monthSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2018, 0, 1), 'next2');
   });
 
   const yearSetActiveStartDateFn = jest.fn();
@@ -276,7 +276,7 @@ describe('Navigation', () => {
 
     prev2.simulate('click');
 
-    expect(yearSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2007, 0, 1));
+    expect(yearSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2007, 0, 1), 'prev2');
   });
 
   it('jumps 1 year back on prev button click for year view', () => {
@@ -284,7 +284,7 @@ describe('Navigation', () => {
 
     prev2.simulate('click');
 
-    expect(yearSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2016, 0, 1));
+    expect(yearSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2016, 0, 1), 'prev');
   });
 
   it('jumps 1 year forward on next button click for year view', () => {
@@ -292,7 +292,7 @@ describe('Navigation', () => {
 
     next.simulate('click');
 
-    expect(yearSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2018, 0, 1));
+    expect(yearSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2018, 0, 1), 'next');
   });
 
   it('jumps 10 years forward on next2 button click for year view', () => {
@@ -300,7 +300,7 @@ describe('Navigation', () => {
 
     next2.simulate('click');
 
-    expect(yearSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2027, 0, 1));
+    expect(yearSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2027, 0, 1), 'next2');
   });
 
   const decadeSetActiveStartDateFn = jest.fn();
@@ -320,7 +320,7 @@ describe('Navigation', () => {
 
     prev2.simulate('click');
 
-    expect(decadeSetActiveStartDateFn).toHaveBeenCalledWith(new Date(1911, 0, 1));
+    expect(decadeSetActiveStartDateFn).toHaveBeenCalledWith(new Date(1911, 0, 1), 'prev2');
   });
 
   it('jumps 1 decade back on prev button click for decade view', () => {
@@ -328,7 +328,7 @@ describe('Navigation', () => {
 
     prev.simulate('click');
 
-    expect(decadeSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2001, 0, 1));
+    expect(decadeSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2001, 0, 1), 'prev');
   });
 
   it('jumps 1 decade forward on next button click for decade view', () => {
@@ -336,7 +336,7 @@ describe('Navigation', () => {
 
     next.simulate('click');
 
-    expect(decadeSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2021, 0, 1));
+    expect(decadeSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2021, 0, 1), 'next');
   });
 
   it('jumps 10 decades forward on next2 button click for decade view', () => {
@@ -344,7 +344,7 @@ describe('Navigation', () => {
 
     next2.simulate('click');
 
-    expect(decadeSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2111, 0, 1));
+    expect(decadeSetActiveStartDateFn).toHaveBeenCalledWith(new Date(2111, 0, 1), 'next2');
   });
 
   const centurySetActiveStartDateFn = jest.fn();
@@ -364,7 +364,7 @@ describe('Navigation', () => {
 
     prev.simulate('click');
 
-    expect(centurySetActiveStartDateFn).toHaveBeenCalledWith(new Date(1901, 0, 1));
+    expect(centurySetActiveStartDateFn).toHaveBeenCalledWith(new Date(1901, 0, 1), 'prev');
   });
 
   it('jumps 1 century forward on next button click for century view', () => {
@@ -372,7 +372,7 @@ describe('Navigation', () => {
 
     next.simulate('click');
 
-    expect(centurySetActiveStartDateFn).toHaveBeenCalledWith(new Date(2101, 0, 1));
+    expect(centurySetActiveStartDateFn).toHaveBeenCalledWith(new Date(2101, 0, 1), 'next');
   });
 
   it('correctly marks drillUp button as disabled when already on top allowed view', () => {

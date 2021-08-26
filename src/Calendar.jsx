@@ -278,6 +278,7 @@ export default class Calendar extends Component {
 
     this.setState(nextState, () => {
       const args = {
+        action: nextState.action,
         activeStartDate: nextState.activeStartDate || this.activeStartDate,
         value: nextState.value || this.value,
         view: nextState.view || this.view,
@@ -331,8 +332,11 @@ export default class Calendar extends Component {
   /**
    * Called when the user uses navigation buttons.
    */
-  setActiveStartDate = (activeStartDate) => {
-    this.setStateAndCallCallbacks({ activeStartDate });
+  setActiveStartDate = (nextActiveStartDate, action) => {
+    this.setStateAndCallCallbacks({
+      action,
+      activeStartDate: nextActiveStartDate,
+    });
   }
 
   drillDown = (nextActiveStartDate, event) => {
@@ -348,6 +352,7 @@ export default class Calendar extends Component {
     const nextView = views[views.indexOf(view) + 1];
 
     this.setStateAndCallCallbacks({
+      action: 'drillDown',
       activeStartDate: nextActiveStartDate,
       view: nextView,
     }, undefined, onDrillDown);
@@ -365,6 +370,7 @@ export default class Calendar extends Component {
     const nextActiveStartDate = getBegin(nextView, activeStartDate);
 
     this.setStateAndCallCallbacks({
+      action: 'drillUp',
       activeStartDate: nextActiveStartDate,
       view: nextView,
     }, undefined, onDrillUp);
@@ -400,6 +406,7 @@ export default class Calendar extends Component {
     event.persist();
 
     this.setStateAndCallCallbacks({
+      action: 'onChange',
       activeStartDate: nextActiveStartDate,
       value: nextValue,
     }, event);

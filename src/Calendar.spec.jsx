@@ -420,6 +420,7 @@ describe('Calendar', () => {
       component.instance().drillUp();
 
       expect(onDrillUp).toHaveBeenCalledWith({
+        action: 'drillUp',
         activeStartDate: new Date(2017, 0, 1),
         view: 'year',
       });
@@ -440,6 +441,7 @@ describe('Calendar', () => {
       component.instance().drillUp();
 
       expect(onDrillUp).toHaveBeenCalledWith({
+        action: 'drillUp',
         activeStartDate: new Date(2017, 0, 1),
         view: 'year',
       });
@@ -488,6 +490,7 @@ describe('Calendar', () => {
       component.instance().drillDown(new Date(2011, 0, 1));
 
       expect(onDrillDown).toHaveBeenCalledWith({
+        action: 'drillDown',
         activeStartDate: new Date(2011, 0, 1),
         view: 'decade',
       });
@@ -508,6 +511,7 @@ describe('Calendar', () => {
       component.instance().drillDown(new Date(2011, 0, 1));
 
       expect(onDrillDown).toHaveBeenCalledWith({
+        action: 'drillDown',
         activeStartDate: new Date(2011, 0, 1),
         view: 'decade',
       });

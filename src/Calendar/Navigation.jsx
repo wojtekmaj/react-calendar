@@ -80,19 +80,19 @@ export default function Navigation({
   );
 
   function onClickPrevious() {
-    setActiveStartDate(previousActiveStartDate);
+    setActiveStartDate(previousActiveStartDate, 'prev');
   }
 
   function onClickPrevious2() {
-    setActiveStartDate(previousActiveStartDate2);
+    setActiveStartDate(previousActiveStartDate2, 'prev2');
   }
 
   function onClickNext() {
-    setActiveStartDate(nextActiveStartDate);
+    setActiveStartDate(nextActiveStartDate, 'next');
   }
 
   function onClickNext2() {
-    setActiveStartDate(nextActiveStartDate2);
+    setActiveStartDate(nextActiveStartDate2, 'next2');
   }
 
   function renderLabel(date) {

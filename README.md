@@ -114,9 +114,9 @@ Displays a complete, interactive calendar.
 |nextLabel|Content of the "next" button on the navigation pane. Setting the value explicitly to null will hide the icon.|`"›"`|<ul><li>String: `"›"`</li><li>React element: `<NextIcon />`</li></ul>|
 |next2AriaLabel|`aria-label` attribute of the "next on higher level" button on the navigation pane.|n/a|`"Jump forwards"`|
 |next2Label|Content of the "next on higher level" button on the navigation pane. Setting the value explicitly to null will hide the icon.|`"»"`|<ul><li>String: `"»"`</li><li>React element: `<DoubleNextIcon />`</li></ul>|
-|onActiveStartDateChange|Function called when the user navigates from one view to another using previous/next button.|n/a|`({ activeStartDate, value, view }) => alert('Changed view to: ', activeStartDate, view)`|
+|onActiveStartDateChange|Function called when the user navigates from one view to another using previous/next button.<br />`action` signifies the reason for active start date change and can be one of the following values: `"prev"`, `"prev2"`, `"next"`, `"next2"`, `"drillUp"`, `"drillDown"`, `"onChange"`.|n/a|`({ action, activeStartDate, value, view }) => alert('Changed view to: ', activeStartDate, view)`|
 |onChange|Function called when the user clicks an item (day on month view, month on year view and so on) on the most detailed view available.|n/a|`(value, event) => alert('New date is: ', value)`|
-|onViewChange|Function called when the user navigates from one view to another using drill up button or by clicking a tile.|n/a|`({ activeStartDate, value, view }) => alert('New view is: ', view)`|
+|onViewChange|Function called when the user navigates from one view to another using drill up button or by clicking a tile.<br />`action` signifies the reason for view change and can be one of the following values: `"prev"`, `"prev2"`, `"next"`, `"next2"`, `"drillUp"`, `"drillDown"`, `"onChange"`.|n/a|`({ action, activeStartDate, value, view }) => alert('New view is: ', view)`|
 |onClickDay|Function called when the user clicks a day.|n/a|`(value, event) => alert('Clicked day: ', value)`|
 |onClickDecade|Function called when the user clicks a decade.|n/a|`(value, event) => alert('Clicked decade: ', value)`|
 |onClickMonth|Function called when the user clicks a month.|n/a|`(value, event) => alert('Clicked month: ', value)`|
