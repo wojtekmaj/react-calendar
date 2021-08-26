@@ -150,7 +150,7 @@ Displays a given month, year, decade and a century, respectively.
 |Prop name|Description|Default value|Example values|
 |----|----|----|----|
 |activeStartDate|The beginning of a period that shall be displayed.|n/a|`new Date(2017, 0, 1)`|
-|hover|The date over which the user is hovering.|n/a|`new Date(2017, 0, 1)`|
+|hover|The date over which the user is hovering. Used only when `selectRange` is enabled, to render a “WIP” range when the user is selecting range.|n/a|`new Date(2017, 0, 1)`|
 |maxDate|Maximum date that the user can select. Periods partially overlapped by maxDate will also be selectable, although react-calendar will ensure that no later date is selected.|n/a|Date: `new Date()`|
 |minDate|Minimum date that the user can select. Periods partially overlapped by minDate will also be selectable, although react-calendar will ensure that no earlier date is selected.|n/a|Date: `new Date()`|
 |onClick|Function called when the user clicks an item (day on month view, month on year view and so on).|n/a|`(value) => alert('New date is: ', value)`|
