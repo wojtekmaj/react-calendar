@@ -106,8 +106,10 @@ export function getTileClasses({
 
   classes.push(...valueRangeClassNames);
 
-  if (hover) {
-    const hoverRange = hover > valueRange[1] ? [valueRange[1], hover] : [hover, valueRange[0]];
+  const valueArray = [].concat(value);
+
+  if (hover && valueArray.length === 1) {
+    const hoverRange = hover > valueRange[0] ? [valueRange[0], hover] : [hover, valueRange[0]];
     const hoverRangeClassNames = getRangeClassNames(hoverRange, dateRange, `${className}--hover`);
 
     classes.push(...hoverRangeClassNames);
