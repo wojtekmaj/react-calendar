@@ -681,6 +681,7 @@ Calendar.propTypes = {
   minDate: isMinDate,
   minDetail: PropTypes.oneOf(allViews),
   navigationAriaLabel: PropTypes.string,
+  navigationAriaLive: PropTypes.oneOf(['off', 'polite', 'assertive']),
   navigationLabel: PropTypes.func,
   next2AriaLabel: PropTypes.string,
   next2Label: PropTypes.node,
