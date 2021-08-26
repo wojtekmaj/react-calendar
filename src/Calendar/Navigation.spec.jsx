@@ -445,6 +445,42 @@ describe('Navigation', () => {
     expect(next2.prop('disabled')).toBeTruthy();
   });
 
+  it('does not disallow navigating to next month when maxDate is set to first day of the next month', () => {
+    const component = shallow(
+      <Navigation
+        {...defaultProps}
+        maxDate={new Date(2017, 1, 1)}
+        view="month"
+      />,
+    );
+
+    const arrows = component.find('button.react-calendar__navigation__arrow');
+
+    const next = arrows.at(2);
+    const next2 = arrows.at(3);
+
+    expect(next.prop('disabled')).toBeFalsy();
+    expect(next2.prop('disabled')).toBeTruthy();
+  });
+
+  it('does not disallow navigating to next year when maxDate is set to first day of the next year', () => {
+    const component = shallow(
+      <Navigation
+        {...defaultProps}
+        maxDate={new Date(2018, 0, 1)}
+        view="month"
+      />,
+    );
+
+    const arrows = component.find('button.react-calendar__navigation__arrow');
+
+    const next = arrows.at(2);
+    const next2 = arrows.at(3);
+
+    expect(next.prop('disabled')).toBeFalsy();
+    expect(next2.prop('disabled')).toBeFalsy();
+  });
+
   it('disallows navigating after dynamically set maxDate', () => {
     const component = shallow(
       <Navigation
