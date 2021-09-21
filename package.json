@@ -84,7 +84,6 @@
   "devDependencies": {
     "@babel/cli": "^7.15.0",
     "@babel/core": "^7.15.0",
-    "@babel/plugin-proposal-class-properties": "^7.14.0",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.0",
