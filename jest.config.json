@@ -1,0 +1,10 @@
+{
+  "collectCoverageFrom": [
+    "**/src/**.{js,jsx}",
+    "!**/src/index.js"
+  ],
+  "setupFiles": [
+    "<rootDir>/jest.setup.js"
+  ],
+  "testEnvironment": "jsdom"
+}
