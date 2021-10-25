@@ -47,14 +47,14 @@
       min-width: 44px;
       background: none;
 
+      &:disabled {
+        background-color: rgb(240, 240, 240);
+      }
+
       &:enabled {
         &:hover, &:focus {
           background-color: rgb(230, 230, 230);
         }
-      }
-
-      &[disabled] {
-        background-color: rgb(240, 240, 240);
       }
     }
   }
