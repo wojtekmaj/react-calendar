@@ -33,7 +33,8 @@ export default function Flex({
             ...child.props,
             style: {
               flexBasis: toPercent(100 / count),
-              maxWidth: toPercent(100 / count),
+              flexShrink: 0,
+              flexGrow: 0,
               overflow: 'hidden',
               marginLeft: offset && (index === 0) ? toPercent((100 * offset) / count) : null,
             },
