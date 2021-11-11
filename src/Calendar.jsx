@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
@@ -175,6 +176,7 @@ export default class Calendar extends Component {
     activeStartDate: this.props.defaultActiveStartDate,
     value: this.props.defaultValue,
     view: this.props.defaultView,
+    activeTile: 0,
     /* eslint-enable react/destructuring-assignment */
   };
 
@@ -201,6 +203,12 @@ export default class Calendar extends Component {
     const { maxDetail } = this.props;
 
     return getValueType(maxDetail);
+  }
+
+  get activeTile() {
+    const { activeTile: activeTileState } = this.state;
+
+    return activeTileState;
   }
 
   get view() {
@@ -453,6 +461,35 @@ export default class Calendar extends Component {
     this.setState({ hover: null });
   }
 
+  handleKeyPress = (event) => {
+    const stepUpDown = this.view === 'month' ? 7 : 3;
+
+    const tiles = document.querySelectorAll('[class*=react-calendar__tile--index_]');
+
+    if (this.activeTile > tiles.length) {
+      this.setState({ activeTile: 0 }, () => {
+        tiles[this.activeTile].focus();
+      });
+    }
+    if (event.key === 'ArrowRight' && this.activeTile + 1 < tiles.length) {
+      this.setState({ activeTile: this.activeTile + 1 }, () => {
+        tiles[this.activeTile].focus();
+      });
+    } else if (event.key === 'ArrowLeft' && this.activeTile > 0) {
+      this.setState({ activeTile: this.activeTile - 1 }, () => {
+        tiles[this.activeTile].focus();
+      });
+    } else if (event.key === 'ArrowUp' && this.activeTile - stepUpDown >= 0) {
+      this.setState({ activeTile: this.activeTile - stepUpDown }, () => {
+        tiles[this.activeTile].focus();
+      });
+    } else if (event.key === 'ArrowDown' && this.activeTile + stepUpDown < tiles.length) {
+      this.setState({ activeTile: this.activeTile + stepUpDown }, () => {
+        tiles[this.activeTile].focus();
+      });
+    }
+  };
+
   renderContent(next) {
     const {
       activeStartDate: currentActiveStartDate,
@@ -624,7 +661,7 @@ export default class Calendar extends Component {
       selectRange,
       showDoubleView,
     } = this.props;
-    const { onMouseLeave, value } = this;
+    const { onMouseLeave, value, handleKeyPress } = this;
     const valueArray = [].concat(value);
 
     return (
@@ -642,6 +679,7 @@ export default class Calendar extends Component {
           className={`${baseClassName}__viewContainer`}
           onBlur={selectRange ? onMouseLeave : null}
           onMouseLeave={selectRange ? onMouseLeave : null}
+          onKeyDown={handleKeyPress}
         >
           {this.renderContent()}
           {showDoubleView && this.renderContent(true)}
