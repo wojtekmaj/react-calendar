@@ -68,7 +68,7 @@ function MyApp() {
 }
 ```
 
-Check the [sample directory](https://github.com/wojtekmaj/react-calendar/tree/master/sample) in this repository for a full working example. For more examples and more advanced use cases, check [Recipes](https://github.com/wojtekmaj/react-calendar/wiki/Recipes) in [React-Calendar Wiki](https://github.com/wojtekmaj/react-calendar/wiki).
+Check the [sample directory](https://github.com/wojtekmaj/react-calendar/tree/main/sample) in this repository for a full working example. For more examples and more advanced use cases, check [Recipes](https://github.com/wojtekmaj/react-calendar/wiki/Recipes) in [React-Calendar Wiki](https://github.com/wojtekmaj/react-calendar/wiki).
 
 ### Custom styling
 
