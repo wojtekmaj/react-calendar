@@ -235,20 +235,6 @@ describe('getWeekNumber', () => {
     }
   });
 
-  it('returns proper week number for a sample week 1 (US)', () => {
-    const year = 2015;
-    const month = 11;
-    const startDate = 27;
-
-    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
-      const date = new Date(year, month, currentDate);
-
-      const weekNumber = getWeekNumber(date, 'US');
-
-      expect(weekNumber).toBe(1);
-    }
-  });
-
   it('returns proper week number for a sample week 52 (US)', () => {
     const year = 2017;
     const month = 11;
