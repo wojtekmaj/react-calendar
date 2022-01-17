@@ -109,7 +109,7 @@ export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
       ? CALENDAR_TYPES.US
       : CALENDAR_TYPES.ISO_8601
   );
-  const beginOfWeek = getBeginOfWeek(date, calendarTypeForWeekNumber);
+  const beginOfWeek = getBeginOfWeek(date, calendarType);
   let year = getYear(date) + 1;
   let dayInWeekOne;
   let beginOfFirstWeek;
@@ -117,7 +117,7 @@ export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   // Look for the first week one that does not come after a given date
   do {
     dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === CALENDAR_TYPES.ISO_8601 ? 4 : 1);
-    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarTypeForWeekNumber);
+    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarType);
     year -= 1;
   } while (date < beginOfFirstWeek);
 

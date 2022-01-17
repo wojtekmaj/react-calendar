@@ -221,9 +221,9 @@ describe('getWeekNumber', () => {
   });
 
   it('returns proper week number for a sample year starting in week 1 (US)', () => {
-    const year = 2015;
-    const month = 11;
-    const startDate = 27;
+    const year = 2016;
+    const month = 0;
+    const startDate = 1;
 
     for (let currentWeek = 1; currentWeek <= 53; currentWeek += 1) {
       const weekOffset = (currentWeek - 1) * 7;
@@ -264,7 +264,7 @@ describe('getWeekNumber', () => {
   });
 
   it('returns proper week number for a sample week 1 (Arabic)', () => {
-    const year = 2018;
+    const year = 2022;
     const month = 0;
     const startDate = 1;
 
@@ -293,7 +293,7 @@ describe('getWeekNumber', () => {
   });
 
   it('returns proper week number for a sample week 52 (Arabic)', () => {
-    const year = 2016;
+    const year = 2020;
     const month = 11;
     const startDate = 26;
 
@@ -307,7 +307,7 @@ describe('getWeekNumber', () => {
   });
 
   it('returns proper week number for a sample week 53 (Arabic)', () => {
-    const year = 2015;
+    const year = 2019;
     const month = 11;
     const startDate = 28;
 
@@ -321,7 +321,7 @@ describe('getWeekNumber', () => {
   });
 
   it('returns proper week number for a sample week 1 (Hebrew)', () => {
-    const year = 2018;
+    const year = 2017;
     const month = 0;
     const startDate = 1;
 
@@ -352,7 +352,7 @@ describe('getWeekNumber', () => {
   it('returns proper week number for a sample week 52 (Hebrew)', () => {
     const year = 2016;
     const month = 11;
-    const startDate = 26;
+    const startDate = 25;
 
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
@@ -364,7 +364,7 @@ describe('getWeekNumber', () => {
   });
 
   it('returns proper week number for a sample week 53 (Hebrew)', () => {
-    const year = 2015;
+    const year = 2014;
     const month = 11;
     const startDate = 28;
 
