@@ -119,7 +119,7 @@ export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
     dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === CALENDAR_TYPES.ISO_8601 ? 4 : 1);
     beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarTypeForWeekNumber);
     year -= 1;
-  } while (date - beginOfFirstWeek < 0);
+  } while (date < beginOfFirstWeek);
 
   return Math.round((beginOfWeek - beginOfFirstWeek) / (8.64e7 * 7)) + 1;
 }
