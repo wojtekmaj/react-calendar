@@ -4,6 +4,14 @@ import mergeClassNames from 'merge-class-names';
 
 import { tileProps } from './shared/propTypes';
 
+function datesAreDifferent(date1, date2) {
+  return (
+    (date1 && !date2)
+    || (!date1 && date2)
+    || (date1 && date2 && date1.getTime() !== date2.getTime())
+  );
+}
+
 function getValue(nextProps, prop) {
   const { activeStartDate, date, view } = nextProps;
 
@@ -14,19 +22,27 @@ function getValue(nextProps, prop) {
 
 export default class Tile extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { tileClassName, tileContent } = nextProps;
+    const { activeStartDate, tileClassName, tileContent } = nextProps;
 
     const nextState = {};
 
-    if (tileClassName !== prevState.tileClassNameProps) {
+    if (
+      tileClassName !== prevState.tileClassNameProps
+      || datesAreDifferent(activeStartDate, prevState.activeStartDateProps)
+    ) {
       nextState.tileClassName = getValue(nextProps, tileClassName);
       nextState.tileClassNameProps = tileClassName;
     }
 
-    if (tileContent !== prevState.tileContentProps) {
+    if (
+      tileContent !== prevState.tileContentProps
+      || datesAreDifferent(activeStartDate, prevState.activeStartDateProps)
+    ) {
       nextState.tileContent = getValue(nextProps, tileContent);
       nextState.tileContentProps = tileContent;
     }
+
+    nextState.activeStartDateProps = activeStartDate;
 
     return nextState;
   }
