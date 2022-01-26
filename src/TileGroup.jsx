@@ -22,6 +22,7 @@ export default function TileGroup({
   ...tileProps
 }) {
   const tiles = [];
+  let index = 0;
   for (let point = start; point <= end; point += step) {
     const date = dateTransform(point);
 
@@ -29,13 +30,14 @@ export default function TileGroup({
       <Tile
         key={date.getTime()}
         classes={getTileClasses({
-          value, valueType, date, dateType, hover,
+          value, valueType, date, dateType, hover, index,
         })}
         date={date}
         point={point}
         {...tileProps}
       />,
     );
+    index++;
   }
 
   return (

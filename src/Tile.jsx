@@ -81,6 +81,7 @@ export default class Tile extends Component {
         onFocus={onMouseOver && (() => onMouseOver(date))}
         onMouseOver={onMouseOver && (() => onMouseOver(date))}
         style={style}
+        tabIndex="0"
         type="button"
       >
         {formatAbbr

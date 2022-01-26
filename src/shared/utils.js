@@ -66,7 +66,7 @@ function getRangeClassNames(valueRange, dateRange, baseClassName) {
 }
 
 export function getTileClasses({
-  value, valueType, date, dateType, hover,
+  value, valueType, date, dateType, hover, index,
 } = {}) {
   const className = 'react-calendar__tile';
   const classes = [className];
@@ -81,6 +81,8 @@ export function getTileClasses({
 
   const now = new Date();
   const dateRange = Array.isArray(date) ? date : getRange(dateType, date);
+
+  classes.push(`${className}--index_${index}`);
 
   if (isValueWithinRange(now, dateRange)) {
     classes.push(`${className}--now`);
