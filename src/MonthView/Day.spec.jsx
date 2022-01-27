@@ -3,8 +3,6 @@ import { mount } from 'enzyme';
 
 import Day from './Day';
 
-/* eslint-disable jsx-a11y/mouse-events-have-key-events */
-
 const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
   classes: ['react-calendar__tile'],
@@ -44,25 +42,17 @@ describe('Day', () => {
   });
 
   it('applies additional classNames for neighboring months', () => {
-    const component = mount(
-      <Day
-        {...tileProps}
-        date={new Date(2018, 1, 2)}
-      />,
-    );
+    const component = mount(<Day {...tileProps} date={new Date(2018, 1, 2)} />);
 
     const wrapperClassName = component.find('.react-calendar__tile').prop('className');
 
-    expect(wrapperClassName.includes('react-calendar__month-view__days__day--neighboringMonth')).toBe(true);
+    expect(
+      wrapperClassName.includes('react-calendar__month-view__days__day--neighboringMonth'),
+    ).toBe(true);
   });
 
   it('renders component with proper abbreviation', () => {
-    const component = mount(
-      <Day
-        {...tileProps}
-        date={new Date(2018, 0, 1)}
-      />,
-    );
+    const component = mount(<Day {...tileProps} date={new Date(2018, 0, 1)} />);
 
     const abbr = component.find('abbr');
 
@@ -71,49 +61,33 @@ describe('Day', () => {
     expect(component.text()).toBe('1');
   });
 
-  it('is disabled when date is before beginning of minDate\'s day', () => {
+  it("is disabled when date is before beginning of minDate's day", () => {
     const component = mount(
-      <Day
-        {...tileProps}
-        date={new Date(2018, 0, 1)}
-        minDate={new Date(2018, 0, 2)}
-      />,
+      <Day {...tileProps} date={new Date(2018, 0, 1)} minDate={new Date(2018, 0, 2)} />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
   });
 
-  it('is not disabled when date is after beginning of minDate\'s day', () => {
+  it("is not disabled when date is after beginning of minDate's day", () => {
     const component = mount(
-      <Day
-        {...tileProps}
-        date={new Date(2018, 0, 1)}
-        minDate={new Date(2018, 0, 1)}
-      />,
+      <Day {...tileProps} date={new Date(2018, 0, 1)} minDate={new Date(2018, 0, 1)} />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
   });
 
-  it('is disabled when date is after end of maxDate\'s day', () => {
+  it("is disabled when date is after end of maxDate's day", () => {
     const component = mount(
-      <Day
-        {...tileProps}
-        date={new Date(2018, 0, 2)}
-        maxDate={new Date(2018, 0, 1)}
-      />,
+      <Day {...tileProps} date={new Date(2018, 0, 2)} maxDate={new Date(2018, 0, 1)} />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
   });
 
-  it('is not disabled when date is before end of maxDate\'s day', () => {
+  it("is not disabled when date is before end of maxDate's day", () => {
     const component = mount(
-      <Day
-        {...tileProps}
-        date={new Date(2018, 0, 1)}
-        maxDate={new Date(2018, 0, 1)}
-      />,
+      <Day {...tileProps} date={new Date(2018, 0, 1)} maxDate={new Date(2018, 0, 1)} />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
@@ -123,13 +97,7 @@ describe('Day', () => {
     const date = new Date(2018, 0, 1);
     const onClick = jest.fn();
 
-    const component = mount(
-      <Day
-        {...tileProps}
-        date={date}
-        onClick={onClick}
-      />,
-    );
+    const component = mount(<Day {...tileProps} date={date} onClick={onClick} />);
 
     component.find('.react-calendar__tile').simulate('click');
 
@@ -141,13 +109,7 @@ describe('Day', () => {
     const date = new Date(2018, 0, 1);
     const onMouseOver = jest.fn();
 
-    const component = mount(
-      <Day
-        {...tileProps}
-        date={date}
-        onMouseOver={onMouseOver}
-      />,
-    );
+    const component = mount(<Day {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
     component.find('.react-calendar__tile').simulate('mouseOver');
 
@@ -159,13 +121,7 @@ describe('Day', () => {
     const date = new Date(2018, 0, 1);
     const onMouseOver = jest.fn();
 
-    const component = mount(
-      <Day
-        {...tileProps}
-        date={date}
-        onMouseOver={onMouseOver}
-      />,
-    );
+    const component = mount(<Day {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
     component.find('.react-calendar__tile').simulate('focus');
 
@@ -174,12 +130,7 @@ describe('Day', () => {
   });
 
   it('renders tileContent properly', () => {
-    const component = mount(
-      <Day
-        {...tileProps}
-        tileContent={<div className="testContent" />}
-      />,
-    );
+    const component = mount(<Day {...tileProps} tileContent={<div className="testContent" />} />);
 
     const testContent = component.find('.testContent');
 
@@ -191,13 +142,7 @@ describe('Day', () => {
     const tileContent = jest.fn();
     tileContent.mockReturnValue(<div className="testContent" />);
 
-    const component = mount(
-      <Day
-        {...tileProps}
-        date={date}
-        tileContent={tileContent}
-      />,
-    );
+    const component = mount(<Day {...tileProps} date={date} tileContent={tileContent} />);
 
     const testContent = component.find('.testContent');
 
@@ -217,12 +162,7 @@ describe('Day', () => {
     formatDay.mockReturnValue('Mock format');
 
     const component = mount(
-      <Day
-        {...tileProps}
-        date={date}
-        formatDay={formatDay}
-        locale={locale}
-      />,
+      <Day {...tileProps} date={date} formatDay={formatDay} locale={locale} />,
     );
 
     const tile = component.find('Tile');
@@ -239,12 +179,7 @@ describe('Day', () => {
     formatLongDate.mockReturnValue('Mock format');
 
     const component = mount(
-      <Day
-        {...tileProps}
-        date={date}
-        formatLongDate={formatLongDate}
-        locale={locale}
-      />,
+      <Day {...tileProps} date={date} formatLongDate={formatLongDate} locale={locale} />,
     );
 
     const abbr = component.find('abbr');

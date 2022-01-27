@@ -13,11 +13,7 @@ describe('YearView', () => {
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const component = mount(
-      <YearView
-        {...defaultProps}
-        activeStartDate={activeStartDate}
-        showNeighboringMonth={false}
-      />,
+      <YearView {...defaultProps} activeStartDate={activeStartDate} showNeighboringMonth={false} />,
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
@@ -29,11 +25,7 @@ describe('YearView', () => {
   it('applies tileClassName to its tiles when given a string', () => {
     const tileClassName = 'testClassName';
     const component = mount(
-      <YearView
-        {...defaultProps}
-        showNeighboringMonth={false}
-        tileClassName={tileClassName}
-      />,
+      <YearView {...defaultProps} showNeighboringMonth={false} tileClassName={tileClassName} />,
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
@@ -72,15 +64,9 @@ describe('YearView', () => {
   });
 
   it('renders tileContent in its tiles when given a node', () => {
-    const tileContent = (
-      <div className="testContent" />
-    );
+    const tileContent = <div className="testContent" />;
     const component = mount(
-      <YearView
-        {...defaultProps}
-        showNeighboringMonth={false}
-        tileContent={tileContent}
-      />,
+      <YearView {...defaultProps} showNeighboringMonth={false} tileContent={tileContent} />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -95,9 +81,7 @@ describe('YearView', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const tileContentFn = ({ date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
-        return (
-          <div className="testContent" />
-        );
+        return <div className="testContent" />;
       }
 
       return null;
@@ -123,12 +107,7 @@ describe('YearView', () => {
   });
 
   it('displays year view with custom month formatting', () => {
-    const component = mount(
-      <YearView
-        {...defaultProps}
-        formatMonth={() => 'Month'}
-      />,
-    );
+    const component = mount(<YearView {...defaultProps} formatMonth={() => 'Month'} />);
 
     const month = component.find('.react-calendar__year-view__months__month').first();
 
@@ -138,12 +117,7 @@ describe('YearView', () => {
   it('passes formatMonth flag to Days component', () => {
     const formatMonth = () => 'Month';
 
-    const component = shallow(
-      <YearView
-        {...defaultProps}
-        formatMonth={formatMonth}
-      />,
-    );
+    const component = shallow(<YearView {...defaultProps} formatMonth={formatMonth} />);
 
     const months = component.find('Months');
 

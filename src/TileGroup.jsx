@@ -29,7 +29,11 @@ export default function TileGroup({
       <Tile
         key={date.getTime()}
         classes={getTileClasses({
-          value, valueType, date, dateType, hover,
+          value,
+          valueType,
+          date,
+          dateType,
+          hover,
         })}
         date={date}
         point={point}
@@ -39,12 +43,7 @@ export default function TileGroup({
   }
 
   return (
-    <Flex
-      className={className}
-      count={count}
-      offset={offset}
-      wrap
-    >
+    <Flex className={className} count={count} offset={offset} wrap>
       {tiles}
     </Flex>
   );

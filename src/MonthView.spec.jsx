@@ -3,7 +3,11 @@ import { mount, shallow } from 'enzyme';
 
 import MonthView from './MonthView';
 
-const { format } = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+const { format } = new Intl.DateTimeFormat('en-US', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
 
 describe('MonthView', () => {
   const defaultProps = {
@@ -29,11 +33,7 @@ describe('MonthView', () => {
   it('applies tileClassName to its tiles when given a string', () => {
     const tileClassName = 'testClassName';
     const component = mount(
-      <MonthView
-        {...defaultProps}
-        showNeighboringMonth={false}
-        tileClassName={tileClassName}
-      />,
+      <MonthView {...defaultProps} showNeighboringMonth={false} tileClassName={tileClassName} />,
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
@@ -72,15 +72,9 @@ describe('MonthView', () => {
   });
 
   it('renders tileContent in its tiles when given a node', () => {
-    const tileContent = (
-      <div className="testContent" />
-    );
+    const tileContent = <div className="testContent" />;
     const component = mount(
-      <MonthView
-        {...defaultProps}
-        showNeighboringMonth={false}
-        tileContent={tileContent}
-      />,
+      <MonthView {...defaultProps} showNeighboringMonth={false} tileContent={tileContent} />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -95,9 +89,7 @@ describe('MonthView', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const tileContentFn = ({ date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
-        return (
-          <div className="testContent" />
-        );
+        return <div className="testContent" />;
       }
 
       return null;
@@ -124,22 +116,13 @@ describe('MonthView', () => {
   });
 
   it('does not render WeekNumbers component by default', () => {
-    const component = mount(
-      <MonthView
-        {...defaultProps}
-      />,
-    );
+    const component = mount(<MonthView {...defaultProps} />);
 
     expect(component.find('WeekNumbers')).toHaveLength(0);
   });
 
   it('renders WeekNumbers component by given showWeekNumbers flag', () => {
-    const component = mount(
-      <MonthView
-        {...defaultProps}
-        showWeekNumbers
-      />,
-    );
+    const component = mount(<MonthView {...defaultProps} showWeekNumbers />);
 
     expect(component.find('WeekNumbers')).toHaveLength(1);
   });
@@ -147,12 +130,7 @@ describe('MonthView', () => {
   it('passes calendarType to Weekdays component', () => {
     const calendarType = 'ISO 8601';
 
-    const component = shallow(
-      <MonthView
-        {...defaultProps}
-        calendarType={calendarType}
-      />,
-    );
+    const component = shallow(<MonthView {...defaultProps} calendarType={calendarType} />);
 
     const weekdays = component.find('Weekdays');
 
@@ -162,12 +140,7 @@ describe('MonthView', () => {
   it('passes derived calendarType to Weekdays component if calendarType is not given', () => {
     const locale = 'en-US';
 
-    const component = shallow(
-      <MonthView
-        {...defaultProps}
-        locale={locale}
-      />,
-    );
+    const component = shallow(<MonthView {...defaultProps} locale={locale} />);
 
     const weekdays = component.find('Weekdays');
 
@@ -178,10 +151,7 @@ describe('MonthView', () => {
     const formatShortWeekday = () => 'Weekday';
 
     const component = shallow(
-      <MonthView
-        {...defaultProps}
-        formatShortWeekday={formatShortWeekday}
-      />,
+      <MonthView {...defaultProps} formatShortWeekday={formatShortWeekday} />,
     );
 
     const weekdays = component.find('Weekdays');
@@ -192,12 +162,7 @@ describe('MonthView', () => {
   it('passes calendarType to Days component', () => {
     const calendarType = 'ISO 8601';
 
-    const component = shallow(
-      <MonthView
-        {...defaultProps}
-        calendarType={calendarType}
-      />,
-    );
+    const component = shallow(<MonthView {...defaultProps} calendarType={calendarType} />);
 
     const days = component.find('Days');
 
@@ -207,12 +172,7 @@ describe('MonthView', () => {
   it('passes derived calendarType to Days component if calendarType is not given', () => {
     const locale = 'en-US';
 
-    const component = shallow(
-      <MonthView
-        {...defaultProps}
-        locale={locale}
-      />,
-    );
+    const component = shallow(<MonthView {...defaultProps} locale={locale} />);
 
     const days = component.find('Days');
 
@@ -222,12 +182,7 @@ describe('MonthView', () => {
   it('passes formatDay flag to Days component', () => {
     const formatDay = () => 'Day';
 
-    const component = shallow(
-      <MonthView
-        {...defaultProps}
-        formatDay={formatDay}
-      />,
-    );
+    const component = shallow(<MonthView {...defaultProps} formatDay={formatDay} />);
 
     const days = component.find('Days');
 
@@ -237,12 +192,7 @@ describe('MonthView', () => {
   it('passes formatLongDate flag to Days component', () => {
     const formatLongDate = () => 'Long date';
 
-    const component = shallow(
-      <MonthView
-        {...defaultProps}
-        formatLongDate={formatLongDate}
-      />,
-    );
+    const component = shallow(<MonthView {...defaultProps} formatLongDate={formatLongDate} />);
 
     const days = component.find('Days');
 

@@ -14,12 +14,7 @@ describe('Navigation', () => {
   };
 
   it('renders prev2, prev, drill up, next and next2 buttons', () => {
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        view="month"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} view="month" />);
 
     const children = component.children();
 
@@ -34,12 +29,7 @@ describe('Navigation', () => {
   });
 
   it('renders prev, drill up, next and buttons only for century view', () => {
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        view="century"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} view="century" />);
 
     const children = component.children();
 
@@ -52,12 +42,7 @@ describe('Navigation', () => {
   });
 
   it('displays proper title for month view', () => {
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        view="month"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} view="month" />);
 
     const drillUp = component.find('.react-calendar__navigation__label');
 
@@ -65,12 +50,7 @@ describe('Navigation', () => {
   });
 
   it('displays proper title for year view', () => {
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        view="year"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} view="year" />);
 
     const drillUp = component.find('.react-calendar__navigation__label');
 
@@ -78,12 +58,7 @@ describe('Navigation', () => {
   });
 
   it('displays proper title for decade view', () => {
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        view="decade"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} view="decade" />);
 
     const drillUp = component.find('.react-calendar__navigation__label');
 
@@ -91,12 +66,7 @@ describe('Navigation', () => {
   });
 
   it('displays proper title for century view', () => {
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        view="century"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} view="century" />);
 
     const drillUp = component.find('.react-calendar__navigation__label');
 
@@ -104,13 +74,7 @@ describe('Navigation', () => {
   });
 
   it('displays proper title for month view given showDouble flags is set to true', () => {
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        showDoubleView
-        view="month"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} showDoubleView view="month" />);
 
     const drillUp = component.find('.react-calendar__navigation__label');
 
@@ -139,11 +103,7 @@ describe('Navigation', () => {
 
   it('uses proper user-defined ARIA live on navigation button', () => {
     const component = shallow(
-      <Navigation
-        {...defaultProps}
-        navigationAriaLive="polite"
-        view="month"
-      />,
+      <Navigation {...defaultProps} navigationAriaLive="polite" view="month" />,
     );
 
     const [, , navigation] = component.children();
@@ -175,13 +135,7 @@ describe('Navigation', () => {
 
   it('calls drillUp function on drill up button click', () => {
     const drillUpFn = jest.fn();
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        drillUp={drillUpFn}
-        view="month"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} drillUp={drillUpFn} view="month" />);
 
     const button = component.find('button.react-calendar__navigation__label');
 
@@ -193,11 +147,7 @@ describe('Navigation', () => {
   it('calls setActiveStartDate on prev2, prev, next and next2 buttons click', () => {
     const setActiveStartDateFn = jest.fn();
     const component = shallow(
-      <Navigation
-        {...defaultProps}
-        setActiveStartDate={setActiveStartDateFn}
-        view="month"
-      />,
+      <Navigation {...defaultProps} setActiveStartDate={setActiveStartDateFn} view="month" />,
     );
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
@@ -218,11 +168,7 @@ describe('Navigation', () => {
   const monthSetActiveStartDateFn = jest.fn();
 
   const monthViewComponent = shallow(
-    <Navigation
-      {...defaultProps}
-      setActiveStartDate={monthSetActiveStartDateFn}
-      view="month"
-    />,
+    <Navigation {...defaultProps} setActiveStartDate={monthSetActiveStartDateFn} view="month" />,
   );
 
   const monthViewArrows = monthViewComponent.find('button.react-calendar__navigation__arrow');
@@ -262,11 +208,7 @@ describe('Navigation', () => {
   const yearSetActiveStartDateFn = jest.fn();
 
   const yearViewComponent = shallow(
-    <Navigation
-      {...defaultProps}
-      setActiveStartDate={yearSetActiveStartDateFn}
-      view="year"
-    />,
+    <Navigation {...defaultProps} setActiveStartDate={yearSetActiveStartDateFn} view="year" />,
   );
 
   const yearViewArrows = yearViewComponent.find('button.react-calendar__navigation__arrow');
@@ -306,11 +248,7 @@ describe('Navigation', () => {
   const decadeSetActiveStartDateFn = jest.fn();
 
   const decadeViewComponent = shallow(
-    <Navigation
-      {...defaultProps}
-      setActiveStartDate={decadeSetActiveStartDateFn}
-      view="decade"
-    />,
+    <Navigation {...defaultProps} setActiveStartDate={decadeSetActiveStartDateFn} view="decade" />,
   );
 
   const decadeViewArrows = decadeViewComponent.find('button.react-calendar__navigation__arrow');
@@ -376,12 +314,7 @@ describe('Navigation', () => {
   });
 
   it('correctly marks drillUp button as disabled when already on top allowed view', () => {
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        view="century"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} view="century" />);
 
     const button = component.find('button.react-calendar__navigation__label');
 
@@ -390,11 +323,7 @@ describe('Navigation', () => {
 
   it('disallows navigating before minDate', () => {
     const component = shallow(
-      <Navigation
-        {...defaultProps}
-        minDate={new Date(2017, 0, 1)}
-        view="month"
-      />,
+      <Navigation {...defaultProps} minDate={new Date(2017, 0, 1)} view="month" />,
     );
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
@@ -407,12 +336,7 @@ describe('Navigation', () => {
   });
 
   it('disallows navigating before dynamically set minDate', () => {
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        view="month"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} view="month" />);
 
     component.setProps({
       minDate: new Date(2017, 0, 1),
@@ -429,11 +353,7 @@ describe('Navigation', () => {
 
   it('disallows navigating after maxDate', () => {
     const component = shallow(
-      <Navigation
-        {...defaultProps}
-        maxDate={new Date(2017, 0, 31)}
-        view="month"
-      />,
+      <Navigation {...defaultProps} maxDate={new Date(2017, 0, 31)} view="month" />,
     );
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
@@ -447,11 +367,7 @@ describe('Navigation', () => {
 
   it('does not disallow navigating to next month when maxDate is set to first day of the next month', () => {
     const component = shallow(
-      <Navigation
-        {...defaultProps}
-        maxDate={new Date(2017, 1, 1)}
-        view="month"
-      />,
+      <Navigation {...defaultProps} maxDate={new Date(2017, 1, 1)} view="month" />,
     );
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
@@ -465,11 +381,7 @@ describe('Navigation', () => {
 
   it('does not disallow navigating to next year when maxDate is set to first day of the next year', () => {
     const component = shallow(
-      <Navigation
-        {...defaultProps}
-        maxDate={new Date(2018, 0, 1)}
-        view="month"
-      />,
+      <Navigation {...defaultProps} maxDate={new Date(2018, 0, 1)} view="month" />,
     );
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
@@ -482,12 +394,7 @@ describe('Navigation', () => {
   });
 
   it('disallows navigating after dynamically set maxDate', () => {
-    const component = shallow(
-      <Navigation
-        {...defaultProps}
-        view="month"
-      />,
-    );
+    const component = shallow(<Navigation {...defaultProps} view="month" />);
 
     component.setProps({
       maxDate: new Date(2017, 0, 31),
@@ -507,11 +414,7 @@ describe('Navigation', () => {
     activeStartDate.setFullYear(0, 0, 1);
 
     const component = shallow(
-      <Navigation
-        {...defaultProps}
-        activeStartDate={activeStartDate}
-        view="year"
-      />,
+      <Navigation {...defaultProps} activeStartDate={activeStartDate} view="year" />,
     );
 
     const arrows = component.find('button.react-calendar__navigation__arrow');
@@ -555,11 +458,7 @@ describe('Navigation', () => {
   describe('formats navigation label properly', () => {
     it('displays calendar with custom month year navigation label', () => {
       const component = shallow(
-        <Navigation
-          {...defaultProps}
-          formatMonthYear={() => 'MonthYear'}
-          view="month"
-        />,
+        <Navigation {...defaultProps} formatMonthYear={() => 'MonthYear'} view="month" />,
       );
 
       const navigationLabel = component.find('.react-calendar__navigation__label').first();
@@ -569,11 +468,7 @@ describe('Navigation', () => {
 
     it('displays calendar with custom year navigation label', () => {
       const component = shallow(
-        <Navigation
-          {...defaultProps}
-          formatYear={() => 'Year'}
-          view="year"
-        />,
+        <Navigation {...defaultProps} formatYear={() => 'Year'} view="year" />,
       );
 
       const navigationLabel = component.find('.react-calendar__navigation__label').first();
@@ -583,11 +478,7 @@ describe('Navigation', () => {
 
     it('displays calendar with custom decade navigation label', () => {
       const component = shallow(
-        <Navigation
-          {...defaultProps}
-          formatYear={() => 'Year'}
-          view="decade"
-        />,
+        <Navigation {...defaultProps} formatYear={() => 'Year'} view="decade" />,
       );
 
       const navigationLabel = component.find('.react-calendar__navigation__label').first();
@@ -597,11 +488,7 @@ describe('Navigation', () => {
 
     it('displays calendar with custom century navigation label', () => {
       const component = shallow(
-        <Navigation
-          {...defaultProps}
-          formatYear={() => 'Year'}
-          view="century"
-        />,
+        <Navigation {...defaultProps} formatYear={() => 'Year'} view="century" />,
       );
 
       const navigationLabel = component.find('.react-calendar__navigation__label').first();

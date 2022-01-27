@@ -6,18 +6,16 @@ import { tileProps } from './shared/propTypes';
 
 function datesAreDifferent(date1, date2) {
   return (
-    (date1 && !date2)
-    || (!date1 && date2)
-    || (date1 && date2 && date1.getTime() !== date2.getTime())
+    (date1 && !date2) ||
+    (!date1 && date2) ||
+    (date1 && date2 && date1.getTime() !== date2.getTime())
   );
 }
 
 function getValue(nextProps, prop) {
   const { activeStartDate, date, view } = nextProps;
 
-  return typeof prop === 'function'
-    ? prop({ activeStartDate, date, view })
-    : prop;
+  return typeof prop === 'function' ? prop({ activeStartDate, date, view }) : prop;
 }
 
 export default class Tile extends Component {
@@ -27,16 +25,16 @@ export default class Tile extends Component {
     const nextState = {};
 
     if (
-      tileClassName !== prevState.tileClassNameProps
-      || datesAreDifferent(activeStartDate, prevState.activeStartDateProps)
+      tileClassName !== prevState.tileClassNameProps ||
+      datesAreDifferent(activeStartDate, prevState.activeStartDateProps)
     ) {
       nextState.tileClassName = getValue(nextProps, tileClassName);
       nextState.tileClassNameProps = tileClassName;
     }
 
     if (
-      tileContent !== prevState.tileContentProps
-      || datesAreDifferent(activeStartDate, prevState.activeStartDateProps)
+      tileContent !== prevState.tileContentProps ||
+      datesAreDifferent(activeStartDate, prevState.activeStartDateProps)
     ) {
       nextState.tileContent = getValue(nextProps, tileContent);
       nextState.tileContentProps = tileContent;
@@ -73,9 +71,9 @@ export default class Tile extends Component {
       <button
         className={mergeClassNames(classes, tileClassName)}
         disabled={
-          (minDate && minDateTransform(minDate) > date)
-          || (maxDate && maxDateTransform(maxDate) < date)
-          || (tileDisabled && tileDisabled({ activeStartDate, date, view }))
+          (minDate && minDateTransform(minDate) > date) ||
+          (maxDate && maxDateTransform(maxDate) < date) ||
+          (tileDisabled && tileDisabled({ activeStartDate, date, view }))
         }
         onClick={onClick && ((event) => onClick(date, event))}
         onFocus={onMouseOver && (() => onMouseOver(date))}
@@ -83,13 +81,7 @@ export default class Tile extends Component {
         style={style}
         type="button"
       >
-        {formatAbbr
-          ? (
-            <abbr aria-label={formatAbbr(locale, date)}>
-              {children}
-            </abbr>
-          )
-          : children}
+        {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}
         {tileContent}
       </button>
     );

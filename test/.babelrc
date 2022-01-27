@@ -1,8 +1,11 @@
 {
   "presets": [
-    ["@babel/env", {
-      "modules": false
-    }],
+    [
+      "@babel/env",
+      {
+        "modules": false
+      }
+    ],
     "@babel/react"
   ]
 }

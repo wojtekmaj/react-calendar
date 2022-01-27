@@ -4,7 +4,11 @@ import { getMonthStart } from '@wojtekmaj/date-utils';
 
 import Calendar from './Calendar';
 
-const { format } = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+const { format } = new Intl.DateTimeFormat('en-US', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
 
 const event = document.createEvent('MouseEvent');
 event.initEvent('click', true, true);
@@ -14,9 +18,7 @@ describe('Calendar', () => {
   it('applies className to its wrapper when given a string', () => {
     const className = 'testClassName';
 
-    const component = shallow(
-      <Calendar className={className} />,
-    );
+    const component = shallow(<Calendar className={className} />);
 
     const wrapperClassName = component.find('.react-calendar').prop('className');
 
@@ -26,18 +28,14 @@ describe('Calendar', () => {
   it('passes container element to inputRef properly', () => {
     const inputRef = jest.fn();
 
-    mount(
-      <Calendar inputRef={inputRef} />,
-    );
+    mount(<Calendar inputRef={inputRef} />);
 
     expect(inputRef).toHaveBeenCalled();
     expect(inputRef.mock.calls[0][0]).toBeInstanceOf(HTMLElement);
   });
 
   it('renders Navigation by default', () => {
-    const component = shallow(
-      <Calendar />,
-    );
+    const component = shallow(<Calendar />);
 
     const navigation = component.find('Navigation');
 
@@ -45,9 +43,7 @@ describe('Calendar', () => {
   });
 
   it('does not render Navigation when showNavigation flag is set to false', () => {
-    const component = shallow(
-      <Calendar showNavigation={false} />,
-    );
+    const component = shallow(<Calendar showNavigation={false} />);
 
     const navigation = component.find('Navigation');
 
@@ -55,49 +51,37 @@ describe('Calendar', () => {
   });
 
   it('uses given value when passed value using value prop', () => {
-    const component = shallow(
-      <Calendar value={new Date(2019, 0, 1)} />,
-    );
+    const component = shallow(<Calendar value={new Date(2019, 0, 1)} />);
 
     expect(component.instance().value).toEqual(new Date(2019, 0, 1));
   });
 
   it('uses given value when passed value using defaultValue prop', () => {
-    const component = shallow(
-      <Calendar defaultValue={new Date(2019, 0, 1)} />,
-    );
+    const component = shallow(<Calendar defaultValue={new Date(2019, 0, 1)} />);
 
     expect(component.instance().value).toEqual(new Date(2019, 0, 1));
   });
 
   it('renders given view when passed view using view prop', () => {
-    const component = shallow(
-      <Calendar view="century" />,
-    );
+    const component = shallow(<Calendar view="century" />);
 
     expect(component.instance().view).toBe('century');
   });
 
   it('renders given view when passed view using defaultView prop', () => {
-    const component = shallow(
-      <Calendar defaultView="century" />,
-    );
+    const component = shallow(<Calendar defaultView="century" />);
 
     expect(component.instance().view).toBe('century');
   });
 
   it('renders given active start date when passed active start date using activeStartDate prop', () => {
-    const component = shallow(
-      <Calendar activeStartDate={new Date(2019, 0, 1)} />,
-    );
+    const component = shallow(<Calendar activeStartDate={new Date(2019, 0, 1)} />);
 
     expect(component.instance().activeStartDate).toEqual(new Date(2019, 0, 1));
   });
 
   it('renders given active start date when passed active start date using activeStartDate prop', () => {
-    const component = shallow(
-      <Calendar defaultActiveStartDate={new Date(2019, 0, 1)} />,
-    );
+    const component = shallow(<Calendar defaultActiveStartDate={new Date(2019, 0, 1)} />);
 
     expect(component.instance().activeStartDate).toEqual(new Date(2019, 0, 1));
   });
@@ -107,9 +91,7 @@ describe('Calendar', () => {
     const newValue = new Date(2018, 0, 15);
     const newActiveStartDate = new Date(2018, 0, 1);
 
-    const component = shallow(
-      <Calendar value={value} />,
-    );
+    const component = shallow(<Calendar value={value} />);
 
     component.setProps({ value: newValue });
 
@@ -121,9 +103,7 @@ describe('Calendar', () => {
     const newValue = new Date(2018, 0, 15);
     const newActiveStartDate = new Date(2018, 0, 1);
 
-    const component = shallow(
-      <Calendar value={value} />,
-    );
+    const component = shallow(<Calendar value={value} />);
 
     component.instance().onChange(newValue, event);
 
@@ -133,9 +113,7 @@ describe('Calendar', () => {
   it('changes Calendar view given new activeStartDate value', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const newActiveStartDate = new Date(2018, 0, 1);
-    const component = shallow(
-      <Calendar activeStartDate={activeStartDate} />,
-    );
+    const component = shallow(<Calendar activeStartDate={activeStartDate} />);
 
     component.setProps({ activeStartDate: newActiveStartDate });
 
@@ -144,9 +122,7 @@ describe('Calendar', () => {
 
   describe('renders views properly', () => {
     it('renders MonthView by default', () => {
-      const component = shallow(
-        <Calendar />,
-      );
+      const component = shallow(<Calendar />);
 
       const monthView = component.find('MonthView');
 
@@ -154,9 +130,7 @@ describe('Calendar', () => {
     });
 
     it('renders MonthView when given view = "month"', () => {
-      const component = shallow(
-        <Calendar view="month" />,
-      );
+      const component = shallow(<Calendar view="month" />);
 
       const monthView = component.find('MonthView');
 
@@ -164,9 +138,7 @@ describe('Calendar', () => {
     });
 
     it('renders YearView when given view = "year"', () => {
-      const component = shallow(
-        <Calendar view="year" />,
-      );
+      const component = shallow(<Calendar view="year" />);
 
       const yearView = component.find('YearView');
 
@@ -174,9 +146,7 @@ describe('Calendar', () => {
     });
 
     it('renders DecadeView when given view = "decade"', () => {
-      const component = shallow(
-        <Calendar view="decade" />,
-      );
+      const component = shallow(<Calendar view="decade" />);
 
       const decadeView = component.find('DecadeView');
 
@@ -184,9 +154,7 @@ describe('Calendar', () => {
     });
 
     it('renders CenturyView when given view = "century"', () => {
-      const component = shallow(
-        <Calendar view="century" />,
-      );
+      const component = shallow(<Calendar view="century" />);
 
       const centuryView = component.find('CenturyView');
 
@@ -194,9 +162,7 @@ describe('Calendar', () => {
     });
 
     it('renders maximum allowed view when given maxDetail', () => {
-      const component = shallow(
-        <Calendar maxDetail="year" />,
-      );
+      const component = shallow(<Calendar maxDetail="year" />);
 
       const yearView = component.find('YearView');
 
@@ -204,12 +170,7 @@ describe('Calendar', () => {
     });
 
     it('renders maximum allowed view when given view that is not allowed', () => {
-      const component = shallow(
-        <Calendar
-          maxDetail="year"
-          view="month"
-        />,
-      );
+      const component = shallow(<Calendar maxDetail="year" view="month" />);
 
       const yearView = component.find('YearView');
 
@@ -217,12 +178,7 @@ describe('Calendar', () => {
     });
 
     it('renders maximum allowed view when attempting to externally switch to a view that is not allowed', () => {
-      const component = shallow(
-        <Calendar
-          maxDetail="year"
-          view="year"
-        />,
-      );
+      const component = shallow(<Calendar maxDetail="year" view="year" />);
 
       component.setProps({ view: 'month' });
 
@@ -232,12 +188,7 @@ describe('Calendar', () => {
     });
 
     it('renders maximum allowed view when given changed maxDetail', () => {
-      const component = shallow(
-        <Calendar
-          maxDetail="month"
-          view="month"
-        />,
-      );
+      const component = shallow(<Calendar maxDetail="month" view="month" />);
 
       component.setProps({ maxDetail: 'year' });
       component.update();
@@ -249,11 +200,7 @@ describe('Calendar', () => {
   });
 
   it('does not pass showWeekNumbers flag to MonthView component by default', () => {
-    const component = shallow(
-      <Calendar
-        view="month"
-      />,
-    );
+    const component = shallow(<Calendar view="month" />);
 
     const monthView = component.find('MonthView');
 
@@ -261,12 +208,7 @@ describe('Calendar', () => {
   });
 
   it('passes showWeekNumbers flag to MonthView component given showWeekNumbers flag', () => {
-    const component = shallow(
-      <Calendar
-        showWeekNumbers
-        view="month"
-      />,
-    );
+    const component = shallow(<Calendar showWeekNumbers view="month" />);
 
     const monthView = component.find('MonthView');
 
@@ -274,12 +216,7 @@ describe('Calendar', () => {
   });
 
   it('passes showNeighboringMonth flag to MonthView component given showNeighboringMonth flag', () => {
-    const component = shallow(
-      <Calendar
-        showNeighboringMonth
-        view="month"
-      />,
-    );
+    const component = shallow(<Calendar showNeighboringMonth view="month" />);
 
     const monthView = component.find('MonthView');
 
@@ -289,11 +226,7 @@ describe('Calendar', () => {
   describe('displays initial view properly', () => {
     it('displays a view with a given value when defaultValue is given', () => {
       const defaultValue = new Date(2017, 0, 15);
-      const component = shallow(
-        <Calendar
-          defaultValue={defaultValue}
-        />,
-      );
+      const component = shallow(<Calendar defaultValue={defaultValue} />);
 
       const monthView = component.find('MonthView');
 
@@ -302,11 +235,7 @@ describe('Calendar', () => {
 
     it('displays a view with a given value when value is given', () => {
       const value = new Date(2017, 0, 15);
-      const component = shallow(
-        <Calendar
-          value={value}
-        />,
-      );
+      const component = shallow(<Calendar value={value} />);
 
       const monthView = component.find('MonthView');
 
@@ -317,10 +246,7 @@ describe('Calendar', () => {
       const defaultActiveStartDate = new Date(2017, 0, 1);
       const value = new Date(2018, 0, 15);
       const component = shallow(
-        <Calendar
-          defaultActiveStartDate={defaultActiveStartDate}
-          value={value}
-        />,
+        <Calendar defaultActiveStartDate={defaultActiveStartDate} value={value} />,
       );
 
       const monthView = component.find('MonthView');
@@ -330,11 +256,7 @@ describe('Calendar', () => {
 
     it('displays a view with defaultActiveStartDate when no value is given and defaultActiveStartDate is given', () => {
       const defaultActiveStartDate = new Date(2017, 0, 1);
-      const component = shallow(
-        <Calendar
-          defaultActiveStartDate={defaultActiveStartDate}
-        />,
-      );
+      const component = shallow(<Calendar defaultActiveStartDate={defaultActiveStartDate} />);
 
       const monthView = component.find('MonthView');
 
@@ -343,23 +265,17 @@ describe('Calendar', () => {
 
     it('displays a view with activeStartDate when no value is given and activeStartDate is given', () => {
       const activeStartDate = new Date(2017, 0, 1);
-      const component = shallow(
-        <Calendar
-          activeStartDate={activeStartDate}
-        />,
-      );
+      const component = shallow(<Calendar activeStartDate={activeStartDate} />);
 
       const monthView = component.find('MonthView');
 
       expect(monthView.prop('activeStartDate')).toEqual(activeStartDate);
     });
 
-    it('displays a view with today\'s date when no value and no activeStartDate is given', () => {
+    it("displays a view with today's date when no value and no activeStartDate is given", () => {
       const today = new Date();
       const beginOfCurrentMonth = getMonthStart(today);
-      const component = shallow(
-        <Calendar />,
-      );
+      const component = shallow(<Calendar />);
 
       const monthView = component.find('MonthView');
 
@@ -368,9 +284,7 @@ describe('Calendar', () => {
 
     it('displays days on the correct weekdays when given a defaultActiveStartDate', () => {
       const defaultActiveStartDate = new Date(2012, 5, 6);
-      const component = mount(
-        <Calendar defaultActiveStartDate={defaultActiveStartDate} />,
-      );
+      const component = mount(<Calendar defaultActiveStartDate={defaultActiveStartDate} />);
 
       const firstDayTile = component.find('.react-calendar__tile').first();
       const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
@@ -381,9 +295,7 @@ describe('Calendar', () => {
 
     it('displays days on the correct weekdays when given an activeStartDate', () => {
       const activeStartDate = new Date(2012, 5, 6);
-      const component = mount(
-        <Calendar activeStartDate={activeStartDate} />,
-      );
+      const component = mount(<Calendar activeStartDate={activeStartDate} />);
 
       const firstDayTile = component.find('.react-calendar__tile').first();
       const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
@@ -395,9 +307,7 @@ describe('Calendar', () => {
 
   describe('handles drill up properly', () => {
     it('drills up when allowed', () => {
-      const component = shallow(
-        <Calendar />,
-      );
+      const component = shallow(<Calendar />);
 
       component.setState({ view: 'month' });
 
@@ -410,11 +320,7 @@ describe('Calendar', () => {
       const onDrillUp = jest.fn();
 
       const component = shallow(
-        <Calendar
-          activeStartDate={new Date(2017, 6, 1)}
-          onDrillUp={onDrillUp}
-          view="month"
-        />,
+        <Calendar activeStartDate={new Date(2017, 6, 1)} onDrillUp={onDrillUp} view="month" />,
       );
 
       component.instance().drillUp();
@@ -430,10 +336,7 @@ describe('Calendar', () => {
       const onDrillUp = jest.fn();
 
       const component = shallow(
-        <Calendar
-          activeStartDate={new Date(2017, 6, 1)}
-          onDrillUp={onDrillUp}
-        />,
+        <Calendar activeStartDate={new Date(2017, 6, 1)} onDrillUp={onDrillUp} />,
       );
 
       component.setState({ view: 'month' });
@@ -450,12 +353,7 @@ describe('Calendar', () => {
     it('refuses to drill up when already on minimum allowed detail', () => {
       const onDrillUp = jest.fn();
 
-      const component = shallow(
-        <Calendar
-          onDrillUp={onDrillUp}
-          view="century"
-        />,
-      );
+      const component = shallow(<Calendar onDrillUp={onDrillUp} view="century" />);
 
       component.instance().drillUp();
 
@@ -465,9 +363,7 @@ describe('Calendar', () => {
 
   describe('handles drill down properly', () => {
     it('drills down when allowed', () => {
-      const component = shallow(
-        <Calendar />,
-      );
+      const component = shallow(<Calendar />);
 
       component.setState({ view: 'century' });
 
@@ -500,10 +396,7 @@ describe('Calendar', () => {
       const onDrillDown = jest.fn();
 
       const component = shallow(
-        <Calendar
-          activeStartDate={new Date(2001, 0, 1)}
-          onDrillDown={onDrillDown}
-        />,
+        <Calendar activeStartDate={new Date(2001, 0, 1)} onDrillDown={onDrillDown} />,
       );
 
       component.setState({ view: 'century' });
@@ -520,12 +413,7 @@ describe('Calendar', () => {
     it('refuses to drill down when already on minimum allowed detail', () => {
       const onDrillDown = jest.fn();
 
-      const component = shallow(
-        <Calendar
-          onDrillDown={onDrillDown}
-          view="month"
-        />,
-      );
+      const component = shallow(<Calendar onDrillDown={onDrillDown} view="month" />);
 
       component.instance().drillUp();
 
@@ -535,9 +423,7 @@ describe('Calendar', () => {
 
   describe('handles active start date change properly', () => {
     it('changes active start date when allowed', () => {
-      const component = shallow(
-        <Calendar />,
-      );
+      const component = shallow(<Calendar />);
 
       component.instance().setActiveStartDate(new Date(2019, 0, 1));
 
@@ -549,11 +435,7 @@ describe('Calendar', () => {
       const newActiveStartDate = new Date(2018, 0, 1);
       const onActiveStartDateChange = jest.fn();
       const component = shallow(
-        <Calendar
-          onActiveStartDateChange={onActiveStartDateChange}
-          value={value}
-          view="year"
-        />,
+        <Calendar onActiveStartDateChange={onActiveStartDateChange} value={value} view="year" />,
       );
 
       component.instance().setActiveStartDate(newActiveStartDate);
@@ -610,11 +492,7 @@ describe('Calendar', () => {
       const newActiveStartDate = new Date(2017, 0, 1);
       const onActiveStartDateChange = jest.fn();
       const component = shallow(
-        <Calendar
-          onActiveStartDateChange={onActiveStartDateChange}
-          value={value}
-          view="year"
-        />,
+        <Calendar onActiveStartDateChange={onActiveStartDateChange} value={value} view="year" />,
       );
 
       component.instance().setActiveStartDate(newActiveStartDate);
@@ -630,11 +508,7 @@ describe('Calendar', () => {
       const newView = 'year';
       const onViewChange = jest.fn();
       const component = shallow(
-        <Calendar
-          activeStartDate={activeStartDate}
-          onViewChange={onViewChange}
-          value={value}
-        />,
+        <Calendar activeStartDate={activeStartDate} onViewChange={onViewChange} value={value} />,
       );
 
       component.instance().setStateAndCallCallbacks({ view: newView });
@@ -674,12 +548,7 @@ describe('Calendar', () => {
       const view = 'year';
       const newView = 'year';
       const onViewChange = jest.fn();
-      const component = shallow(
-        <Calendar
-          onViewChange={onViewChange}
-          view={view}
-        />,
-      );
+      const component = shallow(<Calendar onViewChange={onViewChange} view={view} />);
 
       component.instance().setStateAndCallCallbacks({ view: newView });
 
@@ -690,12 +559,7 @@ describe('Calendar', () => {
   describe('calls onChange properly', () => {
     it('calls onChange function returning the beginning of selected period by default', () => {
       const onChange = jest.fn();
-      const component = shallow(
-        <Calendar
-          onChange={onChange}
-          view="month"
-        />,
-      );
+      const component = shallow(<Calendar onChange={onChange} view="month" />);
 
       component.instance().onChange(new Date(2017, 0, 1), event);
 
@@ -704,13 +568,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
       const onChange = jest.fn();
-      const component = shallow(
-        <Calendar
-          onChange={onChange}
-          returnValue="start"
-          view="month"
-        />,
-      );
+      const component = shallow(<Calendar onChange={onChange} returnValue="start" view="month" />);
 
       component.instance().onChange(new Date(2017, 0, 1), event);
 
@@ -719,13 +577,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the end of the selected period when returnValue is set to "end"', () => {
       const onChange = jest.fn();
-      const component = shallow(
-        <Calendar
-          onChange={onChange}
-          returnValue="end"
-          view="month"
-        />,
-      );
+      const component = shallow(<Calendar onChange={onChange} returnValue="end" view="month" />);
 
       component.instance().onChange(new Date(2017, 0, 1), event);
 
@@ -734,20 +586,14 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of selected period when returnValue is set to "range"', () => {
       const onChange = jest.fn();
-      const component = shallow(
-        <Calendar
-          onChange={onChange}
-          returnValue="range"
-          view="month"
-        />,
-      );
+      const component = shallow(<Calendar onChange={onChange} returnValue="range" view="month" />);
 
       component.instance().onChange(new Date(2017, 0, 1), event);
 
-      expect(onChange).toHaveBeenCalledWith([
-        new Date(2017, 0, 1),
-        new Date(2017, 0, 1, 23, 59, 59, 999),
-      ], event);
+      expect(onChange).toHaveBeenCalledWith(
+        [new Date(2017, 0, 1), new Date(2017, 0, 1, 23, 59, 59, 999)],
+        event,
+      );
     });
 
     it('calls onChange function returning the beginning of selected period, but no earlier than minDate', () => {
@@ -816,13 +662,7 @@ describe('Calendar', () => {
 
     it('does not call onChange function returning a range when selected one piece of a range by default', () => {
       const onChange = jest.fn();
-      const component = shallow(
-        <Calendar
-          onChange={onChange}
-          selectRange
-          view="month"
-        />,
-      );
+      const component = shallow(<Calendar onChange={onChange} selectRange view="month" />);
 
       component.instance().onChange(new Date(2018, 0, 1), event);
 
@@ -832,12 +672,7 @@ describe('Calendar', () => {
     it('does not call onChange function returning a range when selected one piece of a range given allowPartialRange = false', () => {
       const onChange = jest.fn();
       const component = shallow(
-        <Calendar
-          allowPartialRange={false}
-          onChange={onChange}
-          selectRange
-          view="month"
-        />,
+        <Calendar allowPartialRange={false} onChange={onChange} selectRange view="month" />,
       );
 
       component.instance().onChange(new Date(2018, 0, 1), event);
@@ -848,70 +683,47 @@ describe('Calendar', () => {
     it('calls onChange function returning a partial range when selected one piece of a range given allowPartialRange = true', () => {
       const onChange = jest.fn();
       const component = shallow(
-        <Calendar
-          allowPartialRange
-          onChange={onChange}
-          selectRange
-          view="month"
-        />,
+        <Calendar allowPartialRange onChange={onChange} selectRange view="month" />,
       );
 
       component.instance().onChange(new Date(2018, 0, 1), event);
 
       expect(onChange).toHaveBeenCalledTimes(1);
-      expect(onChange).toHaveBeenCalledWith([
-        new Date(2018, 0, 1),
-      ], event);
+      expect(onChange).toHaveBeenCalledWith([new Date(2018, 0, 1)], event);
     });
 
     it('calls onChange function returning a range when selected two pieces of a range', () => {
       const onChange = jest.fn();
-      const component = shallow(
-        <Calendar
-          onChange={onChange}
-          selectRange
-          view="month"
-        />,
-      );
+      const component = shallow(<Calendar onChange={onChange} selectRange view="month" />);
 
       component.instance().onChange(new Date(2018, 0, 1), event);
       component.instance().onChange(new Date(2018, 6, 1), event);
 
       expect(onChange).toHaveBeenCalledTimes(1);
-      expect(onChange).toHaveBeenCalledWith([
-        new Date(2018, 0, 1),
-        new Date(2018, 6, 1, 23, 59, 59, 999),
-      ], event);
+      expect(onChange).toHaveBeenCalledWith(
+        [new Date(2018, 0, 1), new Date(2018, 6, 1, 23, 59, 59, 999)],
+        event,
+      );
     });
 
     it('calls onChange function returning a range when selected reversed two pieces of a range', () => {
       const onChange = jest.fn();
-      const component = shallow(
-        <Calendar
-          onChange={onChange}
-          selectRange
-          view="month"
-        />,
-      );
+      const component = shallow(<Calendar onChange={onChange} selectRange view="month" />);
 
       component.instance().onChange(new Date(2018, 6, 1), event);
       component.instance().onChange(new Date(2018, 0, 1), event);
 
       expect(onChange).toHaveBeenCalledTimes(1);
-      expect(onChange).toHaveBeenCalledWith([
-        new Date(2018, 0, 1),
-        new Date(2018, 6, 1, 23, 59, 59, 999),
-      ], event);
+      expect(onChange).toHaveBeenCalledWith(
+        [new Date(2018, 0, 1), new Date(2018, 6, 1, 23, 59, 59, 999)],
+        event,
+      );
     });
   });
 
   it('passes formatMonthYear to Navigation component', () => {
     const formatMonthYear = () => 'Month year';
-    const component = shallow(
-      <Calendar
-        formatMonthYear={formatMonthYear}
-      />,
-    );
+    const component = shallow(<Calendar formatMonthYear={formatMonthYear} />);
 
     const navigation = component.find('Navigation');
 
@@ -920,11 +732,7 @@ describe('Calendar', () => {
 
   it('passes formatYear to Navigation component', () => {
     const formatYear = () => 'Year';
-    const component = shallow(
-      <Calendar
-        formatYear={formatYear}
-      />,
-    );
+    const component = shallow(<Calendar formatYear={formatYear} />);
 
     const navigation = component.find('Navigation');
 
@@ -933,11 +741,7 @@ describe('Calendar', () => {
 
   it('passes formatDay to MonthView component', () => {
     const formatDay = () => 'Day';
-    const component = shallow(
-      <Calendar
-        formatDay={formatDay}
-      />,
-    );
+    const component = shallow(<Calendar formatDay={formatDay} />);
 
     const monthView = component.find('MonthView');
 
@@ -946,11 +750,7 @@ describe('Calendar', () => {
 
   it('passes formatLongDate to MonthView component', () => {
     const formatLongDate = () => 'Long date';
-    const component = shallow(
-      <Calendar
-        formatLongDate={formatLongDate}
-      />,
-    );
+    const component = shallow(<Calendar formatLongDate={formatLongDate} />);
 
     const monthView = component.find('MonthView');
 
@@ -959,11 +759,7 @@ describe('Calendar', () => {
 
   it('passes formatShortWeekday to MonthView component', () => {
     const formatShortWeekday = () => 'Weekday';
-    const component = shallow(
-      <Calendar
-        formatShortWeekday={formatShortWeekday}
-      />,
-    );
+    const component = shallow(<Calendar formatShortWeekday={formatShortWeekday} />);
 
     const monthView = component.find('MonthView');
 
@@ -972,12 +768,7 @@ describe('Calendar', () => {
 
   it('passes formatMonth to YearView component', () => {
     const formatMonth = () => 'Month';
-    const component = shallow(
-      <Calendar
-        formatMonth={formatMonth}
-        view="year"
-      />,
-    );
+    const component = shallow(<Calendar formatMonth={formatMonth} view="year" />);
 
     const yearView = component.find('YearView');
 
@@ -986,12 +777,7 @@ describe('Calendar', () => {
 
   it('passes formatYear to DecadeView component', () => {
     const formatYear = () => 'Year';
-    const component = shallow(
-      <Calendar
-        formatYear={formatYear}
-        view="decade"
-      />,
-    );
+    const component = shallow(<Calendar formatYear={formatYear} view="decade" />);
 
     const decadeView = component.find('DecadeView');
 
@@ -1000,12 +786,7 @@ describe('Calendar', () => {
 
   it('passes formatYear to CenturyView component', () => {
     const formatYear = () => 'Year';
-    const component = shallow(
-      <Calendar
-        formatYear={formatYear}
-        view="century"
-      />,
-    );
+    const component = shallow(<Calendar formatYear={formatYear} view="century" />);
 
     const centuryView = component.find('CenturyView');
 

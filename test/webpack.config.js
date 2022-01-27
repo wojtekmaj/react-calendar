@@ -46,10 +46,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-          'css-loader',
-        ],
+        use: [isProduction ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader'],
       },
     ].filter(Boolean),
   },
@@ -57,10 +54,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'index.html',
     }),
-    isProduction && new MiniCssExtractPlugin({
-      filename: '[name].[chunkhash:8].css',
-      chunkFilename: '[name].[chunkhash:8].css',
-    }),
+    isProduction &&
+      new MiniCssExtractPlugin({
+        filename: '[name].[chunkhash:8].css',
+        chunkFilename: '[name].[chunkhash:8].css',
+      }),
     isDevelopment && new ReactRefreshWebpackPlugin(),
   ].filter(Boolean),
   optimization: {

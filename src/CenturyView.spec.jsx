@@ -21,17 +21,17 @@ describe('CenturyView', () => {
 
     const firstDayTile = component.find('.react-calendar__tile').first();
 
-    expect(firstDayTile.text()).toBe(`${getDecadeStart(activeStartDate).getFullYear()} – ${getDecadeEnd(activeStartDate).getFullYear()}`);
+    expect(firstDayTile.text()).toBe(
+      `${getDecadeStart(activeStartDate).getFullYear()} – ${getDecadeEnd(
+        activeStartDate,
+      ).getFullYear()}`,
+    );
   });
 
   it('applies tileClassName to its tiles when given a string', () => {
     const tileClassName = 'testClassName';
     const component = mount(
-      <CenturyView
-        {...defaultProps}
-        showNeighboringMonth={false}
-        tileClassName={tileClassName}
-      />,
+      <CenturyView {...defaultProps} showNeighboringMonth={false} tileClassName={tileClassName} />,
     );
 
     const firstDayTile = component.find('.react-calendar__tile').first();
@@ -70,15 +70,9 @@ describe('CenturyView', () => {
   });
 
   it('renders tileContent in its tiles when given a node', () => {
-    const tileContent = (
-      <div className="testContent" />
-    );
+    const tileContent = <div className="testContent" />;
     const component = mount(
-      <CenturyView
-        {...defaultProps}
-        showNeighboringMonth={false}
-        tileContent={tileContent}
-      />,
+      <CenturyView {...defaultProps} showNeighboringMonth={false} tileContent={tileContent} />,
     );
 
     const tiles = component.find('.react-calendar__tile');
@@ -93,9 +87,7 @@ describe('CenturyView', () => {
     const activeStartDate = new Date(2001, 0, 1);
     const tileContentFn = ({ date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
-        return (
-          <div className="testContent" />
-        );
+        return <div className="testContent" />;
       }
 
       return null;
@@ -123,12 +115,7 @@ describe('CenturyView', () => {
   it('passes formatYear flag to Decades component', () => {
     const formatYear = () => 'Year';
 
-    const component = shallow(
-      <CenturyView
-        {...defaultProps}
-        formatYear={formatYear}
-      />,
-    );
+    const component = shallow(<CenturyView {...defaultProps} formatYear={formatYear} />);
 
     const years = component.find('Decades');
 

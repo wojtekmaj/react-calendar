@@ -48,10 +48,8 @@ export default function Navigation({
   const shouldShowPrevNext2Buttons = view !== 'century';
 
   const previousActiveStartDate = getBeginPrevious(view, activeStartDate);
-  const previousActiveStartDate2 = (
-    shouldShowPrevNext2Buttons
-    && getBeginPrevious2(view, activeStartDate)
-  );
+  const previousActiveStartDate2 =
+    shouldShowPrevNext2Buttons && getBeginPrevious2(view, activeStartDate);
   const nextActiveStartDate = getBeginNext(view, activeStartDate);
   const nextActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginNext2(view, activeStartDate);
 
@@ -63,21 +61,20 @@ export default function Navigation({
     return minDate && minDate >= previousActiveEndDate;
   })();
 
-  const prev2ButtonDisabled = shouldShowPrevNext2Buttons && (() => {
-    if (previousActiveStartDate2.getFullYear() < 0) {
-      return true;
-    }
-    const previousActiveEndDate = getEndPrevious2(view, activeStartDate);
-    return minDate && minDate >= previousActiveEndDate;
-  })();
+  const prev2ButtonDisabled =
+    shouldShowPrevNext2Buttons &&
+    (() => {
+      if (previousActiveStartDate2.getFullYear() < 0) {
+        return true;
+      }
+      const previousActiveEndDate = getEndPrevious2(view, activeStartDate);
+      return minDate && minDate >= previousActiveEndDate;
+    })();
 
   const nextButtonDisabled = maxDate && maxDate < nextActiveStartDate;
 
-  const next2ButtonDisabled = (
-    shouldShowPrevNext2Buttons
-    && maxDate
-    && maxDate < nextActiveStartDate2
-  );
+  const next2ButtonDisabled =
+    shouldShowPrevNext2Buttons && maxDate && maxDate < nextActiveStartDate2;
 
   function onClickPrevious() {
     setActiveStartDate(previousActiveStartDate, 'prev');
@@ -111,16 +108,14 @@ export default function Navigation({
       }
     })();
 
-    return (
-      navigationLabel
-        ? navigationLabel({
+    return navigationLabel
+      ? navigationLabel({
           date,
           label,
           locale: locale || getUserLocale(),
           view,
         })
-        : label
-    );
+      : label;
   }
 
   function renderButton() {
@@ -140,11 +135,7 @@ export default function Navigation({
         </span>
         {showDoubleView && (
           <>
-            <span className={`${labelClassName}__divider`}>
-              {' '}
-              –
-              {' '}
-            </span>
+            <span className={`${labelClassName}__divider`}> – </span>
             <span className={`${labelClassName}__labelText ${labelClassName}__labelText--to`}>
               {renderLabel(nextActiveStartDate)}
             </span>
