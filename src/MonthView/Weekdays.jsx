@@ -41,7 +41,10 @@ export default function Weekdays(props) {
     weekdays.push(
       <div
         key={weekday}
-        className={mergeClassNames(weekdayClassName, isWeekend(weekdayDate) && `${weekdayClassName}--weekend`)}
+        className={mergeClassNames(
+          weekdayClassName, 
+          isWeekend(weekdayDate, calendarType) && `${weekdayClassName}--weekend`
+        )}
       >
         <abbr aria-label={abbr} title={abbr}>
           {formatShortWeekday(locale, weekdayDate).replace('.', '')}
