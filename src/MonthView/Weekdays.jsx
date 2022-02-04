@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import mergeClassNames from 'merge-class-names';
 import { getYear, getMonth, getMonthStart } from '@wojtekmaj/date-utils';
 
 import Flex from '../Flex';
 
-import { getDayOfWeek } from '../shared/dates';
+import { getDayOfWeek, isWeekend } from '../shared/dates';
 import {
   formatWeekday,
   formatShortWeekday as defaultFormatShortWeekday,
@@ -12,6 +13,7 @@ import {
 import { isCalendarType } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__weekdays';
+const weekdayClassName = `${className}__weekday`;
 
 export default function Weekdays(props) {
   const {
@@ -38,7 +40,13 @@ export default function Weekdays(props) {
     const abbr = formatWeekday(locale, weekdayDate);
 
     weekdays.push(
-      <div key={weekday} className={`${className}__weekday`}>
+      <div
+        key={weekday}
+        className={mergeClassNames(
+          weekdayClassName,
+          isWeekend(weekdayDate, calendarType) && `${weekdayClassName}--weekend`,
+        )}
+      >
         <abbr aria-label={abbr} title={abbr}>
           {formatShortWeekday(locale, weekdayDate).replace('.', '')}
         </abbr>
