@@ -14,6 +14,7 @@ import { formatWeekday, formatShortWeekday as defaultFormatShortWeekday } from '
 import { isCalendarType } from '../shared/propTypes';
 
 const className = 'react-calendar__month-view__weekdays';
+const weekdayClassName = `${className}__weekday`;
 
 export default function Weekdays(props) {
   const {
@@ -35,7 +36,6 @@ export default function Weekdays(props) {
       year, monthIndex, weekday - getDayOfWeek(beginOfMonth, calendarType),
     );
 
-    const weekdayClassName = `${className}__weekday`;
     const abbr = formatWeekday(locale, weekdayDate);
 
     weekdays.push(
