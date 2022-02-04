@@ -7,15 +7,9 @@ describe('Flex', () => {
   it('styles itself properly with wrap flag set to false', () => {
     const noWrapComponent = shallow(
       <Flex count={3} wrap={false}>
-        <div>
-          Hey
-        </div>
-        <div>
-          Hi
-        </div>
-        <div>
-          Hello
-        </div>
+        <div>Hey</div>
+        <div>Hi</div>
+        <div>Hello</div>
       </Flex>,
     );
 
@@ -26,15 +20,9 @@ describe('Flex', () => {
   it('styles itself properly with wrap flag set to true', () => {
     const wrapComponent = shallow(
       <Flex count={3} wrap>
-        <div>
-          Hey
-        </div>
-        <div>
-          Hi
-        </div>
-        <div>
-          Hello
-        </div>
+        <div>Hey</div>
+        <div>Hi</div>
+        <div>Hello</div>
       </Flex>,
     );
 
@@ -45,15 +33,9 @@ describe('Flex', () => {
   it('renders all given children', () => {
     const component = shallow(
       <Flex count={3}>
-        <div>
-          Hey
-        </div>
-        <div>
-          Hi
-        </div>
-        <div>
-          Hello
-        </div>
+        <div>Hey</div>
+        <div>Hi</div>
+        <div>Hello</div>
       </Flex>,
     );
 
@@ -68,18 +50,16 @@ describe('Flex', () => {
   it('properly sizes and positions all the elements', () => {
     const component = shallow(
       <Flex count={3} offset={1}>
-        <div>
-          Hey
-        </div>
-        <div>
-          Hi
-        </div>
+        <div>Hey</div>
+        <div>Hi</div>
       </Flex>,
     );
 
     const children = component.children();
 
-    children.forEach((child) => expect(parseFloat(child.prop('style').flexBasis)).toBeCloseTo(33.33));
+    children.forEach((child) =>
+      expect(parseFloat(child.prop('style').flexBasis)).toBeCloseTo(33.33),
+    );
     expect(parseFloat(children.first().prop('style').marginLeft)).toBeCloseTo(33.33);
   });
 });

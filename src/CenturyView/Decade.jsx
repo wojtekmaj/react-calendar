@@ -10,11 +10,7 @@ import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__century-view__decades__decade';
 
-export default function Decade({
-  classes,
-  formatYear = defaultFormatYear,
-  ...otherProps
-}) {
+export default function Decade({ classes, formatYear = defaultFormatYear, ...otherProps }) {
   const { date, locale } = otherProps;
 
   return (

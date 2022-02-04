@@ -4,12 +4,7 @@ import { getISOLocalDateTime } from '@wojtekmaj/date-utils';
 
 import { isValue } from './shared/propTypes';
 
-export default function ValueOptions({
-  selectRange,
-  setSelectRange,
-  setValue,
-  value,
-}) {
+export default function ValueOptions({ selectRange, setSelectRange, setValue, value }) {
   const startDate = [].concat(value)[0];
   const endDate = [].concat(value)[1];
 
@@ -57,14 +52,10 @@ export default function ValueOptions({
 
   return (
     <fieldset id="valueOptions">
-      <legend htmlFor="valueOptions">
-        Value options
-      </legend>
+      <legend htmlFor="valueOptions">Value options</legend>
 
       <div>
-        <label htmlFor="startDate">
-          Start date
-        </label>
+        <label htmlFor="startDate">Start date</label>
         <input
           id="startDate"
           onChange={onStartChange}
@@ -72,24 +63,16 @@ export default function ValueOptions({
           value={startDate ? getISOLocalDateTime(startDate) : ''}
         />
         &nbsp;
-        <button
-          onClick={() => setStartValue(null)}
-          type="button"
-        >
+        <button onClick={() => setStartValue(null)} type="button">
           Clear to null
         </button>
-        <button
-          onClick={() => setStartValue('')}
-          type="button"
-        >
+        <button onClick={() => setStartValue('')} type="button">
           Clear to empty string
         </button>
       </div>
 
       <div>
-        <label htmlFor="endDate">
-          End date
-        </label>
+        <label htmlFor="endDate">End date</label>
         <input
           id="endDate"
           onChange={onEndChange}
@@ -97,16 +80,10 @@ export default function ValueOptions({
           value={endDate ? getISOLocalDateTime(endDate) : ''}
         />
         &nbsp;
-        <button
-          onClick={() => setEndValue(null)}
-          type="button"
-        >
+        <button onClick={() => setEndValue(null)} type="button">
           Clear to null
         </button>
-        <button
-          onClick={() => setEndValue('')}
-          type="button"
-        >
+        <button onClick={() => setEndValue('')} type="button">
           Clear to empty string
         </button>
       </div>
@@ -118,9 +95,7 @@ export default function ValueOptions({
           onChange={onSelectRangeChange}
           type="checkbox"
         />
-        <label htmlFor="selectRange">
-          Select range
-        </label>
+        <label htmlFor="selectRange">Select range</label>
       </div>
     </fieldset>
   );
@@ -130,8 +105,5 @@ ValueOptions.propTypes = {
   selectRange: PropTypes.bool,
   setSelectRange: PropTypes.func.isRequired,
   setValue: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    isValue,
-  ]),
+  value: PropTypes.oneOfType([PropTypes.string, isValue]),
 };

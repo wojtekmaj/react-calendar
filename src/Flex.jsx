@@ -26,20 +26,18 @@ export default function Flex({
       }}
       {...otherProps}
     >
-      {React.Children.map(children, (child, index) => (
-        React.cloneElement(
-          child,
-          {
-            ...child.props,
-            style: {
-              flexBasis: toPercent(100 / count),
-              maxWidth: toPercent(100 / count),
-              overflow: 'hidden',
-              marginLeft: offset && (index === 0) ? toPercent((100 * offset) / count) : null,
-            },
+      {React.Children.map(children, (child, index) =>
+        React.cloneElement(child, {
+          ...child.props,
+          style: {
+            flexBasis: toPercent(100 / count),
+            flexShrink: 0,
+            flexGrow: 0,
+            overflow: 'hidden',
+            marginLeft: offset && index === 0 ? toPercent((100 * offset) / count) : null,
           },
-        )
-      ))}
+        }),
+      )}
     </div>
   );
 }
@@ -50,9 +48,6 @@ Flex.propTypes = {
   count: PropTypes.number.isRequired,
   direction: PropTypes.string,
   offset: PropTypes.number,
-  style: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ])),
+  style: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   wrap: PropTypes.bool,
 };

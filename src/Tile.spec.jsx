@@ -14,9 +14,7 @@ describe('<Tile /> component', () => {
   };
 
   it('renders button properly', () => {
-    const component = shallow(
-      <Tile {...defaultProps} />,
-    );
+    const component = shallow(<Tile {...defaultProps} />);
 
     expect(component.find('button')).toHaveLength(1);
   });
@@ -24,12 +22,7 @@ describe('<Tile /> component', () => {
   it('passes onClick to button', () => {
     const onClick = jest.fn();
 
-    const component = shallow(
-      <Tile
-        {...defaultProps}
-        onClick={onClick}
-      />,
-    );
+    const component = shallow(<Tile {...defaultProps} onClick={onClick} />);
 
     const button = component.find('button');
 
@@ -41,12 +34,7 @@ describe('<Tile /> component', () => {
   it('passes classes to button properly', () => {
     const classes = ['a', 'b', 'c'];
 
-    const component = shallow(
-      <Tile
-        {...defaultProps}
-        classes={classes}
-      />,
-    );
+    const component = shallow(<Tile {...defaultProps} classes={classes} />);
 
     const button = component.find('button');
 
@@ -58,19 +46,13 @@ describe('<Tile /> component', () => {
   it('renders children properly', () => {
     const children = 'Hello';
 
-    const component = shallow(
-      <Tile {...defaultProps}>
-        {children}
-      </Tile>,
-    );
+    const component = shallow(<Tile {...defaultProps}>{children}</Tile>);
 
     expect(component.text()).toBe(children);
   });
 
   it('does not render abbr by default', () => {
-    const component = shallow(
-      <Tile {...defaultProps} />,
-    );
+    const component = shallow(<Tile {...defaultProps} />);
 
     expect(component.find('abbr')).toHaveLength(0);
   });
@@ -80,14 +62,7 @@ describe('<Tile /> component', () => {
     const formatAbbr = jest.fn();
     const locale = 'en-US';
 
-    shallow(
-      <Tile
-        {...defaultProps}
-        date={date}
-        formatAbbr={formatAbbr}
-        locale={locale}
-      />,
-    );
+    shallow(<Tile {...defaultProps} date={date} formatAbbr={formatAbbr} locale={locale} />);
 
     expect(formatAbbr).toHaveBeenCalledTimes(1);
     expect(formatAbbr).toHaveBeenCalledWith(locale, date);
@@ -99,10 +74,7 @@ describe('<Tile /> component', () => {
     const formatAbbr = () => ariaLabel;
 
     const component = shallow(
-      <Tile
-        {...defaultProps}
-        formatAbbr={formatAbbr}
-      >
+      <Tile {...defaultProps} formatAbbr={formatAbbr}>
         {children}
       </Tile>,
     );
@@ -147,12 +119,7 @@ describe('<Tile /> component', () => {
     const className = 'className';
     const tileClassName = () => className;
 
-    const component = shallow(
-      <Tile
-        {...defaultProps}
-        tileClassName={tileClassName}
-      />,
-    );
+    const component = shallow(<Tile {...defaultProps} tileClassName={tileClassName} />);
 
     const button = component.find('button');
 
@@ -162,12 +129,7 @@ describe('<Tile /> component', () => {
   it('applies tileClassName to button properly given string', () => {
     const className = 'className';
 
-    const component = shallow(
-      <Tile
-        {...defaultProps}
-        tileClassName={className}
-      />,
-    );
+    const component = shallow(<Tile {...defaultProps} tileClassName={className} />);
 
     const button = component.find('button');
 
@@ -207,12 +169,7 @@ describe('<Tile /> component', () => {
     const content = 'content';
     const tileContent = () => content;
 
-    const component = shallow(
-      <Tile
-        {...defaultProps}
-        tileContent={tileContent}
-      />,
-    );
+    const component = shallow(<Tile {...defaultProps} tileContent={tileContent} />);
 
     const button = component.find('button');
 
@@ -222,12 +179,7 @@ describe('<Tile /> component', () => {
   it('applies tileContent to button properly given string', () => {
     const content = 'className';
 
-    const component = shallow(
-      <Tile
-        {...defaultProps}
-        tileContent={content}
-      />,
-    );
+    const component = shallow(<Tile {...defaultProps} tileContent={content} />);
 
     const button = component.find('button');
 
@@ -261,12 +213,7 @@ describe('<Tile /> component', () => {
   it('disables button properly given tileDisabled returning true', () => {
     const tileDisabled = () => true;
 
-    const component = shallow(
-      <Tile
-        {...defaultProps}
-        tileDisabled={tileDisabled}
-      />,
-    );
+    const component = shallow(<Tile {...defaultProps} tileDisabled={tileDisabled} />);
 
     const button = component.find('button');
 

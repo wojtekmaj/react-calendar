@@ -11,19 +11,14 @@ import { isCalendarType } from './shared/propTypes';
 
 function getCalendarTypeFromLocale(locale) {
   return (
-    Object.keys(CALENDAR_TYPE_LOCALES)
-      .find((calendarType) => CALENDAR_TYPE_LOCALES[calendarType].includes(locale))
-    || CALENDAR_TYPES.ISO_8601
+    Object.keys(CALENDAR_TYPE_LOCALES).find((calendarType) =>
+      CALENDAR_TYPE_LOCALES[calendarType].includes(locale),
+    ) || CALENDAR_TYPES.ISO_8601
   );
 }
 
 export default function MonthView(props) {
-  const {
-    activeStartDate,
-    locale,
-    onMouseLeave,
-    showFixedNumberOfWeeks,
-  } = props;
+  const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks } = props;
   const {
     calendarType = getCalendarTypeFromLocale(locale),
     formatShortWeekday,
@@ -60,20 +55,13 @@ export default function MonthView(props) {
   }
 
   function renderDays() {
-    return (
-      <Days
-        calendarType={calendarType}
-        {...childProps}
-      />
-    );
+    return <Days calendarType={calendarType} {...childProps} />;
   }
 
   const className = 'react-calendar__month-view';
 
   return (
-    <div
-      className={mergeClassNames(className, showWeekNumbers ? `${className}--weekNumbers` : '')}
-    >
+    <div className={mergeClassNames(className, showWeekNumbers ? `${className}--weekNumbers` : '')}>
       <div
         style={{
           display: 'flex',

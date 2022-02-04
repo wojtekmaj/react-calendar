@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  getYear,
-  getMonth,
-  getDaysInMonth,
-} from '@wojtekmaj/date-utils';
+import { getYear, getMonth, getDaysInMonth } from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup';
 import Day from './Day';
@@ -13,15 +9,8 @@ import { getDayOfWeek } from '../shared/dates';
 import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 
 export default function Days(props) {
-  const {
-    activeStartDate,
-    calendarType,
-  } = props;
-  const {
-    showFixedNumberOfWeeks,
-    showNeighboringMonth,
-    ...otherProps
-  } = props;
+  const { activeStartDate, calendarType } = props;
+  const { showFixedNumberOfWeeks, showNeighboringMonth, ...otherProps } = props;
 
   const year = getYear(activeStartDate);
   const monthIndex = getMonth(activeStartDate);
@@ -46,7 +35,7 @@ export default function Days(props) {
   const end = (() => {
     if (showFixedNumberOfWeeks) {
       // Always show 6 weeks
-      return start + (6 * 7) - 1;
+      return start + 6 * 7 - 1;
     }
 
     const daysInMonth = getDaysInMonth(activeStartDate);

@@ -16,12 +16,10 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
     filename: '[name].[chunkhash:8].js',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    symlinks: false,
   },
   module: {
     rules: [
@@ -48,10 +46,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-          'css-loader',
-        ],
+        use: [isProduction ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader'],
       },
     ].filter(Boolean),
   },
@@ -59,10 +54,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'index.html',
     }),
-    isProduction && new MiniCssExtractPlugin({
-      filename: '[name].[chunkhash:8].css',
-      chunkFilename: '[name].[chunkhash:8].css',
-    }),
+    isProduction &&
+      new MiniCssExtractPlugin({
+        filename: '[name].[chunkhash:8].css',
+        chunkFilename: '[name].[chunkhash:8].css',
+      }),
     isDevelopment && new ReactRefreshWebpackPlugin(),
   ].filter(Boolean),
   optimization: {
@@ -75,7 +71,6 @@ module.exports = {
   devServer: {
     compress: true,
     historyApiFallback: true, // respond to 404s with index.html
-    host: '0.0.0.0',
     hot: true, // enable HMR on the server
     port: 3000,
   },

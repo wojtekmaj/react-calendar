@@ -37,9 +37,7 @@ export default function ViewOptions({
 
   return (
     <fieldset id="viewoptions">
-      <legend htmlFor="viewoptions">
-        View options
-      </legend>
+      <legend htmlFor="viewoptions">View options</legend>
 
       <div>
         <input
@@ -48,9 +46,7 @@ export default function ViewOptions({
           onChange={onShowDoubleViewChange}
           type="checkbox"
         />
-        <label htmlFor="showDoubleView">
-          Show double view
-        </label>
+        <label htmlFor="showDoubleView">Show double view</label>
       </div>
 
       <div>
@@ -61,9 +57,7 @@ export default function ViewOptions({
           onChange={onShowFixedNumberOfWeeksChange}
           type="checkbox"
         />
-        <label htmlFor="showFixedNumberOfWeeks">
-          Show fixed number of weeks
-        </label>
+        <label htmlFor="showFixedNumberOfWeeks">Show fixed number of weeks</label>
       </div>
 
       <div>
@@ -74,9 +68,7 @@ export default function ViewOptions({
           onChange={onShowNeighboringMonthChange}
           type="checkbox"
         />
-        <label htmlFor="showNeighboringMonth">
-          {'Show neighboring month\'s days'}
-        </label>
+        <label htmlFor="showNeighboringMonth">{"Show neighboring month's days"}</label>
       </div>
 
       <div>
@@ -86,9 +78,7 @@ export default function ViewOptions({
           onChange={onShowWeekNumbersChange}
           type="checkbox"
         />
-        <label htmlFor="showWeekNumbers">
-          Show week numbers
-        </label>
+        <label htmlFor="showWeekNumbers">Show week numbers</label>
       </div>
     </fieldset>
   );

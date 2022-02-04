@@ -49,10 +49,7 @@ export const CALENDAR_TYPE_LOCALES = {
     'ps',
     'ps-AR',
   ],
-  [CALENDAR_TYPES.HEBREW]: [
-    'he',
-    'he-IL',
-  ],
+  [CALENDAR_TYPES.HEBREW]: ['he', 'he-IL'],
 };
 
 export const WEEKDAYS = [...Array(7)].map((el, index) => index);

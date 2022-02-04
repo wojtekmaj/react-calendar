@@ -29,6 +29,7 @@ export default function Navigation({
   maxDate,
   minDate,
   navigationAriaLabel = '',
+  navigationAriaLive,
   navigationLabel,
   next2AriaLabel = '',
   next2Label = '»',
@@ -47,10 +48,8 @@ export default function Navigation({
   const shouldShowPrevNext2Buttons = view !== 'century';
 
   const previousActiveStartDate = getBeginPrevious(view, activeStartDate);
-  const previousActiveStartDate2 = (
-    shouldShowPrevNext2Buttons
-    && getBeginPrevious2(view, activeStartDate)
-  );
+  const previousActiveStartDate2 =
+    shouldShowPrevNext2Buttons && getBeginPrevious2(view, activeStartDate);
   const nextActiveStartDate = getBeginNext(view, activeStartDate);
   const nextActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginNext2(view, activeStartDate);
 
@@ -62,36 +61,35 @@ export default function Navigation({
     return minDate && minDate >= previousActiveEndDate;
   })();
 
-  const prev2ButtonDisabled = shouldShowPrevNext2Buttons && (() => {
-    if (previousActiveStartDate2.getFullYear() < 0) {
-      return true;
-    }
-    const previousActiveEndDate = getEndPrevious2(view, activeStartDate);
-    return minDate && minDate >= previousActiveEndDate;
-  })();
+  const prev2ButtonDisabled =
+    shouldShowPrevNext2Buttons &&
+    (() => {
+      if (previousActiveStartDate2.getFullYear() < 0) {
+        return true;
+      }
+      const previousActiveEndDate = getEndPrevious2(view, activeStartDate);
+      return minDate && minDate >= previousActiveEndDate;
+    })();
 
-  const nextButtonDisabled = maxDate && maxDate <= nextActiveStartDate;
+  const nextButtonDisabled = maxDate && maxDate < nextActiveStartDate;
 
-  const next2ButtonDisabled = (
-    shouldShowPrevNext2Buttons
-    && maxDate
-    && maxDate <= nextActiveStartDate2
-  );
+  const next2ButtonDisabled =
+    shouldShowPrevNext2Buttons && maxDate && maxDate < nextActiveStartDate2;
 
   function onClickPrevious() {
-    setActiveStartDate(previousActiveStartDate);
+    setActiveStartDate(previousActiveStartDate, 'prev');
   }
 
   function onClickPrevious2() {
-    setActiveStartDate(previousActiveStartDate2);
+    setActiveStartDate(previousActiveStartDate2, 'prev2');
   }
 
   function onClickNext() {
-    setActiveStartDate(nextActiveStartDate);
+    setActiveStartDate(nextActiveStartDate, 'next');
   }
 
   function onClickNext2() {
-    setActiveStartDate(nextActiveStartDate2);
+    setActiveStartDate(nextActiveStartDate2, 'next2');
   }
 
   function renderLabel(date) {
@@ -110,16 +108,14 @@ export default function Navigation({
       }
     })();
 
-    return (
-      navigationLabel
-        ? navigationLabel({
+    return navigationLabel
+      ? navigationLabel({
           date,
           label,
           locale: locale || getUserLocale(),
           view,
         })
-        : label
-    );
+      : label;
   }
 
   function renderButton() {
@@ -127,6 +123,7 @@ export default function Navigation({
     return (
       <button
         aria-label={navigationAriaLabel}
+        aria-live={navigationAriaLive}
         className={labelClassName}
         disabled={!drillUpAvailable}
         onClick={drillUp}
@@ -138,11 +135,7 @@ export default function Navigation({
         </span>
         {showDoubleView && (
           <>
-            <span className={`${labelClassName}__divider`}>
-              {' '}
-              –
-              {' '}
-            </span>
+            <span className={`${labelClassName}__divider`}> – </span>
             <span className={`${labelClassName}__labelText ${labelClassName}__labelText--to`}>
               {renderLabel(nextActiveStartDate)}
             </span>
@@ -153,10 +146,7 @@ export default function Navigation({
   }
 
   return (
-    <div
-      className={className}
-      style={{ display: 'flex' }}
-    >
+    <div className={className}>
       {prev2Label !== null && shouldShowPrevNext2Buttons && (
         <button
           aria-label={prev2AriaLabel}
@@ -215,6 +205,7 @@ Navigation.propTypes = {
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
   navigationAriaLabel: PropTypes.string,
+  navigationAriaLive: PropTypes.string,
   navigationLabel: PropTypes.func,
   next2AriaLabel: PropTypes.string,
   next2Label: PropTypes.node,

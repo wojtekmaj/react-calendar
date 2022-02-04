@@ -7,11 +7,7 @@ function upperCaseFirstLetter(str) {
   return str.slice(0, 1).toUpperCase() + str.slice(1);
 }
 
-export default function MaxDetailOptions({
-  maxDetail,
-  minDetail,
-  setMaxDetail,
-}) {
+export default function MaxDetailOptions({ maxDetail, minDetail, setMaxDetail }) {
   function onChange(event) {
     const { value } = event.target;
 
@@ -22,9 +18,7 @@ export default function MaxDetailOptions({
 
   return (
     <fieldset id="maxdetailoptions">
-      <legend htmlFor="maxdetailoptions">
-        Maximum detail
-      </legend>
+      <legend htmlFor="maxdetailoptions">Maximum detail</legend>
 
       {allViews.map((view, index) => (
         <div key={view}>
@@ -37,9 +31,7 @@ export default function MaxDetailOptions({
             type="radio"
             value={view}
           />
-          <label htmlFor={`max-${view}`}>
-            {upperCaseFirstLetter(view)}
-          </label>
+          <label htmlFor={`max-${view}`}>{upperCaseFirstLetter(view)}</label>
         </div>
       ))}
     </fieldset>

@@ -1,6 +1,6 @@
 {
   "name": "react-calendar",
-  "version": "3.3.1",
+  "version": "3.6.0",
   "description": "Ultimate calendar for your React app.",
   "main": "dist/umd/index.js",
   "module": "dist/esm/index.js",
@@ -18,19 +18,10 @@
     "clean": "rimraf dist",
     "copy-styles": "node ./copy-styles.js",
     "jest": "jest",
-    "jest-coverage": "jest --coverage",
     "lint": "eslint sample/ src/ test/ --ext .jsx,.js",
+    "postinstall": "husky install",
     "prepack": "yarn clean && yarn build",
     "test": "yarn lint && yarn jest"
-  },
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/jest.setup.js"
-    ],
-    "collectCoverageFrom": [
-      "**/src/**.{js,jsx}",
-      "!**/src/index.js"
-    ]
   },
   "keywords": [
     "calendar",
@@ -82,35 +73,38 @@
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.0",
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-proposal-class-properties": "^7.8.0",
-    "@babel/preset-env": "^7.9.0",
-    "@babel/preset-react": "^7.9.0",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.3.1",
-    "babel-eslint": "^10.0.0",
+    "@babel/cli": "^7.15.0",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.0",
     "enzyme": "^3.10.0",
-    "eslint": "^7.12.0",
-    "eslint-config-wojtekmaj": "^0.5.0",
-    "jest": "^26.6.0",
-    "less": "^3.8.1",
+    "eslint": "^8.5.0",
+    "eslint-config-wojtekmaj": "^0.6.5",
+    "husky": "^7.0.0",
+    "jest": "^27.0.0",
+    "less": "^4.0.0",
+    "prettier": "^2.5.0",
+    "pretty-quick": "^3.1.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "rimraf": "^3.0.0"
   },
   "peerDependencies": {
-    "react": "^16.3.0 || ^17.0.0-0",
-    "react-dom": "^16.3.0 || ^17.0.0-0"
+    "react": "^16.3.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.3.0 || ^17.0.0 || ^18.0.0"
+  },
+  "resolutions": {
+    "semver@7.0.0": "^7.0.0"
   },
   "files": [
-    "LICENSE",
-    "README.md",
-    "dist/",
-    "src/"
+    "dist",
+    "src"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/wojtekmaj/react-calendar.git"
   },
-  "funding": "https://github.com/wojtekmaj/react-calendar?sponsor=1"
+  "funding": "https://github.com/wojtekmaj/react-calendar?sponsor=1",
+  "packageManager": "yarn@3.1.0"
 }

@@ -1,38 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function WeekNumber({
-  date,
-  onClickWeekNumber,
-  weekNumber,
-}) {
+const className = 'react-calendar__tile';
+
+export default function WeekNumber({ date, onClickWeekNumber, weekNumber, ...otherProps }) {
   const props = {
-    className: 'react-calendar__tile',
-    style: { flexGrow: 1 },
+    className,
+    ...otherProps,
   };
 
-  const children = (
-    <span>
-      {weekNumber}
-    </span>
-  );
+  const children = <span>{weekNumber}</span>;
 
-  return (
-    onClickWeekNumber
-      ? (
-        <button
-          {...props}
-          onClick={(event) => onClickWeekNumber(weekNumber, date, event)}
-          type="button"
-        >
-          {children}
-        </button>
-      )
-      : (
-        <div {...props}>
-          {children}
-        </div>
-      )
+  return onClickWeekNumber ? (
+    <button
+      {...props}
+      onClick={(event) => onClickWeekNumber(weekNumber, date, event)}
+      type="button"
+    >
+      {children}
+    </button>
+  ) : (
+    <div {...props}>{children}</div>
   );
 }
 
