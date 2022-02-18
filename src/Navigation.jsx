@@ -11,12 +11,12 @@ import {
   getBeginPrevious2,
   getEndPrevious,
   getEndPrevious2,
-} from '../shared/dates';
+} from './shared/dates';
 import {
   formatMonthYear as defaultFormatMonthYear,
   formatYear as defaultFormatYear,
-} from '../shared/dateFormatter';
-import { isView, isViews } from '../shared/propTypes';
+} from './shared/dateFormatter';
+import { isView, isViews } from './shared/propTypes';
 
 const className = 'react-calendar__navigation';
 

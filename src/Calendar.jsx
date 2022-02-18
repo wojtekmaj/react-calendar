@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
 
-import Navigation from './Calendar/Navigation';
+import Navigation from './Navigation';
 import CenturyView from './CenturyView';
 import DecadeView from './DecadeView';
 import YearView from './YearView';
