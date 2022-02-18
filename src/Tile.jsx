@@ -64,6 +64,7 @@ export default class Tile extends Component {
       style,
       tileDisabled,
       view,
+      withoutTileTabIndex
     } = this.props;
     const { tileClassName, tileContent } = this.state;
 
@@ -80,6 +81,7 @@ export default class Tile extends Component {
         onMouseOver={onMouseOver && (() => onMouseOver(date))}
         style={style}
         type="button"
+        tabIndex={withoutTileTabIndex ? '-1' : undefined}
       >
         {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}
         {tileContent}

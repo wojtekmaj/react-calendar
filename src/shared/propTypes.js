@@ -131,4 +131,5 @@ export const tileProps = {
   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   tileDisabled: PropTypes.func,
+  withoutTileTabIndex: PropTypes.bool
 };
