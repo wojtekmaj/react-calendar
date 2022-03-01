@@ -1,7 +1,23 @@
 import getUserLocale from 'get-user-locale';
 
+const formatterCache = new Map();
+
 function getFormatter(options) {
-  return (locale, date) => date.toLocaleString(locale || getUserLocale(), options);
+  return (locale, date) => {
+    const localeWithDefault = locale || getUserLocale();
+
+    if (!formatterCache.has(localeWithDefault)) {
+      formatterCache.set(localeWithDefault, new Map());
+    }
+
+    const formatterCacheLocale = formatterCache.get(localeWithDefault);
+
+    if (!formatterCacheLocale.has(options)) {
+      formatterCacheLocale.set(options, new Intl.DateTimeFormat(localeWithDefault, options).format);
+    }
+
+    return formatterCacheLocale.get(options)(date);
+  };
 }
 
 /**

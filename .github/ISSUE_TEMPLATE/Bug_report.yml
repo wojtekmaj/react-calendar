@@ -1,0 +1,60 @@
+name: 🐛 Bug report
+description: Something does not work the way we promised
+labels:
+  - bug
+body:
+  - type: checkboxes
+    attributes:
+      label: Before you start - checklist
+      options:
+        - label: I followed instructions in documentation written for my React-Calendar version
+          required: true
+        - label: I have checked if this bug is not already reported
+          required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: Short description of the bug you encountered.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: |
+        Steps to reproduce the behavior.
+
+        Example:
+          1. Go to '…'
+          2. Click on '…'
+          3. Scroll down to '…'
+          4. See error
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: What is the expected behavior?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Actual behavior
+      description: What is the actual behavior?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional information
+      description: If applicable, add screenshots (preferably with browser console open) to help explain your problem.
+  - type: textarea
+    attributes:
+      label: Environment
+      description: |
+        Example:
+          - **Browser (if applicable)**: Chrome 96, Firefox 94
+          - **React-Calendar version**: 3.0.0
+          - **React version**: 17.0.0
+      value: |
+          - **Browser (if applicable)**:
+          - **React-Calendar version**:
+          - **React version**:

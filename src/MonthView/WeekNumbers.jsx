@@ -1,30 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  getYear,
-  getMonth,
-  getDate,
-  getDaysInMonth,
-} from '@wojtekmaj/date-utils';
+import { getYear, getMonth, getDate, getDaysInMonth } from '@wojtekmaj/date-utils';
 
 import WeekNumber from './WeekNumber';
 import Flex from '../Flex';
 
-import {
-  getBeginOfWeek,
-  getDayOfWeek,
-  getWeekNumber,
-} from '../shared/dates';
+import { getBeginOfWeek, getDayOfWeek, getWeekNumber } from '../shared/dates';
 import { isCalendarType } from '../shared/propTypes';
 
 export default function WeekNumbers(props) {
-  const {
-    activeStartDate,
-    calendarType,
-    onClickWeekNumber,
-    onMouseLeave,
-    showFixedNumberOfWeeks,
-  } = props;
+  const { activeStartDate, calendarType, onClickWeekNumber, onMouseLeave, showFixedNumberOfWeeks } =
+    props;
 
   const numberOfWeeks = (() => {
     if (showFixedNumberOfWeeks) {
@@ -45,9 +31,7 @@ export default function WeekNumbers(props) {
 
     const result = [];
     for (let index = 0; index < numberOfWeeks; index += 1) {
-      result.push(
-        getBeginOfWeek(new Date(year, monthIndex, day + (index * 7)), calendarType),
-      );
+      result.push(getBeginOfWeek(new Date(year, monthIndex, day + index * 7), calendarType));
     }
     return result;
   })();
@@ -63,16 +47,14 @@ export default function WeekNumbers(props) {
       onMouseOver={onMouseLeave}
       style={{ flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }}
     >
-      {
-        weekNumbers.map((weekNumber, weekIndex) => (
-          <WeekNumber
-            key={weekNumber}
-            date={dates[weekIndex]}
-            onClickWeekNumber={onClickWeekNumber}
-            weekNumber={weekNumber}
-          />
-        ))
-      }
+      {weekNumbers.map((weekNumber, weekIndex) => (
+        <WeekNumber
+          key={weekNumber}
+          date={dates[weekIndex]}
+          onClickWeekNumber={onClickWeekNumber}
+          weekNumber={weekNumber}
+        />
+      ))}
     </Flex>
   );
 }

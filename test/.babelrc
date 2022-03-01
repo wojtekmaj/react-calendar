@@ -7,8 +7,5 @@
       }
     ],
     "@babel/react"
-  ],
-  "plugins": [
-    "@babel/proposal-class-properties"
   ]
 }

@@ -15,22 +15,16 @@ import './Test.less';
 
 const now = new Date();
 
-/* eslint-disable no-console, react/prop-types */
-
 const tileClassName = ({ date, view }) => {
   switch (view) {
     case 'month':
-      return date.getDay() === 0 || date.getDay() === 6
-        ? 'red' : null;
+      return date.getDay() === 0 || date.getDay() === 6 ? 'red' : null;
     case 'year':
-      return date.getMonth() === 5 || date.getMonth() === 6
-        ? 'green' : null;
+      return date.getMonth() === 5 || date.getMonth() === 6 ? 'green' : null;
     case 'decade':
-      return date.getFullYear() === 1991
-        ? 'pink' : null;
+      return date.getFullYear() === 1991 ? 'pink' : null;
     case 'century':
-      return date.getFullYear() === 1991
-        ? 'brown' : null;
+      return date.getFullYear() === 1991 ? 'brown' : null;
     default:
       return null;
   }
@@ -39,45 +33,29 @@ const tileClassName = ({ date, view }) => {
 const tileContent = ({ date, view }) => {
   switch (view) {
     case 'month':
-      return date.getDay() === 0
-        ? (
-          <p>
-            <small>
-              {'It\'s Sunday!'}
-            </small>
-          </p>
-        )
-        : null;
+      return date.getDay() === 0 ? (
+        <p>
+          <small>{"It's Sunday!"}</small>
+        </p>
+      ) : null;
     case 'year':
-      return date.getMonth() === 5 || date.getMonth() === 6
-        ? (
-          <p>
-            <small>
-              Holidays
-            </small>
-          </p>
-        )
-        : null;
+      return date.getMonth() === 5 || date.getMonth() === 6 ? (
+        <p>
+          <small>Holidays</small>
+        </p>
+      ) : null;
     case 'decade':
-      return date.getFullYear() === 1991
-        ? (
-          <p>
-            <small>
-              {'Developer\'s birthday!'}
-            </small>
-          </p>
-        )
-        : null;
+      return date.getFullYear() === 1991 ? (
+        <p>
+          <small>{"Developer's birthday!"}</small>
+        </p>
+      ) : null;
     case 'century':
-      return date.getFullYear() === 1991
-        ? (
-          <p>
-            <small>
-              {'The 90\'s'}
-            </small>
-          </p>
-        )
-        : null;
+      return date.getFullYear() === 1991 ? (
+        <p>
+          <small>{"The 90's"}</small>
+        </p>
+      ) : null;
     default:
       return null;
   }
@@ -85,6 +63,8 @@ const tileContent = ({ date, view }) => {
 
 const nineteenNinetyFive = new Date(1995, now.getUTCMonth() + 1, 15, 12);
 const fifteenthOfNextMonth = new Date(now.getUTCFullYear(), now.getUTCMonth() + 1, 15, 12);
+
+/* eslint-disable no-console */
 
 export default function Test() {
   const [activeStartDate, setActiveStartDate] = useState(
@@ -95,7 +75,7 @@ export default function Test() {
   const [maxDetail, setMaxDetail] = useState('month');
   const [minDate, setMinDate] = useState(nineteenNinetyFive);
   const [minDetail, setMinDetail] = useState('century');
-  const [returnValue/* , setReturnValue */] = useState('start');
+  const [returnValue /* , setReturnValue */] = useState('start');
   const [selectRange, setSelectRange] = useState(false);
   const [showDoubleView, setShowDoubleView] = useState(false);
   const [showFixedNumberOfWeeks, setShowFixedNumberOfWeeks] = useState(false);
@@ -109,7 +89,8 @@ export default function Test() {
       console.log('Changed view to', nextView, nextActiveStartDate);
       setActiveStartDate(nextActiveStartDate);
       setView(nextView);
-    }, [],
+    },
+    [],
   );
 
   function renderDebugInfo() {
@@ -121,18 +102,10 @@ export default function Test() {
     };
 
     if (Array.isArray(value)) {
-      return (
-        <p>
-          {`Chosen date range: ${renderDate(value[0])} - ${renderDate(value[1])}`}
-        </p>
-      );
+      return <p>{`Chosen date range: ${renderDate(value[0])} - ${renderDate(value[1])}`}</p>;
     }
 
-    return (
-      <p>
-        {`Chosen date: ${value ? renderDate(value) : '(none)'}`}
-      </p>
-    );
+    return <p>{`Chosen date: ${value ? renderDate(value) : '(none)'}`}</p>;
   }
 
   const commonProps = {
@@ -167,9 +140,7 @@ export default function Test() {
   return (
     <div className="Test">
       <header>
-        <h1>
-          react-calendar test page
-        </h1>
+        <h1>react-calendar test page</h1>
       </header>
       <div className="Test__container">
         <aside className="Test__container__options">
@@ -189,10 +160,7 @@ export default function Test() {
             setMaxDate={setMaxDate}
             setMinDate={setMinDate}
           />
-          <LocaleOptions
-            locale={locale}
-            setLocale={setLocale}
-          />
+          <LocaleOptions locale={locale} setLocale={setLocale} />
           <ValueOptions
             selectRange={selectRange}
             setSelectRange={setSelectRange}

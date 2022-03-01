@@ -20,13 +20,17 @@ export const isMinDate = (props, propName, componentName) => {
   }
 
   if (!(minDate instanceof Date)) {
-    return new Error(`Invalid prop \`${propName}\` of type \`${typeof minDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`);
+    return new Error(
+      `Invalid prop \`${propName}\` of type \`${typeof minDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`,
+    );
   }
 
   const { maxDate } = props;
 
   if (maxDate && minDate > maxDate) {
-    return new Error(`Invalid prop \`${propName}\` of type \`${typeof minDate}\` supplied to \`${componentName}\`, minDate cannot be larger than maxDate.`);
+    return new Error(
+      `Invalid prop \`${propName}\` of type \`${typeof minDate}\` supplied to \`${componentName}\`, minDate cannot be larger than maxDate.`,
+    );
   }
 
   return null;
@@ -40,13 +44,17 @@ export const isMaxDate = (props, propName, componentName) => {
   }
 
   if (!(maxDate instanceof Date)) {
-    return new Error(`Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`);
+    return new Error(
+      `Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, expected instance of \`Date\`.`,
+    );
   }
 
   const { minDate } = props;
 
   if (minDate && maxDate < minDate) {
-    return new Error(`Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, maxDate cannot be smaller than minDate.`);
+    return new Error(
+      `Invalid prop \`${propName}\` of type \`${typeof maxDate}\` supplied to \`${componentName}\`, maxDate cannot be smaller than minDate.`,
+    );
   }
 
   return null;
@@ -55,7 +63,6 @@ export const isMaxDate = (props, propName, componentName) => {
 export const isRef = PropTypes.oneOfType([
   PropTypes.func,
   PropTypes.shape({
-    // eslint-disable-next-line react/forbid-prop-types
     current: PropTypes.any,
   }),
 ]);
@@ -74,7 +81,11 @@ export const isView = (props, propName, componentName) => {
   const allowedViews = views || allViews;
 
   if (view !== undefined && allowedViews.indexOf(view) === -1) {
-    return new Error(`Invalid prop \`${propName}\` of value \`${view}\` supplied to \`${componentName}\`, expected one of [${allowedViews.map((a) => `"${a}"`).join(', ')}].`);
+    return new Error(
+      `Invalid prop \`${propName}\` of value \`${view}\` supplied to \`${componentName}\`, expected one of [${allowedViews
+        .map((a) => `"${a}"`)
+        .join(', ')}].`,
+    );
   }
 
   // Everything is fine
@@ -85,7 +96,9 @@ isView.isRequired = (props, propName, componentName) => {
   const { [propName]: view } = props;
 
   if (!view) {
-    return new Error(`The prop \`${propName}\` is marked as required in \`${componentName}\`, but its value is \`${view}\`.`);
+    return new Error(
+      `The prop \`${propName}\` is marked as required in \`${componentName}\`, but its value is \`${view}\`.`,
+    );
   }
 
   return isView(props, propName, componentName);
@@ -99,14 +112,8 @@ export const tileGroupProps = {
   minDate: isMinDate,
   onClick: PropTypes.func,
   onMouseOver: PropTypes.func,
-  tileClassName: PropTypes.oneOfType([
-    PropTypes.func,
-    isClassName,
-  ]),
-  tileContent: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.node,
-  ]),
+  tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
+  tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   value: isValue,
   valueType: PropTypes.string,
 };
@@ -120,17 +127,8 @@ export const tileProps = {
   minDate: isMinDate,
   onClick: PropTypes.func,
   onMouseOver: PropTypes.func,
-  style: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ])),
-  tileClassName: PropTypes.oneOfType([
-    PropTypes.func,
-    isClassName,
-  ]),
-  tileContent: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.node,
-  ]),
+  style: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
+  tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   tileDisabled: PropTypes.func,
 };

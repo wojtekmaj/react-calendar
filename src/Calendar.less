@@ -11,16 +11,19 @@
 
     .react-calendar__viewContainer {
       display: flex;
-      margin: -.5em;
+      margin: -0.5em;
 
       > * {
         width: 50%;
-        margin: .5em;
+        margin: 0.5em;
       }
     }
   }
 
-  &, & *, & *:before, & *:after {
+  &,
+  & *,
+  & *:before,
+  & *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -39,6 +42,7 @@
   }
 
   &__navigation {
+    display: flex;
     height: 44px;
     margin-bottom: 1em;
 
@@ -46,14 +50,15 @@
       min-width: 44px;
       background: none;
 
-      &:enabled {
-        &:hover, &:focus {
-          background-color: rgb(230, 230, 230);
-        }
+      &:disabled {
+        background-color: rgb(240, 240, 240);
       }
 
-      &[disabled] {
-        background-color: rgb(240, 240, 240);
+      &:enabled {
+        &:hover,
+        &:focus {
+          background-color: rgb(230, 230, 230);
+        }
       }
     }
   }
@@ -63,22 +68,20 @@
       text-align: center;
       text-transform: uppercase;
       font-weight: bold;
-      font-size: .75em;
+      font-size: 0.75em;
 
       &__weekday {
-        padding: .5em;
+        padding: 0.5em;
       }
     }
 
     &__weekNumbers {
-      font-weight: bold;
-
       .react-calendar__tile {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: .75em;
-        padding: calc(.75em / .75) calc(.5em / .75);
+        font-size: 0.75em;
+        font-weight: bold;
       }
     }
 
@@ -89,7 +92,7 @@
         }
 
         &--neighboringMonth {
-          color: rgb(117, 117, 117)
+          color: rgb(117, 117, 117);
         }
       }
     }
@@ -99,22 +102,24 @@
   &__decade-view,
   &__century-view {
     .react-calendar__tile {
-      padding: 2em .5em;
+      padding: 2em 0.5em;
     }
   }
 
   &__tile {
     max-width: 100%;
-    text-align: center;
-    padding: .75em .5em;
+    padding: 10px 6.6667px;
     background: none;
+    text-align: center;
+    line-height: 16px;
 
     &:disabled {
       background-color: rgb(240, 240, 240);
     }
 
     &:enabled {
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         background-color: rgb(230, 230, 230);
       }
     }
@@ -124,7 +129,8 @@
       background: @bgcolor;
 
       &:enabled {
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           background: lighten(@bgcolor, 10%);
         }
       }
@@ -135,7 +141,8 @@
       background: @bgcolor;
 
       &:enabled {
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           background: lighten(@bgcolor, 10%);
         }
       }
@@ -147,7 +154,8 @@
       color: white;
 
       &:enabled {
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           background: lighten(@bgcolor, 10%);
         }
       }

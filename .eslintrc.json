@@ -1,15 +1,8 @@
 {
-  "extends": "wojtekmaj/react",
-  "parser": "babel-eslint",
-  "rules": {
-    "no-restricted-globals": "off"
-  },
+  "extends": "wojtekmaj/react-no-automatic-runtime",
   "overrides": [
     {
-      "files": [
-        "sample/**",
-        "test/**"
-      ],
+      "files": ["sample/**", "test/**"],
       "rules": {
         "import/no-unresolved": "off"
       }

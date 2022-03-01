@@ -18,24 +18,15 @@ export function between(value, min, max) {
 }
 
 export function isValueWithinRange(value, range) {
-  return (
-    range[0] <= value
-    && range[1] >= value
-  );
+  return range[0] <= value && range[1] >= value;
 }
 
 export function isRangeWithinRange(greaterRange, smallerRange) {
-  return (
-    greaterRange[0] <= smallerRange[0]
-    && greaterRange[1] >= smallerRange[1]
-  );
+  return greaterRange[0] <= smallerRange[0] && greaterRange[1] >= smallerRange[1];
 }
 
 export function doRangesOverlap(range1, range2) {
-  return (
-    isValueWithinRange(range1[0], range2)
-    || isValueWithinRange(range1[1], range2)
-  );
+  return isValueWithinRange(range1[0], range2) || isValueWithinRange(range1[1], range2);
 }
 
 function getRangeClassNames(valueRange, dateRange, baseClassName) {
@@ -65,9 +56,7 @@ function getRangeClassNames(valueRange, dateRange, baseClassName) {
   return classes;
 }
 
-export function getTileClasses({
-  value, valueType, date, dateType, hover,
-} = {}) {
+export function getTileClasses({ value, valueType, date, dateType, hover } = {}) {
   const className = 'react-calendar__tile';
   const classes = [className];
 
@@ -76,7 +65,9 @@ export function getTileClasses({
   }
 
   if (!Array.isArray(date) && !dateType) {
-    throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
+    throw new Error(
+      'getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.',
+    );
   }
 
   const now = new Date();
@@ -91,7 +82,9 @@ export function getTileClasses({
   }
 
   if (!Array.isArray(value) && !valueType) {
-    throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
+    throw new Error(
+      'getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.',
+    );
   }
 
   const valueRange = Array.isArray(value) ? value : getRange(valueType, value);
@@ -106,8 +99,10 @@ export function getTileClasses({
 
   classes.push(...valueRangeClassNames);
 
-  if (hover) {
-    const hoverRange = hover > valueRange[1] ? [valueRange[1], hover] : [hover, valueRange[0]];
+  const valueArray = [].concat(value);
+
+  if (hover && valueArray.length === 1) {
+    const hoverRange = hover > valueRange[0] ? [valueRange[0], hover] : [hover, valueRange[0]];
     const hoverRangeClassNames = getRangeClassNames(hoverRange, dateRange, `${className}--hover`);
 
     classes.push(...hoverRangeClassNames);

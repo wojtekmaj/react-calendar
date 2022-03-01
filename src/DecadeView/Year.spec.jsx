@@ -3,8 +3,6 @@ import { mount } from 'enzyme';
 
 import Year from './Year';
 
-/* eslint-disable jsx-a11y/mouse-events-have-key-events */
-
 const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
   classes: ['react-calendar__tile'],
@@ -31,13 +29,7 @@ describe('Year', () => {
   });
 
   it('renders component without abbreviation', () => {
-    const component = mount(
-      <Year
-        {...tileProps}
-        date={new Date(2018, 0, 1)}
-        year={2018}
-      />,
-    );
+    const component = mount(<Year {...tileProps} date={new Date(2018, 0, 1)} year={2018} />);
 
     const abbr = component.find('abbr');
 
@@ -45,49 +37,33 @@ describe('Year', () => {
     expect(component.text()).toBe('2018');
   });
 
-  it('is disabled when date is before beginning of minDate\'s year', () => {
+  it("is disabled when date is before beginning of minDate's year", () => {
     const component = mount(
-      <Year
-        {...tileProps}
-        date={new Date(2018, 0, 1)}
-        minDate={new Date(2019, 0, 1)}
-      />,
+      <Year {...tileProps} date={new Date(2018, 0, 1)} minDate={new Date(2019, 0, 1)} />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
   });
 
-  it('is not disabled when date is after beginning of minDate\'s year', () => {
+  it("is not disabled when date is after beginning of minDate's year", () => {
     const component = mount(
-      <Year
-        {...tileProps}
-        date={new Date(2018, 0, 1)}
-        minDate={new Date(2018, 0, 1)}
-      />,
+      <Year {...tileProps} date={new Date(2018, 0, 1)} minDate={new Date(2018, 0, 1)} />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
   });
 
-  it('is disabled when date is after end of maxDate\'s year', () => {
+  it("is disabled when date is after end of maxDate's year", () => {
     const component = mount(
-      <Year
-        {...tileProps}
-        date={new Date(2018, 0, 1)}
-        maxDate={new Date(2017, 0, 1)}
-      />,
+      <Year {...tileProps} date={new Date(2018, 0, 1)} maxDate={new Date(2017, 0, 1)} />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
   });
 
-  it('is not disabled when date is before end of maxDate\'s year', () => {
+  it("is not disabled when date is before end of maxDate's year", () => {
     const component = mount(
-      <Year
-        {...tileProps}
-        date={new Date(2018, 0, 1)}
-        maxDate={new Date(2018, 0, 1)}
-      />,
+      <Year {...tileProps} date={new Date(2018, 0, 1)} maxDate={new Date(2018, 0, 1)} />,
     );
 
     expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
@@ -97,13 +73,7 @@ describe('Year', () => {
     const date = new Date(2018, 0, 1);
     const onClick = jest.fn();
 
-    const component = mount(
-      <Year
-        {...tileProps}
-        date={date}
-        onClick={onClick}
-      />,
-    );
+    const component = mount(<Year {...tileProps} date={date} onClick={onClick} />);
 
     component.find('.react-calendar__tile').simulate('click');
 
@@ -115,13 +85,7 @@ describe('Year', () => {
     const date = new Date(2018, 0, 1);
     const onMouseOver = jest.fn();
 
-    const component = mount(
-      <Year
-        {...tileProps}
-        date={date}
-        onMouseOver={onMouseOver}
-      />,
-    );
+    const component = mount(<Year {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
     component.find('.react-calendar__tile').simulate('mouseOver');
 
@@ -133,13 +97,7 @@ describe('Year', () => {
     const date = new Date(2018, 0, 1);
     const onMouseOver = jest.fn();
 
-    const component = mount(
-      <Year
-        {...tileProps}
-        date={date}
-        onMouseOver={onMouseOver}
-      />,
-    );
+    const component = mount(<Year {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
     component.find('.react-calendar__tile').simulate('focus');
 
@@ -148,12 +106,7 @@ describe('Year', () => {
   });
 
   it('renders tileContent properly', () => {
-    const component = mount(
-      <Year
-        {...tileProps}
-        tileContent={<div className="testContent" />}
-      />,
-    );
+    const component = mount(<Year {...tileProps} tileContent={<div className="testContent" />} />);
 
     const testContent = component.find('.testContent');
 
@@ -165,13 +118,7 @@ describe('Year', () => {
     const tileContent = jest.fn();
     tileContent.mockReturnValue(<div className="testContent" />);
 
-    const component = mount(
-      <Year
-        {...tileProps}
-        date={date}
-        tileContent={tileContent}
-      />,
-    );
+    const component = mount(<Year {...tileProps} date={date} tileContent={tileContent} />);
 
     const testContent = component.find('.testContent');
 
@@ -191,12 +138,7 @@ describe('Year', () => {
     formatYear.mockReturnValue('Mock format');
 
     const component = mount(
-      <Year
-        {...tileProps}
-        date={date}
-        formatYear={formatYear}
-        locale={locale}
-      />,
+      <Year {...tileProps} date={date} formatYear={formatYear} locale={locale} />,
     );
 
     const tile = component.find('Tile');

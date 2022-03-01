@@ -55,11 +55,7 @@ describe('WeekNumbers', () => {
 
   it('renders proper weekNumbers for a year that starts in week 1 (US)', () => {
     const component = mount(
-      <WeekNumbers
-        {...defaultProps}
-        activeStartDate={new Date(2017, 0, 1)}
-        calendarType="US"
-      />,
+      <WeekNumbers {...defaultProps} activeStartDate={new Date(2017, 0, 1)} calendarType="US" />,
     );
 
     const weekNumbers = component.find('WeekNumber');
@@ -86,12 +82,7 @@ describe('WeekNumbers', () => {
   });
 
   it('renders static divs as children when not given onClickWeekNumber', () => {
-    const component = mount(
-      <WeekNumbers
-        {...defaultProps}
-        calendarType="ISO 8601"
-      />,
-    );
+    const component = mount(<WeekNumbers {...defaultProps} calendarType="ISO 8601" />);
 
     const children = component.find('div.react-calendar__tile');
 
@@ -100,11 +91,7 @@ describe('WeekNumbers', () => {
 
   it('renders buttons as children when given onClickWeekNumber', () => {
     const component = mount(
-      <WeekNumbers
-        {...defaultProps}
-        calendarType="ISO 8601"
-        onClickWeekNumber={jest.fn()}
-      />,
+      <WeekNumbers {...defaultProps} calendarType="ISO 8601" onClickWeekNumber={jest.fn()} />,
     );
 
     const children = component.find('button.react-calendar__tile');
@@ -131,11 +118,7 @@ describe('WeekNumbers', () => {
   it('calls onClickWeekNumber function with proper arguments when clicked a week number (US)', () => {
     const onClickWeekNumber = jest.fn();
     const component = mount(
-      <WeekNumbers
-        {...defaultProps}
-        calendarType="US"
-        onClickWeekNumber={onClickWeekNumber}
-      />,
+      <WeekNumbers {...defaultProps} calendarType="US" onClickWeekNumber={onClickWeekNumber} />,
     );
 
     const children = component.find('button.react-calendar__tile');

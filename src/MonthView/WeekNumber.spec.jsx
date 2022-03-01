@@ -10,9 +10,7 @@ describe('<WeekNumber /> component', () => {
   };
 
   it('renders div by default', () => {
-    const component = shallow(
-      <WeekNumber {...defaultProps} />,
-    );
+    const component = shallow(<WeekNumber {...defaultProps} />);
 
     expect(component.find('div')).toHaveLength(1);
   });
@@ -21,10 +19,7 @@ describe('<WeekNumber /> component', () => {
     const onClickWeekNumber = () => {};
 
     const component = shallow(
-      <WeekNumber
-        {...defaultProps}
-        onClickWeekNumber={onClickWeekNumber}
-      />,
+      <WeekNumber {...defaultProps} onClickWeekNumber={onClickWeekNumber} />,
     );
 
     expect(component.find('button')).toHaveLength(1);
@@ -33,12 +28,7 @@ describe('<WeekNumber /> component', () => {
   it('renders weekNumber properly', () => {
     const weekNumber = '42';
 
-    const component = shallow(
-      <WeekNumber
-        {...defaultProps}
-        weekNumber={weekNumber}
-      />,
-    );
+    const component = shallow(<WeekNumber {...defaultProps} weekNumber={weekNumber} />);
 
     expect(component.text()).toBe(weekNumber);
   });

@@ -1,17 +1,12 @@
-
 body {
   margin: 0;
   font-family: Segoe UI, Tahoma, sans-serif;
 }
 
 .Test {
-  input, button {
-    font: inherit;
-  }
-
   header {
     background-color: rgb(50, 54, 57);
-    box-shadow: 0 0 8px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
     padding: 20px;
     color: white;
 
@@ -42,6 +37,11 @@ body {
       flex-wrap: wrap;
       margin: 0;
 
+      input,
+      button {
+        font: inherit;
+      }
+
       fieldset {
         border: 1px solid black;
         flex-grow: 1;
@@ -65,14 +65,15 @@ body {
           }
         }
 
-        input[type="checkbox"] + label,
-        input[type="radio"] + label {
+        input[type='checkbox'] + label,
+        input[type='radio'] + label {
           font-weight: normal;
           display: inline-block;
           margin: 0;
         }
 
-        form, div {
+        form,
+        div {
           &:not(:first-child) {
             margin-top: 1em;
           }
@@ -96,11 +97,12 @@ body {
         margin: 0 auto;
 
         &__tile {
-          min-height: 70px; // Custom content used
+          min-height: 58px; // Custom content used
 
           p {
             margin: 0;
             line-height: 0.75;
+
             small {
               font-size: 0.6em;
               text-transform: uppercase;
