@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import YearView from './YearView';
 
@@ -12,26 +12,27 @@ describe('YearView', () => {
 
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2017, 0, 1);
-    const component = mount(
+
+    const { container } = render(
       <YearView {...defaultProps} activeStartDate={activeStartDate} showNeighboringMonth={false} />,
     );
 
-    const firstDayTile = component.find('.react-calendar__tile').first();
-    const firstDayTileTimeAbbr = firstDayTile.find('abbr').prop('aria-label');
+    const firstDayTile = container.querySelector('.react-calendar__tile');
+    const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
-    expect(firstDayTileTimeAbbr).toBe(format(activeStartDate));
+    expect(firstDayTileTimeAbbr).toHaveAccessibleName(format(activeStartDate));
   });
 
   it('applies tileClassName to its tiles when given a string', () => {
     const tileClassName = 'testClassName';
-    const component = mount(
+
+    const { container } = render(
       <YearView {...defaultProps} showNeighboringMonth={false} tileClassName={tileClassName} />,
     );
 
-    const firstDayTile = component.find('.react-calendar__tile').first();
-    const firstDayTileClassName = firstDayTile.prop('className');
+    const firstDayTile = container.querySelector('.react-calendar__tile');
 
-    expect(firstDayTileClassName.includes(tileClassName)).toBe(true);
+    expect(firstDayTile).toHaveClass(tileClassName);
   });
 
   it('applies tileClassName to its tiles conditionally when given a function that returns a string', () => {
@@ -43,7 +44,8 @@ describe('YearView', () => {
 
       return null;
     };
-    const component = mount(
+
+    const { container } = render(
       <YearView
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -52,29 +54,24 @@ describe('YearView', () => {
       />,
     );
 
-    const tiles = component.find('.react-calendar__tile');
+    const tiles = container.querySelectorAll('.react-calendar__tile');
+    const [firstDayTile, secondDayTile] = tiles;
 
-    const firstDayTile = tiles.first();
-    const firstDayTileClassName = firstDayTile.prop('className');
-    const secondDayTile = tiles.at(1);
-    const secondDayTileClassName = secondDayTile.prop('className');
-
-    expect(firstDayTileClassName.includes('firstDayOfTheMonth')).toBe(true);
-    expect(secondDayTileClassName.includes('firstDayOfTheMonth')).toBe(false);
+    expect(firstDayTile).toHaveClass('firstDayOfTheMonth');
+    expect(secondDayTile).not.toHaveClass('firstDayOfTheMonth');
   });
 
   it('renders tileContent in its tiles when given a node', () => {
     const tileContent = <div className="testContent" />;
-    const component = mount(
+
+    const { container } = render(
       <YearView {...defaultProps} showNeighboringMonth={false} tileContent={tileContent} />,
     );
 
-    const tiles = component.find('.react-calendar__tile');
+    const firstDayTile = container.querySelector('.react-calendar__tile');
+    const firstDayTileContent = firstDayTile.querySelector('.testContent');
 
-    const firstDayTile = tiles.first();
-    const firstDayTileContent = firstDayTile.find('.testContent');
-
-    expect(firstDayTileContent).toHaveLength(1);
+    expect(firstDayTileContent).toBeInTheDocument();
   });
 
   it('renders tileContent in its tiles conditionally when given a function that returns a node', () => {
@@ -86,7 +83,8 @@ describe('YearView', () => {
 
       return null;
     };
-    const component = mount(
+
+    const { container } = render(
       <YearView
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -95,32 +93,21 @@ describe('YearView', () => {
       />,
     );
 
-    const tiles = component.find('.react-calendar__tile');
+    const tiles = container.querySelectorAll('.react-calendar__tile');
+    const [firstDayTile, secondDayTile] = tiles;
 
-    const firstDayTile = tiles.first();
-    const firstDayTileContent = firstDayTile.find('.testContent');
-    const secondDayTile = tiles.at(1);
-    const secondDayTileContent = secondDayTile.find('.testContent');
+    const firstDayTileContent = firstDayTile.querySelector('.testContent');
+    const secondDayTileContent = secondDayTile.querySelector('.testContent');
 
-    expect(firstDayTileContent).toHaveLength(1);
-    expect(secondDayTileContent).toHaveLength(0);
+    expect(firstDayTileContent).toBeInTheDocument();
+    expect(secondDayTileContent).not.toBeInTheDocument();
   });
 
   it('displays year view with custom month formatting', () => {
-    const component = mount(<YearView {...defaultProps} formatMonth={() => 'Month'} />);
+    const { container } = render(<YearView {...defaultProps} formatMonth={() => 'Month'} />);
 
-    const month = component.find('.react-calendar__year-view__months__month').first();
+    const month = container.querySelector('.react-calendar__year-view__months__month');
 
-    expect(month.text()).toBe('Month');
-  });
-
-  it('passes formatMonth flag to Days component', () => {
-    const formatMonth = () => 'Month';
-
-    const component = shallow(<YearView {...defaultProps} formatMonth={formatMonth} />);
-
-    const months = component.find('Months');
-
-    expect(months.prop('formatMonth')).toBe(formatMonth);
+    expect(month).toHaveTextContent('Month');
   });
 });

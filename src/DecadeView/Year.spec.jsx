@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { fireEvent, render } from '@testing-library/react';
 
 import Year from './Year';
 
@@ -12,7 +12,7 @@ const tileProps = {
 
 describe('Year', () => {
   it('applies given classNames properly', () => {
-    const component = mount(
+    const { container } = render(
       <Year
         {...tileProps}
         classes={['react-calendar__tile', 'react-calendar__tile--flag']}
@@ -20,62 +20,70 @@ describe('Year', () => {
       />,
     );
 
-    const wrapperClassName = component.find('.react-calendar__tile').prop('className');
+    const wrapper = container.querySelector('.react-calendar__tile');
 
-    expect(wrapperClassName.includes('react-calendar__tile')).toBe(true);
-    expect(wrapperClassName.includes('react-calendar__tile--flag')).toBe(true);
-    expect(wrapperClassName.includes('react-calendar__decade-view__years__year')).toBe(true);
-    expect(wrapperClassName.includes('testFunctionClassName')).toBe(true);
+    expect(wrapper).toHaveClass('react-calendar__tile');
+    expect(wrapper).toHaveClass('react-calendar__tile--flag');
+    expect(wrapper).toHaveClass('react-calendar__decade-view__years__year');
+    expect(wrapper).toHaveClass('testFunctionClassName');
   });
 
   it('renders component without abbreviation', () => {
-    const component = mount(<Year {...tileProps} date={new Date(2018, 0, 1)} year={2018} />);
+    const { container } = render(<Year {...tileProps} date={new Date(2018, 0, 1)} year={2018} />);
 
-    const abbr = component.find('abbr');
+    const abbr = container.querySelector('abbr');
 
-    expect(abbr).toHaveLength(0);
-    expect(component.text()).toBe('2018');
+    expect(abbr).not.toBeInTheDocument();
+    expect(container).toHaveTextContent('2018');
   });
 
   it("is disabled when date is before beginning of minDate's year", () => {
-    const component = mount(
+    const { container } = render(
       <Year {...tileProps} date={new Date(2018, 0, 1)} minDate={new Date(2019, 0, 1)} />,
     );
 
-    expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
+    const tile = container.querySelector('.react-calendar__tile');
+
+    expect(tile).toBeDisabled();
   });
 
   it("is not disabled when date is after beginning of minDate's year", () => {
-    const component = mount(
+    const { container } = render(
       <Year {...tileProps} date={new Date(2018, 0, 1)} minDate={new Date(2018, 0, 1)} />,
     );
 
-    expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
+    const tile = container.querySelector('.react-calendar__tile');
+
+    expect(tile).toBeEnabled();
   });
 
   it("is disabled when date is after end of maxDate's year", () => {
-    const component = mount(
+    const { container } = render(
       <Year {...tileProps} date={new Date(2018, 0, 1)} maxDate={new Date(2017, 0, 1)} />,
     );
 
-    expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
+    const tile = container.querySelector('.react-calendar__tile');
+
+    expect(tile).toBeDisabled();
   });
 
   it("is not disabled when date is before end of maxDate's year", () => {
-    const component = mount(
+    const { container } = render(
       <Year {...tileProps} date={new Date(2018, 0, 1)} maxDate={new Date(2018, 0, 1)} />,
     );
 
-    expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
+    const tile = container.querySelector('.react-calendar__tile');
+
+    expect(tile).toBeEnabled();
   });
 
   it('calls onClick callback when clicked and sends proper date as an argument', () => {
     const date = new Date(2018, 0, 1);
     const onClick = jest.fn();
 
-    const component = mount(<Year {...tileProps} date={date} onClick={onClick} />);
+    const { container } = render(<Year {...tileProps} date={date} onClick={onClick} />);
 
-    component.find('.react-calendar__tile').simulate('click');
+    fireEvent.click(container.querySelector('.react-calendar__tile'));
 
     expect(onClick).toHaveBeenCalled();
     expect(onClick).toHaveBeenCalledWith(date, expect.any(Object));
@@ -85,9 +93,10 @@ describe('Year', () => {
     const date = new Date(2018, 0, 1);
     const onMouseOver = jest.fn();
 
-    const component = mount(<Year {...tileProps} date={date} onMouseOver={onMouseOver} />);
+    const { container } = render(<Year {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
-    component.find('.react-calendar__tile').simulate('mouseOver');
+    const tile = container.querySelector('.react-calendar__tile');
+    fireEvent.mouseOver(tile);
 
     expect(onMouseOver).toHaveBeenCalled();
     expect(onMouseOver).toHaveBeenCalledWith(date);
@@ -97,20 +106,23 @@ describe('Year', () => {
     const date = new Date(2018, 0, 1);
     const onMouseOver = jest.fn();
 
-    const component = mount(<Year {...tileProps} date={date} onMouseOver={onMouseOver} />);
+    const { container } = render(<Year {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
-    component.find('.react-calendar__tile').simulate('focus');
+    const tile = container.querySelector('.react-calendar__tile');
+    fireEvent.focus(tile);
 
     expect(onMouseOver).toHaveBeenCalled();
     expect(onMouseOver).toHaveBeenCalledWith(date);
   });
 
   it('renders tileContent properly', () => {
-    const component = mount(<Year {...tileProps} tileContent={<div className="testContent" />} />);
+    const { container } = render(
+      <Year {...tileProps} tileContent={<div className="testContent" />} />,
+    );
 
-    const testContent = component.find('.testContent');
+    const testContent = container.querySelector('.testContent');
 
-    expect(testContent).toHaveLength(1);
+    expect(testContent).toBeInTheDocument();
   });
 
   it('renders tileContent function result properly and sends proper arguments to it', () => {
@@ -118,9 +130,9 @@ describe('Year', () => {
     const tileContent = jest.fn();
     tileContent.mockReturnValue(<div className="testContent" />);
 
-    const component = mount(<Year {...tileProps} date={date} tileContent={tileContent} />);
+    const { container } = render(<Year {...tileProps} date={date} tileContent={tileContent} />);
 
-    const testContent = component.find('.testContent');
+    const testContent = container.querySelector('.testContent');
 
     expect(tileContent).toHaveBeenCalled();
     expect(tileContent).toHaveBeenCalledWith({
@@ -128,7 +140,7 @@ describe('Year', () => {
       date,
       view: 'decade',
     });
-    expect(testContent).toHaveLength(1);
+    expect(testContent).toBeInTheDocument();
   });
 
   it('uses formatYear if given', () => {
@@ -137,14 +149,14 @@ describe('Year', () => {
     const formatYear = jest.fn();
     formatYear.mockReturnValue('Mock format');
 
-    const component = mount(
+    const { container } = render(
       <Year {...tileProps} date={date} formatYear={formatYear} locale={locale} />,
     );
 
-    const tile = component.find('Tile');
+    const tile = container.querySelector('.react-calendar__tile');
 
     expect(formatYear).toHaveBeenCalled();
     expect(formatYear).toHaveBeenCalledWith(locale, date);
-    expect(tile.text()).toBe('Mock format');
+    expect(tile).toHaveTextContent('Mock format');
   });
 });

@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import Flex from './Flex';
 
 describe('Flex', () => {
   it('styles itself properly with wrap flag set to false', () => {
-    const noWrapComponent = shallow(
+    const { container } = render(
       <Flex count={3} wrap={false}>
         <div>Hey</div>
         <div>Hi</div>
@@ -13,12 +13,14 @@ describe('Flex', () => {
       </Flex>,
     );
 
-    expect(noWrapComponent.prop('style').display).toBe('flex');
-    expect(noWrapComponent.prop('style').flexWrap).toBe('no-wrap');
+    const wrapper = container.firstChild;
+
+    expect(wrapper).toHaveStyle('display: flex');
+    expect(wrapper).toHaveStyle('flex-wrap: no-wrap');
   });
 
   it('styles itself properly with wrap flag set to true', () => {
-    const wrapComponent = shallow(
+    const { container } = render(
       <Flex count={3} wrap>
         <div>Hey</div>
         <div>Hi</div>
@@ -26,12 +28,14 @@ describe('Flex', () => {
       </Flex>,
     );
 
-    expect(wrapComponent.prop('style').display).toBe('flex');
-    expect(wrapComponent.prop('style').flexWrap).toBe('wrap');
+    const wrapper = container.firstChild;
+
+    expect(wrapper).toHaveStyle('display: flex');
+    expect(wrapper).toHaveStyle('flex-wrap: wrap');
   });
 
   it('renders all given children', () => {
-    const component = shallow(
+    const { container } = render(
       <Flex count={3}>
         <div>Hey</div>
         <div>Hi</div>
@@ -39,27 +43,25 @@ describe('Flex', () => {
       </Flex>,
     );
 
-    const children = component.children();
+    const children = [...container.firstChild.children];
 
     expect(children).toHaveLength(3);
-    expect(children.at(0).text()).toBe('Hey');
-    expect(children.at(1).text()).toBe('Hi');
-    expect(children.at(2).text()).toBe('Hello');
+    expect(children[0]).toHaveTextContent('Hey');
+    expect(children[1]).toHaveTextContent('Hi');
+    expect(children[2]).toHaveTextContent('Hello');
   });
 
   it('properly sizes and positions all the elements', () => {
-    const component = shallow(
+    const { container } = render(
       <Flex count={3} offset={1}>
         <div>Hey</div>
         <div>Hi</div>
       </Flex>,
     );
 
-    const children = component.children();
+    const children = [...container.firstChild.children];
 
-    children.forEach((child) =>
-      expect(parseFloat(child.prop('style').flexBasis)).toBeCloseTo(33.33),
-    );
-    expect(parseFloat(children.first().prop('style').marginLeft)).toBeCloseTo(33.33);
+    children.forEach((child) => expect(child).toHaveStyle('flex-basis: 33.333333333333336%'));
+    expect(children[0]).toHaveStyle('margin-left: 33.333333333333336%');
   });
 });

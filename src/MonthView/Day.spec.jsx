@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { fireEvent, render } from '@testing-library/react';
 
 import Day from './Day';
 
@@ -12,7 +12,7 @@ const tileProps = {
 
 describe('Day', () => {
   it('applies given classNames properly', () => {
-    const component = mount(
+    const { container } = render(
       <Day
         {...tileProps}
         classes={['react-calendar__tile', 'react-calendar__tile--flag']}
@@ -20,86 +20,92 @@ describe('Day', () => {
       />,
     );
 
-    const wrapperClassName = component.find('.react-calendar__tile').prop('className');
+    const wrapper = container.querySelector('.react-calendar__tile');
 
-    expect(wrapperClassName.includes('react-calendar__tile')).toBe(true);
-    expect(wrapperClassName.includes('react-calendar__tile--flag')).toBe(true);
-    expect(wrapperClassName.includes('react-calendar__month-view__days__day')).toBe(true);
-    expect(wrapperClassName.includes('testFunctionClassName')).toBe(true);
+    expect(wrapper).toHaveClass('react-calendar__tile');
+    expect(wrapper).toHaveClass('react-calendar__tile--flag');
+    expect(wrapper).toHaveClass('react-calendar__month-view__days__day');
+    expect(wrapper).toHaveClass('testFunctionClassName');
   });
 
   it('applies additional classNames for weekends', () => {
-    const component = mount(
+    const { container } = render(
       <Day
         {...tileProps}
         date={new Date(2018, 0, 6)} // Saturday
       />,
     );
 
-    const wrapperClassName = component.find('.react-calendar__tile').prop('className');
+    const wrapper = container.querySelector('.react-calendar__tile');
 
-    expect(wrapperClassName.includes('react-calendar__month-view__days__day--weekend')).toBe(true);
+    expect(wrapper).toHaveClass('react-calendar__month-view__days__day--weekend');
   });
 
   it('applies additional classNames for neighboring months', () => {
-    const component = mount(<Day {...tileProps} date={new Date(2018, 1, 2)} />);
+    const { container } = render(<Day {...tileProps} date={new Date(2018, 1, 2)} />);
 
-    const wrapperClassName = component.find('.react-calendar__tile').prop('className');
+    const wrapper = container.querySelector('.react-calendar__tile');
 
-    expect(
-      wrapperClassName.includes('react-calendar__month-view__days__day--neighboringMonth'),
-    ).toBe(true);
+    expect(wrapper).toHaveClass('react-calendar__month-view__days__day--neighboringMonth');
   });
 
   it('renders component with proper abbreviation', () => {
-    const component = mount(<Day {...tileProps} date={new Date(2018, 0, 1)} />);
+    const { container } = render(<Day {...tileProps} date={new Date(2018, 0, 1)} />);
 
-    const abbr = component.find('abbr');
+    const abbr = container.querySelector('abbr');
 
-    expect(abbr).toHaveLength(1);
-    expect(abbr.prop('aria-label')).toBe('January 1, 2018');
-    expect(component.text()).toBe('1');
+    expect(abbr).toBeInTheDocument();
+    expect(abbr).toHaveAccessibleName('January 1, 2018');
+    expect(container).toHaveTextContent('1');
   });
 
   it("is disabled when date is before beginning of minDate's day", () => {
-    const component = mount(
+    const { container } = render(
       <Day {...tileProps} date={new Date(2018, 0, 1)} minDate={new Date(2018, 0, 2)} />,
     );
 
-    expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
+    const tile = container.querySelector('.react-calendar__tile');
+
+    expect(tile).toBeDisabled();
   });
 
   it("is not disabled when date is after beginning of minDate's day", () => {
-    const component = mount(
+    const { container } = render(
       <Day {...tileProps} date={new Date(2018, 0, 1)} minDate={new Date(2018, 0, 1)} />,
     );
 
-    expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
+    const tile = container.querySelector('.react-calendar__tile');
+
+    expect(tile).toBeEnabled();
   });
 
   it("is disabled when date is after end of maxDate's day", () => {
-    const component = mount(
+    const { container } = render(
       <Day {...tileProps} date={new Date(2018, 0, 2)} maxDate={new Date(2018, 0, 1)} />,
     );
 
-    expect(component.find('.react-calendar__tile').prop('disabled')).toBeTruthy();
+    const tile = container.querySelector('.react-calendar__tile');
+
+    expect(tile).toBeDisabled();
   });
 
   it("is not disabled when date is before end of maxDate's day", () => {
-    const component = mount(
+    const { container } = render(
       <Day {...tileProps} date={new Date(2018, 0, 1)} maxDate={new Date(2018, 0, 1)} />,
     );
 
-    expect(component.find('.react-calendar__tile').prop('disabled')).toBeFalsy();
+    const tile = container.querySelector('.react-calendar__tile');
+
+    expect(tile).toBeEnabled();
   });
 
   it('calls onClick callback when clicked and sends proper date as an argument', () => {
     const date = new Date(2018, 0, 1);
     const onClick = jest.fn();
 
-    const component = mount(<Day {...tileProps} date={date} onClick={onClick} />);
+    const { container } = render(<Day {...tileProps} date={date} onClick={onClick} />);
 
-    component.find('.react-calendar__tile').simulate('click');
+    fireEvent.click(container.querySelector('.react-calendar__tile'));
 
     expect(onClick).toHaveBeenCalled();
     expect(onClick).toHaveBeenCalledWith(date, expect.any(Object));
@@ -109,9 +115,10 @@ describe('Day', () => {
     const date = new Date(2018, 0, 1);
     const onMouseOver = jest.fn();
 
-    const component = mount(<Day {...tileProps} date={date} onMouseOver={onMouseOver} />);
+    const { container } = render(<Day {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
-    component.find('.react-calendar__tile').simulate('mouseOver');
+    const tile = container.querySelector('.react-calendar__tile');
+    fireEvent.mouseOver(tile);
 
     expect(onMouseOver).toHaveBeenCalled();
     expect(onMouseOver).toHaveBeenCalledWith(date);
@@ -121,20 +128,23 @@ describe('Day', () => {
     const date = new Date(2018, 0, 1);
     const onMouseOver = jest.fn();
 
-    const component = mount(<Day {...tileProps} date={date} onMouseOver={onMouseOver} />);
+    const { container } = render(<Day {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
-    component.find('.react-calendar__tile').simulate('focus');
+    const tile = container.querySelector('.react-calendar__tile');
+    fireEvent.focus(tile);
 
     expect(onMouseOver).toHaveBeenCalled();
     expect(onMouseOver).toHaveBeenCalledWith(date);
   });
 
   it('renders tileContent properly', () => {
-    const component = mount(<Day {...tileProps} tileContent={<div className="testContent" />} />);
+    const { container } = render(
+      <Day {...tileProps} tileContent={<div className="testContent" />} />,
+    );
 
-    const testContent = component.find('.testContent');
+    const testContent = container.querySelector('.testContent');
 
-    expect(testContent).toHaveLength(1);
+    expect(testContent).toBeInTheDocument();
   });
 
   it('renders tileContent function result properly and sends proper arguments to it', () => {
@@ -142,9 +152,9 @@ describe('Day', () => {
     const tileContent = jest.fn();
     tileContent.mockReturnValue(<div className="testContent" />);
 
-    const component = mount(<Day {...tileProps} date={date} tileContent={tileContent} />);
+    const { container } = render(<Day {...tileProps} date={date} tileContent={tileContent} />);
 
-    const testContent = component.find('.testContent');
+    const testContent = container.querySelector('.testContent');
 
     expect(tileContent).toHaveBeenCalled();
     expect(tileContent).toHaveBeenCalledWith({
@@ -152,7 +162,7 @@ describe('Day', () => {
       date,
       view: 'month',
     });
-    expect(testContent).toHaveLength(1);
+    expect(testContent).toBeInTheDocument();
   });
 
   it('uses formatDay if given', () => {
@@ -161,15 +171,15 @@ describe('Day', () => {
     const formatDay = jest.fn();
     formatDay.mockReturnValue('Mock format');
 
-    const component = mount(
+    const { container } = render(
       <Day {...tileProps} date={date} formatDay={formatDay} locale={locale} />,
     );
 
-    const tile = component.find('Tile');
+    const tile = container.querySelector('.react-calendar__tile');
 
     expect(formatDay).toHaveBeenCalled();
     expect(formatDay).toHaveBeenCalledWith(locale, date);
-    expect(tile.text()).toBe('Mock format');
+    expect(tile).toHaveTextContent('Mock format');
   });
 
   it('uses formatLongDate if given', () => {
@@ -178,14 +188,14 @@ describe('Day', () => {
     const formatLongDate = jest.fn();
     formatLongDate.mockReturnValue('Mock format');
 
-    const component = mount(
+    const { container } = render(
       <Day {...tileProps} date={date} formatLongDate={formatLongDate} locale={locale} />,
     );
 
-    const abbr = component.find('abbr');
+    const abbr = container.querySelector('abbr');
 
     expect(formatLongDate).toHaveBeenCalled();
     expect(formatLongDate).toHaveBeenCalledWith(locale, date);
-    expect(abbr.prop('aria-label')).toBe('Mock format');
+    expect(abbr).toHaveAccessibleName('Mock format');
   });
 });
