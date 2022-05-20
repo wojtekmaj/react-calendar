@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import Weekdays from './Weekdays';
 
@@ -9,35 +9,37 @@ describe('Weekdays', () => {
   };
 
   it('renders proper weekdays (ISO 8601)', () => {
-    const component = mount(<Weekdays {...defaultProps} calendarType="ISO 8601" />);
+    const { container } = render(<Weekdays {...defaultProps} calendarType="ISO 8601" />);
 
-    const weekdays = component.find('.react-calendar__month-view__weekdays__weekday');
-    const firstWeekday = weekdays.first();
-    const firstWeekdayAbbr = firstWeekday.find('abbr');
+    const weekdays = container.querySelectorAll('.react-calendar__month-view__weekdays__weekday');
+    const firstWeekday = weekdays[0];
+    const firstWeekdayAbbr = firstWeekday.querySelector('abbr');
 
     expect(weekdays).toHaveLength(7);
-    expect(firstWeekday.text()).toBe('Mon');
-    expect(firstWeekdayAbbr.prop('aria-label')).toBe('Monday');
+    expect(firstWeekday).toHaveTextContent('Mon');
+    expect(firstWeekdayAbbr).toHaveAccessibleName('Monday');
   });
 
   it('renders proper weekdays (US)', () => {
-    const component = mount(<Weekdays {...defaultProps} calendarType="US" />);
+    const { container } = render(<Weekdays {...defaultProps} calendarType="US" />);
 
-    const weekdays = component.find('.react-calendar__month-view__weekdays__weekday');
-    const firstWeekday = weekdays.first();
-    const firstWeekdayAbbr = firstWeekday.find('abbr');
+    const weekdays = container.querySelectorAll('.react-calendar__month-view__weekdays__weekday');
+    const firstWeekday = weekdays[0];
+    const firstWeekdayAbbr = firstWeekday.querySelector('abbr');
 
     expect(weekdays).toHaveLength(7);
-    expect(firstWeekday.text()).toBe('Sun');
-    expect(firstWeekdayAbbr.prop('aria-label')).toBe('Sunday');
+    expect(firstWeekday).toHaveTextContent('Sun');
+    expect(firstWeekdayAbbr).toHaveAccessibleName('Sunday');
   });
 
   it('renders weekdays with custom weekdays formatting', () => {
-    const component = mount(<Weekdays {...defaultProps} formatShortWeekday={() => 'Weekday'} />);
+    const { container } = render(
+      <Weekdays {...defaultProps} formatShortWeekday={() => 'Weekday'} />,
+    );
 
-    const weekdays = component.find('.react-calendar__month-view__weekdays__weekday');
-    const firstWeekday = weekdays.first();
+    const weekdays = container.querySelectorAll('.react-calendar__month-view__weekdays__weekday');
+    const firstWeekday = weekdays[0];
 
-    expect(firstWeekday.text()).toBe('Weekday');
+    expect(firstWeekday).toHaveTextContent('Weekday');
   });
 });
