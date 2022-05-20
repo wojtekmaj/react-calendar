@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import DecadeView from './DecadeView';
 
@@ -10,7 +10,8 @@ describe('DecadeView', () => {
 
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2011, 0, 1);
-    const component = mount(
+
+    const { container } = render(
       <DecadeView
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -18,21 +19,21 @@ describe('DecadeView', () => {
       />,
     );
 
-    const firstDayTile = component.find('.react-calendar__tile').first();
+    const firstDayTile = container.querySelector('.react-calendar__tile');
 
-    expect(firstDayTile.text()).toBe(`${activeStartDate.getFullYear()}`);
+    expect(firstDayTile).toHaveTextContent(`${activeStartDate.getFullYear()}`);
   });
 
   it('applies tileClassName to its tiles when given a string', () => {
     const tileClassName = 'testClassName';
-    const component = mount(
+
+    const { container } = render(
       <DecadeView {...defaultProps} showNeighboringMonth={false} tileClassName={tileClassName} />,
     );
 
-    const firstDayTile = component.find('.react-calendar__tile').first();
-    const firstDayTileClassName = firstDayTile.prop('className');
+    const firstDayTile = container.querySelector('.react-calendar__tile');
 
-    expect(firstDayTileClassName.includes(tileClassName)).toBe(true);
+    expect(firstDayTile).toHaveClass(tileClassName);
   });
 
   it('applies tileClassName to its tiles conditionally when given a function that returns a string', () => {
@@ -44,7 +45,8 @@ describe('DecadeView', () => {
 
       return null;
     };
-    const component = mount(
+
+    const { container } = render(
       <DecadeView
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -53,29 +55,24 @@ describe('DecadeView', () => {
       />,
     );
 
-    const tiles = component.find('.react-calendar__tile');
+    const tiles = container.querySelectorAll('.react-calendar__tile');
+    const [firstDayTile, secondDayTile] = tiles;
 
-    const firstDayTile = tiles.first();
-    const firstDayTileClassName = firstDayTile.prop('className');
-    const secondDayTile = tiles.at(1);
-    const secondDayTileClassName = secondDayTile.prop('className');
-
-    expect(firstDayTileClassName.includes('firstDayOfTheMonth')).toBe(true);
-    expect(secondDayTileClassName.includes('firstDayOfTheMonth')).toBe(false);
+    expect(firstDayTile).toHaveClass('firstDayOfTheMonth');
+    expect(secondDayTile).not.toHaveClass('firstDayOfTheMonth');
   });
 
   it('renders tileContent in its tiles when given a node', () => {
     const tileContent = <div className="testContent" />;
-    const component = mount(
+
+    const { container } = render(
       <DecadeView {...defaultProps} showNeighboringMonth={false} tileContent={tileContent} />,
     );
 
-    const tiles = component.find('.react-calendar__tile');
+    const firstDayTile = container.querySelector('.react-calendar__tile');
+    const firstDayTileContent = firstDayTile.querySelector('.testContent');
 
-    const firstDayTile = tiles.first();
-    const firstDayTileContent = firstDayTile.find('.testContent');
-
-    expect(firstDayTileContent).toHaveLength(1);
+    expect(firstDayTileContent).toBeInTheDocument();
   });
 
   it('renders tileContent in its tiles conditionally when given a function that returns a node', () => {
@@ -87,7 +84,8 @@ describe('DecadeView', () => {
 
       return null;
     };
-    const component = mount(
+
+    const { container } = render(
       <DecadeView
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -96,24 +94,23 @@ describe('DecadeView', () => {
       />,
     );
 
-    const tiles = component.find('.react-calendar__tile');
+    const tiles = container.querySelectorAll('.react-calendar__tile');
+    const [firstDayTile, secondDayTile] = tiles;
 
-    const firstDayTile = tiles.first();
-    const firstDayTileContent = firstDayTile.find('.testContent');
-    const secondDayTile = tiles.at(1);
-    const secondDayTileContent = secondDayTile.find('.testContent');
+    const firstDayTileContent = firstDayTile.querySelector('.testContent');
+    const secondDayTileContent = secondDayTile.querySelector('.testContent');
 
-    expect(firstDayTileContent).toHaveLength(1);
-    expect(secondDayTileContent).toHaveLength(0);
+    expect(firstDayTileContent).toBeInTheDocument();
+    expect(secondDayTileContent).not.toBeInTheDocument();
   });
 
-  it('passes formatYear flag to Years component', () => {
+  it('passes decade view with custom year formatting', () => {
     const formatYear = () => 'Year';
 
-    const component = shallow(<DecadeView {...defaultProps} formatYear={formatYear} />);
+    const { container } = render(<DecadeView {...defaultProps} formatYear={formatYear} />);
 
-    const years = component.find('Years');
+    const year = container.querySelector('.react-calendar__decade-view__years__year');
 
-    expect(years.prop('formatYear')).toBe(formatYear);
+    expect(year).toHaveTextContent('Year');
   });
 });
