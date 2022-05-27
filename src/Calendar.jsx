@@ -457,6 +457,7 @@ export default class Calendar extends Component {
       tileClassName,
       tileContent,
       tileDisabled,
+      withoutTileTabIndex,
     } = this.props;
     const { hover } = this;
 
@@ -479,6 +480,7 @@ export default class Calendar extends Component {
       tileDisabled,
       value,
       valueType,
+      withoutTileTabIndex,
     };
 
     switch (view) {
@@ -635,6 +637,7 @@ const isActiveStartDate = PropTypes.instanceOf(Date);
 const isLooseValue = PropTypes.oneOfType([PropTypes.string, isValue]);
 
 Calendar.propTypes = {
+  withoutTileTabIndex: PropTypes.bool,
   activeStartDate: isActiveStartDate,
   allowPartialRange: PropTypes.bool,
   calendarType: isCalendarType,
