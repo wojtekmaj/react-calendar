@@ -116,6 +116,9 @@ export const tileGroupProps = {
   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   value: isValue,
   valueType: PropTypes.string,
+  // Extra props
+  daysClassNames: PropTypes.object,
+  daysStyles: PropTypes.object,
 };
 
 export const tileProps = {
@@ -131,4 +134,7 @@ export const tileProps = {
   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   tileDisabled: PropTypes.func,
+  // Extra props
+  daysClassNames: PropTypes.object,
+  daysStyles: PropTypes.object,
 };

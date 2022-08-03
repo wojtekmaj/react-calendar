@@ -18,6 +18,25 @@ function getValue(nextProps, prop) {
   return typeof prop === 'function' ? prop({ activeStartDate, date, view }) : prop;
 }
 
+function formatDateToNumberShortcut(date) {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  return [(day > 9 ? '' : '0') + day, (month > 9 ? '' : '0') + month, date.getFullYear()].join('');
+}
+
+function getValueFromObjectByDate(object, date) {
+  if (!object || !date) {
+    return null;
+  }
+
+  if (object.hasOwnProperty(date)) {
+    return object[date];
+  }
+
+  return null;
+}
+
 export default class Tile extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { activeStartDate, tileClassName, tileContent } = nextProps;
@@ -64,12 +83,20 @@ export default class Tile extends Component {
       style,
       tileDisabled,
       view,
+      daysClassNames,
+      daysStyles,
     } = this.props;
     const { tileClassName, tileContent } = this.state;
 
+    const formattedDate = formatDateToNumberShortcut(date);
+
     return (
       <button
-        className={mergeClassNames(classes, tileClassName)}
+        className={mergeClassNames(
+          classes,
+          tileClassName,
+          getValueFromObjectByDate(daysClassNames, formattedDate),
+        )}
         disabled={
           (minDate && minDateTransform(minDate) > date) ||
           (maxDate && maxDateTransform(maxDate) < date) ||
@@ -78,7 +105,7 @@ export default class Tile extends Component {
         onClick={onClick && ((event) => onClick(date, event))}
         onFocus={onMouseOver && (() => onMouseOver(date))}
         onMouseOver={onMouseOver && (() => onMouseOver(date))}
-        style={style}
+        style={Object.assign({}, style, getValueFromObjectByDate(daysStyles, formattedDate))}
         type="button"
       >
         {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}

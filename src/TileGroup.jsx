@@ -58,4 +58,7 @@ TileGroup.propTypes = {
   offset: PropTypes.number,
   step: PropTypes.number,
   tile: PropTypes.func.isRequired,
+  // Extra props
+  daysClassNames: PropTypes.object,
+  daysStyles: PropTypes.object,
 };
