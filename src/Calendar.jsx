@@ -372,15 +372,18 @@ export default class Calendar extends Component {
   };
 
   onChange = (value, event) => {
-    const { selectRange } = this.props;
+    const { value: previousValue } = this;
+    const { goToRangeStartOnSelect, selectRange } = this.props;
 
     this.onClickTile(value, event);
+
+    const isFirstValueInRange = selectRange && !getIsSingleValue(previousValue);
 
     let nextValue;
     if (selectRange) {
       // Range selection turned on
-      const { value: previousValue, valueType } = this;
-      if (!getIsSingleValue(previousValue)) {
+      const { valueType } = this;
+      if (isFirstValueInRange) {
         // Value has 0 or 2 elements - either way we're starting a new array
         // First value
         nextValue = getBegin(valueType, value);
@@ -393,10 +396,18 @@ export default class Calendar extends Component {
       nextValue = this.getProcessedValue(value);
     }
 
-    const nextActiveStartDate = getActiveStartDate({
-      ...this.props,
-      value: nextValue,
-    });
+    const nextActiveStartDate =
+      // Range selection turned off
+      !selectRange ||
+      // Range selection turned on, first value
+      isFirstValueInRange ||
+      // Range selection turned on, second value, goToRangeStartOnSelect toggled on
+      goToRangeStartOnSelect
+        ? getActiveStartDate({
+            ...this.props,
+            value: nextValue,
+          })
+        : null;
 
     event.persist();
 
@@ -622,6 +633,7 @@ export default class Calendar extends Component {
 }
 
 Calendar.defaultProps = {
+  goToRangeStartOnSelect: true,
   maxDate: defaultMaxDate,
   maxDetail: 'month',
   minDate: defaultMinDate,
@@ -648,6 +660,7 @@ Calendar.propTypes = {
   formatMonthYear: PropTypes.func,
   formatShortWeekday: PropTypes.func,
   formatYear: PropTypes.func,
+  goToRangeStartOnSelect: PropTypes.bool,
   inputRef: isRef,
   locale: PropTypes.string,
   maxDate: isMaxDate,
