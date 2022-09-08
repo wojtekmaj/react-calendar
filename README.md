@@ -43,6 +43,10 @@ React-Calendar uses modern web technologies. That's why it's so fast, lightweigh
 
 If you need to support legacy browsers like Internet Explorer 10, you will need to use [Intl.js](https://github.com/andyearnshaw/Intl.js/) or another Intl polyfill along with React-Calendar.
 
+#### My locale isn't supported! What can I do?
+
+If your locale isn't supported, you can use [Intl.js](https://github.com/andyearnshaw/Intl.js/) or another Intl polyfill along with React-Calendar.
+
 ### Installation
 
 Add React-Calendar to your project by executing `npm install react-calendar` or `yarn add react-calendar`.
