@@ -19,6 +19,10 @@ module.exports = {
     filename: '[name].[chunkhash:8].js',
   },
   resolve: {
+    alias: {
+      react: require.resolve('react'),
+      'react-dom': require.resolve('react-dom'),
+    },
     extensions: ['.js', '.jsx'],
   },
   module: {
