@@ -20,7 +20,7 @@ function getValue(nextProps, prop) {
 
 export default class Tile extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { activeStartDate, tileClassName, tileContent } = nextProps;
+    const { activeStartDate, tileClassName, tileStyle, tileContent } = nextProps;
 
     const nextState = {};
 
@@ -30,6 +30,14 @@ export default class Tile extends Component {
     ) {
       nextState.tileClassName = getValue(nextProps, tileClassName);
       nextState.tileClassNameProps = tileClassName;
+    }
+
+    if (
+      tileStyle !== prevState.tileStyleProps ||
+      datesAreDifferent(activeStartDate, prevState.activeStartDateProps)
+    ) {
+      nextState.tileStyle = getValue(nextProps, tileStyle);
+      nextState.tileStyleProps = tileStyle;
     }
 
     if (
@@ -65,7 +73,8 @@ export default class Tile extends Component {
       tileDisabled,
       view,
     } = this.props;
-    const { tileClassName, tileContent } = this.state;
+    const { tileClassName, tileStyle, tileContent } = this.state;
+    const mergedStyles = Object.assign(style || {}, tileStyle || {});
 
     return (
       <button
@@ -78,7 +87,7 @@ export default class Tile extends Component {
         onClick={onClick && ((event) => onClick(date, event))}
         onFocus={onMouseOver && (() => onMouseOver(date))}
         onMouseOver={onMouseOver && (() => onMouseOver(date))}
-        style={style}
+        style={mergedStyles}
         type="button"
       >
         {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}

@@ -30,6 +30,15 @@ const tileClassName = ({ date, view }) => {
   }
 };
 
+const tileStyle = ({ date, view }) => {
+  switch (view) {
+    case 'month':
+      return date.getDay() === 0 || date.getDay() === 6 ? { background: 'red' } : null;
+    default:
+      return null;
+  }
+};
+
 const tileContent = ({ date, view }) => {
   switch (view) {
     case 'month':
@@ -134,6 +143,7 @@ export default function Test() {
     showNeighboringMonth,
     showWeekNumbers,
     tileClassName,
+    tileStyle,
     tileContent,
   };
 
