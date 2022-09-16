@@ -43,6 +43,19 @@ describe('<Tile /> component', () => {
     });
   });
 
+  it('passes style object to button properly', () => {
+    const style = {
+      background: 'red',
+      color: 'black',
+    };
+    const { container } = render(<Tile {...defaultProps} tileStyle={style} />);
+
+    const button = container.querySelector('button');
+
+    expect(button).toHaveStyle('background: red');
+    expect(button).toHaveStyle('color: black');
+  });
+
   it('renders children properly', () => {
     const children = 'Hello';
 

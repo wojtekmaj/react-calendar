@@ -466,6 +466,7 @@ export default class Calendar extends Component {
       minDate,
       selectRange,
       tileClassName,
+      tileStyle,
       tileContent,
       tileDisabled,
     } = this.props;
@@ -486,6 +487,7 @@ export default class Calendar extends Component {
       onClick,
       onMouseOver: selectRange ? onMouseOver : null,
       tileClassName,
+      tileStyle,
       tileContent,
       tileDisabled,
       value,
