@@ -3,6 +3,7 @@ import {
   formatMonth,
   formatMonthYear,
   formatShortWeekday,
+  formatWeekday,
   formatYear,
 } from './dateFormatter';
 
@@ -43,6 +44,16 @@ describe('formatShortWeekday', () => {
     const formattedDate = formatShortWeekday('en-US', date);
 
     expect(formattedDate).toBe('Wed');
+  });
+});
+
+describe('formatWeekday', () => {
+  it('returns proper weekday name', () => {
+    const date = new Date(2017, 1, 1);
+
+    const formattedDate = formatWeekday('en-US', date);
+
+    expect(formattedDate).toBe('Wednesday');
   });
 });
 
