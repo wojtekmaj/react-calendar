@@ -22,6 +22,7 @@ export default function MonthView(props) {
   const {
     calendarType = getCalendarTypeFromLocale(locale),
     formatShortWeekday,
+    formatWeekday,
     onClickWeekNumber,
     showWeekNumbers,
     ...childProps
@@ -32,6 +33,7 @@ export default function MonthView(props) {
       <Weekdays
         calendarType={calendarType}
         formatShortWeekday={formatShortWeekday}
+        formatWeekday={formatWeekday}
         locale={locale}
         onMouseLeave={onMouseLeave}
       />
@@ -87,6 +89,7 @@ MonthView.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType,
   formatShortWeekday: PropTypes.func,
+  formatWeekday: PropTypes.func,
   locale: PropTypes.string,
   onClickWeekNumber: PropTypes.func,
   onMouseLeave: PropTypes.func,

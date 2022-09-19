@@ -515,6 +515,7 @@ export default class Calendar extends Component {
           formatDay,
           formatLongDate,
           formatShortWeekday,
+          formatWeekday,
           onClickWeekNumber,
           showDoubleView,
           showFixedNumberOfWeeks,
@@ -529,6 +530,7 @@ export default class Calendar extends Component {
             formatDay={formatDay}
             formatLongDate={formatLongDate}
             formatShortWeekday={formatShortWeekday}
+            formatWeekday={formatWeekday}
             onClickWeekNumber={onClickWeekNumber}
             onMouseLeave={selectRange ? onMouseLeave : null}
             showFixedNumberOfWeeks={
@@ -659,6 +661,7 @@ Calendar.propTypes = {
   formatMonth: PropTypes.func,
   formatMonthYear: PropTypes.func,
   formatShortWeekday: PropTypes.func,
+  formatWeekday: PropTypes.func,
   formatYear: PropTypes.func,
   goToRangeStartOnSelect: PropTypes.bool,
   inputRef: isRef,

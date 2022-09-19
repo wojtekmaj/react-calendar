@@ -7,8 +7,8 @@ import Flex from '../Flex';
 
 import { getDayOfWeek, isWeekend } from '../shared/dates';
 import {
-  formatWeekday,
   formatShortWeekday as defaultFormatShortWeekday,
+  formatWeekday as defaultFormatWeekday,
 } from '../shared/dateFormatter';
 import { isCalendarType } from '../shared/propTypes';
 
@@ -19,6 +19,7 @@ export default function Weekdays(props) {
   const {
     calendarType,
     formatShortWeekday = defaultFormatShortWeekday,
+    formatWeekday = defaultFormatWeekday,
     locale,
     onMouseLeave,
   } = props;
@@ -64,6 +65,7 @@ export default function Weekdays(props) {
 Weekdays.propTypes = {
   calendarType: isCalendarType.isRequired,
   formatShortWeekday: PropTypes.func,
+  formatWeekday: PropTypes.func,
   locale: PropTypes.string,
   onMouseLeave: PropTypes.func,
 };

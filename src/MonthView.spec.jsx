@@ -151,7 +151,7 @@ describe('MonthView', () => {
   });
 
   it('passes formatShortWeekday to Weekdays component', () => {
-    const formatShortWeekday = () => 'Weekday';
+    const formatShortWeekday = () => 'Wkdy';
 
     const { container } = render(
       <MonthView {...defaultProps} formatShortWeekday={formatShortWeekday} />,
@@ -159,7 +159,18 @@ describe('MonthView', () => {
 
     const weekdays = container.querySelector('.react-calendar__month-view__weekdays');
 
-    expect(weekdays).toHaveTextContent('Weekday');
+    expect(weekdays).toHaveTextContent('Wkdy');
+  });
+
+  it('passes formatWeekday to Weekdays component', () => {
+    const formatWeekday = () => 'Weekday';
+
+    const { container } = render(<MonthView {...defaultProps} formatWeekday={formatWeekday} />);
+
+    const weekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
+    const abbr = weekday.querySelector('abbr');
+
+    expect(abbr).toHaveAccessibleName('Weekday');
   });
 
   it('passes calendarType to Days component', () => {

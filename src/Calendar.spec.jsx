@@ -894,13 +894,24 @@ describe('Calendar', () => {
   });
 
   it('passes formatShortWeekday to MonthView component', () => {
-    const formatShortWeekday = () => 'Weekday';
+    const formatShortWeekday = () => 'Wkdy';
 
     const { container } = render(<Calendar formatShortWeekday={formatShortWeekday} />);
 
     const monthView = container.querySelector('.react-calendar__month-view');
 
-    expect(monthView).toHaveTextContent('Weekday');
+    expect(monthView).toHaveTextContent('Wkdy');
+  });
+
+  it('passes formatWeekday to MonthView component', () => {
+    const formatWeekday = () => 'Weekday';
+
+    const { container } = render(<Calendar formatWeekday={formatWeekday} />);
+
+    const weekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
+    const abbr = weekday.querySelector('abbr');
+
+    expect(abbr).toHaveAccessibleName('Weekday');
   });
 
   it('passes formatMonth to YearView component', () => {
