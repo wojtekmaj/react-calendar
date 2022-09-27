@@ -2,7 +2,7 @@
   "name": "react-calendar",
   "version": "3.9.0",
   "description": "Ultimate calendar for your React app.",
-  "main": "dist/umd/index.js",
+  "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "source": "src/index.js",
   "sideEffects": [
@@ -10,10 +10,10 @@
     "*.less"
   ],
   "scripts": {
-    "build": "yarn build-js-all && yarn copy-styles && yarn build-styles",
-    "build-js-all": "yarn build-js-esm && yarn build-js-umd",
+    "build": "yarn build-js && yarn copy-styles && yarn build-styles",
+    "build-js": "yarn build-js-esm && yarn build-js-cjs",
     "build-js-esm": "BABEL_ENV=production-esm babel src -d dist/esm --ignore \"**/*.spec.js,**/*.spec.jsx\"",
-    "build-js-umd": "BABEL_ENV=production-umd babel src -d dist/umd --ignore \"**/*.spec.js,**/*.spec.jsx\"",
+    "build-js-cjs": "BABEL_ENV=production-cjs babel src -d dist/cjs --ignore \"**/*.spec.js,**/*.spec.jsx\"",
     "build-styles": "lessc ./dist/Calendar.less ./dist/Calendar.css",
     "clean": "rimraf dist",
     "copy-styles": "node ./copy-styles.js",
