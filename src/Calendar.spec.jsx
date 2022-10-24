@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { getMonthStart } from '@wojtekmaj/date-utils';
 
 import Calendar from './Calendar';
@@ -119,7 +119,9 @@ describe('Calendar', () => {
 
     render(<Calendar value={value} ref={instance} />);
 
-    instance.current.onChange(newValue, event);
+    act(() => {
+      instance.current.onChange(newValue, event);
+    });
 
     expect(instance.current.activeStartDate).toEqual(newActiveStartDate);
   });
@@ -356,8 +358,13 @@ describe('Calendar', () => {
 
       render(<Calendar ref={instance} />);
 
-      instance.current.setState({ view: 'month' });
-      instance.current.drillUp();
+      act(() => {
+        instance.current.setState({ view: 'month' });
+      });
+
+      act(() => {
+        instance.current.drillUp();
+      });
 
       expect(instance.current.view).toBe('year');
     });
@@ -375,7 +382,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.drillUp();
+      act(() => {
+        instance.current.drillUp();
+      });
 
       expect(onDrillUp).toHaveBeenCalledWith({
         action: 'drillUp',
@@ -392,8 +401,13 @@ describe('Calendar', () => {
         <Calendar activeStartDate={new Date(2017, 6, 1)} onDrillUp={onDrillUp} ref={instance} />,
       );
 
-      instance.current.setState({ view: 'month' });
-      instance.current.drillUp();
+      act(() => {
+        instance.current.setState({ view: 'month' });
+      });
+
+      act(() => {
+        instance.current.drillUp();
+      });
 
       expect(onDrillUp).toHaveBeenCalledWith({
         action: 'drillUp',
@@ -408,7 +422,9 @@ describe('Calendar', () => {
 
       render(<Calendar onDrillUp={onDrillUp} view="century" ref={instance} />);
 
-      instance.current.drillUp();
+      act(() => {
+        instance.current.drillUp();
+      });
 
       expect(onDrillUp).not.toHaveBeenCalled();
     });
@@ -420,8 +436,13 @@ describe('Calendar', () => {
 
       render(<Calendar ref={instance} />);
 
-      instance.current.setState({ view: 'century' });
-      instance.current.drillDown(new Date(2011, 0, 1));
+      act(() => {
+        instance.current.setState({ view: 'century' });
+      });
+
+      act(() => {
+        instance.current.drillDown(new Date(2011, 0, 1));
+      });
 
       expect(instance.current.view).toBe('decade');
     });
@@ -439,7 +460,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.drillDown(new Date(2011, 0, 1));
+      act(() => {
+        instance.current.drillDown(new Date(2011, 0, 1));
+      });
 
       expect(onDrillDown).toHaveBeenCalledWith({
         action: 'drillDown',
@@ -460,8 +483,13 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.setState({ view: 'century' });
-      instance.current.drillDown(new Date(2011, 0, 1));
+      act(() => {
+        instance.current.setState({ view: 'century' });
+      });
+
+      act(() => {
+        instance.current.drillDown(new Date(2011, 0, 1));
+      });
 
       expect(onDrillDown).toHaveBeenCalledWith({
         action: 'drillDown',
@@ -476,7 +504,9 @@ describe('Calendar', () => {
 
       render(<Calendar onDrillDown={onDrillDown} view="month" ref={instance} />);
 
-      instance.current.drillUp();
+      act(() => {
+        instance.current.drillUp();
+      });
 
       expect(onDrillDown).not.toHaveBeenCalled();
     });
@@ -488,7 +518,9 @@ describe('Calendar', () => {
 
       render(<Calendar ref={instance} />);
 
-      instance.current.setActiveStartDate(new Date(2019, 0, 1));
+      act(() => {
+        instance.current.setActiveStartDate(new Date(2019, 0, 1));
+      });
 
       expect(instance.current.activeStartDate).toEqual(new Date(2019, 0, 1));
     });
@@ -508,7 +540,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.setActiveStartDate(newActiveStartDate);
+      act(() => {
+        instance.current.setActiveStartDate(newActiveStartDate);
+      });
 
       expect(onActiveStartDateChange).toHaveBeenCalledWith({
         activeStartDate: newActiveStartDate,
@@ -534,7 +568,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.setActiveStartDate(newActiveStartDate);
+      act(() => {
+        instance.current.setActiveStartDate(newActiveStartDate);
+      });
 
       expect(onActiveStartDateChange).toHaveBeenCalledWith({
         activeStartDate: newActiveStartDate,
@@ -558,7 +594,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.setActiveStartDate(newActiveStartDate);
+      act(() => {
+        instance.current.setActiveStartDate(newActiveStartDate);
+      });
 
       expect(onActiveStartDateChange).not.toHaveBeenCalled();
     });
@@ -578,7 +616,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.setActiveStartDate(newActiveStartDate);
+      act(() => {
+        instance.current.setActiveStartDate(newActiveStartDate);
+      });
 
       expect(onActiveStartDateChange).not.toHaveBeenCalled();
     });
@@ -601,7 +641,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.setStateAndCallCallbacks({ view: newView });
+      act(() => {
+        instance.current.setStateAndCallCallbacks({ view: newView });
+      });
 
       expect(onViewChange).toHaveBeenCalledWith({
         activeStartDate,
@@ -610,7 +652,7 @@ describe('Calendar', () => {
       });
     });
 
-    it('calls onViewChange on view change', () => {
+    it('calls onViewChange on view change', async () => {
       const value = new Date(2019, 0, 15);
       const activeStartDate = new Date(2017, 0, 1);
       const view = 'year';
@@ -628,7 +670,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.setStateAndCallCallbacks({ view: newView });
+      act(() => {
+        instance.current.setStateAndCallCallbacks({ view: newView });
+      });
 
       expect(onViewChange).toHaveBeenCalledWith({
         activeStartDate,
@@ -645,7 +689,9 @@ describe('Calendar', () => {
 
       render(<Calendar onViewChange={onViewChange} view={view} ref={instance} />);
 
-      instance.current.setStateAndCallCallbacks({ view: newView });
+      act(() => {
+        instance.current.setStateAndCallCallbacks({ view: newView });
+      });
 
       expect(onViewChange).not.toHaveBeenCalled();
     });
@@ -658,7 +704,9 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} view="month" ref={instance} />);
 
-      instance.current.onChange(new Date(2017, 0, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2017, 0, 1), event);
+      });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1), event);
     });
@@ -669,7 +717,9 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} returnValue="start" view="month" ref={instance} />);
 
-      instance.current.onChange(new Date(2017, 0, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2017, 0, 1), event);
+      });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1), event);
     });
@@ -680,7 +730,9 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} returnValue="end" view="month" ref={instance} />);
 
-      instance.current.onChange(new Date(2017, 0, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2017, 0, 1), event);
+      });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 23, 59, 59, 999), event);
     });
@@ -691,7 +743,9 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} returnValue="range" view="month" ref={instance} />);
 
-      instance.current.onChange(new Date(2017, 0, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2017, 0, 1), event);
+      });
 
       expect(onChange).toHaveBeenCalledWith(
         [new Date(2017, 0, 1), new Date(2017, 0, 1, 23, 59, 59, 999)],
@@ -713,7 +767,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.onChange(new Date(2017, 0, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2017, 0, 1), event);
+      });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12), event);
     });
@@ -732,7 +788,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.onChange(new Date(2017, 0, 2), event);
+      act(() => {
+        instance.current.onChange(new Date(2017, 0, 2), event);
+      });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12), event);
     });
@@ -751,7 +809,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.onChange(new Date(2017, 0, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2017, 0, 1), event);
+      });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 2, 12), event);
     });
@@ -770,7 +830,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.onChange(new Date(2017, 0, 2), event);
+      act(() => {
+        instance.current.onChange(new Date(2017, 0, 2), event);
+      });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12), event);
     });
@@ -781,7 +843,9 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
 
-      instance.current.onChange(new Date(2018, 0, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2018, 0, 1), event);
+      });
 
       expect(onChange).not.toHaveBeenCalled();
     });
@@ -800,7 +864,9 @@ describe('Calendar', () => {
         />,
       );
 
-      instance.current.onChange(new Date(2018, 0, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2018, 0, 1), event);
+      });
 
       expect(onChange).not.toHaveBeenCalled();
     });
@@ -813,20 +879,27 @@ describe('Calendar', () => {
         <Calendar allowPartialRange onChange={onChange} selectRange view="month" ref={instance} />,
       );
 
-      instance.current.onChange(new Date(2018, 0, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2018, 0, 1), event);
+      });
 
       expect(onChange).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith([new Date(2018, 0, 1)], event);
     });
 
-    it('calls onChange function returning a range when selected two pieces of a range', () => {
+    it('calls onChange function returning a range when selected two pieces of a range', async () => {
       const onChange = jest.fn();
       const instance = createRef();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
 
-      instance.current.onChange(new Date(2018, 0, 1), event);
-      instance.current.onChange(new Date(2018, 6, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2018, 0, 1), event);
+      });
+
+      act(() => {
+        instance.current.onChange(new Date(2018, 6, 1), event);
+      });
 
       expect(onChange).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith(
@@ -835,14 +908,19 @@ describe('Calendar', () => {
       );
     });
 
-    it('calls onChange function returning a range when selected reversed two pieces of a range', () => {
+    it('calls onChange function returning a range when selected reversed two pieces of a range', async () => {
       const onChange = jest.fn();
       const instance = createRef();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
 
-      instance.current.onChange(new Date(2018, 6, 1), event);
-      instance.current.onChange(new Date(2018, 0, 1), event);
+      act(() => {
+        instance.current.onChange(new Date(2018, 6, 1), event);
+      });
+
+      act(() => {
+        instance.current.onChange(new Date(2018, 0, 1), event);
+      });
 
       expect(onChange).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith(
