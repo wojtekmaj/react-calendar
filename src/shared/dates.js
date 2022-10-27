@@ -327,3 +327,14 @@ export function isWeekend(date, calendarType = CALENDAR_TYPES.ISO_8601) {
       throw new Error('Unsupported calendar type.');
   }
 }
+
+/**
+ * Returns a boolean determining whether a given date is current day of the week.
+ *
+ * @param {Date} date Date.
+ */
+export const isCurrentDayOfWeek = (date) => {
+  const today = new Date(Date.now()).getDay();
+  const weekday = date.getDay();
+  return weekday === today;
+};
