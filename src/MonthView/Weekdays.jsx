@@ -5,7 +5,7 @@ import { getYear, getMonth, getMonthStart } from '@wojtekmaj/date-utils';
 
 import Flex from '../Flex';
 
-import { getDayOfWeek, isWeekend } from '../shared/dates';
+import { getDayOfWeek, isCurrentDayOfWeek, isWeekend } from '../shared/dates';
 import {
   formatShortWeekday as defaultFormatShortWeekday,
   formatWeekday as defaultFormatWeekday,
@@ -46,6 +46,7 @@ export default function Weekdays(props) {
         className={clsx(
           weekdayClassName,
           isWeekend(weekdayDate, calendarType) && `${weekdayClassName}--weekend`,
+          isCurrentDayOfWeek(weekdayDate) && `${weekdayClassName}--currentDayOfWeek`,
         )}
       >
         <abbr aria-label={abbr} title={abbr}>
