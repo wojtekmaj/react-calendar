@@ -3,7 +3,7 @@
 # React-Calendar
 
 <div align="center">
-  <img width="436" heigth="398" src="https://projects.wojtekmaj.pl/react-calendar/react-calendar.jpg">
+  <img width="436" height="398" src="https://projects.wojtekmaj.pl/react-calendar/react-calendar.jpg">
 </div>
 
 Ultimate calendar for your React app.
