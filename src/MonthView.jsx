@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import mergeClassNames from 'merge-class-names';
+import clsx from 'clsx';
 
 import Days from './MonthView/Days';
 import Weekdays from './MonthView/Weekdays';
@@ -63,7 +63,7 @@ export default function MonthView(props) {
   const className = 'react-calendar__month-view';
 
   return (
-    <div className={mergeClassNames(className, showWeekNumbers ? `${className}--weekNumbers` : '')}>
+    <div className={clsx(className, showWeekNumbers ? `${className}--weekNumbers` : '')}>
       <div
         style={{
           display: 'flex',
