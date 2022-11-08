@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import mergeClassNames from 'merge-class-names';
+import clsx from 'clsx';
 
 import { tileProps } from './shared/propTypes';
 
@@ -69,7 +69,7 @@ export default class Tile extends Component {
 
     return (
       <button
-        className={mergeClassNames(classes, tileClassName)}
+        className={clsx(classes, tileClassName)}
         disabled={
           (minDate && minDateTransform(minDate) > date) ||
           (maxDate && maxDateTransform(maxDate) < date) ||

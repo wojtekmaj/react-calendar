@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import mergeClassNames from 'merge-class-names';
+import clsx from 'clsx';
 import { getYear, getMonth, getMonthStart } from '@wojtekmaj/date-utils';
 
 import Flex from '../Flex';
@@ -43,7 +43,7 @@ export default function Weekdays(props) {
     weekdays.push(
       <div
         key={weekday}
-        className={mergeClassNames(
+        className={clsx(
           weekdayClassName,
           isWeekend(weekdayDate, calendarType) && `${weekdayClassName}--weekend`,
         )}

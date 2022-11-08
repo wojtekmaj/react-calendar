@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import mergeClassNames from 'merge-class-names';
+import clsx from 'clsx';
 
 import Navigation from './Calendar/Navigation';
 import CenturyView from './CenturyView';
@@ -612,7 +612,7 @@ export default class Calendar extends Component {
 
     return (
       <div
-        className={mergeClassNames(
+        className={clsx(
           baseClassName,
           selectRange && valueArray.length === 1 && `${baseClassName}--selectRange`,
           showDoubleView && `${baseClassName}--doubleView`,
