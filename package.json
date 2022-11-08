@@ -39,7 +39,7 @@
   "dependencies": {
     "@wojtekmaj/date-utils": "^1.0.2",
     "clsx": "^1.2.1",
-    "get-user-locale": "^1.2.0",
+    "get-user-locale": "^2.0.0",
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
