@@ -704,8 +704,10 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} view="month" ref={instance} />);
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2017, 0, 1), event);
+        onChangeInternal(new Date(2017, 0, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1), event);
@@ -717,8 +719,10 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} returnValue="start" view="month" ref={instance} />);
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2017, 0, 1), event);
+        onChangeInternal(new Date(2017, 0, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1), event);
@@ -730,8 +734,10 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} returnValue="end" view="month" ref={instance} />);
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2017, 0, 1), event);
+        onChangeInternal(new Date(2017, 0, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 23, 59, 59, 999), event);
@@ -743,8 +749,10 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} returnValue="range" view="month" ref={instance} />);
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2017, 0, 1), event);
+        onChangeInternal(new Date(2017, 0, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledWith(
@@ -767,8 +775,10 @@ describe('Calendar', () => {
         />,
       );
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2017, 0, 1), event);
+        onChangeInternal(new Date(2017, 0, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12), event);
@@ -788,8 +798,10 @@ describe('Calendar', () => {
         />,
       );
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2017, 0, 2), event);
+        onChangeInternal(new Date(2017, 0, 2), event);
       });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12), event);
@@ -809,8 +821,10 @@ describe('Calendar', () => {
         />,
       );
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2017, 0, 1), event);
+        onChangeInternal(new Date(2017, 0, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 2, 12), event);
@@ -830,8 +844,10 @@ describe('Calendar', () => {
         />,
       );
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2017, 0, 2), event);
+        onChangeInternal(new Date(2017, 0, 2), event);
       });
 
       expect(onChange).toHaveBeenCalledWith(new Date(2017, 0, 1, 12), event);
@@ -843,8 +859,10 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2018, 0, 1), event);
+        onChangeInternal(new Date(2018, 0, 1), event);
       });
 
       expect(onChange).not.toHaveBeenCalled();
@@ -864,8 +882,10 @@ describe('Calendar', () => {
         />,
       );
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2018, 0, 1), event);
+        onChangeInternal(new Date(2018, 0, 1), event);
       });
 
       expect(onChange).not.toHaveBeenCalled();
@@ -879,8 +899,10 @@ describe('Calendar', () => {
         <Calendar allowPartialRange onChange={onChange} selectRange view="month" ref={instance} />,
       );
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2018, 0, 1), event);
+        onChangeInternal(new Date(2018, 0, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledTimes(1);
@@ -893,12 +915,14 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2018, 0, 1), event);
+        onChangeInternal(new Date(2018, 0, 1), event);
       });
 
       act(() => {
-        instance.current.onChange(new Date(2018, 6, 1), event);
+        onChangeInternal(new Date(2018, 6, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledTimes(1);
@@ -914,12 +938,14 @@ describe('Calendar', () => {
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
 
+      const { onChange: onChangeInternal } = instance.current;
+
       act(() => {
-        instance.current.onChange(new Date(2018, 6, 1), event);
+        onChangeInternal(new Date(2018, 6, 1), event);
       });
 
       act(() => {
-        instance.current.onChange(new Date(2018, 0, 1), event);
+        onChangeInternal(new Date(2018, 0, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledTimes(1);
