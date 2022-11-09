@@ -3507,15 +3507,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-user-locale@npm:^1.4.0":
-  version: 1.5.1
-  resolution: "get-user-locale@npm:1.5.1"
-  dependencies:
-    lodash.memoize: ^4.1.1
-  checksum: 4ab9ae83264c8b4f376b7690578ee3b332808d40f49e500469d476b832d4fddcf8477b7a01b60a242fd232b5a2ae8f6b7620f731d67350e89fd17ddd91fc8a0e
-  languageName: node
-  linkType: hard
-
 "get-user-locale@npm:^2.0.0":
   version: 2.0.0
   resolution: "get-user-locale@npm:2.0.0"
@@ -5225,7 +5216,7 @@ __metadata:
     babel-loader: ^9.0.1
     css-loader: ^6.0.0
     eslint: ^8.26.0
-    get-user-locale: ^1.4.0
+    get-user-locale: ^2.0.0
     html-webpack-plugin: ^5.1.0
     less: ^4.0.0
     less-loader: ^11.0.0
