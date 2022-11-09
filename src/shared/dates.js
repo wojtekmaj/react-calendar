@@ -310,7 +310,16 @@ export function getDecadeLabel(locale, formatYear, date) {
 }
 
 /**
- * Returns a boolean determining whether a given date is on Saturday or Sunday.
+ * Returns a boolean determining whether a given date is the current day of the week.
+ *
+ * @param {Date} date Date.
+ */
+export function isCurrentDayOfWeek(date) {
+  return date.getDay() === new Date().getDay();
+}
+
+/**
+ * Returns a boolean determining whether a given date is a weekend day.
  *
  * @param {Date} date Date.
  */

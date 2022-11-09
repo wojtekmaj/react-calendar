@@ -149,6 +149,17 @@ body {
             }
           }
         }
+
+        &__month-view {
+          &__weekdays {
+            &__weekday {
+              &--current {
+                @bgcolor: lighten(rgb(220, 220, 0), 30%);
+                background: @bgcolor;
+              }
+            }
+          }
+        }
       }
 
       & > p {
