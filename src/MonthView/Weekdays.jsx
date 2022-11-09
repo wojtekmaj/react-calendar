@@ -45,8 +45,8 @@ export default function Weekdays(props) {
         key={weekday}
         className={clsx(
           weekdayClassName,
+          isCurrentDayOfWeek(weekdayDate) && `${weekdayClassName}--current`,
           isWeekend(weekdayDate, calendarType) && `${weekdayClassName}--weekend`,
-          isCurrentDayOfWeek(weekdayDate) && `${weekdayClassName}--currentDayOfWeek`,
         )}
       >
         <abbr aria-label={abbr} title={abbr}>
