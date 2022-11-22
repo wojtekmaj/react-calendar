@@ -25,6 +25,7 @@ export default function MonthView(props) {
     formatWeekday,
     onClickWeekNumber,
     showWeekNumbers,
+    weekNumberContent,
     ...childProps
   } = props;
 
@@ -41,7 +42,7 @@ export default function MonthView(props) {
   }
 
   function renderWeekNumbers() {
-    if (!showWeekNumbers) {
+    if (!showWeekNumbers && !weekNumberContent) {
       return null;
     }
 
@@ -52,6 +53,7 @@ export default function MonthView(props) {
         onClickWeekNumber={onClickWeekNumber}
         onMouseLeave={onMouseLeave}
         showFixedNumberOfWeeks={showFixedNumberOfWeeks}
+        weekNumberContent={weekNumberContent}
       />
     );
   }
@@ -95,4 +97,5 @@ MonthView.propTypes = {
   onMouseLeave: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
+  weekNumberContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
 };
