@@ -3856,12 +3856,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-user-locale@npm:^1.2.0":
-  version: 1.5.1
-  resolution: "get-user-locale@npm:1.5.1"
+"get-user-locale@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "get-user-locale@npm:2.1.0"
   dependencies:
     lodash.memoize: ^4.1.1
-  checksum: 4ab9ae83264c8b4f376b7690578ee3b332808d40f49e500469d476b832d4fddcf8477b7a01b60a242fd232b5a2ae8f6b7620f731d67350e89fd17ddd91fc8a0e
+  checksum: c7c56e8f80212b41fe8ccb142c59d383e1b1b4d309ff0b845c8073c8d1270e77468ae0fd879c39309095f48c529b1f088ef9b733e1b523b4ef7e944e9078eeab
   languageName: node
   linkType: hard
 
@@ -6023,7 +6023,7 @@ __metadata:
     clsx: ^1.2.1
     eslint: ^8.26.0
     eslint-config-wojtekmaj: ^0.7.1
-    get-user-locale: ^1.2.0
+    get-user-locale: ^2.1.0
     husky: ^8.0.0
     jest: ^29.0.0
     jest-environment-jsdom: ^29.0.0
