@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Calendar from 'react-calendar/src';
-import 'react-calendar/src/Calendar.less';
+import 'react-calendar/src/Calendar.css';
 
 import DateBonduariesOptions from './DateBonduariesOptions';
 import MaxDetailOptions from './MaxDetailOptions';
@@ -11,7 +11,7 @@ import ViewOptions from './ViewOptions';
 
 import { formatDate } from './shared/dateFormatter';
 
-import './Test.less';
+import './Test.css';
 
 const now = new Date();
 

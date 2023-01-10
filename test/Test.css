@@ -1,0 +1,154 @@
+body {
+  margin: 0;
+  font-family: Segoe UI, Tahoma, sans-serif;
+}
+
+.Test header {
+  background-color: #323639;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  color: white;
+}
+
+.Test header h1 {
+  font-size: inherit;
+  margin: 0;
+}
+
+.Test__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.Test__container > * > * {
+  margin: 10px;
+}
+
+.Test__container__options {
+  display: flex;
+  flex-basis: 400px;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.Test__container__options input,
+.Test__container__options button {
+  font: inherit;
+}
+
+.Test__container__options fieldset {
+  border: 1px solid black;
+  flex-grow: 1;
+  position: relative;
+  top: -10px;
+}
+
+.Test__container__options fieldset legend {
+  font-weight: 600;
+}
+
+.Test__container__options fieldset legend + * {
+  margin-top: 0 !important;
+}
+
+.Test__container__options fieldset label {
+  font-weight: 600;
+  display: block;
+}
+
+.Test__container__options fieldset label:not(:first-of-type) {
+  margin-top: 1em;
+}
+
+.Test__container__options fieldset input[type='checkbox'] + label,
+.Test__container__options fieldset input[type='radio'] + label {
+  font-weight: normal;
+  display: inline-block;
+  margin: 0;
+}
+
+.Test__container__options fieldset form:not(:first-child),
+.Test__container__options fieldset div:not(:first-child) {
+  margin-top: 1em;
+}
+
+.Test__container__options fieldset form:not(:last-child),
+.Test__container__options fieldset div:not(:last-child) {
+  margin-bottom: 1em;
+}
+
+.Test__container__content {
+  display: flex;
+  max-width: 100%;
+  flex-basis: 420px;
+  flex-direction: column;
+  flex-grow: 100;
+  align-items: stretch;
+}
+
+.Test__container__content .react-calendar {
+  margin: 0 auto;
+}
+
+.Test__container__content .react-calendar__tile {
+  min-height: 58px;
+}
+
+.Test__container__content .react-calendar__tile p {
+  margin: 0;
+  line-height: 0.75;
+}
+
+.Test__container__content .react-calendar__tile p small {
+  font-size: 0.6em;
+  text-transform: uppercase;
+}
+
+.Test__container__content .react-calendar__tile.red {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.Test__container__content .react-calendar__tile.green {
+  background-color: rgba(0, 128, 0, 0.2);
+}
+
+.Test__container__content .react-calendar__tile.pink {
+  background-color: rgba(255, 192, 203, 0.2);
+}
+
+.Test__container__content .react-calendar__tile.brown {
+  background-color: rgba(165, 42, 42, 0.2);
+}
+
+.Test__container__content .react-calendar__tile--active.react-calendar__tile--now {
+  background-color: #7fb7a9;
+}
+
+.Test__container__content .react-calendar__tile--active.red {
+  background-color: rgba(57, 86, 171, 0.84);
+}
+
+.Test__container__content .react-calendar__tile--active.green {
+  background-color: rgba(0, 114, 171, 0.84);
+}
+
+.Test__container__content .react-calendar__tile--active.pink {
+  background-color: rgba(57, 128, 216, 0.84);
+}
+
+.Test__container__content .react-calendar__tile--active.brown {
+  background-color: rgba(37, 95, 180, 0.84);
+}
+
+.Test__container__content .react-calendar__month-view__weekdays__weekday--current {
+  background: #ffff76;
+}
+
+.Test__container__content > p {
+  text-align: center;
+}
