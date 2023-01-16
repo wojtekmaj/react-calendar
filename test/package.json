@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@wojtekmaj/date-utils": "^1.0.2",
-    "get-user-locale": "^1.4.0",
+    "get-user-locale": "^2.1.2",
     "prop-types": "^15.6.2",
     "react": "^18.2.0",
     "react-calendar": "portal:../",
