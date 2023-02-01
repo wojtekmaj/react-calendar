@@ -17,8 +17,8 @@ export default function MaxDetailOptions({ maxDetail, minDetail, setMaxDetail })
   const minDetailIndex = allViews.indexOf(minDetail);
 
   return (
-    <fieldset id="maxdetailoptions">
-      <legend htmlFor="maxdetailoptions">Maximum detail</legend>
+    <fieldset>
+      <legend>Maximum detail</legend>
 
       {allViews.map((view, index) => (
         <div key={view}>

@@ -16,8 +16,8 @@ export default function DateBonduariesOptions({ maxDate, minDate, setMaxDate, se
   }
 
   return (
-    <fieldset id="datebonduariesoptions">
-      <legend htmlFor="datebonduariesoptions">Minimum and maximum date</legend>
+    <fieldset>
+      <legend>Minimum and maximum date</legend>
 
       <div>
         <label htmlFor="minDatetime">Minimum date</label>

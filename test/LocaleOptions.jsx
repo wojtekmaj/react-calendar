@@ -25,8 +25,8 @@ export default function LocaleOptions({ locale, setLocale }) {
   }
 
   return (
-    <fieldset id="localeOptions">
-      <legend htmlFor="localeOptions">Locale</legend>
+    <fieldset>
+      <legend>Locale</legend>
 
       <div>
         <input
