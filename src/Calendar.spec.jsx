@@ -10,8 +10,7 @@ const { format } = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
 });
 
-const event = document.createEvent('MouseEvent');
-event.initEvent('click', true, true);
+const event = new Event('click', { bubbles: true });
 event.persist = () => {};
 
 describe('Calendar', () => {
