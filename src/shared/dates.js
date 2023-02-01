@@ -173,7 +173,7 @@ export function getBeginNext(rangeType, date) {
   }
 }
 
-export const getBeginPrevious2 = (rangeType, date) => {
+export function getBeginPrevious2(rangeType, date) {
   switch (rangeType) {
     case 'decade':
       return getPreviousDecadeStart(date, -100);
@@ -184,9 +184,9 @@ export const getBeginPrevious2 = (rangeType, date) => {
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
-};
+}
 
-export const getBeginNext2 = (rangeType, date) => {
+export function getBeginNext2(rangeType, date) {
   switch (rangeType) {
     case 'decade':
       return getNextDecadeStart(date, 100);
@@ -197,7 +197,7 @@ export const getBeginNext2 = (rangeType, date) => {
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
-};
+}
 
 /**
  * Returns the end of a given range.
@@ -237,7 +237,7 @@ export function getEndPrevious(rangeType, date) {
   }
 }
 
-export const getEndPrevious2 = (rangeType, date) => {
+export function getEndPrevious2(rangeType, date) {
   switch (rangeType) {
     case 'decade':
       return getPreviousDecadeEnd(date, -100);
@@ -248,7 +248,7 @@ export const getEndPrevious2 = (rangeType, date) => {
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
-};
+}
 
 /**
  * Returns an array with the beginning and the end of a given range.

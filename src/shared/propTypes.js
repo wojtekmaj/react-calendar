@@ -12,7 +12,7 @@ export const isClassName = PropTypes.oneOfType([
   PropTypes.arrayOf(PropTypes.string),
 ]);
 
-export const isMinDate = (props, propName, componentName) => {
+export function isMinDate(props, propName, componentName) {
   const { [propName]: minDate } = props;
 
   if (!minDate) {
@@ -34,9 +34,9 @@ export const isMinDate = (props, propName, componentName) => {
   }
 
   return null;
-};
+}
 
-export const isMaxDate = (props, propName, componentName) => {
+export function isMaxDate(props, propName, componentName) {
   const { [propName]: maxDate } = props;
 
   if (!maxDate) {
@@ -58,7 +58,7 @@ export const isMaxDate = (props, propName, componentName) => {
   }
 
   return null;
-};
+}
 
 export const isRef = PropTypes.oneOfType([
   PropTypes.func,
@@ -74,7 +74,7 @@ export const isValue = PropTypes.oneOfType([
 
 export const isViews = PropTypes.arrayOf(PropTypes.oneOf(allViews));
 
-export const isView = (props, propName, componentName) => {
+export function isView(props, propName, componentName) {
   const { [propName]: view } = props;
   const { views } = props;
 
@@ -90,7 +90,7 @@ export const isView = (props, propName, componentName) => {
 
   // Everything is fine
   return null;
-};
+}
 
 isView.isRequired = (props, propName, componentName) => {
   const { [propName]: view } = props;
