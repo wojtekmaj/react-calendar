@@ -8,8 +8,8 @@ function toPercent(num) {
 export default function Flex({
   children,
   className,
-  direction,
   count,
+  direction,
   offset,
   style,
   wrap,
