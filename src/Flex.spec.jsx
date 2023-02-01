@@ -16,7 +16,7 @@ describe('Flex', () => {
     const wrapper = container.firstChild;
 
     expect(wrapper).toHaveStyle('display: flex');
-    expect(wrapper).toHaveStyle('flex-wrap: no-wrap');
+    expect(wrapper).toHaveStyle('flex-wrap: nowrap');
   });
 
   it('styles itself properly with wrap flag set to true', () => {

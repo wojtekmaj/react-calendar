@@ -21,7 +21,7 @@ export default function Flex({
       style={{
         display: 'flex',
         flexDirection: direction,
-        flexWrap: wrap ? 'wrap' : 'no-wrap',
+        flexWrap: wrap ? 'wrap' : 'nowrap',
         ...style,
       }}
       {...otherProps}
