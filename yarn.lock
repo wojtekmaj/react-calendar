@@ -2008,6 +2008,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.memoize@npm:^4.1.7":
+  version: 4.1.7
+  resolution: "@types/lodash.memoize@npm:4.1.7"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 85f128b6606ab0545c11194208cf844536f981859221dff0032b1043dd4e02ee5aa1b96020d1e02a24db31be7493f2e9ff45836d2e3c35cf973fc6488f129eed
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.14.191
+  resolution: "@types/lodash@npm:4.14.191"
+  checksum: ba0d5434e10690869f32d5ea49095250157cae502f10d57de0a723fd72229ce6c6a4979576f0f13e0aa9fbe3ce2457bfb9fa7d4ec3d6daba56730a51906d1491
+  languageName: node
+  linkType: hard
+
 "@types/minimatch@npm:^3.0.3":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
@@ -3856,12 +3872,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-user-locale@npm:^1.2.0":
-  version: 1.5.1
-  resolution: "get-user-locale@npm:1.5.1"
+"get-user-locale@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "get-user-locale@npm:2.1.3"
   dependencies:
+    "@types/lodash.memoize": ^4.1.7
     lodash.memoize: ^4.1.1
-  checksum: 4ab9ae83264c8b4f376b7690578ee3b332808d40f49e500469d476b832d4fddcf8477b7a01b60a242fd232b5a2ae8f6b7620f731d67350e89fd17ddd91fc8a0e
+  checksum: 2fb6e14fdf1eafc0dea620d23fa658ac12c3dba4da81e89703a36152115428463e36d0df62dfeed9af1647907926f87f391eb9148b79e56cd468caf3b4c64f5b
   languageName: node
   linkType: hard
 
@@ -6023,7 +6040,7 @@ __metadata:
     clsx: ^1.2.1
     eslint: ^8.26.0
     eslint-config-wojtekmaj: ^0.7.1
-    get-user-locale: ^1.2.0
+    get-user-locale: ^2.1.3
     husky: ^8.0.0
     jest: ^29.0.0
     jest-environment-jsdom: ^29.0.0
