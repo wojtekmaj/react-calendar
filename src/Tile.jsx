@@ -55,6 +55,7 @@ export default class Tile extends Component {
       date,
       formatAbbr,
       locale,
+      titleAriaLabelHandler,
       maxDate,
       maxDateTransform,
       minDate,
@@ -66,6 +67,9 @@ export default class Tile extends Component {
       view,
     } = this.props;
     const { tileClassName, tileContent } = this.state;
+
+    const tileAriaLabel = titleAriaLabelHandler ? titleAriaLabelHandler(formatAbbr(locale, date)) : formatAbbr(locale, date)
+
 
     return (
       <button
@@ -81,7 +85,7 @@ export default class Tile extends Component {
         style={style}
         type="button"
       >
-        {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}
+        {formatAbbr ? <abbr aria-label={tileAriaLabel}>{children}</abbr> : children}
         {tileContent}
       </button>
     );

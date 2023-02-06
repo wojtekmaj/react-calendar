@@ -399,14 +399,14 @@ export default class Calendar extends Component {
     const nextActiveStartDate =
       // Range selection turned off
       !selectRange ||
-      // Range selection turned on, first value
-      isFirstValueInRange ||
-      // Range selection turned on, second value, goToRangeStartOnSelect toggled on
-      goToRangeStartOnSelect
+        // Range selection turned on, first value
+        isFirstValueInRange ||
+        // Range selection turned on, second value, goToRangeStartOnSelect toggled on
+        goToRangeStartOnSelect
         ? getActiveStartDate({
-            ...this.props,
-            value: nextValue,
-          })
+          ...this.props,
+          value: nextValue,
+        })
         : null;
 
     event.persist();
@@ -461,6 +461,7 @@ export default class Calendar extends Component {
     const { activeStartDate: currentActiveStartDate, onMouseOver, valueType, value, view } = this;
     const {
       calendarType,
+      tileAriaLabelHandler,
       locale,
       maxDate,
       minDate,
@@ -484,6 +485,7 @@ export default class Calendar extends Component {
       maxDate,
       minDate,
       onClick,
+      tileAriaLabelHandler,
       onMouseOver: selectRange ? onMouseOver : null,
       tileClassName,
       tileContent,
@@ -687,6 +689,7 @@ Calendar.propTypes = {
   onDrillDown: PropTypes.func,
   onDrillUp: PropTypes.func,
   onViewChange: PropTypes.func,
+  tileAriaLabelHandler: PropTypes.func,
   prev2AriaLabel: PropTypes.string,
   prev2Label: PropTypes.node,
   prevAriaLabel: PropTypes.string,
