@@ -1945,6 +1945,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wojtekmaj/date-utils@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@wojtekmaj/date-utils@npm:1.1.2"
+  checksum: e0cc184af022ce30aa543ec61dcd02fa95d536a579611a54a00d0f955b15948c06ca0e5389633f1787301e094e2dd66d6019b286ffe2f0a3be33ae631125a819
+  languageName: node
+  linkType: hard
+
 "@xtuc/ieee754@npm:^1.2.0":
   version: 1.2.0
   resolution: "@xtuc/ieee754@npm:1.2.0"
@@ -5107,7 +5114,7 @@ __metadata:
     "@babel/preset-env": ^7.20.2
     "@babel/preset-react": ^7.14.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.0
-    "@wojtekmaj/date-utils": ^1.0.2
+    "@wojtekmaj/date-utils": ^1.1.2
     babel-loader: ^9.0.1
     css-loader: ^6.0.0
     eslint: ^8.26.0
