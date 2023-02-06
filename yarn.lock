@@ -2119,9 +2119,9 @@ __metadata:
   linkType: hard
 
 "@wojtekmaj/date-utils@npm:^1.0.2":
-  version: 1.0.3
-  resolution: "@wojtekmaj/date-utils@npm:1.0.3"
-  checksum: 70b7152160529295319ead97e070f85a50c0eab7973b5845e3a58eab9b0c999023975d2739b5e2a059d27b108ce7cdbf14da99737d6fa3e3822d4dafb76b06f0
+  version: 1.1.2
+  resolution: "@wojtekmaj/date-utils@npm:1.1.2"
+  checksum: e0cc184af022ce30aa543ec61dcd02fa95d536a579611a54a00d0f955b15948c06ca0e5389633f1787301e094e2dd66d6019b286ffe2f0a3be33ae631125a819
   languageName: node
   linkType: hard
 
