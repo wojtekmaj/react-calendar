@@ -125,6 +125,7 @@ export const tileProps = {
   locale: PropTypes.string,
   maxDate: isMaxDate,
   minDate: isMinDate,
+  tileAriaLabelHandler: PropTypes.func,
   onClick: PropTypes.func,
   onMouseOver: PropTypes.func,
   style: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
