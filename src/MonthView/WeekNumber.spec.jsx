@@ -32,4 +32,47 @@ describe('<WeekNumber /> component', () => {
 
     expect(container).toHaveTextContent(weekNumber);
   });
+
+  it('calls weekNumberContent properly (only on related prop change)', () => {
+    const weekNumberContent = jest.fn();
+
+    const { rerender } = render(
+      <WeekNumber {...defaultProps} weekNumberContent={weekNumberContent} />,
+    );
+
+    // Trigger any unrelated prop change
+    rerender(
+      <WeekNumber
+        {...defaultProps}
+        onClickWeekNumber={() => 'unrelated'}
+        weekNumberContent={weekNumberContent}
+      />,
+    );
+
+    expect(weekNumberContent).toHaveBeenCalledTimes(1);
+    expect(weekNumberContent).toHaveBeenCalledWith({
+      ...defaultProps,
+    });
+  });
+
+  it('applies weekNumberContent to div properly given function', () => {
+    const content = 'content';
+    const weekNumberContent = () => content;
+    const { container } = render(
+      <WeekNumber {...defaultProps} weekNumberContent={weekNumberContent} />,
+    );
+
+    const div = container.querySelector('div');
+
+    expect(div).toHaveTextContent(content);
+  });
+
+  it('applies weekNumberContent to div properly given string', () => {
+    const content = 'content';
+    const { container } = render(<WeekNumber {...defaultProps} weekNumberContent={content} />);
+
+    const div = container.querySelector('div');
+
+    expect(div).toHaveTextContent(content);
+  });
 });
