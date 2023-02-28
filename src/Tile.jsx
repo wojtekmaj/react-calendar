@@ -19,6 +19,14 @@ function getValue(nextProps, prop) {
 }
 
 export default class Tile extends Component {
+  static propTypes = {
+    ...tileProps,
+    children: PropTypes.node.isRequired,
+    formatAbbr: PropTypes.func,
+    maxDateTransform: PropTypes.func.isRequired,
+    minDateTransform: PropTypes.func.isRequired,
+  };
+
   static getDerivedStateFromProps(nextProps, prevState) {
     const { activeStartDate, tileClassName, tileContent } = nextProps;
 
@@ -87,11 +95,3 @@ export default class Tile extends Component {
     );
   }
 }
-
-Tile.propTypes = {
-  ...tileProps,
-  children: PropTypes.node.isRequired,
-  formatAbbr: PropTypes.func,
-  maxDateTransform: PropTypes.func.isRequired,
-  minDateTransform: PropTypes.func.isRequired,
-};
