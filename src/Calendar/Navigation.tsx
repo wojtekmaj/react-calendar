@@ -18,7 +18,34 @@ import {
 } from '../shared/dateFormatter';
 import { isView, isViews } from '../shared/propTypes';
 
+import type { Action, NavigationLabelFunc, RangeType } from '../shared/types';
+
 const className = 'react-calendar__navigation';
+
+type NavigationProps = {
+  activeStartDate: Date;
+  drillUp: () => void;
+  formatMonthYear?: typeof defaultFormatMonthYear;
+  formatYear?: typeof defaultFormatYear;
+  locale?: string;
+  maxDate?: Date;
+  minDate?: Date;
+  navigationAriaLabel?: string;
+  navigationAriaLive?: 'off' | 'polite' | 'assertive';
+  navigationLabel?: NavigationLabelFunc;
+  next2AriaLabel?: string;
+  next2Label?: React.ReactNode;
+  nextAriaLabel?: string;
+  nextLabel?: React.ReactNode;
+  prev2AriaLabel?: string;
+  prev2Label?: React.ReactNode;
+  prevAriaLabel?: string;
+  prevLabel?: React.ReactNode;
+  setActiveStartDate: (nextActiveStartDate: Date, action: Action) => void;
+  showDoubleView?: boolean;
+  view: RangeType;
+  views: string[];
+};
 
 export default function Navigation({
   activeStartDate,
@@ -43,15 +70,18 @@ export default function Navigation({
   showDoubleView,
   view,
   views,
-}) {
+}: NavigationProps) {
   const drillUpAvailable = views.indexOf(view) > 0;
   const shouldShowPrevNext2Buttons = view !== 'century';
 
   const previousActiveStartDate = getBeginPrevious(view, activeStartDate);
-  const previousActiveStartDate2 =
-    shouldShowPrevNext2Buttons && getBeginPrevious2(view, activeStartDate);
+  const previousActiveStartDate2 = shouldShowPrevNext2Buttons
+    ? getBeginPrevious2(view, activeStartDate)
+    : undefined;
   const nextActiveStartDate = getBeginNext(view, activeStartDate);
-  const nextActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginNext2(view, activeStartDate);
+  const nextActiveStartDate2 = shouldShowPrevNext2Buttons
+    ? getBeginNext2(view, activeStartDate)
+    : undefined;
 
   const prevButtonDisabled = (() => {
     if (previousActiveStartDate.getFullYear() < 0) {
@@ -64,7 +94,7 @@ export default function Navigation({
   const prev2ButtonDisabled =
     shouldShowPrevNext2Buttons &&
     (() => {
-      if (previousActiveStartDate2.getFullYear() < 0) {
+      if ((previousActiveStartDate2 as Date).getFullYear() < 0) {
         return true;
       }
       const previousActiveEndDate = getEndPrevious2(view, activeStartDate);
@@ -74,14 +104,14 @@ export default function Navigation({
   const nextButtonDisabled = maxDate && maxDate < nextActiveStartDate;
 
   const next2ButtonDisabled =
-    shouldShowPrevNext2Buttons && maxDate && maxDate < nextActiveStartDate2;
+    shouldShowPrevNext2Buttons && maxDate && maxDate < (nextActiveStartDate2 as Date);
 
   function onClickPrevious() {
     setActiveStartDate(previousActiveStartDate, 'prev');
   }
 
   function onClickPrevious2() {
-    setActiveStartDate(previousActiveStartDate2, 'prev2');
+    setActiveStartDate(previousActiveStartDate2 as Date, 'prev2');
   }
 
   function onClickNext() {
@@ -89,10 +119,10 @@ export default function Navigation({
   }
 
   function onClickNext2() {
-    setActiveStartDate(nextActiveStartDate2, 'next2');
+    setActiveStartDate(nextActiveStartDate2 as Date, 'next2');
   }
 
-  function renderLabel(date) {
+  function renderLabel(date: Date) {
     const label = (() => {
       switch (view) {
         case 'century':
@@ -112,7 +142,7 @@ export default function Navigation({
       ? navigationLabel({
           date,
           label,
-          locale: locale || getUserLocale(),
+          locale: locale || getUserLocale() || undefined,
           view,
         })
       : label;

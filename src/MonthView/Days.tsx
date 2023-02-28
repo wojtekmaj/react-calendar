@@ -8,7 +8,16 @@ import Day from './Day';
 import { getDayOfWeek } from '../shared/dates';
 import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 
-export default function Days(props) {
+import type { CalendarType } from '../shared/types';
+
+type DaysProps = {
+  activeStartDate: Date;
+  calendarType: CalendarType;
+  showFixedNumberOfWeeks?: boolean;
+  showNeighboringMonth?: boolean;
+} & React.ComponentProps<typeof TileGroup>;
+
+export default function Days(props: DaysProps) {
   const { activeStartDate, calendarType } = props;
   const { showFixedNumberOfWeeks, showNeighboringMonth, ...otherProps } = props;
 

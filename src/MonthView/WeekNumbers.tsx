@@ -8,7 +8,17 @@ import Flex from '../Flex';
 import { getBeginOfWeek, getDayOfWeek, getWeekNumber } from '../shared/dates';
 import { isCalendarType } from '../shared/propTypes';
 
-export default function WeekNumbers(props) {
+import type { CalendarType, OnClickWeekNumberFunc } from '../shared/types';
+
+type WeekNumbersProps = {
+  activeStartDate: Date;
+  calendarType: CalendarType;
+  onClickWeekNumber?: OnClickWeekNumberFunc;
+  onMouseLeave?: () => void;
+  showFixedNumberOfWeeks?: boolean;
+};
+
+export default function WeekNumbers(props: WeekNumbersProps) {
   const { activeStartDate, calendarType, onClickWeekNumber, onMouseLeave, showFixedNumberOfWeeks } =
     props;
 
@@ -47,14 +57,22 @@ export default function WeekNumbers(props) {
       onMouseOver={onMouseLeave}
       style={{ flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }}
     >
-      {weekNumbers.map((weekNumber, weekIndex) => (
-        <WeekNumber
-          key={weekNumber}
-          date={dates[weekIndex]}
-          onClickWeekNumber={onClickWeekNumber}
-          weekNumber={weekNumber}
-        />
-      ))}
+      {weekNumbers.map((weekNumber, weekIndex) => {
+        const date = dates[weekIndex];
+
+        if (!date) {
+          throw new Error('date is not defined');
+        }
+
+        return (
+          <WeekNumber
+            key={weekNumber}
+            date={date}
+            onClickWeekNumber={onClickWeekNumber}
+            weekNumber={weekNumber}
+          />
+        );
+      })}
     </Flex>
   );
 }

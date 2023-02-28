@@ -12,7 +12,7 @@ export const isClassName = PropTypes.oneOfType([
   PropTypes.arrayOf(PropTypes.string),
 ]);
 
-export function isMinDate(props, propName, componentName) {
+export function isMinDate(props: Record<string, unknown>, propName: string, componentName: string) {
   const { [propName]: minDate } = props;
 
   if (!minDate) {
@@ -36,7 +36,7 @@ export function isMinDate(props, propName, componentName) {
   return null;
 }
 
-export function isMaxDate(props, propName, componentName) {
+export function isMaxDate(props: Record<string, unknown>, propName: string, componentName: string) {
   const { [propName]: maxDate } = props;
 
   if (!maxDate) {
@@ -74,13 +74,17 @@ export const isValue = PropTypes.oneOfType([
 
 export const isViews = PropTypes.arrayOf(PropTypes.oneOf(allViews));
 
-export function isView(props, propName, componentName) {
+export function isView(
+  props: Record<string, unknown> & { views?: string[] },
+  propName: string,
+  componentName: string,
+) {
   const { [propName]: view } = props;
   const { views } = props;
 
   const allowedViews = views || allViews;
 
-  if (view !== undefined && allowedViews.indexOf(view) === -1) {
+  if (view !== undefined && (typeof view !== 'string' || allowedViews.indexOf(view) === -1)) {
     return new Error(
       `Invalid prop \`${propName}\` of value \`${view}\` supplied to \`${componentName}\`, expected one of [${allowedViews
         .map((a) => `"${a}"`)
@@ -92,7 +96,7 @@ export function isView(props, propName, componentName) {
   return null;
 }
 
-isView.isRequired = (props, propName, componentName) => {
+isView.isRequired = (props: Record<string, unknown>, propName: string, componentName: string) => {
   const { [propName]: view } = props;
 
   if (!view) {

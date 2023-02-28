@@ -6,7 +6,11 @@ import Year from './Year';
 import { getBeginOfDecadeYear } from '../shared/dates';
 import { tileGroupProps } from '../shared/propTypes';
 
-export default function Years(props) {
+type YearsProps = {
+  activeStartDate: Date;
+} & React.ComponentProps<typeof TileGroup>;
+
+export default function Years(props: YearsProps) {
   const { activeStartDate } = props;
   const start = getBeginOfDecadeYear(activeStartDate);
   const end = start + 9;

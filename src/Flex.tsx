@@ -1,7 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function toPercent(num) {
+type FlexProps = React.HTMLAttributes<HTMLDivElement> & {
+  children: React.ReactElement[];
+  className?: string;
+  count: number;
+  direction?: 'row' | 'column';
+  offset?: number;
+  wrap?: boolean;
+};
+
+function toPercent(num: number): string {
   return `${num}%`;
 }
 
@@ -14,7 +23,7 @@ export default function Flex({
   style,
   wrap,
   ...otherProps
-}) {
+}: FlexProps) {
   return (
     <div
       className={className}

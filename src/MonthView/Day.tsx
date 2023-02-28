@@ -11,7 +11,17 @@ import {
 } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
+import type { CalendarType } from '../shared/types';
+
 const className = 'react-calendar__month-view__days__day';
+
+type DayProps = {
+  calendarType?: CalendarType;
+  classes?: string[];
+  currentMonthIndex: number;
+  formatDay?: typeof defaultFormatDay;
+  formatLongDate?: typeof defaultFormatLongDate;
+} & React.ComponentProps<typeof Tile>;
 
 export default function Day({
   calendarType,
@@ -20,18 +30,31 @@ export default function Day({
   formatDay = defaultFormatDay,
   formatLongDate = defaultFormatLongDate,
   ...otherProps
-}) {
+}: DayProps) {
   const { date, locale } = otherProps;
+
+  const classesProps: string[] = [];
+
+  if (classes) {
+    classesProps.push(...classes);
+  }
+
+  if (className) {
+    classesProps.push(className);
+  }
+
+  if (isWeekend(date, calendarType)) {
+    classesProps.push(`${className}--weekend`);
+  }
+
+  if (date.getMonth() !== currentMonthIndex) {
+    classesProps.push(`${className}--neighboringMonth`);
+  }
 
   return (
     <Tile
       {...otherProps}
-      classes={[].concat(
-        classes,
-        className,
-        isWeekend(date, calendarType) ? `${className}--weekend` : null,
-        date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null,
-      )}
+      classes={classesProps}
       formatAbbr={formatLongDate}
       maxDateTransform={getDayEnd}
       minDateTransform={getDayStart}

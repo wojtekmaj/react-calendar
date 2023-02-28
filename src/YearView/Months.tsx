@@ -7,7 +7,11 @@ import Month from './Month';
 
 import { tileGroupProps } from '../shared/propTypes';
 
-export default function Months(props) {
+type MonthsProps = {
+  activeStartDate: Date;
+} & React.ComponentProps<typeof TileGroup>;
+
+export default function Months(props: MonthsProps) {
   const { activeStartDate } = props;
   const start = 0;
   const end = 11;

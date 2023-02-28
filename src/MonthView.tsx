@@ -9,15 +9,24 @@ import WeekNumbers from './MonthView/WeekNumbers';
 import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const';
 import { isCalendarType } from './shared/propTypes';
 
-function getCalendarTypeFromLocale(locale) {
-  return (
-    Object.keys(CALENDAR_TYPE_LOCALES).find((calendarType) =>
-      CALENDAR_TYPE_LOCALES[calendarType].includes(locale),
-    ) || CALENDAR_TYPES.ISO_8601
-  );
+import type { CalendarType } from './shared/types';
+
+function getCalendarTypeFromLocale(locale: string): CalendarType {
+  for (const [calendarType, locales] of Object.entries(CALENDAR_TYPE_LOCALES)) {
+    if (locales.includes(locale)) {
+      return calendarType as CalendarType;
+    }
+  }
+
+  return CALENDAR_TYPES.ISO_8601;
 }
 
-export default function MonthView(props) {
+type MonthViewProps = {
+  showWeekNumbers?: boolean;
+} & React.ComponentProps<typeof Weekdays> &
+  React.ComponentProps<typeof Days>;
+
+export default function MonthView(props: MonthViewProps) {
   const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks } = props;
   const {
     calendarType = getCalendarTypeFromLocale(locale),

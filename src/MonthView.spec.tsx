@@ -47,7 +47,7 @@ describe('MonthView', () => {
 
   it('applies tileClassName to its tiles conditionally when given a function that returns a string', () => {
     const activeStartDate = new Date(2017, 0, 1);
-    const tileClassNameFn = ({ date }) => {
+    const tileClassNameFn = ({ date }: { date: Date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
         return 'firstDayOfTheMonth';
       }
@@ -88,7 +88,7 @@ describe('MonthView', () => {
 
   it('renders tileContent in its tiles conditionally when given a function that returns a node', () => {
     const activeStartDate = new Date(2017, 0, 1);
-    const tileContentFn = ({ date }) => {
+    const tileContentFn = ({ date }: { date: Date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
         return <div className="testContent" />;
       }

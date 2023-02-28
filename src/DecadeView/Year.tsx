@@ -9,13 +9,22 @@ import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__decade-view__years__year';
 
-export default function Year({ classes, formatYear = defaultFormatYear, ...otherProps }) {
+type YearProps = {
+  classes?: string[];
+  formatYear?: typeof defaultFormatYear;
+} & React.ComponentProps<typeof Tile>;
+
+export default function Year({
+  classes,
+  formatYear = defaultFormatYear,
+  ...otherProps
+}: YearProps) {
   const { date, locale } = otherProps;
 
   return (
     <Tile
       {...otherProps}
-      classes={[].concat(classes, className)}
+      classes={[...(classes || []), className]}
       maxDateTransform={getYearEnd}
       minDateTransform={getYearStart}
       view="decade"

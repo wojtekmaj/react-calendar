@@ -7,6 +7,8 @@ import {
   getTileClasses,
 } from './utils';
 
+import type { Range } from './types';
+
 describe('between', () => {
   it('returns value when value is within set boundaries', () => {
     const value = new Date(2017, 6, 1);
@@ -46,7 +48,7 @@ describe('between', () => {
 describe('isValueWithinRange', () => {
   it('returns true for a value between range bonduaries', () => {
     const value = new Date(2017, 6, 1);
-    const range = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
+    const range: Range<Date> = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
 
     const valueWithin = isValueWithinRange(value, range);
 
@@ -55,7 +57,7 @@ describe('isValueWithinRange', () => {
 
   it('returns true for a value on the first range bonduary', () => {
     const value = new Date(2017, 0, 1);
-    const range = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
+    const range: Range<Date> = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
 
     const valueWithin = isValueWithinRange(value, range);
 
@@ -64,7 +66,7 @@ describe('isValueWithinRange', () => {
 
   it('returns true for a value on the last range bonduary', () => {
     const value = new Date(2018, 0, 1);
-    const range = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
+    const range: Range<Date> = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
 
     const valueWithin = isValueWithinRange(value, range);
 
@@ -73,7 +75,7 @@ describe('isValueWithinRange', () => {
 
   it('returns true for a value smaller than both range bonduaries', () => {
     const value = new Date(2016, 0, 1);
-    const range = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
+    const range: Range<Date> = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
 
     const valueWithin = isValueWithinRange(value, range);
 
@@ -82,7 +84,7 @@ describe('isValueWithinRange', () => {
 
   it('returns true for a value larger than both range bonduaries', () => {
     const value = new Date(2019, 0, 1);
-    const range = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
+    const range: Range<Date> = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
 
     const valueWithin = isValueWithinRange(value, range);
 
@@ -92,8 +94,8 @@ describe('isValueWithinRange', () => {
 
 describe('isRangeWithinRange', () => {
   it('returns true for range fitting within another range', () => {
-    const greaterRange = [new Date(2011, 0, 1), new Date(2020, 0, 1)];
-    const smallerRange = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
+    const greaterRange: Range<Date> = [new Date(2011, 0, 1), new Date(2020, 0, 1)];
+    const smallerRange: Range<Date> = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
 
     const rangeWithin = isRangeWithinRange(greaterRange, smallerRange);
 
@@ -101,8 +103,8 @@ describe('isRangeWithinRange', () => {
   });
 
   it('returns true for a range identical with another range', () => {
-    const greaterRange = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
-    const smallerRange = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
+    const greaterRange: Range<Date> = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
+    const smallerRange: Range<Date> = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
 
     const rangeWithin = isRangeWithinRange(greaterRange, smallerRange);
 
@@ -110,8 +112,8 @@ describe('isRangeWithinRange', () => {
   });
 
   it('returns false for a range that starts outside of another range', () => {
-    const greaterRange = [new Date(2011, 0, 1), new Date(2020, 0, 1)];
-    const smallerRange = [new Date(2010, 0, 1), new Date(2017, 0, 1)];
+    const greaterRange: Range<Date> = [new Date(2011, 0, 1), new Date(2020, 0, 1)];
+    const smallerRange: Range<Date> = [new Date(2010, 0, 1), new Date(2017, 0, 1)];
 
     const rangeWithin = isRangeWithinRange(greaterRange, smallerRange);
 
@@ -119,8 +121,8 @@ describe('isRangeWithinRange', () => {
   });
 
   it('returns false for a range that ends outside of another range', () => {
-    const greaterRange = [new Date(2011, 0, 1), new Date(2020, 0, 1)];
-    const smallerRange = [new Date(2016, 0, 1), new Date(2021, 0, 1)];
+    const greaterRange: Range<Date> = [new Date(2011, 0, 1), new Date(2020, 0, 1)];
+    const smallerRange: Range<Date> = [new Date(2016, 0, 1), new Date(2021, 0, 1)];
 
     const rangeWithin = isRangeWithinRange(greaterRange, smallerRange);
 
@@ -130,8 +132,8 @@ describe('isRangeWithinRange', () => {
 
 describe('doRangesOverlap', () => {
   it('returns true for overlapping ranges', () => {
-    const range1 = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
-    const range2 = [new Date(2016, 6, 1), new Date(2017, 6, 1)];
+    const range1: Range<Date> = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
+    const range2: Range<Date> = [new Date(2016, 6, 1), new Date(2017, 6, 1)];
 
     const rangesOverlap = doRangesOverlap(range1, range2);
     const rangesOverlapReversed = doRangesOverlap(range2, range1);
@@ -141,8 +143,8 @@ describe('doRangesOverlap', () => {
   });
 
   it('returns true for touching ranges', () => {
-    const range1 = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
-    const range2 = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
+    const range1: Range<Date> = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
+    const range2: Range<Date> = [new Date(2017, 0, 1), new Date(2018, 0, 1)];
 
     const rangesOverlap = doRangesOverlap(range1, range2);
     const rangesOverlapReversed = doRangesOverlap(range2, range1);
@@ -152,8 +154,8 @@ describe('doRangesOverlap', () => {
   });
 
   it('returns false for ranges that do not overlap', () => {
-    const range1 = [new Date(2006, 0, 1), new Date(2007, 0, 1)];
-    const range2 = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
+    const range1: Range<Date> = [new Date(2006, 0, 1), new Date(2007, 0, 1)];
+    const range2: Range<Date> = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
 
     const rangesOverlap = doRangesOverlap(range1, range2);
     const rangesOverlapReversed = doRangesOverlap(range2, range1);
@@ -165,15 +167,18 @@ describe('doRangesOverlap', () => {
 
 describe('getTileClasses', () => {
   it('throws an error when given no value', () => {
+    // @ts-expect-error-next-line
     expect(() => getTileClasses()).toThrow();
   });
 
   it('throws an error when given date but not given dateType parameter ', () => {
+    // @ts-expect-error-next-line
     expect(() => getTileClasses({ date: new Date(2017, 0, 1) })).toThrow();
   });
 
   it('throws an error when given date and value but not given valueType parameter ', () => {
     expect(() =>
+      // @ts-expect-error-next-line
       getTileClasses({
         date: new Date(2017, 0, 1),
         dateType: 'month',
@@ -233,9 +238,10 @@ describe('getTileClasses', () => {
 
   describe('range classes', () => {
     it('returns range flag set to true when passed a date within value array', () => {
+      const value: Range<Date> = [new Date(2017, 0, 1), new Date(2017, 6, 1)];
+
       const result = getTileClasses({
-        value: [new Date(2017, 0, 1), new Date(2017, 6, 1)],
-        valueType: 'month',
+        value,
         date: new Date(2017, 3, 1),
         dateType: 'month',
       });
@@ -246,9 +252,10 @@ describe('getTileClasses', () => {
     });
 
     it('returns range & rangeStart flags set to true when passed a date equal to value start', () => {
+      const value: Range<Date> = [new Date(2017, 0, 1), new Date(2017, 6, 1)];
+
       const result = getTileClasses({
-        value: [new Date(2017, 0, 1), new Date(2017, 6, 1)],
-        valueType: 'month',
+        value,
         date: new Date(2017, 0, 1),
         dateType: 'month',
       });
@@ -259,9 +266,10 @@ describe('getTileClasses', () => {
     });
 
     it('returns range & rangeEnd flags set to true when passed a date equal to value end', () => {
+      const value: Range<Date> = [new Date(2017, 0, 1), new Date(2017, 6, 1)];
+
       const result = getTileClasses({
-        value: [new Date(2017, 0, 1), new Date(2017, 6, 1)],
-        valueType: 'month',
+        value,
         date: new Date(2017, 6, 1),
         dateType: 'month',
       });

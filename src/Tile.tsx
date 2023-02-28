@@ -4,7 +4,43 @@ import clsx from 'clsx';
 
 import { tileProps } from './shared/propTypes';
 
-function datesAreDifferent(date1, date2) {
+import type {
+  ClassName,
+  TileClassNameFunc,
+  TileContentFunc,
+  TileDisabledFunc,
+  View,
+} from './shared/types';
+
+type TileProps = {
+  activeStartDate: Date;
+  children: React.ReactNode;
+  classes?: ClassName;
+  date: Date;
+  formatAbbr?: (locale: string | undefined, date: Date) => string;
+  locale: string;
+  maxDate?: Date;
+  maxDateTransform: (date: Date) => Date;
+  minDate?: Date;
+  minDateTransform: (date: Date) => Date;
+  onClick: (date: Date, event: React.MouseEvent) => void;
+  onMouseOver: (date: Date) => void;
+  style?: React.CSSProperties;
+  tileClassName?: TileClassNameFunc | ClassName;
+  tileContent?: TileContentFunc | React.ReactNode;
+  tileDisabled?: TileDisabledFunc;
+  view: View;
+};
+
+type TileState = {
+  activeStartDateProps?: TileProps['activeStartDate'];
+  tileClassName?: ClassName;
+  tileClassNameProps?: TileProps['tileClassName'];
+  tileContent?: React.ReactNode;
+  tileContentProps?: TileProps['tileContent'];
+};
+
+function datesAreDifferent(date1?: Date, date2?: Date) {
   return (
     (date1 && !date2) ||
     (!date1 && date2) ||
@@ -12,13 +48,7 @@ function datesAreDifferent(date1, date2) {
   );
 }
 
-function getValue(nextProps, prop) {
-  const { activeStartDate, date, view } = nextProps;
-
-  return typeof prop === 'function' ? prop({ activeStartDate, date, view }) : prop;
-}
-
-export default class Tile extends Component {
+export default class Tile extends Component<TileProps, TileState> {
   static propTypes = {
     ...tileProps,
     children: PropTypes.node.isRequired,
@@ -27,16 +57,19 @@ export default class Tile extends Component {
     minDateTransform: PropTypes.func.isRequired,
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { activeStartDate, tileClassName, tileContent } = nextProps;
+  static getDerivedStateFromProps(nextProps: TileProps, prevState: TileState) {
+    const { activeStartDate, date, tileClassName, tileContent, view } = nextProps;
 
-    const nextState = {};
+    const nextState: TileState = {};
+
+    const args = { activeStartDate, date, view };
 
     if (
       tileClassName !== prevState.tileClassNameProps ||
       datesAreDifferent(activeStartDate, prevState.activeStartDateProps)
     ) {
-      nextState.tileClassName = getValue(nextProps, tileClassName);
+      nextState.tileClassName =
+        typeof tileClassName === 'function' ? tileClassName(args) : tileClassName;
       nextState.tileClassNameProps = tileClassName;
     }
 
@@ -44,7 +77,7 @@ export default class Tile extends Component {
       tileContent !== prevState.tileContentProps ||
       datesAreDifferent(activeStartDate, prevState.activeStartDateProps)
     ) {
-      nextState.tileContent = getValue(nextProps, tileContent);
+      nextState.tileContent = typeof tileContent === 'function' ? tileContent(args) : tileContent;
       nextState.tileContentProps = tileContent;
     }
 
@@ -53,7 +86,7 @@ export default class Tile extends Component {
     return nextState;
   }
 
-  state = {};
+  state: Readonly<TileState> = {};
 
   render() {
     const {

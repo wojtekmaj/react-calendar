@@ -391,6 +391,7 @@ describe('Calendar', () => {
       expect(onDrillUp).toHaveBeenCalledWith({
         action: 'drillUp',
         activeStartDate: new Date(2017, 0, 1),
+        value: null,
         view: 'year',
       });
     });
@@ -414,6 +415,7 @@ describe('Calendar', () => {
       expect(onDrillUp).toHaveBeenCalledWith({
         action: 'drillUp',
         activeStartDate: new Date(2017, 0, 1),
+        value: null,
         view: 'year',
       });
     });
@@ -469,6 +471,7 @@ describe('Calendar', () => {
       expect(onDrillDown).toHaveBeenCalledWith({
         action: 'drillDown',
         activeStartDate: new Date(2011, 0, 1),
+        value: null,
         view: 'decade',
       });
     });
@@ -496,6 +499,7 @@ describe('Calendar', () => {
       expect(onDrillDown).toHaveBeenCalledWith({
         action: 'drillDown',
         activeStartDate: new Date(2011, 0, 1),
+        value: null,
         view: 'decade',
       });
     });

@@ -11,11 +11,20 @@ import {
   formatWeekday as defaultFormatWeekday,
 } from '../shared/dateFormatter';
 import { isCalendarType } from '../shared/propTypes';
+import type { CalendarType } from '../shared/types';
 
 const className = 'react-calendar__month-view__weekdays';
 const weekdayClassName = `${className}__weekday`;
 
-export default function Weekdays(props) {
+type WeekdaysProps = {
+  calendarType: CalendarType;
+  formatShortWeekday?: typeof defaultFormatShortWeekday;
+  formatWeekday?: typeof defaultFormatWeekday;
+  locale?: string;
+  onMouseLeave?: () => void;
+};
+
+export default function Weekdays(props: WeekdaysProps) {
   const {
     calendarType,
     formatShortWeekday = defaultFormatShortWeekday,

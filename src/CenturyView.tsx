@@ -2,7 +2,9 @@ import React from 'react';
 
 import Decades from './CenturyView/Decades';
 
-export default function CenturyView(props) {
+type CenturyViewProps = React.ComponentProps<typeof Decades>;
+
+export default function CenturyView(props: CenturyViewProps) {
   function renderDecades() {
     return <Decades {...props} />;
   }

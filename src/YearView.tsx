@@ -2,7 +2,9 @@ import React from 'react';
 
 import Months from './YearView/Months';
 
-export default function YearView(props) {
+type YearViewProps = React.ComponentProps<typeof Months>;
+
+export default function YearView(props: YearViewProps) {
   function renderMonths() {
     return <Months {...props} />;
   }

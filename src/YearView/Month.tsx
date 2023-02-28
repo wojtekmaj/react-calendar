@@ -12,18 +12,24 @@ import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__year-view__months__month';
 
+type MonthProps = {
+  classes?: string[];
+  formatMonth?: typeof defaultFormatMonth;
+  formatMonthYear?: typeof defaultFormatMonthYear;
+} & React.ComponentProps<typeof Tile>;
+
 export default function Month({
   classes,
   formatMonth = defaultFormatMonth,
   formatMonthYear = defaultFormatMonthYear,
   ...otherProps
-}) {
+}: MonthProps) {
   const { date, locale } = otherProps;
 
   return (
     <Tile
       {...otherProps}
-      classes={[].concat(classes, className)}
+      classes={[...(classes || []), className]}
       formatAbbr={formatMonthYear}
       maxDateTransform={getMonthEnd}
       minDateTransform={getMonthStart}

@@ -6,7 +6,24 @@ import Flex from './Flex';
 import { getTileClasses } from './shared/utils';
 import { tileGroupProps } from './shared/propTypes';
 
-export default function TileGroup({
+import type { RangeType } from './shared/types';
+
+type TileGroupProps<T extends React.ElementType> = {
+  className?: string;
+  count?: number;
+  dateTransform: (point: number) => Date;
+  dateType: RangeType;
+  end: number;
+  hover?: Date;
+  offset?: number;
+  start: number;
+  step?: number;
+  tile: T;
+  value?: Date;
+  valueType: RangeType;
+} & React.ComponentProps<T>;
+
+export default function TileGroup<T extends React.ElementType>({
   className,
   count = 3,
   dateTransform,
@@ -20,7 +37,7 @@ export default function TileGroup({
   value,
   valueType,
   ...tileProps
-}) {
+}: TileGroupProps<T>) {
   const tiles = [];
   for (let point = start; point <= end; point += step) {
     const date = dateTransform(point);
