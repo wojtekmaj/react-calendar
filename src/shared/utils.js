@@ -56,7 +56,15 @@ function getRangeClassNames(valueRange, dateRange, baseClassName) {
   return classes;
 }
 
-export function getTileClasses({ value, valueType, date, dateType, hover } = {}) {
+export function getTileClasses(args) {
+  if (!args) {
+    throw new Error(
+      'getTileClasses(): Unable to get tile activity classes because nothing was passed.',
+    );
+  }
+
+  const { value, valueType, date, dateType, hover } = args;
+
   const className = 'react-calendar__tile';
   const classes = [className];
 

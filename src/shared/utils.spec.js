@@ -163,12 +163,8 @@ describe('doRangesOverlap', () => {
 });
 
 describe('getTileClasses', () => {
-  it('returns all flags set to false when given no value', () => {
-    const result = getTileClasses();
-
-    expect(result.includes('react-calendar__tile--active')).toBe(false);
-    expect(result.includes('react-calendar__tile--hasActive')).toBe(false);
-    expect(result.includes('react-calendar__tile--hover')).toBe(false);
+  it('throws an error when given no value', () => {
+    expect(() => getTileClasses()).toThrow();
   });
 
   it('throws an error when given date but not given dateType parameter ', () => {
