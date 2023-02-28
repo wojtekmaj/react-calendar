@@ -11,7 +11,9 @@ const { format } = new Intl.DateTimeFormat('en-US', {
 });
 
 const event = new Event('click', { bubbles: true });
-event.persist = () => {};
+event.persist = () => {
+  // Intentionally empty
+};
 
 describe('Calendar', () => {
   it('applies className to its wrapper when given a string', () => {

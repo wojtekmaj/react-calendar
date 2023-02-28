@@ -16,7 +16,9 @@ describe('<WeekNumber /> component', () => {
   });
 
   it('renders button given onClickWeekNumber prop', () => {
-    const onClickWeekNumber = () => {};
+    const onClickWeekNumber = () => {
+      // Intentionally empty
+    };
 
     const { container } = render(
       <WeekNumber {...defaultProps} onClickWeekNumber={onClickWeekNumber} />,

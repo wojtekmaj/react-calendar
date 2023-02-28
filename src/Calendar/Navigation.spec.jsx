@@ -8,8 +8,12 @@ const allViews = ['century', 'decade', 'year', 'month'];
 describe('Navigation', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
-    drillUp: () => {},
-    setActiveStartDate: () => {},
+    drillUp: () => {
+      // Intentionally empty
+    },
+    setActiveStartDate: () => {
+      // Intentionally empty
+    },
     views: allViews,
   };
 
