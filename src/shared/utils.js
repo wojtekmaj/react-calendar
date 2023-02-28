@@ -58,9 +58,7 @@ function getRangeClassNames(valueRange, dateRange, baseClassName) {
 
 export function getTileClasses(args) {
   if (!args) {
-    throw new Error(
-      'getTileClasses(): Unable to get tile activity classes because nothing was passed.',
-    );
+    throw new Error('args is required');
   }
 
   const { value, valueType, date, dateType, hover } = args;
@@ -73,9 +71,7 @@ export function getTileClasses(args) {
   }
 
   if (!Array.isArray(date) && !dateType) {
-    throw new Error(
-      'getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.',
-    );
+    throw new Error('dateType is required when date is not an array of two dates');
   }
 
   const now = new Date();
@@ -90,9 +86,7 @@ export function getTileClasses(args) {
   }
 
   if (!Array.isArray(value) && !valueType) {
-    throw new Error(
-      'getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.',
-    );
+    throw new Error('valueType is required when value is not an array of two dates');
   }
 
   const valueRange = Array.isArray(value) ? value : getRange(valueType, value);
