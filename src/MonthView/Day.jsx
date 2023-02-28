@@ -14,11 +14,11 @@ import { tileProps } from '../shared/propTypes';
 const className = 'react-calendar__month-view__days__day';
 
 export default function Day({
-  formatDay = defaultFormatDay,
-  formatLongDate = defaultFormatLongDate,
   calendarType,
   classes,
   currentMonthIndex,
+  formatDay = defaultFormatDay,
+  formatLongDate = defaultFormatLongDate,
   ...otherProps
 }) {
   const { date, locale } = otherProps;
