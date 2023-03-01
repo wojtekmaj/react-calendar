@@ -100,7 +100,16 @@ function getDetailValue({ value, minDate, maxDate, maxDetail }, index) {
   }
 
   const valueType = getValueType(maxDetail);
-  const detailValueFrom = [getBegin, getEnd][index](valueType, valuePiece);
+  const detailValueFrom = (() => {
+    switch (index) {
+      case 0:
+        return getBegin(valueType, valuePiece);
+      case 1:
+        return getEnd(valueType, valuePiece);
+      default:
+        throw new Error(`Invalid index value: ${index}`);
+    }
+  })();
 
   return between(detailValueFrom, minDate, maxDate);
 }
