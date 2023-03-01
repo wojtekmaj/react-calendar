@@ -51,11 +51,13 @@ export default function TileGroup({
 
 TileGroup.propTypes = {
   ...tileGroupProps,
-  activeStartDate: PropTypes.instanceOf(Date),
+  className: PropTypes.string,
   count: PropTypes.number,
   dateTransform: PropTypes.func.isRequired,
   dateType: PropTypes.string,
+  end: PropTypes.number.isRequired,
   offset: PropTypes.number,
   step: PropTypes.number,
+  start: PropTypes.number.isRequired,
   tile: PropTypes.func.isRequired,
 };
