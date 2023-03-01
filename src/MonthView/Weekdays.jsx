@@ -64,7 +64,7 @@ export default function Weekdays(props) {
 }
 
 Weekdays.propTypes = {
-  calendarType: isCalendarType.isRequired,
+  calendarType: isCalendarType,
   formatShortWeekday: PropTypes.func,
   formatWeekday: PropTypes.func,
   locale: PropTypes.string,
