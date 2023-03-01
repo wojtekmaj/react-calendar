@@ -356,16 +356,25 @@ export default class Calendar extends Component {
       };
 
       function shouldUpdate(key) {
-        return (
-          // Key must exist, and…
-          key in nextState &&
-          // …key changed from undefined to defined or the other way around, or…
-          (typeof nextState[key] !== typeof prevArgs[key] ||
-            // …value changed.
-            (nextState[key] instanceof Date
-              ? nextState[key].getTime() !== prevArgs[key].getTime()
-              : nextState[key] !== prevArgs[key]))
-        );
+        // Key must exist, and…
+        if (!(key in nextState)) {
+          return false;
+        }
+
+        const nextValue = nextState[key];
+        const prevValue = prevArgs[key];
+
+        // …key changed from defined to undefined or the other way around, or…
+        if (typeof nextValue !== typeof prevValue) {
+          return true;
+        }
+
+        // …value changed.
+        if (nextValue instanceof Date && prevValue instanceof Date) {
+          return nextValue.getTime() !== prevValue.getTime();
+        } else {
+          return nextValue !== prevValue;
+        }
       }
 
       if (shouldUpdate('activeStartDate')) {
