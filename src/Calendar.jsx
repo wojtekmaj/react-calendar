@@ -427,6 +427,10 @@ export default class Calendar extends Component {
 
     const nextView = views[views.indexOf(view) + 1];
 
+    if (!nextView) {
+      throw new Error('Attempted to drill down from the lowest view.');
+    }
+
     this.setStateAndCallCallbacks(
       {
         action: 'drillDown',
@@ -447,6 +451,11 @@ export default class Calendar extends Component {
     const { onDrillUp } = this.props;
 
     const nextView = views[views.indexOf(view) - 1];
+
+    if (!nextView) {
+      throw new Error('Attempted to drill up from the highest view.');
+    }
+
     const nextActiveStartDate = getBegin(nextView, activeStartDate);
 
     this.setStateAndCallCallbacks(
