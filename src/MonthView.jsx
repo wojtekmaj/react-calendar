@@ -88,11 +88,14 @@ export default function MonthView(props) {
 MonthView.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   calendarType: isCalendarType,
+  formatDay: PropTypes.func,
+  formatLongDate: PropTypes.func,
   formatShortWeekday: PropTypes.func,
   formatWeekday: PropTypes.func,
   locale: PropTypes.string,
   onClickWeekNumber: PropTypes.func,
   onMouseLeave: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
+  showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
 };
