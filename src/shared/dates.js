@@ -81,7 +81,7 @@ export function getBeginOfDecadeYear(date) {
  * Returns the beginning of a given week.
  *
  * @param {Date} date Date.
- * @param {string} calendarType Calendar type.
+ * @param {string} [calendarType="ISO 8601"] Calendar type.
  */
 export function getBeginOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   const year = getYear(date);
@@ -96,7 +96,7 @@ export function getBeginOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
  * In US calendar week 1 is the one with January 1.
  *
  * @param {Date} date Date.
- * @param {string} calendarType Calendar type.
+ * @param {string} [calendarType="ISO 8601"] Calendar type.
  */
 export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   const calendarTypeForWeekNumber =
@@ -290,11 +290,18 @@ function toYearLabel(locale, formatYear = defaultFormatYear, dates) {
 }
 
 /**
+ * @callback FormatYear
+ * @param {string} locale Locale.
+ * @param {Date} date Date.
+ * @returns {string} Formatted year.
+ */
+
+/**
  * Returns a string labelling a century of a given date.
  * For example, for 2017 it will return 2001-2100.
  *
  * @param {string} locale Locale.
- * @param {function} formatYear Function to format a year.
+ * @param {FormatYear} formatYear Function to format a year.
  * @param {Date|string|number} date Date or a year as a string or as a number.
  */
 export function getCenturyLabel(locale, formatYear, date) {
@@ -306,7 +313,7 @@ export function getCenturyLabel(locale, formatYear, date) {
  * For example, for 2017 it will return 2011-2020.
  *
  * @param {string} locale Locale.
- * @param {function} formatYear Function to format a year.
+ * @param {FormatYear} formatYear Function to format a year.
  * @param {Date|string|number} date Date or a year as a string or as a number.
  */
 export function getDecadeLabel(locale, formatYear, date) {
@@ -326,7 +333,7 @@ export function isCurrentDayOfWeek(date) {
  * Returns a boolean determining whether a given date is a weekend day.
  *
  * @param {Date} date Date.
- * @param {string} calendarType Calendar type.
+ * @param {string} [calendarType="ISO 8601"] Calendar type.
  */
 export function isWeekend(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   const weekday = date.getDay();
