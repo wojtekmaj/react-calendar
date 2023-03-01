@@ -20,29 +20,29 @@ describe('Navigation', () => {
   it('renders prev2, prev, drill up, next and next2 buttons', () => {
     const { container } = render(<Navigation {...defaultProps} view="month" />);
 
-    const children = [...container.firstChild.children];
+    const children = [...container.firstElementChild.children];
 
     const [prev2, prev, drillUp, next, next2] = children;
 
     expect(children).toHaveLength(5);
-    expect(prev2.type).toBe('button');
-    expect(prev.type).toBe('button');
-    expect(drillUp.type).toBe('button');
-    expect(next.type).toBe('button');
-    expect(next2.type).toBe('button');
+    expect(prev2.getAttribute('type')).toBe('button');
+    expect(prev.getAttribute('type')).toBe('button');
+    expect(drillUp.getAttribute('type')).toBe('button');
+    expect(next.getAttribute('type')).toBe('button');
+    expect(next2.getAttribute('type')).toBe('button');
   });
 
   it('renders prev, drill up, next and buttons only for century view', () => {
     const { container } = render(<Navigation {...defaultProps} view="century" />);
 
-    const children = [...container.firstChild.children];
+    const children = [...container.firstElementChild.children];
 
     const [prev, drillUp, next] = children;
 
     expect(children).toHaveLength(3);
-    expect(prev.type).toBe('button');
-    expect(drillUp.type).toBe('button');
-    expect(next.type).toBe('button');
+    expect(prev.getAttribute('type')).toBe('button');
+    expect(drillUp.getAttribute('type')).toBe('button');
+    expect(next.getAttribute('type')).toBe('button');
   });
 
   it('displays proper title for month view', () => {
@@ -97,7 +97,7 @@ describe('Navigation', () => {
       />,
     );
 
-    const [prev2, prev, , next, next2] = [...container.firstChild.children];
+    const [prev2, prev, , next, next2] = [...container.firstElementChild.children];
 
     expect(prev2).toHaveTextContent('prev2Label');
     expect(prev).toHaveTextContent('prevLabel');
@@ -110,7 +110,7 @@ describe('Navigation', () => {
       <Navigation {...defaultProps} navigationAriaLive="polite" view="month" />,
     );
 
-    const [, , navigation] = [...container.firstChild.children];
+    const [, , navigation] = [...container.firstElementChild.children];
 
     expect(navigation).toHaveAttribute('aria-live', 'polite');
   });
@@ -128,7 +128,7 @@ describe('Navigation', () => {
       />,
     );
 
-    const [prev2, prev, navigation, next, next2] = [...container.firstChild.children];
+    const [prev2, prev, navigation, next, next2] = [...container.firstElementChild.children];
 
     expect(prev2).toHaveAccessibleName('prev2AriaLabel');
     expect(prev).toHaveAccessibleName('prevAriaLabel');
