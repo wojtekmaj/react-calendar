@@ -61,7 +61,7 @@ export default function WeekNumbers(props) {
 
 WeekNumbers.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  calendarType: isCalendarType.isRequired,
+  calendarType: isCalendarType,
   onClickWeekNumber: PropTypes.func,
   onMouseLeave: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
