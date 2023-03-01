@@ -13,7 +13,7 @@ describe('Flex', () => {
       </Flex>,
     );
 
-    const wrapper = container.firstChild;
+    const wrapper = container.firstElementChild;
 
     expect(wrapper).toHaveStyle('display: flex');
     expect(wrapper).toHaveStyle('flex-wrap: nowrap');
@@ -28,7 +28,7 @@ describe('Flex', () => {
       </Flex>,
     );
 
-    const wrapper = container.firstChild;
+    const wrapper = container.firstElementChild;
 
     expect(wrapper).toHaveStyle('display: flex');
     expect(wrapper).toHaveStyle('flex-wrap: wrap');
@@ -43,7 +43,7 @@ describe('Flex', () => {
       </Flex>,
     );
 
-    const children = [...container.firstChild.children];
+    const children = [...container.firstElementChild.children];
 
     expect(children).toHaveLength(3);
     expect(children[0]).toHaveTextContent('Hey');
@@ -59,7 +59,7 @@ describe('Flex', () => {
       </Flex>,
     );
 
-    const children = [...container.firstChild.children];
+    const children = [...container.firstElementChild.children];
 
     children.forEach((child) => expect(child).toHaveStyle('flex-basis: 33.333333333333336%'));
     expect(children[0]).toHaveStyle('margin-left: 33.333333333333336%');
