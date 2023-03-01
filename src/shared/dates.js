@@ -113,7 +113,7 @@ export function getWeekNumber(date, calendarType = CALENDAR_TYPES.ISO_8601) {
     year -= 1;
   } while (date < beginOfFirstWeek);
 
-  return Math.round((beginOfWeek - beginOfFirstWeek) / (8.64e7 * 7)) + 1;
+  return Math.round((beginOfWeek.getTime() - beginOfFirstWeek.getTime()) / (8.64e7 * 7)) + 1;
 }
 
 /**
@@ -281,7 +281,7 @@ export function getRange(rangeType, date) {
  * @param {Date} date2 Second date.
  */
 export function getValueRange(rangeType, date1, date2) {
-  const rawNextValue = [date1, date2].sort((a, b) => a - b);
+  const rawNextValue = [date1, date2].sort((a, b) => a.getTime() - b.getTime());
   return [getBegin(rangeType, rawNextValue[0]), getEnd(rangeType, rawNextValue[1])];
 }
 
