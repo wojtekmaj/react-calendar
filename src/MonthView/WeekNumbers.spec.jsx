@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
@@ -91,7 +92,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
 
   it('renders buttons as children when given onClickWeekNumber', () => {
     const { container } = render(
-      <WeekNumbers {...defaultProps} calendarType="ISO 8601" onClickWeekNumber={jest.fn()} />,
+      <WeekNumbers {...defaultProps} calendarType="ISO 8601" onClickWeekNumber={vi.fn()} />,
     );
 
     const children = container.querySelectorAll('button.react-calendar__tile');
@@ -100,7 +101,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
   });
 
   it('calls onClickWeekNumber function with proper arguments when clicked a week number (ISO 8601)', () => {
-    const onClickWeekNumber = jest.fn();
+    const onClickWeekNumber = vi.fn();
     const { container } = render(
       <WeekNumbers
         {...defaultProps}
@@ -116,7 +117,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
   });
 
   it('calls onClickWeekNumber function with proper arguments when clicked a week number (US)', () => {
-    const onClickWeekNumber = jest.fn();
+    const onClickWeekNumber = vi.fn();
     const { container } = render(
       <WeekNumbers {...defaultProps} calendarType="US" onClickWeekNumber={onClickWeekNumber} />,
     );

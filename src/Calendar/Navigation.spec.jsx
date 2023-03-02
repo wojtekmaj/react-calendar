@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
@@ -138,7 +139,7 @@ describe('Navigation', () => {
   });
 
   it('calls drillUp function on drill up button click', () => {
-    const drillUpFn = jest.fn();
+    const drillUpFn = vi.fn();
 
     const { container } = render(<Navigation {...defaultProps} drillUp={drillUpFn} view="month" />);
 
@@ -150,7 +151,7 @@ describe('Navigation', () => {
   });
 
   it('calls setActiveStartDate on prev2, prev, next and next2 buttons click', () => {
-    const setActiveStartDateFn = jest.fn();
+    const setActiveStartDateFn = vi.fn();
 
     const { container } = render(
       <Navigation {...defaultProps} setActiveStartDate={setActiveStartDateFn} view="month" />,
@@ -172,7 +173,7 @@ describe('Navigation', () => {
   });
 
   describe('month navigation', () => {
-    const monthSetActiveStartDateFn = jest.fn();
+    const monthSetActiveStartDateFn = vi.fn();
     let monthViewArrows;
 
     beforeEach(() => {
@@ -221,7 +222,7 @@ describe('Navigation', () => {
   });
 
   describe('year navigation', () => {
-    const yearSetActiveStartDateFn = jest.fn();
+    const yearSetActiveStartDateFn = vi.fn();
     let yearViewArrows;
 
     beforeEach(() => {
@@ -266,7 +267,7 @@ describe('Navigation', () => {
   });
 
   describe('decade navigation', () => {
-    const decadeSetActiveStartDateFn = jest.fn();
+    const decadeSetActiveStartDateFn = vi.fn();
     let decadeViewArrows;
 
     beforeEach(() => {
@@ -317,7 +318,7 @@ describe('Navigation', () => {
   });
 
   describe('century navigation', () => {
-    const centurySetActiveStartDateFn = jest.fn();
+    const centurySetActiveStartDateFn = vi.fn();
     let centuryViewArrows;
 
     beforeEach(() => {
@@ -466,7 +467,7 @@ describe('Navigation', () => {
     const view = 'month';
     const locale = 'de-DE';
 
-    const navigationLabel = jest.fn().mockReturnValue(label);
+    const navigationLabel = vi.fn().mockReturnValue(label);
 
     const { container } = render(
       <Navigation

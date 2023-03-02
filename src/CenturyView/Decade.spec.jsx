@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
@@ -81,7 +82,7 @@ describe('Decade', () => {
 
   it('calls onClick callback when clicked and sends proper date as an argument', () => {
     const date = new Date(2010, 0, 1);
-    const onClick = jest.fn();
+    const onClick = vi.fn();
 
     const { container } = render(<Decade {...tileProps} date={date} onClick={onClick} />);
 
@@ -93,7 +94,7 @@ describe('Decade', () => {
 
   it('calls onMouseOver callback when hovered and sends proper date as an argument', () => {
     const date = new Date(2010, 0, 1);
-    const onMouseOver = jest.fn();
+    const onMouseOver = vi.fn();
 
     const { container } = render(<Decade {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
@@ -106,7 +107,7 @@ describe('Decade', () => {
 
   it('calls onMouseOver callback when focused and sends proper date as an argument', () => {
     const date = new Date(2010, 0, 1);
-    const onMouseOver = jest.fn();
+    const onMouseOver = vi.fn();
 
     const { container } = render(<Decade {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
@@ -129,7 +130,7 @@ describe('Decade', () => {
 
   it('renders tileContent function result properly and sends proper arguments to it', () => {
     const date = new Date(2018, 0, 1);
-    const tileContent = jest.fn();
+    const tileContent = vi.fn();
     tileContent.mockReturnValue(<div className="testContent" />);
 
     const { container } = render(<Decade {...tileProps} date={date} tileContent={tileContent} />);
@@ -148,7 +149,7 @@ describe('Decade', () => {
   it('uses formatYear if given', () => {
     const locale = 'en-US';
     const date = new Date(2018, 0, 1);
-    const formatYear = jest.fn();
+    const formatYear = vi.fn();
     formatYear.mockReturnValue('Mock format');
 
     const { container } = render(

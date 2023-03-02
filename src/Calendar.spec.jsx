@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import React, { createRef } from 'react';
 import { act, render } from '@testing-library/react';
 import { getMonthStart } from '@wojtekmaj/date-utils';
@@ -27,7 +28,7 @@ describe('Calendar', () => {
   });
 
   it('passes container element to inputRef properly', () => {
-    const inputRef = jest.fn();
+    const inputRef = vi.fn();
 
     render(<Calendar inputRef={inputRef} />);
 
@@ -371,7 +372,7 @@ describe('Calendar', () => {
     });
 
     it('calls onDrillUp on drill up properly given view prop', () => {
-      const onDrillUp = jest.fn();
+      const onDrillUp = vi.fn();
       const instance = createRef();
 
       render(
@@ -395,7 +396,7 @@ describe('Calendar', () => {
     });
 
     it('calls onDrillUp on drill up properly when not given view prop', () => {
-      const onDrillUp = jest.fn();
+      const onDrillUp = vi.fn();
       const instance = createRef();
 
       render(
@@ -418,7 +419,7 @@ describe('Calendar', () => {
     });
 
     it('refuses to drill up when already on minimum allowed detail', () => {
-      const onDrillUp = jest.fn();
+      const onDrillUp = vi.fn();
       const instance = createRef();
 
       render(<Calendar onDrillUp={onDrillUp} view="century" ref={instance} />);
@@ -449,7 +450,7 @@ describe('Calendar', () => {
     });
 
     it('calls onDrillDown on drill down given view prop', () => {
-      const onDrillDown = jest.fn();
+      const onDrillDown = vi.fn();
       const instance = createRef();
 
       render(
@@ -473,7 +474,7 @@ describe('Calendar', () => {
     });
 
     it('calls onDrillDown on drill down when not given view prop', () => {
-      const onDrillDown = jest.fn();
+      const onDrillDown = vi.fn();
       const instance = createRef();
 
       render(
@@ -500,7 +501,7 @@ describe('Calendar', () => {
     });
 
     it('refuses to drill down when already on minimum allowed detail', () => {
-      const onDrillDown = jest.fn();
+      const onDrillDown = vi.fn();
       const instance = createRef();
 
       render(<Calendar onDrillDown={onDrillDown} view="month" ref={instance} />);
@@ -529,7 +530,7 @@ describe('Calendar', () => {
     it('calls onActiveStartDateChange on activeStartDate initial set', () => {
       const value = new Date(2019, 0, 15);
       const newActiveStartDate = new Date(2018, 0, 1);
-      const onActiveStartDateChange = jest.fn();
+      const onActiveStartDateChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -556,7 +557,7 @@ describe('Calendar', () => {
       const value = new Date(2019, 0, 15);
       const activeStartDate = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2018, 0, 1);
-      const onActiveStartDateChange = jest.fn();
+      const onActiveStartDateChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -583,7 +584,7 @@ describe('Calendar', () => {
     it('does not call onActiveStartDateChange on activeStartDate change if value is the same as before', () => {
       const activeStartDate = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2017, 0, 1);
-      const onActiveStartDateChange = jest.fn();
+      const onActiveStartDateChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -605,7 +606,7 @@ describe('Calendar', () => {
     it('does not call onActiveStartDateChange on activeStartDate change if value is the same as previously inherited', () => {
       const value = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2017, 0, 1);
-      const onActiveStartDateChange = jest.fn();
+      const onActiveStartDateChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -630,7 +631,7 @@ describe('Calendar', () => {
       const value = new Date(2019, 0, 15);
       const activeStartDate = new Date(2017, 0, 1);
       const newView = 'year';
-      const onViewChange = jest.fn();
+      const onViewChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -658,7 +659,7 @@ describe('Calendar', () => {
       const activeStartDate = new Date(2017, 0, 1);
       const view = 'year';
       const newView = 'month';
-      const onViewChange = jest.fn();
+      const onViewChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -685,7 +686,7 @@ describe('Calendar', () => {
     it('does not call onViewChange on view change if value is the same as before', () => {
       const view = 'year';
       const newView = 'year';
-      const onViewChange = jest.fn();
+      const onViewChange = vi.fn();
       const instance = createRef();
 
       render(<Calendar onViewChange={onViewChange} view={view} ref={instance} />);
@@ -700,7 +701,7 @@ describe('Calendar', () => {
 
   describe('calls onChange properly', () => {
     it('calls onChange function returning the beginning of selected period by default', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(<Calendar onChange={onChange} view="month" ref={instance} />);
@@ -715,7 +716,7 @@ describe('Calendar', () => {
     });
 
     it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(<Calendar onChange={onChange} returnValue="start" view="month" ref={instance} />);
@@ -730,7 +731,7 @@ describe('Calendar', () => {
     });
 
     it('calls onChange function returning the end of the selected period when returnValue is set to "end"', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(<Calendar onChange={onChange} returnValue="end" view="month" ref={instance} />);
@@ -745,7 +746,7 @@ describe('Calendar', () => {
     });
 
     it('calls onChange function returning the beginning of selected period when returnValue is set to "range"', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(<Calendar onChange={onChange} returnValue="range" view="month" ref={instance} />);
@@ -763,7 +764,7 @@ describe('Calendar', () => {
     });
 
     it('calls onChange function returning the beginning of selected period, but no earlier than minDate', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -786,7 +787,7 @@ describe('Calendar', () => {
     });
 
     it('calls onChange function returning the beginning of selected period, but no later than maxDate', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -809,7 +810,7 @@ describe('Calendar', () => {
     });
 
     it('calls onChange function returning the end of selected period, but no earlier than minDate', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -832,7 +833,7 @@ describe('Calendar', () => {
     });
 
     it('calls onChange function returning the end of selected period, but no later than maxDate', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -855,7 +856,7 @@ describe('Calendar', () => {
     });
 
     it('does not call onChange function returning a range when selected one piece of a range by default', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
@@ -870,7 +871,7 @@ describe('Calendar', () => {
     });
 
     it('does not call onChange function returning a range when selected one piece of a range given allowPartialRange = false', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -893,7 +894,7 @@ describe('Calendar', () => {
     });
 
     it('calls onChange function returning a partial range when selected one piece of a range given allowPartialRange = true', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(
@@ -911,7 +912,7 @@ describe('Calendar', () => {
     });
 
     it('calls onChange function returning a range when selected two pieces of a range', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
@@ -934,7 +935,7 @@ describe('Calendar', () => {
     });
 
     it('calls onChange function returning a range when selected reversed two pieces of a range', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const instance = createRef();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
