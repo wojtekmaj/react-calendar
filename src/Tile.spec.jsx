@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
@@ -20,7 +21,7 @@ describe('<Tile /> component', () => {
   });
 
   it('passes onClick to button', () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
 
     const { container } = render(<Tile {...defaultProps} onClick={onClick} />);
 
@@ -59,7 +60,7 @@ describe('<Tile /> component', () => {
 
   it('calls formatAbbr properly', () => {
     const date = new Date(2019, 5, 1);
-    const formatAbbr = jest.fn();
+    const formatAbbr = vi.fn();
     const locale = 'en-US';
 
     render(<Tile {...defaultProps} date={date} formatAbbr={formatAbbr} locale={locale} />);
@@ -89,7 +90,7 @@ describe('<Tile /> component', () => {
   it('calls tileClassName properly', () => {
     const activeStartDate = new Date(2019, 5, 1);
     const date = new Date(2019, 5, 15);
-    const tileClassName = jest.fn();
+    const tileClassName = vi.fn();
     const view = 'month';
 
     const { rerender } = render(
@@ -146,7 +147,7 @@ describe('<Tile /> component', () => {
   it('calls tileContent properly', () => {
     const activeStartDate = new Date(2019, 5, 1);
     const date = new Date(2019, 5, 15);
-    const tileContent = jest.fn();
+    const tileContent = vi.fn();
     const view = 'month';
 
     const { rerender } = render(
@@ -203,7 +204,7 @@ describe('<Tile /> component', () => {
   it('calls tileDisabled properly', () => {
     const activeStartDate = new Date(2019, 5, 1);
     const date = new Date(2019, 5, 15);
-    const tileDisabled = jest.fn();
+    const tileDisabled = vi.fn();
     const view = 'month';
 
     render(

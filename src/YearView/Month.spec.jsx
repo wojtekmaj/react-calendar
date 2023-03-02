@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
@@ -79,7 +80,7 @@ describe('Month', () => {
 
   it('calls onClick callback when clicked and sends proper date as an argument', () => {
     const date = new Date(2018, 0, 1);
-    const onClick = jest.fn();
+    const onClick = vi.fn();
 
     const { container } = render(<Month {...tileProps} date={date} onClick={onClick} />);
 
@@ -91,7 +92,7 @@ describe('Month', () => {
 
   it('calls onMouseOver callback when hovered and sends proper date as an argument', () => {
     const date = new Date(2018, 0, 1);
-    const onMouseOver = jest.fn();
+    const onMouseOver = vi.fn();
 
     const { container } = render(<Month {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
@@ -104,7 +105,7 @@ describe('Month', () => {
 
   it('calls onMouseOver callback when focused and sends proper date as an argument', () => {
     const date = new Date(2018, 0, 1);
-    const onMouseOver = jest.fn();
+    const onMouseOver = vi.fn();
 
     const { container } = render(<Month {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
@@ -127,7 +128,7 @@ describe('Month', () => {
 
   it('renders tileContent function result properly and sends proper arguments to it', () => {
     const date = new Date(2018, 0, 1);
-    const tileContent = jest.fn();
+    const tileContent = vi.fn();
     tileContent.mockReturnValue(<div className="testContent" />);
 
     const { container } = render(<Month {...tileProps} date={date} tileContent={tileContent} />);
@@ -146,7 +147,7 @@ describe('Month', () => {
   it('uses formatMonth if given', () => {
     const locale = 'en-US';
     const date = new Date(2018, 0, 1);
-    const formatMonth = jest.fn();
+    const formatMonth = vi.fn();
     formatMonth.mockReturnValue('Mock format');
 
     const { container } = render(
@@ -163,7 +164,7 @@ describe('Month', () => {
   it('uses formatMonthYear if given', () => {
     const locale = 'en-US';
     const date = new Date(2018, 0, 1);
-    const formatMonthYear = jest.fn();
+    const formatMonthYear = vi.fn();
     formatMonthYear.mockReturnValue('Mock format');
 
     const { container } = render(
