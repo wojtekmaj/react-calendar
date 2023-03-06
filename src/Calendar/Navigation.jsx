@@ -133,21 +133,21 @@ export default function Navigation({
         <span className={`${labelClassName}__labelText ${labelClassName}__labelText--from`}>
           {renderLabel(activeStartDate)}
         </span>
-        {showDoubleView && (
+        {showDoubleView ? (
           <>
             <span className={`${labelClassName}__divider`}> – </span>
             <span className={`${labelClassName}__labelText ${labelClassName}__labelText--to`}>
               {renderLabel(nextActiveStartDate)}
             </span>
           </>
-        )}
+        ) : null}
       </button>
     );
   }
 
   return (
     <div className={className}>
-      {prev2Label !== null && shouldShowPrevNext2Buttons && (
+      {prev2Label !== null && shouldShowPrevNext2Buttons ? (
         <button
           aria-label={prev2AriaLabel}
           className={`${className}__arrow ${className}__prev2-button`}
@@ -157,7 +157,7 @@ export default function Navigation({
         >
           {prev2Label}
         </button>
-      )}
+      ) : null}
       {prevLabel !== null && (
         <button
           aria-label={prevAriaLabel}
@@ -181,7 +181,7 @@ export default function Navigation({
           {nextLabel}
         </button>
       )}
-      {next2Label !== null && shouldShowPrevNext2Buttons && (
+      {next2Label !== null && shouldShowPrevNext2Buttons ? (
         <button
           aria-label={next2AriaLabel}
           className={`${className}__arrow ${className}__next2-button`}
@@ -191,7 +191,7 @@ export default function Navigation({
         >
           {next2Label}
         </button>
-      )}
+      ) : null}
     </div>
   );
 }
