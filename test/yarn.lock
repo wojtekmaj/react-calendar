@@ -1020,17 +1020,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-user-locale@npm:^2.1.3":
-  version: 2.1.3
-  resolution: "get-user-locale@npm:2.1.3"
-  dependencies:
-    "@types/lodash.memoize": ^4.1.7
-    lodash.memoize: ^4.1.1
-  checksum: 2fb6e14fdf1eafc0dea620d23fa658ac12c3dba4da81e89703a36152115428463e36d0df62dfeed9af1647907926f87f391eb9148b79e56cd468caf3b4c64f5b
-  languageName: node
-  linkType: hard
-
-"get-user-locale@npm:^2.2.0":
+"get-user-locale@npm:^2.1.3, get-user-locale@npm:^2.2.0":
   version: 2.2.0
   resolution: "get-user-locale@npm:2.2.0"
   dependencies:
