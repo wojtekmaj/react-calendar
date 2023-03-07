@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 
 fs.copyFile('src/Calendar.css', 'dist/Calendar.css', (error) => {
   if (error) {
