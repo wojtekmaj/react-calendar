@@ -59,6 +59,15 @@ export default function FocusContainer({
 
       const nextTabDate = new Date(activeTabDate);
 
+      if (
+        event.key === 'ArrowUp' ||
+        event.key === 'ArrowDown' ||
+        event.key === 'ArrowRight' ||
+        event.key === 'ArrowLeft'
+      ) {
+        event.preventDefault();
+      }
+
       switch (true) {
         case event.key === 'ArrowUp' && view === 'month':
           nextTabDate.setDate(activeTabDate.getDate() - 7);
