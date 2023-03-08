@@ -1,10 +1,27 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getBeginNext, getBeginPrevious, getEndPrevious } from './shared/dates';
 import { isValue, isView } from './shared/propTypes';
 
+const DefaultFocusContext = {
+  activeTabDate: new Date(),
+  setActiveTabDate: () => null,
+};
+
+export const FocusContext = React.createContext(DefaultFocusContext);
+FocusContext.displayName = 'FocusContext';
+
+function clearTimeFromDate(date) {
+  if (date !== null && date !== undefined) {
+    return new Date(new Date(date).toDateString());
+  } else {
+    return date;
+  }
+}
+
 export default function FocusContainer({
   children,
+  containerRef,
   value,
   activeStartDate,
   setActiveStartDate,
@@ -12,8 +29,9 @@ export default function FocusContainer({
   view,
 }) {
   const currentValue = Array.isArray(value) ? value[0] : value;
-  const [activeTabDate, setActiveTabDate] = useState(currentValue ?? activeStartDate);
-  const containerRef = useRef(null);
+  const [activeTabDate, setActiveTabDate] = useState(
+    clearTimeFromDate(currentValue) ?? activeStartDate,
+  );
 
   // Move the focus to the current focusable element
   useEffect(() => {
@@ -31,7 +49,7 @@ export default function FocusContainer({
         focusableElement.focus();
       }
     }, 0);
-  }, [activeTabDate]);
+  }, [activeTabDate, containerRef]);
 
   // Set the focusable element to the active start date when the
   // active start date changes and the previous focusable element goes
@@ -147,12 +165,20 @@ export default function FocusContainer({
     };
   });
 
-  return <>{children({ activeTabDate, containerRef })}</>;
+  return (
+    <FocusContext.Provider value={{ activeTabDate, setActiveTabDate }}>
+      {children}
+    </FocusContext.Provider>
+  );
 }
 
 FocusContainer.propTypes = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  children: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  containerRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
   setActiveStartDate: PropTypes.func.isRequired,
   showDoubleView: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, isValue]),

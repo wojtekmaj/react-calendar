@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 
 import Navigation from './Calendar/Navigation';
 import CenturyView from './CenturyView';
 import DecadeView from './DecadeView';
-import FocusContainer from './FocusContainer';
+import FocusContainer, { FocusContext } from './FocusContainer';
 import MonthView from './MonthView';
 import YearView from './YearView';
 
@@ -252,6 +252,8 @@ export default class Calendar extends Component {
     value: this.props.defaultValue,
     view: this.props.defaultView,
   };
+
+  containerRef = createRef(null);
 
   get activeStartDate() {
     const { activeStartDate: activeStartDateProps } = this.props;
@@ -723,22 +725,27 @@ export default class Calendar extends Component {
         {this.renderNavigation()}
         <FocusContainer
           activeStartDate={activeStartDate}
+          containerRef={this.containerRef}
           setActiveStartDate={setActiveStartDate}
           showDoubleView={showDoubleView}
           value={value}
           view={view}
         >
-          {({ activeTabDate, containerRef }) => (
-            <div
-              className={`${baseClassName}__viewContainer`}
-              onBlur={selectRange ? onMouseLeave : null}
-              onMouseLeave={selectRange ? onMouseLeave : null}
-              ref={containerRef}
-            >
-              {this.renderContent(activeTabDate)}
-              {showDoubleView ? this.renderContent(activeTabDate, true) : null}
-            </div>
-          )}
+          <div
+            className={`${baseClassName}__viewContainer`}
+            onBlur={selectRange ? onMouseLeave : null}
+            onMouseLeave={selectRange ? onMouseLeave : null}
+            ref={this.containerRef}
+          >
+            <FocusContext.Consumer>
+              {({ activeTabDate }) => (
+                <>
+                  {this.renderContent(activeTabDate)}
+                  {showDoubleView ? this.renderContent(activeTabDate, true) : null}
+                </>
+              )}
+            </FocusContext.Consumer>
+          </div>
         </FocusContainer>
       </div>
     );
