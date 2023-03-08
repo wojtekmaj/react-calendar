@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getBeginNext, getBeginPrevious, getEndPrevious } from './shared/dates';
 import { isValue, isView } from './shared/propTypes';
 
@@ -32,6 +32,7 @@ export default function FocusContainer({
   const [activeTabDate, setActiveTabDate] = useState(
     clearTimeFromDate(currentValue) ?? activeStartDate,
   );
+  const activeTabeDateRef = useRef(activeTabDate);
 
   // Move the focus to the current focusable element
   useEffect(() => {
@@ -51,6 +52,12 @@ export default function FocusContainer({
     }, 0);
   }, [activeTabDate, containerRef]);
 
+  // Using a ref in the below `useEffect`, rather than the actual `activeTabDate` value
+  // prevents the `useEffect` from firing every time the `activeTabDate` changes.
+  useEffect(() => {
+    activeTabeDateRef.current = activeTabDate;
+  }, [activeTabDate]);
+
   // Set the focusable element to the active start date when the
   // active start date changes and the previous focusable element goes
   // out of view (e.g. when using the navigation buttons)
@@ -59,13 +66,13 @@ export default function FocusContainer({
     const endPrevious = getEndPrevious(view, activeStartDate);
 
     if (
-      activeTabDate <= endPrevious ||
-      (!showDoubleView && activeTabDate >= beginNext) ||
-      (showDoubleView && activeTabDate >= getBeginNext(view, beginNext))
+      activeTabeDateRef.current <= endPrevious ||
+      (!showDoubleView && activeTabeDateRef.current >= beginNext) ||
+      (showDoubleView && activeTabeDateRef.current >= getBeginNext(view, beginNext))
     ) {
       setActiveTabDate(activeStartDate);
     }
-  }, [view, activeStartDate, activeTabDate, showDoubleView]);
+  }, [view, activeStartDate, activeTabeDateRef, showDoubleView]);
 
   // Handle arrow keyboard interactions by moving the focusable element around
   useEffect(() => {
