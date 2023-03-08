@@ -17,7 +17,7 @@ import {
   isMinDate,
   isRef,
   isValue,
-  isView
+  isView,
 } from './shared/propTypes';
 import { between } from './shared/utils';
 
@@ -736,7 +736,7 @@ export default class Calendar extends Component {
               ref={containerRef}
             >
               {this.renderContent(activeTabDate)}
-              {showDoubleView && this.renderContent(activeTabDate, true)}
+              {showDoubleView ? this.renderContent(activeTabDate, true) : null}
             </div>
           )}
         </FocusContainer>

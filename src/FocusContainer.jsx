@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
 import { getBeginNext, getBeginPrevious, getEndPrevious } from './shared/dates';
 import { isValue, isView } from './shared/propTypes';
 
@@ -47,7 +47,7 @@ export default function FocusContainer({
     ) {
       setActiveTabDate(activeStartDate);
     }
-  }, [view, activeStartDate]);
+  }, [view, activeStartDate, activeTabDate, showDoubleView]);
 
   // Handle arrow keyboard interactions by moving the focusable element around
   useEffect(() => {
