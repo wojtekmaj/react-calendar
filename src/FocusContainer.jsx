@@ -20,12 +20,12 @@ function clearTimeFromDate(date) {
 }
 
 export default function FocusContainer({
+  activeStartDate,
   children,
   containerRef,
-  value,
-  activeStartDate,
   setActiveStartDate,
   showDoubleView,
+  value,
   view,
 }) {
   const currentValue = Array.isArray(value) ? value[0] : value;
