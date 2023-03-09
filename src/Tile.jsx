@@ -92,6 +92,7 @@ export default class Tile extends Component {
         onClick={this.handleClick}
         onFocus={onMouseOver ? () => onMouseOver(date) : undefined}
         onMouseOver={onMouseOver ? () => onMouseOver(date) : undefined}
+        role="gridcell"
         style={style}
         tabIndex={isFocusable ? 0 : -1}
         type="button"

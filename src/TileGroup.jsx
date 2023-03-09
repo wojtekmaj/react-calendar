@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Flex from './Flex';
@@ -22,6 +22,8 @@ export default function TileGroup({
   ...tileProps
 }) {
   const tiles = [];
+  const gridRef = useRef(null);
+  const [isFocusWithin, setIsFocusWithin] = useState(false);
   for (let point = start; point <= end; point += step) {
     const date = dateTransform(point);
 
@@ -42,8 +44,35 @@ export default function TileGroup({
     );
   }
 
+  const handleGridBlur = useCallback((event) => {
+    const focusHasLeftGrid = !gridRef.current.contains(event.relatedTarget);
+    if (focusHasLeftGrid) {
+      setIsFocusWithin(false);
+    }
+  }, []);
+
+  const handleGridFocus = useCallback(() => {
+    if (!isFocusWithin) {
+      setIsFocusWithin(true);
+
+      // set focus to the first focusable tile
+      const focusableTile = gridRef.current.querySelector('[tabindex="0"]');
+      focusableTile?.focus();
+    }
+  }, [isFocusWithin]);
+
   return (
-    <Flex className={className} count={count} offset={offset} wrap>
+    <Flex
+      className={className}
+      count={count}
+      offset={offset}
+      onBlur={handleGridBlur}
+      onFocus={handleGridFocus}
+      ref={gridRef}
+      role="grid"
+      tabIndex={isFocusWithin ? -1 : 0}
+      wrap
+    >
       {tiles}
     </Flex>
   );
