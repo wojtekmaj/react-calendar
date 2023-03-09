@@ -708,7 +708,7 @@ export default class Calendar extends Component {
   }
 
   render() {
-    const { className, inputRef, selectRange, showDoubleView } = this.props;
+    const { className, inputRef, maxDate, minDate, selectRange, showDoubleView } = this.props;
     const { onMouseLeave, value, view, activeStartDate, setActiveStartDate } = this;
     const valueArray = [].concat(value);
 
@@ -726,6 +726,8 @@ export default class Calendar extends Component {
         <FocusContainer
           activeStartDate={activeStartDate}
           containerRef={this.containerRef}
+          minDate={minDate}
+          maxDate={maxDate}
           setActiveStartDate={setActiveStartDate}
           showDoubleView={showDoubleView}
           value={value}

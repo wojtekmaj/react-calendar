@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { getBeginNext, getBeginPrevious, getEndPrevious } from './shared/dates';
-import { isValue, isView } from './shared/propTypes';
+import { isMaxDate, isMinDate, isValue, isView } from './shared/propTypes';
 
 const DefaultFocusContext = {
   activeTabDate: new Date(),
@@ -23,6 +23,8 @@ export default function FocusContainer({
   activeStartDate,
   children,
   containerRef,
+  maxDate,
+  minDate,
   setActiveStartDate,
   showDoubleView,
   value,
@@ -151,6 +153,11 @@ export default function FocusContainer({
         return;
       }
 
+      // If the focusable element is outside the allowable bounds, exit
+      if (nextTabDate.getTime() > maxDate.getTime() || nextTabDate.getTime() < minDate.getTime()) {
+        return;
+      }
+
       setActiveTabDate(nextTabDate);
 
       // If the new focusable element is out of view, adjust the view
@@ -186,6 +193,8 @@ FocusContainer.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]),
+  maxDate: isMaxDate,
+  minDate: isMinDate,
   setActiveStartDate: PropTypes.func.isRequired,
   showDoubleView: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, isValue]),
