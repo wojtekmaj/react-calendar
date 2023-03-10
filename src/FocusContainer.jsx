@@ -19,6 +19,28 @@ function clearTimeFromDate(date) {
   }
 }
 
+const getTopRowYearOffset = (year) => {
+  const yearDigit = `${year}`.slice(-1);
+
+  if (yearDigit === '1') {
+    return 1;
+  } else if (yearDigit === '2' || yearDigit === '3') {
+    return 4;
+  } else {
+    return 3;
+  }
+};
+
+const getBottomRowYearOffset = (year) => {
+  const yearDigit = `${year}`.slice(-1);
+
+  if (yearDigit === '0') {
+    return 1;
+  } else {
+    return 3;
+  }
+};
+
 export default function FocusContainer({
   activeStartDate,
   children,
@@ -103,7 +125,9 @@ export default function FocusContainer({
           nextTabDate.setMonth(activeTabDate.getMonth() - 3);
           break;
         case event.key === 'ArrowUp' && view === 'decade':
-          nextTabDate.setFullYear(activeTabDate.getFullYear() - 3);
+          nextTabDate.setFullYear(
+            activeTabDate.getFullYear() - getTopRowYearOffset(activeTabDate.getFullYear()),
+          );
           break;
         case event.key === 'ArrowUp' && view === 'century':
           nextTabDate.setFullYear(activeTabDate.getFullYear() - 30);
@@ -115,7 +139,9 @@ export default function FocusContainer({
           nextTabDate.setMonth(activeTabDate.getMonth() + 3);
           break;
         case event.key === 'ArrowDown' && view === 'decade':
-          nextTabDate.setFullYear(activeTabDate.getFullYear() + 3);
+          nextTabDate.setFullYear(
+            activeTabDate.getFullYear() + getBottomRowYearOffset(activeTabDate.getFullYear()),
+          );
           break;
         case event.key === 'ArrowDown' && view === 'century':
           nextTabDate.setFullYear(activeTabDate.getFullYear() + 30);
