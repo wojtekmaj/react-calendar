@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { getBeginNext, getBeginPrevious, getEndPrevious } from './shared/dates';
 import { isMaxDate, isMinDate, isValue, isView } from './shared/propTypes';
 
@@ -41,6 +41,30 @@ const getBottomRowYearOffset = (year) => {
   }
 };
 
+const getTopRowDecadeOffset = (year) => {
+  const decadeDigit = `${year}`.slice(-2, -1);
+
+  if (decadeDigit === '0') {
+    return 10;
+  } else if (decadeDigit === '1' || decadeDigit === '2') {
+    return 40;
+  } else {
+    return 30;
+  }
+};
+
+const getBottomRowDecaderOffset = (year) => {
+  const decadeDigit = `${year}`.slice(-2, -1);
+
+  if (decadeDigit === '9') {
+    return 10;
+  } else if (decadeDigit === '7' || decadeDigit === '8') {
+    return 40;
+  } else {
+    return 30;
+  }
+};
+
 export default function FocusContainer({
   activeStartDate,
   children,
@@ -53,34 +77,35 @@ export default function FocusContainer({
   view,
 }) {
   const currentValue = Array.isArray(value) ? value[0] : value;
-  const [activeTabDate, setActiveTabDate] = useState(
+  const [activeTabDateState, setActiveTabDateState] = useState(
     clearTimeFromDate(currentValue) ?? activeStartDate,
   );
-  const activeTabeDateRef = useRef(activeTabDate);
+  const activeTabeDateRef = useRef(activeTabDateState);
+  const shouldSetFocusRef = useRef(false);
+
+  const setActiveTabDateAndFocus = useCallback((date) => {
+    shouldSetFocusRef.current = true;
+    setActiveTabDateState(date);
+  }, []);
 
   // Move the focus to the current focusable element
   useEffect(() => {
-    // If the previously focused element was not in the grid,
-    // (e.g. it was a navigation button), we don't move the focus
-    if (!containerRef.current?.contains(document.activeElement)) {
-      return;
-    }
-
     // We are applying the focus async, to ensure that the calendar view
     // was already updated
     setTimeout(() => {
       const focusableElement = containerRef.current?.querySelector('[tabindex="0"]');
-      if (focusableElement) {
-        focusableElement.focus();
+      if (shouldSetFocusRef.current) {
+        shouldSetFocusRef.current = false;
+        focusableElement?.focus();
       }
     }, 0);
-  }, [activeTabDate, containerRef]);
+  }, [activeTabDateState, containerRef]);
 
   // Using a ref in the below `useEffect`, rather than the actual `activeTabDate` value
   // prevents the `useEffect` from firing every time the `activeTabDate` changes.
   useEffect(() => {
-    activeTabeDateRef.current = activeTabDate;
-  }, [activeTabDate]);
+    activeTabeDateRef.current = activeTabDateState;
+  }, [activeTabDateState]);
 
   // Set the focusable element to the active start date when the
   // active start date changes and the previous focusable element goes
@@ -94,7 +119,7 @@ export default function FocusContainer({
       (!showDoubleView && activeTabeDateRef.current >= beginNext) ||
       (showDoubleView && activeTabeDateRef.current >= getBeginNext(view, beginNext))
     ) {
-      setActiveTabDate(activeStartDate);
+      setActiveTabDateState(activeStartDate);
     }
   }, [view, activeStartDate, activeTabeDateRef, showDoubleView]);
 
@@ -106,7 +131,7 @@ export default function FocusContainer({
         return;
       }
 
-      const nextTabDate = new Date(activeTabDate);
+      const nextTabDate = new Date(activeTabDateState);
 
       if (
         event.key === 'ArrowUp' ||
@@ -119,63 +144,71 @@ export default function FocusContainer({
 
       switch (true) {
         case event.key === 'ArrowUp' && view === 'month':
-          nextTabDate.setDate(activeTabDate.getDate() - 7);
+          nextTabDate.setDate(activeTabDateState.getDate() - 7);
           break;
         case event.key === 'ArrowUp' && view === 'year':
-          nextTabDate.setMonth(activeTabDate.getMonth() - 3);
+          nextTabDate.setMonth(activeTabDateState.getMonth() - 3);
           break;
         case event.key === 'ArrowUp' && view === 'decade':
           nextTabDate.setFullYear(
-            activeTabDate.getFullYear() - getTopRowYearOffset(activeTabDate.getFullYear()),
+            activeTabDateState.getFullYear() -
+              getTopRowYearOffset(activeTabDateState.getFullYear()),
           );
           break;
         case event.key === 'ArrowUp' && view === 'century':
-          nextTabDate.setFullYear(activeTabDate.getFullYear() - 30);
+          nextTabDate.setFullYear(
+            activeTabDateState.getFullYear() -
+              getTopRowDecadeOffset(activeTabDateState.getFullYear()),
+          );
           break;
         case event.key === 'ArrowDown' && view === 'month':
-          nextTabDate.setDate(activeTabDate.getDate() + 7);
+          nextTabDate.setDate(activeTabDateState.getDate() + 7);
           break;
         case event.key === 'ArrowDown' && view === 'year':
-          nextTabDate.setMonth(activeTabDate.getMonth() + 3);
+          nextTabDate.setMonth(activeTabDateState.getMonth() + 3);
           break;
         case event.key === 'ArrowDown' && view === 'decade':
           nextTabDate.setFullYear(
-            activeTabDate.getFullYear() + getBottomRowYearOffset(activeTabDate.getFullYear()),
+            activeTabDateState.getFullYear() +
+              getBottomRowYearOffset(activeTabDateState.getFullYear()),
           );
           break;
         case event.key === 'ArrowDown' && view === 'century':
-          nextTabDate.setFullYear(activeTabDate.getFullYear() + 30);
+          nextTabDate.setFullYear(
+            activeTabDateState.getFullYear() +
+              getBottomRowDecaderOffset(activeTabDateState.getFullYear()),
+          );
           break;
         case event.key === 'ArrowLeft' && view === 'month':
-          nextTabDate.setDate(activeTabDate.getDate() - 1);
+          nextTabDate.setDate(activeTabDateState.getDate() - 1);
           break;
         case event.key === 'ArrowLeft' && view === 'year':
-          nextTabDate.setMonth(activeTabDate.getMonth() - 1);
+          nextTabDate.setMonth(activeTabDateState.getMonth() - 1);
           break;
         case event.key === 'ArrowLeft' && view === 'decade':
-          nextTabDate.setFullYear(activeTabDate.getFullYear() - 1);
+          nextTabDate.setFullYear(activeTabDateState.getFullYear() - 1);
           break;
         case event.key === 'ArrowLeft' && view === 'century':
-          nextTabDate.setFullYear(activeTabDate.getFullYear() - 10);
+          nextTabDate.setFullYear(activeTabDateState.getFullYear() - 10);
           break;
         case event.key === 'ArrowRight' && view === 'month':
-          nextTabDate.setDate(activeTabDate.getDate() + 1);
+          nextTabDate.setDate(activeTabDateState.getDate() + 1);
           break;
         case event.key === 'ArrowRight' && view === 'year':
-          nextTabDate.setMonth(activeTabDate.getMonth() + 1);
+          nextTabDate.setMonth(activeTabDateState.getMonth() + 1);
           break;
         case event.key === 'ArrowRight' && view === 'decade':
-          nextTabDate.setFullYear(activeTabDate.getFullYear() + 1);
+          nextTabDate.setFullYear(activeTabDateState.getFullYear() + 1);
           break;
         case event.key === 'ArrowRight' && view === 'century':
-          nextTabDate.setFullYear(activeTabDate.getFullYear() + 10);
+          nextTabDate.setFullYear(activeTabDateState.getFullYear() + 10);
           break;
         default:
           break;
       }
 
       // If the focusable element is unchanged, exit
-      if (nextTabDate.getTime() === activeTabDate.getTime()) {
+      if (nextTabDate.getTime() === activeTabDateState.getTime()) {
         return;
       }
 
@@ -184,7 +217,7 @@ export default function FocusContainer({
         return;
       }
 
-      setActiveTabDate(nextTabDate);
+      setActiveTabDateAndFocus(nextTabDate);
 
       // If the new focusable element is out of view, adjust the view
       // by changing the active start date
@@ -206,7 +239,9 @@ export default function FocusContainer({
   });
 
   return (
-    <FocusContext.Provider value={{ activeTabDate, setActiveTabDate }}>
+    <FocusContext.Provider
+      value={{ activeTabDate: activeTabDateState, setActiveTabDate: setActiveTabDateAndFocus }}
+    >
       {children}
     </FocusContext.Provider>
   );
