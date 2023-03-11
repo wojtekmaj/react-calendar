@@ -23,6 +23,12 @@ describe('FocusContainer', () => {
     view: 'decade',
   };
 
+  const defaultCenturyProps = {
+    defaultValue: new Date('January 01, 2041'),
+    defaultActiveStartDate: new Date('January 01, 2001'),
+    view: 'century',
+  };
+
   const renderCalendar = (props) => {
     return render(<Calendar {...props} />);
   };
@@ -155,6 +161,43 @@ describe('FocusContainer', () => {
           await waitFor(() => expect(document.activeElement.textContent).toBe('2024'));
         });
       });
+
+      describe('centuryView', () => {
+        it('moves to the next decade', async () => {
+          renderCalendar(defaultCenturyProps);
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowRight' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2051 – 2060'));
+        });
+
+        it('wraps to the next row, if decade is at the end of a row', async () => {
+          renderCalendar({
+            ...defaultCenturyProps,
+            defaultValue: new Date('January 01, 2055'),
+          });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowRight' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2061 – 2070'));
+        });
+
+        it('will not move focus beyond `maxDate`', async () => {
+          renderCalendar({
+            ...defaultCenturyProps,
+            maxDate: new Date('November 25, 2045'),
+          });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowRight' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2041 – 2050'));
+
+          // The previous expect will return a false positive even if not capped by `maxDate`
+          // This additional expect will fail however, if the 'ArrowRight' dosen't no-op.
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowLeft' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2031 – 2040'));
+        });
+      });
     });
 
     describe('arrowLeft', () => {
@@ -248,6 +291,37 @@ describe('FocusContainer', () => {
           // This additional expect will fail however, if the 'ArrowLeft' dosen't no-op.
           fireEvent.keyDown(document.activeElement, { key: 'ArrowRight' });
           await waitFor(() => expect(document.activeElement.textContent).toBe('2026'));
+        });
+      });
+
+      describe('centuryView', () => {
+        it('moves to the previous month', async () => {
+          renderCalendar(defaultCenturyProps);
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowLeft' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2031 – 2040'));
+        });
+
+        it('wraps to the previous row, if decade is at the start of a row', async () => {
+          renderCalendar({ ...defaultCenturyProps, defaultValue: new Date('January 01, 2032') });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowLeft' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2021 – 2030'));
+        });
+
+        it('will not move focus beyond `minDate`', async () => {
+          renderCalendar({ ...defaultCenturyProps, minDate: new Date('April 09, 2035') });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowLeft' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2041 – 2050'));
+
+          // The previous expect will return a false positive even if not capped by `minDate`
+          // This additional expect will fail however, if the 'ArrowLeft' dosen't no-op.
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowRight' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2051 – 2060'));
         });
       });
     });
@@ -373,6 +447,57 @@ describe('FocusContainer', () => {
           await waitFor(() => expect(document.activeElement.textContent).toBe('2028'));
         });
       });
+
+      describe('centuryView', () => {
+        it('moves to the previous row', async () => {
+          renderCalendar(defaultCenturyProps);
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2011 – 2020'));
+        });
+
+        it('wraps to the previous century, if decade is in the 00s', async () => {
+          renderCalendar({ ...defaultCenturyProps, defaultValue: new Date('January 01, 2001') });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('1991 – 2000'));
+        });
+
+        it('wraps to the previous century, if decade is in the 10s', async () => {
+          renderCalendar({ ...defaultCenturyProps, defaultValue: new Date('January 01, 2012') });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('1971 – 1980'));
+        });
+
+        it('wraps to the previous century, if decade is in the 20s', async () => {
+          renderCalendar({ ...defaultCenturyProps, defaultValue: new Date('January 01, 2023') });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('1981 – 1990'));
+        });
+
+        it('will not move focus beyond `minDate`', async () => {
+          renderCalendar({
+            ...defaultCenturyProps,
+            defaultValue: new Date('January 1, 2045'),
+            minDate: new Date('April 20, 2045'),
+          });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2041 – 2050'));
+
+          // The previous expect will return a false positive even if not capped by `minDate`
+          // This additional expect will fail however, if the 'ArrowUp' dosen't no-op.
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2071 – 2080'));
+        });
+      });
     });
 
     describe('arrowDown', () => {
@@ -478,6 +603,57 @@ describe('FocusContainer', () => {
           // This additional expect will fail however, if the 'ArrowDown' dosen't no-op.
           fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
           await waitFor(() => expect(document.activeElement.textContent).toBe('2022'));
+        });
+      });
+
+      describe('centuryView', () => {
+        it('moves to the next row', async () => {
+          renderCalendar(defaultCenturyProps);
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2071 – 2080'));
+        });
+
+        it('wraps to the next century, if decade is in the 90s', async () => {
+          renderCalendar({ ...defaultCenturyProps, defaultValue: new Date('January 01 2091') });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2101 – 2110'));
+        });
+
+        it('wraps to the next century, if decade is in the 80s', async () => {
+          renderCalendar({ ...defaultCenturyProps, defaultValue: new Date('January 01 2083') });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2121 – 2130'));
+        });
+
+        it('wraps to the next century, if decade is in the 70s', async () => {
+          renderCalendar({ ...defaultCenturyProps, defaultValue: new Date('January 01 2078') });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2111 – 2120'));
+        });
+
+        it('will not move focus beyond `maxDate`', async () => {
+          renderCalendar({
+            ...defaultCenturyProps,
+            defaultValue: new Date('January 01, 2041'),
+            maxDate: new Date('May 5, 2041'),
+          });
+          screen.getByRole('grid').focus();
+
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2041 – 2050'));
+
+          // The previous expect will return a false positive even if not capped by `maxDate`
+          // This additional expect will fail however, if the 'ArrowDown' dosen't no-op.
+          fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
+          await waitFor(() => expect(document.activeElement.textContent).toBe('2011 – 2020'));
         });
       });
     });
