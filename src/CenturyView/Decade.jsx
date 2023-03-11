@@ -22,7 +22,7 @@ export default function Decade({
     <Tile
       {...otherProps}
       classes={[].concat(classes, className)}
-      isFocusable={activeTabDate <= getDecadeEnd(date) && activeTabDate > getDecadeStart(date)}
+      isFocusable={activeTabDate <= getDecadeEnd(date) && activeTabDate >= getDecadeStart(date)}
       maxDateTransform={getDecadeEnd}
       minDateTransform={getDecadeStart}
       view="century"
