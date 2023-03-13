@@ -6,6 +6,7 @@ import Day from './Day';
 
 const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
+  activeTabDate: new Date(2018, 0, 1),
   classes: ['react-calendar__tile'],
   currentMonthIndex: 0,
   date: new Date(2018, 0, 1),

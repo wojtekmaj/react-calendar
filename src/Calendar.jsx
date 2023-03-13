@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import React, { Component, createRef } from 'react';
 
 import Navigation from './Calendar/Navigation';
 import CenturyView from './CenturyView';
 import DecadeView from './DecadeView';
-import YearView from './YearView';
+import FocusContainer, { FocusContext } from './FocusContainer';
 import MonthView from './MonthView';
+import YearView from './YearView';
 
 import { getBegin, getBeginNext, getEnd, getValueRange } from './shared/dates';
 import {
@@ -251,6 +252,8 @@ export default class Calendar extends Component {
     value: this.props.defaultValue,
     view: this.props.defaultView,
   };
+
+  containerRef = createRef(null);
 
   get activeStartDate() {
     const { activeStartDate: activeStartDateProps } = this.props;
@@ -555,7 +558,7 @@ export default class Calendar extends Component {
     this.setState({ hover: null });
   };
 
-  renderContent(next) {
+  renderContent(activeTabDate, next) {
     const { activeStartDate: currentActiveStartDate, onMouseOver, valueType, value, view } = this;
     const {
       calendarType,
@@ -577,6 +580,7 @@ export default class Calendar extends Component {
 
     const commonProps = {
       activeStartDate,
+      activeTabDate,
       hover,
       locale,
       maxDate,
@@ -704,8 +708,8 @@ export default class Calendar extends Component {
   }
 
   render() {
-    const { className, inputRef, selectRange, showDoubleView } = this.props;
-    const { onMouseLeave, value } = this;
+    const { className, inputRef, maxDate, minDate, selectRange, showDoubleView } = this.props;
+    const { onMouseLeave, value, view, activeStartDate, setActiveStartDate } = this;
     const valueArray = [].concat(value);
 
     return (
@@ -719,14 +723,32 @@ export default class Calendar extends Component {
         ref={inputRef}
       >
         {this.renderNavigation()}
-        <div
-          className={`${baseClassName}__viewContainer`}
-          onBlur={selectRange ? onMouseLeave : null}
-          onMouseLeave={selectRange ? onMouseLeave : null}
+        <FocusContainer
+          activeStartDate={activeStartDate}
+          containerRef={this.containerRef}
+          minDate={minDate}
+          maxDate={maxDate}
+          setActiveStartDate={setActiveStartDate}
+          showDoubleView={showDoubleView}
+          value={value}
+          view={view}
         >
-          {this.renderContent()}
-          {showDoubleView ? this.renderContent(true) : null}
-        </div>
+          <div
+            className={`${baseClassName}__viewContainer`}
+            onBlur={selectRange ? onMouseLeave : null}
+            onMouseLeave={selectRange ? onMouseLeave : null}
+            ref={this.containerRef}
+          >
+            <FocusContext.Consumer>
+              {({ activeTabDate }) => (
+                <>
+                  {this.renderContent(activeTabDate)}
+                  {showDoubleView ? this.renderContent(activeTabDate, true) : null}
+                </>
+              )}
+            </FocusContext.Consumer>
+          </div>
+        </FocusContainer>
       </div>
     );
   }

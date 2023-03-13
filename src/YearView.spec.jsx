@@ -9,6 +9,7 @@ const { format } = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'nume
 describe('YearView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
+    activeTabDate: new Date(2017, 0, 1),
   };
 
   it('renders proper view when given activeStartDate', () => {

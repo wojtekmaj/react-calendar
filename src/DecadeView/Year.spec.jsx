@@ -6,6 +6,7 @@ import Year from './Year';
 
 const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
+  activeTabDate: new Date(2018, 0, 1),
   classes: ['react-calendar__tile'],
   date: new Date(2018, 0, 1),
   point: 2018,

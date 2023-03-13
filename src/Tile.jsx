@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { FocusContext } from './FocusContainer';
 
 import { tileProps } from './shared/propTypes';
 
@@ -55,6 +56,11 @@ export default class Tile extends Component {
 
   state = {};
 
+  handleClick = (event) => {
+    this.props.onClick?.(this.props.date, event);
+    this.context.setActiveTabDate(this.props.date);
+  };
+
   render() {
     const {
       activeStartDate,
@@ -67,8 +73,8 @@ export default class Tile extends Component {
       maxDateTransform,
       minDate,
       minDateTransform,
-      onClick,
       onMouseOver,
+      isFocusable,
       style,
       tileDisabled,
       view,
@@ -83,10 +89,12 @@ export default class Tile extends Component {
           (maxDate && maxDateTransform(maxDate) < date) ||
           (tileDisabled && tileDisabled({ activeStartDate, date, view }))
         }
-        onClick={onClick ? (event) => onClick(date, event) : undefined}
+        onClick={this.handleClick}
         onFocus={onMouseOver ? () => onMouseOver(date) : undefined}
         onMouseOver={onMouseOver ? () => onMouseOver(date) : undefined}
+        role="gridcell"
         style={style}
+        tabIndex={isFocusable ? 0 : -1}
         type="button"
       >
         {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}
@@ -95,3 +103,4 @@ export default class Tile extends Component {
     );
   }
 }
+Tile.contextType = FocusContext;

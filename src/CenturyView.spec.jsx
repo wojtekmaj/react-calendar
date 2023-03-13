@@ -8,6 +8,7 @@ import CenturyView from './CenturyView';
 describe('CenturyView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
+    activeTabDate: new Date(2017, 0, 1),
   };
 
   it('renders proper view when given activeStartDate', () => {
