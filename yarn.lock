@@ -2299,12 +2299,12 @@ __metadata:
   linkType: hard
 
 "get-user-locale@npm:^2.1.3":
-  version: 2.1.3
-  resolution: "get-user-locale@npm:2.1.3"
+  version: 2.2.1
+  resolution: "get-user-locale@npm:2.2.1"
   dependencies:
     "@types/lodash.memoize": ^4.1.7
     lodash.memoize: ^4.1.1
-  checksum: 2fb6e14fdf1eafc0dea620d23fa658ac12c3dba4da81e89703a36152115428463e36d0df62dfeed9af1647907926f87f391eb9148b79e56cd468caf3b4c64f5b
+  checksum: 929e368d120795295a9fb98724b1f236ea42fe570fa710a8c6d5ecf03f32d11a57966ab7cef38f416523fdf57178d888e835919bc52321696236d74092d06dbc
   languageName: node
   linkType: hard
 
