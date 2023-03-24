@@ -443,7 +443,7 @@ describe('Calendar', () => {
       });
 
       act(() => {
-        instance.current.drillDown(new Date(2011, 0, 1));
+        instance.current.drillDown(new Date(2011, 0, 1), event);
       });
 
       expect(instance.current.view).toBe('decade');
@@ -463,7 +463,7 @@ describe('Calendar', () => {
       );
 
       act(() => {
-        instance.current.drillDown(new Date(2011, 0, 1));
+        instance.current.drillDown(new Date(2011, 0, 1), event);
       });
 
       expect(onDrillDown).toHaveBeenCalledWith({
@@ -490,7 +490,7 @@ describe('Calendar', () => {
       });
 
       act(() => {
-        instance.current.drillDown(new Date(2011, 0, 1));
+        instance.current.drillDown(new Date(2011, 0, 1), event);
       });
 
       expect(onDrillDown).toHaveBeenCalledWith({
@@ -521,7 +521,7 @@ describe('Calendar', () => {
       render(<Calendar ref={instance} />);
 
       act(() => {
-        instance.current.setActiveStartDate(new Date(2019, 0, 1));
+        instance.current.setActiveStartDate(new Date(2019, 0, 1), 'onChange');
       });
 
       expect(instance.current.activeStartDate).toEqual(new Date(2019, 0, 1));
@@ -543,10 +543,11 @@ describe('Calendar', () => {
       );
 
       act(() => {
-        instance.current.setActiveStartDate(newActiveStartDate);
+        instance.current.setActiveStartDate(newActiveStartDate, 'onChange');
       });
 
       expect(onActiveStartDateChange).toHaveBeenCalledWith({
+        action: 'onChange',
         activeStartDate: newActiveStartDate,
         value,
         view: 'year',
@@ -571,10 +572,11 @@ describe('Calendar', () => {
       );
 
       act(() => {
-        instance.current.setActiveStartDate(newActiveStartDate);
+        instance.current.setActiveStartDate(newActiveStartDate, 'onChange');
       });
 
       expect(onActiveStartDateChange).toHaveBeenCalledWith({
+        action: 'onChange',
         activeStartDate: newActiveStartDate,
         value,
         view: 'year',
@@ -597,7 +599,7 @@ describe('Calendar', () => {
       );
 
       act(() => {
-        instance.current.setActiveStartDate(newActiveStartDate);
+        instance.current.setActiveStartDate(newActiveStartDate, 'onChange');
       });
 
       expect(onActiveStartDateChange).not.toHaveBeenCalled();
@@ -619,7 +621,7 @@ describe('Calendar', () => {
       );
 
       act(() => {
-        instance.current.setActiveStartDate(newActiveStartDate);
+        instance.current.setActiveStartDate(newActiveStartDate, 'onChange');
       });
 
       expect(onActiveStartDateChange).not.toHaveBeenCalled();
@@ -644,10 +646,15 @@ describe('Calendar', () => {
       );
 
       act(() => {
-        instance.current.setStateAndCallCallbacks({ view: newView });
+        instance.current.setStateAndCallCallbacks({
+          action: 'onChange',
+          activeStartDate,
+          view: newView,
+        });
       });
 
       expect(onViewChange).toHaveBeenCalledWith({
+        action: 'onChange',
         activeStartDate,
         value,
         view: newView,
@@ -656,6 +663,7 @@ describe('Calendar', () => {
 
     it('calls onViewChange on view change', async () => {
       const value = new Date(2019, 0, 15);
+      const action = 'onChange';
       const activeStartDate = new Date(2017, 0, 1);
       const view = 'year';
       const newView = 'month';
@@ -673,10 +681,11 @@ describe('Calendar', () => {
       );
 
       act(() => {
-        instance.current.setStateAndCallCallbacks({ view: newView });
+        instance.current.setStateAndCallCallbacks({ action, activeStartDate, view: newView });
       });
 
       expect(onViewChange).toHaveBeenCalledWith({
+        action,
         activeStartDate,
         value,
         view: newView,
@@ -684,6 +693,8 @@ describe('Calendar', () => {
     });
 
     it('does not call onViewChange on view change if value is the same as before', () => {
+      const action = 'onChange';
+      const activeStartDate = new Date(2017, 0, 1);
       const view = 'year';
       const newView = 'year';
       const onViewChange = vi.fn();
@@ -692,7 +703,11 @@ describe('Calendar', () => {
       render(<Calendar onViewChange={onViewChange} view={view} ref={instance} />);
 
       act(() => {
-        instance.current.setStateAndCallCallbacks({ view: newView });
+        instance.current.setStateAndCallCallbacks({
+          action,
+          activeStartDate,
+          view: newView,
+        });
       });
 
       expect(onViewChange).not.toHaveBeenCalled();
