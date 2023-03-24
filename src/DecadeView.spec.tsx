@@ -7,7 +7,7 @@ import DecadeView from './DecadeView';
 describe('DecadeView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
-  };
+  } satisfies React.ComponentProps<typeof DecadeView>;
 
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2011, 0, 1);
@@ -39,7 +39,7 @@ describe('DecadeView', () => {
 
   it('applies tileClassName to its tiles conditionally when given a function that returns a string', () => {
     const activeStartDate = new Date(2011, 0, 1);
-    const tileClassNameFn = ({ date }) => {
+    const tileClassNameFn = ({ date }: { date: Date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
         return 'firstDayOfTheMonth';
       }
@@ -72,7 +72,7 @@ describe('DecadeView', () => {
       <DecadeView {...defaultProps} showNeighboringMonth={false} tileContent={tileContent} />,
     );
 
-    const firstDayTile = container.querySelector('.react-calendar__tile');
+    const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
 
     expect(firstDayTileContent).toBeInTheDocument();
@@ -80,7 +80,7 @@ describe('DecadeView', () => {
 
   it('renders tileContent in its tiles conditionally when given a function that returns a node', () => {
     const activeStartDate = new Date(2011, 0, 1);
-    const tileContentFn = ({ date }) => {
+    const tileContentFn = ({ date }: { date: Date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
         return <div className="testContent" />;
       }
@@ -99,8 +99,8 @@ describe('DecadeView', () => {
 
     const tiles = container.querySelectorAll('.react-calendar__tile');
 
-    const firstDayTile = tiles[0];
-    const secondDayTile = tiles[1];
+    const firstDayTile = tiles[0] as HTMLDivElement;
+    const secondDayTile = tiles[1] as HTMLDivElement;
 
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
     const secondDayTileContent = secondDayTile.querySelector('.testContent');

@@ -7,7 +7,7 @@ import WeekNumbers from './WeekNumbers';
 describe('.react-calendar__month-view__weekNumbers', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
-  };
+  } satisfies Partial<React.ComponentProps<typeof WeekNumbers>>;
 
   it('renders proper weekNumbers for a year that starts in week 1 (ISO 8601)', () => {
     const { container } = render(
@@ -110,7 +110,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
       />,
     );
 
-    const firstChild = container.querySelector('button.react-calendar__tile');
+    const firstChild = container.querySelector('button.react-calendar__tile') as HTMLButtonElement;
     fireEvent.click(firstChild);
 
     expect(onClickWeekNumber).toHaveBeenCalledWith(52, new Date(2016, 11, 26), expect.any(Object));
@@ -122,7 +122,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
       <WeekNumbers {...defaultProps} calendarType="US" onClickWeekNumber={onClickWeekNumber} />,
     );
 
-    const firstChild = container.querySelector('button.react-calendar__tile');
+    const firstChild = container.querySelector('button.react-calendar__tile') as HTMLButtonElement;
     fireEvent.click(firstChild);
 
     expect(onClickWeekNumber).toHaveBeenCalledWith(1, new Date(2017, 0, 1), expect.any(Object));

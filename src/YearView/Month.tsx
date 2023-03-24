@@ -16,10 +16,13 @@ type MonthProps = {
   classes?: string[];
   formatMonth?: typeof defaultFormatMonth;
   formatMonthYear?: typeof defaultFormatMonthYear;
-} & React.ComponentProps<typeof Tile>;
+} & Omit<
+  React.ComponentProps<typeof Tile>,
+  'children' | 'formatAbbr' | 'maxDateTransform' | 'minDateTransform' | 'view'
+>;
 
 export default function Month({
-  classes,
+  classes = [],
   formatMonth = defaultFormatMonth,
   formatMonthYear = defaultFormatMonthYear,
   ...otherProps
@@ -29,7 +32,7 @@ export default function Month({
   return (
     <Tile
       {...otherProps}
-      classes={[...(classes || []), className]}
+      classes={[...classes, className]}
       formatAbbr={formatMonthYear}
       maxDateTransform={getMonthEnd}
       minDateTransform={getMonthStart}

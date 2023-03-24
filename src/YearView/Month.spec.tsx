@@ -8,6 +8,12 @@ const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
   classes: ['react-calendar__tile'],
   date: new Date(2018, 0, 1),
+  onClick: () => {
+    // Intentionally empty
+  },
+  onMouseOver: () => {
+    // Intentionally empty
+  },
 };
 
 describe('Month', () => {
@@ -29,7 +35,7 @@ describe('Month', () => {
   });
 
   it('renders component with proper abbreviation', () => {
-    const { container } = render(<Month {...tileProps} date={new Date(2018, 0, 1)} month={2018} />);
+    const { container } = render(<Month {...tileProps} date={new Date(2018, 0, 1)} />);
 
     const abbr = container.querySelector('abbr');
 
@@ -84,7 +90,7 @@ describe('Month', () => {
 
     const { container } = render(<Month {...tileProps} date={date} onClick={onClick} />);
 
-    fireEvent.click(container.querySelector('.react-calendar__tile'));
+    fireEvent.click(container.querySelector('.react-calendar__tile') as HTMLDivElement);
 
     expect(onClick).toHaveBeenCalled();
     expect(onClick).toHaveBeenCalledWith(date, expect.any(Object));
@@ -96,7 +102,7 @@ describe('Month', () => {
 
     const { container } = render(<Month {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
-    const tile = container.querySelector('.react-calendar__tile');
+    const tile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     fireEvent.mouseOver(tile);
 
     expect(onMouseOver).toHaveBeenCalled();
@@ -109,7 +115,7 @@ describe('Month', () => {
 
     const { container } = render(<Month {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
-    const tile = container.querySelector('.react-calendar__tile');
+    const tile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     fireEvent.focus(tile);
 
     expect(onMouseOver).toHaveBeenCalled();

@@ -21,11 +21,14 @@ type DayProps = {
   currentMonthIndex: number;
   formatDay?: typeof defaultFormatDay;
   formatLongDate?: typeof defaultFormatLongDate;
-} & React.ComponentProps<typeof Tile>;
+} & Omit<
+  React.ComponentProps<typeof Tile>,
+  'children' | 'formatAbbr' | 'maxDateTransform' | 'minDateTransform' | 'view'
+>;
 
 export default function Day({
   calendarType,
-  classes,
+  classes = [],
   currentMonthIndex,
   formatDay = defaultFormatDay,
   formatLongDate = defaultFormatLongDate,

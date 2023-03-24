@@ -16,12 +16,13 @@ describe('Navigation', () => {
       // Intentionally empty
     },
     views: allViews,
-  };
+    view: 'month',
+  } satisfies React.ComponentProps<typeof Navigation>;
 
   it('renders prev2, prev, drill up, next and next2 buttons', () => {
     const { container } = render(<Navigation {...defaultProps} view="month" />);
 
-    const children = [...container.firstElementChild.children];
+    const children = Array.from((container.firstElementChild as HTMLDivElement).children);
 
     const prev2 = children[0];
     const prev = children[1];
@@ -40,7 +41,7 @@ describe('Navigation', () => {
   it('renders prev, drill up, next and buttons only for century view', () => {
     const { container } = render(<Navigation {...defaultProps} view="century" />);
 
-    const children = [...container.firstElementChild.children];
+    const children = Array.from((container.firstElementChild as HTMLDivElement).children);
 
     const prev = children[0];
     const drillUp = children[1];
@@ -104,7 +105,7 @@ describe('Navigation', () => {
       />,
     );
 
-    const children = [...container.firstElementChild.children];
+    const children = Array.from((container.firstElementChild as HTMLDivElement).children);
 
     const prev2 = children[0];
     const prev = children[1];
@@ -122,7 +123,7 @@ describe('Navigation', () => {
       <Navigation {...defaultProps} navigationAriaLive="polite" view="month" />,
     );
 
-    const children = [...container.firstElementChild.children];
+    const children = Array.from((container.firstElementChild as HTMLDivElement).children);
 
     const navigation = children[2];
 
@@ -142,7 +143,7 @@ describe('Navigation', () => {
       />,
     );
 
-    const children = [...container.firstElementChild.children];
+    const children = Array.from((container.firstElementChild as HTMLDivElement).children);
 
     const prev2 = children[0];
     const prev = children[1];
@@ -162,7 +163,9 @@ describe('Navigation', () => {
 
     const { container } = render(<Navigation {...defaultProps} drillUp={drillUpFn} view="month" />);
 
-    const button = container.querySelector('button.react-calendar__navigation__label');
+    const button = container.querySelector(
+      'button.react-calendar__navigation__label',
+    ) as HTMLButtonElement;
 
     fireEvent.click(button);
 
@@ -178,10 +181,10 @@ describe('Navigation', () => {
 
     const arrows = container.querySelectorAll('button.react-calendar__navigation__arrow');
 
-    const prev2 = arrows[0];
-    const prev = arrows[1];
-    const next = arrows[2];
-    const next2 = arrows[3];
+    const prev2 = arrows[0] as HTMLButtonElement;
+    const prev = arrows[1] as HTMLButtonElement;
+    const next = arrows[2] as HTMLButtonElement;
+    const next2 = arrows[3] as HTMLButtonElement;
 
     fireEvent.click(prev2);
     fireEvent.click(prev);
@@ -193,7 +196,7 @@ describe('Navigation', () => {
 
   describe('month navigation', () => {
     const monthSetActiveStartDateFn = vi.fn();
-    let monthViewArrows;
+    let monthViewArrows: NodeListOf<HTMLButtonElement>;
 
     beforeEach(() => {
       const { container: monthContainer } = render(
@@ -208,7 +211,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 12 months back on prev2 button click for month view', () => {
-      const prev2 = monthViewArrows[0];
+      const prev2 = monthViewArrows[0] as HTMLButtonElement;
 
       fireEvent.click(prev2);
 
@@ -216,7 +219,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 1 month back on prev button click for month view', () => {
-      const prev = monthViewArrows[1];
+      const prev = monthViewArrows[1] as HTMLButtonElement;
 
       fireEvent.click(prev);
 
@@ -224,7 +227,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 1 month forward on next button click for month view', () => {
-      const next = monthViewArrows[2];
+      const next = monthViewArrows[2] as HTMLButtonElement;
 
       fireEvent.click(next);
 
@@ -232,7 +235,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 12 months forward on next2 button click for month view', () => {
-      const next2 = monthViewArrows[3];
+      const next2 = monthViewArrows[3] as HTMLButtonElement;
 
       fireEvent.click(next2);
 
@@ -242,7 +245,7 @@ describe('Navigation', () => {
 
   describe('year navigation', () => {
     const yearSetActiveStartDateFn = vi.fn();
-    let yearViewArrows;
+    let yearViewArrows: NodeListOf<HTMLButtonElement>;
 
     beforeEach(() => {
       const { container: yearContainer } = render(
@@ -253,7 +256,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 10 years back on prev2 button click for year view', () => {
-      const prev2 = yearViewArrows[0];
+      const prev2 = yearViewArrows[0] as HTMLButtonElement;
 
       fireEvent.click(prev2);
 
@@ -261,7 +264,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 1 year back on prev button click for year view', () => {
-      const prev2 = yearViewArrows[1];
+      const prev2 = yearViewArrows[1] as HTMLButtonElement;
 
       fireEvent.click(prev2);
 
@@ -269,7 +272,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 1 year forward on next button click for year view', () => {
-      const next = yearViewArrows[2];
+      const next = yearViewArrows[2] as HTMLButtonElement;
 
       fireEvent.click(next);
 
@@ -277,7 +280,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 10 years forward on next2 button click for year view', () => {
-      const next2 = yearViewArrows[3];
+      const next2 = yearViewArrows[3] as HTMLButtonElement;
 
       fireEvent.click(next2);
 
@@ -287,7 +290,7 @@ describe('Navigation', () => {
 
   describe('decade navigation', () => {
     const decadeSetActiveStartDateFn = vi.fn();
-    let decadeViewArrows;
+    let decadeViewArrows: NodeListOf<HTMLButtonElement>;
 
     beforeEach(() => {
       const { container: decadeContainer } = render(
@@ -304,7 +307,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 10 decades back on prev2 button click for decade view', () => {
-      const prev2 = decadeViewArrows[0];
+      const prev2 = decadeViewArrows[0] as HTMLButtonElement;
 
       fireEvent.click(prev2);
 
@@ -312,7 +315,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 1 decade back on prev button click for decade view', () => {
-      const prev = decadeViewArrows[1];
+      const prev = decadeViewArrows[1] as HTMLButtonElement;
 
       fireEvent.click(prev);
 
@@ -320,7 +323,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 1 decade forward on next button click for decade view', () => {
-      const next = decadeViewArrows[2];
+      const next = decadeViewArrows[2] as HTMLButtonElement;
 
       fireEvent.click(next);
 
@@ -328,7 +331,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 10 decades forward on next2 button click for decade view', () => {
-      const next2 = decadeViewArrows[3];
+      const next2 = decadeViewArrows[3] as HTMLButtonElement;
 
       fireEvent.click(next2);
 
@@ -338,7 +341,7 @@ describe('Navigation', () => {
 
   describe('century navigation', () => {
     const centurySetActiveStartDateFn = vi.fn();
-    let centuryViewArrows;
+    let centuryViewArrows: NodeListOf<HTMLButtonElement>;
 
     beforeEach(() => {
       const { container: centuryContainer } = render(
@@ -355,7 +358,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 1 century back on prev button click for century view', () => {
-      const prev = centuryViewArrows[0];
+      const prev = centuryViewArrows[0] as HTMLButtonElement;
 
       fireEvent.click(prev);
 
@@ -363,7 +366,7 @@ describe('Navigation', () => {
     });
 
     it('jumps 1 century forward on next button click for century view', () => {
-      const next = centuryViewArrows[1];
+      const next = centuryViewArrows[1] as HTMLButtonElement;
 
       fireEvent.click(next);
 

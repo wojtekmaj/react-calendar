@@ -11,7 +11,9 @@ const { format } = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
 });
 
-const event = new Event('click', { bubbles: true });
+const event = new Event('click', {
+  bubbles: true,
+}) as unknown as React.MouseEvent<HTMLButtonElement>;
 event.persist = () => {
   // Intentionally empty
 };
@@ -53,49 +55,73 @@ describe('Calendar', () => {
   });
 
   it('uses given value when passed value using value prop', () => {
-    const instance = createRef();
+    const instance = createRef<Calendar>();
 
     render(<Calendar value={new Date(2019, 0, 1)} ref={instance} />);
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
 
     expect(instance.current.value).toEqual(new Date(2019, 0, 1));
   });
 
   it('uses given value when passed value using defaultValue prop', () => {
-    const instance = createRef();
+    const instance = createRef<Calendar>();
 
     render(<Calendar defaultValue={new Date(2019, 0, 1)} ref={instance} />);
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
 
     expect(instance.current.value).toEqual(new Date(2019, 0, 1));
   });
 
   it('renders given view when passed view using view prop', () => {
-    const instance = createRef();
+    const instance = createRef<Calendar>();
 
     render(<Calendar view="century" ref={instance} />);
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
 
     expect(instance.current.view).toBe('century');
   });
 
   it('renders given view when passed view using defaultView prop', () => {
-    const instance = createRef();
+    const instance = createRef<Calendar>();
 
     render(<Calendar defaultView="century" ref={instance} />);
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
 
     expect(instance.current.view).toBe('century');
   });
 
   it('renders given active start date when passed active start date using activeStartDate prop', () => {
-    const instance = createRef();
+    const instance = createRef<Calendar>();
 
     render(<Calendar activeStartDate={new Date(2019, 0, 1)} ref={instance} />);
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
 
     expect(instance.current.activeStartDate).toEqual(new Date(2019, 0, 1));
   });
 
   it('renders given active start date when passed active start date using activeStartDate prop', () => {
-    const instance = createRef();
+    const instance = createRef<Calendar>();
 
     render(<Calendar defaultActiveStartDate={new Date(2019, 0, 1)} ref={instance} />);
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
 
     expect(instance.current.activeStartDate).toEqual(new Date(2019, 0, 1));
   });
@@ -104,11 +130,15 @@ describe('Calendar', () => {
     const value = new Date(2018, 1, 15);
     const newValue = new Date(2018, 0, 15);
     const newActiveStartDate = new Date(2018, 0, 1);
-    const instance = createRef();
+    const instance = createRef<Calendar>();
 
     const { rerender } = render(<Calendar value={value} ref={instance} />);
 
     rerender(<Calendar value={newValue} ref={instance} />);
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
 
     expect(instance.current.activeStartDate).toEqual(newActiveStartDate);
   });
@@ -117,13 +147,21 @@ describe('Calendar', () => {
     const value = new Date(2018, 1, 15);
     const newValue = new Date(2018, 0, 15);
     const newActiveStartDate = new Date(2018, 0, 1);
-    const instance = createRef();
+    const instance = createRef<Calendar>();
 
     render(<Calendar value={value} ref={instance} />);
 
     act(() => {
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
       instance.current.onChange(newValue, event);
     });
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
 
     expect(instance.current.activeStartDate).toEqual(newActiveStartDate);
   });
@@ -131,11 +169,15 @@ describe('Calendar', () => {
   it('changes Calendar view given new activeStartDate value', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const newActiveStartDate = new Date(2018, 0, 1);
-    const instance = createRef();
+    const instance = createRef<Calendar>();
 
     const { rerender } = render(<Calendar activeStartDate={activeStartDate} ref={instance} />);
 
     rerender(<Calendar activeStartDate={newActiveStartDate} ref={instance} />);
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
 
     expect(instance.current.activeStartDate).toEqual(newActiveStartDate);
   });
@@ -241,7 +283,7 @@ describe('Calendar', () => {
       <Calendar activeStartDate={activeStartDate} showNeighboringMonth view="month" />,
     );
 
-    const firstDayTile = container.querySelector('.react-calendar__tile');
+    const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
     // The first date that this calendar should show is December 26, 2016.
@@ -256,7 +298,7 @@ describe('Calendar', () => {
         <Calendar defaultValue={defaultValue} showNeighboringMonth={false} />,
       );
 
-      const firstDayTile = container.querySelector('.react-calendar__tile');
+      const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
       const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
       expect(firstDayTileTimeAbbr).toHaveAccessibleName(format(new Date(2017, 0, 1)));
@@ -267,7 +309,7 @@ describe('Calendar', () => {
 
       const { container } = render(<Calendar value={value} showNeighboringMonth={false} />);
 
-      const firstDayTile = container.querySelector('.react-calendar__tile');
+      const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
       const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
       expect(firstDayTileTimeAbbr).toHaveAccessibleName(format(new Date(2017, 0, 1)));
@@ -285,7 +327,7 @@ describe('Calendar', () => {
         />,
       );
 
-      const firstDayTile = container.querySelector('.react-calendar__tile');
+      const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
       const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
       expect(firstDayTileTimeAbbr).toHaveAccessibleName(format(defaultActiveStartDate));
@@ -298,7 +340,7 @@ describe('Calendar', () => {
         <Calendar defaultActiveStartDate={defaultActiveStartDate} showNeighboringMonth={false} />,
       );
 
-      const firstDayTile = container.querySelector('.react-calendar__tile');
+      const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
       const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
       expect(firstDayTileTimeAbbr).toHaveAccessibleName(format(defaultActiveStartDate));
@@ -311,7 +353,7 @@ describe('Calendar', () => {
         <Calendar activeStartDate={activeStartDate} showNeighboringMonth={false} />,
       );
 
-      const firstDayTile = container.querySelector('.react-calendar__tile');
+      const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
       const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
       expect(firstDayTileTimeAbbr).toHaveAccessibleName(format(activeStartDate));
@@ -323,7 +365,7 @@ describe('Calendar', () => {
 
       const { container } = render(<Calendar showNeighboringMonth={false} />);
 
-      const firstDayTile = container.querySelector('.react-calendar__tile');
+      const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
       const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
       expect(firstDayTileTimeAbbr).toHaveAccessibleName(format(beginOfCurrentMonth));
@@ -334,7 +376,7 @@ describe('Calendar', () => {
 
       const { container } = render(<Calendar defaultActiveStartDate={defaultActiveStartDate} />);
 
-      const firstDayTile = container.querySelector('.react-calendar__tile');
+      const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
       const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
       // The date of the first Monday that this calendar should show is May 28, 2012.
@@ -346,7 +388,7 @@ describe('Calendar', () => {
 
       const { container } = render(<Calendar activeStartDate={activeStartDate} />);
 
-      const firstDayTile = container.querySelector('.react-calendar__tile');
+      const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
       const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
       // The date of the first Monday that this calendar should show is May 28, 2012.
@@ -356,24 +398,36 @@ describe('Calendar', () => {
 
   describe('handles drill up properly', () => {
     it('drills up when allowed', () => {
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar ref={instance} />);
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setState({ view: 'month' });
       });
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.drillUp();
       });
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       expect(instance.current.view).toBe('year');
     });
 
     it('calls onDrillUp on drill up properly given view prop', () => {
       const onDrillUp = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -385,6 +439,10 @@ describe('Calendar', () => {
       );
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.drillUp();
       });
 
@@ -398,17 +456,25 @@ describe('Calendar', () => {
 
     it('calls onDrillUp on drill up properly when not given view prop', () => {
       const onDrillUp = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar activeStartDate={new Date(2017, 6, 1)} onDrillUp={onDrillUp} ref={instance} />,
       );
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setState({ view: 'month' });
       });
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.drillUp();
       });
 
@@ -422,11 +488,15 @@ describe('Calendar', () => {
 
     it('refuses to drill up when already on minimum allowed detail', () => {
       const onDrillUp = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar onDrillUp={onDrillUp} view="century" ref={instance} />);
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.drillUp();
       });
 
@@ -436,24 +506,36 @@ describe('Calendar', () => {
 
   describe('handles drill down properly', () => {
     it('drills down when allowed', () => {
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar ref={instance} />);
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setState({ view: 'century' });
       });
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.drillDown(new Date(2011, 0, 1), event);
       });
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       expect(instance.current.view).toBe('decade');
     });
 
     it('calls onDrillDown on drill down given view prop', () => {
       const onDrillDown = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -465,6 +547,10 @@ describe('Calendar', () => {
       );
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.drillDown(new Date(2011, 0, 1), event);
       });
 
@@ -478,7 +564,7 @@ describe('Calendar', () => {
 
     it('calls onDrillDown on drill down when not given view prop', () => {
       const onDrillDown = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -489,10 +575,18 @@ describe('Calendar', () => {
       );
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setState({ view: 'century' });
       });
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.drillDown(new Date(2011, 0, 1), event);
       });
 
@@ -506,11 +600,15 @@ describe('Calendar', () => {
 
     it('refuses to drill down when already on minimum allowed detail', () => {
       const onDrillDown = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar onDrillDown={onDrillDown} view="month" ref={instance} />);
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.drillUp();
       });
 
@@ -520,13 +618,21 @@ describe('Calendar', () => {
 
   describe('handles active start date change properly', () => {
     it('changes active start date when allowed', () => {
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar ref={instance} />);
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setActiveStartDate(new Date(2019, 0, 1), 'onChange');
       });
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       expect(instance.current.activeStartDate).toEqual(new Date(2019, 0, 1));
     });
@@ -535,7 +641,7 @@ describe('Calendar', () => {
       const value = new Date(2019, 0, 15);
       const newActiveStartDate = new Date(2018, 0, 1);
       const onActiveStartDateChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -547,6 +653,10 @@ describe('Calendar', () => {
       );
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setActiveStartDate(newActiveStartDate, 'onChange');
       });
 
@@ -563,7 +673,7 @@ describe('Calendar', () => {
       const activeStartDate = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2018, 0, 1);
       const onActiveStartDateChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -576,6 +686,10 @@ describe('Calendar', () => {
       );
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setActiveStartDate(newActiveStartDate, 'onChange');
       });
 
@@ -591,7 +705,7 @@ describe('Calendar', () => {
       const activeStartDate = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2017, 0, 1);
       const onActiveStartDateChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -603,6 +717,10 @@ describe('Calendar', () => {
       );
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setActiveStartDate(newActiveStartDate, 'onChange');
       });
 
@@ -613,7 +731,7 @@ describe('Calendar', () => {
       const value = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2017, 0, 1);
       const onActiveStartDateChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -625,6 +743,10 @@ describe('Calendar', () => {
       );
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setActiveStartDate(newActiveStartDate, 'onChange');
       });
 
@@ -638,7 +760,7 @@ describe('Calendar', () => {
       const activeStartDate = new Date(2017, 0, 1);
       const newView = 'year';
       const onViewChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -650,6 +772,10 @@ describe('Calendar', () => {
       );
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setStateAndCallCallbacks({
           action: 'onChange',
           activeStartDate,
@@ -672,7 +798,7 @@ describe('Calendar', () => {
       const view = 'year';
       const newView = 'month';
       const onViewChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -685,7 +811,15 @@ describe('Calendar', () => {
       );
 
       act(() => {
-        instance.current.setStateAndCallCallbacks({ action, activeStartDate, view: newView });
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
+        instance.current.setStateAndCallCallbacks({
+          action,
+          activeStartDate,
+          view: newView,
+        });
       });
 
       expect(onViewChange).toHaveBeenCalledWith({
@@ -702,11 +836,15 @@ describe('Calendar', () => {
       const view = 'year';
       const newView = 'year';
       const onViewChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar onViewChange={onViewChange} view={view} ref={instance} />);
 
       act(() => {
+        if (!instance.current) {
+          throw new Error('Calendar ref is not set');
+        }
+
         instance.current.setStateAndCallCallbacks({
           action,
           activeStartDate,
@@ -721,9 +859,13 @@ describe('Calendar', () => {
   describe('calls onChange properly', () => {
     it('calls onChange function returning the beginning of selected period by default', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar onChange={onChange} view="month" ref={instance} />);
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -736,9 +878,13 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar onChange={onChange} returnValue="start" view="month" ref={instance} />);
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -751,9 +897,13 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the end of the selected period when returnValue is set to "end"', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar onChange={onChange} returnValue="end" view="month" ref={instance} />);
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -766,9 +916,13 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of selected period when returnValue is set to "range"', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar onChange={onChange} returnValue="range" view="month" ref={instance} />);
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -784,7 +938,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of selected period, but no earlier than minDate', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -795,6 +949,10 @@ describe('Calendar', () => {
           ref={instance}
         />,
       );
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -807,7 +965,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of selected period, but no later than maxDate', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -818,6 +976,10 @@ describe('Calendar', () => {
           ref={instance}
         />,
       );
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -830,7 +992,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the end of selected period, but no earlier than minDate', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -841,6 +1003,10 @@ describe('Calendar', () => {
           ref={instance}
         />,
       );
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -853,7 +1019,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the end of selected period, but no later than maxDate', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -864,6 +1030,10 @@ describe('Calendar', () => {
           ref={instance}
         />,
       );
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -876,9 +1046,13 @@ describe('Calendar', () => {
 
     it('does not call onChange function returning a range when selected one piece of a range by default', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -891,7 +1065,7 @@ describe('Calendar', () => {
 
     it('does not call onChange function returning a range when selected one piece of a range given allowPartialRange = false', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar
@@ -902,6 +1076,10 @@ describe('Calendar', () => {
           ref={instance}
         />,
       );
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -914,11 +1092,15 @@ describe('Calendar', () => {
 
     it('calls onChange function returning a partial range when selected one piece of a range given allowPartialRange = true', () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(
         <Calendar allowPartialRange onChange={onChange} selectRange view="month" ref={instance} />,
       );
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -932,9 +1114,13 @@ describe('Calendar', () => {
 
     it('calls onChange function returning a range when selected two pieces of a range', async () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -955,9 +1141,13 @@ describe('Calendar', () => {
 
     it('calls onChange function returning a range when selected reversed two pieces of a range', async () => {
       const onChange = vi.fn();
-      const instance = createRef();
+      const instance = createRef<Calendar>();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
 
       const { onChange: onChangeInternal } = instance.current;
 
@@ -1012,7 +1202,7 @@ describe('Calendar', () => {
 
     const { container } = render(<Calendar formatLongDate={formatLongDate} />);
 
-    const firstDayTile = container.querySelector('.react-calendar__tile');
+    const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
     expect(firstDayTileTimeAbbr).toHaveAccessibleName('Long date');
@@ -1033,7 +1223,9 @@ describe('Calendar', () => {
 
     const { container } = render(<Calendar formatWeekday={formatWeekday} />);
 
-    const weekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
+    const weekday = container.querySelector(
+      '.react-calendar__month-view__weekdays__weekday',
+    ) as HTMLDivElement;
     const abbr = weekday.querySelector('abbr');
 
     expect(abbr).toHaveAccessibleName('Weekday');

@@ -9,6 +9,12 @@ const tileProps = {
   classes: ['react-calendar__tile'],
   currentMonthIndex: 0,
   date: new Date(2018, 0, 1),
+  onClick: () => {
+    // Intentionally empty
+  },
+  onMouseOver: () => {
+    // Intentionally empty
+  },
 };
 
 describe('Day', () => {
@@ -106,7 +112,7 @@ describe('Day', () => {
 
     const { container } = render(<Day {...tileProps} date={date} onClick={onClick} />);
 
-    fireEvent.click(container.querySelector('.react-calendar__tile'));
+    fireEvent.click(container.querySelector('.react-calendar__tile') as HTMLDivElement);
 
     expect(onClick).toHaveBeenCalled();
     expect(onClick).toHaveBeenCalledWith(date, expect.any(Object));
@@ -118,7 +124,7 @@ describe('Day', () => {
 
     const { container } = render(<Day {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
-    const tile = container.querySelector('.react-calendar__tile');
+    const tile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     fireEvent.mouseOver(tile);
 
     expect(onMouseOver).toHaveBeenCalled();
@@ -131,7 +137,7 @@ describe('Day', () => {
 
     const { container } = render(<Day {...tileProps} date={date} onMouseOver={onMouseOver} />);
 
-    const tile = container.querySelector('.react-calendar__tile');
+    const tile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     fireEvent.focus(tile);
 
     expect(onMouseOver).toHaveBeenCalled();

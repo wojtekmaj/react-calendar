@@ -13,10 +13,13 @@ const className = 'react-calendar__century-view__decades__decade';
 type DecadeProps = {
   classes?: string[];
   formatYear?: typeof defaultFormatYear;
-} & React.ComponentProps<typeof Tile>;
+} & Omit<
+  React.ComponentProps<typeof Tile>,
+  'children' | 'maxDateTransform' | 'minDateTransform' | 'view'
+>;
 
 export default function Decade({
-  classes,
+  classes = [],
   formatYear = defaultFormatYear,
   ...otherProps
 }: DecadeProps) {
@@ -25,7 +28,7 @@ export default function Decade({
   return (
     <Tile
       {...otherProps}
-      classes={[...(classes || []), className]}
+      classes={[...classes, className]}
       maxDateTransform={getDecadeEnd}
       minDateTransform={getDecadeStart}
       view="century"

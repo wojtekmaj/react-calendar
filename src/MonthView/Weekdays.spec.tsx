@@ -7,13 +7,13 @@ import Weekdays from './Weekdays';
 describe('Weekdays', () => {
   const defaultProps = {
     calendarType: 'ISO 8601',
-  };
+  } satisfies React.ComponentProps<typeof Weekdays>;
 
   it('renders proper weekdays (ISO 8601)', () => {
     const { container } = render(<Weekdays {...defaultProps} calendarType="ISO 8601" />);
 
     const weekdays = container.querySelectorAll('.react-calendar__month-view__weekdays__weekday');
-    const firstWeekday = weekdays[0];
+    const [firstWeekday] = weekdays as unknown as [HTMLDivElement];
     const firstWeekdayAbbr = firstWeekday.querySelector('abbr');
 
     expect(weekdays).toHaveLength(7);
@@ -25,7 +25,7 @@ describe('Weekdays', () => {
     const { container } = render(<Weekdays {...defaultProps} calendarType="US" />);
 
     const weekdays = container.querySelectorAll('.react-calendar__month-view__weekdays__weekday');
-    const firstWeekday = weekdays[0];
+    const [firstWeekday] = weekdays as unknown as [HTMLDivElement];
     const firstWeekdayAbbr = firstWeekday.querySelector('abbr');
 
     expect(weekdays).toHaveLength(7);
@@ -44,7 +44,9 @@ describe('Weekdays', () => {
   it('renders weekdays with custom weekdays formatting', () => {
     const { container } = render(<Weekdays {...defaultProps} formatWeekday={() => 'Weekday'} />);
 
-    const firstWeekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
+    const firstWeekday = container.querySelector(
+      '.react-calendar__month-view__weekdays__weekday',
+    ) as HTMLDivElement;
     const firstWeekdayAbbr = firstWeekday.querySelector('abbr');
 
     expect(firstWeekdayAbbr).toHaveAccessibleName('Weekday');

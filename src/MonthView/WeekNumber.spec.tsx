@@ -8,7 +8,7 @@ describe('<WeekNumber /> component', () => {
   const defaultProps = {
     date: new Date(2019, 0, 1),
     weekNumber: 1,
-  };
+  } satisfies React.ComponentProps<typeof WeekNumber>;
 
   it('renders div by default', () => {
     const { container } = render(<WeekNumber {...defaultProps} />);
@@ -29,10 +29,10 @@ describe('<WeekNumber /> component', () => {
   });
 
   it('renders weekNumber properly', () => {
-    const weekNumber = '42';
+    const weekNumber = 42;
 
     const { container } = render(<WeekNumber {...defaultProps} weekNumber={weekNumber} />);
 
-    expect(container).toHaveTextContent(weekNumber);
+    expect(container).toHaveTextContent(`${weekNumber}`);
   });
 });

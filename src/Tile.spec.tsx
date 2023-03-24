@@ -10,9 +10,16 @@ describe('<Tile /> component', () => {
     children: '',
     classes: [],
     date: new Date(2019, 0, 1),
-    maxDateTransform: (date) => date,
-    minDateTransform: (date) => date,
-  };
+    maxDateTransform: (date: Date) => date,
+    minDateTransform: (date: Date) => date,
+    onClick: () => {
+      // Intentionally empty
+    },
+    onMouseOver: () => {
+      // Intentionally empty
+    },
+    view: 'month',
+  } satisfies React.ComponentProps<typeof Tile>;
 
   it('renders button properly', () => {
     const { container } = render(<Tile {...defaultProps} />);
@@ -25,7 +32,7 @@ describe('<Tile /> component', () => {
 
     const { container } = render(<Tile {...defaultProps} onClick={onClick} />);
 
-    const button = container.querySelector('button');
+    const button = container.querySelector('button') as HTMLButtonElement;
 
     fireEvent.click(button);
 

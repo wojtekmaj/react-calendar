@@ -18,7 +18,7 @@ type TileProps = {
   classes?: ClassName;
   date: Date;
   formatAbbr?: (locale: string | undefined, date: Date) => string;
-  locale: string;
+  locale?: string;
   maxDate?: Date;
   maxDateTransform: (date: Date) => Date;
   minDate?: Date;

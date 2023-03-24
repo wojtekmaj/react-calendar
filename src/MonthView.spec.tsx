@@ -14,7 +14,7 @@ const { format } = new Intl.DateTimeFormat('en-US', {
 describe('MonthView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
-  };
+  } satisfies React.ComponentProps<typeof MonthView>;
 
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2017, 0, 1);
@@ -27,7 +27,7 @@ describe('MonthView', () => {
       />,
     );
 
-    const firstDayTile = container.querySelector('.react-calendar__tile');
+    const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
 
     expect(firstDayTileTimeAbbr).toHaveAccessibleName(format(activeStartDate));
@@ -80,7 +80,7 @@ describe('MonthView', () => {
       <MonthView {...defaultProps} showNeighboringMonth={false} tileContent={tileContent} />,
     );
 
-    const firstDayTile = container.querySelector('.react-calendar__tile');
+    const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
 
     expect(firstDayTileContent).toBeInTheDocument();
@@ -107,8 +107,8 @@ describe('MonthView', () => {
 
     const tiles = container.querySelectorAll('.react-calendar__tile');
 
-    const firstDayTile = tiles[0];
-    const secondDayTile = tiles[1];
+    const firstDayTile = tiles[0] as HTMLDivElement;
+    const secondDayTile = tiles[1] as HTMLDivElement;
 
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
     const secondDayTileContent = secondDayTile.querySelector('.testContent');
@@ -172,7 +172,9 @@ describe('MonthView', () => {
 
     const { container } = render(<MonthView {...defaultProps} formatWeekday={formatWeekday} />);
 
-    const weekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
+    const weekday = container.querySelector(
+      '.react-calendar__month-view__weekdays__weekday',
+    ) as HTMLDivElement;
     const abbr = weekday.querySelector('abbr');
 
     expect(abbr).toHaveAccessibleName('Weekday');

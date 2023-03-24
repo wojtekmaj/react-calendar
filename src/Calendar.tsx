@@ -64,7 +64,7 @@ type CalendarProps = typeof Calendar.defaultProps & {
   formatWeekday?: typeof defaultFormatWeekday;
   formatYear?: typeof defaultFormatYear;
   goToRangeStartOnSelect?: boolean;
-  inputRef?: React.RefObject<HTMLDivElement>;
+  inputRef?: React.Ref<HTMLDivElement>;
   locale?: string;
   maxDate?: Date;
   maxDetail?: Detail;

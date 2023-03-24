@@ -8,7 +8,7 @@ import CenturyView from './CenturyView';
 describe('CenturyView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
-  };
+  } satisfies React.ComponentProps<typeof CenturyView>;
 
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2001, 0, 1);
@@ -77,7 +77,7 @@ describe('CenturyView', () => {
       <CenturyView {...defaultProps} showNeighboringMonth={false} tileContent={tileContent} />,
     );
 
-    const firstDayTile = container.querySelector('.react-calendar__tile');
+    const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
 
     expect(firstDayTileContent).toBeInTheDocument();
@@ -104,8 +104,8 @@ describe('CenturyView', () => {
 
     const tiles = container.querySelectorAll('.react-calendar__tile');
 
-    const firstDayTile = tiles[0];
-    const secondDayTile = tiles[1];
+    const firstDayTile = tiles[0] as HTMLDivElement;
+    const secondDayTile = tiles[1] as HTMLDivElement;
 
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
     const secondDayTileContent = secondDayTile.querySelector('.testContent');
