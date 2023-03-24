@@ -22,7 +22,7 @@ describe('Navigation', () => {
   it('renders prev2, prev, drill up, next and next2 buttons', () => {
     const { container } = render(<Navigation {...defaultProps} view="month" />);
 
-    const children = Array.from((container.firstElementChild as HTMLDivElement).children);
+    const children = container.firstElementChild!.children;
 
     const prev2 = children[0];
     const prev = children[1];
@@ -41,7 +41,7 @@ describe('Navigation', () => {
   it('renders prev, drill up, next and buttons only for century view', () => {
     const { container } = render(<Navigation {...defaultProps} view="century" />);
 
-    const children = Array.from((container.firstElementChild as HTMLDivElement).children);
+    const children = container.firstElementChild!.children;
 
     const prev = children[0];
     const drillUp = children[1];
@@ -105,7 +105,7 @@ describe('Navigation', () => {
       />,
     );
 
-    const children = Array.from((container.firstElementChild as HTMLDivElement).children);
+    const children = container.firstElementChild!.children;
 
     const prev2 = children[0];
     const prev = children[1];
@@ -123,7 +123,7 @@ describe('Navigation', () => {
       <Navigation {...defaultProps} navigationAriaLive="polite" view="month" />,
     );
 
-    const children = Array.from((container.firstElementChild as HTMLDivElement).children);
+    const children = container.firstElementChild!.children;
 
     const navigation = children[2];
 
@@ -143,7 +143,7 @@ describe('Navigation', () => {
       />,
     );
 
-    const children = Array.from((container.firstElementChild as HTMLDivElement).children);
+    const children = container.firstElementChild!.children;
 
     const prev2 = children[0];
     const prev = children[1];
