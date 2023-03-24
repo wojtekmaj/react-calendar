@@ -7,7 +7,7 @@ import Weekdays from './MonthView/Weekdays';
 import WeekNumbers from './MonthView/WeekNumbers';
 
 import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const';
-import { isCalendarType } from './shared/propTypes';
+import { isCalendarType, tileGroupProps } from './shared/propTypes';
 
 import type { CalendarType } from './shared/types';
 
@@ -95,13 +95,12 @@ export default function MonthView(props: MonthViewProps) {
 }
 
 MonthView.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
+  ...tileGroupProps,
   calendarType: isCalendarType,
   formatDay: PropTypes.func,
   formatLongDate: PropTypes.func,
   formatShortWeekday: PropTypes.func,
   formatWeekday: PropTypes.func,
-  locale: PropTypes.string,
   onClickWeekNumber: PropTypes.func,
   onMouseLeave: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
