@@ -36,8 +36,7 @@ describe('Weekdays', () => {
   it('renders weekdays with custom weekdays formatting', () => {
     const { container } = render(<Weekdays {...defaultProps} formatShortWeekday={() => 'Wkdy'} />);
 
-    const weekdays = container.querySelectorAll('.react-calendar__month-view__weekdays__weekday');
-    const firstWeekday = weekdays[0];
+    const firstWeekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
 
     expect(firstWeekday).toHaveTextContent('Wkdy');
   });
@@ -45,10 +44,9 @@ describe('Weekdays', () => {
   it('renders weekdays with custom weekdays formatting', () => {
     const { container } = render(<Weekdays {...defaultProps} formatWeekday={() => 'Weekday'} />);
 
-    const weekdays = container.querySelectorAll('.react-calendar__month-view__weekdays__weekday');
-    const firstWeekday = weekdays[0];
-    const abbr = firstWeekday.querySelector('abbr');
+    const firstWeekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
+    const firstWeekdayAbbr = firstWeekday.querySelector('abbr');
 
-    expect(abbr).toHaveAccessibleName('Weekday');
+    expect(firstWeekdayAbbr).toHaveAccessibleName('Weekday');
   });
 });

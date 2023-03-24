@@ -23,7 +23,11 @@ describe('Navigation', () => {
 
     const children = [...container.firstElementChild.children];
 
-    const [prev2, prev, drillUp, next, next2] = children;
+    const prev2 = children[0];
+    const prev = children[1];
+    const drillUp = children[2];
+    const next = children[3];
+    const next2 = children[4];
 
     expect(children).toHaveLength(5);
     expect(prev2).toHaveAttribute('type', 'button');
@@ -38,7 +42,9 @@ describe('Navigation', () => {
 
     const children = [...container.firstElementChild.children];
 
-    const [prev, drillUp, next] = children;
+    const prev = children[0];
+    const drillUp = children[1];
+    const next = children[2];
 
     expect(children).toHaveLength(3);
     expect(prev).toHaveAttribute('type', 'button');
@@ -98,7 +104,12 @@ describe('Navigation', () => {
       />,
     );
 
-    const [prev2, prev, , next, next2] = [...container.firstElementChild.children];
+    const children = [...container.firstElementChild.children];
+
+    const prev2 = children[0];
+    const prev = children[1];
+    const next = children[3];
+    const next2 = children[4];
 
     expect(prev2).toHaveTextContent('prev2Label');
     expect(prev).toHaveTextContent('prevLabel');
@@ -111,7 +122,9 @@ describe('Navigation', () => {
       <Navigation {...defaultProps} navigationAriaLive="polite" view="month" />,
     );
 
-    const [, , navigation] = [...container.firstElementChild.children];
+    const children = [...container.firstElementChild.children];
+
+    const navigation = children[2];
 
     expect(navigation).toHaveAttribute('aria-live', 'polite');
   });
@@ -129,7 +142,13 @@ describe('Navigation', () => {
       />,
     );
 
-    const [prev2, prev, navigation, next, next2] = [...container.firstElementChild.children];
+    const children = [...container.firstElementChild.children];
+
+    const prev2 = children[0];
+    const prev = children[1];
+    const navigation = children[2];
+    const next = children[3];
+    const next2 = children[4];
 
     expect(prev2).toHaveAccessibleName('prev2AriaLabel');
     expect(prev).toHaveAccessibleName('prevAriaLabel');

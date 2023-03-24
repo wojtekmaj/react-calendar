@@ -56,7 +56,9 @@ describe('YearView', () => {
     );
 
     const tiles = container.querySelectorAll('.react-calendar__tile');
-    const [firstDayTile, secondDayTile] = tiles;
+
+    const firstDayTile = tiles[0];
+    const secondDayTile = tiles[1];
 
     expect(firstDayTile).toHaveClass('firstDayOfTheMonth');
     expect(secondDayTile).not.toHaveClass('firstDayOfTheMonth');
@@ -95,7 +97,9 @@ describe('YearView', () => {
     );
 
     const tiles = container.querySelectorAll('.react-calendar__tile');
-    const [firstDayTile, secondDayTile] = tiles;
+
+    const firstDayTile = tiles[0];
+    const secondDayTile = tiles[1];
 
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
     const secondDayTileContent = secondDayTile.querySelector('.testContent');

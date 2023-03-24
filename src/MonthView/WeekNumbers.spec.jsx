@@ -110,9 +110,9 @@ describe('.react-calendar__month-view__weekNumbers', () => {
       />,
     );
 
-    const children = container.querySelectorAll('button.react-calendar__tile');
+    const firstChild = container.querySelector('button.react-calendar__tile');
+    fireEvent.click(firstChild);
 
-    fireEvent.click(children[0]);
     expect(onClickWeekNumber).toHaveBeenCalledWith(52, new Date(2016, 11, 26), expect.any(Object));
   });
 
@@ -122,9 +122,9 @@ describe('.react-calendar__month-view__weekNumbers', () => {
       <WeekNumbers {...defaultProps} calendarType="US" onClickWeekNumber={onClickWeekNumber} />,
     );
 
-    const children = container.querySelectorAll('button.react-calendar__tile');
+    const firstChild = container.querySelector('button.react-calendar__tile');
+    fireEvent.click(firstChild);
 
-    fireEvent.click(children[0]);
     expect(onClickWeekNumber).toHaveBeenCalledWith(1, new Date(2017, 0, 1), expect.any(Object));
   });
 });
