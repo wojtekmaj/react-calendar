@@ -44,7 +44,8 @@ describe('Flex', () => {
       </Flex>,
     );
 
-    const children = container.firstElementChild!.children;
+    const wrapper = container.firstElementChild as HTMLDivElement;
+    const children = wrapper.children;
 
     expect(children).toHaveLength(3);
     expect(children[0]).toHaveTextContent('Hey');
@@ -60,7 +61,8 @@ describe('Flex', () => {
       </Flex>,
     );
 
-    const children = Array.from(container.firstElementChild!.children);
+    const wrapper = container.firstElementChild as HTMLDivElement;
+    const children = Array.from(wrapper.children);
 
     children.forEach((child) => expect(child).toHaveStyle('flex-basis: 33.333333333333336%'));
     expect(children[0]).toHaveStyle('margin-left: 33.333333333333336%');
