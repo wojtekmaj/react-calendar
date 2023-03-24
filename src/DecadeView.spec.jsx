@@ -105,7 +105,7 @@ describe('DecadeView', () => {
     expect(secondDayTileContent).not.toBeInTheDocument();
   });
 
-  it('passes decade view with custom year formatting', () => {
+  it('displays decade view with custom year formatting', () => {
     const formatYear = () => 'Year';
 
     const { container } = render(<DecadeView {...defaultProps} formatYear={formatYear} />);
