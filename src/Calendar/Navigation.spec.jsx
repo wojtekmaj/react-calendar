@@ -26,11 +26,11 @@ describe('Navigation', () => {
     const [prev2, prev, drillUp, next, next2] = children;
 
     expect(children).toHaveLength(5);
-    expect(prev2.getAttribute('type')).toBe('button');
-    expect(prev.getAttribute('type')).toBe('button');
-    expect(drillUp.getAttribute('type')).toBe('button');
-    expect(next.getAttribute('type')).toBe('button');
-    expect(next2.getAttribute('type')).toBe('button');
+    expect(prev2).toHaveAttribute('type', 'button');
+    expect(prev).toHaveAttribute('type', 'button');
+    expect(drillUp).toHaveAttribute('type', 'button');
+    expect(next).toHaveAttribute('type', 'button');
+    expect(next2).toHaveAttribute('type', 'button');
   });
 
   it('renders prev, drill up, next and buttons only for century view', () => {
@@ -41,9 +41,9 @@ describe('Navigation', () => {
     const [prev, drillUp, next] = children;
 
     expect(children).toHaveLength(3);
-    expect(prev.getAttribute('type')).toBe('button');
-    expect(drillUp.getAttribute('type')).toBe('button');
-    expect(next.getAttribute('type')).toBe('button');
+    expect(prev).toHaveAttribute('type', 'button');
+    expect(drillUp).toHaveAttribute('type', 'button');
+    expect(next).toHaveAttribute('type', 'button');
   });
 
   it('displays proper title for month view', () => {
