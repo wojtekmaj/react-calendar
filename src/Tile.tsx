@@ -40,7 +40,7 @@ type TileState = {
   tileContentProps?: TileProps['tileContent'];
 };
 
-function datesAreDifferent(date1?: Date, date2?: Date) {
+function datesAreDifferent(date1?: Date | null, date2?: Date | null) {
   return (
     (date1 && !date2) ||
     (!date1 && date2) ||
