@@ -2,9 +2,9 @@ import type { CALENDAR_TYPES } from './const';
 
 export type Action = 'prev' | 'prev2' | 'next' | 'next2' | 'onChange' | 'drillUp' | 'drillDown';
 
-export type CalendarType = typeof CALENDAR_TYPES[keyof typeof CALENDAR_TYPES];
+export type CalendarType = (typeof CALENDAR_TYPES)[keyof typeof CALENDAR_TYPES];
 
-export type ClassName = string | string[];
+export type ClassName = string | null | undefined | (string | null | undefined)[];
 
 export type Detail = 'century' | 'decade' | 'year' | 'month';
 
