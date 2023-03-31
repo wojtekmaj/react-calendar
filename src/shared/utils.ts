@@ -8,6 +8,7 @@ import type { Range, RangeType } from './types';
  * @param {Date} value Value to return.
  * @param {Date} min Minimum return value.
  * @param {Date} max Maximum return value.
+ * @returns {Date} Value between min and max.
  */
 export function between<T extends Date>(value: T, min?: T | null, max?: T | null): T {
   if (min && min > value) {

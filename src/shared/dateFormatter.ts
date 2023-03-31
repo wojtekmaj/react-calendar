@@ -33,6 +33,7 @@ function getFormatter(
  * https://bugzilla.mozilla.org/show_bug.cgi?id=1385643
  *
  * @param {Date} date Date.
+ * @returns {Date} Date with hour set to 12.
  */
 function toSafeHour(date: Date): Date {
   const safeDate = new Date(date);
