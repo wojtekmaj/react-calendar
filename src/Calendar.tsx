@@ -47,8 +47,27 @@ import type {
   formatYear as defaultFormatYear,
 } from './shared/dateFormatter';
 
-// eslint-disable-next-line no-use-before-define
-type CalendarProps = typeof Calendar.defaultProps & {
+const baseClassName = 'react-calendar';
+const allViews = ['century', 'decade', 'year', 'month'] as const;
+const allValueTypes = ['decade', 'year', 'month', 'day'] as const;
+
+const defaultMinDate = new Date();
+defaultMinDate.setFullYear(1, 0, 1);
+defaultMinDate.setHours(0, 0, 0, 0);
+const defaultMaxDate = new Date(8.64e15);
+
+const defaultProps = {
+  goToRangeStartOnSelect: true,
+  maxDate: defaultMaxDate,
+  maxDetail: 'month',
+  minDate: defaultMinDate,
+  minDetail: 'century',
+  returnValue: 'start',
+  showNavigation: true,
+  showNeighboringMonth: true,
+};
+
+type CalendarProps = typeof defaultProps & {
   activeStartDate?: Date;
   allowPartialRange?: boolean;
   calendarType?: CalendarType;
@@ -113,15 +132,6 @@ type CalendarState = {
   view?: View;
 };
 
-const defaultMinDate = new Date();
-defaultMinDate.setFullYear(1, 0, 1);
-defaultMinDate.setHours(0, 0, 0, 0);
-const defaultMaxDate = new Date(8.64e15);
-
-const baseClassName = 'react-calendar';
-const allViews = ['century', 'decade', 'year', 'month'] as const;
-const allValueTypes = ['decade', 'year', 'month', 'day'] as const;
-
 function toDate(value: Date | string): Date {
   if (value instanceof Date) {
     return value;
@@ -165,7 +175,7 @@ function getView(view: View | undefined, minDetail: Detail, maxDetail: Detail): 
 /**
  * Returns value type that can be returned with currently applied settings.
  */
-function getValueType<T extends number>(view: typeof allViews[T]): typeof allValueTypes[T] {
+function getValueType<T extends number>(view: (typeof allViews)[T]): (typeof allValueTypes)[T] {
   const index = allViews.indexOf(view) as T;
 
   return allValueTypes[index];
@@ -291,16 +301,7 @@ const isActiveStartDate = PropTypes.instanceOf(Date);
 const isLooseValue = PropTypes.oneOfType([PropTypes.string, isValue]);
 
 export default class Calendar extends Component<CalendarProps, CalendarState> {
-  static defaultProps = {
-    goToRangeStartOnSelect: true,
-    maxDate: defaultMaxDate,
-    maxDetail: 'month',
-    minDate: defaultMinDate,
-    minDetail: 'century',
-    returnValue: 'start',
-    showNavigation: true,
-    showNeighboringMonth: true,
-  };
+  static defaultProps = defaultProps;
 
   static propTypes = {
     activeStartDate: isActiveStartDate,
