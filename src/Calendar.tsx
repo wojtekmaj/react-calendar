@@ -202,8 +202,8 @@ function getValue(
 
 type DetailArgs = {
   value?: LooseValue;
-  minDate: Date;
-  maxDate: Date;
+  minDate?: Date;
+  maxDate?: Date;
   maxDetail: Detail;
 };
 
