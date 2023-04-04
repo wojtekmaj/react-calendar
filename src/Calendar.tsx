@@ -180,10 +180,7 @@ function getValueType<T extends number>(view: (typeof allViews)[T]): (typeof all
   return allValueTypes[index];
 }
 
-function getValue(
-  value: string | Date | null | undefined | (string | Date | null | undefined)[],
-  index: 0 | 1,
-): Date | null {
+function getValue(value: LooseValue | undefined, index: 0 | 1): Date | null {
   const rawValue = Array.isArray(value) ? value[index] : value;
 
   if (!rawValue) {
@@ -234,7 +231,10 @@ const getDetailValueFrom = (args: DetailArgs) => getDetailValue(args, 0);
 const getDetailValueTo = (args: DetailArgs) => getDetailValue(args, 1);
 
 const getDetailValueArray = (args: DetailArgs) =>
-  [getDetailValueFrom, getDetailValueTo].map((fn) => fn(args));
+  [getDetailValueFrom, getDetailValueTo].map((fn) => fn(args)) as [
+    ReturnType<typeof getDetailValueFrom>,
+    ReturnType<typeof getDetailValueTo>,
+  ];
 
 function getActiveStartDate(
   props: DetailArgs & {
@@ -359,7 +359,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     activeStartDate: this.props.defaultActiveStartDate,
     hover: null,
     value: Array.isArray(this.props.defaultValue)
-      ? this.props.defaultValue.map((el) => (el !== null ? toDate(el) : el))
+      ? (this.props.defaultValue.map((el) => (el !== null ? toDate(el) : el)) as [
+          Date | null,
+          Date | null,
+        ])
       : this.props.defaultValue !== null && this.props.defaultValue !== undefined
       ? toDate(this.props.defaultValue)
       : this.props.defaultValue,
@@ -391,7 +394,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
 
     return Array.isArray(rawValue)
-      ? rawValue.map((el) => (el !== null ? toDate(el) : el))
+      ? (rawValue.map((el) => (el !== null ? toDate(el) : el)) as [Date | null, Date | null])
       : rawValue !== null
       ? toDate(rawValue)
       : rawValue;
@@ -538,7 +541,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
                 throw new Error('value must not be an array');
               }
 
-              onChange([nextState.value || null], event);
+              onChange([nextState.value || null, null], event);
             }
           } else {
             onChange(nextState.value || null, event);

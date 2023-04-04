@@ -1109,7 +1109,7 @@ describe('Calendar', () => {
       });
 
       expect(onChange).toHaveBeenCalledTimes(1);
-      expect(onChange).toHaveBeenCalledWith([new Date(2018, 0, 1)], event);
+      expect(onChange).toHaveBeenCalledWith([new Date(2018, 0, 1), null], event);
     });
 
     it('calls onChange function returning a range when selected two pieces of a range', async () => {

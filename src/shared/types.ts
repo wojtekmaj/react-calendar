@@ -8,13 +8,17 @@ export type ClassName = string | null | undefined | (string | null | undefined)[
 
 export type Detail = 'century' | 'decade' | 'year' | 'month';
 
-export type LooseValue = string | Date | null | (string | Date | null)[];
+type LooseValuePiece = string | Date | null;
+
+export type LooseValue = LooseValuePiece | [LooseValuePiece, LooseValuePiece];
 
 export type Range<T> = [T, T];
 
 export type RangeType = 'century' | 'decade' | 'year' | 'month' | 'day';
 
-export type Value = Date | null | (Date | null)[];
+type ValuePiece = Date | null;
+
+export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export type View = 'century' | 'decade' | 'year' | 'month';
 
