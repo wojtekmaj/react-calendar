@@ -1021,7 +1021,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-user-locale@npm:^2.1.3":
+"get-user-locale@npm:^2.2.1":
   version: 2.2.1
   resolution: "get-user-locale@npm:2.2.1"
   dependencies:
@@ -1600,18 +1600,18 @@ __metadata:
   linkType: soft
 
 "react-calendar@npm:latest":
-  version: 4.1.0
-  resolution: "react-calendar@npm:4.1.0"
+  version: 4.2.0
+  resolution: "react-calendar@npm:4.2.0"
   dependencies:
     "@types/react": "*"
     "@wojtekmaj/date-utils": ^1.1.3
     clsx: ^1.2.1
-    get-user-locale: ^2.1.3
+    get-user-locale: ^2.2.1
     prop-types: ^15.6.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 9ec265dd927797fcb2370f8b2ca520e2c7ac6716f53b0ba7bc68578b247b8a67950ae2a20a1dbc6579a5c38cb25ae2fa6a55afc02bd1589de23868c5d336421a
+  checksum: 3201e7a979ce02d5c9f1a6d6a1e6e0813975c155c2dfbc5f1c170b85db94b20ae8a67b850e355dc8df5224f16547b85a735f4ada1f3b9aebb9d0f316973aa3e8
   languageName: node
   linkType: hard
 
