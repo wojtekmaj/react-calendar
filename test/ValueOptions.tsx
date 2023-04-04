@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getISOLocalDateTime } from '@wojtekmaj/date-utils';
 
-import { isValue } from './shared/propTypes';
-
 import type { LooseValue } from './shared/types';
 
 type ValueOptionsProps = {
@@ -117,9 +115,13 @@ export default function ValueOptions({
   );
 }
 
+const isValue = PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]);
+
+const isValueOrValueArray = PropTypes.oneOfType([isValue, PropTypes.arrayOf(isValue)]);
+
 ValueOptions.propTypes = {
   selectRange: PropTypes.bool,
   setSelectRange: PropTypes.func.isRequired,
   setValue: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, isValue]),
+  value: isValueOrValueArray,
 };
