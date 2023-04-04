@@ -8,7 +8,7 @@ export type ClassName = string | null | undefined | (string | null | undefined)[
 
 export type Detail = 'century' | 'decade' | 'year' | 'month';
 
-export type LooseValue = string | Date | null | (Date | null)[];
+export type LooseValue = string | Date | null | (string | Date | null)[];
 
 export type Range<T> = [T, T];
 

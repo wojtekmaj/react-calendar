@@ -15,7 +15,6 @@ import {
   isMaxDate,
   isMinDate,
   isRef,
-  isValue,
   isView,
 } from './shared/propTypes';
 import { between } from './shared/utils';
@@ -234,15 +233,8 @@ const getDetailValueFrom = (args: DetailArgs) => getDetailValue(args, 0);
 
 const getDetailValueTo = (args: DetailArgs) => getDetailValue(args, 1);
 
-const getDetailValueArray = (args: DetailArgs) => {
-  const { value } = args;
-
-  if (Array.isArray(value)) {
-    return value;
-  }
-
-  return [getDetailValueFrom, getDetailValueTo].map((fn) => fn(args));
-};
+const getDetailValueArray = (args: DetailArgs) =>
+  [getDetailValueFrom, getDetailValueTo].map((fn) => fn(args));
 
 function getActiveStartDate(
   props: DetailArgs & {
@@ -298,7 +290,10 @@ function getIsSingleValue<T>(value: T | T[]): value is T {
 }
 
 const isActiveStartDate = PropTypes.instanceOf(Date);
-const isLooseValue = PropTypes.oneOfType([PropTypes.string, isValue]);
+
+const isValue = PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]);
+
+const isValueOrValueArray = PropTypes.oneOfType([isValue, PropTypes.arrayOf(isValue)]);
 
 export default class Calendar extends Component<CalendarProps, CalendarState> {
   static defaultProps = defaultProps;
@@ -309,7 +304,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     calendarType: isCalendarType,
     className: isClassName,
     defaultActiveStartDate: isActiveStartDate,
-    defaultValue: isLooseValue,
+    defaultValue: isValueOrValueArray,
     defaultView: isView,
     formatDay: PropTypes.func,
     formatLongDate: PropTypes.func,
@@ -356,17 +351,18 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
     tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     tileDisabled: PropTypes.func,
-    value: isLooseValue,
+    value: isValueOrValueArray,
     view: isView,
   };
 
   state: Readonly<CalendarState> = {
     activeStartDate: this.props.defaultActiveStartDate,
     hover: null,
-    value:
-      typeof this.props.defaultValue === 'string'
-        ? toDate(this.props.defaultValue)
-        : this.props.defaultValue,
+    value: Array.isArray(this.props.defaultValue)
+      ? this.props.defaultValue.map((el) => (el !== null ? toDate(el) : el))
+      : this.props.defaultValue !== null && this.props.defaultValue !== undefined
+      ? toDate(this.props.defaultValue)
+      : this.props.defaultValue,
     view: this.props.defaultView,
   };
 
@@ -394,7 +390,11 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       return null;
     }
 
-    return typeof rawValue === 'string' ? toDate(rawValue) : rawValue;
+    return Array.isArray(rawValue)
+      ? rawValue.map((el) => (el !== null ? toDate(el) : el))
+      : rawValue !== null
+      ? toDate(rawValue)
+      : rawValue;
   }
 
   get valueType() {
