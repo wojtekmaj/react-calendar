@@ -53,7 +53,7 @@ export type TileArgs = {
   view: View;
 };
 
-export type TileClassNameFunc = (args: TileArgs) => string;
+export type TileClassNameFunc = (args: TileArgs) => ClassName;
 
 export type TileContentFunc = (args: TileArgs) => React.ReactNode;
 
