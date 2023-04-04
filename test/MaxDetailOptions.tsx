@@ -1,17 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const allViews = ['century', 'decade', 'year', 'month'];
+import type { View } from './shared/types';
 
-function upperCaseFirstLetter(str) {
+const allViews = ['century', 'decade', 'year', 'month'] as const;
+
+function upperCaseFirstLetter(str: string) {
   return str.slice(0, 1).toUpperCase() + str.slice(1);
 }
 
-export default function MaxDetailOptions({ maxDetail, minDetail, setMaxDetail }) {
-  function onChange(event) {
+type MaxDetailOptionsProps = {
+  maxDetail: View;
+  minDetail: View;
+  setMaxDetail: (maxDetail: View) => void;
+};
+
+export default function MaxDetailOptions({
+  maxDetail,
+  minDetail,
+  setMaxDetail,
+}: MaxDetailOptionsProps) {
+  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
 
-    setMaxDetail(value);
+    setMaxDetail(value as View);
   }
 
   const minDetailIndex = allViews.indexOf(minDetail);

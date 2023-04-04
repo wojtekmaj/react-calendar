@@ -13,9 +13,11 @@ import { formatDate } from './shared/dateFormatter';
 
 import './Test.css';
 
+import type { LooseValue, Value, View } from './shared/types';
+
 const now = new Date();
 
-const tileClassName = ({ date, view }) => {
+const tileClassName = ({ date, view }: { date: Date; view: View }) => {
   switch (view) {
     case 'month':
       return date.getDay() === 0 || date.getDay() === 6 ? 'red' : null;
@@ -30,7 +32,7 @@ const tileClassName = ({ date, view }) => {
   }
 };
 
-const tileContent = ({ date, view }) => {
+const tileContent = ({ date, view }: { date: Date; view: View }) => {
   switch (view) {
     case 'month':
       return date.getDay() === 0 ? (
@@ -66,35 +68,43 @@ const fifteenthOfNextMonth = new Date(now.getUTCFullYear(), now.getUTCMonth() + 
 
 /* eslint-disable no-console */
 
+type ReturnValue = 'start' | 'end' | 'range';
+
 export default function Test() {
-  const [activeStartDate, setActiveStartDate] = useState(
+  const [activeStartDate, setActiveStartDate] = useState<Date | undefined>(
     new Date(now.getFullYear(), now.getMonth()),
   );
-  const [locale, setLocale] = useState(null);
-  const [maxDate, setMaxDate] = useState(fifteenthOfNextMonth);
-  const [maxDetail, setMaxDetail] = useState('month');
-  const [minDate, setMinDate] = useState(nineteenNinetyFive);
-  const [minDetail, setMinDetail] = useState('century');
-  const [returnValue /* , setReturnValue */] = useState('start');
+  const [locale, setLocale] = useState<string>();
+  const [maxDate, setMaxDate] = useState<Date | undefined>(fifteenthOfNextMonth);
+  const [maxDetail, setMaxDetail] = useState<View>('month');
+  const [minDate, setMinDate] = useState<Date | undefined>(nineteenNinetyFive);
+  const [minDetail, setMinDetail] = useState<View>('century');
+  const [returnValue /* , setReturnValue */] = useState<ReturnValue>('start');
   const [selectRange, setSelectRange] = useState(false);
   const [showDoubleView, setShowDoubleView] = useState(false);
   const [showFixedNumberOfWeeks, setShowFixedNumberOfWeeks] = useState(false);
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(true);
   const [showWeekNumbers, setShowWeekNumbers] = useState(false);
-  const [value, setValue] = useState(now);
-  const [view, setView] = useState('month');
+  const [value, setValue] = useState<LooseValue>(now);
+  const [view, setView] = useState<View>('month');
 
   const onViewOrDateChange = useCallback(
-    ({ activeStartDate: nextActiveStartDate, view: nextView }) => {
+    ({
+      activeStartDate: nextActiveStartDate,
+      view: nextView,
+    }: {
+      activeStartDate: Date | null;
+      view: View;
+    }) => {
       console.log('Changed view to', nextView, nextActiveStartDate);
-      setActiveStartDate(nextActiveStartDate);
+      setActiveStartDate(nextActiveStartDate || undefined);
       setView(nextView);
     },
     [],
   );
 
   function renderDebugInfo() {
-    const renderDate = (dateToRender) => {
+    const renderDate = (dateToRender: string | Date | null) => {
       if (dateToRender instanceof Date) {
         return formatDate(locale, dateToRender);
       }
@@ -116,14 +126,26 @@ export default function Test() {
     minDate,
     minDetail,
     onActiveStartDateChange: onViewOrDateChange,
-    onChange: setValue,
-    onClickWeekNumber: (weekNumber, date) => {
+    onChange: (value: Value) => setValue(value),
+    onClickWeekNumber: (weekNumber: number, date: Date) => {
       console.log('Clicked week number', weekNumber, date);
     },
-    onDrillDown: ({ activeStartDate: nextActiveStartDate, view: nextView }) => {
+    onDrillDown: ({
+      activeStartDate: nextActiveStartDate,
+      view: nextView,
+    }: {
+      activeStartDate: Date | null;
+      view: View;
+    }) => {
       console.log('Drilled down to', nextView, nextActiveStartDate);
     },
-    onDrillUp: ({ activeStartDate: nextActiveStartDate, view: nextView }) => {
+    onDrillUp: ({
+      activeStartDate: nextActiveStartDate,
+      view: nextView,
+    }: {
+      activeStartDate: Date | null;
+      view: View;
+    }) => {
       console.log('Drilled up to', nextView, nextActiveStartDate);
     },
     onViewChange: onViewOrDateChange,
