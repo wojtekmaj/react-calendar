@@ -1,6 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+type ViewOptionsProps = {
+  setShowDoubleView: (showDoubleView: boolean) => void;
+  setShowFixedNumberOfWeeks: (showFixedNumberOfWeeks: boolean) => void;
+  setShowNeighboringMonth: (showNeighboringMonth: boolean) => void;
+  setShowWeekNumbers: (showWeekNumbers: boolean) => void;
+  showDoubleView: boolean;
+  showFixedNumberOfWeeks: boolean;
+  showNeighboringMonth: boolean;
+  showWeekNumbers: boolean;
+};
+
 export default function ViewOptions({
   setShowDoubleView,
   setShowFixedNumberOfWeeks,
@@ -10,26 +21,26 @@ export default function ViewOptions({
   showFixedNumberOfWeeks,
   showNeighboringMonth,
   showWeekNumbers,
-}) {
-  function onShowDoubleViewChange(event) {
+}: ViewOptionsProps) {
+  function onShowDoubleViewChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { checked } = event.target;
 
     setShowDoubleView(checked);
   }
 
-  function onShowFixedNumberOfWeeksChange(event) {
+  function onShowFixedNumberOfWeeksChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { checked } = event.target;
 
     setShowFixedNumberOfWeeks(checked);
   }
 
-  function onShowWeekNumbersChange(event) {
+  function onShowWeekNumbersChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { checked } = event.target;
 
     setShowWeekNumbers(checked);
   }
 
-  function onShowNeighboringMonthChange(event) {
+  function onShowNeighboringMonthChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { checked } = event.target;
 
     setShowNeighboringMonth(checked);
