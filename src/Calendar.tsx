@@ -66,7 +66,7 @@ const defaultProps = {
   showNeighboringMonth: true,
 };
 
-type CalendarProps = typeof defaultProps & {
+type CalendarProps = {
   activeStartDate?: Date;
   allowPartialRange?: boolean;
   calendarType?: CalendarType;
@@ -122,6 +122,8 @@ type CalendarProps = typeof defaultProps & {
   value?: LooseValue;
   view?: View;
 };
+
+type CalendarPropsWithDefaults = typeof defaultProps & CalendarProps;
 
 type CalendarState = {
   action?: Action;
@@ -256,7 +258,7 @@ function getActiveStartDate(
   return getBegin(rangeType, valueFrom);
 }
 
-function getInitialActiveStartDate(props: CalendarProps) {
+function getInitialActiveStartDate(props: CalendarPropsWithDefaults) {
   const {
     activeStartDate,
     defaultActiveStartDate,
@@ -370,14 +372,18 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   get activeStartDate() {
-    const { activeStartDate: activeStartDateProps } = this.props;
+    const { activeStartDate: activeStartDateProps } = this.props as CalendarPropsWithDefaults;
     const { activeStartDate: activeStartDateState } = this.state;
 
-    return activeStartDateProps || activeStartDateState || getInitialActiveStartDate(this.props);
+    return (
+      activeStartDateProps ||
+      activeStartDateState ||
+      getInitialActiveStartDate(this.props as CalendarPropsWithDefaults)
+    );
   }
 
   get value(): Value {
-    const { selectRange, value: valueProps } = this.props;
+    const { selectRange, value: valueProps } = this.props as CalendarPropsWithDefaults;
     const { value: valueState } = this.state;
 
     const rawValue = (() => {
@@ -401,26 +407,26 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   }
 
   get valueType() {
-    const { maxDetail } = this.props;
+    const { maxDetail } = this.props as CalendarPropsWithDefaults;
 
     return getValueType(maxDetail);
   }
 
   get view() {
-    const { minDetail, maxDetail, view: viewProps } = this.props;
+    const { minDetail, maxDetail, view: viewProps } = this.props as CalendarPropsWithDefaults;
     const { view: viewState } = this.state;
 
     return getView(viewProps || viewState, minDetail, maxDetail);
   }
 
   get views() {
-    const { minDetail, maxDetail } = this.props;
+    const { minDetail, maxDetail } = this.props as CalendarPropsWithDefaults;
 
     return getLimitedViews(minDetail, maxDetail);
   }
 
   get hover() {
-    const { selectRange } = this.props;
+    const { selectRange } = this.props as CalendarPropsWithDefaults;
     const { hover } = this.state;
 
     return selectRange ? hover : null;
@@ -442,7 +448,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
    * Gets current value in a desired format.
    */
   getProcessedValue(value: Date) {
-    const { minDate, maxDate, maxDetail, returnValue } = this.props;
+    const { minDate, maxDate, maxDetail, returnValue } = this.props as CalendarPropsWithDefaults;
 
     const processFunction = (() => {
       switch (returnValue) {
@@ -477,8 +483,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   ) => {
     const { activeStartDate: previousActiveStartDate, view: previousView } = this;
 
-    const { allowPartialRange, onActiveStartDateChange, onChange, onViewChange, selectRange } =
-      this.props;
+    const { allowPartialRange, onActiveStartDateChange, onChange, onViewChange, selectRange } = this
+      .props as CalendarPropsWithDefaults;
 
     const prevArgs = {
       action: undefined,
@@ -571,7 +577,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     this.onClickTile(nextActiveStartDate, event);
 
     const { view, views } = this;
-    const { onDrillDown } = this.props;
+    const { onDrillDown } = this.props as CalendarPropsWithDefaults;
 
     const nextView = views[views.indexOf(view) + 1];
 
@@ -596,7 +602,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
 
     const { activeStartDate, view, views } = this;
-    const { onDrillUp } = this.props;
+    const { onDrillUp } = this.props as CalendarPropsWithDefaults;
 
     const nextView = views[views.indexOf(view) - 1];
 
@@ -619,7 +625,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
   onChange = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
     const { value: previousValue } = this;
-    const { goToRangeStartOnSelect, selectRange } = this.props;
+    const { goToRangeStartOnSelect, selectRange } = this.props as CalendarPropsWithDefaults;
 
     this.onClickTile(value, event);
 
@@ -659,7 +665,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       // Range selection turned on, second value, goToRangeStartOnSelect toggled on
       goToRangeStartOnSelect
         ? getActiveStartDate({
-            ...this.props,
+            ...(this.props as CalendarPropsWithDefaults),
             value: nextValue,
           })
         : null;
@@ -678,7 +684,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
   onClickTile = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
     const { view } = this;
-    const { onClickDay, onClickDecade, onClickMonth, onClickYear } = this.props;
+    const { onClickDay, onClickDecade, onClickMonth, onClickYear } = this
+      .props as CalendarPropsWithDefaults;
 
     const callback = (() => {
       switch (view) {
@@ -723,7 +730,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       tileClassName,
       tileContent,
       tileDisabled,
-    } = this.props;
+    } = this.props as CalendarPropsWithDefaults;
     const { hover } = this;
 
     const activeStartDate = next
@@ -749,17 +756,17 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
     switch (view) {
       case 'century': {
-        const { formatYear } = this.props;
+        const { formatYear } = this.props as CalendarPropsWithDefaults;
 
         return <CenturyView formatYear={formatYear} {...commonProps} />;
       }
       case 'decade': {
-        const { formatYear } = this.props;
+        const { formatYear } = this.props as CalendarPropsWithDefaults;
 
         return <DecadeView formatYear={formatYear} {...commonProps} />;
       }
       case 'year': {
-        const { formatMonth, formatMonthYear } = this.props;
+        const { formatMonth, formatMonthYear } = this.props as CalendarPropsWithDefaults;
 
         return (
           <YearView formatMonth={formatMonth} formatMonthYear={formatMonthYear} {...commonProps} />
@@ -776,7 +783,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           showFixedNumberOfWeeks,
           showNeighboringMonth,
           showWeekNumbers,
-        } = this.props;
+        } = this.props as CalendarPropsWithDefaults;
         const { onMouseLeave } = this;
 
         return (
@@ -805,7 +812,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   }
 
   renderNavigation() {
-    const { showNavigation } = this.props;
+    const { showNavigation } = this.props as CalendarPropsWithDefaults;
 
     if (!showNavigation) {
       return null;
@@ -830,7 +837,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       prevAriaLabel,
       prevLabel,
       showDoubleView,
-    } = this.props;
+    } = this.props as CalendarPropsWithDefaults;
 
     return (
       <Navigation
@@ -861,7 +868,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   }
 
   render() {
-    const { className, inputRef, selectRange, showDoubleView } = this.props;
+    const { className, inputRef, selectRange, showDoubleView } = this
+      .props as CalendarPropsWithDefaults;
     const { onMouseLeave, value } = this;
     const valueArray = Array.isArray(value) ? value : [value];
 
