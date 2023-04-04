@@ -102,8 +102,8 @@ type CalendarProps = typeof defaultProps & {
   onClickMonth?: OnChangeFunc;
   onClickWeekNumber?: OnClickWeekNumberFunc;
   onClickYear?: OnChangeFunc;
-  onDrillDown?: () => void;
-  onDrillUp?: () => void;
+  onDrillDown?: ({ action, activeStartDate, value, view }: OnArgs) => void;
+  onDrillUp?: ({ action, activeStartDate, value, view }: OnArgs) => void;
   onViewChange?: ({ action, activeStartDate, value, view }: OnArgs) => void;
   prev2AriaLabel?: string;
   prev2Label?: React.ReactNode;
