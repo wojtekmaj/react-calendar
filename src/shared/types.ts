@@ -35,7 +35,7 @@ export type NavigationLabelFunc = ({
 export type OnArgs = {
   action: Action;
   activeStartDate: Date | null;
-  value: Date | null | (Date | null)[];
+  value: Value;
   view: View;
 };
 
