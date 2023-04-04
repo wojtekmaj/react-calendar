@@ -4,47 +4,57 @@ import { getISOLocalDateTime } from '@wojtekmaj/date-utils';
 
 import { isValue } from './shared/propTypes';
 
-export default function ValueOptions({ selectRange, setSelectRange, setValue, value }) {
-  const startDate = [].concat(value)[0];
-  const endDate = [].concat(value)[1];
+import type { LooseValue } from './shared/types';
 
-  function setStartValue(startValue) {
-    if (!startValue) {
-      setValue(value[1] || startValue);
+type ValueOptionsProps = {
+  selectRange?: boolean;
+  setSelectRange: (selectRange: boolean) => void;
+  setValue: (value: LooseValue) => void;
+  value?: LooseValue;
+};
+
+export default function ValueOptions({
+  selectRange,
+  setSelectRange,
+  setValue,
+  value,
+}: ValueOptionsProps) {
+  const [startDate, endDate] = Array.isArray(value) ? value : [value, null];
+
+  function setStartValue(nextStartDate: string | Date | null) {
+    if (!nextStartDate) {
+      setValue(endDate);
       return;
     }
 
     if (Array.isArray(value)) {
-      setValue([startValue, value[1]]);
+      setValue([nextStartDate, endDate]);
     } else {
-      setValue(startValue);
+      setValue(nextStartDate);
     }
   }
 
-  function setEndValue(endValue) {
-    if (!endValue) {
-      setValue(value[0]);
+  function setEndValue(nextEndDate: string | Date | null) {
+    if (!nextEndDate) {
+      setValue(startDate || null);
       return;
     }
 
-    if (Array.isArray(value)) {
-      setValue([value[0], endValue]);
-    } else {
-      setValue([value, endValue]);
-    }
+    setValue([startDate || null, nextEndDate]);
   }
 
-  function onStartChange(event) {
+  function onStartChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value: nextValue } = event.target;
+
     setStartValue(nextValue ? new Date(nextValue) : null);
   }
 
-  function onEndChange(event) {
+  function onEndChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value: nextValue } = event.target;
     setEndValue(nextValue ? new Date(nextValue) : null);
   }
 
-  function onSelectRangeChange(event) {
+  function onSelectRangeChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { checked } = event.target;
 
     setSelectRange(checked);
@@ -60,7 +70,11 @@ export default function ValueOptions({ selectRange, setSelectRange, setValue, va
           id="startDate"
           onChange={onStartChange}
           type="datetime-local"
-          value={startDate ? getISOLocalDateTime(startDate) : ''}
+          value={
+            startDate && startDate instanceof Date
+              ? getISOLocalDateTime(startDate)
+              : startDate || undefined
+          }
         />
         &nbsp;
         <button onClick={() => setStartValue(null)} type="button">
@@ -77,7 +91,9 @@ export default function ValueOptions({ selectRange, setSelectRange, setValue, va
           id="endDate"
           onChange={onEndChange}
           type="datetime-local"
-          value={endDate ? getISOLocalDateTime(endDate) : ''}
+          value={
+            endDate && endDate instanceof Date ? getISOLocalDateTime(endDate) : endDate || undefined
+          }
         />
         &nbsp;
         <button onClick={() => setEndValue(null)} type="button">

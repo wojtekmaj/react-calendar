@@ -1,27 +1,35 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
-export default function LocaleOptions({ locale, setLocale }) {
-  function onChange(event) {
-    let { value: nextLocale } = event.target;
+type LocaleOptionsProps = {
+  locale: string | undefined;
+  setLocale: (locale: string | undefined) => void;
+};
 
-    if (nextLocale === 'null') {
-      nextLocale = null;
+export default function LocaleOptions({ locale, setLocale }: LocaleOptionsProps) {
+  const customLocale = useRef<HTMLInputElement>(null);
+
+  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { value: nextLocale } = event.target;
+
+    if (nextLocale === 'undefined') {
+      setLocale(undefined);
+    } else {
+      setLocale(nextLocale);
     }
-
-    setLocale(nextLocale);
   }
 
-  function onCustomChange(event) {
+  function onCustomChange(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const { value: nextLocale } = event.target.customLocale;
+    const input = customLocale.current;
+    const { value: nextLocale } = input as HTMLInputElement;
 
     setLocale(nextLocale);
   }
 
   function resetLocale() {
-    setLocale(null);
+    setLocale(undefined);
   }
 
   return (
@@ -30,12 +38,12 @@ export default function LocaleOptions({ locale, setLocale }) {
 
       <div>
         <input
-          checked={locale === null}
+          checked={locale === undefined}
           id="localeDefault"
           name="locale"
           onChange={onChange}
           type="radio"
-          value="null"
+          value="undefined"
         />
         <label htmlFor="localeDefault">Auto</label>
       </div>
@@ -81,13 +89,14 @@ export default function LocaleOptions({ locale, setLocale }) {
           id="customLocale"
           name="customLocale"
           pattern="^[a-z]{2}(-[A-Z0-9]{2,3})?$"
+          ref={customLocale}
           type="text"
         />
         &nbsp;
         <button style={{ display: 'none' }} type="submit">
           Set locale
         </button>
-        <button disabled={locale === null} onClick={resetLocale} type="button">
+        <button disabled={locale === undefined} onClick={resetLocale} type="button">
           Reset locale
         </button>
       </form>
