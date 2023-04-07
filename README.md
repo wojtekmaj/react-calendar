@@ -27,15 +27,16 @@ A minimal demo page can be found in `sample` directory.
 
 ## Before you continue
 
-React-Calendar is under constant development. This documentation is written for React-Calendar 3.x branch. If you want to see documentation for other versions of React-Calendar, use dropdown on top of GitHub page to switch to an appropriate tag. Here are quick links to the newest docs from each branch:
+React-Calendar is under constant development. This documentation is written for React-Calendar 4.x branch. If you want to see documentation for other versions of React-Calendar, use dropdown on top of GitHub page to switch to an appropriate tag. Here are quick links to the newest docs from each branch:
 
+- [v3.x](https://github.com/wojtekmaj/react-calendar/blob/v3.x/README.md)
 - [v2.x](https://github.com/wojtekmaj/react-calendar/blob/v2.x/README.md)
 
 ## Getting started
 
 ### Compatibility
 
-Your project needs to use React 16.3 or later.
+Your project needs to use React 16.8 or later.
 
 React-Calendar uses modern web technologies. That's why it's so fast, lightweight and easy to style. This, however, comes at a cost of [supporting only modern browsers](https://caniuse.com/#feat=internationalization).
 
