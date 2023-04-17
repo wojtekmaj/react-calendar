@@ -30,12 +30,11 @@ describe('Calendar', () => {
   });
 
   it('passes container element to inputRef properly', () => {
-    const inputRef = vi.fn();
+    const inputRef = createRef<HTMLDivElement>();
 
     render(<Calendar inputRef={inputRef} />);
 
-    expect(inputRef).toHaveBeenCalled();
-    expect(inputRef).toHaveBeenCalledWith(expect.any(HTMLElement));
+    expect(inputRef.current).toBeInstanceOf(HTMLDivElement);
   });
 
   it('renders Navigation by default', () => {
