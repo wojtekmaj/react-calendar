@@ -342,7 +342,7 @@ export function getValueRange(rangeType: RangeType, date1: Date, date2: Date): [
 
 function toYearLabel(
   locale: string | undefined,
-  formatYear: (locale: string | undefined, date: Date) => string = defaultFormatYear,
+  formatYear: ((locale: string | undefined, date: Date) => string) | undefined = defaultFormatYear,
   dates: Date[],
 ): string {
   return dates.map((date) => formatYear(locale, date)).join(' – ');
@@ -366,7 +366,7 @@ function toYearLabel(
  */
 export function getCenturyLabel(
   locale: string | undefined,
-  formatYear: (locale: string | undefined, date: Date) => string,
+  formatYear: ((locale: string | undefined, date: Date) => string) | undefined,
   date: Date,
 ): string {
   return toYearLabel(locale, formatYear, getCenturyRange(date));
@@ -383,7 +383,7 @@ export function getCenturyLabel(
  */
 export function getDecadeLabel(
   locale: string | undefined,
-  formatYear: (locale: string | undefined, date: Date) => string,
+  formatYear: ((locale: string | undefined, date: Date) => string) | undefined,
   date: Date,
 ): string {
   return toYearLabel(locale, formatYear, getDecadeRange(date));

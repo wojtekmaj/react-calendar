@@ -66,6 +66,7 @@ describe('getDayOfWeek', () => {
   it('throws an error when given unrecognized calendar type', () => {
     const date = new Date(2017, 0, 1);
 
+    // @ts-expect-error-next-line
     expect(() => getDayOfWeek(date, 'Chinese')).toThrow();
   });
 });
@@ -438,6 +439,7 @@ describe('getRange', () => {
   it('throws an error when given unrecognized range type', () => {
     const date = new Date(2017, 0, 1);
 
+    // @ts-expect-error-next-line
     expect(() => getRange('hamster', date)).toThrow();
   });
 });
@@ -491,6 +493,7 @@ describe('getBegin', () => {
   it('throws an error when given unrecognized range type', () => {
     const date = new Date(2017, 0, 1);
 
+    // @ts-expect-error-next-line
     expect(() => getBegin('hamster', date)).toThrow();
   });
 });
@@ -535,6 +538,7 @@ describe('getBeginPrevious', () => {
   it('throws an error when given unrecognized range type', () => {
     const date = new Date(2017, 0, 1);
 
+    // @ts-expect-error-next-line
     expect(() => getBeginPrevious('hamster', date)).toThrow();
   });
 });
@@ -579,6 +583,7 @@ describe('getBeginNext', () => {
   it('throws an error when given unrecognized range type', () => {
     const date = new Date(2017, 0, 1);
 
+    // @ts-expect-error-next-line
     expect(() => getBeginNext('hamster', date)).toThrow();
   });
 });
@@ -614,6 +619,7 @@ describe('getBeginPrevious2', () => {
   it('throws an error when given unrecognized range type', () => {
     const date = new Date(2017, 0, 1);
 
+    // @ts-expect-error-next-line
     expect(() => getBeginPrevious2('hamster', date)).toThrow();
   });
 });
@@ -649,6 +655,7 @@ describe('getBeginNext2', () => {
   it('throws an error when given unrecognized range type', () => {
     const date = new Date(2017, 0, 1);
 
+    // @ts-expect-error-next-line
     expect(() => getBeginNext2('hamster', date)).toThrow();
   });
 });
@@ -702,6 +709,7 @@ describe('getEnd', () => {
   it('throws an error when given unrecognized range type', () => {
     const date = new Date(2017, 0, 1);
 
+    // @ts-expect-error-next-line
     expect(() => getEnd('hamster', date)).toThrow();
   });
 });
@@ -746,6 +754,7 @@ describe('getEndPrevious', () => {
   it('throws an error when given unrecognized range type', () => {
     const date = new Date(2017, 0, 1);
 
+    // @ts-expect-error-next-line
     expect(() => getEndPrevious('hamster', date)).toThrow();
   });
 });
@@ -781,6 +790,7 @@ describe('getEndPrevious2', () => {
   it('throws an error when given unrecognized range type', () => {
     const date = new Date(2017, 0, 1);
 
+    // @ts-expect-error-next-line
     expect(() => getEndPrevious2('hamster', date)).toThrow();
   });
 });
