@@ -66,5 +66,7 @@ describe('Flex', () => {
 
     children.forEach((child) => expect(child).toHaveStyle('flex-basis: 33.333333333333336%'));
     expect(children[0]).toHaveStyle('margin-left: 33.333333333333336%');
+    expect(children[0]).toHaveStyle('margin-inline-start: 33.333333333333336%');
+    expect(children[0]).toHaveStyle('margin-inline-end: 0');
   });
 });
