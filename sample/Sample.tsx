@@ -4,8 +4,12 @@ import 'react-calendar/dist/Calendar.css';
 
 import './Sample.css';
 
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
+
 export default function Sample() {
-  const [value, onChange] = useState<Date | null | (Date | null)[]>(new Date());
+  const [value, onChange] = useState<Value>(new Date());
 
   return (
     <div className="Sample">
@@ -14,7 +18,7 @@ export default function Sample() {
       </header>
       <div className="Sample__container">
         <main className="Sample__container__content">
-          <Calendar onChange={(nextValue) => onChange(nextValue)} showWeekNumbers value={value} />
+          <Calendar onChange={onChange} showWeekNumbers value={value} />
         </main>
       </div>
     </div>
