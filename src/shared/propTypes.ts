@@ -62,7 +62,7 @@ export function isMaxDate(props: Record<string, unknown>, propName: string, comp
 
 export const isRef = PropTypes.oneOfType([
   PropTypes.func,
-  PropTypes.shape({
+  PropTypes.exact({
     current: PropTypes.any,
   }),
 ]);
