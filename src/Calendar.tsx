@@ -569,6 +569,29 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     });
   };
 
+  onClickTile = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
+    const { view } = this;
+    const { onClickDay, onClickDecade, onClickMonth, onClickYear } = this
+      .props as CalendarPropsWithDefaults;
+
+    const callback = (() => {
+      switch (view) {
+        case 'century':
+          return onClickDecade;
+        case 'decade':
+          return onClickYear;
+        case 'year':
+          return onClickMonth;
+        case 'month':
+          return onClickDay;
+        default:
+          throw new Error(`Invalid view: ${view}.`);
+      }
+    })();
+
+    if (callback) callback(value, event);
+  };
+
   drillDown = (nextActiveStartDate: Date, event: React.MouseEvent<HTMLButtonElement>) => {
     if (!this.drillDownAvailable) {
       return;
@@ -680,29 +703,6 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       },
       event,
     );
-  };
-
-  onClickTile = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
-    const { view } = this;
-    const { onClickDay, onClickDecade, onClickMonth, onClickYear } = this
-      .props as CalendarPropsWithDefaults;
-
-    const callback = (() => {
-      switch (view) {
-        case 'century':
-          return onClickDecade;
-        case 'decade':
-          return onClickYear;
-        case 'year':
-          return onClickMonth;
-        case 'month':
-          return onClickDay;
-        default:
-          throw new Error(`Invalid view: ${view}.`);
-      }
-    })();
-
-    if (callback) callback(value, event);
   };
 
   onMouseOver = (value: Date) => {
