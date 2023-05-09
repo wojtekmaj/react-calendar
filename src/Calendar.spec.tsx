@@ -396,53 +396,42 @@ describe('Calendar', () => {
   });
 
   describe('handles drill up properly', () => {
-    it('drills up when allowed', () => {
-      const instance = createRef<Calendar>();
+    it('drills up properly', () => {
+      const activeStartDate = new Date(2017, 0, 1);
 
-      render(<Calendar ref={instance} />);
+      const { container } = render(
+        <Calendar activeStartDate={activeStartDate} defaultView="month" />,
+      );
 
-      act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
-
-        instance.current.setState({ view: 'month' });
-      });
+      const drillUpButton = container.querySelector(
+        '.react-calendar__navigation__label',
+      ) as HTMLButtonElement;
 
       act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
-
-        instance.current.drillUp();
+        drillUpButton.click();
       });
 
-      if (!instance.current) {
-        throw new Error('Calendar ref is not set');
-      }
+      const label = container.querySelector(
+        '.react-calendar__navigation__label',
+      ) as HTMLButtonElement;
 
-      expect(instance.current.view).toBe('year');
+      expect(label).toHaveAccessibleName('2017');
     });
 
     it('calls onDrillUp on drill up properly given view prop', () => {
+      const activeStartDate = new Date(2017, 0, 1);
       const onDrillUp = vi.fn();
-      const instance = createRef<Calendar>();
 
-      render(
-        <Calendar
-          activeStartDate={new Date(2017, 6, 1)}
-          onDrillUp={onDrillUp}
-          view="month"
-          ref={instance}
-        />,
+      const { container } = render(
+        <Calendar activeStartDate={activeStartDate} onDrillUp={onDrillUp} view="month" />,
       );
 
-      act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
+      const drillUpButton = container.querySelector(
+        '.react-calendar__navigation__label',
+      ) as HTMLButtonElement;
 
-        instance.current.drillUp();
+      act(() => {
+        drillUpButton.click();
       });
 
       expect(onDrillUp).toHaveBeenCalledWith({
@@ -454,27 +443,19 @@ describe('Calendar', () => {
     });
 
     it('calls onDrillUp on drill up properly when not given view prop', () => {
+      const activeStartDate = new Date(2017, 0, 1);
       const onDrillUp = vi.fn();
-      const instance = createRef<Calendar>();
 
-      render(
-        <Calendar activeStartDate={new Date(2017, 6, 1)} onDrillUp={onDrillUp} ref={instance} />,
+      const { container } = render(
+        <Calendar activeStartDate={activeStartDate} onDrillUp={onDrillUp} defaultView="month" />,
       );
 
-      act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
-
-        instance.current.setState({ view: 'month' });
-      });
+      const drillUpButton = container.querySelector(
+        '.react-calendar__navigation__label',
+      ) as HTMLButtonElement;
 
       act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
-
-        instance.current.drillUp();
+        drillUpButton.click();
       });
 
       expect(onDrillUp).toHaveBeenCalledWith({
@@ -504,94 +485,69 @@ describe('Calendar', () => {
   });
 
   describe('handles drill down properly', () => {
-    it('drills down when allowed', () => {
-      const instance = createRef<Calendar>();
+    it('drills down properly', () => {
+      const activeStartDate = new Date(2011, 0, 1);
 
-      render(<Calendar ref={instance} />);
-
-      act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
-
-        instance.current.setState({ view: 'century' });
-      });
-
-      act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
-
-        instance.current.drillDown(new Date(2011, 0, 1), event);
-      });
-
-      if (!instance.current) {
-        throw new Error('Calendar ref is not set');
-      }
-
-      expect(instance.current.view).toBe('decade');
-    });
-
-    it('calls onDrillDown on drill down given view prop', () => {
-      const onDrillDown = vi.fn();
-      const instance = createRef<Calendar>();
-
-      render(
-        <Calendar
-          activeStartDate={new Date(2001, 0, 1)}
-          onDrillDown={onDrillDown}
-          view="century"
-          ref={instance}
-        />,
+      const { container } = render(
+        <Calendar activeStartDate={activeStartDate} defaultView="century" />,
       );
 
-      act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
+      const tile = container.querySelector('.react-calendar__tile') as HTMLButtonElement;
 
-        instance.current.drillDown(new Date(2011, 0, 1), event);
+      act(() => {
+        tile.click();
+      });
+
+      const label = container.querySelector(
+        '.react-calendar__navigation__label',
+      ) as HTMLButtonElement;
+
+      expect(label).toHaveAccessibleName('2011 – 2020');
+    });
+
+    it('calls onDrillDown on drill down properly given view prop', () => {
+      const activeStartDate = new Date(2001, 0, 1);
+      const onDrillDown = vi.fn();
+
+      const { container } = render(
+        <Calendar activeStartDate={activeStartDate} view="century" onDrillDown={onDrillDown} />,
+      );
+
+      const tile = container.querySelector('.react-calendar__tile') as HTMLButtonElement;
+
+      act(() => {
+        tile.click();
       });
 
       expect(onDrillDown).toHaveBeenCalledWith({
         action: 'drillDown',
-        activeStartDate: new Date(2011, 0, 1),
+        activeStartDate: new Date(2001, 0, 1),
         value: null,
         view: 'decade',
       });
     });
 
     it('calls onDrillDown on drill down when not given view prop', () => {
+      const activeStartDate = new Date(2001, 0, 1);
       const onDrillDown = vi.fn();
-      const instance = createRef<Calendar>();
 
-      render(
+      const { container } = render(
         <Calendar
-          activeStartDate={new Date(2001, 0, 1)}
+          activeStartDate={activeStartDate}
+          defaultView="century"
           onDrillDown={onDrillDown}
-          ref={instance}
         />,
       );
 
-      act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
-
-        instance.current.setState({ view: 'century' });
-      });
+      const tile = container.querySelector('.react-calendar__tile') as HTMLButtonElement;
 
       act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
-
-        instance.current.drillDown(new Date(2011, 0, 1), event);
+        tile.click();
       });
 
       expect(onDrillDown).toHaveBeenCalledWith({
         action: 'drillDown',
-        activeStartDate: new Date(2011, 0, 1),
+        activeStartDate: new Date(2001, 0, 1),
         value: null,
         view: 'decade',
       });
@@ -754,101 +710,76 @@ describe('Calendar', () => {
   });
 
   describe('handles view change properly', () => {
-    it('calls onViewChange on view initial set', () => {
-      const value = new Date(2019, 0, 15);
+    it('calls onViewChange on drill up', () => {
       const activeStartDate = new Date(2017, 0, 1);
-      const newView = 'year';
       const onViewChange = vi.fn();
-      const instance = createRef<Calendar>();
-
-      render(
-        <Calendar
-          activeStartDate={activeStartDate}
-          onViewChange={onViewChange}
-          value={value}
-          ref={instance}
-        />,
-      );
-
-      act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
-
-        instance.current.setStateAndCallCallbacks({
-          action: 'onChange',
-          activeStartDate,
-          view: newView,
-        });
-      });
-
-      expect(onViewChange).toHaveBeenCalledWith({
-        action: 'onChange',
-        activeStartDate,
-        value,
-        view: newView,
-      });
-    });
-
-    it('calls onViewChange on view change', async () => {
       const value = new Date(2019, 0, 15);
-      const action = 'onChange';
-      const activeStartDate = new Date(2017, 0, 1);
-      const view = 'year';
-      const newView = 'month';
-      const onViewChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const view = 'month';
 
-      render(
+      const { container } = render(
         <Calendar
           activeStartDate={activeStartDate}
           onViewChange={onViewChange}
           value={value}
           view={view}
-          ref={instance}
         />,
       );
 
-      act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
+      const drillUpButton = container.querySelector(
+        'button.react-calendar__navigation__label',
+      ) as HTMLButtonElement;
 
-        instance.current.setStateAndCallCallbacks({
-          action,
-          activeStartDate,
-          view: newView,
-        });
+      act(() => {
+        drillUpButton.click();
       });
 
       expect(onViewChange).toHaveBeenCalledWith({
-        action,
+        action: 'drillUp',
         activeStartDate,
         value,
-        view: newView,
+        view: 'year',
       });
     });
 
-    it('does not call onViewChange on view change if value is the same as before', () => {
-      const action = 'onChange';
+    it('calls onViewChange on tile click', async () => {
       const activeStartDate = new Date(2017, 0, 1);
-      const view = 'year';
-      const newView = 'year';
       const onViewChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const value = new Date(2019, 0, 15);
+      const view = 'year';
 
-      render(<Calendar onViewChange={onViewChange} view={view} ref={instance} />);
+      const { container } = render(
+        <Calendar
+          activeStartDate={activeStartDate}
+          onViewChange={onViewChange}
+          value={value}
+          view={view}
+        />,
+      );
+
+      const tile = container.querySelector('button.react-calendar__tile') as HTMLButtonElement;
 
       act(() => {
-        if (!instance.current) {
-          throw new Error('Calendar ref is not set');
-        }
+        tile.click();
+      });
 
-        instance.current.setStateAndCallCallbacks({
-          action,
-          activeStartDate,
-          view: newView,
-        });
+      expect(onViewChange).toHaveBeenCalledWith({
+        action: 'drillDown',
+        activeStartDate,
+        value,
+        view: 'month',
+      });
+    });
+
+    it('does not call onViewChange if value is the same as before', () => {
+      const view = 'month';
+      const onViewChange = vi.fn();
+
+      const { container } = render(<Calendar onViewChange={onViewChange} view={view} />);
+
+      const tile = container.querySelector('button.react-calendar__tile') as HTMLButtonElement;
+
+      act(() => {
+        tile.click();
       });
 
       expect(onViewChange).not.toHaveBeenCalled();
