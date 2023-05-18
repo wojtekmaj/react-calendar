@@ -66,7 +66,7 @@ const defaultProps = {
   showNeighboringMonth: true,
 };
 
-type CalendarProps = {
+export type CalendarProps = {
   activeStartDate?: Date;
   allowPartialRange?: boolean;
   calendarType?: CalendarType;
