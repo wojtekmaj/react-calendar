@@ -691,7 +691,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
             ...(this.props as CalendarPropsWithDefaults),
             value: nextValue,
           })
-        : null;
+        : this.activeStartDate;
 
     event.persist();
 

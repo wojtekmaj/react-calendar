@@ -707,6 +707,85 @@ describe('Calendar', () => {
 
       expect(onActiveStartDateChange).not.toHaveBeenCalled();
     });
+
+    it('returns to start of range when range is completed', () => {
+      const onActiveStartDateChange = vi.fn();
+
+      const initialRange = new Date(2017, 0, 10);
+
+      const { container } = render(
+        <Calendar
+          view="month"
+          selectRange
+          onActiveStartDateChange={onActiveStartDateChange}
+          defaultValue={initialRange}
+        />,
+      );
+
+      const nextMonthButton = container.querySelector(
+        'button.react-calendar__navigation__next-button',
+      ) as HTMLButtonElement;
+
+      act(() => {
+        nextMonthButton.click();
+      });
+      // Disregard the call on the above button click
+      onActiveStartDateChange.mockClear();
+
+      // First day not in the previous month
+      const firstDayTile = container.querySelector(
+        '.react-calendar__tile:not([react-calendar__month-view__days__day--weekend])',
+      ) as HTMLButtonElement;
+
+      act(() => {
+        firstDayTile.click();
+      });
+
+      expect(onActiveStartDateChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: 'onChange',
+          activeStartDate: new Date(2017, 0, 1),
+          view: 'month',
+        }),
+      );
+    });
+
+    it('does not change activeStartDate on range completion when goToRangeStartOnSelect is set to false', () => {
+      const onActiveStartDateChange = vi.fn();
+
+      const initialRange = new Date(2017, 0, 10);
+
+      const { container } = render(
+        <Calendar
+          view="month"
+          selectRange
+          onActiveStartDateChange={onActiveStartDateChange}
+          defaultValue={initialRange}
+          goToRangeStartOnSelect={false}
+        />,
+      );
+
+      const nextMonthButton = container.querySelector(
+        'button.react-calendar__navigation__next-button',
+      ) as HTMLButtonElement;
+
+      act(() => {
+        nextMonthButton.click();
+      });
+      // Disregard the call on the above button click
+      onActiveStartDateChange.mockClear();
+
+      // First day not in the previous month
+      const firstDayTile = container.querySelector(
+        '.react-calendar__tile:not([react-calendar__month-view__days__day--weekend])',
+      ) as HTMLButtonElement;
+
+      act(() => {
+        firstDayTile.click();
+      });
+
+      expect(onActiveStartDateChange).not.toHaveBeenCalled();
+    });
   });
 
   describe('handles view change properly', () => {
