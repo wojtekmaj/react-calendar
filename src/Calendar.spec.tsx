@@ -5,6 +5,18 @@ import { getMonthStart } from '@wojtekmaj/date-utils';
 
 import Calendar from './Calendar';
 
+import type { Action, Value, View } from './shared/types';
+
+type CalendarImperativeHandle = {
+  activeStartDate: Date;
+  drillDown: (nextActiveStartDate: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  drillUp: () => void;
+  onChange: (rawNextValue: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  setActiveStartDate: (nextActiveStartDate: Date, action: Action) => void;
+  value: Value;
+  view: View;
+};
+
 const { format } = new Intl.DateTimeFormat('en-US', {
   day: 'numeric',
   month: 'long',
@@ -54,7 +66,7 @@ describe('Calendar', () => {
   });
 
   it('uses given value when passed value using value prop', () => {
-    const instance = createRef<Calendar>();
+    const instance = createRef<CalendarImperativeHandle>();
 
     render(<Calendar value={new Date(2019, 0, 1)} ref={instance} />);
 
@@ -66,7 +78,7 @@ describe('Calendar', () => {
   });
 
   it('uses given value when passed value using defaultValue prop', () => {
-    const instance = createRef<Calendar>();
+    const instance = createRef<CalendarImperativeHandle>();
 
     render(<Calendar defaultValue={new Date(2019, 0, 1)} ref={instance} />);
 
@@ -78,7 +90,7 @@ describe('Calendar', () => {
   });
 
   it('renders given view when passed view using view prop', () => {
-    const instance = createRef<Calendar>();
+    const instance = createRef<CalendarImperativeHandle>();
 
     render(<Calendar view="century" ref={instance} />);
 
@@ -90,7 +102,7 @@ describe('Calendar', () => {
   });
 
   it('renders given view when passed view using defaultView prop', () => {
-    const instance = createRef<Calendar>();
+    const instance = createRef<CalendarImperativeHandle>();
 
     render(<Calendar defaultView="century" ref={instance} />);
 
@@ -102,7 +114,7 @@ describe('Calendar', () => {
   });
 
   it('renders given active start date when passed active start date using activeStartDate prop', () => {
-    const instance = createRef<Calendar>();
+    const instance = createRef<CalendarImperativeHandle>();
 
     render(<Calendar activeStartDate={new Date(2019, 0, 1)} ref={instance} />);
 
@@ -114,7 +126,7 @@ describe('Calendar', () => {
   });
 
   it('renders given active start date when passed active start date using activeStartDate prop', () => {
-    const instance = createRef<Calendar>();
+    const instance = createRef<CalendarImperativeHandle>();
 
     render(<Calendar defaultActiveStartDate={new Date(2019, 0, 1)} ref={instance} />);
 
@@ -129,7 +141,7 @@ describe('Calendar', () => {
     const value = new Date(2018, 1, 15);
     const newValue = new Date(2018, 0, 15);
     const newActiveStartDate = new Date(2018, 0, 1);
-    const instance = createRef<Calendar>();
+    const instance = createRef<CalendarImperativeHandle>();
 
     const { rerender } = render(<Calendar value={value} ref={instance} />);
 
@@ -146,7 +158,7 @@ describe('Calendar', () => {
     const value = new Date(2018, 1, 15);
     const newValue = new Date(2018, 0, 15);
     const newActiveStartDate = new Date(2018, 0, 1);
-    const instance = createRef<Calendar>();
+    const instance = createRef<CalendarImperativeHandle>();
 
     render(<Calendar value={value} ref={instance} />);
 
@@ -168,7 +180,7 @@ describe('Calendar', () => {
   it('changes Calendar view given new activeStartDate value', () => {
     const activeStartDate = new Date(2017, 0, 1);
     const newActiveStartDate = new Date(2018, 0, 1);
-    const instance = createRef<Calendar>();
+    const instance = createRef<CalendarImperativeHandle>();
 
     const { rerender } = render(<Calendar activeStartDate={activeStartDate} ref={instance} />);
 
@@ -468,7 +480,7 @@ describe('Calendar', () => {
 
     it('refuses to drill up when already on minimum allowed detail', () => {
       const onDrillUp = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(<Calendar onDrillUp={onDrillUp} view="century" ref={instance} />);
 
@@ -555,7 +567,7 @@ describe('Calendar', () => {
 
     it('refuses to drill down when already on minimum allowed detail', () => {
       const onDrillDown = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(<Calendar onDrillDown={onDrillDown} view="month" ref={instance} />);
 
@@ -573,7 +585,7 @@ describe('Calendar', () => {
 
   describe('handles active start date change properly', () => {
     it('changes active start date when allowed', () => {
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(<Calendar ref={instance} />);
 
@@ -596,7 +608,7 @@ describe('Calendar', () => {
       const value = new Date(2019, 0, 15);
       const newActiveStartDate = new Date(2018, 0, 1);
       const onActiveStartDateChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(
         <Calendar
@@ -628,7 +640,7 @@ describe('Calendar', () => {
       const activeStartDate = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2018, 0, 1);
       const onActiveStartDateChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(
         <Calendar
@@ -660,7 +672,7 @@ describe('Calendar', () => {
       const activeStartDate = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2017, 0, 1);
       const onActiveStartDateChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(
         <Calendar
@@ -686,7 +698,7 @@ describe('Calendar', () => {
       const value = new Date(2017, 0, 1);
       const newActiveStartDate = new Date(2017, 0, 1);
       const onActiveStartDateChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(
         <Calendar
@@ -789,7 +801,7 @@ describe('Calendar', () => {
   describe('calls onChange properly', () => {
     it('calls onChange function returning the beginning of selected period by default', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(<Calendar onChange={onChange} view="month" ref={instance} />);
 
@@ -808,7 +820,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of the selected period when returnValue is set to "start"', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(<Calendar onChange={onChange} returnValue="start" view="month" ref={instance} />);
 
@@ -827,7 +839,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the end of the selected period when returnValue is set to "end"', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(<Calendar onChange={onChange} returnValue="end" view="month" ref={instance} />);
 
@@ -846,7 +858,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of selected period when returnValue is set to "range"', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(<Calendar onChange={onChange} returnValue="range" view="month" ref={instance} />);
 
@@ -868,7 +880,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of selected period, but no earlier than minDate', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(
         <Calendar
@@ -895,7 +907,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the beginning of selected period, but no later than maxDate', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(
         <Calendar
@@ -922,7 +934,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the end of selected period, but no earlier than minDate', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(
         <Calendar
@@ -949,7 +961,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning the end of selected period, but no later than maxDate', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(
         <Calendar
@@ -976,7 +988,7 @@ describe('Calendar', () => {
 
     it('does not call onChange function returning a range when selected one piece of a range by default', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
 
@@ -995,7 +1007,7 @@ describe('Calendar', () => {
 
     it('does not call onChange function returning a range when selected one piece of a range given allowPartialRange = false', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(
         <Calendar
@@ -1022,7 +1034,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning a partial range when selected one piece of a range given allowPartialRange = true', () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(
         <Calendar allowPartialRange onChange={onChange} selectRange view="month" ref={instance} />,
@@ -1044,7 +1056,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning a range when selected two pieces of a range', async () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
 
@@ -1058,8 +1070,10 @@ describe('Calendar', () => {
         onChangeInternal(new Date(2018, 0, 1), event);
       });
 
+      const { onChange: onChangeInternal2 } = instance.current;
+
       act(() => {
-        onChangeInternal(new Date(2018, 6, 1), event);
+        onChangeInternal2(new Date(2018, 6, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledTimes(1);
@@ -1071,7 +1085,7 @@ describe('Calendar', () => {
 
     it('calls onChange function returning a range when selected reversed two pieces of a range', async () => {
       const onChange = vi.fn();
-      const instance = createRef<Calendar>();
+      const instance = createRef<CalendarImperativeHandle>();
 
       render(<Calendar onChange={onChange} selectRange view="month" ref={instance} />);
 
@@ -1085,8 +1099,10 @@ describe('Calendar', () => {
         onChangeInternal(new Date(2018, 6, 1), event);
       });
 
+      const { onChange: onChangeInternal2 } = instance.current;
+
       act(() => {
-        onChangeInternal(new Date(2018, 0, 1), event);
+        onChangeInternal2(new Date(2018, 0, 1), event);
       });
 
       expect(onChange).toHaveBeenCalledTimes(1);

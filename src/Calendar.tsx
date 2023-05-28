@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
@@ -56,17 +56,6 @@ defaultMinDate.setFullYear(1, 0, 1);
 defaultMinDate.setHours(0, 0, 0, 0);
 const defaultMaxDate = new Date(8.64e15);
 
-const defaultProps = {
-  goToRangeStartOnSelect: true,
-  maxDate: defaultMaxDate,
-  maxDetail: 'month',
-  minDate: defaultMinDate,
-  minDetail: 'century',
-  returnValue: 'start',
-  showNavigation: true,
-  showNeighboringMonth: true,
-};
-
 export type CalendarProps = {
   activeStartDate?: Date;
   allowPartialRange?: boolean;
@@ -121,15 +110,6 @@ export type CalendarProps = {
   tileContent?: TileContentFunc | React.ReactNode;
   tileDisabled?: TileDisabledFunc;
   value?: LooseValue;
-  view?: View;
-};
-
-type CalendarPropsWithDefaults = typeof defaultProps & CalendarProps;
-
-type CalendarState = {
-  activeStartDate?: Date | null;
-  hover?: Date | null;
-  value?: Value;
   view?: View;
 };
 
@@ -309,88 +289,81 @@ function areDatesEqual(date1?: Date | null, date2?: Date | null) {
   return date1 instanceof Date && date2 instanceof Date && date1.getTime() === date2.getTime();
 }
 
-const isActiveStartDate = PropTypes.instanceOf(Date);
+const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
+  const {
+    activeStartDate: activeStartDateProps,
+    allowPartialRange,
+    calendarType,
+    className,
+    defaultActiveStartDate,
+    defaultValue,
+    defaultView,
+    formatDay,
+    formatLongDate,
+    formatMonth,
+    formatMonthYear,
+    formatShortWeekday,
+    formatWeekday,
+    formatYear,
+    goToRangeStartOnSelect = true,
+    inputRef,
+    locale,
+    maxDate = defaultMaxDate,
+    maxDetail = 'month',
+    minDate = defaultMinDate,
+    minDetail = 'century',
+    navigationAriaLabel,
+    navigationAriaLive,
+    navigationLabel,
+    next2AriaLabel,
+    next2Label,
+    nextAriaLabel,
+    nextLabel,
+    onActiveStartDateChange,
+    onChange: onChangeProps,
+    onClickDay,
+    onClickDecade,
+    onClickMonth,
+    onClickWeekNumber,
+    onClickYear,
+    onDrillDown,
+    onDrillUp,
+    onViewChange,
+    prev2AriaLabel,
+    prev2Label,
+    prevAriaLabel,
+    prevLabel,
+    returnValue = 'start',
+    selectRange,
+    showDoubleView,
+    showFixedNumberOfWeeks,
+    showNavigation = true,
+    showNeighboringMonth = true,
+    showWeekNumbers,
+    tileClassName,
+    tileContent,
+    tileDisabled,
+    value: valueProps,
+    view: viewProps,
+  } = props;
 
-const isValue = PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]);
+  const [activeStartDateState, setActiveStartDateState] = useState<Date | null | undefined>(
+    defaultActiveStartDate,
+  );
+  const [hoverState, setHoverState] = useState<Date | null>(null);
+  const [valueState, setValueState] = useState<Value | undefined>(
+    Array.isArray(defaultValue)
+      ? (defaultValue.map((el) => (el !== null ? toDate(el) : el)) as [Date | null, Date | null])
+      : defaultValue !== null && defaultValue !== undefined
+      ? toDate(defaultValue)
+      : defaultValue,
+  );
+  const [viewState, setViewState] = useState<View | undefined>(defaultView);
 
-const isValueOrValueArray = PropTypes.oneOfType([isValue, rangeOf(isValue)]);
-
-export default class Calendar extends Component<CalendarProps, CalendarState> {
-  static defaultProps = defaultProps;
-
-  static propTypes = {
-    activeStartDate: isActiveStartDate,
-    allowPartialRange: PropTypes.bool,
-    calendarType: isCalendarType,
-    className: isClassName,
-    defaultActiveStartDate: isActiveStartDate,
-    defaultValue: isValueOrValueArray,
-    defaultView: isView,
-    formatDay: PropTypes.func,
-    formatLongDate: PropTypes.func,
-    formatMonth: PropTypes.func,
-    formatMonthYear: PropTypes.func,
-    formatShortWeekday: PropTypes.func,
-    formatWeekday: PropTypes.func,
-    formatYear: PropTypes.func,
-    goToRangeStartOnSelect: PropTypes.bool,
-    inputRef: isRef,
-    locale: PropTypes.string,
-    maxDate: isMaxDate,
-    maxDetail: PropTypes.oneOf(allViews),
-    minDate: isMinDate,
-    minDetail: PropTypes.oneOf(allViews),
-    navigationAriaLabel: PropTypes.string,
-    navigationAriaLive: PropTypes.oneOf(['off', 'polite', 'assertive']),
-    navigationLabel: PropTypes.func,
-    next2AriaLabel: PropTypes.string,
-    next2Label: PropTypes.node,
-    nextAriaLabel: PropTypes.string,
-    nextLabel: PropTypes.node,
-    onActiveStartDateChange: PropTypes.func,
-    onChange: PropTypes.func,
-    onClickDay: PropTypes.func,
-    onClickDecade: PropTypes.func,
-    onClickMonth: PropTypes.func,
-    onClickWeekNumber: PropTypes.func,
-    onClickYear: PropTypes.func,
-    onDrillDown: PropTypes.func,
-    onDrillUp: PropTypes.func,
-    onViewChange: PropTypes.func,
-    prev2AriaLabel: PropTypes.string,
-    prev2Label: PropTypes.node,
-    prevAriaLabel: PropTypes.string,
-    prevLabel: PropTypes.node,
-    returnValue: PropTypes.oneOf(['start', 'end', 'range']),
-    selectRange: PropTypes.bool,
-    showDoubleView: PropTypes.bool,
-    showFixedNumberOfWeeks: PropTypes.bool,
-    showNavigation: PropTypes.bool,
-    showNeighboringMonth: PropTypes.bool,
-    showWeekNumbers: PropTypes.bool,
-    tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
-    tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    tileDisabled: PropTypes.func,
-    value: isValueOrValueArray,
-    view: isView,
-  };
-
-  state: Readonly<CalendarState> = {
-    activeStartDate: this.props.defaultActiveStartDate,
-    hover: null,
-    value: Array.isArray(this.props.defaultValue)
-      ? (this.props.defaultValue.map((el) => (el !== null ? toDate(el) : el)) as [
-          Date | null,
-          Date | null,
-        ])
-      : this.props.defaultValue !== null && this.props.defaultValue !== undefined
-      ? toDate(this.props.defaultValue)
-      : this.props.defaultValue,
-    view: this.props.defaultView,
-  };
-
-  get activeStartDate() {
-    const {
+  const activeStartDate =
+    activeStartDateProps ||
+    activeStartDateState ||
+    getInitialActiveStartDate({
       activeStartDate: activeStartDateProps,
       defaultActiveStartDate,
       defaultValue,
@@ -399,33 +372,11 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       maxDetail,
       minDate,
       minDetail,
-      value,
-      view,
-    } = this.props as CalendarPropsWithDefaults;
-    const { activeStartDate: activeStartDateState } = this.state;
+      value: valueProps,
+      view: viewProps,
+    });
 
-    return (
-      activeStartDateProps ||
-      activeStartDateState ||
-      getInitialActiveStartDate({
-        activeStartDate: activeStartDateProps,
-        defaultActiveStartDate,
-        defaultValue,
-        defaultView,
-        maxDate,
-        maxDetail,
-        minDate,
-        minDetail,
-        value,
-        view,
-      })
-    );
-  }
-
-  get value(): Value {
-    const { selectRange, value: valueProps } = this.props as CalendarPropsWithDefaults;
-    const { value: valueState } = this.state;
-
+  const value: Value = (() => {
     const rawValue = (() => {
       // In the middle of range selection, use value from state
       if (selectRange && getIsSingleValue(valueState)) {
@@ -444,168 +395,138 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       : rawValue !== null
       ? toDate(rawValue)
       : rawValue;
-  }
+  })();
 
-  get valueType() {
-    const { maxDetail } = this.props as CalendarPropsWithDefaults;
+  const valueType = getValueType(maxDetail);
 
-    return getValueType(maxDetail);
-  }
+  const view = getView(viewProps || viewState, minDetail, maxDetail);
 
-  get view() {
-    const { minDetail, maxDetail, view: viewProps } = this.props as CalendarPropsWithDefaults;
-    const { view: viewState } = this.state;
+  const views = getLimitedViews(minDetail, maxDetail);
 
-    return getView(viewProps || viewState, minDetail, maxDetail);
-  }
+  const hover = selectRange ? hoverState : null;
 
-  get views() {
-    const { minDetail, maxDetail } = this.props as CalendarPropsWithDefaults;
+  const drillDownAvailable = views.indexOf(view) < views.length - 1;
 
-    return getLimitedViews(minDetail, maxDetail);
-  }
+  const drillUpAvailable = views.indexOf(view) > 0;
 
-  get hover() {
-    const { selectRange } = this.props as CalendarPropsWithDefaults;
-    const { hover } = this.state;
+  const getProcessedValue = useCallback(
+    (value: Date) => {
+      const processFunction = (() => {
+        switch (returnValue) {
+          case 'start':
+            return getDetailValueFrom;
+          case 'end':
+            return getDetailValueTo;
+          case 'range':
+            return getDetailValueArray;
+          default:
+            throw new Error('Invalid returnValue.');
+        }
+      })();
 
-    return selectRange ? hover : null;
-  }
+      return processFunction({
+        maxDate,
+        maxDetail,
+        minDate,
+        value,
+      });
+    },
+    [maxDate, maxDetail, minDate, returnValue],
+  );
 
-  get drillDownAvailable() {
-    const { view, views } = this;
+  const setActiveStartDate = useCallback(
+    (nextActiveStartDate: Date, action: Action) => {
+      setActiveStartDateState(nextActiveStartDate);
 
-    return views.indexOf(view) < views.length - 1;
-  }
+      const args: OnArgs = {
+        action,
+        activeStartDate: nextActiveStartDate,
+        value,
+        view,
+      };
 
-  get drillUpAvailable() {
-    const { view, views } = this;
-
-    return views.indexOf(view) > 0;
-  }
-
-  /**
-   * Gets current value in a desired format.
-   */
-  getProcessedValue(value: Date) {
-    const { minDate, maxDate, maxDetail, returnValue } = this.props as CalendarPropsWithDefaults;
-
-    const processFunction = (() => {
-      switch (returnValue) {
-        case 'start':
-          return getDetailValueFrom;
-        case 'end':
-          return getDetailValueTo;
-        case 'range':
-          return getDetailValueArray;
-        default:
-          throw new Error('Invalid returnValue.');
+      if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+        onActiveStartDateChange(args);
       }
-    })();
+    },
+    [activeStartDate, onActiveStartDateChange, value, view],
+  );
 
-    return processFunction({
+  const onClickTile = useCallback(
+    (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
+      const callback = (() => {
+        switch (view) {
+          case 'century':
+            return onClickDecade;
+          case 'decade':
+            return onClickYear;
+          case 'year':
+            return onClickMonth;
+          case 'month':
+            return onClickDay;
+          default:
+            throw new Error(`Invalid view: ${view}.`);
+        }
+      })();
+
+      if (callback) callback(value, event);
+    },
+    [onClickDay, onClickDecade, onClickMonth, onClickYear, view],
+  );
+
+  const drillDown = useCallback(
+    (nextActiveStartDate: Date, event: React.MouseEvent<HTMLButtonElement>) => {
+      if (!drillDownAvailable) {
+        return;
+      }
+
+      onClickTile(nextActiveStartDate, event);
+
+      const nextView = views[views.indexOf(view) + 1];
+
+      if (!nextView) {
+        throw new Error('Attempted to drill down from the lowest view.');
+      }
+
+      setActiveStartDateState(nextActiveStartDate);
+      setViewState(nextView);
+
+      const args: OnArgs = {
+        action: 'drillDown',
+        activeStartDate: nextActiveStartDate,
+        value,
+        view: nextView,
+      };
+
+      if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+        onActiveStartDateChange(args);
+      }
+
+      if (onViewChange && view !== nextView) {
+        onViewChange(args);
+      }
+
+      if (onDrillDown) {
+        onDrillDown(args);
+      }
+    },
+    [
+      activeStartDate,
+      drillDownAvailable,
+      onActiveStartDateChange,
+      onClickTile,
+      onDrillDown,
+      onViewChange,
       value,
-      minDate,
-      maxDate,
-      maxDetail,
-    });
-  }
+      view,
+      views,
+    ],
+  );
 
-  /**
-   * Called when the user uses navigation buttons.
-   */
-  setActiveStartDate = (nextActiveStartDate: Date, action: Action) => {
-    const { onActiveStartDateChange } = this.props as CalendarPropsWithDefaults;
-
-    this.setState({
-      activeStartDate: nextActiveStartDate,
-    });
-
-    const args: OnArgs = {
-      action,
-      activeStartDate: nextActiveStartDate,
-      value: this.value,
-      view: this.view,
-    };
-
-    if (onActiveStartDateChange && !areDatesEqual(this.activeStartDate, nextActiveStartDate)) {
-      onActiveStartDateChange(args);
-    }
-  };
-
-  onClickTile = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
-    const { view } = this;
-    const { onClickDay, onClickDecade, onClickMonth, onClickYear } = this
-      .props as CalendarPropsWithDefaults;
-
-    const callback = (() => {
-      switch (view) {
-        case 'century':
-          return onClickDecade;
-        case 'decade':
-          return onClickYear;
-        case 'year':
-          return onClickMonth;
-        case 'month':
-          return onClickDay;
-        default:
-          throw new Error(`Invalid view: ${view}.`);
-      }
-    })();
-
-    if (callback) callback(value, event);
-  };
-
-  drillDown = (nextActiveStartDate: Date, event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!this.drillDownAvailable) {
+  const drillUp = useCallback(() => {
+    if (!drillUpAvailable) {
       return;
     }
-
-    this.onClickTile(nextActiveStartDate, event);
-
-    const { view, views } = this;
-    const { onActiveStartDateChange, onDrillDown, onViewChange } = this
-      .props as CalendarPropsWithDefaults;
-
-    const nextView = views[views.indexOf(view) + 1];
-
-    if (!nextView) {
-      throw new Error('Attempted to drill down from the lowest view.');
-    }
-
-    this.setState({
-      activeStartDate: nextActiveStartDate,
-      view: nextView,
-    });
-
-    const args: OnArgs = {
-      action: 'drillDown',
-      activeStartDate: nextActiveStartDate,
-      value: this.value,
-      view: nextView,
-    };
-
-    if (onActiveStartDateChange && !areDatesEqual(this.activeStartDate, nextActiveStartDate)) {
-      onActiveStartDateChange(args);
-    }
-
-    if (onViewChange && view !== nextView) {
-      onViewChange(args);
-    }
-
-    if (onDrillDown) {
-      onDrillDown(args);
-    }
-  };
-
-  drillUp = () => {
-    if (!this.drillUpAvailable) {
-      return;
-    }
-
-    const { activeStartDate, view, views } = this;
-    const { onActiveStartDateChange, onDrillUp, onViewChange } = this
-      .props as CalendarPropsWithDefaults;
 
     const nextView = views[views.indexOf(view) - 1];
 
@@ -615,15 +536,13 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
     const nextActiveStartDate = getBegin(nextView, activeStartDate);
 
-    this.setState({
-      activeStartDate: nextActiveStartDate,
-      view: nextView,
-    });
+    setActiveStartDateState(nextActiveStartDate);
+    setViewState(nextView);
 
     const args: OnArgs = {
       action: 'drillUp',
       activeStartDate: nextActiveStartDate,
-      value: this.value,
+      value,
       view: nextView,
     };
 
@@ -638,147 +557,151 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     if (onDrillUp) {
       onDrillUp(args);
     }
-  };
+  }, [
+    activeStartDate,
+    drillUpAvailable,
+    onActiveStartDateChange,
+    onDrillUp,
+    onViewChange,
+    value,
+    view,
+    views,
+  ]);
 
-  onChange = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
-    const { value: previousValue } = this;
-    const {
+  const onChange = useCallback(
+    (rawNextValue: Date, event: React.MouseEvent<HTMLButtonElement>) => {
+      const previousValue = value;
+
+      onClickTile(rawNextValue, event);
+
+      const isFirstValueInRange = selectRange && !getIsSingleValue(previousValue);
+
+      let nextValue: Value;
+      if (selectRange) {
+        // Range selection turned on
+
+        if (isFirstValueInRange) {
+          // Value has 0 or 2 elements - either way we're starting a new array
+          // First value
+          nextValue = getBegin(valueType, rawNextValue);
+        } else {
+          if (!previousValue) {
+            throw new Error('previousValue is required');
+          }
+
+          if (Array.isArray(previousValue)) {
+            throw new Error('previousValue must not be an array');
+          }
+
+          // Second value
+          nextValue = getValueRange(valueType, previousValue, rawNextValue);
+        }
+      } else {
+        // Range selection turned off
+        nextValue = getProcessedValue(rawNextValue);
+      }
+
+      const nextActiveStartDate =
+        // Range selection turned off
+        !selectRange ||
+        // Range selection turned on, first value
+        isFirstValueInRange ||
+        // Range selection turned on, second value, goToRangeStartOnSelect toggled on
+        goToRangeStartOnSelect
+          ? getActiveStartDate({
+              maxDate,
+              maxDetail,
+              minDate,
+              minDetail,
+              value: nextValue,
+              view,
+            })
+          : null;
+
+      event.persist();
+
+      setActiveStartDateState(nextActiveStartDate);
+      setValueState(nextValue);
+
+      const args: OnArgs = {
+        action: 'onChange',
+        activeStartDate: nextActiveStartDate,
+        value: nextValue,
+        view,
+      };
+
+      if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+        onActiveStartDateChange(args);
+      }
+
+      if (onChangeProps) {
+        if (selectRange) {
+          const isSingleValue = getIsSingleValue(nextValue);
+
+          if (!isSingleValue) {
+            onChangeProps(nextValue || null, event);
+          } else if (allowPartialRange) {
+            if (Array.isArray(nextValue)) {
+              throw new Error('value must not be an array');
+            }
+
+            onChangeProps([nextValue || null, null], event);
+          }
+        } else {
+          onChangeProps(nextValue || null, event);
+        }
+      }
+    },
+    [
+      activeStartDate,
       allowPartialRange,
+      getProcessedValue,
       goToRangeStartOnSelect,
       maxDate,
       maxDetail,
       minDate,
       minDetail,
       onActiveStartDateChange,
-      onChange,
+      onChangeProps,
+      onClickTile,
       selectRange,
+      value,
+      valueType,
       view,
-    } = this.props as CalendarPropsWithDefaults;
+    ],
+  );
 
-    this.onClickTile(value, event);
+  function onMouseOver(nextHover: Date) {
+    setHoverState(nextHover);
+  }
 
-    const isFirstValueInRange = selectRange && !getIsSingleValue(previousValue);
+  function onMouseLeave() {
+    setHoverState(null);
+  }
 
-    let nextValue: Value;
-    if (selectRange) {
-      // Range selection turned on
-      const { valueType } = this;
+  useImperativeHandle(
+    ref,
+    () => ({
+      activeStartDate,
+      drillDown,
+      drillUp,
+      onChange,
+      setActiveStartDate,
+      value,
+      view,
+    }),
+    [activeStartDate, drillDown, drillUp, onChange, setActiveStartDate, value, view],
+  );
 
-      if (isFirstValueInRange) {
-        // Value has 0 or 2 elements - either way we're starting a new array
-        // First value
-        nextValue = getBegin(valueType, value);
-      } else {
-        if (!previousValue) {
-          throw new Error('previousValue is required');
-        }
+  function renderContent(next?: boolean) {
+    const currentActiveStartDate = next
+      ? getBeginNext(view, activeStartDate)
+      : getBegin(view, activeStartDate);
 
-        if (Array.isArray(previousValue)) {
-          throw new Error('previousValue must not be an array');
-        }
-
-        // Second value
-        nextValue = getValueRange(valueType, previousValue, value);
-      }
-    } else {
-      // Range selection turned off
-      nextValue = this.getProcessedValue(value);
-    }
-
-    const nextActiveStartDate =
-      // Range selection turned off
-      !selectRange ||
-      // Range selection turned on, first value
-      isFirstValueInRange ||
-      // Range selection turned on, second value, goToRangeStartOnSelect toggled on
-      goToRangeStartOnSelect
-        ? getActiveStartDate({
-            maxDate,
-            maxDetail,
-            minDate,
-            minDetail,
-            value: nextValue,
-            view,
-          })
-        : null;
-
-    event.persist();
-
-    this.setState({
-      activeStartDate: nextActiveStartDate,
-      value: nextValue,
-    });
-
-    const args: OnArgs = {
-      action: 'onChange',
-      activeStartDate: nextActiveStartDate,
-      value: nextValue,
-      view: this.view,
-    };
-
-    if (onActiveStartDateChange && !areDatesEqual(this.activeStartDate, nextActiveStartDate)) {
-      onActiveStartDateChange(args);
-    }
-
-    if (onChange) {
-      if (!event) {
-        throw new Error('event is required');
-      }
-
-      if (selectRange) {
-        const isSingleValue = getIsSingleValue(nextValue);
-
-        if (!isSingleValue) {
-          onChange(nextValue || null, event);
-        } else if (allowPartialRange) {
-          if (Array.isArray(nextValue)) {
-            throw new Error('value must not be an array');
-          }
-
-          onChange([nextValue || null, null], event);
-        }
-      } else {
-        onChange(nextValue || null, event);
-      }
-    }
-  };
-
-  onMouseOver = (value: Date) => {
-    this.setState((prevState) => {
-      if (prevState.hover && prevState.hover.getTime() === value.getTime()) {
-        return null;
-      }
-
-      return { hover: value };
-    });
-  };
-
-  onMouseLeave = () => {
-    this.setState({ hover: null });
-  };
-
-  renderContent(next?: boolean) {
-    const { activeStartDate: currentActiveStartDate, onMouseOver, valueType, value, view } = this;
-    const {
-      calendarType,
-      locale,
-      maxDate,
-      minDate,
-      selectRange,
-      tileClassName,
-      tileContent,
-      tileDisabled,
-    } = this.props as CalendarPropsWithDefaults;
-    const { hover } = this;
-
-    const activeStartDate = next
-      ? getBeginNext(view, currentActiveStartDate)
-      : getBegin(view, currentActiveStartDate);
-
-    const onClick = this.drillDownAvailable ? this.drillDown : this.onChange;
+    const onClick = drillDownAvailable ? drillDown : onChange;
 
     const commonProps = {
-      activeStartDate,
+      activeStartDate: currentActiveStartDate,
       hover,
       locale,
       maxDate,
@@ -794,36 +717,17 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
     switch (view) {
       case 'century': {
-        const { formatYear } = this.props as CalendarPropsWithDefaults;
-
         return <CenturyView formatYear={formatYear} {...commonProps} />;
       }
       case 'decade': {
-        const { formatYear } = this.props as CalendarPropsWithDefaults;
-
         return <DecadeView formatYear={formatYear} {...commonProps} />;
       }
       case 'year': {
-        const { formatMonth, formatMonthYear } = this.props as CalendarPropsWithDefaults;
-
         return (
           <YearView formatMonth={formatMonth} formatMonthYear={formatMonthYear} {...commonProps} />
         );
       }
       case 'month': {
-        const {
-          formatDay,
-          formatLongDate,
-          formatShortWeekday,
-          formatWeekday,
-          onClickWeekNumber,
-          showDoubleView,
-          showFixedNumberOfWeeks,
-          showNeighboringMonth,
-          showWeekNumbers,
-        } = this.props as CalendarPropsWithDefaults;
-        const { onMouseLeave } = this;
-
         return (
           <MonthView
             calendarType={calendarType}
@@ -849,38 +753,15 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
   }
 
-  renderNavigation() {
-    const { showNavigation } = this.props as CalendarPropsWithDefaults;
-
+  function renderNavigation() {
     if (!showNavigation) {
       return null;
     }
 
-    const { activeStartDate, view, views } = this;
-    const {
-      formatMonthYear,
-      formatYear,
-      locale,
-      maxDate,
-      minDate,
-      navigationAriaLabel,
-      navigationAriaLive,
-      navigationLabel,
-      next2AriaLabel,
-      next2Label,
-      nextAriaLabel,
-      nextLabel,
-      prev2AriaLabel,
-      prev2Label,
-      prevAriaLabel,
-      prevLabel,
-      showDoubleView,
-    } = this.props as CalendarPropsWithDefaults;
-
     return (
       <Navigation
         activeStartDate={activeStartDate}
-        drillUp={this.drillUp}
+        drillUp={drillUp}
         formatMonthYear={formatMonthYear}
         formatYear={formatYear}
         locale={locale}
@@ -897,7 +778,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         prev2Label={prev2Label}
         prevAriaLabel={prevAriaLabel}
         prevLabel={prevLabel}
-        setActiveStartDate={this.setActiveStartDate}
+        setActiveStartDate={setActiveStartDate}
         showDoubleView={showDoubleView}
         view={view}
         views={views}
@@ -905,32 +786,92 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     );
   }
 
-  render() {
-    const { className, inputRef, selectRange, showDoubleView } = this
-      .props as CalendarPropsWithDefaults;
-    const { onMouseLeave, value } = this;
-    const valueArray = Array.isArray(value) ? value : [value];
+  const valueArray = Array.isArray(value) ? value : [value];
 
-    return (
+  return (
+    <div
+      className={clsx(
+        baseClassName,
+        selectRange && valueArray.length === 1 && `${baseClassName}--selectRange`,
+        showDoubleView && `${baseClassName}--doubleView`,
+        className,
+      )}
+      ref={inputRef}
+    >
+      {renderNavigation()}
       <div
-        className={clsx(
-          baseClassName,
-          selectRange && valueArray.length === 1 && `${baseClassName}--selectRange`,
-          showDoubleView && `${baseClassName}--doubleView`,
-          className,
-        )}
-        ref={inputRef}
+        className={`${baseClassName}__viewContainer`}
+        onBlur={selectRange ? onMouseLeave : undefined}
+        onMouseLeave={selectRange ? onMouseLeave : undefined}
       >
-        {this.renderNavigation()}
-        <div
-          className={`${baseClassName}__viewContainer`}
-          onBlur={selectRange ? onMouseLeave : undefined}
-          onMouseLeave={selectRange ? onMouseLeave : undefined}
-        >
-          {this.renderContent()}
-          {showDoubleView ? this.renderContent(true) : null}
-        </div>
+        {renderContent()}
+        {showDoubleView ? renderContent(true) : null}
       </div>
-    );
-  }
-}
+    </div>
+  );
+});
+
+const isActiveStartDate = PropTypes.instanceOf(Date);
+
+const isValue = PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]);
+
+const isValueOrValueArray = PropTypes.oneOfType([isValue, rangeOf(isValue)]);
+
+Calendar.propTypes = {
+  activeStartDate: isActiveStartDate,
+  allowPartialRange: PropTypes.bool,
+  calendarType: isCalendarType,
+  className: isClassName,
+  defaultActiveStartDate: isActiveStartDate,
+  defaultValue: isValueOrValueArray,
+  defaultView: isView,
+  formatDay: PropTypes.func,
+  formatLongDate: PropTypes.func,
+  formatMonth: PropTypes.func,
+  formatMonthYear: PropTypes.func,
+  formatShortWeekday: PropTypes.func,
+  formatWeekday: PropTypes.func,
+  formatYear: PropTypes.func,
+  goToRangeStartOnSelect: PropTypes.bool,
+  inputRef: isRef,
+  locale: PropTypes.string,
+  maxDate: isMaxDate,
+  maxDetail: PropTypes.oneOf(allViews),
+  minDate: isMinDate,
+  minDetail: PropTypes.oneOf(allViews),
+  navigationAriaLabel: PropTypes.string,
+  navigationAriaLive: PropTypes.oneOf(['off', 'polite', 'assertive']),
+  navigationLabel: PropTypes.func,
+  next2AriaLabel: PropTypes.string,
+  next2Label: PropTypes.node,
+  nextAriaLabel: PropTypes.string,
+  nextLabel: PropTypes.node,
+  onActiveStartDateChange: PropTypes.func,
+  onChange: PropTypes.func,
+  onClickDay: PropTypes.func,
+  onClickDecade: PropTypes.func,
+  onClickMonth: PropTypes.func,
+  onClickWeekNumber: PropTypes.func,
+  onClickYear: PropTypes.func,
+  onDrillDown: PropTypes.func,
+  onDrillUp: PropTypes.func,
+  onViewChange: PropTypes.func,
+  prev2AriaLabel: PropTypes.string,
+  prev2Label: PropTypes.node,
+  prevAriaLabel: PropTypes.string,
+  prevLabel: PropTypes.node,
+  returnValue: PropTypes.oneOf(['start', 'end', 'range']),
+  selectRange: PropTypes.bool,
+  showDoubleView: PropTypes.bool,
+  showFixedNumberOfWeeks: PropTypes.bool,
+  showNavigation: PropTypes.bool,
+  showNeighboringMonth: PropTypes.bool,
+  showWeekNumbers: PropTypes.bool,
+  tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
+  tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+  tileDisabled: PropTypes.func,
+  value: isValueOrValueArray,
+  view: isView,
+};
+
+export default Calendar;
