@@ -80,13 +80,10 @@ export function isView(
   componentName: string,
 ) {
   const { [propName]: view } = props;
-  const { views } = props;
 
-  const allowedViews = views || allViews;
-
-  if (view !== undefined && (typeof view !== 'string' || allowedViews.indexOf(view) === -1)) {
+  if (view !== undefined && (typeof view !== 'string' || allViews.indexOf(view) === -1)) {
     return new Error(
-      `Invalid prop \`${propName}\` of value \`${view}\` supplied to \`${componentName}\`, expected one of [${allowedViews
+      `Invalid prop \`${propName}\` of value \`${view}\` supplied to \`${componentName}\`, expected one of [${allViews
         .map((a) => `"${a}"`)
         .join(', ')}].`,
     );
