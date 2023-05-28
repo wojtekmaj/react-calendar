@@ -237,14 +237,17 @@ const getDetailValueArray = (args: DetailArgs) =>
     ReturnType<typeof getDetailValueTo>,
   ];
 
-function getActiveStartDate(
-  props: DetailArgs & {
-    minDetail: Detail;
-    view?: View;
-  },
-) {
-  const { maxDate, maxDetail, minDate, minDetail, value, view } = props;
-
+function getActiveStartDate({
+  maxDate,
+  maxDetail,
+  minDate,
+  minDetail,
+  value,
+  view,
+}: DetailArgs & {
+  minDetail: Detail;
+  view?: View;
+}) {
   const rangeType = getView(view, minDetail, maxDetail);
   const valueFrom =
     getDetailValueFrom({
@@ -257,19 +260,29 @@ function getActiveStartDate(
   return getBegin(rangeType, valueFrom);
 }
 
-function getInitialActiveStartDate(props: CalendarPropsWithDefaults) {
-  const {
-    activeStartDate,
-    defaultActiveStartDate,
-    defaultValue,
-    defaultView,
-    maxDetail,
-    minDetail,
-    value,
-    view,
-    ...otherProps
-  } = props;
-
+function getInitialActiveStartDate({
+  activeStartDate,
+  defaultActiveStartDate,
+  defaultValue,
+  defaultView,
+  maxDate,
+  maxDetail,
+  minDate,
+  minDetail,
+  value,
+  view,
+}: {
+  activeStartDate?: Date;
+  defaultActiveStartDate?: Date;
+  defaultValue?: LooseValue;
+  defaultView?: View;
+  maxDate: Date;
+  maxDetail: Detail;
+  minDate: Date;
+  minDetail: Detail;
+  value?: LooseValue;
+  view?: View;
+}) {
   const rangeType = getView(view, minDetail, maxDetail);
   const valueFrom = activeStartDate || defaultActiveStartDate;
 
@@ -278,11 +291,12 @@ function getInitialActiveStartDate(props: CalendarPropsWithDefaults) {
   }
 
   return getActiveStartDate({
+    maxDate,
     maxDetail,
+    minDate,
     minDetail,
     value: value || defaultValue,
     view: view || defaultView,
-    ...otherProps,
   });
 }
 
@@ -371,13 +385,35 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   get activeStartDate() {
-    const { activeStartDate: activeStartDateProps } = this.props as CalendarPropsWithDefaults;
+    const {
+      activeStartDate: activeStartDateProps,
+      defaultActiveStartDate,
+      defaultValue,
+      defaultView,
+      maxDate,
+      maxDetail,
+      minDate,
+      minDetail,
+      value,
+      view,
+    } = this.props as CalendarPropsWithDefaults;
     const { activeStartDate: activeStartDateState } = this.state;
 
     return (
       activeStartDateProps ||
       activeStartDateState ||
-      getInitialActiveStartDate(this.props as CalendarPropsWithDefaults)
+      getInitialActiveStartDate({
+        activeStartDate: activeStartDateProps,
+        defaultActiveStartDate,
+        defaultValue,
+        defaultView,
+        maxDate,
+        maxDetail,
+        minDate,
+        minDetail,
+        value,
+        view,
+      })
     );
   }
 
@@ -645,7 +681,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
   onChange = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
     const { value: previousValue } = this;
-    const { goToRangeStartOnSelect, selectRange } = this.props as CalendarPropsWithDefaults;
+    const { goToRangeStartOnSelect, maxDate, maxDetail, minDate, minDetail, selectRange, view } =
+      this.props as CalendarPropsWithDefaults;
 
     this.onClickTile(value, event);
 
@@ -685,8 +722,12 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       // Range selection turned on, second value, goToRangeStartOnSelect toggled on
       goToRangeStartOnSelect
         ? getActiveStartDate({
-            ...(this.props as CalendarPropsWithDefaults),
+            maxDate,
+            maxDetail,
+            minDate,
+            minDetail,
             value: nextValue,
+            view,
           })
         : null;
 
