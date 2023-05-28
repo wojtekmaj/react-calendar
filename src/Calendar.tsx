@@ -16,6 +16,7 @@ import {
   isMinDate,
   isRef,
   isView,
+  rangeOf,
 } from './shared/propTypes';
 import { between } from './shared/utils';
 
@@ -308,7 +309,7 @@ const isActiveStartDate = PropTypes.instanceOf(Date);
 
 const isValue = PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]);
 
-const isValueOrValueArray = PropTypes.oneOfType([isValue, PropTypes.arrayOf(isValue)]);
+const isValueOrValueArray = PropTypes.oneOfType([isValue, rangeOf(isValue)]);
 
 export default class Calendar extends Component<CalendarProps, CalendarState> {
   static defaultProps = defaultProps;

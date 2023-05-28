@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { CALENDAR_TYPES } from './const';
 
 import type { Requireable, Validator } from 'prop-types';
-import type { View } from './types';
+import type { Range, View } from './types';
 
 const calendarTypes = Object.values(CALENDAR_TYPES);
 const allViews = ['century', 'decade', 'year', 'month'];
@@ -116,6 +116,10 @@ isView.isRequired = function isViewIsRequired(
   }
 
   return isView(props, propName, componentName, location, propFullName);
+};
+
+export const rangeOf = <T>(type: Requireable<T>): Requireable<Range<T>> => {
+  return PropTypes.arrayOf(type) as Requireable<Range<T>>;
 };
 
 export const tileGroupProps = {
