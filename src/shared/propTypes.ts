@@ -2,6 +2,9 @@ import PropTypes from 'prop-types';
 
 import { CALENDAR_TYPES } from './const';
 
+import type { Requireable, Validator } from 'prop-types';
+import type { View } from './types';
+
 const calendarTypes = Object.values(CALENDAR_TYPES);
 const allViews = ['century', 'decade', 'year', 'month'];
 
@@ -12,7 +15,11 @@ export const isClassName = PropTypes.oneOfType([
   PropTypes.arrayOf(PropTypes.string),
 ]);
 
-export function isMinDate(props: Record<string, unknown>, propName: string, componentName: string) {
+export const isMinDate: Validator<Date | null | undefined> = function isMinDate(
+  props,
+  propName,
+  componentName,
+) {
   const { [propName]: minDate } = props;
 
   if (!minDate) {
@@ -34,9 +41,13 @@ export function isMinDate(props: Record<string, unknown>, propName: string, comp
   }
 
   return null;
-}
+};
 
-export function isMaxDate(props: Record<string, unknown>, propName: string, componentName: string) {
+export const isMaxDate: Validator<Date | null | undefined> = function isMaxDate(
+  props,
+  propName,
+  componentName,
+) {
   const { [propName]: maxDate } = props;
 
   if (!maxDate) {
@@ -58,7 +69,7 @@ export function isMaxDate(props: Record<string, unknown>, propName: string, comp
   }
 
   return null;
-}
+};
 
 export const isRef = PropTypes.oneOfType([
   PropTypes.func,
@@ -74,11 +85,7 @@ export const isValue = PropTypes.oneOfType([
 
 export const isViews = PropTypes.arrayOf(PropTypes.oneOf(allViews));
 
-export function isView(
-  props: Record<string, unknown> & { views?: string[] },
-  propName: string,
-  componentName: string,
-) {
+export const isView: Requireable<View> = function isView(props, propName, componentName) {
   const { [propName]: view } = props;
 
   if (view !== undefined && (typeof view !== 'string' || allViews.indexOf(view) === -1)) {
@@ -91,9 +98,15 @@ export function isView(
 
   // Everything is fine
   return null;
-}
+};
 
-isView.isRequired = (props: Record<string, unknown>, propName: string, componentName: string) => {
+isView.isRequired = function isViewIsRequired(
+  props,
+  propName,
+  componentName,
+  location,
+  propFullName,
+) {
   const { [propName]: view } = props;
 
   if (!view) {
@@ -102,7 +115,7 @@ isView.isRequired = (props: Record<string, unknown>, propName: string, component
     );
   }
 
-  return isView(props, propName, componentName);
+  return isView(props, propName, componentName, location, propFullName);
 };
 
 export const tileGroupProps = {
