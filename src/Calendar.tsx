@@ -126,7 +126,6 @@ export type CalendarProps = {
 type CalendarPropsWithDefaults = typeof defaultProps & CalendarProps;
 
 type CalendarState = {
-  action?: Action;
   activeStartDate?: Date | null;
   hover?: Date | null;
   value?: Value;
@@ -472,8 +471,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   }
 
   setStateAndCallCallbacks = (
+    action: Action,
     nextState: {
-      action: Action;
       activeStartDate: Date | null;
       value?: Value;
       view?: View;
@@ -487,7 +486,6 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       .props as CalendarPropsWithDefaults;
 
     const prevArgs = {
-      action: undefined,
       activeStartDate: previousActiveStartDate,
       value: undefined,
       view: previousView,
@@ -495,13 +493,13 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
     this.setState(nextState, () => {
       const args = {
-        action: nextState.action,
+        action,
         activeStartDate: nextState.activeStartDate || this.activeStartDate,
         value: ('value' in nextState && nextState.value) || this.value,
         view: ('view' in nextState && nextState.view) || this.view,
       };
 
-      function shouldUpdate(key: keyof OnArgs) {
+      function shouldUpdate(key: 'activeStartDate' | 'value' | 'view') {
         // Key must exist, and…
         if (!(key in nextState)) {
           return false;
@@ -525,10 +523,6 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
       if (shouldUpdate('activeStartDate')) {
         if (onActiveStartDateChange) onActiveStartDateChange(args);
-      }
-
-      if (shouldUpdate('view')) {
-        if (onViewChange) onViewChange(args);
       }
 
       if (shouldUpdate('value')) {
@@ -555,6 +549,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         }
       }
 
+      if (shouldUpdate('view')) {
+        if (onViewChange) onViewChange(args);
+      }
+
       if (callback) callback(args);
     });
   };
@@ -563,8 +561,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
    * Called when the user uses navigation buttons.
    */
   setActiveStartDate = (nextActiveStartDate: Date, action: Action) => {
-    this.setStateAndCallCallbacks({
-      action,
+    this.setStateAndCallCallbacks(action, {
       activeStartDate: nextActiveStartDate,
     });
   };
@@ -609,8 +606,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
 
     this.setStateAndCallCallbacks(
+      'drillDown',
       {
-        action: 'drillDown',
         activeStartDate: nextActiveStartDate,
         view: nextView,
       },
@@ -636,8 +633,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     const nextActiveStartDate = getBegin(nextView, activeStartDate);
 
     this.setStateAndCallCallbacks(
+      'drillUp',
       {
-        action: 'drillUp',
         activeStartDate: nextActiveStartDate,
         view: nextView,
       },
@@ -696,8 +693,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     event.persist();
 
     this.setStateAndCallCallbacks(
+      'onChange',
       {
-        action: 'onChange',
         activeStartDate: nextActiveStartDate,
         value: nextValue,
       },
