@@ -305,6 +305,10 @@ function getIsSingleValue<T>(value: T | T[]): value is T {
   return value && (!Array.isArray(value) || value.length === 1);
 }
 
+function areDatesEqual(date1?: Date | null, date2?: Date | null) {
+  return date1 instanceof Date && date2 instanceof Date && date1.getTime() === date2.getTime();
+}
+
 const isActiveStartDate = PropTypes.instanceOf(Date);
 
 const isValue = PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]);
@@ -507,100 +511,26 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     });
   }
 
-  setStateAndCallCallbacks = (
-    action: Action,
-    nextState: {
-      activeStartDate: Date | null;
-      value?: Value;
-      view?: View;
-    },
-    event?: React.MouseEvent<HTMLButtonElement> | undefined,
-    callback?: ({ action, activeStartDate, value, view }: OnArgs) => void,
-  ) => {
-    const { activeStartDate: previousActiveStartDate, view: previousView } = this;
-
-    const { allowPartialRange, onActiveStartDateChange, onChange, onViewChange, selectRange } = this
-      .props as CalendarPropsWithDefaults;
-
-    const prevArgs = {
-      activeStartDate: previousActiveStartDate,
-      value: undefined,
-      view: previousView,
-    };
-
-    this.setState(nextState, () => {
-      const args = {
-        action,
-        activeStartDate: nextState.activeStartDate || this.activeStartDate,
-        value: ('value' in nextState && nextState.value) || this.value,
-        view: ('view' in nextState && nextState.view) || this.view,
-      };
-
-      function shouldUpdate(key: 'activeStartDate' | 'value' | 'view') {
-        // Key must exist, and…
-        if (!(key in nextState)) {
-          return false;
-        }
-
-        const nextValue = nextState[key];
-        const prevValue = prevArgs[key];
-
-        // …key changed from defined to undefined or the other way around, or…
-        if (typeof nextValue !== typeof prevValue) {
-          return true;
-        }
-
-        // …value changed.
-        if (nextValue instanceof Date && prevValue instanceof Date) {
-          return nextValue.getTime() !== prevValue.getTime();
-        } else {
-          return nextValue !== prevValue;
-        }
-      }
-
-      if (shouldUpdate('activeStartDate')) {
-        if (onActiveStartDateChange) onActiveStartDateChange(args);
-      }
-
-      if (shouldUpdate('value')) {
-        if (onChange) {
-          if (!event) {
-            throw new Error('event is required');
-          }
-
-          if (selectRange) {
-            const isSingleValue = getIsSingleValue(nextState.value);
-
-            if (!isSingleValue) {
-              onChange(nextState.value || null, event);
-            } else if (allowPartialRange) {
-              if (Array.isArray(nextState.value)) {
-                throw new Error('value must not be an array');
-              }
-
-              onChange([nextState.value || null, null], event);
-            }
-          } else {
-            onChange(nextState.value || null, event);
-          }
-        }
-      }
-
-      if (shouldUpdate('view')) {
-        if (onViewChange) onViewChange(args);
-      }
-
-      if (callback) callback(args);
-    });
-  };
-
   /**
    * Called when the user uses navigation buttons.
    */
   setActiveStartDate = (nextActiveStartDate: Date, action: Action) => {
-    this.setStateAndCallCallbacks(action, {
+    const { onActiveStartDateChange } = this.props as CalendarPropsWithDefaults;
+
+    this.setState({
       activeStartDate: nextActiveStartDate,
     });
+
+    const args: OnArgs = {
+      action,
+      activeStartDate: nextActiveStartDate,
+      value: this.value,
+      view: this.view,
+    };
+
+    if (onActiveStartDateChange && !areDatesEqual(this.activeStartDate, nextActiveStartDate)) {
+      onActiveStartDateChange(args);
+    }
   };
 
   onClickTile = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
@@ -634,7 +564,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     this.onClickTile(nextActiveStartDate, event);
 
     const { view, views } = this;
-    const { onDrillDown } = this.props as CalendarPropsWithDefaults;
+    const { onActiveStartDateChange, onDrillDown, onViewChange } = this
+      .props as CalendarPropsWithDefaults;
 
     const nextView = views[views.indexOf(view) + 1];
 
@@ -642,15 +573,29 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       throw new Error('Attempted to drill down from the lowest view.');
     }
 
-    this.setStateAndCallCallbacks(
-      'drillDown',
-      {
-        activeStartDate: nextActiveStartDate,
-        view: nextView,
-      },
-      undefined,
-      onDrillDown,
-    );
+    this.setState({
+      activeStartDate: nextActiveStartDate,
+      view: nextView,
+    });
+
+    const args: OnArgs = {
+      action: 'drillDown',
+      activeStartDate: nextActiveStartDate,
+      value: this.value,
+      view: nextView,
+    };
+
+    if (onActiveStartDateChange && !areDatesEqual(this.activeStartDate, nextActiveStartDate)) {
+      onActiveStartDateChange(args);
+    }
+
+    if (onViewChange && view !== nextView) {
+      onViewChange(args);
+    }
+
+    if (onDrillDown) {
+      onDrillDown(args);
+    }
   };
 
   drillUp = () => {
@@ -659,7 +604,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
 
     const { activeStartDate, view, views } = this;
-    const { onDrillUp } = this.props as CalendarPropsWithDefaults;
+    const { onActiveStartDateChange, onDrillUp, onViewChange } = this
+      .props as CalendarPropsWithDefaults;
 
     const nextView = views[views.indexOf(view) - 1];
 
@@ -669,21 +615,45 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
     const nextActiveStartDate = getBegin(nextView, activeStartDate);
 
-    this.setStateAndCallCallbacks(
-      'drillUp',
-      {
-        activeStartDate: nextActiveStartDate,
-        view: nextView,
-      },
-      undefined,
-      onDrillUp,
-    );
+    this.setState({
+      activeStartDate: nextActiveStartDate,
+      view: nextView,
+    });
+
+    const args: OnArgs = {
+      action: 'drillUp',
+      activeStartDate: nextActiveStartDate,
+      value: this.value,
+      view: nextView,
+    };
+
+    if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+      onActiveStartDateChange(args);
+    }
+
+    if (onViewChange && view !== nextView) {
+      onViewChange(args);
+    }
+
+    if (onDrillUp) {
+      onDrillUp(args);
+    }
   };
 
   onChange = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
     const { value: previousValue } = this;
-    const { goToRangeStartOnSelect, maxDate, maxDetail, minDate, minDetail, selectRange, view } =
-      this.props as CalendarPropsWithDefaults;
+    const {
+      allowPartialRange,
+      goToRangeStartOnSelect,
+      maxDate,
+      maxDetail,
+      minDate,
+      minDetail,
+      onActiveStartDateChange,
+      onChange,
+      selectRange,
+      view,
+    } = this.props as CalendarPropsWithDefaults;
 
     this.onClickTile(value, event);
 
@@ -734,14 +704,43 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
     event.persist();
 
-    this.setStateAndCallCallbacks(
-      'onChange',
-      {
-        activeStartDate: nextActiveStartDate,
-        value: nextValue,
-      },
-      event,
-    );
+    this.setState({
+      activeStartDate: nextActiveStartDate,
+      value: nextValue,
+    });
+
+    const args: OnArgs = {
+      action: 'onChange',
+      activeStartDate: nextActiveStartDate,
+      value: nextValue,
+      view: this.view,
+    };
+
+    if (onActiveStartDateChange && !areDatesEqual(this.activeStartDate, nextActiveStartDate)) {
+      onActiveStartDateChange(args);
+    }
+
+    if (onChange) {
+      if (!event) {
+        throw new Error('event is required');
+      }
+
+      if (selectRange) {
+        const isSingleValue = getIsSingleValue(nextValue);
+
+        if (!isSingleValue) {
+          onChange(nextValue || null, event);
+        } else if (allowPartialRange) {
+          if (Array.isArray(nextValue)) {
+            throw new Error('value must not be an array');
+          }
+
+          onChange([nextValue || null, null], event);
+        }
+      } else {
+        onChange(nextValue || null, event);
+      }
+    }
   };
 
   onMouseOver = (value: Date) => {
