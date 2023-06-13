@@ -14,6 +14,7 @@ import type { CalendarType, DeprecatedCalendarType, OnClickWeekNumberFunc } from
 type WeekNumbersProps = {
   activeStartDate: Date;
   calendarType: CalendarType | DeprecatedCalendarType;
+  locale?: string;
   onClickWeekNumber?: OnClickWeekNumberFunc;
   onMouseLeave?: () => void;
   showFixedNumberOfWeeks?: boolean;
@@ -23,6 +24,7 @@ export default function WeekNumbers(props: WeekNumbersProps) {
   const {
     activeStartDate,
     calendarType: calendarTypeOrDeprecatedCalendarType,
+    locale,
     onClickWeekNumber,
     onMouseLeave,
     showFixedNumberOfWeeks,
@@ -35,7 +37,7 @@ export default function WeekNumbers(props: WeekNumbersProps) {
     }
 
     const numberOfDays = getDaysInMonth(activeStartDate);
-    const startWeekday = getDayOfWeek(activeStartDate, calendarType);
+    const startWeekday = getDayOfWeek(activeStartDate, locale, calendarType);
 
     const days = numberOfDays - (7 - startWeekday);
     return 1 + Math.ceil(days / 7);
@@ -48,12 +50,14 @@ export default function WeekNumbers(props: WeekNumbersProps) {
 
     const result = [];
     for (let index = 0; index < numberOfWeeks; index += 1) {
-      result.push(getBeginOfWeek(new Date(year, monthIndex, day + index * 7), calendarType));
+      result.push(
+        getBeginOfWeek(new Date(year, monthIndex, day + index * 7), locale, calendarType),
+      );
     }
     return result;
   })();
 
-  const weekNumbers = dates.map((date) => getWeekNumber(date, calendarType));
+  const weekNumbers = dates.map((date) => getWeekNumber(date, locale, calendarType));
 
   return (
     <Flex

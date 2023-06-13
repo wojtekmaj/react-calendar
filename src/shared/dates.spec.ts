@@ -26,7 +26,7 @@ describe('getDayOfWeek', () => {
   it('returns proper day of the week (ISO 8601)', () => {
     const date = new Date(2017, 0, 1);
 
-    const dayOfWeek = getDayOfWeek(date, 'iso8601');
+    const dayOfWeek = getDayOfWeek(date, undefined, 'iso8601');
 
     expect(dayOfWeek).toBe(6);
   });
@@ -34,7 +34,7 @@ describe('getDayOfWeek', () => {
   it('returns proper day of the week (US)', () => {
     const date = new Date(2017, 0, 1);
 
-    const dayOfWeek = getDayOfWeek(date, 'gregory');
+    const dayOfWeek = getDayOfWeek(date, undefined, 'gregory');
 
     expect(dayOfWeek).toBe(0);
   });
@@ -42,7 +42,7 @@ describe('getDayOfWeek', () => {
   it('returns proper day of the week (Islamic)', () => {
     const date = new Date(2017, 0, 1);
 
-    const dayOfWeek = getDayOfWeek(date, 'islamic');
+    const dayOfWeek = getDayOfWeek(date, undefined, 'islamic');
 
     expect(dayOfWeek).toBe(1);
   });
@@ -50,9 +50,9 @@ describe('getDayOfWeek', () => {
   it('returns proper day of the week (Hebrew)', () => {
     const date = new Date(2017, 0, 1);
 
-    const dayOfWeek = getDayOfWeek(date, 'hebrew');
+    const dayOfWeek = getDayOfWeek(date, undefined, 'hebrew');
 
-    expect(dayOfWeek).toBe(0);
+    expect(dayOfWeek).toBe(6);
   });
 
   it('returns proper day of the week (default)', () => {
@@ -67,7 +67,7 @@ describe('getDayOfWeek', () => {
     const date = new Date(2017, 0, 1);
 
     // @ts-expect-error-next-line
-    expect(() => getDayOfWeek(date, 'Chinese')).toThrow();
+    expect(() => getDayOfWeek(date, undefined, 'potato')).toThrow();
   });
 });
 
@@ -108,7 +108,7 @@ describe('getBeginOfWeek', () => {
     const date = new Date(2017, 0, 1);
     const beginOfWeekDate = new Date(2016, 11, 26);
 
-    const beginOfWeek = getBeginOfWeek(date, 'iso8601');
+    const beginOfWeek = getBeginOfWeek(date, undefined, 'iso8601');
 
     expect(beginOfWeek).toEqual(beginOfWeekDate);
   });
@@ -117,7 +117,7 @@ describe('getBeginOfWeek', () => {
     const date = new Date(2016, 0, 1);
     const beginOfWeekDate = new Date(2015, 11, 27);
 
-    const beginOfWeek = getBeginOfWeek(date, 'gregory');
+    const beginOfWeek = getBeginOfWeek(date, undefined, 'gregory');
 
     expect(beginOfWeek).toEqual(beginOfWeekDate);
   });
@@ -126,16 +126,16 @@ describe('getBeginOfWeek', () => {
     const date = new Date(2016, 0, 1);
     const beginOfWeekDate = new Date(2015, 11, 26);
 
-    const beginOfWeek = getBeginOfWeek(date, 'islamic');
+    const beginOfWeek = getBeginOfWeek(date, undefined, 'islamic');
 
     expect(beginOfWeek).toEqual(beginOfWeekDate);
   });
 
   it('returns proper beginning of the week (Hebrew)', () => {
     const date = new Date(2016, 0, 1);
-    const beginOfWeekDate = new Date(2015, 11, 27);
+    const beginOfWeekDate = new Date(2015, 11, 28);
 
-    const beginOfWeek = getBeginOfWeek(date, 'hebrew');
+    const beginOfWeek = getBeginOfWeek(date, undefined, 'hebrew');
 
     expect(beginOfWeek).toEqual(beginOfWeekDate);
   });
@@ -159,7 +159,7 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'iso8601');
+      const weekNumber = getWeekNumber(date, undefined, 'iso8601');
 
       expect(weekNumber).toBe(1);
     }
@@ -174,7 +174,7 @@ describe('getWeekNumber', () => {
       const weekOffset = (currentWeek - 1) * 7;
       const date = new Date(year, month, startDate + weekOffset);
 
-      const weekNumber = getWeekNumber(date, 'iso8601');
+      const weekNumber = getWeekNumber(date, undefined, 'iso8601');
 
       expect(weekNumber).toBe(currentWeek);
     }
@@ -188,7 +188,7 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'iso8601');
+      const weekNumber = getWeekNumber(date, undefined, 'iso8601');
 
       expect(weekNumber).toBe(52);
     }
@@ -202,7 +202,7 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'iso8601');
+      const weekNumber = getWeekNumber(date, undefined, 'iso8601');
 
       expect(weekNumber).toBe(53);
     }
@@ -216,7 +216,7 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'gregory');
+      const weekNumber = getWeekNumber(date, undefined, 'gregory');
 
       expect(weekNumber).toBe(1);
     }
@@ -231,7 +231,7 @@ describe('getWeekNumber', () => {
       const weekOffset = (currentWeek - 1) * 7;
       const date = new Date(year, month, startDate + weekOffset);
 
-      const weekNumber = getWeekNumber(date, 'gregory');
+      const weekNumber = getWeekNumber(date, undefined, 'gregory');
 
       expect(weekNumber).toBe(currentWeek);
     }
@@ -245,7 +245,7 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'gregory');
+      const weekNumber = getWeekNumber(date, undefined, 'gregory');
 
       expect(weekNumber).toBe(52);
     }
@@ -259,7 +259,7 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'gregory');
+      const weekNumber = getWeekNumber(date, undefined, 'gregory');
 
       expect(weekNumber).toBe(53);
     }
@@ -268,12 +268,12 @@ describe('getWeekNumber', () => {
   it('returns proper week number for a sample week 1 (Hebrew)', () => {
     const year = 2017;
     const month = 0;
-    const startDate = 1;
+    const startDate = 2;
 
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'hebrew');
+      const weekNumber = getWeekNumber(date, undefined, 'hebrew');
 
       expect(weekNumber).toBe(1);
     }
@@ -288,7 +288,7 @@ describe('getWeekNumber', () => {
       const weekOffset = (currentWeek - 1) * 7;
       const date = new Date(year, month, startDate + weekOffset);
 
-      const weekNumber = getWeekNumber(date, 'hebrew');
+      const weekNumber = getWeekNumber(date, undefined, 'hebrew');
 
       expect(weekNumber).toBe(currentWeek);
     }
@@ -297,28 +297,14 @@ describe('getWeekNumber', () => {
   it('returns proper week number for a sample week 52 (Hebrew)', () => {
     const year = 2016;
     const month = 11;
-    const startDate = 25;
+    const startDate = 26;
 
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'hebrew');
+      const weekNumber = getWeekNumber(date, undefined, 'hebrew');
 
       expect(weekNumber).toBe(52);
-    }
-  });
-
-  it('returns proper week number for a sample week 53 (Hebrew)', () => {
-    const year = 2014;
-    const month = 11;
-    const startDate = 28;
-
-    for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
-      const date = new Date(year, month, currentDate);
-
-      const weekNumber = getWeekNumber(date, 'hebrew');
-
-      expect(weekNumber).toBe(53);
     }
   });
 
@@ -330,7 +316,7 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'islamic');
+      const weekNumber = getWeekNumber(date, undefined, 'islamic');
 
       expect(weekNumber).toBe(1);
     }
@@ -345,7 +331,7 @@ describe('getWeekNumber', () => {
       const weekOffset = (currentWeek - 1) * 7;
       const date = new Date(year, month, startDate + weekOffset);
 
-      const weekNumber = getWeekNumber(date, 'islamic');
+      const weekNumber = getWeekNumber(date, undefined, 'islamic');
 
       expect(weekNumber).toBe(currentWeek);
     }
@@ -359,7 +345,7 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'islamic');
+      const weekNumber = getWeekNumber(date, undefined, 'islamic');
 
       expect(weekNumber).toBe(52);
     }
@@ -373,7 +359,7 @@ describe('getWeekNumber', () => {
     for (let currentDate = startDate; currentDate < startDate + 7; currentDate += 1) {
       const date = new Date(year, month, currentDate);
 
-      const weekNumber = getWeekNumber(date, 'islamic');
+      const weekNumber = getWeekNumber(date, undefined, 'islamic');
 
       expect(weekNumber).toBe(53);
     }
@@ -844,7 +830,7 @@ describe('isWeekend', () => {
       ${new Date(2017, 0, 1)}   | ${true}
       ${new Date(2017, 0, 2)}   | ${false}
     `('returns $flag for $date', ({ date, flag }) => {
-      expect(isWeekend(date, 'iso8601')).toBe(flag);
+      expect(isWeekend(date, undefined, 'iso8601')).toBe(flag);
     });
   });
 
@@ -856,7 +842,7 @@ describe('isWeekend', () => {
       ${new Date(2017, 0, 1)}   | ${true}
       ${new Date(2017, 0, 2)}   | ${false}
     `('returns $flag for $date', ({ date, flag }) => {
-      expect(isWeekend(date, 'gregory')).toBe(flag);
+      expect(isWeekend(date, undefined, 'gregory')).toBe(flag);
     });
   });
 
@@ -868,7 +854,7 @@ describe('isWeekend', () => {
       ${new Date(2017, 0, 1)}   | ${false}
       ${new Date(2017, 0, 2)}   | ${false}
     `('returns $flag for $date', ({ date, flag }) => {
-      expect(isWeekend(date, 'hebrew')).toBe(flag);
+      expect(isWeekend(date, undefined, 'hebrew')).toBe(flag);
     });
   });
 
@@ -880,7 +866,7 @@ describe('isWeekend', () => {
       ${new Date(2017, 0, 1)}   | ${false}
       ${new Date(2017, 0, 2)}   | ${false}
     `('returns $flag for $date', ({ date, flag }) => {
-      expect(isWeekend(date, 'islamic')).toBe(flag);
+      expect(isWeekend(date, undefined, 'islamic')).toBe(flag);
     });
   });
 

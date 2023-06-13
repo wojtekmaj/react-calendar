@@ -46,6 +46,7 @@ export default function MonthView(props: MonthViewProps) {
       <WeekNumbers
         activeStartDate={activeStartDate}
         calendarType={calendarType}
+        locale={locale}
         onClickWeekNumber={onClickWeekNumber}
         onMouseLeave={onMouseLeave}
         showFixedNumberOfWeeks={showFixedNumberOfWeeks}
@@ -54,7 +55,7 @@ export default function MonthView(props: MonthViewProps) {
   }
 
   function renderDays() {
-    return <Days calendarType={calendarType} {...childProps} />;
+    return <Days calendarType={calendarType} locale={locale} {...childProps} />;
   }
 
   const className = 'react-calendar__month-view';

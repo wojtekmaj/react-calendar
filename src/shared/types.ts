@@ -34,6 +34,12 @@ export type IntlCalendarType =
   | 'roc'
   | 'islamicc';
 
+export type IntlWeekInfo = {
+  firstDay: number;
+  minimalDays: number;
+  weekend: number[];
+};
+
 type LooseValuePiece = string | Date | null;
 
 export type LooseValue = LooseValuePiece | Range<LooseValuePiece>;

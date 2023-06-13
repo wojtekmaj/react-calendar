@@ -47,7 +47,7 @@ export default function Weekdays(props: WeekdaysProps) {
     const weekdayDate = new Date(
       year,
       monthIndex,
-      weekday - getDayOfWeek(beginOfMonth, calendarType),
+      weekday - getDayOfWeek(beginOfMonth, locale, calendarType),
     );
 
     const abbr = formatWeekday(locale, weekdayDate);
@@ -58,7 +58,7 @@ export default function Weekdays(props: WeekdaysProps) {
         className={clsx(
           weekdayClassName,
           isCurrentDayOfWeek(weekdayDate) && `${weekdayClassName}--current`,
-          isWeekend(weekdayDate, calendarType) && `${weekdayClassName}--weekend`,
+          isWeekend(weekdayDate, locale, calendarType) && `${weekdayClassName}--weekend`,
         )}
       >
         <abbr aria-label={abbr} title={abbr}>

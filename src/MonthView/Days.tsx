@@ -19,7 +19,7 @@ type DaysProps = {
 } & React.ComponentProps<typeof TileGroup>;
 
 export default function Days(props: DaysProps) {
-  const { activeStartDate, calendarType: calendarTypeOrDeprecatedCalendarType } = props;
+  const { activeStartDate, calendarType: calendarTypeOrDeprecatedCalendarType, locale } = props;
   const { showFixedNumberOfWeeks, showNeighboringMonth, ...otherProps } = props;
 
   const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
@@ -27,7 +27,7 @@ export default function Days(props: DaysProps) {
   const monthIndex = getMonth(activeStartDate);
 
   const hasFixedNumberOfWeeks = showFixedNumberOfWeeks || showNeighboringMonth;
-  const dayOfWeek = getDayOfWeek(activeStartDate, calendarType);
+  const dayOfWeek = getDayOfWeek(activeStartDate, locale, calendarType);
 
   const offset = hasFixedNumberOfWeeks ? 0 : dayOfWeek;
 
@@ -55,7 +55,7 @@ export default function Days(props: DaysProps) {
       const activeEndDate = new Date();
       activeEndDate.setFullYear(year, monthIndex, daysInMonth);
       activeEndDate.setHours(0, 0, 0, 0);
-      const daysUntilEndOfTheWeek = 7 - getDayOfWeek(activeEndDate, calendarType) - 1;
+      const daysUntilEndOfTheWeek = 7 - getDayOfWeek(activeEndDate, locale, calendarType) - 1;
       return daysInMonth + daysUntilEndOfTheWeek;
     }
 

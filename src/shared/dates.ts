@@ -33,7 +33,7 @@ import {
 import { CALENDAR_TYPES, WEEKDAYS } from './const';
 import { formatYear as defaultFormatYear } from './dateFormatter';
 
-import type { CalendarType, RangeType } from './types';
+import type { CalendarType, IntlWeekInfo, RangeType } from './types';
 
 const SUNDAY = WEEKDAYS[0];
 const FRIDAY = WEEKDAYS[5];
@@ -41,30 +41,56 @@ const SATURDAY = WEEKDAYS[6];
 
 /* Simple getters - getting a property of a given point in time */
 
+function getWeekInfo(locale: string | undefined, calendarType: CalendarType): IntlWeekInfo {
+  try {
+    if (!locale) {
+      throw new Error('Locale must be specified.');
+    }
+
+    const intlLocale = new Intl.Locale(locale, { calendar: calendarType });
+
+    if ('getWeekInfo' in intlLocale) {
+      return (intlLocale.getWeekInfo as () => IntlWeekInfo)();
+    }
+
+    if ('weekInfo' in intlLocale) {
+      return intlLocale.weekInfo as IntlWeekInfo;
+    }
+  } catch (error) {
+    // Continue to fallback logic
+  }
+
+  switch (calendarType) {
+    case CALENDAR_TYPES.ISO_8601:
+      return { firstDay: 1, minimalDays: 4, weekend: [6, 7] };
+    case CALENDAR_TYPES.ISLAMIC:
+      return { firstDay: 6, minimalDays: 1, weekend: [5, 6] };
+    case CALENDAR_TYPES.HEBREW:
+      return { firstDay: 1, minimalDays: 1, weekend: [6, 7] };
+    case CALENDAR_TYPES.GREGORY:
+      return { firstDay: 7, minimalDays: 1, weekend: [6, 7] };
+    default:
+      throw new Error('Unsupported calendar type.');
+  }
+}
+
 /**
  * Gets day of the week of a given date.
  * @param {Date} date Date.
+ * @param {string} [locale] Locale.
  * @param {CalendarType} [calendarType="iso8601"] Calendar type.
  * @returns {number} Day of the week.
  */
 export function getDayOfWeek(
   date: Date,
+  locale?: string,
   calendarType: CalendarType = CALENDAR_TYPES.ISO_8601,
 ): number {
   const weekday = date.getDay();
 
-  switch (calendarType) {
-    case CALENDAR_TYPES.ISO_8601:
-      // Shifts days of the week so that Monday is 0, Sunday is 6
-      return (weekday + 6) % 7;
-    case CALENDAR_TYPES.ISLAMIC:
-      return (weekday + 1) % 7;
-    case CALENDAR_TYPES.HEBREW:
-    case CALENDAR_TYPES.GREGORY:
-      return weekday;
-    default:
-      throw new Error('Unsupported calendar type.');
-  }
+  const { firstDay } = getWeekInfo(locale, calendarType);
+
+  return (weekday + 7 - firstDay) % 7;
 }
 
 /**
@@ -103,16 +129,18 @@ export function getBeginOfDecadeYear(date: Date): number {
  * Returns the beginning of a given week.
  *
  * @param {Date} date Date.
+ * @param {string} [locale] Locale.
  * @param {CalendarType} [calendarType="iso8601"] Calendar type.
  * @returns {Date} Beginning of a given week.
  */
 export function getBeginOfWeek(
   date: Date,
+  locale?: string,
   calendarType: CalendarType = CALENDAR_TYPES.ISO_8601,
 ): Date {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
-  const day = date.getDate() - getDayOfWeek(date, calendarType);
+  const day = date.getDate() - getDayOfWeek(date, locale, calendarType);
   return new Date(year, monthIndex, day);
 }
 
@@ -122,16 +150,18 @@ export function getBeginOfWeek(
  * In US calendar week 1 is the one with January 1.
  *
  * @param {Date} date Date.
+ * @param {string} [locale] Locale.
  * @param {CalendarType} [calendarType="iso8601"] Calendar type.
  * @returns {number} Week number.
  */
 export function getWeekNumber(
   date: Date,
+  locale?: string,
   calendarType: CalendarType = CALENDAR_TYPES.ISO_8601,
 ): number {
   const calendarTypeForWeekNumber =
     calendarType === CALENDAR_TYPES.GREGORY ? CALENDAR_TYPES.GREGORY : CALENDAR_TYPES.ISO_8601;
-  const beginOfWeek = getBeginOfWeek(date, calendarType);
+  const beginOfWeek = getBeginOfWeek(date, locale, calendarType);
   let year = getYear(date) + 1;
   let dayInWeekOne;
   let beginOfFirstWeek;
@@ -139,7 +169,7 @@ export function getWeekNumber(
   // Look for the first week one that does not come after a given date
   do {
     dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === CALENDAR_TYPES.ISO_8601 ? 4 : 1);
-    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarType);
+    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, locale, calendarType);
     year -= 1;
   } while (date < beginOfFirstWeek);
 
@@ -403,11 +433,13 @@ export function isCurrentDayOfWeek(date: Date): boolean {
  * Returns a boolean determining whether a given date is a weekend day.
  *
  * @param {Date} date Date.
+ * @param {string} [locale] Locale.
  * @param {CalendarType} [calendarType="iso8601"] Calendar type.
  * @returns {boolean} Whether a given date is a weekend day.
  */
 export function isWeekend(
   date: Date,
+  locale?: string,
   calendarType: CalendarType = CALENDAR_TYPES.ISO_8601,
 ): boolean {
   const weekday = date.getDay();

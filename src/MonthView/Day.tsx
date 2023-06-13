@@ -48,7 +48,7 @@ export default function Day({
     classesProps.push(className);
   }
 
-  if (isWeekend(date, calendarType)) {
+  if (isWeekend(date, locale, calendarType)) {
     classesProps.push(`${className}--weekend`);
   }
 
