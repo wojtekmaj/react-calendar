@@ -6,11 +6,11 @@ import Weekdays from './Weekdays';
 
 describe('Weekdays', () => {
   const defaultProps = {
-    calendarType: 'ISO 8601',
+    calendarType: 'iso8601',
   } satisfies React.ComponentProps<typeof Weekdays>;
 
   it('renders proper weekdays (ISO 8601)', () => {
-    const { container } = render(<Weekdays {...defaultProps} calendarType="ISO 8601" />);
+    const { container } = render(<Weekdays {...defaultProps} calendarType="iso8601" />);
 
     const weekdays = container.querySelectorAll('.react-calendar__month-view__weekdays__weekday');
     const [firstWeekday] = weekdays as unknown as [HTMLDivElement];
@@ -22,7 +22,7 @@ describe('Weekdays', () => {
   });
 
   it('renders proper weekdays (US)', () => {
-    const { container } = render(<Weekdays {...defaultProps} calendarType="US" />);
+    const { container } = render(<Weekdays {...defaultProps} calendarType="gregory" />);
 
     const weekdays = container.querySelectorAll('.react-calendar__month-view__weekdays__weekday');
     const [firstWeekday] = weekdays as unknown as [HTMLDivElement];

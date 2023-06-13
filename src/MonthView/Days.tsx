@@ -7,20 +7,22 @@ import Day from './Day';
 
 import { getDayOfWeek } from '../shared/dates';
 import { isCalendarType, tileGroupProps } from '../shared/propTypes';
+import { mapCalendarType } from '../shared/utils';
 
-import type { CalendarType } from '../shared/types';
+import type { CalendarType, DeprecatedCalendarType } from '../shared/types';
 
 type DaysProps = {
   activeStartDate: Date;
-  calendarType: CalendarType;
+  calendarType: CalendarType | DeprecatedCalendarType;
   showFixedNumberOfWeeks?: boolean;
   showNeighboringMonth?: boolean;
 } & React.ComponentProps<typeof TileGroup>;
 
 export default function Days(props: DaysProps) {
-  const { activeStartDate, calendarType } = props;
+  const { activeStartDate, calendarType: calendarTypeOrDeprecatedCalendarType } = props;
   const { showFixedNumberOfWeeks, showNeighboringMonth, ...otherProps } = props;
 
+  const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
   const year = getYear(activeStartDate);
   const monthIndex = getMonth(activeStartDate);
 

@@ -1,4 +1,11 @@
 export const CALENDAR_TYPES = {
+  GREGORY: 'gregory',
+  HEBREW: 'hebrew',
+  ISLAMIC: 'islamic',
+  ISO_8601: 'iso8601',
+} as const;
+
+export const DEPRECATED_CALENDAR_TYPES = {
   ARABIC: 'Arabic',
   HEBREW: 'Hebrew',
   ISO_8601: 'ISO 8601',
@@ -6,7 +13,7 @@ export const CALENDAR_TYPES = {
 } as const;
 
 export const CALENDAR_TYPE_LOCALES = {
-  [CALENDAR_TYPES.US]: [
+  [CALENDAR_TYPES.GREGORY]: [
     'en-CA',
     'en-US',
     'es-AR',
@@ -27,7 +34,8 @@ export const CALENDAR_TYPE_LOCALES = {
     'es-VE',
     'pt-BR',
   ],
-  [CALENDAR_TYPES.ARABIC]: [
+  [CALENDAR_TYPES.HEBREW]: ['he', 'he-IL'],
+  [CALENDAR_TYPES.ISLAMIC]: [
     // ar-LB, ar-MA intentionally missing
     'ar',
     'ar-AE',
@@ -49,7 +57,6 @@ export const CALENDAR_TYPE_LOCALES = {
     'ps',
     'ps-AR',
   ],
-  [CALENDAR_TYPES.HEBREW]: ['he', 'he-IL'],
 };
 
 export const WEEKDAYS = [0, 1, 2, 3, 4, 5, 6] as const;

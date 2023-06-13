@@ -24,6 +24,7 @@ import type {
   Action,
   CalendarType,
   ClassName,
+  DeprecatedCalendarType,
   Detail,
   LooseValue,
   NavigationLabelFunc,
@@ -59,7 +60,7 @@ const defaultMaxDate = new Date(8.64e15);
 export type CalendarProps = {
   activeStartDate?: Date;
   allowPartialRange?: boolean;
-  calendarType?: CalendarType;
+  calendarType?: CalendarType | DeprecatedCalendarType;
   className?: ClassName;
   defaultActiveStartDate?: Date;
   defaultValue?: LooseValue;

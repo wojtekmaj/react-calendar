@@ -44,7 +44,7 @@ const SATURDAY = WEEKDAYS[6];
 /**
  * Gets day of the week of a given date.
  * @param {Date} date Date.
- * @param {CalendarType} [calendarType="ISO 8601"] Calendar type.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
  * @returns {number} Day of the week.
  */
 export function getDayOfWeek(
@@ -57,10 +57,10 @@ export function getDayOfWeek(
     case CALENDAR_TYPES.ISO_8601:
       // Shifts days of the week so that Monday is 0, Sunday is 6
       return (weekday + 6) % 7;
-    case CALENDAR_TYPES.ARABIC:
+    case CALENDAR_TYPES.ISLAMIC:
       return (weekday + 1) % 7;
     case CALENDAR_TYPES.HEBREW:
-    case CALENDAR_TYPES.US:
+    case CALENDAR_TYPES.GREGORY:
       return weekday;
     default:
       throw new Error('Unsupported calendar type.');
@@ -103,7 +103,7 @@ export function getBeginOfDecadeYear(date: Date): number {
  * Returns the beginning of a given week.
  *
  * @param {Date} date Date.
- * @param {CalendarType} [calendarType="ISO 8601"] Calendar type.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
  * @returns {Date} Beginning of a given week.
  */
 export function getBeginOfWeek(
@@ -122,7 +122,7 @@ export function getBeginOfWeek(
  * In US calendar week 1 is the one with January 1.
  *
  * @param {Date} date Date.
- * @param {CalendarType} [calendarType="ISO 8601"] Calendar type.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
  * @returns {number} Week number.
  */
 export function getWeekNumber(
@@ -130,7 +130,7 @@ export function getWeekNumber(
   calendarType: CalendarType = CALENDAR_TYPES.ISO_8601,
 ): number {
   const calendarTypeForWeekNumber =
-    calendarType === CALENDAR_TYPES.US ? CALENDAR_TYPES.US : CALENDAR_TYPES.ISO_8601;
+    calendarType === CALENDAR_TYPES.GREGORY ? CALENDAR_TYPES.GREGORY : CALENDAR_TYPES.ISO_8601;
   const beginOfWeek = getBeginOfWeek(date, calendarType);
   let year = getYear(date) + 1;
   let dayInWeekOne;
@@ -403,7 +403,7 @@ export function isCurrentDayOfWeek(date: Date): boolean {
  * Returns a boolean determining whether a given date is a weekend day.
  *
  * @param {Date} date Date.
- * @param {CalendarType} [calendarType="ISO 8601"] Calendar type.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
  * @returns {boolean} Whether a given date is a weekend day.
  */
 export function isWeekend(
@@ -413,11 +413,11 @@ export function isWeekend(
   const weekday = date.getDay();
 
   switch (calendarType) {
-    case CALENDAR_TYPES.ARABIC:
+    case CALENDAR_TYPES.ISLAMIC:
     case CALENDAR_TYPES.HEBREW:
       return weekday === FRIDAY || weekday === SATURDAY;
     case CALENDAR_TYPES.ISO_8601:
-    case CALENDAR_TYPES.US:
+    case CALENDAR_TYPES.GREGORY:
       return weekday === SATURDAY || weekday === SUNDAY;
     default:
       throw new Error('Unsupported calendar type.');

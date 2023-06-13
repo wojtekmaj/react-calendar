@@ -10,13 +10,14 @@ import {
   formatLongDate as defaultFormatLongDate,
 } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
+import { mapCalendarType } from '../shared/utils';
 
-import type { CalendarType } from '../shared/types';
+import type { CalendarType, DeprecatedCalendarType } from '../shared/types';
 
 const className = 'react-calendar__month-view__days__day';
 
 type DayProps = {
-  calendarType?: CalendarType;
+  calendarType?: CalendarType | DeprecatedCalendarType;
   classes?: string[];
   currentMonthIndex: number;
   formatDay?: typeof defaultFormatDay;
@@ -27,13 +28,14 @@ type DayProps = {
 >;
 
 export default function Day({
-  calendarType,
+  calendarType: calendarTypeOrDeprecatedCalendarType,
   classes = [],
   currentMonthIndex,
   formatDay = defaultFormatDay,
   formatLongDate = defaultFormatLongDate,
   ...otherProps
 }: DayProps) {
+  const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
   const { date, locale } = otherProps;
 
   const classesProps: string[] = [];
