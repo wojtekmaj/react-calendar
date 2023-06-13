@@ -6,20 +6,8 @@ import Days from './MonthView/Days';
 import Weekdays from './MonthView/Weekdays';
 import WeekNumbers from './MonthView/WeekNumbers';
 
-import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const';
 import { isCalendarType, tileGroupProps } from './shared/propTypes';
-
-import type { CalendarType } from './shared/types';
-
-function getCalendarTypeFromLocale(locale: string): CalendarType {
-  for (const [calendarType, locales] of Object.entries(CALENDAR_TYPE_LOCALES)) {
-    if (locales.includes(locale)) {
-      return calendarType as CalendarType;
-    }
-  }
-
-  return CALENDAR_TYPES.ISO_8601;
-}
+import { getCalendarTypeFromLocale } from './shared/utils';
 
 type MonthViewProps = {
   showWeekNumbers?: boolean;

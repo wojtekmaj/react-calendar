@@ -1,9 +1,15 @@
 import warning from 'tiny-warning';
 
-import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const';
+import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES, DEPRECATED_CALENDAR_TYPES } from './const';
 import { getRange } from './dates';
 
-import type { CalendarType, DeprecatedCalendarType, Range, RangeType } from './types';
+import type {
+  CalendarType,
+  DeprecatedCalendarType,
+  IntlCalendarType,
+  Range,
+  RangeType,
+} from './types';
 
 /**
  * Returns a value no smaller than min and no larger than max.
@@ -35,6 +41,48 @@ export function isRangeWithinRange(greaterRange: Range<Date>, smallerRange: Rang
 
 export function doRangesOverlap(range1: Range<Date>, range2: Range<Date>): boolean {
   return isValueWithinRange(range1[0], range2) || isValueWithinRange(range1[1], range2);
+}
+
+const calendarTypes = Object.values(CALENDAR_TYPES);
+
+function filterCalendarTypes(calendarType: IntlCalendarType): calendarType is CalendarType {
+  return calendarTypes.includes(calendarType as CalendarType);
+}
+
+export function getCalendarTypeFromLocale(locale?: string): CalendarType {
+  if (!locale) {
+    return CALENDAR_TYPES.ISO_8601;
+  }
+
+  const intlCalendarTypes: IntlCalendarType[] = (() => {
+    try {
+      const intlLocale = new Intl.Locale(locale);
+
+      if ('getCalendars' in intlLocale) {
+        return (intlLocale.getCalendars as () => IntlCalendarType[])();
+      }
+
+      if ('calendars' in intlLocale) {
+        return intlLocale.calendars as IntlCalendarType[];
+      }
+    } catch (error) {
+      // Continue to fallback logic
+    }
+
+    for (const calendarType in CALENDAR_TYPE_LOCALES) {
+      const locales = CALENDAR_TYPE_LOCALES[calendarType as keyof typeof CALENDAR_TYPE_LOCALES];
+
+      if (locales.includes(locale)) {
+        return [calendarType as CalendarType];
+      }
+    }
+
+    return [];
+  })();
+
+  const supportedCalendarType = intlCalendarTypes.find(filterCalendarTypes);
+
+  return supportedCalendarType || CALENDAR_TYPES.ISO_8601;
 }
 
 function getRangeClassNames(

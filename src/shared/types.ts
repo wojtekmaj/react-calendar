@@ -13,6 +13,27 @@ export type DeprecatedCalendarType =
 
 export type Detail = 'century' | 'decade' | 'year' | 'month';
 
+export type IntlCalendarType =
+  | 'buddhist'
+  | 'chinese'
+  | 'coptic'
+  | 'dangi'
+  | 'ethioaa'
+  | 'ethiopic'
+  | 'gregory'
+  | 'hebrew'
+  | 'indian'
+  | 'islamic'
+  | 'islamic-civil'
+  | 'islamic-rgsa'
+  | 'islamic-tbla'
+  | 'islamic-umalqura'
+  | 'iso8601'
+  | 'japanese'
+  | 'persian'
+  | 'roc'
+  | 'islamicc';
+
 type LooseValuePiece = string | Date | null;
 
 export type LooseValue = LooseValuePiece | Range<LooseValuePiece>;
