@@ -14,7 +14,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
       <WeekNumbers
         {...defaultProps}
         activeStartDate={new Date(2018, 0, 1)}
-        calendarType="ISO 8601"
+        calendarType="iso8601"
       />,
     );
 
@@ -29,7 +29,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
       <WeekNumbers
         {...defaultProps}
         activeStartDate={new Date(2017, 0, 1)}
-        calendarType="ISO 8601"
+        calendarType="iso8601"
       />,
     );
 
@@ -44,7 +44,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
       <WeekNumbers
         {...defaultProps}
         activeStartDate={new Date(2016, 0, 1)}
-        calendarType="ISO 8601"
+        calendarType="iso8601"
       />,
     );
 
@@ -56,7 +56,11 @@ describe('.react-calendar__month-view__weekNumbers', () => {
 
   it('renders proper weekNumbers for a year that starts in week 1 (US)', () => {
     const { container } = render(
-      <WeekNumbers {...defaultProps} activeStartDate={new Date(2017, 0, 1)} calendarType="US" />,
+      <WeekNumbers
+        {...defaultProps}
+        activeStartDate={new Date(2017, 0, 1)}
+        calendarType="gregory"
+      />,
     );
 
     const weekNumbers = container.querySelectorAll('.react-calendar__tile');
@@ -71,7 +75,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
       <WeekNumbers
         {...defaultProps}
         activeStartDate={new Date(2018, 0, 1)}
-        calendarType="ISO 8601"
+        calendarType="iso8601"
         showFixedNumberOfWeeks
       />,
     );
@@ -83,7 +87,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
   });
 
   it('renders static divs as children when not given onClickWeekNumber', () => {
-    const { container } = render(<WeekNumbers {...defaultProps} calendarType="ISO 8601" />);
+    const { container } = render(<WeekNumbers {...defaultProps} calendarType="iso8601" />);
 
     const children = container.querySelectorAll('div.react-calendar__tile');
 
@@ -92,7 +96,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
 
   it('renders buttons as children when given onClickWeekNumber', () => {
     const { container } = render(
-      <WeekNumbers {...defaultProps} calendarType="ISO 8601" onClickWeekNumber={vi.fn()} />,
+      <WeekNumbers {...defaultProps} calendarType="iso8601" onClickWeekNumber={vi.fn()} />,
     );
 
     const children = container.querySelectorAll('button.react-calendar__tile');
@@ -105,7 +109,7 @@ describe('.react-calendar__month-view__weekNumbers', () => {
     const { container } = render(
       <WeekNumbers
         {...defaultProps}
-        calendarType="ISO 8601"
+        calendarType="iso8601"
         onClickWeekNumber={onClickWeekNumber}
       />,
     );
@@ -119,7 +123,11 @@ describe('.react-calendar__month-view__weekNumbers', () => {
   it('calls onClickWeekNumber function with proper arguments when clicked a week number (US)', () => {
     const onClickWeekNumber = vi.fn();
     const { container } = render(
-      <WeekNumbers {...defaultProps} calendarType="US" onClickWeekNumber={onClickWeekNumber} />,
+      <WeekNumbers
+        {...defaultProps}
+        calendarType="gregory"
+        onClickWeekNumber={onClickWeekNumber}
+      />,
     );
 
     const firstChild = container.querySelector('button.react-calendar__tile') as HTMLButtonElement;

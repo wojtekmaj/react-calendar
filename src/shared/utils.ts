@@ -1,6 +1,9 @@
+import warning from 'tiny-warning';
+
+import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const';
 import { getRange } from './dates';
 
-import type { Range, RangeType } from './types';
+import type { CalendarType, DeprecatedCalendarType, Range, RangeType } from './types';
 
 /**
  * Returns a value no smaller than min and no larger than max.
@@ -150,4 +153,38 @@ export function getTileClasses(
   }
 
   return classes;
+}
+
+const calendarTypeMap: Record<DeprecatedCalendarType, CalendarType> = {
+  [DEPRECATED_CALENDAR_TYPES.ARABIC]: CALENDAR_TYPES.ISLAMIC,
+  [DEPRECATED_CALENDAR_TYPES.HEBREW]: CALENDAR_TYPES.HEBREW,
+  [DEPRECATED_CALENDAR_TYPES.ISO_8601]: CALENDAR_TYPES.ISO_8601,
+  [DEPRECATED_CALENDAR_TYPES.US]: CALENDAR_TYPES.GREGORY,
+};
+
+function isDeprecatedCalendarType(
+  calendarType?: CalendarType | DeprecatedCalendarType,
+): calendarType is DeprecatedCalendarType {
+  return calendarType !== undefined && calendarType in DEPRECATED_CALENDAR_TYPES;
+}
+
+let warned = false;
+
+export function mapCalendarType(
+  calendarTypeOrDeprecatedCalendarType?: CalendarType | DeprecatedCalendarType,
+): CalendarType | undefined {
+  if (isDeprecatedCalendarType(calendarTypeOrDeprecatedCalendarType)) {
+    const calendarType = calendarTypeMap[calendarTypeOrDeprecatedCalendarType];
+
+    warning(
+      warned,
+      `Specifying calendarType="${calendarTypeOrDeprecatedCalendarType}" is deprecated. Use calendarType="${calendarType}" instead.`,
+    );
+
+    warned = true;
+
+    return calendarType;
+  }
+
+  return calendarTypeOrDeprecatedCalendarType;
 }

@@ -134,7 +134,7 @@ describe('MonthView', () => {
   });
 
   it('passes calendarType to Weekdays component', () => {
-    const calendarType = 'ISO 8601';
+    const calendarType = 'iso8601';
 
     const { container } = render(<MonthView {...defaultProps} calendarType={calendarType} />);
 
@@ -181,7 +181,7 @@ describe('MonthView', () => {
   });
 
   it('passes calendarType to Days component', () => {
-    const calendarType = 'ISO 8601';
+    const calendarType = 'iso8601';
 
     const { container } = render(
       <MonthView

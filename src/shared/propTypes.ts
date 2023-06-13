@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
 
-import { CALENDAR_TYPES } from './const';
+import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const';
 
 import type { Requireable, Validator } from 'prop-types';
 import type { Range, View } from './types';
 
 const calendarTypes = Object.values(CALENDAR_TYPES);
+const deprecatedCalendarTypes = Object.values(DEPRECATED_CALENDAR_TYPES);
 const allViews = ['century', 'decade', 'year', 'month'];
 
-export const isCalendarType = PropTypes.oneOf(calendarTypes);
+export const isCalendarType = PropTypes.oneOf([...calendarTypes, ...deprecatedCalendarTypes]);
 
 export const isClassName = PropTypes.oneOfType([
   PropTypes.string,
