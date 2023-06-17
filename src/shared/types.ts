@@ -46,7 +46,7 @@ export type OnArgs = {
   view: View;
 };
 
-export type OnChangeFunc = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+export type OnClickFunc = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
 
 export type OnClickWeekNumberFunc = (
   weekNumber: number,

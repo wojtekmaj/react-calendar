@@ -29,7 +29,7 @@ import type {
   LooseValue,
   NavigationLabelFunc,
   OnArgs,
-  OnChangeFunc,
+  OnClickFunc,
   OnClickWeekNumberFunc,
   TileClassNameFunc,
   TileContentFunc,
@@ -88,11 +88,11 @@ export type CalendarProps = {
   nextLabel?: React.ReactNode;
   onActiveStartDateChange?: ({ action, activeStartDate, value, view }: OnArgs) => void;
   onChange?: (value: Value, event: React.MouseEvent<HTMLButtonElement>) => void;
-  onClickDay?: OnChangeFunc;
-  onClickDecade?: OnChangeFunc;
-  onClickMonth?: OnChangeFunc;
+  onClickDay?: OnClickFunc;
+  onClickDecade?: OnClickFunc;
+  onClickMonth?: OnClickFunc;
   onClickWeekNumber?: OnClickWeekNumberFunc;
-  onClickYear?: OnChangeFunc;
+  onClickYear?: OnClickFunc;
   onDrillDown?: ({ action, activeStartDate, value, view }: OnArgs) => void;
   onDrillUp?: ({ action, activeStartDate, value, view }: OnArgs) => void;
   onViewChange?: ({ action, activeStartDate, value, view }: OnArgs) => void;

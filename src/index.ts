@@ -7,6 +7,15 @@ import MonthView from './MonthView';
 
 export type { CalendarProps } from './Calendar';
 
+export type {
+  NavigationLabelFunc,
+  OnClickFunc,
+  OnClickWeekNumberFunc,
+  TileClassNameFunc,
+  TileContentFunc,
+  TileDisabledFunc,
+} from './shared/types';
+
 export { Calendar, Navigation, CenturyView, DecadeView, YearView, MonthView };
 
 export default Calendar;
