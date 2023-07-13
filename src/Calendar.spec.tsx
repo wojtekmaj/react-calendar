@@ -3,9 +3,9 @@ import React, { createRef } from 'react';
 import { act, render } from '@testing-library/react';
 import { getMonthStart } from '@wojtekmaj/date-utils';
 
-import Calendar from './Calendar';
+import Calendar from './Calendar.js';
 
-import type { Action, Value, View } from './shared/types';
+import type { Action, Value, View } from './shared/types.js';
 
 type CalendarImperativeHandle = {
   activeStartDate: Date;

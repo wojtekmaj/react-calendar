@@ -4,13 +4,13 @@ import React, { forwardRef, useCallback, useImperativeHandle, useState } from 'r
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import Navigation from './Calendar/Navigation';
-import CenturyView from './CenturyView';
-import DecadeView from './DecadeView';
-import YearView from './YearView';
-import MonthView from './MonthView';
+import Navigation from './Calendar/Navigation.js';
+import CenturyView from './CenturyView.js';
+import DecadeView from './DecadeView.js';
+import YearView from './YearView.js';
+import MonthView from './MonthView.js';
 
-import { getBegin, getBeginNext, getEnd, getValueRange } from './shared/dates';
+import { getBegin, getBeginNext, getEnd, getValueRange } from './shared/dates.js';
 import {
   isCalendarType,
   isClassName,
@@ -19,8 +19,8 @@ import {
   isRef,
   isView,
   rangeOf,
-} from './shared/propTypes';
-import { between } from './shared/utils';
+} from './shared/propTypes.js';
+import { between } from './shared/utils.js';
 
 import type {
   Action,
@@ -39,7 +39,7 @@ import type {
   TileDisabledFunc,
   Value,
   View,
-} from './shared/types';
+} from './shared/types.js';
 
 import type {
   formatDay as defaultFormatDay,
@@ -49,7 +49,7 @@ import type {
   formatShortWeekday as defaultFormatShortWeekday,
   formatWeekday as defaultFormatWeekday,
   formatYear as defaultFormatYear,
-} from './shared/dateFormatter';
+} from './shared/dateFormatter.js';
 
 const baseClassName = 'react-calendar';
 const allViews = ['century', 'decade', 'year', 'month'] as const;

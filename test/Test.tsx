@@ -1,19 +1,19 @@
 import React, { useCallback, useState } from 'react';
-import Calendar from 'react-calendar/src';
-import 'react-calendar/src/Calendar.css';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
-import DateBonduariesOptions from './DateBonduariesOptions';
-import MaxDetailOptions from './MaxDetailOptions';
-import MinDetailOptions from './MinDetailOptions';
-import LocaleOptions from './LocaleOptions';
-import ValueOptions from './ValueOptions';
-import ViewOptions from './ViewOptions';
+import DateBonduariesOptions from './DateBonduariesOptions.js';
+import MaxDetailOptions from './MaxDetailOptions.js';
+import MinDetailOptions from './MinDetailOptions.js';
+import LocaleOptions from './LocaleOptions.js';
+import ValueOptions from './ValueOptions.js';
+import ViewOptions from './ViewOptions.js';
 
-import { formatDate } from './shared/dateFormatter';
+import { formatDate } from './shared/dateFormatter.js';
 
 import './Test.css';
 
-import type { LooseValue, Value, View } from './shared/types';
+import type { LooseValue, Value, View } from './shared/types.js';
 
 const now = new Date();
 

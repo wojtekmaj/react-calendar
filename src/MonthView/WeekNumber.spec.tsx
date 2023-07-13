@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import WeekNumber from './WeekNumber';
+import WeekNumber from './WeekNumber.js';
 
 describe('<WeekNumber /> component', () => {
   const defaultProps = {

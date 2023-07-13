@@ -2,18 +2,27 @@
   "name": "react-calendar",
   "version": "4.5.0",
   "description": "Ultimate calendar for your React app.",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "source": "src/index.ts",
-  "types": "dist/cjs/index.d.ts",
+  "type": "module",
   "sideEffects": [
     "*.css"
   ],
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "source": "./src/index.ts",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./dist/Calendar.css": "./dist/Calendar.css"
+  },
   "scripts": {
     "build": "yarn build-js && yarn copy-styles",
-    "build-js": "yarn build-js-esm && yarn build-js-cjs",
+    "build-js": "yarn build-js-esm && yarn build-js-cjs && yarn build-js-cjs-package",
     "build-js-esm": "tsc --project tsconfig.build.json --outDir dist/esm --module esnext",
     "build-js-cjs": "tsc --project tsconfig.build.json --outDir dist/cjs --module commonjs",
+    "build-js-cjs-package": "echo '{\n  \"type\": \"commonjs\"\n}' > dist/cjs/package.json",
     "clean": "rimraf dist",
     "copy-styles": "cpy 'src/**/*.css' dist",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -23,7 +32,7 @@
     "test": "yarn lint && yarn tsc && yarn prettier && yarn unit",
     "tsc": "tsc --noEmit",
     "unit": "vitest",
-    "watch": "yarn build-js-esm --watch & yarn build-js-cjs --watch & nodemon --watch src --ext css --exec \"yarn copy-styles\""
+    "watch": "yarn build-js-esm --watch & yarn build-js-cjs --watch & yarn build-js-cjs-package & nodemon --watch src --ext css --exec \"yarn copy-styles\""
   },
   "keywords": [
     "calendar",

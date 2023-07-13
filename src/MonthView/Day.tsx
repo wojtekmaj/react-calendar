@@ -1,16 +1,16 @@
 import React from 'react';
 import { getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
 
-import Tile from '../Tile';
+import Tile from '../Tile.js';
 
-import { isWeekend } from '../shared/dates';
+import { isWeekend } from '../shared/dates.js';
 import {
   formatDay as defaultFormatDay,
   formatLongDate as defaultFormatLongDate,
-} from '../shared/dateFormatter';
-import { mapCalendarType } from '../shared/utils';
+} from '../shared/dateFormatter.js';
+import { mapCalendarType } from '../shared/utils.js';
 
-import type { CalendarType, DeprecatedCalendarType } from '../shared/types';
+import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
 
 const className = 'react-calendar__month-view__days__day';
 

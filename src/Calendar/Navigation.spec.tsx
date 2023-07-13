@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
-import Navigation from './Navigation';
+import Navigation from './Navigation.js';
 
 const allViews = ['century', 'decade', 'year', 'month'];
 

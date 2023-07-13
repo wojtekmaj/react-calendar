@@ -1,10 +1,10 @@
 import React from 'react';
 import { getYearStart } from '@wojtekmaj/date-utils';
 
-import TileGroup from '../TileGroup';
-import Year from './Year';
+import TileGroup from '../TileGroup.js';
+import Year from './Year.js';
 
-import { getBeginOfDecadeYear } from '../shared/dates';
+import { getBeginOfDecadeYear } from '../shared/dates.js';
 
 type YearsProps = {
   activeStartDate: Date;

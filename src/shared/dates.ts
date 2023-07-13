@@ -30,10 +30,10 @@ import {
   getDayRange,
 } from '@wojtekmaj/date-utils';
 
-import { CALENDAR_TYPES, WEEKDAYS } from './const';
-import { formatYear as defaultFormatYear } from './dateFormatter';
+import { CALENDAR_TYPES, WEEKDAYS } from './const.js';
+import { formatYear as defaultFormatYear } from './dateFormatter.js';
 
-import type { CalendarType, RangeType } from './types';
+import type { CalendarType, RangeType } from './types.js';
 
 const SUNDAY = WEEKDAYS[0];
 const FRIDAY = WEEKDAYS[5];

@@ -6,7 +6,7 @@ import {
   formatShortWeekday,
   formatWeekday,
   formatYear,
-} from './dateFormatter';
+} from './dateFormatter.js';
 
 describe('formatDate', () => {
   it('returns proper full numeric date', () => {

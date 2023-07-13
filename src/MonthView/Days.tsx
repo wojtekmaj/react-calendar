@@ -1,13 +1,13 @@
 import React from 'react';
 import { getYear, getMonth, getDaysInMonth, getDayStart } from '@wojtekmaj/date-utils';
 
-import TileGroup from '../TileGroup';
-import Day from './Day';
+import TileGroup from '../TileGroup.js';
+import Day from './Day.js';
 
-import { getDayOfWeek } from '../shared/dates';
-import { mapCalendarType } from '../shared/utils';
+import { getDayOfWeek } from '../shared/dates.js';
+import { mapCalendarType } from '../shared/utils.js';
 
-import type { CalendarType, DeprecatedCalendarType } from '../shared/types';
+import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
 
 type DaysProps = {
   activeStartDate: Date;

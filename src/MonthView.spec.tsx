@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import MonthView from './MonthView';
-import { formatShortWeekday } from './shared/dateFormatter';
+import MonthView from './MonthView.js';
+import { formatShortWeekday } from './shared/dateFormatter.js';
 
 const { format } = new Intl.DateTimeFormat('en-US', {
   day: 'numeric',

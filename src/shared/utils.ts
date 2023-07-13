@@ -1,9 +1,9 @@
 import warning from 'tiny-warning';
 
-import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const';
-import { getRange } from './dates';
+import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const.js';
+import { getRange } from './dates.js';
 
-import type { CalendarType, DeprecatedCalendarType, Range, RangeType, Value } from './types';
+import type { CalendarType, DeprecatedCalendarType, Range, RangeType, Value } from './types.js';
 
 /**
  * Returns a value no smaller than min and no larger than max.

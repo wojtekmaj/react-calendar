@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import Days from './MonthView/Days';
-import Weekdays from './MonthView/Weekdays';
-import WeekNumbers from './MonthView/WeekNumbers';
+import Days from './MonthView/Days.js';
+import Weekdays from './MonthView/Weekdays.js';
+import WeekNumbers from './MonthView/WeekNumbers.js';
 
-import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const';
-import { isCalendarType, tileGroupProps } from './shared/propTypes';
+import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const.js';
+import { isCalendarType, tileGroupProps } from './shared/propTypes.js';
 
-import type { CalendarType } from './shared/types';
+import type { CalendarType } from './shared/types.js';
 
 function getCalendarTypeFromLocale(locale: string | undefined): CalendarType {
   if (locale) {

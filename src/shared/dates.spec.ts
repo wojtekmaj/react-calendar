@@ -20,7 +20,7 @@ import {
   getCenturyLabel,
   getDecadeLabel,
   isWeekend,
-} from './dates';
+} from './dates.js';
 
 describe('getDayOfWeek', () => {
   it('returns proper day of the week (ISO 8601)', () => {

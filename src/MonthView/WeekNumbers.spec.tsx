@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
-import WeekNumbers from './WeekNumbers';
+import WeekNumbers from './WeekNumbers.js';
 
 describe('.react-calendar__month-view__weekNumbers', () => {
   const defaultProps = {

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const';
+import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const.js';
 
 import type { Requireable, Validator } from 'prop-types';
-import type { Range, View } from './types';
+import type { Range, View } from './types.js';
 
 const calendarTypes = Object.values(CALENDAR_TYPES);
 const deprecatedCalendarTypes = Object.values(DEPRECATED_CALENDAR_TYPES);

@@ -1,12 +1,12 @@
 import React from 'react';
 import { getMonthStart, getMonthEnd } from '@wojtekmaj/date-utils';
 
-import Tile from '../Tile';
+import Tile from '../Tile.js';
 
 import {
   formatMonth as defaultFormatMonth,
   formatMonthYear as defaultFormatMonthYear,
-} from '../shared/dateFormatter';
+} from '../shared/dateFormatter.js';
 
 const className = 'react-calendar__year-view__months__month';
 

@@ -1,4 +1,4 @@
-import type { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const';
+import type { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const.js';
 
 export type Range<T> = [T, T];
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { getYearStart, getYearEnd } from '@wojtekmaj/date-utils';
 
-import Tile from '../Tile';
+import Tile from '../Tile.js';
 
-import { formatYear as defaultFormatYear } from '../shared/dateFormatter';
+import { formatYear as defaultFormatYear } from '../shared/dateFormatter.js';
 
 const className = 'react-calendar__decade-view__years__year';
 

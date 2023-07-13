@@ -7,7 +7,7 @@ import type {
   TileContentFunc,
   TileDisabledFunc,
   View,
-} from './shared/types';
+} from './shared/types.js';
 
 type TileProps = {
   activeStartDate: Date;

@@ -1,11 +1,11 @@
-import Calendar from './Calendar';
-import CenturyView from './CenturyView';
-import DecadeView from './DecadeView';
-import MonthView from './MonthView';
-import Navigation from './Calendar/Navigation';
-import YearView from './YearView';
+import Calendar from './Calendar.js';
+import CenturyView from './CenturyView.js';
+import DecadeView from './DecadeView.js';
+import MonthView from './MonthView.js';
+import Navigation from './Calendar/Navigation.js';
+import YearView from './YearView.js';
 
-export type { CalendarProps } from './Calendar';
+export type { CalendarProps } from './Calendar.js';
 
 export type {
   NavigationLabelFunc,
@@ -14,7 +14,7 @@ export type {
   TileClassNameFunc,
   TileContentFunc,
   TileDisabledFunc,
-} from './shared/types';
+} from './shared/types.js';
 
 export { Calendar, CenturyView, DecadeView, MonthView, Navigation, YearView };
 
