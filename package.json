@@ -37,7 +37,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@types/react": "*",
     "@wojtekmaj/date-utils": "^1.1.3",
     "clsx": "^2.0.0",
     "get-user-locale": "^2.2.1",
@@ -48,6 +47,7 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^14.0.0",
     "@types/node": "*",
+    "@types/react": "*",
     "eslint": "^8.26.0",
     "eslint-config-wojtekmaj": "^0.9.0",
     "husky": "^8.0.0",
@@ -62,8 +62,14 @@
     "vitest": "^0.30.1"
   },
   "peerDependencies": {
+    "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public",
