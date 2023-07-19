@@ -56,12 +56,16 @@ Add React-Calendar to your project by executing `npm install react-calendar` or 
 
 Here's an example of basic usage:
 
-```js
-import React, { useState } from 'react';
+```tsx
+import { useState } from 'react';
 import Calendar from 'react-calendar';
 
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
+
 function MyApp() {
-  const [value, onChange] = useState(new Date());
+  const [value, onChange] = useState<Value>(new Date());
 
   return (
     <div>
@@ -77,7 +81,7 @@ Check the [sample directory](https://github.com/wojtekmaj/react-calendar/tree/ma
 
 If you want to use default React-Calendar styling to build upon it, you can import React-Calendar's styles by using:
 
-```js
+```ts
 import 'react-calendar/dist/Calendar.css';
 ```
 
