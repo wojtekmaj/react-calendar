@@ -68,20 +68,13 @@ function getRangeClassNames(
   return classes;
 }
 
-type ValueRangeOrValueWithValueType<T = Date, U = T | Range<T>> = U extends Range<T>
-  ? { value: U; valueType?: undefined }
-  : { value: U; valueType: RangeType };
-
-type DateRangeOrDateWithDateType<T = Date, U = T | Range<T>> = U extends Range<T>
-  ? { date: U; dateType?: undefined }
-  : { date: U; dateType: RangeType };
-
-export function getTileClasses(
-  args: {
-    hover?: Date;
-  } & ValueRangeOrValueWithValueType &
-    DateRangeOrDateWithDateType,
-): string[] {
+export function getTileClasses(args: {
+  value?: Date | Range<Date>;
+  valueType?: RangeType;
+  hover?: Date;
+  date?: Date | Range<Date>;
+  dateType?: RangeType;
+}): string[] {
   if (!args) {
     throw new Error('args is required');
   }

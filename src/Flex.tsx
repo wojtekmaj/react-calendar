@@ -7,6 +7,7 @@ type FlexProps = React.HTMLAttributes<HTMLDivElement> & {
   count: number;
   direction?: 'row' | 'column';
   offset?: number;
+  style?: React.CSSProperties;
   wrap?: boolean;
 };
 

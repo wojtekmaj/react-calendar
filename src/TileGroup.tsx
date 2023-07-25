@@ -6,7 +6,7 @@ import Flex from './Flex';
 import { getTileClasses } from './shared/utils';
 import { tileGroupProps } from './shared/propTypes';
 
-import type { RangeType } from './shared/types';
+import type { Range, RangeType } from './shared/types';
 
 type TileGroupProps<T extends React.ElementType> = {
   className?: string;
@@ -19,9 +19,9 @@ type TileGroupProps<T extends React.ElementType> = {
   start: number;
   step?: number;
   tile: T;
-  value?: Date;
+  value?: Date | Range<Date>;
   valueType: RangeType;
-} & React.ComponentProps<T>;
+} & Omit<React.ComponentProps<T>, 'classes' | 'date'>;
 
 export default function TileGroup<T extends React.ElementType>({
   className,
@@ -42,8 +42,10 @@ export default function TileGroup<T extends React.ElementType>({
   for (let point = start; point <= end; point += step) {
     const date = dateTransform(point);
 
+    const FixedTile = Tile as React.ElementType;
+
     tiles.push(
-      <Tile
+      <FixedTile
         key={date.getTime()}
         classes={getTileClasses({
           value,

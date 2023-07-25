@@ -24,6 +24,7 @@ function getCalendarTypeFromLocale(locale: string): CalendarType {
 type MonthViewProps = {
   showWeekNumbers?: boolean;
 } & React.ComponentProps<typeof Weekdays> &
+  React.ComponentProps<typeof WeekNumbers> &
   React.ComponentProps<typeof Days>;
 
 export default function MonthView(props: MonthViewProps) {

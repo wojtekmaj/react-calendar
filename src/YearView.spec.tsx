@@ -9,6 +9,7 @@ const { format } = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'nume
 describe('YearView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
+    valueType: 'month',
   } satisfies React.ComponentProps<typeof YearView>;
 
   it('renders proper view when given activeStartDate', () => {

@@ -15,7 +15,7 @@ import type {
 type TileProps = {
   activeStartDate: Date;
   children: React.ReactNode;
-  classes?: ClassName;
+  classes?: string[];
   date: Date;
   formatAbbr?: (locale: string | undefined, date: Date) => string;
   locale?: string;
@@ -23,8 +23,8 @@ type TileProps = {
   maxDateTransform: (date: Date) => Date;
   minDate?: Date;
   minDateTransform: (date: Date) => Date;
-  onClick: (date: Date, event: React.MouseEvent) => void;
-  onMouseOver: (date: Date) => void;
+  onClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onMouseOver?: (date: Date) => void;
   style?: React.CSSProperties;
   tileClassName?: TileClassNameFunc | ClassName;
   tileContent?: TileContentFunc | React.ReactNode;

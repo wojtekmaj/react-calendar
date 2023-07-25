@@ -7,9 +7,12 @@ import Decade from './Decade';
 import { getBeginOfCenturyYear } from '../shared/dates';
 import { tileGroupProps } from '../shared/propTypes';
 
+import type { RangeType } from '../shared/types';
+
 type DecadesProps = {
   activeStartDate: Date;
-} & React.ComponentProps<typeof TileGroup>;
+  valueType: RangeType;
+} & Omit<React.ComponentProps<typeof Decade>, 'classes' | 'date'>;
 
 export default function Decades(props: DecadesProps) {
   const { activeStartDate } = props;

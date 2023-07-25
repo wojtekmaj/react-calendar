@@ -8,6 +8,7 @@ import CenturyView from './CenturyView';
 describe('CenturyView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
+    valueType: 'decade',
   } satisfies React.ComponentProps<typeof CenturyView>;
 
   it('renders proper view when given activeStartDate', () => {

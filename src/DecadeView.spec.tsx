@@ -7,6 +7,7 @@ import DecadeView from './DecadeView';
 describe('DecadeView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
+    valueType: 'year',
   } satisfies React.ComponentProps<typeof DecadeView>;
 
   it('renders proper view when given activeStartDate', () => {

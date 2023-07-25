@@ -142,7 +142,7 @@ export const tileGroupProps = {
 
 export const tileProps = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  classes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  classes: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
   locale: PropTypes.string,
   maxDate: isMaxDate,

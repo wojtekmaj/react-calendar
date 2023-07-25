@@ -7,9 +7,12 @@ import Month from './Month';
 
 import { tileGroupProps } from '../shared/propTypes';
 
+import type { RangeType } from '../shared/types';
+
 type MonthsProps = {
   activeStartDate: Date;
-} & React.ComponentProps<typeof TileGroup>;
+  valueType: RangeType;
+} & Omit<React.ComponentProps<typeof Month>, 'classes' | 'date'>;
 
 export default function Months(props: MonthsProps) {
   const { activeStartDate } = props;

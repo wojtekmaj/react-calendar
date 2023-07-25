@@ -14,6 +14,7 @@ const { format } = new Intl.DateTimeFormat('en-US', {
 describe('MonthView', () => {
   const defaultProps = {
     activeStartDate: new Date(2017, 0, 1),
+    valueType: 'day',
   } satisfies React.ComponentProps<typeof MonthView>;
 
   it('renders proper view when given activeStartDate', () => {

@@ -172,13 +172,11 @@ describe('getTileClasses', () => {
   });
 
   it('throws an error when given date but not given dateType parameter ', () => {
-    // @ts-expect-error-next-line
     expect(() => getTileClasses({ date: new Date(2017, 0, 1) })).toThrow();
   });
 
   it('throws an error when given date and value but not given valueType parameter ', () => {
     expect(() =>
-      // @ts-expect-error-next-line
       getTileClasses({
         date: new Date(2017, 0, 1),
         dateType: 'month',
