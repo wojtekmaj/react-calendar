@@ -85,8 +85,8 @@ export default function Days(props: DaysProps) {
 }
 
 Days.propTypes = {
+  ...tileGroupProps,
   calendarType: isCalendarType,
   showFixedNumberOfWeeks: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
-  ...tileGroupProps,
 };

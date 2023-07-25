@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getYear } from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup';
@@ -40,5 +39,4 @@ export default function Months(props: MonthsProps) {
 
 Months.propTypes = {
   ...tileGroupProps,
-  locale: PropTypes.string,
 };

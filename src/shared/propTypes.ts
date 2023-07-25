@@ -137,7 +137,7 @@ export const tileGroupProps = {
   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   value: isValue,
-  valueType: PropTypes.string,
+  valueType: PropTypes.oneOf(['century', 'decade', 'year', 'month', 'day'] as const).isRequired,
 };
 
 export const tileProps = {
