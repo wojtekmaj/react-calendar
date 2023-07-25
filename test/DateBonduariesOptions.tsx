@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getISOLocalDateTime } from '@wojtekmaj/date-utils';
 
 type DateBoundariesOptionsProps = {
@@ -60,10 +59,3 @@ export default function DateBonduariesOptions({
     </fieldset>
   );
 }
-
-DateBonduariesOptions.propTypes = {
-  maxDate: PropTypes.instanceOf(Date),
-  minDate: PropTypes.instanceOf(Date),
-  setMaxDate: PropTypes.func.isRequired,
-  setMinDate: PropTypes.func.isRequired,
-};

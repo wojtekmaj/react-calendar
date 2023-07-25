@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getISOLocalDateTime } from '@wojtekmaj/date-utils';
 
 import type { LooseValue } from './shared/types';
@@ -114,14 +113,3 @@ export default function ValueOptions({
     </fieldset>
   );
 }
-
-const isValue = PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]);
-
-const isValueOrValueArray = PropTypes.oneOfType([isValue, PropTypes.arrayOf(isValue)]);
-
-ValueOptions.propTypes = {
-  selectRange: PropTypes.bool,
-  setSelectRange: PropTypes.func.isRequired,
-  setValue: PropTypes.func.isRequired,
-  value: isValueOrValueArray,
-};

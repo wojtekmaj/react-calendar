@@ -1,10 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Flex from './Flex';
 
 import { getTileClasses } from './shared/utils';
-import { tileGroupProps } from './shared/propTypes';
 
 import type { Range, RangeType } from './shared/types';
 
@@ -66,16 +64,3 @@ export default function TileGroup<T extends React.ElementType>({
     </Flex>
   );
 }
-
-TileGroup.propTypes = {
-  ...tileGroupProps,
-  className: PropTypes.string,
-  count: PropTypes.number,
-  dateTransform: PropTypes.func.isRequired,
-  dateType: PropTypes.string,
-  end: PropTypes.number.isRequired,
-  offset: PropTypes.number,
-  step: PropTypes.number,
-  start: PropTypes.number.isRequired,
-  tile: PropTypes.func.isRequired,
-};

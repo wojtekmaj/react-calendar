@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { getYear, getMonth, getMonthStart } from '@wojtekmaj/date-utils';
 
@@ -10,7 +9,6 @@ import {
   formatShortWeekday as defaultFormatShortWeekday,
   formatWeekday as defaultFormatWeekday,
 } from '../shared/dateFormatter';
-import { isCalendarType } from '../shared/propTypes';
 import { mapCalendarType } from '../shared/utils';
 
 import type { CalendarType, DeprecatedCalendarType } from '../shared/types';
@@ -74,11 +72,3 @@ export default function Weekdays(props: WeekdaysProps) {
     </Flex>
   );
 }
-
-Weekdays.propTypes = {
-  calendarType: isCalendarType,
-  formatShortWeekday: PropTypes.func,
-  formatWeekday: PropTypes.func,
-  locale: PropTypes.string,
-  onMouseLeave: PropTypes.func,
-};

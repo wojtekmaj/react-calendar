@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import type { OnClickWeekNumberFunc } from '../shared/types';
 
@@ -48,9 +47,3 @@ export default function WeekNumber(props: WeekNumberProps) {
     );
   }
 }
-
-WeekNumber.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  onClickWeekNumber: PropTypes.func,
-  weekNumber: PropTypes.node.isRequired,
-};

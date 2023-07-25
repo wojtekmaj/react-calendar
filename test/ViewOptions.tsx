@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 type ViewOptionsProps = {
   setShowDoubleView: (showDoubleView: boolean) => void;
@@ -94,14 +93,3 @@ export default function ViewOptions({
     </fieldset>
   );
 }
-
-ViewOptions.propTypes = {
-  setShowDoubleView: PropTypes.func.isRequired,
-  setShowFixedNumberOfWeeks: PropTypes.func.isRequired,
-  setShowNeighboringMonth: PropTypes.func.isRequired,
-  setShowWeekNumbers: PropTypes.func.isRequired,
-  showDoubleView: PropTypes.bool.isRequired,
-  showFixedNumberOfWeeks: PropTypes.bool.isRequired,
-  showNeighboringMonth: PropTypes.bool.isRequired,
-  showWeekNumbers: PropTypes.bool.isRequired,
-};

@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getYear, getMonth, getDate, getDaysInMonth } from '@wojtekmaj/date-utils';
 
 import WeekNumber from './WeekNumber';
 import Flex from '../Flex';
 
 import { getBeginOfWeek, getDayOfWeek, getWeekNumber } from '../shared/dates';
-import { isCalendarType } from '../shared/propTypes';
 import { mapCalendarType } from '../shared/utils';
 
 import type { CalendarType, DeprecatedCalendarType, OnClickWeekNumberFunc } from '../shared/types';
@@ -83,11 +81,3 @@ export default function WeekNumbers(props: WeekNumbersProps) {
     </Flex>
   );
 }
-
-WeekNumbers.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  calendarType: isCalendarType,
-  onClickWeekNumber: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  showFixedNumberOfWeeks: PropTypes.bool,
-};

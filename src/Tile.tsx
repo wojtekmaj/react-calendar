@@ -1,8 +1,5 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
-
-import { tileProps } from './shared/propTypes';
 
 import type {
   ClassName,
@@ -84,11 +81,3 @@ export default function Tile(props: TileProps) {
     </button>
   );
 }
-
-Tile.propTypes = {
-  ...tileProps,
-  children: PropTypes.node.isRequired,
-  formatAbbr: PropTypes.func,
-  maxDateTransform: PropTypes.func.isRequired,
-  minDateTransform: PropTypes.func.isRequired,
-};

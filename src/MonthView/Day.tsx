@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile';
@@ -9,7 +8,6 @@ import {
   formatDay as defaultFormatDay,
   formatLongDate as defaultFormatLongDate,
 } from '../shared/dateFormatter';
-import { tileProps } from '../shared/propTypes';
 import { mapCalendarType } from '../shared/utils';
 
 import type { CalendarType, DeprecatedCalendarType } from '../shared/types';
@@ -69,10 +67,3 @@ export default function Day({
     </Tile>
   );
 }
-
-Day.propTypes = {
-  ...tileProps,
-  currentMonthIndex: PropTypes.number.isRequired,
-  formatDay: PropTypes.func,
-  formatLongDate: PropTypes.func,
-};

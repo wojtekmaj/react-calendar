@@ -1552,7 +1552,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.0, prop-types@npm:^15.6.2":
+"prop-types@npm:^15.6.0":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -1571,7 +1571,6 @@ __metadata:
     "@vitejs/plugin-react": ^3.0.0
     "@wojtekmaj/date-utils": ^1.1.3
     get-user-locale: ^2.2.1
-    prop-types: ^15.6.2
     react: ^18.2.0
     react-calendar: "portal:../"
     react-dom: ^18.2.0

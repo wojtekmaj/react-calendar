@@ -5,7 +5,6 @@ import TileGroup from '../TileGroup';
 import Decade from './Decade';
 
 import { getBeginOfCenturyYear } from '../shared/dates';
-import { tileGroupProps } from '../shared/propTypes';
 
 import type { RangeType } from '../shared/types';
 
@@ -32,7 +31,3 @@ export default function Decades(props: DecadesProps) {
     />
   );
 }
-
-Decades.propTypes = {
-  ...tileGroupProps,
-};

@@ -4,8 +4,6 @@ import { getYear } from '@wojtekmaj/date-utils';
 import TileGroup from '../TileGroup';
 import Month from './Month';
 
-import { tileGroupProps } from '../shared/propTypes';
-
 import type { RangeType } from '../shared/types';
 
 type MonthsProps = {
@@ -36,7 +34,3 @@ export default function Months(props: MonthsProps) {
     />
   );
 }
-
-Months.propTypes = {
-  ...tileGroupProps,
-};

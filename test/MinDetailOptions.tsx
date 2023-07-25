@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { View } from './shared/types';
+
+import type { View } from './shared/types';
 
 const allViews = ['century', 'decade', 'year', 'month'] as const;
 
@@ -48,9 +48,3 @@ export default function MinDetailOptions({
     </fieldset>
   );
 }
-
-MinDetailOptions.propTypes = {
-  maxDetail: PropTypes.oneOf(allViews).isRequired,
-  minDetail: PropTypes.oneOf(allViews).isRequired,
-  setMinDetail: PropTypes.func.isRequired,
-};
