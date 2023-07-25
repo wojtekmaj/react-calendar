@@ -1,9 +1,9 @@
 import Calendar from './Calendar';
-import Navigation from './Calendar/Navigation';
 import CenturyView from './CenturyView';
 import DecadeView from './DecadeView';
-import YearView from './YearView';
 import MonthView from './MonthView';
+import Navigation from './Calendar/Navigation';
+import YearView from './YearView';
 
 export type { CalendarProps } from './Calendar';
 
@@ -16,6 +16,6 @@ export type {
   TileDisabledFunc,
 } from './shared/types';
 
-export { Calendar, Navigation, CenturyView, DecadeView, YearView, MonthView };
+export { Calendar, CenturyView, DecadeView, MonthView, Navigation, YearView };
 
 export default Calendar;
