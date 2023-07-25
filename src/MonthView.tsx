@@ -11,10 +11,12 @@ import { isCalendarType, tileGroupProps } from './shared/propTypes';
 
 import type { CalendarType } from './shared/types';
 
-function getCalendarTypeFromLocale(locale: string): CalendarType {
-  for (const [calendarType, locales] of Object.entries(CALENDAR_TYPE_LOCALES)) {
-    if (locales.includes(locale)) {
-      return calendarType as CalendarType;
+function getCalendarTypeFromLocale(locale: string | undefined): CalendarType {
+  if (locale) {
+    for (const [calendarType, locales] of Object.entries(CALENDAR_TYPE_LOCALES)) {
+      if (locales.includes(locale)) {
+        return calendarType as CalendarType;
+      }
     }
   }
 
