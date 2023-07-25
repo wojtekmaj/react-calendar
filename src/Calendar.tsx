@@ -710,7 +710,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
       maxDate,
       minDate,
       onClick,
-      onMouseOver: selectRange ? onMouseOver : null,
+      onMouseOver: selectRange ? onMouseOver : undefined,
       tileClassName,
       tileContent,
       tileDisabled,
@@ -739,7 +739,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
             formatShortWeekday={formatShortWeekday}
             formatWeekday={formatWeekday}
             onClickWeekNumber={onClickWeekNumber}
-            onMouseLeave={selectRange ? onMouseLeave : null}
+            onMouseLeave={selectRange ? onMouseLeave : undefined}
             showFixedNumberOfWeeks={
               typeof showFixedNumberOfWeeks !== 'undefined'
                 ? showFixedNumberOfWeeks
