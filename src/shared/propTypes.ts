@@ -9,7 +9,10 @@ const calendarTypes = Object.values(CALENDAR_TYPES);
 const deprecatedCalendarTypes = Object.values(DEPRECATED_CALENDAR_TYPES);
 const allViews = ['century', 'decade', 'year', 'month'];
 
-export const isCalendarType = PropTypes.oneOf([...calendarTypes, ...deprecatedCalendarTypes]);
+export const isCalendarType = PropTypes.oneOf([
+  ...calendarTypes,
+  ...deprecatedCalendarTypes,
+] as const);
 
 export const isClassName = PropTypes.oneOfType([
   PropTypes.string,
