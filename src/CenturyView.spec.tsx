@@ -15,11 +15,7 @@ describe('CenturyView', () => {
     const activeStartDate = new Date(2001, 0, 1);
 
     const { container } = render(
-      <CenturyView
-        {...defaultProps}
-        activeStartDate={activeStartDate}
-        showNeighboringMonth={false}
-      />,
+      <CenturyView {...defaultProps} activeStartDate={activeStartDate} />,
     );
 
     const firstDayTile = container.querySelector('.react-calendar__tile');
@@ -34,9 +30,7 @@ describe('CenturyView', () => {
   it('applies tileClassName to its tiles when given a string', () => {
     const tileClassName = 'testClassName';
 
-    const { container } = render(
-      <CenturyView {...defaultProps} showNeighboringMonth={false} tileClassName={tileClassName} />,
-    );
+    const { container } = render(<CenturyView {...defaultProps} tileClassName={tileClassName} />);
 
     const firstDayTile = container.querySelector('.react-calendar__tile');
 
@@ -57,7 +51,6 @@ describe('CenturyView', () => {
       <CenturyView
         {...defaultProps}
         activeStartDate={activeStartDate}
-        showNeighboringMonth={false}
         tileClassName={tileClassNameFn}
       />,
     );
@@ -74,9 +67,7 @@ describe('CenturyView', () => {
   it('renders tileContent in its tiles when given a node', () => {
     const tileContent = <div className="testContent" />;
 
-    const { container } = render(
-      <CenturyView {...defaultProps} showNeighboringMonth={false} tileContent={tileContent} />,
-    );
+    const { container } = render(<CenturyView {...defaultProps} tileContent={tileContent} />);
 
     const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
@@ -98,7 +89,6 @@ describe('CenturyView', () => {
       <CenturyView
         {...defaultProps}
         activeStartDate={activeStartDate}
-        showNeighboringMonth={false}
         tileContent={tileContentFn}
       />,
     );

@@ -15,9 +15,7 @@ describe('YearView', () => {
   it('renders proper view when given activeStartDate', () => {
     const activeStartDate = new Date(2017, 0, 1);
 
-    const { container } = render(
-      <YearView {...defaultProps} activeStartDate={activeStartDate} showNeighboringMonth={false} />,
-    );
+    const { container } = render(<YearView {...defaultProps} activeStartDate={activeStartDate} />);
 
     const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
@@ -28,9 +26,7 @@ describe('YearView', () => {
   it('applies tileClassName to its tiles when given a string', () => {
     const tileClassName = 'testClassName';
 
-    const { container } = render(
-      <YearView {...defaultProps} showNeighboringMonth={false} tileClassName={tileClassName} />,
-    );
+    const { container } = render(<YearView {...defaultProps} tileClassName={tileClassName} />);
 
     const firstDayTile = container.querySelector('.react-calendar__tile');
 
@@ -51,7 +47,6 @@ describe('YearView', () => {
       <YearView
         {...defaultProps}
         activeStartDate={activeStartDate}
-        showNeighboringMonth={false}
         tileClassName={tileClassNameFn}
       />,
     );
@@ -68,9 +63,7 @@ describe('YearView', () => {
   it('renders tileContent in its tiles when given a node', () => {
     const tileContent = <div className="testContent" />;
 
-    const { container } = render(
-      <YearView {...defaultProps} showNeighboringMonth={false} tileContent={tileContent} />,
-    );
+    const { container } = render(<YearView {...defaultProps} tileContent={tileContent} />);
 
     const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
@@ -89,12 +82,7 @@ describe('YearView', () => {
     };
 
     const { container } = render(
-      <YearView
-        {...defaultProps}
-        activeStartDate={activeStartDate}
-        showNeighboringMonth={false}
-        tileContent={tileContentFn}
-      />,
+      <YearView {...defaultProps} activeStartDate={activeStartDate} tileContent={tileContentFn} />,
     );
 
     const tiles = container.querySelectorAll('.react-calendar__tile');

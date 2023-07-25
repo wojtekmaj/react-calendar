@@ -55,7 +55,6 @@ export default function TileGroup<T extends React.ElementType>({
           hover,
         })}
         date={date}
-        point={point}
         {...tileProps}
       />,
     );

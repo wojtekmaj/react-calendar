@@ -8,13 +8,6 @@ const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
   classes: ['react-calendar__tile'],
   date: new Date(2011, 0, 1),
-  onClick: () => {
-    // Intentionally empty
-  },
-  onMouseOver: () => {
-    // Intentionally empty
-  },
-  point: 2011,
 };
 
 describe('Decade', () => {

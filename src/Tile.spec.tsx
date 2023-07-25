@@ -12,12 +12,6 @@ describe('<Tile /> component', () => {
     date: new Date(2019, 0, 1),
     maxDateTransform: (date: Date) => date,
     minDateTransform: (date: Date) => date,
-    onClick: () => {
-      // Intentionally empty
-    },
-    onMouseOver: () => {
-      // Intentionally empty
-    },
     view: 'month',
   } satisfies React.ComponentProps<typeof Tile>;
 

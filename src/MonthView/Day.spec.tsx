@@ -9,12 +9,6 @@ const tileProps = {
   classes: ['react-calendar__tile'],
   currentMonthIndex: 0,
   date: new Date(2018, 0, 1),
-  onClick: () => {
-    // Intentionally empty
-  },
-  onMouseOver: () => {
-    // Intentionally empty
-  },
 };
 
 describe('Day', () => {
