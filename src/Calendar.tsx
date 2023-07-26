@@ -33,6 +33,7 @@ import type {
   OnArgs,
   OnClickFunc,
   OnClickWeekNumberFunc,
+  Range,
   TileClassNameFunc,
   TileContentFunc,
   TileDisabledFunc,
@@ -356,10 +357,10 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
   const [hoverState, setHoverState] = useState<Date | null>(null);
   const [valueState, setValueState] = useState<Value | undefined>(
     Array.isArray(defaultValue)
-      ? (defaultValue.map((el) => (el !== null ? toDate(el) : el)) as [Date | null, Date | null])
+      ? (defaultValue.map((el) => (el !== null ? toDate(el) : null)) as Range<Date | null>)
       : defaultValue !== null && defaultValue !== undefined
       ? toDate(defaultValue)
-      : defaultValue,
+      : null,
   );
   const [viewState, setViewState] = useState<View | undefined>(defaultView);
 
@@ -394,10 +395,10 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
     }
 
     return Array.isArray(rawValue)
-      ? (rawValue.map((el) => (el !== null ? toDate(el) : el)) as [Date | null, Date | null])
+      ? (rawValue.map((el) => (el !== null ? toDate(el) : null)) as Range<Date | null>)
       : rawValue !== null
       ? toDate(rawValue)
-      : rawValue;
+      : null;
   })();
 
   const valueType = getValueType(maxDetail);
