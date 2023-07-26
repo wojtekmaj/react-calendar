@@ -1,4 +1,5 @@
 import React from 'react';
+import { getYearStart } from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup';
 import Year from './Year';
@@ -21,12 +22,7 @@ export default function Years(props: YearsProps) {
     <TileGroup
       {...props}
       className="react-calendar__decade-view__years"
-      dateTransform={(year) => {
-        const date = new Date();
-        date.setFullYear(year, 0, 1);
-        date.setHours(0, 0, 0, 0);
-        return date;
-      }}
+      dateTransform={getYearStart}
       dateType="year"
       end={end}
       start={start}

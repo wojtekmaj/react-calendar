@@ -1,5 +1,5 @@
 import React from 'react';
-import { getYear } from '@wojtekmaj/date-utils';
+import { getMonthStart, getYear } from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup';
 import Month from './Month';
@@ -24,8 +24,7 @@ export default function Months(props: MonthsProps) {
       dateTransform={(monthIndex) => {
         const date = new Date();
         date.setFullYear(year, monthIndex, 1);
-        date.setHours(0, 0, 0, 0);
-        return date;
+        return getMonthStart(date);
       }}
       dateType="month"
       end={end}

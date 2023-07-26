@@ -1,5 +1,5 @@
 import React from 'react';
-import { getYear, getMonth, getDaysInMonth } from '@wojtekmaj/date-utils';
+import { getYear, getMonth, getDaysInMonth, getDayStart } from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup';
 import Day from './Day';
@@ -70,8 +70,7 @@ export default function Days(props: DaysProps) {
       dateTransform={(day) => {
         const date = new Date();
         date.setFullYear(year, monthIndex, day);
-        date.setHours(0, 0, 0, 0);
-        return date;
+        return getDayStart(date);
       }}
       dateType="day"
       end={end}
