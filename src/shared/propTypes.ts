@@ -82,9 +82,14 @@ export const isRef = PropTypes.oneOfType([
   }),
 ]);
 
+const isRange = PropTypes.arrayOf(
+  PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.oneOf([null])]).isRequired,
+) as Requireable<Range<Date>>;
+
 export const isValue = PropTypes.oneOfType([
   PropTypes.instanceOf(Date),
-  PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  PropTypes.oneOf([null]),
+  isRange,
 ]);
 
 export const isViews = PropTypes.arrayOf(PropTypes.oneOf(allViews));
