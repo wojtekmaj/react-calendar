@@ -6,28 +6,39 @@ import Decade from './Decade';
 
 import { getBeginOfCenturyYear } from '../shared/dates';
 
-import type { RangeType } from '../shared/types';
-
 type DecadesProps = {
   activeStartDate: Date;
-  valueType: RangeType;
-} & Omit<React.ComponentProps<typeof Decade>, 'classes' | 'date'>;
+} & Omit<
+  React.ComponentProps<typeof TileGroup>,
+  'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start'
+> &
+  Omit<React.ComponentProps<typeof Decade>, 'classes' | 'date'>;
 
 export default function Decades(props: DecadesProps) {
-  const { activeStartDate } = props;
+  const { activeStartDate, hover, value, valueType, ...otherProps } = props;
   const start = getBeginOfCenturyYear(activeStartDate);
   const end = start + 99;
 
   return (
     <TileGroup
-      {...props}
       className="react-calendar__century-view__decades"
       dateTransform={getDecadeStart}
       dateType="decade"
       end={end}
+      hover={hover}
+      renderTile={({ date, ...otherTileProps }) => (
+        <Decade
+          key={date.getTime()}
+          {...otherProps}
+          {...otherTileProps}
+          activeStartDate={activeStartDate}
+          date={date}
+        />
+      )}
       start={start}
       step={10}
-      tile={Decade}
+      value={value}
+      valueType={valueType}
     />
   );
 }

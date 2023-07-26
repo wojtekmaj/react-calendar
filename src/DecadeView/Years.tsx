@@ -6,27 +6,38 @@ import Year from './Year';
 
 import { getBeginOfDecadeYear } from '../shared/dates';
 
-import type { RangeType } from '../shared/types';
-
 type YearsProps = {
   activeStartDate: Date;
-  valueType: RangeType;
-} & Omit<React.ComponentProps<typeof Year>, 'classes' | 'date'>;
+} & Omit<
+  React.ComponentProps<typeof TileGroup>,
+  'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start'
+> &
+  Omit<React.ComponentProps<typeof Year>, 'classes' | 'date'>;
 
 export default function Years(props: YearsProps) {
-  const { activeStartDate } = props;
+  const { activeStartDate, hover, value, valueType, ...otherProps } = props;
   const start = getBeginOfDecadeYear(activeStartDate);
   const end = start + 9;
 
   return (
     <TileGroup
-      {...props}
       className="react-calendar__decade-view__years"
       dateTransform={getYearStart}
       dateType="year"
       end={end}
+      hover={hover}
+      renderTile={({ date, ...otherTileProps }) => (
+        <Year
+          key={date.getTime()}
+          {...otherProps}
+          {...otherTileProps}
+          activeStartDate={activeStartDate}
+          date={date}
+        />
+      )}
       start={start}
-      tile={Year}
+      value={value}
+      valueType={valueType}
     />
   );
 }

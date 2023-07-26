@@ -4,24 +4,24 @@ import Flex from './Flex';
 
 import { getTileClasses } from './shared/utils';
 
-import type { Range, RangeType } from './shared/types';
+import type { RangeType, Value } from './shared/types';
 
-type TileGroupProps<T extends React.ElementType> = {
+type TileGroupProps = {
   className?: string;
   count?: number;
   dateTransform: (point: number) => Date;
   dateType: RangeType;
   end: number;
-  hover?: Date;
+  hover?: Date | null;
   offset?: number;
+  renderTile: (props: { classes: string[]; date: Date }) => React.ReactElement;
   start: number;
   step?: number;
-  tile: T;
-  value?: Date | Range<Date>;
+  value?: Value;
   valueType: RangeType;
-} & Omit<React.ComponentProps<T>, 'classes' | 'date'>;
+};
 
-export default function TileGroup<T extends React.ElementType>({
+export default function TileGroup({
   className,
   count = 3,
   dateTransform,
@@ -29,32 +29,27 @@ export default function TileGroup<T extends React.ElementType>({
   end,
   hover,
   offset,
+  renderTile,
   start,
   step = 1,
-  tile: Tile,
   value,
   valueType,
-  ...tileProps
-}: TileGroupProps<T>) {
+}: TileGroupProps) {
   const tiles = [];
   for (let point = start; point <= end; point += step) {
     const date = dateTransform(point);
 
-    const FixedTile = Tile as React.ElementType;
-
     tiles.push(
-      <FixedTile
-        key={date.getTime()}
-        classes={getTileClasses({
-          value,
-          valueType,
+      renderTile({
+        classes: getTileClasses({
           date,
           dateType,
           hover,
-        })}
-        date={date}
-        {...tileProps}
-      />,
+          value,
+          valueType,
+        }),
+        date,
+      }),
     );
   }
 

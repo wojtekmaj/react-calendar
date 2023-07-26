@@ -7,19 +7,30 @@ import Day from './Day';
 import { getDayOfWeek } from '../shared/dates';
 import { mapCalendarType } from '../shared/utils';
 
-import type { CalendarType, DeprecatedCalendarType, RangeType } from '../shared/types';
+import type { CalendarType, DeprecatedCalendarType } from '../shared/types';
 
 type DaysProps = {
   activeStartDate: Date;
   calendarType?: CalendarType | DeprecatedCalendarType;
   showFixedNumberOfWeeks?: boolean;
   showNeighboringMonth?: boolean;
-  valueType: RangeType;
-} & Omit<React.ComponentProps<typeof Day>, 'classes' | 'currentMonthIndex' | 'date' | 'point'>;
+} & Omit<
+  React.ComponentProps<typeof TileGroup>,
+  'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start'
+> &
+  Omit<React.ComponentProps<typeof Day>, 'classes' | 'currentMonthIndex' | 'date' | 'point'>;
 
 export default function Days(props: DaysProps) {
-  const { activeStartDate, calendarType: calendarTypeOrDeprecatedCalendarType } = props;
-  const { showFixedNumberOfWeeks, showNeighboringMonth, ...otherProps } = props;
+  const {
+    activeStartDate,
+    calendarType: calendarTypeOrDeprecatedCalendarType,
+    hover,
+    showFixedNumberOfWeeks,
+    showNeighboringMonth,
+    value,
+    valueType,
+    ...otherProps
+  } = props;
 
   const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
   const year = getYear(activeStartDate);
@@ -63,20 +74,30 @@ export default function Days(props: DaysProps) {
 
   return (
     <TileGroup
-      {...otherProps}
       className="react-calendar__month-view__days"
       count={7}
-      currentMonthIndex={monthIndex}
       dateTransform={(day) => {
         const date = new Date();
         date.setFullYear(year, monthIndex, day);
         return getDayStart(date);
       }}
       dateType="day"
+      hover={hover}
       end={end}
+      renderTile={({ date, ...otherTileProps }) => (
+        <Day
+          key={date.getTime()}
+          {...otherProps}
+          {...otherTileProps}
+          activeStartDate={activeStartDate}
+          currentMonthIndex={monthIndex}
+          date={date}
+        />
+      )}
       offset={offset}
       start={start}
-      tile={Day}
+      value={value}
+      valueType={valueType}
     />
   );
 }

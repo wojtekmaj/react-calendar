@@ -4,22 +4,22 @@ import { getMonthStart, getYear } from '@wojtekmaj/date-utils';
 import TileGroup from '../TileGroup';
 import Month from './Month';
 
-import type { RangeType } from '../shared/types';
-
 type MonthsProps = {
   activeStartDate: Date;
-  valueType: RangeType;
-} & Omit<React.ComponentProps<typeof Month>, 'classes' | 'date'>;
+} & Omit<
+  React.ComponentProps<typeof TileGroup>,
+  'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start'
+> &
+  Omit<React.ComponentProps<typeof Month>, 'classes' | 'date'>;
 
 export default function Months(props: MonthsProps) {
-  const { activeStartDate } = props;
+  const { activeStartDate, hover, value, valueType, ...otherProps } = props;
   const start = 0;
   const end = 11;
   const year = getYear(activeStartDate);
 
   return (
     <TileGroup
-      {...props}
       className="react-calendar__year-view__months"
       dateTransform={(monthIndex) => {
         const date = new Date();
@@ -28,8 +28,19 @@ export default function Months(props: MonthsProps) {
       }}
       dateType="month"
       end={end}
+      hover={hover}
+      renderTile={({ date, ...otherTileProps }) => (
+        <Month
+          key={date.getTime()}
+          {...otherProps}
+          {...otherTileProps}
+          activeStartDate={activeStartDate}
+          date={date}
+        />
+      )}
       start={start}
-      tile={Month}
+      value={value}
+      valueType={valueType}
     />
   );
 }
