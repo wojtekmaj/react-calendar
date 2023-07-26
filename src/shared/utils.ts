@@ -3,7 +3,7 @@ import warning from 'tiny-warning';
 import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const';
 import { getRange } from './dates';
 
-import type { CalendarType, DeprecatedCalendarType, Range, RangeType } from './types';
+import type { CalendarType, DeprecatedCalendarType, Range, RangeType, Value } from './types';
 
 /**
  * Returns a value no smaller than min and no larger than max.
@@ -68,12 +68,20 @@ function getRangeClassNames(
   return classes;
 }
 
+function isCompleteValue<T>(value: T | null | Range<T | null>): value is T | Range<T> {
+  if (Array.isArray(value)) {
+    return value[0] !== null && value[1] !== null;
+  }
+
+  return value !== null;
+}
+
 export function getTileClasses(args: {
-  value?: Date | Range<Date>;
-  valueType?: RangeType;
-  hover?: Date;
   date?: Date | Range<Date>;
   dateType?: RangeType;
+  hover?: Date | null;
+  value?: Value;
+  valueType?: RangeType;
 }): string[] {
   if (!args) {
     throw new Error('args is required');
@@ -107,7 +115,7 @@ export function getTileClasses(args: {
     classes.push(`${className}--now`);
   }
 
-  if (!value) {
+  if (!value || !isCompleteValue(value)) {
     return classes;
   }
 
