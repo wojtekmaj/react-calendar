@@ -15,7 +15,7 @@
     "build-js-esm": "tsc --project tsconfig.build.json --outDir dist/esm --module esnext",
     "build-js-cjs": "tsc --project tsconfig.build.json --outDir dist/cjs --module commonjs",
     "clean": "rimraf dist",
-    "copy-styles": "node --loader ts-node/esm ./copy-styles.ts",
+    "copy-styles": "cpy 'src/**/*.css' dist",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "postinstall": "husky install",
     "prepack": "yarn clean && yarn build",
@@ -39,6 +39,7 @@
   "dependencies": {
     "@wojtekmaj/date-utils": "^1.1.3",
     "clsx": "^2.0.0",
+    "cpy-cli": "^5.0.0",
     "get-user-locale": "^2.2.1",
     "prop-types": "^15.6.0",
     "tiny-warning": "^1.0.0"
@@ -57,7 +58,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.0",
-    "ts-node": "^10.9.1",
     "typescript": "^5.0.0",
     "vitest": "^0.30.1"
   },
