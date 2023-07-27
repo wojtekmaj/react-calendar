@@ -2,16 +2,16 @@ import React from 'react';
 import clsx from 'clsx';
 import { getYear, getMonth, getMonthStart } from '@wojtekmaj/date-utils';
 
-import Flex from '../Flex';
+import Flex from '../Flex.js';
 
-import { getDayOfWeek, isCurrentDayOfWeek, isWeekend } from '../shared/dates';
+import { getDayOfWeek, isCurrentDayOfWeek, isWeekend } from '../shared/dates.js';
 import {
   formatShortWeekday as defaultFormatShortWeekday,
   formatWeekday as defaultFormatWeekday,
-} from '../shared/dateFormatter';
-import { mapCalendarType } from '../shared/utils';
+} from '../shared/dateFormatter.js';
+import { mapCalendarType } from '../shared/utils.js';
 
-import type { CalendarType, DeprecatedCalendarType } from '../shared/types';
+import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
 
 const className = 'react-calendar__month-view__weekdays';
 const weekdayClassName = `${className}__weekday`;

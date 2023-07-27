@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Flex from './Flex';
+import Flex from './Flex.js';
 
-import { getTileClasses } from './shared/utils';
+import { getTileClasses } from './shared/utils.js';
 
-import type { RangeType, Value } from './shared/types';
+import type { RangeType, Value } from './shared/types.js';
 
 type TileGroupProps = {
   className?: string;

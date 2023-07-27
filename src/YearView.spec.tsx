@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import YearView from './YearView';
+import YearView from './YearView.js';
 
 const { format } = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
 

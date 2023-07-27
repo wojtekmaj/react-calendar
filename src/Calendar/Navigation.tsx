@@ -12,13 +12,13 @@ import {
   getBeginPrevious2,
   getEndPrevious,
   getEndPrevious2,
-} from '../shared/dates';
+} from '../shared/dates.js';
 import {
   formatMonthYear as defaultFormatMonthYear,
   formatYear as defaultFormatYear,
-} from '../shared/dateFormatter';
+} from '../shared/dateFormatter.js';
 
-import type { Action, NavigationLabelFunc, RangeType } from '../shared/types';
+import type { Action, NavigationLabelFunc, RangeType } from '../shared/types.js';
 
 const className = 'react-calendar__navigation';
 

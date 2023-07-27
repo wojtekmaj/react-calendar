@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Months from './YearView/Months';
+import Months from './YearView/Months.js';
 
-import { tileGroupProps } from './shared/propTypes';
+import { tileGroupProps } from './shared/propTypes.js';
 
 type YearViewProps = React.ComponentProps<typeof Months>;
 

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import Flex from './Flex';
+import Flex from './Flex.js';
 
 describe('Flex', () => {
   it('styles itself properly with wrap flag set to false', () => {

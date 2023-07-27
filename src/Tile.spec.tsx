@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
-import Tile from './Tile';
+import Tile from './Tile.js';
 
 describe('<Tile /> component', () => {
   const defaultProps = {

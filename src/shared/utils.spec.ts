@@ -5,9 +5,9 @@ import {
   isRangeWithinRange,
   doRangesOverlap,
   getTileClasses,
-} from './utils';
+} from './utils.js';
 
-import type { Range } from './types';
+import type { Range } from './types.js';
 
 describe('between', () => {
   it('returns value when value is within set boundaries', () => {

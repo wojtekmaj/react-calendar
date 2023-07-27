@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Decades from './CenturyView/Decades';
+import Decades from './CenturyView/Decades.js';
 
-import { tileGroupProps } from './shared/propTypes';
+import { tileGroupProps } from './shared/propTypes.js';
 
 type CenturyViewProps = React.ComponentProps<typeof Decades>;
 

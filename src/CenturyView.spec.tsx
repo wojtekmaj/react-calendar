@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { getDecadeStart, getDecadeEnd } from '@wojtekmaj/date-utils';
 
-import CenturyView from './CenturyView';
+import CenturyView from './CenturyView.js';
 
 describe('CenturyView', () => {
   const defaultProps = {

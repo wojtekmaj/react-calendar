@@ -1,13 +1,17 @@
 import React from 'react';
 import { getYear, getMonth, getDate, getDaysInMonth } from '@wojtekmaj/date-utils';
 
-import WeekNumber from './WeekNumber';
-import Flex from '../Flex';
+import WeekNumber from './WeekNumber.js';
+import Flex from '../Flex.js';
 
-import { getBeginOfWeek, getDayOfWeek, getWeekNumber } from '../shared/dates';
-import { mapCalendarType } from '../shared/utils';
+import { getBeginOfWeek, getDayOfWeek, getWeekNumber } from '../shared/dates.js';
+import { mapCalendarType } from '../shared/utils.js';
 
-import type { CalendarType, DeprecatedCalendarType, OnClickWeekNumberFunc } from '../shared/types';
+import type {
+  CalendarType,
+  DeprecatedCalendarType,
+  OnClickWeekNumberFunc,
+} from '../shared/types.js';
 
 type WeekNumbersProps = {
   activeStartDate: Date;
