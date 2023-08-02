@@ -94,7 +94,7 @@ export const isValue = PropTypes.oneOfType([
 
 export const isViews = PropTypes.arrayOf(PropTypes.oneOf(allViews));
 
-export const isView: Requireable<View> = function isView(props, propName, componentName) {
+export const isView: Requireable<View> = function (props, propName, componentName) {
   const { [propName]: view } = props;
 
   if (view !== undefined && (typeof view !== 'string' || allViews.indexOf(view) === -1)) {
@@ -109,13 +109,7 @@ export const isView: Requireable<View> = function isView(props, propName, compon
   return null;
 };
 
-isView.isRequired = function isViewIsRequired(
-  props,
-  propName,
-  componentName,
-  location,
-  propFullName,
-) {
+isView.isRequired = function (props, propName, componentName, location, propFullName) {
   const { [propName]: view } = props;
 
   if (!view) {

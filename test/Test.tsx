@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-import DateBonduariesOptions from './DateBonduariesOptions.js';
+import DateBoundariesOptions from './DateBoundariesOptions.js';
 import MaxDetailOptions from './MaxDetailOptions.js';
 import MinDetailOptions from './MinDetailOptions.js';
 import LocaleOptions from './LocaleOptions.js';
@@ -176,7 +176,7 @@ export default function Test() {
             minDetail={minDetail}
             setMaxDetail={setMaxDetail}
           />
-          <DateBonduariesOptions
+          <DateBoundariesOptions
             maxDate={maxDate}
             minDate={minDate}
             setMaxDate={setMaxDate}

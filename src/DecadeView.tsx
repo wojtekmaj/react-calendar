@@ -6,16 +6,14 @@ import { tileGroupProps } from './shared/propTypes.js';
 
 type DecadeViewProps = React.ComponentProps<typeof Years>;
 
-const DecadeView: React.FC<DecadeViewProps> = function DecadeView(props) {
+export default function DecadeView(props: DecadeViewProps) {
   function renderYears() {
     return <Years {...props} />;
   }
 
   return <div className="react-calendar__decade-view">{renderYears()}</div>;
-};
+}
 
 DecadeView.propTypes = {
   ...tileGroupProps,
 };
-
-export default DecadeView;
