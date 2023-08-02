@@ -109,7 +109,13 @@ export const isView: Requireable<View> = function (props, propName, componentNam
   return null;
 };
 
-isView.isRequired = function (props, propName, componentName, location, propFullName) {
+isView.isRequired = function isViewIsRequired(
+  props,
+  propName,
+  componentName,
+  location,
+  propFullName,
+) {
   const { [propName]: view } = props;
 
   if (!view) {
