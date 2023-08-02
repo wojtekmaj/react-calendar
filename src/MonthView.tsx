@@ -29,7 +29,7 @@ type MonthViewProps = {
   React.ComponentProps<typeof WeekNumbers> &
   React.ComponentProps<typeof Days>;
 
-export default function MonthView(props: MonthViewProps) {
+const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
   const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks } = props;
   const {
     calendarType = getCalendarTypeFromLocale(locale),
@@ -95,7 +95,7 @@ export default function MonthView(props: MonthViewProps) {
       </div>
     </div>
   );
-}
+};
 
 MonthView.propTypes = {
   ...tileGroupProps,
@@ -110,3 +110,5 @@ MonthView.propTypes = {
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
 };
+
+export default MonthView;
