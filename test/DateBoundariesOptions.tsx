@@ -8,7 +8,7 @@ type DateBoundariesOptionsProps = {
   setMinDate: (date: Date | undefined) => void;
 };
 
-export default function DateBonduariesOptions({
+export default function DateBoundariesOptions({
   maxDate,
   minDate,
   setMaxDate,
