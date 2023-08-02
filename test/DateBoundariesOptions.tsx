@@ -2,10 +2,10 @@ import React from 'react';
 import { getISOLocalDateTime } from '@wojtekmaj/date-utils';
 
 type DateBoundariesOptionsProps = {
-  maxDate?: Date;
-  minDate?: Date;
-  setMaxDate: (date?: Date) => void;
-  setMinDate: (date?: Date) => void;
+  maxDate: Date | undefined;
+  minDate: Date | undefined;
+  setMaxDate: (date: Date | undefined) => void;
+  setMinDate: (date: Date | undefined) => void;
 };
 
 export default function DateBoundariesOptions({

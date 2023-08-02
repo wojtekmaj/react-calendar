@@ -11,7 +11,7 @@ import { isCalendarType, tileGroupProps } from './shared/propTypes.js';
 
 import type { CalendarType } from './shared/types.js';
 
-function getCalendarTypeFromLocale(locale?: string): CalendarType {
+function getCalendarTypeFromLocale(locale: string | undefined): CalendarType {
   if (locale) {
     for (const [calendarType, locales] of Object.entries(CALENDAR_TYPE_LOCALES)) {
       if (locales.includes(locale)) {
@@ -29,7 +29,7 @@ type MonthViewProps = {
   React.ComponentProps<typeof WeekNumbers> &
   React.ComponentProps<typeof Days>;
 
-const MonthView: React.FC<MonthViewProps> = function (props) {
+const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
   const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks } = props;
   const {
     calendarType = getCalendarTypeFromLocale(locale),

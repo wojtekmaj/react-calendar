@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 
 type LocaleOptionsProps = {
-  locale?: string;
-  setLocale: (locale?: string) => void;
+  locale: string | undefined;
+  setLocale: (locale: string | undefined) => void;
 };
 
 export default function LocaleOptions({ locale, setLocale }: LocaleOptionsProps) {
