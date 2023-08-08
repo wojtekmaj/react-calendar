@@ -1,5 +1,5 @@
 {
-  "name": "react-calendar-test-page",
+  "name": "test",
   "version": "2.18.0",
   "description": "A test page for React-Calendar.",
   "private": true,
@@ -7,7 +7,11 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prettier": "prettier --check . --cache",
+    "test": "yarn lint && yarn tsc && yarn prettier",
+    "tsc": "tsc --noEmit"
   },
   "author": {
     "name": "Wojciech Maj",
@@ -18,12 +22,16 @@
     "@wojtekmaj/date-utils": "^1.1.3",
     "get-user-locale": "^2.2.1",
     "react": "^18.2.0",
-    "react-calendar": "portal:../",
+    "react-calendar": "workspace:package",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.0",
+    "@types/react": "*",
     "@vitejs/plugin-react": "^3.0.0",
+    "eslint": "^8.26.0",
+    "eslint-config-wojtekmaj": "^0.9.0",
+    "prettier": "^2.7.0",
     "typescript": "^5.0.0",
     "vite": "^4.0.0"
   }
