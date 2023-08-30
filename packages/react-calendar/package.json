@@ -31,7 +31,7 @@
     "test": "yarn lint && yarn tsc && yarn prettier && yarn unit",
     "tsc": "tsc --noEmit",
     "unit": "vitest",
-    "watch": "yarn build-esm --watch & yarn build-cjs --watch"
+    "watch": "yarn build-esm --watch & yarn build-cjs --watch & nodemon --watch src --ext css --exec \"yarn copy-styles\""
   },
   "keywords": [
     "calendar",
