@@ -92,7 +92,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/wojtekmaj/react-calendar.git",
-    "directory": "package"
+    "directory": "packages/react-calendar"
   },
   "funding": "https://github.com/wojtekmaj/react-calendar?sponsor=1"
 }
