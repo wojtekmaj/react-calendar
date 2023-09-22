@@ -1,5 +1,3 @@
-import React from 'react';
-
 import type { View } from './shared/types.js';
 
 const allViews = ['century', 'decade', 'year', 'month'] as const;

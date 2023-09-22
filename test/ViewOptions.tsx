@@ -1,5 +1,3 @@
-import React from 'react';
-
 type ViewOptionsProps = {
   setShowDoubleView: (showDoubleView: boolean) => void;
   setShowFixedNumberOfWeeks: (showFixedNumberOfWeeks: boolean) => void;

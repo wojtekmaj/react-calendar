@@ -1,4 +1,3 @@
-import React from 'react';
 import { getISOLocalDateTime } from '@wojtekmaj/date-utils';
 
 type DateBoundariesOptionsProps = {
