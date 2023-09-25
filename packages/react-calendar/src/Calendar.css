@@ -63,8 +63,9 @@
 .react-calendar__month-view__weekdays {
   text-align: center;
   text-transform: uppercase;
-  font-weight: bold;
+  font: inherit;
   font-size: 0.75em;
+  font-weight: bold;
 }
 
 .react-calendar__month-view__weekdays__weekday {
@@ -75,6 +76,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font: inherit;
   font-size: 0.75em;
   font-weight: bold;
 }
@@ -99,6 +101,8 @@
   background: none;
   text-align: center;
   line-height: 16px;
+  font: inherit;
+  font-size: 0.833em;
 }
 
 .react-calendar__tile:disabled {
