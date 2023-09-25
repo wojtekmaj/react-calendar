@@ -9,6 +9,7 @@ export type { CalendarProps } from './Calendar.js';
 
 export type {
   NavigationLabelFunc,
+  OnArgs,
   OnClickFunc,
   OnClickWeekNumberFunc,
   TileClassNameFunc,
