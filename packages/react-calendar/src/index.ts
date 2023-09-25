@@ -12,6 +12,7 @@ export type {
   OnArgs,
   OnClickFunc,
   OnClickWeekNumberFunc,
+  TileArgs,
   TileClassNameFunc,
   TileContentFunc,
   TileDisabledFunc,
