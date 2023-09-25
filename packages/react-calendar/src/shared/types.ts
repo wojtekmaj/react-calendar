@@ -45,8 +45,14 @@ export type OnArgs = {
   value: Value;
   view: View;
 };
+export type OnClickType<T extends React.ElementType> = React.ComponentPropsWithoutRef<T>['onClick'];
 
-export type OnClickFunc = (value: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+export type OnClickEventType<T extends React.ElementType> = Parameters<OnClickType<T>>[1];
+
+export type OnClickFunc<T extends React.ElementType> = (
+  value: Date,
+  event: OnClickEventType<T>,
+) => void;
 
 export type OnClickWeekNumberFunc = (
   weekNumber: number,

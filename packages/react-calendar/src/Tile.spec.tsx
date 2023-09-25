@@ -15,10 +15,22 @@ describe('<Tile /> component', () => {
     view: 'month',
   } satisfies React.ComponentProps<typeof Tile>;
 
-  it('renders button properly', () => {
+  it('renders button properly by default', () => {
     const { container } = render(<Tile {...defaultProps} />);
 
     expect(container.querySelector('button')).toBeInTheDocument();
+  });
+
+  it('renders button given tileAs="button"', () => {
+    const { container } = render(<Tile {...defaultProps} tileAs="button" />);
+
+    expect(container.querySelector('button')).toBeInTheDocument();
+  });
+
+  it('renders div given tileAs="div"', () => {
+    const { container } = render(<Tile {...defaultProps} tileAs="div" />);
+
+    expect(container.querySelector('div')).toBeInTheDocument();
   });
 
   it('passes onClick to button', () => {

@@ -155,6 +155,7 @@ export const tileProps = {
   onClick: PropTypes.func,
   onMouseOver: PropTypes.func,
   style: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  tileAs: PropTypes.oneOfType([PropTypes.func, PropTypes.oneOf(['button', 'div'] as const)]),
   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   tileDisabled: PropTypes.func,
