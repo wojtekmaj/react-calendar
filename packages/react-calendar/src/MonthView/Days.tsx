@@ -89,6 +89,7 @@ export default function Days(props: DaysProps) {
           key={date.getTime()}
           {...otherProps}
           {...otherTileProps}
+          calendarType={calendarType}
           activeStartDate={activeStartDate}
           currentMonthIndex={monthIndex}
           date={date}
