@@ -6,10 +6,11 @@ import Day from './Day.js';
 
 const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
+  calendarType: 'iso8601',
   classes: ['react-calendar__tile'],
   currentMonthIndex: 0,
   date: new Date(2018, 0, 1),
-};
+} satisfies React.ComponentProps<typeof Day>;
 
 describe('Day', () => {
   it('applies given classNames properly', () => {

@@ -15,7 +15,7 @@ import type {
 
 type WeekNumbersProps = {
   activeStartDate: Date;
-  calendarType?: CalendarType | DeprecatedCalendarType;
+  calendarType: CalendarType | DeprecatedCalendarType | undefined;
   onClickWeekNumber?: OnClickWeekNumberFunc;
   onMouseLeave?: () => void;
   showFixedNumberOfWeeks?: boolean;

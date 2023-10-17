@@ -164,7 +164,7 @@ const calendarTypeMap: Record<DeprecatedCalendarType, CalendarType> = {
 };
 
 function isDeprecatedCalendarType(
-  calendarType?: CalendarType | DeprecatedCalendarType,
+  calendarType: CalendarType | DeprecatedCalendarType | undefined,
 ): calendarType is DeprecatedCalendarType {
   return calendarType !== undefined && calendarType in DEPRECATED_CALENDAR_TYPES;
 }

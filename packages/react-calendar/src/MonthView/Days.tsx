@@ -11,7 +11,7 @@ import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
 
 type DaysProps = {
   activeStartDate: Date;
-  calendarType?: CalendarType | DeprecatedCalendarType;
+  calendarType: CalendarType | DeprecatedCalendarType | undefined;
   showFixedNumberOfWeeks?: boolean;
   showNeighboringMonth?: boolean;
 } & Omit<
@@ -90,6 +90,7 @@ export default function Days(props: DaysProps) {
           {...otherProps}
           {...otherTileProps}
           activeStartDate={activeStartDate}
+          calendarType={calendarTypeOrDeprecatedCalendarType}
           currentMonthIndex={monthIndex}
           date={date}
         />

@@ -17,7 +17,7 @@ const className = 'react-calendar__month-view__weekdays';
 const weekdayClassName = `${className}__weekday`;
 
 type WeekdaysProps = {
-  calendarType?: CalendarType | DeprecatedCalendarType;
+  calendarType: CalendarType | DeprecatedCalendarType | undefined;
   formatShortWeekday?: typeof defaultFormatShortWeekday;
   formatWeekday?: typeof defaultFormatWeekday;
   locale?: string;
