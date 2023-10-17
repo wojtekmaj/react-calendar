@@ -9,7 +9,7 @@ import WeekNumbers from './MonthView/WeekNumbers.js';
 import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const.js';
 import { isCalendarType, tileGroupProps } from './shared/propTypes.js';
 
-import type { CalendarType } from './shared/types.js';
+import type { CalendarType, DeprecatedCalendarType } from './shared/types.js';
 
 function getCalendarTypeFromLocale(locale: string | undefined): CalendarType {
   if (locale) {
@@ -24,10 +24,14 @@ function getCalendarTypeFromLocale(locale: string | undefined): CalendarType {
 }
 
 type MonthViewProps = {
+  calendarType?: CalendarType | DeprecatedCalendarType;
   showWeekNumbers?: boolean;
-} & React.ComponentProps<typeof Weekdays> &
-  React.ComponentProps<typeof WeekNumbers> &
-  React.ComponentProps<typeof Days>;
+} & Omit<
+  React.ComponentProps<typeof Weekdays> &
+    React.ComponentProps<typeof WeekNumbers> &
+    React.ComponentProps<typeof Days>,
+  'calendarType'
+>;
 
 const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
   const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks } = props;

@@ -15,7 +15,7 @@ import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
 const className = 'react-calendar__month-view__days__day';
 
 type DayProps = {
-  calendarType?: CalendarType | DeprecatedCalendarType;
+  calendarType: CalendarType | DeprecatedCalendarType | undefined;
   classes?: string[];
   currentMonthIndex: number;
   formatDay?: typeof defaultFormatDay;
