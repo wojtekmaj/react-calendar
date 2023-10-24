@@ -23,7 +23,7 @@ Ultimate calendar for your React app.
 
 A minimal demo page can be found in `sample` directory.
 
-[Online demo](http://projects.wojtekmaj.pl/react-calendar/) is also available!
+[Online demo](https://projects.wojtekmaj.pl/react-calendar/) is also available!
 
 ## Before you continue
 
