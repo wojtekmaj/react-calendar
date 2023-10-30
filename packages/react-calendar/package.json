@@ -53,7 +53,7 @@
     "tiny-warning": "^1.0.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
     "@types/node": "*",
     "@types/react": "*",
