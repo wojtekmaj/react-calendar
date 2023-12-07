@@ -31,6 +31,7 @@ import type {
   LooseValue,
   NavigationLabelFunc,
   OnArgs,
+  OnClickEventType,
   OnClickFunc,
   OnClickWeekNumberFunc,
   Range,
@@ -60,7 +61,7 @@ defaultMinDate.setFullYear(1, 0, 1);
 defaultMinDate.setHours(0, 0, 0, 0);
 const defaultMaxDate = new Date(8.64e15);
 
-export type CalendarProps = {
+export type CalendarProps<T extends React.ElementType> = {
   activeStartDate?: Date;
   allowPartialRange?: boolean;
   calendarType?: CalendarType | DeprecatedCalendarType;
@@ -90,12 +91,12 @@ export type CalendarProps = {
   nextAriaLabel?: string;
   nextLabel?: React.ReactNode;
   onActiveStartDateChange?: ({ action, activeStartDate, value, view }: OnArgs) => void;
-  onChange?: (value: Value, event: React.MouseEvent<HTMLButtonElement>) => void;
-  onClickDay?: OnClickFunc;
-  onClickDecade?: OnClickFunc;
-  onClickMonth?: OnClickFunc;
+  onChange?: (value: Value, event: OnClickEventType<T>) => void;
+  onClickDay?: OnClickFunc<T>;
+  onClickDecade?: OnClickFunc<T>;
+  onClickMonth?: OnClickFunc<T>;
   onClickWeekNumber?: OnClickWeekNumberFunc;
-  onClickYear?: OnClickFunc;
+  onClickYear?: OnClickFunc<T>;
   onDrillDown?: ({ action, activeStartDate, value, view }: OnArgs) => void;
   onDrillUp?: ({ action, activeStartDate, value, view }: OnArgs) => void;
   onViewChange?: ({ action, activeStartDate, value, view }: OnArgs) => void;
@@ -110,6 +111,7 @@ export type CalendarProps = {
   showNavigation?: boolean;
   showNeighboringMonth?: boolean;
   showWeekNumbers?: boolean;
+  tileAs?: T;
   tileClassName?: TileClassNameFunc | ClassName;
   tileContent?: TileContentFunc | React.ReactNode;
   tileDisabled?: TileDisabledFunc;
@@ -293,7 +295,10 @@ function areDatesEqual(date1?: Date | null, date2?: Date | null) {
   return date1 instanceof Date && date2 instanceof Date && date1.getTime() === date2.getTime();
 }
 
-const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
+const Calendar = forwardRef(function Calendar<T extends React.ElementType = 'button'>(
+  props: CalendarProps<T>,
+  ref,
+) {
   const {
     activeStartDate: activeStartDateProps,
     allowPartialRange,
@@ -344,6 +349,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
     showNavigation = true,
     showNeighboringMonth = true,
     showWeekNumbers,
+    tileAs,
     tileClassName,
     tileContent,
     tileDisabled,
@@ -457,7 +463,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
   );
 
   const onClickTile = useCallback(
-    (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
+    (value: Date, event: OnClickEventType<T>) => {
       const callback = (() => {
         switch (view) {
           case 'century':
@@ -479,7 +485,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
   );
 
   const drillDown = useCallback(
-    (nextActiveStartDate: Date, event: React.MouseEvent<HTMLButtonElement>) => {
+    (nextActiveStartDate: Date, event: OnClickEventType<T>) => {
       if (!drillDownAvailable) {
         return;
       }
@@ -573,7 +579,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
   ]);
 
   const onChange = useCallback(
-    (rawNextValue: Date, event: React.MouseEvent<HTMLButtonElement>) => {
+    (rawNextValue: Date, event: OnClickEventType<T>) => {
       const previousValue = value;
 
       onClickTile(rawNextValue, event);
@@ -712,6 +718,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
       minDate,
       onClick,
       onMouseOver: selectRange ? onMouseOver : undefined,
+      tileAs,
       tileClassName,
       tileContent,
       tileDisabled,
@@ -871,6 +878,7 @@ Calendar.propTypes = {
   showNavigation: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
+  tileAs: PropTypes.oneOfType([PropTypes.func, PropTypes.oneOf(['button', 'div'] as const)]),
   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   tileDisabled: PropTypes.func,

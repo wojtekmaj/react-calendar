@@ -3,13 +3,14 @@ import clsx from 'clsx';
 
 import type {
   ClassName,
+  OnClickEventType,
   TileClassNameFunc,
   TileContentFunc,
   TileDisabledFunc,
   View,
 } from './shared/types.js';
 
-type TileProps = {
+type TileProps<T extends React.ElementType> = {
   activeStartDate: Date;
   children: React.ReactNode;
   classes?: string[];
@@ -20,16 +21,17 @@ type TileProps = {
   maxDateTransform: (date: Date) => Date;
   minDate?: Date;
   minDateTransform: (date: Date) => Date;
-  onClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (date: Date, event: OnClickEventType<T>) => void;
   onMouseOver?: (date: Date) => void;
   style?: React.CSSProperties;
+  tileAs?: T;
   tileClassName?: TileClassNameFunc | ClassName;
   tileContent?: TileContentFunc | React.ReactNode;
   tileDisabled?: TileDisabledFunc;
   view: View;
 };
 
-export default function Tile(props: TileProps) {
+export default function Tile<T extends React.ElementType = 'button'>(props: TileProps<T>) {
   const {
     activeStartDate,
     children,
@@ -44,6 +46,7 @@ export default function Tile(props: TileProps) {
     onClick,
     onMouseOver,
     style,
+    tileAs,
     tileClassName: tileClassNameProps,
     tileContent: tileContentProps,
     tileDisabled,
@@ -62,8 +65,10 @@ export default function Tile(props: TileProps) {
     return typeof tileContentProps === 'function' ? tileContentProps(args) : tileContentProps;
   }, [activeStartDate, date, tileContentProps, view]);
 
+  const TileComponent = tileAs || 'button';
+
   return (
-    <button
+    <TileComponent
       className={clsx(classes, tileClassName)}
       disabled={
         (minDate && minDateTransform(minDate) > date) ||
@@ -78,6 +83,6 @@ export default function Tile(props: TileProps) {
     >
       {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}
       {tileContent}
-    </button>
+    </TileComponent>
   );
 }
