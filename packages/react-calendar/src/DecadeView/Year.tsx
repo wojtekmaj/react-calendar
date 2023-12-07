@@ -9,6 +9,11 @@ const className = 'react-calendar__decade-view__years__year';
 
 type YearProps = {
   classes?: string[];
+  /**
+   *  Function called to override default formatting of year in the top navigation section. Can be used to use your own formatting function.
+   *
+   * @example (locale, date) => formatDate(date, 'YYYY')
+   */
   formatYear?: typeof defaultFormatYear;
 } & Omit<
   React.ComponentProps<typeof Tile>,

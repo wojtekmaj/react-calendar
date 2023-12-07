@@ -24,7 +24,18 @@ function getCalendarTypeFromLocale(locale: string | undefined): CalendarType {
 }
 
 type MonthViewProps = {
+  /**
+   * Type of calendar that should be used. Can be `'gregory`, `'hebrew'`, `'islamic'`, `'iso8601'`. Setting to `"gregory"` or `"hebrew"` will change the first day of the week to Sunday. Setting to `"islamic"` will change the first day of the week to Saturday. Setting to `"islamic"` or `"hebrew"` will make weekends appear on Friday to Saturday.
+   *
+   * @example 'iso8601'
+   */
   calendarType?: CalendarType | DeprecatedCalendarType;
+  /**
+   *  Whether week numbers shall be shown at the left of MonthView or not.
+   *
+   * @default false
+   * @example true
+   */
   showWeekNumbers?: boolean;
 } & Omit<
   React.ComponentProps<typeof Weekdays> &
@@ -33,6 +44,9 @@ type MonthViewProps = {
   'calendarType'
 >;
 
+/**
+ * Displays a given month.
+ */
 const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
   const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks } = props;
   const {

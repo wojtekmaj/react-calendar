@@ -12,7 +12,17 @@ const className = 'react-calendar__year-view__months__month';
 
 type MonthProps = {
   classes?: string[];
+  /**
+   * Function called to override default formatting of month names. Can be used to use your own formatting function.
+   *
+   * @example (locale, date) => formatDate(date, 'MMM')
+   */
   formatMonth?: typeof defaultFormatMonth;
+  /**
+   * Function called to override default formatting of months and years. Can be used to use your own formatting function.
+   *
+   * @example (locale, date) => formatDate(date, 'MMMM YYYY')
+   */
   formatMonthYear?: typeof defaultFormatMonthYear;
 } & Omit<
   React.ComponentProps<typeof Tile>,

@@ -6,6 +6,9 @@ import { tileGroupProps } from './shared/propTypes.js';
 
 type DecadeViewProps = React.ComponentProps<typeof Years>;
 
+/**
+ * Displays a given decade.
+ */
 const DecadeView: React.FC<DecadeViewProps> = function DecadeView(props) {
   function renderYears() {
     return <Years {...props} />;
