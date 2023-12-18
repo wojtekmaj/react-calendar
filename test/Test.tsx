@@ -84,6 +84,7 @@ export default function Test() {
   const [showDoubleView, setShowDoubleView] = useState(false);
   const [showFixedNumberOfWeeks, setShowFixedNumberOfWeeks] = useState(false);
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(true);
+  const [showWeekAbbreviation, setShowWeekAbbreviation] = useState(true);
   const [showWeekNumbers, setShowWeekNumbers] = useState(false);
   const [value, setValue] = useState<LooseValue>(now);
   const [view, setView] = useState<View>('month');
@@ -154,6 +155,7 @@ export default function Test() {
     showDoubleView,
     showFixedNumberOfWeeks,
     showNeighboringMonth,
+    showWeekAbbreviation,
     showWeekNumbers,
     tileClassName,
     tileContent,
@@ -193,10 +195,12 @@ export default function Test() {
             setShowDoubleView={setShowDoubleView}
             setShowFixedNumberOfWeeks={setShowFixedNumberOfWeeks}
             setShowNeighboringMonth={setShowNeighboringMonth}
+            setShowWeekAbbreviation={setShowWeekAbbreviation}
             setShowWeekNumbers={setShowWeekNumbers}
             showDoubleView={showDoubleView}
             showFixedNumberOfWeeks={showFixedNumberOfWeeks}
             showNeighboringMonth={showNeighboringMonth}
+            showWeekAbbreviation={showWeekAbbreviation}
             showWeekNumbers={showWeekNumbers}
           />
         </aside>

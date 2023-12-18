@@ -31,6 +31,13 @@ type MonthViewProps = {
    */
   calendarType?: CalendarType | DeprecatedCalendarType;
   /**
+   *  Weather show week abbreviation when hovering week title or not.
+   *
+   * @default true
+   * @example false
+   */
+  showWeekAbbreviation?: boolean;
+  /**
    *  Whether week numbers shall be shown at the left of MonthView or not.
    *
    * @default false
@@ -54,6 +61,7 @@ const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
     formatShortWeekday,
     formatWeekday,
     onClickWeekNumber,
+    showWeekAbbreviation,
     showWeekNumbers,
     ...childProps
   } = props;
@@ -66,6 +74,7 @@ const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
         formatWeekday={formatWeekday}
         locale={locale}
         onMouseLeave={onMouseLeave}
+        showWeekAbbreviation={showWeekAbbreviation}
       />
     );
   }
@@ -126,6 +135,7 @@ MonthView.propTypes = {
   onMouseLeave: PropTypes.func,
   showFixedNumberOfWeeks: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
+  showWeekAbbreviation: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
 };
 

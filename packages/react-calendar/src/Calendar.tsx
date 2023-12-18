@@ -375,6 +375,13 @@ export type CalendarProps = {
    */
   showNeighboringMonth?: boolean;
   /**
+   *  Weather show week abbreviation when hovering week title or not.
+   *
+   * @default true
+   * @example false
+   */
+  showWeekAbbreviation?: boolean;
+  /**
    *  Whether week numbers shall be shown at the left of MonthView or not.
    *
    * @default false
@@ -644,6 +651,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
     showFixedNumberOfWeeks,
     showNavigation = true,
     showNeighboringMonth = true,
+    showWeekAbbreviation = true,
     showWeekNumbers,
     tileClassName,
     tileContent,
@@ -1048,6 +1056,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
                 : showDoubleView
             }
             showNeighboringMonth={showNeighboringMonth}
+            showWeekAbbreviation={showWeekAbbreviation}
             showWeekNumbers={showWeekNumbers}
             {...commonProps}
           />
@@ -1171,6 +1180,7 @@ Calendar.propTypes = {
   showFixedNumberOfWeeks: PropTypes.bool,
   showNavigation: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
+  showWeekAbbreviation: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
