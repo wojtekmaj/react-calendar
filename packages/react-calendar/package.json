@@ -50,13 +50,14 @@
     "clsx": "^2.0.0",
     "get-user-locale": "^2.2.1",
     "prop-types": "^15.6.0",
-    "tiny-warning": "^1.0.0"
+    "warning": "^4.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
     "@types/node": "*",
     "@types/react": "*",
+    "@types/warning": "^3.0.0",
     "cpy-cli": "^5.0.0",
     "eslint": "^8.26.0",
     "eslint-config-wojtekmaj": "^0.9.0",
