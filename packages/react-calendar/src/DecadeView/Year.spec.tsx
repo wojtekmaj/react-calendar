@@ -7,6 +7,7 @@ import Year from './Year.js';
 const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
   classes: ['react-calendar__tile'],
+  currentDecade: 2011,
   date: new Date(2018, 0, 1),
 };
 

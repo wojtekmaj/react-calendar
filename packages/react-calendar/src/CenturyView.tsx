@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Decades from './CenturyView/Decades.js';
 
@@ -19,6 +20,7 @@ const CenturyView: React.FC<CenturyViewProps> = function CenturyView(props) {
 
 CenturyView.propTypes = {
   ...tileGroupProps,
+  showNeighboringCentury: PropTypes.bool,
 };
 
 export default CenturyView;

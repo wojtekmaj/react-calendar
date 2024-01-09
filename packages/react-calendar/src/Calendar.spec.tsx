@@ -301,6 +301,36 @@ describe('Calendar', () => {
     expect(firstDayTileTimeAbbr).toHaveAccessibleName(format(new Date(2016, 11, 26)));
   });
 
+  it('passes showNeighboringDecade flag to DecadeView component given showNeighboringDecade flag', () => {
+    const activeStartDate = new Date(2001, 0, 1);
+
+    const { container } = render(
+      <Calendar activeStartDate={activeStartDate} showNeighboringDecade view="decade" />,
+    );
+
+    const lastYearTile = container.querySelector(
+      '.react-calendar__tile:last-child',
+    ) as HTMLDivElement;
+
+    // The last year that this calendar should show is 2029.
+    expect(lastYearTile).toHaveAccessibleName('2012');
+  });
+
+  it('passes showNeighboringCentury flag to CenturyView component given showNeighboringCentury flag', () => {
+    const activeStartDate = new Date(2001, 0, 1);
+
+    const { container } = render(
+      <Calendar activeStartDate={activeStartDate} showNeighboringCentury view="century" />,
+    );
+
+    const lastDecadeTile = container.querySelector(
+      '.react-calendar__tile:last-child',
+    ) as HTMLDivElement;
+
+    // The last decade that this calendar should show is 2111 – 2120.
+    expect(lastDecadeTile).toHaveAccessibleName('2111 – 2120');
+  });
+
   describe('displays initial view properly', () => {
     it('displays a view with a given value when defaultValue is given', () => {
       const defaultValue = new Date(2017, 0, 15);

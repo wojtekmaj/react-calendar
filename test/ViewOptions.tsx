@@ -1,10 +1,14 @@
 type ViewOptionsProps = {
   setShowDoubleView: (showDoubleView: boolean) => void;
   setShowFixedNumberOfWeeks: (showFixedNumberOfWeeks: boolean) => void;
+  setShowNeighboringCentury: (showNeighboringCentury: boolean) => void;
+  setShowNeighboringDecade: (showNeighboringDecade: boolean) => void;
   setShowNeighboringMonth: (showNeighboringMonth: boolean) => void;
   setShowWeekNumbers: (showWeekNumbers: boolean) => void;
   showDoubleView: boolean;
   showFixedNumberOfWeeks: boolean;
+  showNeighboringCentury: boolean;
+  showNeighboringDecade: boolean;
   showNeighboringMonth: boolean;
   showWeekNumbers: boolean;
 };
@@ -12,10 +16,14 @@ type ViewOptionsProps = {
 export default function ViewOptions({
   setShowDoubleView,
   setShowFixedNumberOfWeeks,
+  setShowNeighboringCentury,
+  setShowNeighboringDecade,
   setShowNeighboringMonth,
   setShowWeekNumbers,
   showDoubleView,
   showFixedNumberOfWeeks,
+  showNeighboringCentury,
+  showNeighboringDecade,
   showNeighboringMonth,
   showWeekNumbers,
 }: ViewOptionsProps) {
@@ -35,6 +43,18 @@ export default function ViewOptions({
     const { checked } = event.target;
 
     setShowWeekNumbers(checked);
+  }
+
+  function onShowNeighboringCenturyChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { checked } = event.target;
+
+    setShowNeighboringCentury(checked);
+  }
+
+  function onShowNeighboringDecadeChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { checked } = event.target;
+
+    setShowNeighboringDecade(checked);
   }
 
   function onShowNeighboringMonthChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -66,6 +86,26 @@ export default function ViewOptions({
           type="checkbox"
         />
         <label htmlFor="showFixedNumberOfWeeks">Show fixed number of weeks</label>
+      </div>
+
+      <div>
+        <input
+          checked={showNeighboringCentury}
+          id="showNeighboringCentury"
+          onChange={onShowNeighboringCenturyChange}
+          type="checkbox"
+        />
+        <label htmlFor="showNeighboringCentury">{"Show neighboring century's decades"}</label>
+      </div>
+
+      <div>
+        <input
+          checked={showNeighboringDecade}
+          id="showNeighboringDecade"
+          onChange={onShowNeighboringDecadeChange}
+          type="checkbox"
+        />
+        <label htmlFor="showNeighboringDecade">{"Show neighboring decade's years"}</label>
       </div>
 
       <div>

@@ -368,6 +368,20 @@ export type CalendarProps = {
    */
   showNavigation?: boolean;
   /**
+   * Whether decades from next century shall be rendered to fill the entire last row in.
+   *
+   * @default false
+   * @example true
+   */
+  showNeighboringCentury?: boolean;
+  /**
+   * Whether years from next decade shall be rendered to fill the entire last row in.
+   *
+   * @default false
+   * @example true
+   */
+  showNeighboringDecade?: boolean;
+  /**
    * Whether days from previous or next month shall be rendered if the month doesn't start on the first day of the week or doesn't end on the last day of the week, respectively.
    *
    * @default true
@@ -643,6 +657,8 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
     showDoubleView,
     showFixedNumberOfWeeks,
     showNavigation = true,
+    showNeighboringCentury,
+    showNeighboringDecade,
     showNeighboringMonth = true,
     showWeekNumbers,
     tileClassName,
@@ -1022,10 +1038,22 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
 
     switch (view) {
       case 'century': {
-        return <CenturyView formatYear={formatYear} {...commonProps} />;
+        return (
+          <CenturyView
+            formatYear={formatYear}
+            showNeighboringCentury={showNeighboringCentury}
+            {...commonProps}
+          />
+        );
       }
       case 'decade': {
-        return <DecadeView formatYear={formatYear} {...commonProps} />;
+        return (
+          <DecadeView
+            formatYear={formatYear}
+            showNeighboringDecade={showNeighboringDecade}
+            {...commonProps}
+          />
+        );
       }
       case 'year': {
         return (
@@ -1170,6 +1198,8 @@ Calendar.propTypes = {
   showDoubleView: PropTypes.bool,
   showFixedNumberOfWeeks: PropTypes.bool,
   showNavigation: PropTypes.bool,
+  showNeighboringCentury: PropTypes.bool,
+  showNeighboringDecade: PropTypes.bool,
   showNeighboringMonth: PropTypes.bool,
   showWeekNumbers: PropTypes.bool,
   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
