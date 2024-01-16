@@ -4,14 +4,12 @@ type ViewOptionsProps = {
   setShowNeighboringCentury: (showNeighboringCentury: boolean) => void;
   setShowNeighboringDecade: (showNeighboringDecade: boolean) => void;
   setShowNeighboringMonth: (showNeighboringMonth: boolean) => void;
-  setShowWeekAbbreviation: (showWeekAbbreviation: boolean) => void;
   setShowWeekNumbers: (showWeekNumbers: boolean) => void;
   showDoubleView: boolean;
   showFixedNumberOfWeeks: boolean;
   showNeighboringCentury: boolean;
   showNeighboringDecade: boolean;
   showNeighboringMonth: boolean;
-  showWeekAbbreviation: boolean;
   showWeekNumbers: boolean;
 };
 
@@ -21,14 +19,12 @@ export default function ViewOptions({
   setShowNeighboringCentury,
   setShowNeighboringDecade,
   setShowNeighboringMonth,
-  setShowWeekAbbreviation,
   setShowWeekNumbers,
   showDoubleView,
   showFixedNumberOfWeeks,
   showNeighboringCentury,
   showNeighboringDecade,
   showNeighboringMonth,
-  showWeekAbbreviation,
   showWeekNumbers,
 }: ViewOptionsProps) {
   function onShowDoubleViewChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -65,12 +61,6 @@ export default function ViewOptions({
     const { checked } = event.target;
 
     setShowNeighboringMonth(checked);
-  }
-
-  function onShowWeekAbbreviationChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const { checked } = event.target;
-
-    setShowWeekAbbreviation(checked);
   }
 
   return (
@@ -127,16 +117,6 @@ export default function ViewOptions({
           type="checkbox"
         />
         <label htmlFor="showNeighboringMonth">{"Show neighboring month's days"}</label>
-      </div>
-
-      <div>
-        <input
-          checked={showWeekAbbreviation}
-          id="showWeekAbbreviation"
-          onChange={onShowWeekAbbreviationChange}
-          type="checkbox"
-        />
-        <label htmlFor="showWeekAbbreviation">Show week abbreviation</label>
       </div>
 
       <div>

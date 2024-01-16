@@ -42,7 +42,6 @@ type WeekdaysProps = {
    */
   locale?: string;
   onMouseLeave?: () => void;
-  showWeekAbbreviation?: boolean;
 };
 
 export default function Weekdays(props: WeekdaysProps) {
@@ -52,7 +51,6 @@ export default function Weekdays(props: WeekdaysProps) {
     formatWeekday = defaultFormatWeekday,
     locale,
     onMouseLeave,
-    showWeekAbbreviation,
   } = props;
 
   const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
@@ -81,9 +79,7 @@ export default function Weekdays(props: WeekdaysProps) {
           isWeekend(weekdayDate, calendarType) && `${weekdayClassName}--weekend`,
         )}
       >
-        <abbr aria-label={abbr} title={showWeekAbbreviation ? abbr : undefined}>
-          {formatShortWeekday(locale, weekdayDate).replace('.', '')}
-        </abbr>
+        <abbr aria-label={abbr}>{formatShortWeekday(locale, weekdayDate).replace('.', '')}</abbr>
       </div>,
     );
   }
