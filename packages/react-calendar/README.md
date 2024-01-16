@@ -7,7 +7,7 @@
 </div>
 
 ## Translation Support
-[[English](https://github.com/wojtekmaj/react-calendar), [Korean](https://github.com/wojtekmaj/react-calendar/blob/main/README.ko-KR.md)]
+[[English](https://github.com/wojtekmaj/react-calendar), [Korean](https://github.com/wojtekmaj/react-calendar/blob/main/languages/korean.md)]
 
 ## Description
 
