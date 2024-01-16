@@ -13,16 +13,23 @@ type DecadesProps = {
    * @example new Date(2017, 0, 1)
    */
   activeStartDate: Date;
+  /**
+   * Whether decades from next century shall be rendered to fill the entire last row in.
+   *
+   * @default false
+   * @example true
+   */
+  showNeighboringCentury?: boolean;
 } & Omit<
   React.ComponentProps<typeof TileGroup>,
   'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start'
 > &
-  Omit<React.ComponentProps<typeof Decade>, 'classes' | 'date'>;
+  Omit<React.ComponentProps<typeof Decade>, 'classes' | 'currentCentury' | 'date'>;
 
 export default function Decades(props: DecadesProps) {
-  const { activeStartDate, hover, value, valueType, ...otherProps } = props;
+  const { activeStartDate, hover, showNeighboringCentury, value, valueType, ...otherProps } = props;
   const start = getBeginOfCenturyYear(activeStartDate);
-  const end = start + 99;
+  const end = start + (showNeighboringCentury ? 119 : 99);
 
   return (
     <TileGroup
@@ -37,6 +44,7 @@ export default function Decades(props: DecadesProps) {
           {...otherProps}
           {...otherTileProps}
           activeStartDate={activeStartDate}
+          currentCentury={start}
           date={date}
         />
       )}

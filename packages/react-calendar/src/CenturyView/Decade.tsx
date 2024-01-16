@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDecadeStart, getDecadeEnd } from '@wojtekmaj/date-utils';
+import { getDecadeStart, getDecadeEnd, getCenturyStart } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile.js';
 
@@ -10,6 +10,7 @@ const className = 'react-calendar__century-view__decades__decade';
 
 type DecadeProps = {
   classes?: string[];
+  currentCentury: number;
   /**
    *  Function called to override default formatting of year in the top navigation section. Can be used to use your own formatting function.
    *
@@ -23,15 +24,30 @@ type DecadeProps = {
 
 export default function Decade({
   classes = [],
+  currentCentury,
   formatYear = defaultFormatYear,
   ...otherProps
 }: DecadeProps) {
   const { date, locale } = otherProps;
 
+  const classesProps: string[] = [];
+
+  if (classes) {
+    classesProps.push(...classes);
+  }
+
+  if (className) {
+    classesProps.push(className);
+  }
+
+  if (getCenturyStart(date).getFullYear() !== currentCentury) {
+    classesProps.push(`${className}--neighboringCentury`);
+  }
+
   return (
     <Tile
       {...otherProps}
-      classes={[...classes, className]}
+      classes={classesProps}
       maxDateTransform={getDecadeEnd}
       minDateTransform={getDecadeStart}
       view="century"

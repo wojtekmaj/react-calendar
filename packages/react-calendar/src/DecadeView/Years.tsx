@@ -13,16 +13,23 @@ type YearsProps = {
    * @example new Date(2017, 0, 1)
    */
   activeStartDate: Date;
+  /**
+   * Whether years from next decade shall be rendered to fill the entire last row in.
+   *
+   * @default false
+   * @example true
+   */
+  showNeighboringDecade?: boolean;
 } & Omit<
   React.ComponentProps<typeof TileGroup>,
   'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start'
 > &
-  Omit<React.ComponentProps<typeof Year>, 'classes' | 'date'>;
+  Omit<React.ComponentProps<typeof Year>, 'classes' | 'currentDecade' | 'date'>;
 
 export default function Years(props: YearsProps) {
-  const { activeStartDate, hover, value, valueType, ...otherProps } = props;
+  const { activeStartDate, hover, showNeighboringDecade, value, valueType, ...otherProps } = props;
   const start = getBeginOfDecadeYear(activeStartDate);
-  const end = start + 9;
+  const end = start + (showNeighboringDecade ? 11 : 9);
 
   return (
     <TileGroup
@@ -37,6 +44,7 @@ export default function Years(props: YearsProps) {
           {...otherProps}
           {...otherTileProps}
           activeStartDate={activeStartDate}
+          currentDecade={start}
           date={date}
         />
       )}

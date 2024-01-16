@@ -1,4 +1,4 @@
-import warning from 'tiny-warning';
+import warning from 'warning';
 
 import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const.js';
 import { getRange } from './dates.js';

@@ -1,6 +1,6 @@
 {
   "name": "react-calendar",
-  "version": "4.7.0",
+  "version": "4.8.0",
   "description": "Ultimate calendar for your React app.",
   "type": "module",
   "sideEffects": [
@@ -21,7 +21,7 @@
     "build": "yarn build-js && yarn copy-styles",
     "build-js": "yarn build-js-esm && yarn build-js-cjs && yarn build-js-cjs-package",
     "build-js-esm": "tsc --project tsconfig.build.json --outDir dist/esm",
-    "build-js-cjs": "tsc --project tsconfig.build.json --outDir dist/cjs --module commonjs --verbatimModuleSyntax false",
+    "build-js-cjs": "tsc --project tsconfig.build.json --outDir dist/cjs --module commonjs --moduleResolution node --verbatimModuleSyntax false",
     "build-js-cjs-package": "echo '{\n  \"type\": \"commonjs\"\n}' > dist/cjs/package.json",
     "clean": "rimraf dist",
     "copy-styles": "cpy 'src/**/*.css' dist",
@@ -50,13 +50,14 @@
     "clsx": "^2.0.0",
     "get-user-locale": "^2.2.1",
     "prop-types": "^15.6.0",
-    "tiny-warning": "^1.0.0"
+    "warning": "^4.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
     "@types/node": "*",
     "@types/react": "*",
+    "@types/warning": "^3.0.0",
     "cpy-cli": "^5.0.0",
     "eslint": "^8.26.0",
     "eslint-config-wojtekmaj": "^0.9.0",
@@ -89,7 +90,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/wojtekmaj/react-calendar.git",
+    "url": "git+https://github.com/wojtekmaj/react-calendar.git",
     "directory": "packages/react-calendar"
   },
   "funding": "https://github.com/wojtekmaj/react-calendar?sponsor=1"

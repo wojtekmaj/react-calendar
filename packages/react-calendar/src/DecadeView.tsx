@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Years from './DecadeView/Years.js';
 
@@ -19,6 +20,7 @@ const DecadeView: React.FC<DecadeViewProps> = function DecadeView(props) {
 
 DecadeView.propTypes = {
   ...tileGroupProps,
+  showNeighboringDecade: PropTypes.bool,
 };
 
 export default DecadeView;

@@ -83,6 +83,8 @@ export default function Test() {
   const [selectRange, setSelectRange] = useState(false);
   const [showDoubleView, setShowDoubleView] = useState(false);
   const [showFixedNumberOfWeeks, setShowFixedNumberOfWeeks] = useState(false);
+  const [showNeighboringCentury, setShowNeighboringCentury] = useState(false);
+  const [showNeighboringDecade, setShowNeighboringDecade] = useState(false);
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(true);
   const [showWeekAbbreviation, setShowWeekAbbreviation] = useState(true);
   const [showWeekNumbers, setShowWeekNumbers] = useState(false);
@@ -154,6 +156,8 @@ export default function Test() {
     selectRange,
     showDoubleView,
     showFixedNumberOfWeeks,
+    showNeighboringCentury,
+    showNeighboringDecade,
     showNeighboringMonth,
     showWeekAbbreviation,
     showWeekNumbers,
@@ -194,11 +198,15 @@ export default function Test() {
           <ViewOptions
             setShowDoubleView={setShowDoubleView}
             setShowFixedNumberOfWeeks={setShowFixedNumberOfWeeks}
+            setShowNeighboringCentury={setShowNeighboringCentury}
+            setShowNeighboringDecade={setShowNeighboringDecade}
             setShowNeighboringMonth={setShowNeighboringMonth}
             setShowWeekAbbreviation={setShowWeekAbbreviation}
             setShowWeekNumbers={setShowWeekNumbers}
             showDoubleView={showDoubleView}
             showFixedNumberOfWeeks={showFixedNumberOfWeeks}
+            showNeighboringCentury={showNeighboringCentury}
+            showNeighboringDecade={showNeighboringDecade}
             showNeighboringMonth={showNeighboringMonth}
             showWeekAbbreviation={showWeekAbbreviation}
             showWeekNumbers={showWeekNumbers}
