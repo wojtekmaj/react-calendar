@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { getUserLocale } from 'get-user-locale';
+import clsx from 'clsx';
 
 import {
   getCenturyLabel,
@@ -18,11 +19,27 @@ import {
   formatYear as defaultFormatYear,
 } from '../shared/dateFormatter.js';
 
-import type { Action, NavigationLabelFunc, RangeType } from '../shared/types.js';
+import type { Action, ClassName, NavigationLabelFunc, RangeType } from '../shared/types.js';
 
 const className = 'react-calendar__navigation';
 
+const slotNames = [
+  'base',
+  'label',
+  'divider',
+  'labelText',
+  'labelTextFrom',
+  'labelTextTo',
+  'arrow',
+  'prev2Button',
+  'prevButton',
+  'nextButton',
+  'next2Button',
+] as const;
+type SlotName = (typeof slotNames)[number];
+
 type NavigationProps = {
+  classNames?: Partial<Record<SlotName, ClassName>>;
   /**
    * The beginning of a period that shall be displayed. If you wish to use react-calendar in an uncontrolled way, use `defaultActiveStartDate` instead.
    *
@@ -173,6 +190,7 @@ export default function Navigation({
   showDoubleView,
   view,
   views,
+  classNames = {},
 }: NavigationProps) {
   const drillUpAvailable = views.indexOf(view) > 0;
   const shouldShowPrevNext2Buttons = view !== 'century';
@@ -257,19 +275,33 @@ export default function Navigation({
       <button
         aria-label={navigationAriaLabel}
         aria-live={navigationAriaLive}
-        className={labelClassName}
+        className={clsx(labelClassName, classNames.label)}
         disabled={!drillUpAvailable}
         onClick={drillUp}
         style={{ flexGrow: 1 }}
         type="button"
       >
-        <span className={`${labelClassName}__labelText ${labelClassName}__labelText--from`}>
+        <span
+          className={clsx(
+            `${labelClassName}__labelText`,
+            `${labelClassName}__labelText--from`,
+            classNames.labelText,
+            classNames.labelTextFrom,
+          )}
+        >
           {renderLabel(activeStartDate)}
         </span>
         {showDoubleView ? (
           <>
-            <span className={`${labelClassName}__divider`}> – </span>
-            <span className={`${labelClassName}__labelText ${labelClassName}__labelText--to`}>
+            <span className={clsx(`${labelClassName}__divider`, classNames.divider)}> – </span>
+            <span
+              className={clsx(
+                `${labelClassName}__labelText`,
+                `${labelClassName}__labelText--to`,
+                classNames.labelText,
+                classNames.labelTextTo,
+              )}
+            >
               {renderLabel(nextActiveStartDate)}
             </span>
           </>
@@ -279,11 +311,16 @@ export default function Navigation({
   }
 
   return (
-    <div className={className}>
+    <div className={clsx(className, classNames.base)}>
       {prev2Label !== null && shouldShowPrevNext2Buttons ? (
         <button
           aria-label={prev2AriaLabel}
-          className={`${className}__arrow ${className}__prev2-button`}
+          className={clsx(
+            `${className}__arrow`,
+            `${className}__prev2-button`,
+            classNames.arrow,
+            classNames.prev2Button,
+          )}
           disabled={prev2ButtonDisabled}
           onClick={onClickPrevious2}
           type="button"
@@ -294,7 +331,12 @@ export default function Navigation({
       {prevLabel !== null && (
         <button
           aria-label={prevAriaLabel}
-          className={`${className}__arrow ${className}__prev-button`}
+          className={clsx(
+            `${className}__arrow`,
+            `${className}__prev-button`,
+            classNames.arrow,
+            classNames.prevButton,
+          )}
           disabled={prevButtonDisabled}
           onClick={onClickPrevious}
           type="button"
@@ -306,7 +348,12 @@ export default function Navigation({
       {nextLabel !== null && (
         <button
           aria-label={nextAriaLabel}
-          className={`${className}__arrow ${className}__next-button`}
+          className={clsx(
+            `${className}__arrow`,
+            `${className}__next-button`,
+            classNames.arrow,
+            classNames.nextButton,
+          )}
           disabled={nextButtonDisabled}
           onClick={onClickNext}
           type="button"
@@ -317,7 +364,12 @@ export default function Navigation({
       {next2Label !== null && shouldShowPrevNext2Buttons ? (
         <button
           aria-label={next2AriaLabel}
-          className={`${className}__arrow ${className}__next2-button`}
+          className={clsx(
+            `${className}__arrow`,
+            `${className}__next2-button`,
+            classNames.arrow,
+            classNames.next2Button,
+          )}
           disabled={next2ButtonDisabled}
           onClick={onClickNext2}
           type="button"

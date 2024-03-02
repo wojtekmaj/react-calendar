@@ -53,7 +53,7 @@ describe('MonthView', () => {
         return 'firstDayOfTheMonth';
       }
 
-      return null;
+      return;
     };
 
     const { container } = render(

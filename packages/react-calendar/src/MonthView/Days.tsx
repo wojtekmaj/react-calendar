@@ -1,15 +1,25 @@
 import React from 'react';
 import { getYear, getMonth, getDaysInMonth, getDayStart } from '@wojtekmaj/date-utils';
 
-import TileGroup from '../TileGroup.js';
-import Day from './Day.js';
+import TileGroup, { slotNames as tileGroupSlotNames } from '../TileGroup.js';
+import Day, { slotNames as daySlotNames } from './Day.js';
 
 import { getDayOfWeek } from '../shared/dates.js';
-import { mapCalendarType } from '../shared/utils.js';
+import { mapCalendarType, pickClassNames } from '../shared/utils.js';
 
-import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
+import type { CalendarType, ClassName, DeprecatedCalendarType } from '../shared/types.js';
+
+type TileGroupProps = React.ComponentProps<typeof TileGroup>;
+type DayProps = React.ComponentProps<typeof Day>;
+
+const localSlotName = ['daysView'] as const;
+type LocalSlotName = (typeof localSlotName)[number];
+export const slotNames = [...localSlotName, ...tileGroupSlotNames, ...daySlotNames] as const;
 
 type DaysProps = {
+  classNames?: TileGroupProps['classNames'] &
+    DayProps['classNames'] &
+    Partial<Record<LocalSlotName, ClassName>>;
   /**
    * The beginning of a period that shall be displayed.
    *
@@ -37,10 +47,10 @@ type DaysProps = {
    */
   showNeighboringMonth?: boolean;
 } & Omit<
-  React.ComponentProps<typeof TileGroup>,
-  'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start'
+  TileGroupProps,
+  'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start' | 'classNames'
 > &
-  Omit<React.ComponentProps<typeof Day>, 'classes' | 'currentMonthIndex' | 'date' | 'point'>;
+  Omit<DayProps, 'currentMonthIndex' | 'date' | 'point' | 'classNames'>;
 
 export default function Days(props: DaysProps) {
   const {
@@ -51,6 +61,7 @@ export default function Days(props: DaysProps) {
     showNeighboringMonth,
     value,
     valueType,
+    classNames = {},
     ...otherProps
   } = props;
 
@@ -96,7 +107,17 @@ export default function Days(props: DaysProps) {
 
   return (
     <TileGroup
-      className="react-calendar__month-view__days"
+      classNames={pickClassNames(
+        {
+          ...classNames,
+          tileGroup: [
+            'react-calendar__month-view__days',
+            classNames.tileGroup,
+            classNames.daysView,
+          ],
+        },
+        tileGroupSlotNames,
+      )}
       count={7}
       dateTransform={(day) => {
         const date = new Date();
@@ -106,11 +127,14 @@ export default function Days(props: DaysProps) {
       dateType="day"
       hover={hover}
       end={end}
-      renderTile={({ date, ...otherTileProps }) => (
+      renderTile={({ date, className }) => (
         <Day
           key={date.getTime()}
+          classNames={pickClassNames(
+            { ...classNames, dayTile: [classNames.dayTile, className] },
+            daySlotNames,
+          )}
           {...otherProps}
-          {...otherTileProps}
           activeStartDate={activeStartDate}
           calendarType={calendarTypeOrDeprecatedCalendarType}
           currentMonthIndex={monthIndex}

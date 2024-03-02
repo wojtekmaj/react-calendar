@@ -10,18 +10,21 @@ import {
 } from '../shared/dateFormatter.js';
 import { mapCalendarType } from '../shared/utils.js';
 
-import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
+import type { CalendarType, ClassName, DeprecatedCalendarType } from '../shared/types.js';
 
 const className = 'react-calendar__month-view__days__day';
 
+export const slotNames = ['dayTile', 'weekendDayTile', 'neighbouringMonthDayTile'] as const;
+type SlotName = (typeof slotNames)[number];
+
 type DayProps = {
+  classNames?: Partial<Record<SlotName, ClassName>>;
   /**
    * Type of calendar that should be used. Can be `'gregory`, `'hebrew'`, `'islamic'`, `'iso8601'`. Setting to `"gregory"` or `"hebrew"` will change the first day of the week to Sunday. Setting to `"islamic"` will change the first day of the week to Saturday. Setting to `"islamic"` or `"hebrew"` will make weekends appear on Friday to Saturday.
    *
    * @example 'iso8601'
    */
   calendarType: CalendarType | DeprecatedCalendarType | undefined;
-  classes?: string[];
   currentMonthIndex: number;
   /**
    * Function called to override default formatting of day tile labels. Can be used to use your own formatting function.
@@ -37,12 +40,12 @@ type DayProps = {
   formatLongDate?: typeof defaultFormatLongDate;
 } & Omit<
   React.ComponentProps<typeof Tile>,
-  'children' | 'formatAbbr' | 'maxDateTransform' | 'minDateTransform' | 'view'
+  'children' | 'formatAbbr' | 'maxDateTransform' | 'minDateTransform' | 'view' | 'className'
 >;
 
 export default function Day({
   calendarType: calendarTypeOrDeprecatedCalendarType,
-  classes = [],
+  classNames = {},
   currentMonthIndex,
   formatDay = defaultFormatDay,
   formatLongDate = defaultFormatLongDate,
@@ -51,28 +54,19 @@ export default function Day({
   const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
   const { date, locale } = otherProps;
 
-  const classesProps: string[] = [];
-
-  if (classes) {
-    classesProps.push(...classes);
-  }
-
-  if (className) {
-    classesProps.push(className);
-  }
-
-  if (isWeekend(date, calendarType)) {
-    classesProps.push(`${className}--weekend`);
-  }
-
-  if (date.getMonth() !== currentMonthIndex) {
-    classesProps.push(`${className}--neighboringMonth`);
-  }
-
   return (
     <Tile
       {...otherProps}
-      classes={classesProps}
+      className={[
+        className,
+        classNames.dayTile,
+        isWeekend(date, calendarType)
+          ? [`${className}--weekend`, classNames.weekendDayTile]
+          : undefined,
+        date.getMonth() !== currentMonthIndex
+          ? [`${className}--neighboringMonth`, classNames.neighbouringMonthDayTile]
+          : undefined,
+      ]}
       formatAbbr={formatLongDate}
       maxDateTransform={getDayEnd}
       minDateTransform={getDayStart}

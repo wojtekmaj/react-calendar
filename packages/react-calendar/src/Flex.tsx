@@ -1,8 +1,11 @@
 import React from 'react';
+import clsx from 'clsx';
 
-type FlexProps = React.HTMLAttributes<HTMLDivElement> & {
+import type { ClassName } from './shared/types.js';
+
+type FlexProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'className'> & {
   children: React.ReactElement[];
-  className?: string;
+  className?: ClassName;
   count: number;
   direction?: 'row' | 'column';
   offset?: number;
@@ -26,7 +29,7 @@ export default function Flex({
 }: FlexProps) {
   return (
     <div
-      className={className}
+      className={clsx(className)}
       style={{
         display: 'flex',
         flexDirection: direction,

@@ -11,12 +11,21 @@ import {
 } from '../shared/dateFormatter.js';
 import { mapCalendarType } from '../shared/utils.js';
 
-import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
+import type { CalendarType, ClassName, DeprecatedCalendarType } from '../shared/types.js';
 
 const className = 'react-calendar__month-view__weekdays';
 const weekdayClassName = `${className}__weekday`;
 
+export const slotNames = [
+  'weekdayView',
+  'weekdayCurrentView',
+  'weekdayWeekendView',
+  'weekdaysView',
+] as const;
+type SlotName = (typeof slotNames)[number];
+
 type WeekdaysProps = {
+  classNames?: Partial<Record<SlotName, ClassName>>;
   /**
    * Type of calendar that should be used. Can be `'gregory`, `'hebrew'`, `'islamic'`, `'iso8601'`. Setting to `"gregory"` or `"hebrew"` will change the first day of the week to Sunday. Setting to `"islamic"` will change the first day of the week to Saturday. Setting to `"islamic"` or `"hebrew"` will make weekends appear on Friday to Saturday.
    *
@@ -51,6 +60,7 @@ export default function Weekdays(props: WeekdaysProps) {
     formatWeekday = defaultFormatWeekday,
     locale,
     onMouseLeave,
+    classNames = {},
   } = props;
 
   const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
@@ -75,8 +85,15 @@ export default function Weekdays(props: WeekdaysProps) {
         key={weekday}
         className={clsx(
           weekdayClassName,
-          isCurrentDayOfWeek(weekdayDate) && `${weekdayClassName}--current`,
-          isWeekend(weekdayDate, calendarType) && `${weekdayClassName}--weekend`,
+          classNames.weekdayView,
+          isCurrentDayOfWeek(weekdayDate) && [
+            `${weekdayClassName}--current`,
+            classNames.weekdayCurrentView,
+          ],
+          isWeekend(weekdayDate, calendarType) && [
+            `${weekdayClassName}--weekend`,
+            classNames.weekdayWeekendView,
+          ],
         )}
       >
         <abbr aria-label={abbr} title={abbr}>
@@ -87,7 +104,12 @@ export default function Weekdays(props: WeekdaysProps) {
   }
 
   return (
-    <Flex className={className} count={7} onFocus={onMouseLeave} onMouseOver={onMouseLeave}>
+    <Flex
+      className={[className, classNames.weekdaysView]}
+      count={7}
+      onFocus={onMouseLeave}
+      onMouseOver={onMouseLeave}
+    >
       {weekdays}
     </Flex>
   );

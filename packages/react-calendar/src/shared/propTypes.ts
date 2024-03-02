@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const.js';
 
 import type { Requireable, Validator } from 'prop-types';
-import type { Range, View } from './types.js';
+import type { ClassName, Range, View } from './types.js';
 
 const calendarTypes = Object.values(CALENDAR_TYPES);
 const deprecatedCalendarTypes = Object.values(DEPRECATED_CALENDAR_TYPES);
@@ -14,10 +14,18 @@ export const isCalendarType = PropTypes.oneOf([
   ...deprecatedCalendarTypes,
 ] as const);
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const lazyFunction =
+  <F extends (...args: any[]) => any = (...args: any[]) => any>(f: F) =>
+  (...args: Parameters<F>) =>
+    f(...args);
+/* eslint-enable @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/no-use-before-define
+const lazyClassName = lazyFunction<Validator<ClassName>>((...args) => isClassName(...args));
 export const isClassName = PropTypes.oneOfType([
   PropTypes.string,
-  PropTypes.arrayOf(PropTypes.string),
-]);
+  lazyClassName,
+]) as Validator<ClassName>;
 
 export const isMinDate: Validator<Date | null | undefined> = function isMinDate(
   props,
@@ -145,6 +153,7 @@ export const tileGroupProps = {
   valueType: PropTypes.oneOf(['century', 'decade', 'year', 'month', 'day'] as const).isRequired,
 };
 
+// TODO: remove, unused
 export const tileProps = {
   activeStartDate: PropTypes.instanceOf(Date).isRequired,
   classes: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
