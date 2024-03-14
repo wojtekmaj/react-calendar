@@ -6,16 +6,20 @@ import Month from './Month.js';
 
 const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
-  classes: ['react-calendar__tile'],
+  classNames: {
+    monthTile: 'react-calendar__tile',
+  },
   date: new Date(2018, 0, 1),
-};
+} satisfies React.ComponentProps<typeof Month>;
 
 describe('Month', () => {
   it('applies given classNames properly', () => {
     const { container } = render(
       <Month
         {...tileProps}
-        classes={['react-calendar__tile', 'react-calendar__tile--flag']}
+        classNames={{
+          monthTile: ['react-calendar__tile', 'react-calendar__tile--flag'],
+        }}
         tileClassName={() => 'testFunctionClassName'}
       />,
     );

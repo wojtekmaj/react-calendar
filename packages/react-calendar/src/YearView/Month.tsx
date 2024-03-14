@@ -7,11 +7,15 @@ import {
   formatMonth as defaultFormatMonth,
   formatMonthYear as defaultFormatMonthYear,
 } from '../shared/dateFormatter.js';
+import type { ClassName } from '../shared/types.js';
 
 const className = 'react-calendar__year-view__months__month';
 
+export const slotNames = ['monthTile'] as const;
+type SlotName = (typeof slotNames)[number];
+
 type MonthProps = {
-  classes?: string[];
+  classNames?: Partial<Record<SlotName, ClassName>>;
   /**
    * Function called to override default formatting of month names. Can be used to use your own formatting function.
    *
@@ -26,11 +30,11 @@ type MonthProps = {
   formatMonthYear?: typeof defaultFormatMonthYear;
 } & Omit<
   React.ComponentProps<typeof Tile>,
-  'children' | 'formatAbbr' | 'maxDateTransform' | 'minDateTransform' | 'view'
+  'children' | 'formatAbbr' | 'maxDateTransform' | 'minDateTransform' | 'view' | 'className'
 >;
 
 export default function Month({
-  classes = [],
+  classNames = {},
   formatMonth = defaultFormatMonth,
   formatMonthYear = defaultFormatMonthYear,
   ...otherProps
@@ -40,7 +44,7 @@ export default function Month({
   return (
     <Tile
       {...otherProps}
-      classes={[...classes, className]}
+      className={[className, classNames.monthTile]}
       formatAbbr={formatMonthYear}
       maxDateTransform={getMonthEnd}
       minDateTransform={getMonthStart}

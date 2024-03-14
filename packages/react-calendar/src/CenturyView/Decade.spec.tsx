@@ -6,17 +6,21 @@ import Decade from './Decade.js';
 
 const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
-  classes: ['react-calendar__tile'],
+  classNames: {
+    decadeTile: 'react-calendar__tile',
+  },
   currentCentury: 2001,
   date: new Date(2011, 0, 1),
-};
+} satisfies React.ComponentProps<typeof Decade>;
 
 describe('Decade', () => {
   it('applies given classNames properly', () => {
     const { container } = render(
       <Decade
         {...tileProps}
-        classes={['react-calendar__tile', 'react-calendar__tile--flag']}
+        classNames={{
+          decadeTile: ['react-calendar__tile', 'react-calendar__tile--flag'],
+        }}
         tileClassName={() => 'testFunctionClassName'}
       />,
     );

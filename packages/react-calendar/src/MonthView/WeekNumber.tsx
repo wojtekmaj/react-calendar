@@ -1,26 +1,28 @@
 import React from 'react';
+import clsx from 'clsx';
 
-import type { OnClickWeekNumberFunc } from '../shared/types.js';
+import type { ClassName, OnClickWeekNumberFunc } from '../shared/types.js';
 
 const className = 'react-calendar__tile';
 
-type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & {
+type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'className'> & {
   onClickWeekNumber: OnClickWeekNumberFunc;
 };
 
-type DivProps = React.HTMLAttributes<HTMLDivElement> & {
+type DivProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'className'> & {
   onClickWeekNumber?: undefined;
 };
 
 type WeekNumberProps<T = OnClickWeekNumberFunc | undefined> = (T extends OnClickWeekNumberFunc
   ? ButtonProps
   : DivProps) & {
+  className?: ClassName;
   date: Date;
   weekNumber: number;
 };
 
 export default function WeekNumber(props: WeekNumberProps) {
-  const { onClickWeekNumber, weekNumber } = props;
+  const { onClickWeekNumber, weekNumber, className: externalClassName } = props;
 
   const children = <span>{weekNumber}</span>;
 
@@ -30,7 +32,7 @@ export default function WeekNumber(props: WeekNumberProps) {
     return (
       <button
         {...otherProps}
-        className={className}
+        className={clsx(className, externalClassName)}
         onClick={(event) => onClickWeekNumber(weekNumber, date, event)}
         type="button"
       >
@@ -41,7 +43,7 @@ export default function WeekNumber(props: WeekNumberProps) {
     const { date, onClickWeekNumber, weekNumber, ...otherProps } = props;
 
     return (
-      <div {...otherProps} className={className}>
+      <div {...otherProps} className={clsx(className, externalClassName)}>
         {children}
       </div>
     );

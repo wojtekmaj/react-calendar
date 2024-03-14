@@ -9,11 +9,16 @@ import { mapCalendarType } from '../shared/utils.js';
 
 import type {
   CalendarType,
+  ClassName,
   DeprecatedCalendarType,
   OnClickWeekNumberFunc,
 } from '../shared/types.js';
 
+export const slotNames = ['weekNumbersView', 'weekNumberView'] as const;
+type SlotName = (typeof slotNames)[number];
+
 type WeekNumbersProps = {
+  classNames?: Partial<Record<SlotName, ClassName>>;
   /**
    * The beginning of a period that shall be displayed.
    *
@@ -49,6 +54,7 @@ export default function WeekNumbers(props: WeekNumbersProps) {
     onClickWeekNumber,
     onMouseLeave,
     showFixedNumberOfWeeks,
+    classNames = {},
   } = props;
 
   const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
@@ -80,7 +86,7 @@ export default function WeekNumbers(props: WeekNumbersProps) {
 
   return (
     <Flex
-      className="react-calendar__month-view__weekNumbers"
+      className={['react-calendar__month-view__weekNumbers', classNames.weekNumbersView]}
       count={numberOfWeeks}
       direction="column"
       onFocus={onMouseLeave}
@@ -100,6 +106,7 @@ export default function WeekNumbers(props: WeekNumbersProps) {
             date={date}
             onClickWeekNumber={onClickWeekNumber}
             weekNumber={weekNumber}
+            className={classNames.weekNumberView}
           />
         );
       })}

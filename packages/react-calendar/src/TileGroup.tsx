@@ -2,19 +2,25 @@ import React from 'react';
 
 import Flex from './Flex.js';
 
-import { getTileClasses } from './shared/utils.js';
+import { getTileClassName, type TileClassNames } from './shared/utils.js';
 
-import type { RangeType, Value } from './shared/types.js';
+import type { ClassName, RangeType, Value } from './shared/types.js';
+
+export const slotNames = ['tileGroup', 'tile'] as const;
+export type SlotName = (typeof slotNames)[number];
 
 type TileGroupProps = {
-  className?: string;
+  classNames?: {
+    tileGroup?: ClassName;
+    tile?: TileClassNames;
+  };
   count?: number;
   dateTransform: (point: number) => Date;
   dateType: RangeType;
   end: number;
   hover?: Date | null;
   offset?: number;
-  renderTile: (props: { classes: string[]; date: Date }) => React.ReactElement;
+  renderTile: (props: { className: ClassName; date: Date }) => React.ReactElement;
   start: number;
   step?: number;
   value?: Value;
@@ -22,7 +28,7 @@ type TileGroupProps = {
 };
 
 export default function TileGroup({
-  className,
+  classNames = {},
   count = 3,
   dateTransform,
   dateType,
@@ -41,12 +47,13 @@ export default function TileGroup({
 
     tiles.push(
       renderTile({
-        classes: getTileClasses({
+        className: getTileClassName({
           date,
           dateType,
           hover,
           value,
           valueType,
+          tileClassNames: classNames.tile,
         }),
         date,
       }),
@@ -54,7 +61,7 @@ export default function TileGroup({
   }
 
   return (
-    <Flex className={className} count={count} offset={offset} wrap>
+    <Flex className={classNames.tileGroup} count={count} offset={offset} wrap>
       {tiles}
     </Flex>
   );

@@ -20,7 +20,7 @@ import {
   isView,
   rangeOf,
 } from './shared/propTypes.js';
-import { between } from './shared/utils.js';
+import { between, mergeTileClassNames, type TileClassNames } from './shared/utils.js';
 
 import type {
   Action,
@@ -60,6 +60,15 @@ defaultMinDate.setFullYear(1, 0, 1);
 defaultMinDate.setHours(0, 0, 0, 0);
 const defaultMaxDate = new Date(8.64e15);
 
+type CenturyClassNames = React.ComponentProps<typeof CenturyView>['classNames'];
+type DecadeClassNames = React.ComponentProps<typeof DecadeView>['classNames'];
+type MonthClassNames = React.ComponentProps<typeof MonthView>['classNames'];
+type YearClassNames = React.ComponentProps<typeof YearView>['classNames'];
+type NavigationClassNames = React.ComponentProps<typeof Navigation>['classNames'];
+
+const localSlotNames = ['base', 'selectRange', 'doubleView', 'viewContainer'] as const;
+type LocalSlotName = (typeof localSlotNames)[number];
+
 export type CalendarProps = {
   /**
    * The beginning of a period that shall be displayed. If you wish to use react-calendar in an uncontrolled way, use `defaultActiveStartDate` instead.
@@ -87,6 +96,22 @@ export type CalendarProps = {
    * @example ['class1', 'class2 class3']
    */
   className?: ClassName;
+  /**
+   * Class names that will be added to appropriate slots.
+   *
+   * @example {}
+   */
+  classNames?: Partial<
+    Record<LocalSlotName, ClassName> & {
+      decade: DecadeClassNames;
+      century: CenturyClassNames;
+      month: MonthClassNames;
+      year: YearClassNames;
+      navigation: NavigationClassNames;
+      tileGroup: ClassName;
+      tile: TileClassNames;
+    }
+  >;
   /**
    * The beginning of a period that shall be displayed by default. If you wish to use react-calendar in a controlled way, use `activeStartDate` instead.
    *
@@ -614,6 +639,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
     allowPartialRange,
     calendarType,
     className,
+    classNames = {},
     defaultActiveStartDate,
     defaultValue,
     defaultView,
@@ -1042,6 +1068,10 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
           <CenturyView
             formatYear={formatYear}
             showNeighboringCentury={showNeighboringCentury}
+            classNames={{
+              ...classNames.century,
+              tile: mergeTileClassNames(classNames.tile, classNames.century?.tile),
+            }}
             {...commonProps}
           />
         );
@@ -1051,13 +1081,25 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
           <DecadeView
             formatYear={formatYear}
             showNeighboringDecade={showNeighboringDecade}
+            classNames={{
+              ...classNames.decade,
+              tile: mergeTileClassNames(classNames.tile, classNames.decade?.tile),
+            }}
             {...commonProps}
           />
         );
       }
       case 'year': {
         return (
-          <YearView formatMonth={formatMonth} formatMonthYear={formatMonthYear} {...commonProps} />
+          <YearView
+            formatMonth={formatMonth}
+            formatMonthYear={formatMonthYear}
+            classNames={{
+              ...classNames.year,
+              tile: mergeTileClassNames(classNames.tile, classNames.year?.tile),
+            }}
+            {...commonProps}
+          />
         );
       }
       case 'month': {
@@ -1077,6 +1119,10 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
             }
             showNeighboringMonth={showNeighboringMonth}
             showWeekNumbers={showWeekNumbers}
+            classNames={{
+              ...classNames.month,
+              tile: mergeTileClassNames(classNames.tile, classNames.month?.tile),
+            }}
             {...commonProps}
           />
         );
@@ -1115,6 +1161,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
         showDoubleView={showDoubleView}
         view={view}
         views={views}
+        classNames={classNames.navigation}
       />
     );
   }
@@ -1124,16 +1171,16 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
   return (
     <div
       className={clsx(
-        baseClassName,
-        selectRange && valueArray.length === 1 && `${baseClassName}--selectRange`,
-        showDoubleView && `${baseClassName}--doubleView`,
-        className,
+        [baseClassName, className, classNames.base],
+        selectRange &&
+          valueArray.length === 1 && [`${baseClassName}--selectRange`, classNames.selectRange],
+        showDoubleView && [`${baseClassName}--doubleView`, classNames.doubleView],
       )}
       ref={inputRef}
     >
       {renderNavigation()}
       <div
-        className={`${baseClassName}__viewContainer`}
+        className={clsx(`${baseClassName}__viewContainer`, classNames.viewContainer)}
         onBlur={selectRange ? onMouseLeave : undefined}
         onMouseLeave={selectRange ? onMouseLeave : undefined}
       >

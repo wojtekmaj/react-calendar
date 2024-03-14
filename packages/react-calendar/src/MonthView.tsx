@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import Days from './MonthView/Days.js';
-import Weekdays from './MonthView/Weekdays.js';
-import WeekNumbers from './MonthView/WeekNumbers.js';
+import Days, { slotNames as daysSlotNames } from './MonthView/Days.js';
+import Weekdays, { slotNames as weekdaysSlotNames } from './MonthView/Weekdays.js';
+import WeekNumbers, { slotNames as weekNumbersSlotNames } from './MonthView/WeekNumbers.js';
 
 import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const.js';
 import { isCalendarType, tileGroupProps } from './shared/propTypes.js';
 
-import type { CalendarType, DeprecatedCalendarType } from './shared/types.js';
+import type { CalendarType, ClassName, DeprecatedCalendarType } from './shared/types.js';
+import { pickClassNames } from './shared/utils.js';
 
 function getCalendarTypeFromLocale(locale: string | undefined): CalendarType {
   if (locale) {
@@ -23,7 +24,27 @@ function getCalendarTypeFromLocale(locale: string | undefined): CalendarType {
   return CALENDAR_TYPES.ISO_8601;
 }
 
+const className = 'react-calendar__month-view';
+
+const localSlotName = ['monthView', 'weekNumbersMonthView'] as const;
+type LocalSlotName = (typeof localSlotName)[number];
+
+export const slotNames = [
+  ...localSlotName,
+  ...daysSlotNames,
+  ...weekdaysSlotNames,
+  ...weekNumbersSlotNames,
+] as const;
+
+type WeekdaysProps = React.ComponentProps<typeof Weekdays>;
+type WeekNumbersProps = React.ComponentProps<typeof WeekNumbers>;
+type DaysProps = React.ComponentProps<typeof Days>;
+
 type MonthViewProps = {
+  classNames?: WeekdaysProps['classNames'] &
+    WeekNumbersProps['classNames'] &
+    DaysProps['classNames'] &
+    Partial<Record<LocalSlotName, ClassName>>;
   /**
    * Type of calendar that should be used. Can be `'gregory`, `'hebrew'`, `'islamic'`, `'iso8601'`. Setting to `"gregory"` or `"hebrew"` will change the first day of the week to Sunday. Setting to `"islamic"` will change the first day of the week to Saturday. Setting to `"islamic"` or `"hebrew"` will make weekends appear on Friday to Saturday.
    *
@@ -38,9 +59,9 @@ type MonthViewProps = {
    */
   showWeekNumbers?: boolean;
 } & Omit<
-  React.ComponentProps<typeof Weekdays> &
-    React.ComponentProps<typeof WeekNumbers> &
-    React.ComponentProps<typeof Days>,
+  Omit<WeekdaysProps, 'classNames'> &
+    Omit<WeekNumbersProps, 'classNames'> &
+    Omit<DaysProps, 'classNames'>,
   'calendarType'
 >;
 
@@ -48,7 +69,7 @@ type MonthViewProps = {
  * Displays a given month.
  */
 const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
-  const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks } = props;
+  const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks, classNames = {} } = props;
   const {
     calendarType = getCalendarTypeFromLocale(locale),
     formatShortWeekday,
@@ -66,6 +87,7 @@ const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
         formatWeekday={formatWeekday}
         locale={locale}
         onMouseLeave={onMouseLeave}
+        classNames={pickClassNames(classNames, weekdaysSlotNames)}
       />
     );
   }
@@ -82,18 +104,29 @@ const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
         onClickWeekNumber={onClickWeekNumber}
         onMouseLeave={onMouseLeave}
         showFixedNumberOfWeeks={showFixedNumberOfWeeks}
+        classNames={pickClassNames(classNames, weekNumbersSlotNames)}
       />
     );
   }
 
   function renderDays() {
-    return <Days calendarType={calendarType} {...childProps} />;
+    return (
+      <Days
+        calendarType={calendarType}
+        classNames={pickClassNames(classNames, daysSlotNames)}
+        {...childProps}
+      />
+    );
   }
 
-  const className = 'react-calendar__month-view';
-
   return (
-    <div className={clsx(className, showWeekNumbers ? `${className}--weekNumbers` : '')}>
+    <div
+      className={clsx(
+        className,
+        classNames.monthView,
+        showWeekNumbers ? [`${className}--weekNumbers`, classNames.weekNumbersMonthView] : '',
+      )}
+    >
       <div
         style={{
           display: 'flex',

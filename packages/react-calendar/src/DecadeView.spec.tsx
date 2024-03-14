@@ -39,7 +39,7 @@ describe('DecadeView', () => {
         return 'firstDayOfTheMonth';
       }
 
-      return null;
+      return;
     };
 
     const { container } = render(

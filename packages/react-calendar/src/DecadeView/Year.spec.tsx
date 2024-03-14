@@ -6,17 +6,21 @@ import Year from './Year.js';
 
 const tileProps = {
   activeStartDate: new Date(2018, 0, 1),
-  classes: ['react-calendar__tile'],
+  classNames: {
+    yearTile: 'react-calendar__tile',
+  },
   currentDecade: 2011,
   date: new Date(2018, 0, 1),
-};
+} satisfies React.ComponentProps<typeof Year>;
 
 describe('Year', () => {
   it('applies given classNames properly', () => {
     const { container } = render(
       <Year
         {...tileProps}
-        classes={['react-calendar__tile', 'react-calendar__tile--flag']}
+        classNames={{
+          yearTile: ['react-calendar__tile', 'react-calendar__tile--flag'],
+        }}
         tileClassName={() => 'testFunctionClassName'}
       />,
     );
