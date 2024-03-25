@@ -37,6 +37,7 @@ import type {
   TileDisabledFunc,
   Value,
   View,
+  WeekdayContentFunc,
 } from './shared/types.js';
 
 const baseClassName = 'react-calendar';
@@ -411,6 +412,13 @@ export type CalendarProps = {
    */
   tileDisabled?: TileDisabledFunc;
   /**
+   * Allows to render custom content within a given weekday container on month view.
+   *
+   * @example 'Sample'
+   * @example ({ locale, date }) => <p>{formatDate(date, 'dd')}</p>
+   */
+  weekdayContent?: WeekdayContentFunc | React.ReactNode;
+  /**
    * Calendar value. Can be either one value or an array of two values. If you wish to use react-calendar in an uncontrolled way, use `defaultValue` instead.
    *
    * @example new Date(2017, 0, 1)
@@ -662,6 +670,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       tileDisabled,
       value: valueProps,
       view: viewProps,
+      weekdayContent,
     } = props;
 
     const [activeStartDateState, setActiveStartDateState] = useState<Date | null | undefined>(
@@ -1079,6 +1088,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
               }
               showNeighboringMonth={showNeighboringMonth}
               showWeekNumbers={showWeekNumbers}
+              weekdayContent={weekdayContent}
               {...commonProps}
             />
           );
