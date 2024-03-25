@@ -52,7 +52,7 @@ describe('Weekdays', () => {
     expect(firstWeekdayAbbr).toHaveAccessibleName('Weekday');
   });
 
-  it('applies weekdayContent to button properly given function', () => {
+  it('applies weekdayContent properly given function', () => {
     const content = 'content';
     const weekdayContent = () => content;
 
@@ -60,6 +60,16 @@ describe('Weekdays', () => {
 
     const firstWeekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
 
-    expect(firstWeekday).toHaveTextContent('content');
+    expect(firstWeekday).toHaveTextContent(content);
+  });
+
+  it('applies weekdayContent properly given string', () => {
+    const content = 'content';
+
+    const { container } = render(<Weekdays {...defaultProps} weekdayContent={content} />);
+
+    const firstWeekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
+
+    expect(firstWeekday).toHaveTextContent(content);
   });
 });
