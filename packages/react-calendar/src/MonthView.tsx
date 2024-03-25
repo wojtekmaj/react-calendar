@@ -55,6 +55,7 @@ const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
     formatWeekday,
     onClickWeekNumber,
     showWeekNumbers,
+    weekdayContent,
     ...childProps
   } = props;
 
@@ -66,6 +67,7 @@ const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
         formatWeekday={formatWeekday}
         locale={locale}
         onMouseLeave={onMouseLeave}
+        weekdayContent={weekdayContent}
       />
     );
   }
