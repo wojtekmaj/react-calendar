@@ -676,8 +676,8 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
     Array.isArray(defaultValue)
       ? (defaultValue.map((el) => (el !== null ? toDate(el) : null)) as Range<Date | null>)
       : defaultValue !== null && defaultValue !== undefined
-      ? toDate(defaultValue)
-      : null,
+        ? toDate(defaultValue)
+        : null,
   );
   const [viewState, setViewState] = useState<View | undefined>(defaultView);
 
@@ -714,8 +714,8 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
     return Array.isArray(rawValue)
       ? (rawValue.map((el) => (el !== null ? toDate(el) : null)) as Range<Date | null>)
       : rawValue !== null
-      ? toDate(rawValue)
-      : null;
+        ? toDate(rawValue)
+        : null;
   })();
 
   const valueType = getValueType(maxDetail);
