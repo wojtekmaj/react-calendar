@@ -1,12 +1,24 @@
 import React from 'react';
 import { getYearStart } from '@wojtekmaj/date-utils';
 
-import TileGroup from '../TileGroup.js';
-import Year from './Year.js';
+import TileGroup, { slotNames as tileGroupSlotNames } from '../TileGroup.js';
+import Year, { slotNames as yearSlotNames } from './Year.js';
 
 import { getBeginOfDecadeYear } from '../shared/dates.js';
+import type { ClassName } from '../shared/types.js';
+import { pickClassNames } from '../shared/utils.js';
+
+type TileGroupProps = React.ComponentProps<typeof TileGroup>;
+type YearProps = React.ComponentProps<typeof Year>;
+
+const localSlotName = ['yearsView'] as const;
+type LocalSlotName = (typeof localSlotName)[number];
+export const slotNames = [...localSlotName, ...tileGroupSlotNames, ...yearSlotNames] as const;
 
 type YearsProps = {
+  classNames?: TileGroupProps['classNames'] &
+    YearProps['classNames'] &
+    Partial<Record<LocalSlotName, ClassName>>;
   /**
    * The beginning of a period that shall be displayed.
    *
@@ -21,28 +33,49 @@ type YearsProps = {
    */
   showNeighboringDecade?: boolean;
 } & Omit<
-  React.ComponentProps<typeof TileGroup>,
-  'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start'
+  TileGroupProps,
+  'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start' | 'classNames'
 > &
-  Omit<React.ComponentProps<typeof Year>, 'classes' | 'currentDecade' | 'date'>;
+  Omit<YearProps, 'currentDecade' | 'date' | 'classNames'>;
 
 export default function Years(props: YearsProps) {
-  const { activeStartDate, hover, showNeighboringDecade, value, valueType, ...otherProps } = props;
+  const {
+    activeStartDate,
+    hover,
+    showNeighboringDecade,
+    value,
+    valueType,
+    classNames = {},
+    ...otherProps
+  } = props;
   const start = getBeginOfDecadeYear(activeStartDate);
   const end = start + (showNeighboringDecade ? 11 : 9);
 
   return (
     <TileGroup
-      className="react-calendar__decade-view__years"
+      classNames={pickClassNames(
+        {
+          ...classNames,
+          tileGroup: [
+            'react-calendar__decade-view__years',
+            classNames.tileGroup,
+            classNames.yearsView,
+          ],
+        },
+        tileGroupSlotNames,
+      )}
       dateTransform={getYearStart}
       dateType="year"
       end={end}
       hover={hover}
-      renderTile={({ date, ...otherTileProps }) => (
+      renderTile={({ date, className }) => (
         <Year
           key={date.getTime()}
+          classNames={pickClassNames(
+            { ...classNames, yearTile: [classNames.yearTile, className] },
+            yearSlotNames,
+          )}
           {...otherProps}
-          {...otherTileProps}
           activeStartDate={activeStartDate}
           currentDecade={start}
           date={date}

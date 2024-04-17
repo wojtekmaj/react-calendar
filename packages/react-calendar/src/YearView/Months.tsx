@@ -1,10 +1,23 @@
 import React from 'react';
 import { getMonthStart, getYear } from '@wojtekmaj/date-utils';
 
-import TileGroup from '../TileGroup.js';
-import Month from './Month.js';
+import TileGroup, { slotNames as tileGroupSlotNames } from '../TileGroup.js';
+import Month, { slotNames as monthSlotNames } from './Month.js';
+import type { ClassName } from '../shared/types.js';
+import { pickClassNames } from '../shared/utils.js';
+
+type TileGroupProps = React.ComponentProps<typeof TileGroup>;
+type MonthProps = React.ComponentProps<typeof Month>;
+
+const localSlotName = ['monthsView'] as const;
+type LocalSlotName = (typeof localSlotName)[number];
+export const slotNames = [...localSlotName, ...tileGroupSlotNames, ...monthSlotNames] as const;
 
 type MonthsProps = {
+  classNames?: TileGroupProps['classNames'] &
+    MonthProps['classNames'] &
+    Partial<Record<LocalSlotName, ClassName>>;
+  /**
   /**
    * The beginning of a period that shall be displayed.
    *
@@ -12,20 +25,30 @@ type MonthsProps = {
    */
   activeStartDate: Date;
 } & Omit<
-  React.ComponentProps<typeof TileGroup>,
-  'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start'
+  TileGroupProps,
+  'dateTransform' | 'dateType' | 'end' | 'renderTile' | 'start' | 'classNames'
 > &
-  Omit<React.ComponentProps<typeof Month>, 'classes' | 'date'>;
+  Omit<MonthProps, 'date' | 'classNames'>;
 
 export default function Months(props: MonthsProps) {
-  const { activeStartDate, hover, value, valueType, ...otherProps } = props;
+  const { activeStartDate, hover, value, valueType, classNames = {}, ...otherProps } = props;
   const start = 0;
   const end = 11;
   const year = getYear(activeStartDate);
 
   return (
     <TileGroup
-      className="react-calendar__year-view__months"
+      classNames={pickClassNames(
+        {
+          ...classNames,
+          tileGroup: [
+            'react-calendar__year-view__months',
+            classNames.tileGroup,
+            classNames.monthsView,
+          ],
+        },
+        tileGroupSlotNames,
+      )}
       dateTransform={(monthIndex) => {
         const date = new Date();
         date.setFullYear(year, monthIndex, 1);
@@ -34,11 +57,14 @@ export default function Months(props: MonthsProps) {
       dateType="month"
       end={end}
       hover={hover}
-      renderTile={({ date, ...otherTileProps }) => (
+      renderTile={({ date, className }) => (
         <Month
           key={date.getTime()}
           {...otherProps}
-          {...otherTileProps}
+          classNames={pickClassNames(
+            { ...classNames, monthTile: [classNames.monthTile, className] },
+            monthSlotNames,
+          )}
           activeStartDate={activeStartDate}
           date={date}
         />

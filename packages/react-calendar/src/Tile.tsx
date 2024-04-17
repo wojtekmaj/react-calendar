@@ -17,7 +17,7 @@ type TileProps = {
    */
   activeStartDate: Date;
   children: React.ReactNode;
-  classes?: string[];
+  className?: ClassName;
   date: Date;
   formatAbbr?: (locale: string | undefined, date: Date) => string;
   /**
@@ -78,7 +78,7 @@ export default function Tile(props: TileProps) {
   const {
     activeStartDate,
     children,
-    classes,
+    className,
     date,
     formatAbbr,
     locale,
@@ -109,7 +109,7 @@ export default function Tile(props: TileProps) {
 
   return (
     <button
-      className={clsx(classes, tileClassName)}
+      className={clsx(className, tileClassName)}
       disabled={
         (minDate && minDateTransform(minDate) > date) ||
         (maxDate && maxDateTransform(maxDate) < date) ||

@@ -3,7 +3,14 @@ import warning from 'warning';
 import { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const.js';
 import { getRange } from './dates.js';
 
-import type { CalendarType, DeprecatedCalendarType, Range, RangeType, Value } from './types.js';
+import type {
+  CalendarType,
+  ClassName,
+  DeprecatedCalendarType,
+  Range,
+  RangeType,
+  Value,
+} from './types.js';
 
 /**
  * Returns a value no smaller than min and no larger than max.
@@ -37,35 +44,39 @@ export function doRangesOverlap(range1: Range<Date>, range2: Range<Date>): boole
   return isValueWithinRange(range1[0], range2) || isValueWithinRange(range1[1], range2);
 }
 
+const rangeSlotNames = ['base', 'start', 'end', 'bothEnds'] as const;
+type RangeSlotName = (typeof rangeSlotNames)[number];
+export type RangeClassNames = Partial<Record<RangeSlotName, ClassName>>;
 function getRangeClassNames(
   valueRange: Range<Date>,
   dateRange: Range<Date>,
   baseClassName: string,
-): string[] {
+  rangeClassNames: RangeClassNames = {},
+): ClassName[] {
   const isRange = doRangesOverlap(dateRange, valueRange);
 
-  const classes = [];
+  const classNames: ClassName[] = [];
 
   if (isRange) {
-    classes.push(baseClassName);
+    classNames.push(baseClassName, rangeClassNames.base);
 
     const isRangeStart = isValueWithinRange(valueRange[0], dateRange);
     const isRangeEnd = isValueWithinRange(valueRange[1], dateRange);
 
     if (isRangeStart) {
-      classes.push(`${baseClassName}Start`);
+      classNames.push(`${baseClassName}Start`, rangeClassNames.start);
     }
 
     if (isRangeEnd) {
-      classes.push(`${baseClassName}End`);
+      classNames.push(`${baseClassName}End`, rangeClassNames.end);
     }
 
     if (isRangeStart && isRangeEnd) {
-      classes.push(`${baseClassName}BothEnds`);
+      classNames.push(`${baseClassName}BothEnds`, rangeClassNames.bothEnds);
     }
   }
 
-  return classes;
+  return classNames;
 }
 
 function isCompleteValue<T>(value: T | null | Range<T | null>): value is T | Range<T> {
@@ -76,24 +87,31 @@ function isCompleteValue<T>(value: T | null | Range<T | null>): value is T | Ran
   return value !== null;
 }
 
-export function getTileClasses(args: {
+const tileSlotNames = ['base', 'now', 'active', 'hasActive'] as const;
+type TileSlotName = (typeof tileSlotNames)[number];
+export type TileClassNames = Partial<Record<TileSlotName, ClassName>> & {
+  range?: RangeClassNames;
+  hoverRange?: RangeClassNames;
+};
+export function getTileClassName(args: {
   date?: Date | Range<Date>;
   dateType?: RangeType;
   hover?: Date | null;
   value?: Value;
   valueType?: RangeType;
-}): string[] {
+  tileClassNames?: TileClassNames;
+}): ClassName[] {
   if (!args) {
     throw new Error('args is required');
   }
 
-  const { value, date, hover } = args;
+  const { value, date, hover, tileClassNames = {} } = args;
 
   const className = 'react-calendar__tile';
-  const classes = [className];
+  const classNames: ClassName[] = [className, tileClassNames.base];
 
   if (!date) {
-    return classes;
+    return classNames;
   }
 
   const now = new Date();
@@ -112,11 +130,11 @@ export function getTileClasses(args: {
   })();
 
   if (isValueWithinRange(now, dateRange)) {
-    classes.push(`${className}--now`);
+    classNames.push(`${className}--now`, tileClassNames.now);
   }
 
   if (!value || !isCompleteValue(value)) {
-    return classes;
+    return classNames;
   }
 
   const valueRange = (() => {
@@ -134,26 +152,36 @@ export function getTileClasses(args: {
   })();
 
   if (isRangeWithinRange(valueRange, dateRange)) {
-    classes.push(`${className}--active`);
+    classNames.push(`${className}--active`, tileClassNames.active);
   } else if (doRangesOverlap(valueRange, dateRange)) {
-    classes.push(`${className}--hasActive`);
+    classNames.push(`${className}--hasActive`, tileClassNames.hasActive);
   }
 
-  const valueRangeClassNames = getRangeClassNames(valueRange, dateRange, `${className}--range`);
+  const valueRangeClassNames = getRangeClassNames(
+    valueRange,
+    dateRange,
+    `${className}--range`,
+    tileClassNames.range,
+  );
 
-  classes.push(...valueRangeClassNames);
+  classNames.push(...valueRangeClassNames);
 
   const valueArray = Array.isArray(value) ? value : [value];
 
   if (hover && valueArray.length === 1) {
     const hoverRange: Range<Date> =
       hover > valueRange[0] ? [valueRange[0], hover] : [hover, valueRange[0]];
-    const hoverRangeClassNames = getRangeClassNames(hoverRange, dateRange, `${className}--hover`);
+    const hoverRangeClassNames = getRangeClassNames(
+      hoverRange,
+      dateRange,
+      `${className}--hover`,
+      tileClassNames.hoverRange,
+    );
 
-    classes.push(...hoverRangeClassNames);
+    classNames.push(...hoverRangeClassNames);
   }
 
-  return classes;
+  return classNames;
 }
 
 const calendarTypeMap: Record<DeprecatedCalendarType, CalendarType> = {
@@ -188,4 +216,47 @@ export function mapCalendarType(
   }
 
   return calendarTypeOrDeprecatedCalendarType;
+}
+
+export function pickClassNames<
+  T extends Partial<Record<string, unknown>>,
+  K extends keyof T & string,
+>(obj: T | undefined, keys: readonly K[]): Pick<T, K> {
+  if (!obj) {
+    return {} as Pick<T, K>;
+  }
+  const pickedClassNames = {} as Pick<T, K>;
+  for (const key of keys) {
+    pickedClassNames[key] = obj[key];
+  }
+  return pickedClassNames;
+}
+
+export function mergeRangeClassNames(
+  ...rangeClassNames: (RangeClassNames | undefined)[]
+): RangeClassNames {
+  const mergedRangeClassNames = {} as RangeClassNames;
+  rangeSlotNames.forEach((rangeSlotName) => {
+    mergedRangeClassNames[rangeSlotName] = rangeClassNames.map(
+      (rangeClassNamesElement) => rangeClassNamesElement?.[rangeSlotName],
+    );
+  });
+  return mergedRangeClassNames;
+}
+
+export function mergeTileClassNames(
+  ...tileClassNames: (TileClassNames | undefined)[]
+): TileClassNames {
+  const mergedTileClassNames = {} as TileClassNames;
+  tileSlotNames.forEach((tileSlotName) => {
+    mergedTileClassNames[tileSlotName] = tileClassNames.map(
+      (tileClassNamesElement) => tileClassNamesElement?.[tileSlotName],
+    );
+  });
+  (['range', 'hoverRange'] as const).forEach((rangeSlotName) => {
+    mergedTileClassNames[rangeSlotName] = mergeRangeClassNames(
+      ...tileClassNames.map((tileClassNamesElement) => tileClassNamesElement?.[rangeSlotName]),
+    );
+  });
+  return mergedTileClassNames;
 }

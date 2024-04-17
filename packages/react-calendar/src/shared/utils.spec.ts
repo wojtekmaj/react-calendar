@@ -4,7 +4,7 @@ import {
   isValueWithinRange,
   isRangeWithinRange,
   doRangesOverlap,
-  getTileClasses,
+  getTileClassName,
 } from './utils.js';
 
 import type { Range } from './types.js';
@@ -168,16 +168,16 @@ describe('doRangesOverlap', () => {
 describe('getTileClasses', () => {
   it('throws an error when given no value', () => {
     // @ts-expect-error-next-line
-    expect(() => getTileClasses()).toThrow();
+    expect(() => getTileClassName()).toThrow();
   });
 
   it('throws an error when given date but not given dateType parameter ', () => {
-    expect(() => getTileClasses({ date: new Date(2017, 0, 1) })).toThrow();
+    expect(() => getTileClassName({ date: new Date(2017, 0, 1) })).toThrow();
   });
 
   it('throws an error when given date and value but not given valueType parameter ', () => {
     expect(() =>
-      getTileClasses({
+      getTileClassName({
         date: new Date(2017, 0, 1),
         dateType: 'month',
         value: new Date(2017, 0, 1),
@@ -186,7 +186,7 @@ describe('getTileClasses', () => {
   });
 
   it('returns active flag set to true when passed a value equal to date', () => {
-    const result = getTileClasses({
+    const result = getTileClassName({
       value: new Date(2017, 0, 1),
       valueType: 'month',
       date: new Date(2017, 0, 1),
@@ -199,7 +199,7 @@ describe('getTileClasses', () => {
   });
 
   it('returns active flag set to true when passed a value array equal to date array', () => {
-    const result = getTileClasses({
+    const result = getTileClassName({
       value: [new Date(2017, 0, 1), new Date(2017, 0, 31)],
       date: [new Date(2017, 0, 1), new Date(2017, 0, 31)],
     });
@@ -210,7 +210,7 @@ describe('getTileClasses', () => {
   });
 
   it('returns hasActive flag set to true when passed a value covering date', () => {
-    const result = getTileClasses({
+    const result = getTileClassName({
       value: new Date(2017, 6, 1),
       valueType: 'month',
       date: new Date(2017, 0, 1),
@@ -223,7 +223,7 @@ describe('getTileClasses', () => {
   });
 
   it('returns all flags set to false when given value completely unrelated to date', () => {
-    const result = getTileClasses({
+    const result = getTileClassName({
       value: new Date(2017, 6, 1),
       valueType: 'month',
       date: new Date(2016, 0, 1),
@@ -238,7 +238,7 @@ describe('getTileClasses', () => {
     it('returns range flag set to true when passed a date within value array', () => {
       const value: Range<Date> = [new Date(2017, 0, 1), new Date(2017, 6, 1)];
 
-      const result = getTileClasses({
+      const result = getTileClassName({
         value,
         date: new Date(2017, 3, 1),
         dateType: 'month',
@@ -252,7 +252,7 @@ describe('getTileClasses', () => {
     it('returns range & rangeStart flags set to true when passed a date equal to value start', () => {
       const value: Range<Date> = [new Date(2017, 0, 1), new Date(2017, 6, 1)];
 
-      const result = getTileClasses({
+      const result = getTileClassName({
         value,
         date: new Date(2017, 0, 1),
         dateType: 'month',
@@ -266,7 +266,7 @@ describe('getTileClasses', () => {
     it('returns range & rangeEnd flags set to true when passed a date equal to value end', () => {
       const value: Range<Date> = [new Date(2017, 0, 1), new Date(2017, 6, 1)];
 
-      const result = getTileClasses({
+      const result = getTileClassName({
         value,
         date: new Date(2017, 6, 1),
         dateType: 'month',
@@ -280,7 +280,7 @@ describe('getTileClasses', () => {
 
   describe('hover classes', () => {
     it('returns hover flag set to true when passed a date between value and hover (1)', () => {
-      const result = getTileClasses({
+      const result = getTileClassName({
         value: new Date(2017, 6, 1),
         valueType: 'month',
         date: new Date(2017, 3, 1),
@@ -294,7 +294,7 @@ describe('getTileClasses', () => {
     });
 
     it('returns hover flag set to true when passed a date between value and hover (2)', () => {
-      const result = getTileClasses({
+      const result = getTileClassName({
         value: new Date(2017, 0, 1),
         valueType: 'month',
         date: new Date(2017, 3, 1),
@@ -308,7 +308,7 @@ describe('getTileClasses', () => {
     });
 
     it('returns hover & hoverStart flags set to true when passed a date equal to hover', () => {
-      const result = getTileClasses({
+      const result = getTileClassName({
         value: new Date(2017, 0, 1),
         valueType: 'month',
         date: new Date(2017, 0, 1),
@@ -322,7 +322,7 @@ describe('getTileClasses', () => {
     });
 
     it('returns hover & hoverEnd flags set to true when passed a date equal to hover', () => {
-      const result = getTileClasses({
+      const result = getTileClassName({
         value: new Date(2017, 0, 1),
         valueType: 'month',
         date: new Date(2017, 6, 1),

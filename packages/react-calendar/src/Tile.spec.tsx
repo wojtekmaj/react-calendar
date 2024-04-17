@@ -8,7 +8,6 @@ describe('<Tile /> component', () => {
   const defaultProps = {
     activeStartDate: new Date(2019, 0, 1),
     children: '',
-    classes: [],
     date: new Date(2019, 0, 1),
     maxDateTransform: (date: Date) => date,
     minDateTransform: (date: Date) => date,
@@ -33,14 +32,14 @@ describe('<Tile /> component', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('passes classes to button properly', () => {
-    const classes = ['a', 'b', 'c'];
+  it('passes classNames to button properly', () => {
+    const classNames = ['a', 'b', 'c'];
 
-    const { container } = render(<Tile {...defaultProps} classes={classes} />);
+    const { container } = render(<Tile {...defaultProps} className={classNames} />);
 
     const button = container.querySelector('button');
 
-    classes.forEach((className) => {
+    classNames.forEach((className) => {
       expect(button).toHaveClass(className);
     });
   });
