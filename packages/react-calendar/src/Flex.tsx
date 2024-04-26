@@ -1,7 +1,8 @@
 import { Children, cloneElement } from 'react';
 
 type FlexProps = React.HTMLAttributes<HTMLDivElement> & {
-  children: React.ReactElement[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: React.ReactElement<any>[];
   className?: string;
   count: number;
   direction?: 'row' | 'column';
