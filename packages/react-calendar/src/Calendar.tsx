@@ -1,7 +1,6 @@
 'use client';
 
 import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import Navigation from './Calendar/Navigation.js';
@@ -11,15 +10,6 @@ import YearView from './YearView.js';
 import MonthView from './MonthView.js';
 
 import { getBegin, getBeginNext, getEnd, getValueRange } from './shared/dates.js';
-import {
-  isCalendarType,
-  isClassName,
-  isMaxDate,
-  isMinDate,
-  isRef,
-  isView,
-  rangeOf,
-} from './shared/propTypes.js';
 import { between } from './shared/utils.js';
 
 import type {
@@ -1143,70 +1133,5 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
     </div>
   );
 });
-
-const isActiveStartDate = PropTypes.instanceOf(Date);
-
-const isValue = PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]);
-
-const isValueOrValueArray = PropTypes.oneOfType([isValue, rangeOf(isValue)]);
-
-Calendar.propTypes = {
-  activeStartDate: isActiveStartDate,
-  allowPartialRange: PropTypes.bool,
-  calendarType: isCalendarType,
-  className: isClassName,
-  defaultActiveStartDate: isActiveStartDate,
-  defaultValue: isValueOrValueArray,
-  defaultView: isView,
-  formatDay: PropTypes.func,
-  formatLongDate: PropTypes.func,
-  formatMonth: PropTypes.func,
-  formatMonthYear: PropTypes.func,
-  formatShortWeekday: PropTypes.func,
-  formatWeekday: PropTypes.func,
-  formatYear: PropTypes.func,
-  goToRangeStartOnSelect: PropTypes.bool,
-  inputRef: isRef,
-  locale: PropTypes.string,
-  maxDate: isMaxDate,
-  maxDetail: PropTypes.oneOf(allViews),
-  minDate: isMinDate,
-  minDetail: PropTypes.oneOf(allViews),
-  navigationAriaLabel: PropTypes.string,
-  navigationAriaLive: PropTypes.oneOf(['off', 'polite', 'assertive'] as const),
-  navigationLabel: PropTypes.func,
-  next2AriaLabel: PropTypes.string,
-  next2Label: PropTypes.node,
-  nextAriaLabel: PropTypes.string,
-  nextLabel: PropTypes.node,
-  onActiveStartDateChange: PropTypes.func,
-  onChange: PropTypes.func,
-  onClickDay: PropTypes.func,
-  onClickDecade: PropTypes.func,
-  onClickMonth: PropTypes.func,
-  onClickWeekNumber: PropTypes.func,
-  onClickYear: PropTypes.func,
-  onDrillDown: PropTypes.func,
-  onDrillUp: PropTypes.func,
-  onViewChange: PropTypes.func,
-  prev2AriaLabel: PropTypes.string,
-  prev2Label: PropTypes.node,
-  prevAriaLabel: PropTypes.string,
-  prevLabel: PropTypes.node,
-  returnValue: PropTypes.oneOf(['start', 'end', 'range'] as const),
-  selectRange: PropTypes.bool,
-  showDoubleView: PropTypes.bool,
-  showFixedNumberOfWeeks: PropTypes.bool,
-  showNavigation: PropTypes.bool,
-  showNeighboringCentury: PropTypes.bool,
-  showNeighboringDecade: PropTypes.bool,
-  showNeighboringMonth: PropTypes.bool,
-  showWeekNumbers: PropTypes.bool,
-  tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
-  tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  tileDisabled: PropTypes.func,
-  value: isValueOrValueArray,
-  view: isView,
-};
 
 export default Calendar;

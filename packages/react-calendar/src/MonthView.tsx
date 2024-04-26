@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import Days from './MonthView/Days.js';
@@ -6,7 +5,6 @@ import Weekdays from './MonthView/Weekdays.js';
 import WeekNumbers from './MonthView/WeekNumbers.js';
 
 import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const.js';
-import { isCalendarType, tileGroupProps } from './shared/propTypes.js';
 
 import type { CalendarType, DeprecatedCalendarType } from './shared/types.js';
 
@@ -112,20 +110,6 @@ const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
       </div>
     </div>
   );
-};
-
-MonthView.propTypes = {
-  ...tileGroupProps,
-  calendarType: isCalendarType,
-  formatDay: PropTypes.func,
-  formatLongDate: PropTypes.func,
-  formatShortWeekday: PropTypes.func,
-  formatWeekday: PropTypes.func,
-  onClickWeekNumber: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  showFixedNumberOfWeeks: PropTypes.bool,
-  showNeighboringMonth: PropTypes.bool,
-  showWeekNumbers: PropTypes.bool,
 };
 
 export default MonthView;
