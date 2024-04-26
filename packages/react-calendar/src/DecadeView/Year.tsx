@@ -1,4 +1,3 @@
-import React from 'react';
 import { getYearStart, getYearEnd, getDecadeStart } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile.js';

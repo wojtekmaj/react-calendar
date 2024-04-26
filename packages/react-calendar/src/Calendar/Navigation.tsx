@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { getUserLocale } from 'get-user-locale';
 
 import {

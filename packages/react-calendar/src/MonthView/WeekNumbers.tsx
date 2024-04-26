@@ -1,4 +1,3 @@
-import React from 'react';
 import { getYear, getMonth, getDate, getDaysInMonth } from '@wojtekmaj/date-utils';
 
 import WeekNumber from './WeekNumber.js';

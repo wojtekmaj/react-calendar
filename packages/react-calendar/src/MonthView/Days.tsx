@@ -1,4 +1,3 @@
-import React from 'react';
 import { getYear, getMonth, getDaysInMonth, getDayStart } from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup.js';

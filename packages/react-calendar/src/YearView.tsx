@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Months from './YearView/Months.js';
 
 import { tileGroupProps } from './shared/propTypes.js';

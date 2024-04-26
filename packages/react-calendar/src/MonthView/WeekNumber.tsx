@@ -1,5 +1,3 @@
-import React from 'react';
-
 import type { OnClickWeekNumberFunc } from '../shared/types.js';
 
 const className = 'react-calendar__tile';

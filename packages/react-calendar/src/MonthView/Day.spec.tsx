@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import React from 'react';
+
 import { fireEvent, render } from '@testing-library/react';
 
 import Day from './Day.js';

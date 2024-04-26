@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Flex from './Flex.js';
 
 import { getTileClasses } from './shared/utils.js';

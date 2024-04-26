@@ -1,4 +1,3 @@
-import React from 'react';
 import { getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile.js';

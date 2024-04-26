@@ -1,4 +1,4 @@
-import React from 'react';
+import { Children, cloneElement } from 'react';
 
 type FlexProps = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactElement[];
@@ -35,10 +35,10 @@ export default function Flex({
       }}
       {...otherProps}
     >
-      {React.Children.map(children, (child, index) => {
+      {Children.map(children, (child, index) => {
         const marginInlineStart = offset && index === 0 ? toPercent((100 * offset) / count) : null;
 
-        return React.cloneElement(child, {
+        return cloneElement(child, {
           ...child.props,
           style: {
             flexBasis: toPercent(100 / count),

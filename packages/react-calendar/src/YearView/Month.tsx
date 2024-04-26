@@ -1,4 +1,3 @@
-import React from 'react';
 import { getMonthStart, getMonthEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile.js';

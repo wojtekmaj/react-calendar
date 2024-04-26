@@ -1,4 +1,3 @@
-import React from 'react';
 import clsx from 'clsx';
 import { getYear, getMonth, getMonthStart } from '@wojtekmaj/date-utils';
 
