@@ -44,7 +44,7 @@ type MonthViewProps = {
 /**
  * Displays a given month.
  */
-const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
+export default function MonthView(props: MonthViewProps) {
   const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks } = props;
   const {
     calendarType = getCalendarTypeFromLocale(locale),
@@ -110,6 +110,4 @@ const MonthView: React.FC<MonthViewProps> = function MonthView(props) {
       </div>
     </div>
   );
-};
-
-export default MonthView;
+}

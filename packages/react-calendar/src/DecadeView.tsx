@@ -5,12 +5,10 @@ type DecadeViewProps = React.ComponentProps<typeof Years>;
 /**
  * Displays a given decade.
  */
-const DecadeView: React.FC<DecadeViewProps> = function DecadeView(props) {
+export default function DecadeView(props: DecadeViewProps) {
   function renderYears() {
     return <Years {...props} />;
   }
 
   return <div className="react-calendar__decade-view">{renderYears()}</div>;
-};
-
-export default DecadeView;
+}
