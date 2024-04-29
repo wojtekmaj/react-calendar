@@ -65,3 +65,10 @@ export type TileClassNameFunc = (args: TileArgs) => ClassName;
 export type TileContentFunc = (args: TileArgs) => React.ReactNode;
 
 export type TileDisabledFunc = (args: TileArgs) => boolean;
+
+export type WeekdayArgs = {
+  date: Date;
+  locale: string | undefined;
+};
+
+export type WeekdayContentFunc = (args: WeekdayArgs) => React.ReactNode;

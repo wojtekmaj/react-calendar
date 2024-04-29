@@ -29,6 +29,7 @@ import type {
   TileDisabledFunc,
   Value,
   View,
+  WeekdayContentFunc,
 } from './shared/types.js';
 
 import type {
@@ -420,6 +421,13 @@ export type CalendarProps = {
    * @example 'year'
    */
   view?: View;
+  /**
+   * Allows to render custom content within a given weekday container on month view.
+   *
+   * @example 'Sample'
+   * @example ({ locale, date }) => <p>{formatDate(date, 'dd')}</p> : null
+   */
+  weekdayContent?: WeekdayContentFunc | React.ReactNode;
 };
 
 function toDate(value: Date | string): Date {
@@ -656,6 +664,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
     tileDisabled,
     value: valueProps,
     view: viewProps,
+    weekdayContent,
   } = props;
 
   const [activeStartDateState, setActiveStartDateState] = useState<Date | null | undefined>(
@@ -1067,6 +1076,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
             }
             showNeighboringMonth={showNeighboringMonth}
             showWeekNumbers={showWeekNumbers}
+            weekdayContent={weekdayContent}
             {...commonProps}
           />
         );
