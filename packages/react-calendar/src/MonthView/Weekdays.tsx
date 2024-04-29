@@ -8,9 +8,8 @@ import {
   formatShortWeekday as defaultFormatShortWeekday,
   formatWeekday as defaultFormatWeekday,
 } from '../shared/dateFormatter.js';
-import { mapCalendarType } from '../shared/utils.js';
 
-import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
+import type { CalendarType } from '../shared/types.js';
 
 const className = 'react-calendar__month-view__weekdays';
 const weekdayClassName = `${className}__weekday`;
@@ -21,7 +20,7 @@ type WeekdaysProps = {
    *
    * @example 'iso8601'
    */
-  calendarType: CalendarType | DeprecatedCalendarType | undefined;
+  calendarType: CalendarType | undefined;
   /**
    * Function called to override default formatting of weekday names (shortened). Can be used to use your own formatting function.
    *
@@ -45,14 +44,13 @@ type WeekdaysProps = {
 
 export default function Weekdays(props: WeekdaysProps) {
   const {
-    calendarType: calendarTypeOrDeprecatedCalendarType,
+    calendarType,
     formatShortWeekday = defaultFormatShortWeekday,
     formatWeekday = defaultFormatWeekday,
     locale,
     onMouseLeave,
   } = props;
 
-  const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
   const anyDate = new Date();
   const beginOfMonth = getMonthStart(anyDate);
   const year = getYear(beginOfMonth);

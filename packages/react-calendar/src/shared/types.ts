@@ -1,4 +1,4 @@
-import type { CALENDAR_TYPES, DEPRECATED_CALENDAR_TYPES } from './const.js';
+import type { CALENDAR_TYPES } from './const.js';
 
 export type Range<T> = [T, T];
 
@@ -7,9 +7,6 @@ export type Action = 'prev' | 'prev2' | 'next' | 'next2' | 'onChange' | 'drillUp
 export type CalendarType = (typeof CALENDAR_TYPES)[keyof typeof CALENDAR_TYPES];
 
 export type ClassName = string | null | undefined | (string | null | undefined)[];
-
-export type DeprecatedCalendarType =
-  (typeof DEPRECATED_CALENDAR_TYPES)[keyof typeof DEPRECATED_CALENDAR_TYPES];
 
 export type Detail = 'century' | 'decade' | 'year' | 'month';
 

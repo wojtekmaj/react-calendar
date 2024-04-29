@@ -5,13 +5,6 @@ export const CALENDAR_TYPES = {
   ISO_8601: 'iso8601',
 } as const;
 
-export const DEPRECATED_CALENDAR_TYPES = {
-  ARABIC: 'Arabic',
-  HEBREW: 'Hebrew',
-  ISO_8601: 'ISO 8601',
-  US: 'US',
-} as const;
-
 export const CALENDAR_TYPE_LOCALES = {
   [CALENDAR_TYPES.GREGORY]: [
     'en-CA',

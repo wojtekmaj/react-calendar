@@ -7,9 +7,8 @@ import {
   formatDay as defaultFormatDay,
   formatLongDate as defaultFormatLongDate,
 } from '../shared/dateFormatter.js';
-import { mapCalendarType } from '../shared/utils.js';
 
-import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
+import type { CalendarType } from '../shared/types.js';
 
 const className = 'react-calendar__month-view__days__day';
 
@@ -19,7 +18,7 @@ type DayProps = {
    *
    * @example 'iso8601'
    */
-  calendarType: CalendarType | DeprecatedCalendarType | undefined;
+  calendarType: CalendarType | undefined;
   classes?: string[];
   currentMonthIndex: number;
   /**
@@ -40,14 +39,13 @@ type DayProps = {
 >;
 
 export default function Day({
-  calendarType: calendarTypeOrDeprecatedCalendarType,
+  calendarType,
   classes = [],
   currentMonthIndex,
   formatDay = defaultFormatDay,
   formatLongDate = defaultFormatLongDate,
   ...otherProps
 }: DayProps) {
-  const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
   const { date, locale } = otherProps;
 
   const classesProps: string[] = [];

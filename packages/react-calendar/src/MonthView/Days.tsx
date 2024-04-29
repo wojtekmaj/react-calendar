@@ -4,9 +4,8 @@ import TileGroup from '../TileGroup.js';
 import Day from './Day.js';
 
 import { getDayOfWeek } from '../shared/dates.js';
-import { mapCalendarType } from '../shared/utils.js';
 
-import type { CalendarType, DeprecatedCalendarType } from '../shared/types.js';
+import type { CalendarType } from '../shared/types.js';
 
 type DaysProps = {
   /**
@@ -20,7 +19,7 @@ type DaysProps = {
    *
    * @example 'iso8601'
    */
-  calendarType: CalendarType | DeprecatedCalendarType | undefined;
+  calendarType: CalendarType | undefined;
   /**
    * Whether to always show fixed number of weeks (6). Forces `showNeighboringMonth` prop to be `true`.
    *
@@ -44,7 +43,7 @@ type DaysProps = {
 export default function Days(props: DaysProps) {
   const {
     activeStartDate,
-    calendarType: calendarTypeOrDeprecatedCalendarType,
+    calendarType,
     hover,
     showFixedNumberOfWeeks,
     showNeighboringMonth,
@@ -53,7 +52,6 @@ export default function Days(props: DaysProps) {
     ...otherProps
   } = props;
 
-  const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
   const year = getYear(activeStartDate);
   const monthIndex = getMonth(activeStartDate);
 
@@ -111,7 +109,7 @@ export default function Days(props: DaysProps) {
           {...otherProps}
           {...otherTileProps}
           activeStartDate={activeStartDate}
-          calendarType={calendarTypeOrDeprecatedCalendarType}
+          calendarType={calendarType}
           currentMonthIndex={monthIndex}
           date={date}
         />

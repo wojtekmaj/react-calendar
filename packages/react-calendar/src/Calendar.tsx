@@ -16,7 +16,6 @@ import type {
   Action,
   CalendarType,
   ClassName,
-  DeprecatedCalendarType,
   Detail,
   LooseValue,
   NavigationLabelFunc,
@@ -69,7 +68,7 @@ export type CalendarProps = {
    *
    * @example 'iso8601'
    */
-  calendarType?: CalendarType | DeprecatedCalendarType;
+  calendarType?: CalendarType;
   /**
    * Class name(s) that will be added along with `"react-calendar"` to the main react-calendar `<div>` element.
    *

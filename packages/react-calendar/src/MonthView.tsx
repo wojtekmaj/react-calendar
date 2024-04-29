@@ -6,7 +6,7 @@ import WeekNumbers from './MonthView/WeekNumbers.js';
 
 import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const.js';
 
-import type { CalendarType, DeprecatedCalendarType } from './shared/types.js';
+import type { CalendarType } from './shared/types.js';
 
 function getCalendarTypeFromLocale(locale: string | undefined): CalendarType {
   if (locale) {
@@ -26,7 +26,7 @@ type MonthViewProps = {
    *
    * @example 'iso8601'
    */
-  calendarType?: CalendarType | DeprecatedCalendarType;
+  calendarType?: CalendarType;
   /**
    *  Whether week numbers shall be shown at the left of MonthView or not.
    *

@@ -4,13 +4,8 @@ import WeekNumber from './WeekNumber.js';
 import Flex from '../Flex.js';
 
 import { getBeginOfWeek, getDayOfWeek, getWeekNumber } from '../shared/dates.js';
-import { mapCalendarType } from '../shared/utils.js';
 
-import type {
-  CalendarType,
-  DeprecatedCalendarType,
-  OnClickWeekNumberFunc,
-} from '../shared/types.js';
+import type { CalendarType, OnClickWeekNumberFunc } from '../shared/types.js';
 
 type WeekNumbersProps = {
   /**
@@ -24,7 +19,7 @@ type WeekNumbersProps = {
    *
    * @example 'iso8601'
    */
-  calendarType: CalendarType | DeprecatedCalendarType | undefined;
+  calendarType: CalendarType | undefined;
   /**
    * Function called when the user clicks a week number.
    *
@@ -42,15 +37,9 @@ type WeekNumbersProps = {
 };
 
 export default function WeekNumbers(props: WeekNumbersProps) {
-  const {
-    activeStartDate,
-    calendarType: calendarTypeOrDeprecatedCalendarType,
-    onClickWeekNumber,
-    onMouseLeave,
-    showFixedNumberOfWeeks,
-  } = props;
+  const { activeStartDate, calendarType, onClickWeekNumber, onMouseLeave, showFixedNumberOfWeeks } =
+    props;
 
-  const calendarType = mapCalendarType(calendarTypeOrDeprecatedCalendarType);
   const numberOfWeeks = (() => {
     if (showFixedNumberOfWeeks) {
       return 6;
