@@ -40,10 +40,6 @@ Your project needs to use React 16.8 or later.
 
 react-calendar uses modern web technologies. That's why it's so fast, lightweight and easy to style. This, however, comes at a cost of [supporting only modern browsers](https://caniuse.com/#feat=internationalization).
 
-#### Legacy browsers
-
-If you need to support legacy browsers like Internet Explorer 10, you will need to use [Intl.js](https://github.com/andyearnshaw/Intl.js/) or another Intl polyfill along with react-calendar.
-
 #### My locale isn't supported! What can I do?
 
 If your locale isn't supported, you can use [Intl.js](https://github.com/andyearnshaw/Intl.js/) or another Intl polyfill along with react-calendar.
