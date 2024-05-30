@@ -120,6 +120,7 @@ export default function Tile(props: TileProps) {
       onMouseOver={onMouseOver ? () => onMouseOver(date) : undefined}
       style={style}
       type="button"
+      aria-pressed={!!classes?.find((classString) => classString.indexOf('--active') != -1)}
     >
       {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}
       {tileContent}
