@@ -1,7 +1,7 @@
 import { Children, cloneElement } from 'react';
 
 type FlexProps = React.HTMLAttributes<HTMLDivElement> & {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: Too complex to type
   children: React.ReactElement<any>[];
   className?: string;
   count: number;
