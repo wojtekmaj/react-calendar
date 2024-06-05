@@ -40,9 +40,9 @@ describe('<Tile /> component', () => {
 
     const button = container.querySelector('button');
 
-    classes.forEach((className) => {
+    for (const className of classes) {
       expect(button).toHaveClass(className);
-    });
+    }
   });
 
   it('renders children properly', () => {

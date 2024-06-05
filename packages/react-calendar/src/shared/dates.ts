@@ -133,8 +133,8 @@ export function getWeekNumber(
     calendarType === CALENDAR_TYPES.GREGORY ? CALENDAR_TYPES.GREGORY : CALENDAR_TYPES.ISO_8601;
   const beginOfWeek = getBeginOfWeek(date, calendarType);
   let year = getYear(date) + 1;
-  let dayInWeekOne;
-  let beginOfFirstWeek;
+  let dayInWeekOne: Date;
+  let beginOfFirstWeek: Date;
 
   // Look for the first week one that does not come after a given date
   do {
@@ -342,10 +342,10 @@ export function getValueRange(rangeType: RangeType, date1: Date, date2: Date): [
 
 function toYearLabel(
   locale: string | undefined,
-  formatYear: ((locale: string | undefined, date: Date) => string) | undefined = defaultFormatYear,
+  formatYear: ((locale: string | undefined, date: Date) => string) | undefined,
   dates: Date[],
 ): string {
-  return dates.map((date) => formatYear(locale, date)).join(' – ');
+  return dates.map((date) => (formatYear || defaultFormatYear)(locale, date)).join(' – ');
 }
 
 /**

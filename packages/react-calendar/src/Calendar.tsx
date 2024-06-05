@@ -479,7 +479,7 @@ function getValue(value: LooseValue | undefined, index: 0 | 1): Date | null {
 
   const valueDate = toDate(rawValue);
 
-  if (isNaN(valueDate.getTime())) {
+  if (Number.isNaN(valueDate.getTime())) {
     throw new Error(`Invalid date: ${value}`);
   }
 
