@@ -544,6 +544,9 @@ describe('Calendar', () => {
         '.react-calendar__navigation__label',
       ) as HTMLButtonElement;
 
+      expect(document.activeElement).toBe(
+        container.querySelector('.react-calendar__viewContainer'),
+      );
       expect(label).toHaveAccessibleName('2011 – 2020');
     });
 

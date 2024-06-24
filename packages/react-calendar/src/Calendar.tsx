@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import Navigation from './Calendar/Navigation.js';
@@ -669,6 +669,8 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
         : null,
   );
   const [viewState, setViewState] = useState<View | undefined>(defaultView);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const setContentFocus = useRef(false);
 
   const activeStartDate =
     activeStartDateProps ||
@@ -800,6 +802,7 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
 
       setActiveStartDateState(nextActiveStartDate);
       setViewState(nextView);
+      setContentFocus.current = true;
 
       const args: OnArgs = {
         action: 'drillDown',
@@ -1003,6 +1006,13 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
     [activeStartDate, drillDown, drillUp, onChange, setActiveStartDate, value, view],
   );
 
+  useEffect(() => {
+    if (setContentFocus.current) {
+      setContentFocus.current = false;
+      contentRef.current?.focus();
+    }
+  });
+
   function renderContent(next?: boolean) {
     const currentActiveStartDate = next
       ? getBeginNext(view, activeStartDate)
@@ -1125,6 +1135,8 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
         className={`${baseClassName}__viewContainer`}
         onBlur={selectRange ? onMouseLeave : undefined}
         onMouseLeave={selectRange ? onMouseLeave : undefined}
+        tabIndex={-1}
+        ref={contentRef}
       >
         {renderContent()}
         {showDoubleView ? renderContent(true) : null}
