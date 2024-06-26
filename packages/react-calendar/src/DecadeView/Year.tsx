@@ -25,7 +25,7 @@ export default function Year({
   currentDecade,
   formatYear = defaultFormatYear,
   ...otherProps
-}: YearProps) {
+}: YearProps): React.ReactElement {
   const { date, locale } = otherProps;
 
   const classesProps: string[] = [];

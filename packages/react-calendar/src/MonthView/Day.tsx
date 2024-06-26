@@ -45,7 +45,7 @@ export default function Day({
   formatDay = defaultFormatDay,
   formatLongDate = defaultFormatLongDate,
   ...otherProps
-}: DayProps) {
+}: DayProps): React.ReactElement {
   const { date, locale } = otherProps;
 
   const classesProps: string[] = [];

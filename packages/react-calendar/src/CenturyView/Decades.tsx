@@ -25,7 +25,7 @@ type DecadesProps = {
 > &
   Omit<React.ComponentProps<typeof Decade>, 'classes' | 'currentCentury' | 'date'>;
 
-export default function Decades(props: DecadesProps) {
+export default function Decades(props: DecadesProps): React.ReactElement {
   const { activeStartDate, hover, showNeighboringCentury, value, valueType, ...otherProps } = props;
   const start = getBeginOfCenturyYear(activeStartDate);
   const end = start + (showNeighboringCentury ? 119 : 99);

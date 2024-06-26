@@ -5,7 +5,7 @@ type YearViewProps = React.ComponentProps<typeof Months>;
 /**
  * Displays a given year.
  */
-export default function YearView(props: YearViewProps) {
+export default function YearView(props: YearViewProps): React.ReactElement {
   function renderMonths() {
     return <Months {...props} />;
   }

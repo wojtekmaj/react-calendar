@@ -26,7 +26,7 @@ export default function Decade({
   currentCentury,
   formatYear = defaultFormatYear,
   ...otherProps
-}: DecadeProps) {
+}: DecadeProps): React.ReactElement {
   const { date, locale } = otherProps;
 
   const classesProps: string[] = [];

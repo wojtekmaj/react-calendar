@@ -17,7 +17,7 @@ type WeekNumberProps<T = OnClickWeekNumberFunc | undefined> = (T extends OnClick
   weekNumber: number;
 };
 
-export default function WeekNumber(props: WeekNumberProps) {
+export default function WeekNumber(props: WeekNumberProps): React.ReactElement {
   const { onClickWeekNumber, weekNumber } = props;
 
   const children = <span>{weekNumber}</span>;
