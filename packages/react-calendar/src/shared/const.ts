@@ -1,3 +1,5 @@
+import type { CalendarType } from './types.js';
+
 export const CALENDAR_TYPES = {
   GREGORY: 'gregory',
   HEBREW: 'hebrew',
@@ -5,8 +7,8 @@ export const CALENDAR_TYPES = {
   ISO_8601: 'iso8601',
 } as const;
 
-export const CALENDAR_TYPE_LOCALES = {
-  [CALENDAR_TYPES.GREGORY]: [
+export const CALENDAR_TYPE_LOCALES: Partial<Record<CalendarType, string[]>> = {
+  gregory: [
     'en-CA',
     'en-US',
     'es-AR',
@@ -27,8 +29,8 @@ export const CALENDAR_TYPE_LOCALES = {
     'es-VE',
     'pt-BR',
   ],
-  [CALENDAR_TYPES.HEBREW]: ['he', 'he-IL'],
-  [CALENDAR_TYPES.ISLAMIC]: [
+  hebrew: ['he', 'he-IL'],
+  islamic: [
     // ar-LB, ar-MA intentionally missing
     'ar',
     'ar-AE',
