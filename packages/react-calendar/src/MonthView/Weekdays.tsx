@@ -42,7 +42,7 @@ type WeekdaysProps = {
   onMouseLeave?: () => void;
 };
 
-export default function Weekdays(props: WeekdaysProps) {
+export default function Weekdays(props: WeekdaysProps): React.ReactElement {
   const {
     calendarType,
     formatShortWeekday = defaultFormatShortWeekday,

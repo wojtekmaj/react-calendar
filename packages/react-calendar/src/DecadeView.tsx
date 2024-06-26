@@ -5,7 +5,7 @@ type DecadeViewProps = React.ComponentProps<typeof Years>;
 /**
  * Displays a given decade.
  */
-export default function DecadeView(props: DecadeViewProps) {
+export default function DecadeView(props: DecadeViewProps): React.ReactElement {
   function renderYears() {
     return <Years {...props} />;
   }

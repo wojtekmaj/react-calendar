@@ -66,11 +66,19 @@ const formatShortWeekdayOptions = { weekday: 'short' } satisfies Intl.DateTimeFo
 const formatWeekdayOptions = { weekday: 'long' } satisfies Intl.DateTimeFormatOptions;
 const formatYearOptions = { year: 'numeric' } satisfies Intl.DateTimeFormatOptions;
 
-export const formatDate = getSafeFormatter(formatDateOptions);
-export const formatDay = getSafeFormatter(formatDayOptions);
-export const formatLongDate = getSafeFormatter(formatLongDateOptions);
-export const formatMonth = getSafeFormatter(formatMonthOptions);
-export const formatMonthYear = getSafeFormatter(formatMonthYearOptions);
-export const formatShortWeekday = getSafeFormatter(formatShortWeekdayOptions);
-export const formatWeekday = getSafeFormatter(formatWeekdayOptions);
-export const formatYear = getSafeFormatter(formatYearOptions);
+export const formatDate: (locale: string | undefined, date: Date) => string =
+  getSafeFormatter(formatDateOptions);
+export const formatDay: (locale: string | undefined, date: Date) => string =
+  getSafeFormatter(formatDayOptions);
+export const formatLongDate: (locale: string | undefined, date: Date) => string =
+  getSafeFormatter(formatLongDateOptions);
+export const formatMonth: (locale: string | undefined, date: Date) => string =
+  getSafeFormatter(formatMonthOptions);
+export const formatMonthYear: (locale: string | undefined, date: Date) => string =
+  getSafeFormatter(formatMonthYearOptions);
+export const formatShortWeekday: (locale: string | undefined, date: Date) => string =
+  getSafeFormatter(formatShortWeekdayOptions);
+export const formatWeekday: (locale: string | undefined, date: Date) => string =
+  getSafeFormatter(formatWeekdayOptions);
+export const formatYear: (locale: string | undefined, date: Date) => string =
+  getSafeFormatter(formatYearOptions);

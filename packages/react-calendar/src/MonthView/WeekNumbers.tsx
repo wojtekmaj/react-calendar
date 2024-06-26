@@ -36,7 +36,7 @@ type WeekNumbersProps = {
   showFixedNumberOfWeeks?: boolean;
 };
 
-export default function WeekNumbers(props: WeekNumbersProps) {
+export default function WeekNumbers(props: WeekNumbersProps): React.ReactElement {
   const { activeStartDate, calendarType, onClickWeekNumber, onMouseLeave, showFixedNumberOfWeeks } =
     props;
 

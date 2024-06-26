@@ -40,7 +40,7 @@ type DaysProps = {
 > &
   Omit<React.ComponentProps<typeof Day>, 'classes' | 'currentMonthIndex' | 'date' | 'point'>;
 
-export default function Days(props: DaysProps) {
+export default function Days(props: DaysProps): React.ReactElement {
   const {
     activeStartDate,
     calendarType,

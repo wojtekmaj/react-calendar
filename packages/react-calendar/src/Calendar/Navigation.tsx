@@ -172,7 +172,7 @@ export default function Navigation({
   showDoubleView,
   view,
   views,
-}: NavigationProps) {
+}: NavigationProps): React.ReactElement {
   const drillUpAvailable = views.indexOf(view) > 0;
   const shouldShowPrevNext2Buttons = view !== 'century';
 

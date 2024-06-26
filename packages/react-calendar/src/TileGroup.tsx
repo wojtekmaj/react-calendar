@@ -32,7 +32,7 @@ export default function TileGroup({
   step = 1,
   value,
   valueType,
-}: TileGroupProps) {
+}: TileGroupProps): React.ReactElement {
   const tiles = [];
   for (let point = start; point <= end; point += step) {
     const date = dateTransform(point);

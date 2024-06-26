@@ -24,7 +24,7 @@ export default function Flex({
   style,
   wrap,
   ...otherProps
-}: FlexProps) {
+}: FlexProps): React.ReactElement {
   return (
     <div
       className={className}

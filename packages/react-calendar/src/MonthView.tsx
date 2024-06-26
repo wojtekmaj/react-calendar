@@ -44,7 +44,7 @@ type MonthViewProps = {
 /**
  * Displays a given month.
  */
-export default function MonthView(props: MonthViewProps) {
+export default function MonthView(props: MonthViewProps): React.ReactElement {
   const { activeStartDate, locale, onMouseLeave, showFixedNumberOfWeeks } = props;
   const {
     calendarType = getCalendarTypeFromLocale(locale),

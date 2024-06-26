@@ -5,7 +5,7 @@ type CenturyViewProps = React.ComponentProps<typeof Decades>;
 /**
  * Displays a given century.
  */
-export default function CenturyView(props: CenturyViewProps) {
+export default function CenturyView(props: CenturyViewProps): React.ReactElement {
   function renderDecades() {
     return <Decades {...props} />;
   }

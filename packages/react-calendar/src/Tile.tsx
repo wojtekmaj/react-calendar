@@ -74,7 +74,7 @@ type TileProps = {
   view: View;
 };
 
-export default function Tile(props: TileProps) {
+export default function Tile(props: TileProps): React.ReactElement {
   const {
     activeStartDate,
     children,
