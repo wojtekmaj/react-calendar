@@ -8,6 +8,7 @@ import YearView from './YearView.js';
 export type { CalendarProps } from './Calendar.js';
 
 export type {
+  CalendarType,
   NavigationLabelFunc,
   OnArgs,
   OnClickFunc,
