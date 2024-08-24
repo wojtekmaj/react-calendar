@@ -3,9 +3,12 @@ import Flex from './Flex.js';
 import { getTileClasses } from './shared/utils.js';
 
 import type { RangeType, Value } from './shared/types.js';
+import { useEffect } from 'react';
 
 type TileGroupProps = {
   className?: string;
+  activeClassName?:string
+  nowClassName?:string
   count?: number;
   dateTransform: (point: number) => Date;
   dateType: RangeType;
@@ -25,6 +28,8 @@ export default function TileGroup({
   dateTransform,
   dateType,
   end,
+  activeClassName,
+  nowClassName,
   hover,
   offset,
   renderTile,
@@ -36,7 +41,7 @@ export default function TileGroup({
   const tiles = [];
   for (let point = start; point <= end; point += step) {
     const date = dateTransform(point);
-
+    console.log(nowClassName,activeClassName)
     tiles.push(
       renderTile({
         classes: getTileClasses({
@@ -45,6 +50,8 @@ export default function TileGroup({
           hover,
           value,
           valueType,
+          activeClassName,
+          nowClassName,
         }),
         date,
       }),

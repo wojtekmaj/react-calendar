@@ -78,6 +78,8 @@ export function getTileClasses(args: {
   dateType?: RangeType;
   hover?: Date | null;
   value?: Value;
+  activeClassName?:string;
+  nowClassName?:string;
   valueType?: RangeType;
 }): string[] {
   if (!args) {
@@ -110,6 +112,7 @@ export function getTileClasses(args: {
 
   if (isValueWithinRange(now, dateRange)) {
     classes.push(`${className}--now`);
+    if(args.nowClassName) classes.push(args.nowClassName)
   }
 
   if (!value || !isCompleteValue(value)) {
@@ -132,9 +135,13 @@ export function getTileClasses(args: {
 
   if (isRangeWithinRange(valueRange, dateRange)) {
     classes.push(`${className}--active`);
+    if(args.activeClassName) classes.push(args.activeClassName)
   } else if (doRangesOverlap(valueRange, dateRange)) {
     classes.push(`${className}--hasActive`);
+    if(args.activeClassName) classes.push(args.activeClassName)
   }
+
+  console.log(classes)
 
   const valueRangeClassNames = getRangeClassNames(valueRange, dateRange, `${className}--range`);
 

@@ -53,6 +53,8 @@ type TileProps = {
    * @example ({ activeStartDate, date, view }) => view === 'month' && date.getDay() === 3 ? 'wednesday' : null
    */
   tileClassName?: TileClassNameFunc | ClassName;
+  activeClassName?:string;
+  nowClassName?:string;
   /**
    * Allows to render custom content within a given calendar item (day on month view, month on year view and so on).
    *
