@@ -64,9 +64,11 @@ describe('Flex', () => {
     const wrapper = container.firstElementChild as HTMLDivElement;
     const children = Array.from(wrapper.children);
 
-    children.forEach((child) => expect(child).toHaveStyle('flex-basis: 33.333333333333336%'));
-    expect(children[0]).toHaveStyle('margin-left: 33.333333333333336%');
-    expect(children[0]).toHaveStyle('margin-inline-start: 33.333333333333336%');
-    expect(children[0]).toHaveStyle('margin-inline-end: 0');
+    for (const child of children) {
+      expect(child).toHaveStyle('flex-basis: 33.333333333333336%');
+      expect(child).toHaveStyle('flex-shrink: 0');
+      expect(child).toHaveStyle('flex-grow: 0');
+      expect(child).toHaveStyle('overflow: hidden');
+    }
   });
 });

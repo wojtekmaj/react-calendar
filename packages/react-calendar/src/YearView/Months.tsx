@@ -16,7 +16,7 @@ type MonthsProps = {
 > &
   Omit<React.ComponentProps<typeof Month>, 'classes' | 'date'>;
 
-export default function Months(props: MonthsProps) {
+export default function Months(props: MonthsProps): React.ReactElement {
   const { activeStartDate, hover, value, valueType, ...otherProps } = props;
   const start = 0;
   const end = 11;

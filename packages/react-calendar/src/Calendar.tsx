@@ -479,7 +479,7 @@ function getValue(value: LooseValue | undefined, index: 0 | 1): Date | null {
 
   const valueDate = toDate(rawValue);
 
-  if (isNaN(valueDate.getTime())) {
+  if (Number.isNaN(valueDate.getTime())) {
     throw new Error(`Invalid date: ${value}`);
   }
 
@@ -597,212 +597,261 @@ function areDatesEqual(date1?: Date | null, date2?: Date | null) {
   return date1 instanceof Date && date2 instanceof Date && date1.getTime() === date2.getTime();
 }
 
-const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
-  const {
-    activeStartDate: activeStartDateProps,
-    allowPartialRange,
-    calendarType,
-    className,
-    defaultActiveStartDate,
-    defaultValue,
-    defaultView,
-    formatDay,
-    formatLongDate,
-    formatMonth,
-    formatMonthYear,
-    formatShortWeekday,
-    formatWeekday,
-    formatYear,
-    goToRangeStartOnSelect = true,
-    inputRef,
-    locale,
-    maxDate = defaultMaxDate,
-    maxDetail = 'month',
-    minDate = defaultMinDate,
-    minDetail = 'century',
-    navigationAriaLabel,
-    navigationAriaLive,
-    navigationLabel,
-    next2AriaLabel,
-    next2Label,
-    nextAriaLabel,
-    nextLabel,
-    onActiveStartDateChange,
-    onChange: onChangeProps,
-    onClickDay,
-    onClickDecade,
-    onClickMonth,
-    onClickWeekNumber,
-    onClickYear,
-    onDrillDown,
-    onDrillUp,
-    onViewChange,
-    prev2AriaLabel,
-    prev2Label,
-    prevAriaLabel,
-    prevLabel,
-    returnValue = 'start',
-    selectRange,
-    showDoubleView,
-    showFixedNumberOfWeeks,
-    showNavigation = true,
-    showNeighboringCentury,
-    showNeighboringDecade,
-    showNeighboringMonth = true,
-    showWeekNumbers,
-    tileClassName,
-    tileContent,
-    tileDisabled,
-    value: valueProps,
-    view: viewProps,
-  } = props;
-
-  const [activeStartDateState, setActiveStartDateState] = useState<Date | null | undefined>(
-    defaultActiveStartDate,
-  );
-  const [hoverState, setHoverState] = useState<Date | null>(null);
-  const [valueState, setValueState] = useState<Value | undefined>(
-    Array.isArray(defaultValue)
-      ? (defaultValue.map((el) => (el !== null ? toDate(el) : null)) as Range<Date | null>)
-      : defaultValue !== null && defaultValue !== undefined
-        ? toDate(defaultValue)
-        : null,
-  );
-  const [viewState, setViewState] = useState<View | undefined>(defaultView);
-
-  const activeStartDate =
-    activeStartDateProps ||
-    activeStartDateState ||
-    getInitialActiveStartDate({
+const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttributes<unknown>> =
+  forwardRef(function Calendar(props, ref) {
+    const {
       activeStartDate: activeStartDateProps,
+      allowPartialRange,
+      calendarType,
+      className,
       defaultActiveStartDate,
       defaultValue,
       defaultView,
-      maxDate,
-      maxDetail,
-      minDate,
-      minDetail,
+      formatDay,
+      formatLongDate,
+      formatMonth,
+      formatMonthYear,
+      formatShortWeekday,
+      formatWeekday,
+      formatYear,
+      goToRangeStartOnSelect = true,
+      inputRef,
+      locale,
+      maxDate = defaultMaxDate,
+      maxDetail = 'month',
+      minDate = defaultMinDate,
+      minDetail = 'century',
+      navigationAriaLabel,
+      navigationAriaLive,
+      navigationLabel,
+      next2AriaLabel,
+      next2Label,
+      nextAriaLabel,
+      nextLabel,
+      onActiveStartDateChange,
+      onChange: onChangeProps,
+      onClickDay,
+      onClickDecade,
+      onClickMonth,
+      onClickWeekNumber,
+      onClickYear,
+      onDrillDown,
+      onDrillUp,
+      onViewChange,
+      prev2AriaLabel,
+      prev2Label,
+      prevAriaLabel,
+      prevLabel,
+      returnValue = 'start',
+      selectRange,
+      showDoubleView,
+      showFixedNumberOfWeeks,
+      showNavigation = true,
+      showNeighboringCentury,
+      showNeighboringDecade,
+      showNeighboringMonth = true,
+      showWeekNumbers,
+      tileClassName,
+      tileContent,
+      tileDisabled,
       value: valueProps,
       view: viewProps,
-    });
+    } = props;
 
-  const value: Value = (() => {
-    const rawValue = (() => {
-      // In the middle of range selection, use value from state
-      if (selectRange && getIsSingleValue(valueState)) {
-        return valueState;
-      }
+    const [activeStartDateState, setActiveStartDateState] = useState<Date | null | undefined>(
+      defaultActiveStartDate,
+    );
+    const [hoverState, setHoverState] = useState<Date | null>(null);
+    const [valueState, setValueState] = useState<Value | undefined>(
+      Array.isArray(defaultValue)
+        ? (defaultValue.map((el) => (el !== null ? toDate(el) : null)) as Range<Date | null>)
+        : defaultValue !== null && defaultValue !== undefined
+          ? toDate(defaultValue)
+          : null,
+    );
+    const [viewState, setViewState] = useState<View | undefined>(defaultView);
 
-      return valueProps !== undefined ? valueProps : valueState;
-    })();
-
-    if (!rawValue) {
-      return null;
-    }
-
-    return Array.isArray(rawValue)
-      ? (rawValue.map((el) => (el !== null ? toDate(el) : null)) as Range<Date | null>)
-      : rawValue !== null
-        ? toDate(rawValue)
-        : null;
-  })();
-
-  const valueType = getValueType(maxDetail);
-
-  const view = getView(viewProps || viewState, minDetail, maxDetail);
-
-  const views = getLimitedViews(minDetail, maxDetail);
-
-  const hover = selectRange ? hoverState : null;
-
-  const drillDownAvailable = views.indexOf(view) < views.length - 1;
-
-  const drillUpAvailable = views.indexOf(view) > 0;
-
-  const getProcessedValue = useCallback(
-    (value: Date) => {
-      const processFunction = (() => {
-        switch (returnValue) {
-          case 'start':
-            return getDetailValueFrom;
-          case 'end':
-            return getDetailValueTo;
-          case 'range':
-            return getDetailValueArray;
-          default:
-            throw new Error('Invalid returnValue.');
-        }
-      })();
-
-      return processFunction({
+    const activeStartDate =
+      activeStartDateProps ||
+      activeStartDateState ||
+      getInitialActiveStartDate({
+        activeStartDate: activeStartDateProps,
+        defaultActiveStartDate,
+        defaultValue,
+        defaultView,
         maxDate,
         maxDetail,
         minDate,
-        value,
+        minDetail,
+        value: valueProps,
+        view: viewProps,
       });
-    },
-    [maxDate, maxDetail, minDate, returnValue],
-  );
 
-  const setActiveStartDate = useCallback(
-    (nextActiveStartDate: Date, action: Action) => {
-      setActiveStartDateState(nextActiveStartDate);
-
-      const args: OnArgs = {
-        action,
-        activeStartDate: nextActiveStartDate,
-        value,
-        view,
-      };
-
-      if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
-        onActiveStartDateChange(args);
-      }
-    },
-    [activeStartDate, onActiveStartDateChange, value, view],
-  );
-
-  const onClickTile = useCallback(
-    (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
-      const callback = (() => {
-        switch (view) {
-          case 'century':
-            return onClickDecade;
-          case 'decade':
-            return onClickYear;
-          case 'year':
-            return onClickMonth;
-          case 'month':
-            return onClickDay;
-          default:
-            throw new Error(`Invalid view: ${view}.`);
+    const value: Value = (() => {
+      const rawValue = (() => {
+        // In the middle of range selection, use value from state
+        if (selectRange && getIsSingleValue(valueState)) {
+          return valueState;
         }
+
+        return valueProps !== undefined ? valueProps : valueState;
       })();
 
-      if (callback) callback(value, event);
-    },
-    [onClickDay, onClickDecade, onClickMonth, onClickYear, view],
-  );
+      if (!rawValue) {
+        return null;
+      }
 
-  const drillDown = useCallback(
-    (nextActiveStartDate: Date, event: React.MouseEvent<HTMLButtonElement>) => {
-      if (!drillDownAvailable) {
+      return Array.isArray(rawValue)
+        ? (rawValue.map((el) => (el !== null ? toDate(el) : null)) as Range<Date | null>)
+        : rawValue !== null
+          ? toDate(rawValue)
+          : null;
+    })();
+
+    const valueType = getValueType(maxDetail);
+
+    const view = getView(viewProps || viewState, minDetail, maxDetail);
+
+    const views = getLimitedViews(minDetail, maxDetail);
+
+    const hover = selectRange ? hoverState : null;
+
+    const drillDownAvailable = views.indexOf(view) < views.length - 1;
+
+    const drillUpAvailable = views.indexOf(view) > 0;
+
+    const getProcessedValue = useCallback(
+      (value: Date) => {
+        const processFunction = (() => {
+          switch (returnValue) {
+            case 'start':
+              return getDetailValueFrom;
+            case 'end':
+              return getDetailValueTo;
+            case 'range':
+              return getDetailValueArray;
+            default:
+              throw new Error('Invalid returnValue.');
+          }
+        })();
+
+        return processFunction({
+          maxDate,
+          maxDetail,
+          minDate,
+          value,
+        });
+      },
+      [maxDate, maxDetail, minDate, returnValue],
+    );
+
+    const setActiveStartDate = useCallback(
+      (nextActiveStartDate: Date, action: Action) => {
+        setActiveStartDateState(nextActiveStartDate);
+
+        const args: OnArgs = {
+          action,
+          activeStartDate: nextActiveStartDate,
+          value,
+          view,
+        };
+
+        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+          onActiveStartDateChange(args);
+        }
+      },
+      [activeStartDate, onActiveStartDateChange, value, view],
+    );
+
+    const onClickTile = useCallback(
+      (value: Date, event: React.MouseEvent<HTMLButtonElement>) => {
+        const callback = (() => {
+          switch (view) {
+            case 'century':
+              return onClickDecade;
+            case 'decade':
+              return onClickYear;
+            case 'year':
+              return onClickMonth;
+            case 'month':
+              return onClickDay;
+            default:
+              throw new Error(`Invalid view: ${view}.`);
+          }
+        })();
+
+        if (callback) callback(value, event);
+      },
+      [onClickDay, onClickDecade, onClickMonth, onClickYear, view],
+    );
+
+    const drillDown = useCallback(
+      (nextActiveStartDate: Date, event: React.MouseEvent<HTMLButtonElement>) => {
+        if (!drillDownAvailable) {
+          return;
+        }
+
+        onClickTile(nextActiveStartDate, event);
+
+        const nextView = views[views.indexOf(view) + 1];
+
+        if (!nextView) {
+          throw new Error('Attempted to drill down from the lowest view.');
+        }
+
+        setActiveStartDateState(nextActiveStartDate);
+        setViewState(nextView);
+
+        const args: OnArgs = {
+          action: 'drillDown',
+          activeStartDate: nextActiveStartDate,
+          value,
+          view: nextView,
+        };
+
+        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+          onActiveStartDateChange(args);
+        }
+
+        if (onViewChange && view !== nextView) {
+          onViewChange(args);
+        }
+
+        if (onDrillDown) {
+          onDrillDown(args);
+        }
+      },
+      [
+        activeStartDate,
+        drillDownAvailable,
+        onActiveStartDateChange,
+        onClickTile,
+        onDrillDown,
+        onViewChange,
+        value,
+        view,
+        views,
+      ],
+    );
+
+    const drillUp = useCallback(() => {
+      if (!drillUpAvailable) {
         return;
       }
 
-      onClickTile(nextActiveStartDate, event);
-
-      const nextView = views[views.indexOf(view) + 1];
+      const nextView = views[views.indexOf(view) - 1];
 
       if (!nextView) {
-        throw new Error('Attempted to drill down from the lowest view.');
+        throw new Error('Attempted to drill up from the highest view.');
       }
+
+      const nextActiveStartDate = getBegin(nextView, activeStartDate);
 
       setActiveStartDateState(nextActiveStartDate);
       setViewState(nextView);
 
       const args: OnArgs = {
-        action: 'drillDown',
+        action: 'drillUp',
         activeStartDate: nextActiveStartDate,
         value,
         view: nextView,
@@ -816,321 +865,277 @@ const Calendar = forwardRef(function Calendar(props: CalendarProps, ref) {
         onViewChange(args);
       }
 
-      if (onDrillDown) {
-        onDrillDown(args);
+      if (onDrillUp) {
+        onDrillUp(args);
       }
-    },
-    [
+    }, [
       activeStartDate,
-      drillDownAvailable,
+      drillUpAvailable,
       onActiveStartDateChange,
-      onClickTile,
-      onDrillDown,
+      onDrillUp,
       onViewChange,
       value,
       view,
       views,
-    ],
-  );
+    ]);
 
-  const drillUp = useCallback(() => {
-    if (!drillUpAvailable) {
-      return;
-    }
+    const onChange = useCallback(
+      (rawNextValue: Date, event: React.MouseEvent<HTMLButtonElement>) => {
+        const previousValue = value;
 
-    const nextView = views[views.indexOf(view) - 1];
+        onClickTile(rawNextValue, event);
 
-    if (!nextView) {
-      throw new Error('Attempted to drill up from the highest view.');
-    }
+        const isFirstValueInRange = selectRange && !getIsSingleValue(previousValue);
 
-    const nextActiveStartDate = getBegin(nextView, activeStartDate);
+        let nextValue: Value;
+        if (selectRange) {
+          // Range selection turned on
 
-    setActiveStartDateState(nextActiveStartDate);
-    setViewState(nextView);
+          if (isFirstValueInRange) {
+            // Value has 0 or 2 elements - either way we're starting a new array
+            // First value
+            nextValue = getBegin(valueType, rawNextValue);
+          } else {
+            if (!previousValue) {
+              throw new Error('previousValue is required');
+            }
 
-    const args: OnArgs = {
-      action: 'drillUp',
-      activeStartDate: nextActiveStartDate,
-      value,
-      view: nextView,
-    };
+            if (Array.isArray(previousValue)) {
+              throw new Error('previousValue must not be an array');
+            }
 
-    if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
-      onActiveStartDateChange(args);
-    }
-
-    if (onViewChange && view !== nextView) {
-      onViewChange(args);
-    }
-
-    if (onDrillUp) {
-      onDrillUp(args);
-    }
-  }, [
-    activeStartDate,
-    drillUpAvailable,
-    onActiveStartDateChange,
-    onDrillUp,
-    onViewChange,
-    value,
-    view,
-    views,
-  ]);
-
-  const onChange = useCallback(
-    (rawNextValue: Date, event: React.MouseEvent<HTMLButtonElement>) => {
-      const previousValue = value;
-
-      onClickTile(rawNextValue, event);
-
-      const isFirstValueInRange = selectRange && !getIsSingleValue(previousValue);
-
-      let nextValue: Value;
-      if (selectRange) {
-        // Range selection turned on
-
-        if (isFirstValueInRange) {
-          // Value has 0 or 2 elements - either way we're starting a new array
-          // First value
-          nextValue = getBegin(valueType, rawNextValue);
+            // Second value
+            nextValue = getValueRange(valueType, previousValue, rawNextValue);
+          }
         } else {
-          if (!previousValue) {
-            throw new Error('previousValue is required');
-          }
-
-          if (Array.isArray(previousValue)) {
-            throw new Error('previousValue must not be an array');
-          }
-
-          // Second value
-          nextValue = getValueRange(valueType, previousValue, rawNextValue);
+          // Range selection turned off
+          nextValue = getProcessedValue(rawNextValue);
         }
-      } else {
-        // Range selection turned off
-        nextValue = getProcessedValue(rawNextValue);
-      }
 
-      const nextActiveStartDate =
-        // Range selection turned off
-        !selectRange ||
-        // Range selection turned on, first value
-        isFirstValueInRange ||
-        // Range selection turned on, second value, goToRangeStartOnSelect toggled on
-        goToRangeStartOnSelect
-          ? getActiveStartDate({
-              maxDate,
-              maxDetail,
-              minDate,
-              minDetail,
-              value: nextValue,
-              view,
-            })
-          : null;
+        const nextActiveStartDate =
+          // Range selection turned off
+          !selectRange ||
+          // Range selection turned on, first value
+          isFirstValueInRange ||
+          // Range selection turned on, second value, goToRangeStartOnSelect toggled on
+          goToRangeStartOnSelect
+            ? getActiveStartDate({
+                maxDate,
+                maxDetail,
+                minDate,
+                minDetail,
+                value: nextValue,
+                view,
+              })
+            : null;
 
-      event.persist();
+        event.persist();
 
-      setActiveStartDateState(nextActiveStartDate);
-      setValueState(nextValue);
+        setActiveStartDateState(nextActiveStartDate);
+        setValueState(nextValue);
 
-      const args: OnArgs = {
-        action: 'onChange',
-        activeStartDate: nextActiveStartDate,
-        value: nextValue,
+        const args: OnArgs = {
+          action: 'onChange',
+          activeStartDate: nextActiveStartDate,
+          value: nextValue,
+          view,
+        };
+
+        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+          onActiveStartDateChange(args);
+        }
+
+        if (onChangeProps) {
+          if (selectRange) {
+            const isSingleValue = getIsSingleValue(nextValue);
+
+            if (!isSingleValue) {
+              onChangeProps(nextValue || null, event);
+            } else if (allowPartialRange) {
+              if (Array.isArray(nextValue)) {
+                throw new Error('value must not be an array');
+              }
+
+              onChangeProps([nextValue || null, null], event);
+            }
+          } else {
+            onChangeProps(nextValue || null, event);
+          }
+        }
+      },
+      [
+        activeStartDate,
+        allowPartialRange,
+        getProcessedValue,
+        goToRangeStartOnSelect,
+        maxDate,
+        maxDetail,
+        minDate,
+        minDetail,
+        onActiveStartDateChange,
+        onChangeProps,
+        onClickTile,
+        selectRange,
+        value,
+        valueType,
         view,
+      ],
+    );
+
+    function onMouseOver(nextHover: Date) {
+      setHoverState(nextHover);
+    }
+
+    function onMouseLeave() {
+      setHoverState(null);
+    }
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        activeStartDate,
+        drillDown,
+        drillUp,
+        onChange,
+        setActiveStartDate,
+        value,
+        view,
+      }),
+      [activeStartDate, drillDown, drillUp, onChange, setActiveStartDate, value, view],
+    );
+
+    function renderContent(next?: boolean) {
+      const currentActiveStartDate = next
+        ? getBeginNext(view, activeStartDate)
+        : getBegin(view, activeStartDate);
+
+      const onClick = drillDownAvailable ? drillDown : onChange;
+
+      const commonProps = {
+        activeStartDate: currentActiveStartDate,
+        hover,
+        locale,
+        maxDate,
+        minDate,
+        onClick,
+        onMouseOver: selectRange ? onMouseOver : undefined,
+        tileClassName,
+        tileContent,
+        tileDisabled,
+        value,
+        valueType,
       };
 
-      if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
-        onActiveStartDateChange(args);
-      }
-
-      if (onChangeProps) {
-        if (selectRange) {
-          const isSingleValue = getIsSingleValue(nextValue);
-
-          if (!isSingleValue) {
-            onChangeProps(nextValue || null, event);
-          } else if (allowPartialRange) {
-            if (Array.isArray(nextValue)) {
-              throw new Error('value must not be an array');
-            }
-
-            onChangeProps([nextValue || null, null], event);
-          }
-        } else {
-          onChangeProps(nextValue || null, event);
+      switch (view) {
+        case 'century': {
+          return (
+            <CenturyView
+              formatYear={formatYear}
+              showNeighboringCentury={showNeighboringCentury}
+              {...commonProps}
+            />
+          );
         }
+        case 'decade': {
+          return (
+            <DecadeView
+              formatYear={formatYear}
+              showNeighboringDecade={showNeighboringDecade}
+              {...commonProps}
+            />
+          );
+        }
+        case 'year': {
+          return (
+            <YearView
+              formatMonth={formatMonth}
+              formatMonthYear={formatMonthYear}
+              {...commonProps}
+            />
+          );
+        }
+        case 'month': {
+          return (
+            <MonthView
+              calendarType={calendarType}
+              formatDay={formatDay}
+              formatLongDate={formatLongDate}
+              formatShortWeekday={formatShortWeekday}
+              formatWeekday={formatWeekday}
+              onClickWeekNumber={onClickWeekNumber}
+              onMouseLeave={selectRange ? onMouseLeave : undefined}
+              showFixedNumberOfWeeks={
+                typeof showFixedNumberOfWeeks !== 'undefined'
+                  ? showFixedNumberOfWeeks
+                  : showDoubleView
+              }
+              showNeighboringMonth={showNeighboringMonth}
+              showWeekNumbers={showWeekNumbers}
+              {...commonProps}
+            />
+          );
+        }
+        default:
+          throw new Error(`Invalid view: ${view}.`);
       }
-    },
-    [
-      activeStartDate,
-      allowPartialRange,
-      getProcessedValue,
-      goToRangeStartOnSelect,
-      maxDate,
-      maxDetail,
-      minDate,
-      minDetail,
-      onActiveStartDateChange,
-      onChangeProps,
-      onClickTile,
-      selectRange,
-      value,
-      valueType,
-      view,
-    ],
-  );
-
-  function onMouseOver(nextHover: Date) {
-    setHoverState(nextHover);
-  }
-
-  function onMouseLeave() {
-    setHoverState(null);
-  }
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      activeStartDate,
-      drillDown,
-      drillUp,
-      onChange,
-      setActiveStartDate,
-      value,
-      view,
-    }),
-    [activeStartDate, drillDown, drillUp, onChange, setActiveStartDate, value, view],
-  );
-
-  function renderContent(next?: boolean) {
-    const currentActiveStartDate = next
-      ? getBeginNext(view, activeStartDate)
-      : getBegin(view, activeStartDate);
-
-    const onClick = drillDownAvailable ? drillDown : onChange;
-
-    const commonProps = {
-      activeStartDate: currentActiveStartDate,
-      hover,
-      locale,
-      maxDate,
-      minDate,
-      onClick,
-      onMouseOver: selectRange ? onMouseOver : undefined,
-      tileClassName,
-      tileContent,
-      tileDisabled,
-      value,
-      valueType,
-    };
-
-    switch (view) {
-      case 'century': {
-        return (
-          <CenturyView
-            formatYear={formatYear}
-            showNeighboringCentury={showNeighboringCentury}
-            {...commonProps}
-          />
-        );
-      }
-      case 'decade': {
-        return (
-          <DecadeView
-            formatYear={formatYear}
-            showNeighboringDecade={showNeighboringDecade}
-            {...commonProps}
-          />
-        );
-      }
-      case 'year': {
-        return (
-          <YearView formatMonth={formatMonth} formatMonthYear={formatMonthYear} {...commonProps} />
-        );
-      }
-      case 'month': {
-        return (
-          <MonthView
-            calendarType={calendarType}
-            formatDay={formatDay}
-            formatLongDate={formatLongDate}
-            formatShortWeekday={formatShortWeekday}
-            formatWeekday={formatWeekday}
-            onClickWeekNumber={onClickWeekNumber}
-            onMouseLeave={selectRange ? onMouseLeave : undefined}
-            showFixedNumberOfWeeks={
-              typeof showFixedNumberOfWeeks !== 'undefined'
-                ? showFixedNumberOfWeeks
-                : showDoubleView
-            }
-            showNeighboringMonth={showNeighboringMonth}
-            showWeekNumbers={showWeekNumbers}
-            {...commonProps}
-          />
-        );
-      }
-      default:
-        throw new Error(`Invalid view: ${view}.`);
     }
-  }
 
-  function renderNavigation() {
-    if (!showNavigation) {
-      return null;
+    function renderNavigation() {
+      if (!showNavigation) {
+        return null;
+      }
+
+      return (
+        <Navigation
+          activeStartDate={activeStartDate}
+          drillUp={drillUp}
+          formatMonthYear={formatMonthYear}
+          formatYear={formatYear}
+          locale={locale}
+          maxDate={maxDate}
+          minDate={minDate}
+          navigationAriaLabel={navigationAriaLabel}
+          navigationAriaLive={navigationAriaLive}
+          navigationLabel={navigationLabel}
+          next2AriaLabel={next2AriaLabel}
+          next2Label={next2Label}
+          nextAriaLabel={nextAriaLabel}
+          nextLabel={nextLabel}
+          prev2AriaLabel={prev2AriaLabel}
+          prev2Label={prev2Label}
+          prevAriaLabel={prevAriaLabel}
+          prevLabel={prevLabel}
+          setActiveStartDate={setActiveStartDate}
+          showDoubleView={showDoubleView}
+          view={view}
+          views={views}
+        />
+      );
     }
+
+    const valueArray = Array.isArray(value) ? value : [value];
 
     return (
-      <Navigation
-        activeStartDate={activeStartDate}
-        drillUp={drillUp}
-        formatMonthYear={formatMonthYear}
-        formatYear={formatYear}
-        locale={locale}
-        maxDate={maxDate}
-        minDate={minDate}
-        navigationAriaLabel={navigationAriaLabel}
-        navigationAriaLive={navigationAriaLive}
-        navigationLabel={navigationLabel}
-        next2AriaLabel={next2AriaLabel}
-        next2Label={next2Label}
-        nextAriaLabel={nextAriaLabel}
-        nextLabel={nextLabel}
-        prev2AriaLabel={prev2AriaLabel}
-        prev2Label={prev2Label}
-        prevAriaLabel={prevAriaLabel}
-        prevLabel={prevLabel}
-        setActiveStartDate={setActiveStartDate}
-        showDoubleView={showDoubleView}
-        view={view}
-        views={views}
-      />
-    );
-  }
-
-  const valueArray = Array.isArray(value) ? value : [value];
-
-  return (
-    <div
-      className={clsx(
-        baseClassName,
-        selectRange && valueArray.length === 1 && `${baseClassName}--selectRange`,
-        showDoubleView && `${baseClassName}--doubleView`,
-        className,
-      )}
-      ref={inputRef}
-    >
-      {renderNavigation()}
       <div
-        className={`${baseClassName}__viewContainer`}
-        onBlur={selectRange ? onMouseLeave : undefined}
-        onMouseLeave={selectRange ? onMouseLeave : undefined}
+        className={clsx(
+          baseClassName,
+          selectRange && valueArray.length === 1 && `${baseClassName}--selectRange`,
+          showDoubleView && `${baseClassName}--doubleView`,
+          className,
+        )}
+        ref={inputRef}
       >
-        {renderContent()}
-        {showDoubleView ? renderContent(true) : null}
+        {renderNavigation()}
+        <div
+          className={`${baseClassName}__viewContainer`}
+          onBlur={selectRange ? onMouseLeave : undefined}
+          onMouseLeave={selectRange ? onMouseLeave : undefined}
+        >
+          {renderContent()}
+          {showDoubleView ? renderContent(true) : null}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  });
 
 export default Calendar;

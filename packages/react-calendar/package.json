@@ -25,13 +25,13 @@
     "build-js-cjs-package": "echo '{\n  \"type\": \"commonjs\"\n}' > dist/cjs/package.json",
     "clean": "rimraf dist",
     "copy-styles": "cpy 'src/**/*.css' dist",
-    "format": "prettier --check . --cache",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "biome format",
+    "lint": "biome lint",
     "prepack": "yarn clean && yarn build",
     "test": "yarn lint && yarn tsc && yarn format && yarn unit",
     "tsc": "tsc",
     "unit": "vitest",
-    "watch": "yarn build-js-esm --watch & yarn build-js-cjs --watch & nodemon --watch src --ext css --exec \"yarn copy-styles\""
+    "watch": "yarn build-js-esm --watch & yarn build-js-cjs --watch & node --eval \"fs.watch('src', () => child_process.exec('yarn copy-styles'))\""
   },
   "keywords": [
     "calendar",
@@ -52,22 +52,21 @@
     "warning": "^4.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@testing-library/dom": "^10.0.0",
     "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^15.0.0",
+    "@testing-library/react": "^16.0.0",
     "@types/node": "*",
     "@types/react": "*",
+    "@types/react-dom": "*",
     "@types/warning": "^3.0.0",
     "cpy-cli": "^5.0.0",
-    "eslint": "^8.56.0",
-    "eslint-config-wojtekmaj": "^1.0.0",
     "happy-dom": "^12.6.0",
-    "nodemon": "^3.0.0",
-    "prettier": "^3.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rimraf": "^3.0.0",
-    "typescript": "^5.4.2",
-    "vitest": "^1.0.2"
+    "rimraf": "^6.0.0",
+    "typescript": "^5.5.2",
+    "vitest": "^2.0.5"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",

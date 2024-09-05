@@ -74,7 +74,7 @@ type TileProps = {
   view: View;
 };
 
-export default function Tile(props: TileProps) {
+export default function Tile(props: TileProps): React.ReactElement {
   const {
     activeStartDate,
     children,
@@ -113,7 +113,7 @@ export default function Tile(props: TileProps) {
       disabled={
         (minDate && minDateTransform(minDate) > date) ||
         (maxDate && maxDateTransform(maxDate) < date) ||
-        (tileDisabled && tileDisabled({ activeStartDate, date, view }))
+        tileDisabled?.({ activeStartDate, date, view })
       }
       onClick={onClick ? (event) => onClick(date, event) : undefined}
       onFocus={onMouseOver ? () => onMouseOver(date) : undefined}

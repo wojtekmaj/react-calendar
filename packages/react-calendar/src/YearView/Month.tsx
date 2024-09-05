@@ -33,7 +33,7 @@ export default function Month({
   formatMonth = defaultFormatMonth,
   formatMonthYear = defaultFormatMonthYear,
   ...otherProps
-}: MonthProps) {
+}: MonthProps): React.ReactElement {
   const { date, locale } = otherProps;
 
   return (
