@@ -285,7 +285,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/biome@npm:^1.8.3":
+"@biomejs/biome@npm:1.8.3":
   version: 1.8.3
   resolution: "@biomejs/biome@npm:1.8.3"
   dependencies:
@@ -2559,7 +2559,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-calendar@workspace:packages/react-calendar"
   dependencies:
-    "@biomejs/biome": "npm:^1.8.3"
+    "@biomejs/biome": "npm:1.8.3"
     "@testing-library/dom": "npm:^10.0.0"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.0.0"
@@ -2963,7 +2963,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "test@workspace:test"
   dependencies:
-    "@biomejs/biome": "npm:^1.8.3"
+    "@biomejs/biome": "npm:1.8.3"
     "@types/react": "npm:*"
     "@vitejs/plugin-react": "npm:^4.2.0"
     "@wojtekmaj/date-utils": "npm:^1.1.3"
