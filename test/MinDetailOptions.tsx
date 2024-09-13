@@ -40,6 +40,7 @@ export default function MinDetailOptions({
             type="radio"
             value={view}
           />
+          {/* biome-ignore lint/a11y/noLabelWithoutControl: Pinky promise this label won't ever be empty */}
           <label htmlFor={`min-${view}`}>{upperCaseFirstLetter(view)}</label>
         </div>
       ))}

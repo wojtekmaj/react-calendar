@@ -95,7 +95,7 @@ export default function ViewOptions({
           onChange={onShowNeighboringCenturyChange}
           type="checkbox"
         />
-        <label htmlFor="showNeighboringCentury">{"Show neighboring century's decades"}</label>
+        <label htmlFor="showNeighboringCentury">Show neighboring century's decades</label>
       </div>
 
       <div>
@@ -105,7 +105,7 @@ export default function ViewOptions({
           onChange={onShowNeighboringDecadeChange}
           type="checkbox"
         />
-        <label htmlFor="showNeighboringDecade">{"Show neighboring decade's years"}</label>
+        <label htmlFor="showNeighboringDecade">Show neighboring decade's years</label>
       </div>
 
       <div>
@@ -116,7 +116,7 @@ export default function ViewOptions({
           onChange={onShowNeighboringMonthChange}
           type="checkbox"
         />
-        <label htmlFor="showNeighboringMonth">{"Show neighboring month's days"}</label>
+        <label htmlFor="showNeighboringMonth">Show neighboring month's days</label>
       </div>
 
       <div>
