@@ -15,7 +15,7 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
     },
-    "./dist/Calendar.css": "./dist/Calendar.css"
+    "./*": "./*"
   },
   "scripts": {
     "build": "yarn build-js && yarn copy-styles",
