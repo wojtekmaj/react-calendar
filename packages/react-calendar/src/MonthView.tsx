@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 import Days from './MonthView/Days.js';
 import Weekdays from './MonthView/Weekdays.js';
