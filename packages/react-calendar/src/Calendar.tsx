@@ -1,7 +1,7 @@
 'use client';
 
 import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 import Navigation from './Calendar/Navigation.js';
 import CenturyView from './CenturyView.js';
