@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { getYear, getMonth, getMonthStart } from '@wojtekmaj/date-utils';
 
 import Flex from '../Flex.js';
