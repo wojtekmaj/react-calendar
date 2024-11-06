@@ -1800,17 +1800,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:^12.6.0":
-  version: 12.6.0
-  resolution: "happy-dom@npm:12.6.0"
+"happy-dom@npm:^15.10.1":
+  version: 15.10.1
+  resolution: "happy-dom@npm:15.10.1"
   dependencies:
-    css.escape: "npm:^1.5.1"
     entities: "npm:^4.5.0"
-    iconv-lite: "npm:^0.6.3"
     webidl-conversions: "npm:^7.0.0"
-    whatwg-encoding: "npm:^2.0.0"
     whatwg-mimetype: "npm:^3.0.0"
-  checksum: 10c0/9353bbca619cda9bbfc734d948cc2db74c6bf4b9241e3a770a14415d2c09e8ae65f0a05823010877a517d5e483b934837d6d00d8606fd8242acb855e2d3c39ca
+  checksum: 10c0/2951f40e8051b7c031a5887098b772a729c677322b8ebf4918111e2abb65ad451cf93cf1925cb86c1ab8b2fe922f4e5d746104bb3e4caa6a6a31b67f7bb71bab
   languageName: node
   linkType: hard
 
@@ -1864,7 +1861,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iconv-lite@npm:0.6.3, iconv-lite@npm:^0.6.2, iconv-lite@npm:^0.6.3":
+"iconv-lite@npm:^0.6.2":
   version: 0.6.3
   resolution: "iconv-lite@npm:0.6.3"
   dependencies:
@@ -2520,7 +2517,7 @@ __metadata:
     clsx: "npm:^2.0.0"
     cpy-cli: "npm:^5.0.0"
     get-user-locale: "npm:^2.2.1"
-    happy-dom: "npm:^12.6.0"
+    happy-dom: "npm:^15.10.1"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     rimraf: "npm:^6.0.0"
@@ -3150,15 +3147,6 @@ __metadata:
   version: 7.0.0
   resolution: "webidl-conversions@npm:7.0.0"
   checksum: 10c0/228d8cb6d270c23b0720cb2d95c579202db3aaf8f633b4e9dd94ec2000a04e7e6e43b76a94509cdb30479bd00ae253ab2371a2da9f81446cc313f89a4213a2c4
-  languageName: node
-  linkType: hard
-
-"whatwg-encoding@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "whatwg-encoding@npm:2.0.0"
-  dependencies:
-    iconv-lite: "npm:0.6.3"
-  checksum: 10c0/91b90a49f312dc751496fd23a7e68981e62f33afe938b97281ad766235c4872fc4e66319f925c5e9001502b3040dd25a33b02a9c693b73a4cbbfdc4ad10c3e3e
   languageName: node
   linkType: hard
 
