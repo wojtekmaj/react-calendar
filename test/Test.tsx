@@ -14,11 +14,15 @@ import { formatDate } from './shared/dateFormatter.js';
 import './Test.css';
 
 import type { LooseValue, Value, View } from './shared/types.js';
+import type {CalendarType} from 'react-calendar/src/index.js';
+import CalendarTypeOptions from './CalendarTypeOptions.js';
 
 const now = new Date();
 
 const tileClassName = ({ date, view }: { date: Date; view: View }) => {
   switch (view) {
+    case 'week':
+      return date.getDay() === 0 || date.getDay() === 6 ? 'red' : null;
     case 'month':
       return date.getDay() === 0 || date.getDay() === 6 ? 'red' : null;
     case 'year':
@@ -34,6 +38,12 @@ const tileClassName = ({ date, view }: { date: Date; view: View }) => {
 
 const tileContent = ({ date, view }: { date: Date; view: View }) => {
   switch (view) {
+    case 'week':
+      return date.getDay() === 0 ? (
+        <p>
+          <small>{"It's Sunday!"}</small>
+        </p>
+      ) : null;
     case 'month':
       return date.getDay() === 0 ? (
         <p>
@@ -74,6 +84,7 @@ export default function Test() {
   );
   const [locale, setLocale] = useState<string>();
   const [maxDate, setMaxDate] = useState<Date | undefined>(fifteenthOfNextMonth);
+  const [calendarType, setCalendarType] = useState<CalendarType>('gregory');
   const [maxDetail, setMaxDetail] = useState<View>('month');
   const [minDate, setMinDate] = useState<Date | undefined>(nineteenNinetyFive);
   const [minDetail, setMinDetail] = useState<View>('century');
@@ -120,6 +131,7 @@ export default function Test() {
 
   const commonProps = {
     className: 'myCustomCalendarClassName',
+    calendarType,
     locale,
     maxDate,
     maxDetail,
@@ -184,6 +196,7 @@ export default function Test() {
             setMaxDate={setMaxDate}
             setMinDate={setMinDate}
           />
+          <CalendarTypeOptions calendarType={calendarType} setCalendarType={setCalendarType} />
           <LocaleOptions locale={locale} setLocale={setLocale} />
           <ValueOptions
             selectRange={selectRange}

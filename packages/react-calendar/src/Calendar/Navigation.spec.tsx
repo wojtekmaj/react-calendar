@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Navigation from './Navigation.js';
 
-const allViews = ['century', 'decade', 'year', 'month'];
+const allViews = ['century', 'decade', 'year', 'month', 'week'];
 
 describe('Navigation', () => {
   const defaultProps = {

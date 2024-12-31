@@ -28,6 +28,8 @@ import {
   getDayStart,
   getDayEnd,
   getDayRange,
+  getMonth,
+  getDate,
 } from '@wojtekmaj/date-utils';
 
 import { CALENDAR_TYPES, WEEKDAYS } from './const.js';
@@ -147,6 +149,73 @@ export function getWeekNumber(
 }
 
 /**
+ * Gets week start date according to ISO 8601 or US standard.
+ * In ISO 8601, Arabic and Hebrew week 1 is the one with January 4.
+ * In US calendar week 1 is the one with January 1.
+ *
+ * @param {Date} date Date.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
+ * @returns {Date} starting day of the week.
+ */
+export function getWeekStartDate(
+  date: Date,
+  calendarType: CalendarType = CALENDAR_TYPES.ISO_8601,
+): Date {
+  const calendarTypeForWeekNumber =
+    calendarType === CALENDAR_TYPES.GREGORY ? CALENDAR_TYPES.GREGORY : CALENDAR_TYPES.ISO_8601;
+  const beginOfWeek = getBeginOfWeek(date, calendarType);
+  let year = getYear(date) + 1;
+  let dayInWeekOne: Date;
+  let beginOfFirstWeek: Date;
+
+  // Look for the first week one that does not come after a given date
+  do {
+    dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === CALENDAR_TYPES.ISO_8601 ? 4 : 1);
+    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarType);
+    year -= 1;
+  } while (date < beginOfFirstWeek);
+
+  return beginOfWeek;
+}
+
+/**
+ * Gets week end date according to ISO 8601 or US standard.
+ * In ISO 8601, Arabic and Hebrew week 1 is the one with January 4.
+ * In US calendar week 1 is the one with January 1.
+ *
+ * @param {Date} date Date.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
+ * @returns {number} Week number.
+ */
+export function getWeekEndDate(
+  date: Date,
+  calendarType: CalendarType = CALENDAR_TYPES.ISO_8601,
+): Date {
+  const beginOfWeek = getWeekStartDate(date, calendarType);
+  beginOfWeek.setDate(beginOfWeek.getDate() + 6);
+  return beginOfWeek;
+}
+
+/**
+ * Gets week date according to ISO 8601 or US standard.
+ * In ISO 8601, Arabic and Hebrew week 1 is the one with January 4.
+ * In US calendar week 1 is the one with January 1.
+ *
+ * @param {Date} date Date.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
+ * @returns {number} Week number.
+ */
+export function getWeekDate(
+  date: Date,
+  calendarType: CalendarType = CALENDAR_TYPES.ISO_8601,
+  weekOffset = 0,
+): Date {
+  const beginOfWeek = getWeekStartDate(date, calendarType);
+  beginOfWeek.setDate(beginOfWeek.getDate() + (weekOffset * 7));
+  return beginOfWeek;
+}
+
+/**
  * Others
  */
 
@@ -157,7 +226,7 @@ export function getWeekNumber(
  * @param {Date} date Date.
  * @returns {Date} Beginning of a given range.
  */
-export function getBegin(rangeType: RangeType, date: Date): Date {
+export function getBegin(rangeType: RangeType, date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601): Date {
   switch (rangeType) {
     case 'century':
       return getCenturyStart(date);
@@ -169,6 +238,9 @@ export function getBegin(rangeType: RangeType, date: Date): Date {
       return getMonthStart(date);
     case 'day':
       return getDayStart(date);
+    case 'week':{
+      return getWeekStartDate(date, calendarType);
+    }
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
@@ -181,7 +253,7 @@ export function getBegin(rangeType: RangeType, date: Date): Date {
  * @param {Date} date Date.
  * @returns {Date} Beginning of a previous given range.
  */
-export function getBeginPrevious(rangeType: RangeType, date: Date): Date {
+export function getBeginPrevious(rangeType: RangeType, date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601): Date {
   switch (rangeType) {
     case 'century':
       return getPreviousCenturyStart(date);
@@ -191,6 +263,9 @@ export function getBeginPrevious(rangeType: RangeType, date: Date): Date {
       return getPreviousYearStart(date);
     case 'month':
       return getPreviousMonthStart(date);
+    case 'week': {
+      return getPreviousWeekStart(date, calendarType);
+    }
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
@@ -203,7 +278,7 @@ export function getBeginPrevious(rangeType: RangeType, date: Date): Date {
  * @param {Date} date Date.
  * @returns {Date} Beginning of a next given range.
  */
-export function getBeginNext(rangeType: RangeType, date: Date): Date {
+export function getBeginNext(rangeType: RangeType, date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601): Date {
   switch (rangeType) {
     case 'century':
       return getNextCenturyStart(date);
@@ -213,12 +288,15 @@ export function getBeginNext(rangeType: RangeType, date: Date): Date {
       return getNextYearStart(date);
     case 'month':
       return getNextMonthStart(date);
+    case 'week': {
+      return getNextWeekStart(date, calendarType);
+    }
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
-export function getBeginPrevious2(rangeType: RangeType, date: Date): Date {
+export function getBeginPrevious2(rangeType: RangeType, date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601): Date {
   switch (rangeType) {
     case 'decade':
       return getPreviousDecadeStart(date, -100);
@@ -226,12 +304,15 @@ export function getBeginPrevious2(rangeType: RangeType, date: Date): Date {
       return getPreviousYearStart(date, -10);
     case 'month':
       return getPreviousMonthStart(date, -12);
+    case 'week': {
+      return getPreviousWeekStart(date, calendarType, -2);
+    }
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
-export function getBeginNext2(rangeType: RangeType, date: Date): Date {
+export function getBeginNext2(rangeType: RangeType, date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601): Date {
   switch (rangeType) {
     case 'decade':
       return getNextDecadeStart(date, 100);
@@ -239,6 +320,9 @@ export function getBeginNext2(rangeType: RangeType, date: Date): Date {
       return getNextYearStart(date, 10);
     case 'month':
       return getNextMonthStart(date, 12);
+    case 'week': {
+      return getNextWeekStart(date, calendarType, 2);
+    }
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
@@ -251,7 +335,7 @@ export function getBeginNext2(rangeType: RangeType, date: Date): Date {
  * @param {Date} date Date.
  * @returns {Date} End of a given range.
  */
-export function getEnd(rangeType: RangeType, date: Date): Date {
+export function getEnd(rangeType: RangeType, date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601): Date {
   switch (rangeType) {
     case 'century':
       return getCenturyEnd(date);
@@ -263,6 +347,9 @@ export function getEnd(rangeType: RangeType, date: Date): Date {
       return getMonthEnd(date);
     case 'day':
       return getDayEnd(date);
+    case 'week': {
+      return getWeekEndDate(date, calendarType);
+    }
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
@@ -275,7 +362,7 @@ export function getEnd(rangeType: RangeType, date: Date): Date {
  * @param {Date} date Date.
  * @returns {Date} End of a previous given range.
  */
-export function getEndPrevious(rangeType: RangeType, date: Date): Date {
+export function getEndPrevious(rangeType: RangeType, date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601): Date {
   switch (rangeType) {
     case 'century':
       return getPreviousCenturyEnd(date);
@@ -285,12 +372,14 @@ export function getEndPrevious(rangeType: RangeType, date: Date): Date {
       return getPreviousYearEnd(date);
     case 'month':
       return getPreviousMonthEnd(date);
+    case 'week':
+      return getPreviousWeekEnd(date, calendarType);
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
 }
 
-export function getEndPrevious2(rangeType: RangeType, date: Date): Date {
+export function getEndPrevious2(rangeType: RangeType, date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601): Date {
   switch (rangeType) {
     case 'decade':
       return getPreviousDecadeEnd(date, -100);
@@ -298,6 +387,8 @@ export function getEndPrevious2(rangeType: RangeType, date: Date): Date {
       return getPreviousYearEnd(date, -10);
     case 'month':
       return getPreviousMonthEnd(date, -12);
+    case 'week':
+      return getPreviousWeekEnd(date, calendarType, -2);
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
@@ -322,6 +413,8 @@ export function getRange(rangeType: RangeType, date: Date): [Date, Date] {
       return getMonthRange(date);
     case 'day':
       return getDayRange(date);
+    case 'week':
+      return getWeekRange(date);
     default:
       throw new Error(`Invalid rangeType: ${rangeType}`);
   }
@@ -423,3 +516,65 @@ export function isWeekend(
       throw new Error('Unsupported calendar type.');
   }
 }
+
+
+/**
+ * Day
+ */
+
+function makeGetEdgeOfNeighborDay(getEdgeOfPeriod: (date: Date) => Date, defaultOffset: number) {
+  return function makeGetEdgeOfNeighborDayInternal(date: Date, offset: number = defaultOffset) {
+    const year = getYear(date);
+    const month = getMonth(date);
+    const day = getDate(date) + offset;
+    const previousPeriod = new Date();
+    previousPeriod.setFullYear(year, month, day);
+    previousPeriod.setHours(0, 0, 0, 0);
+    return getEdgeOfPeriod(previousPeriod);
+  };
+}
+
+/**
+ * Gets previous week start date from a given date.
+ *
+ * @param {Date} date Date to get previous week start from
+ * @returns {Date} Previous week start date
+ */
+export function getPreviousWeekStart(date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601, offset = -1): Date {
+  return getWeekStartDate(getWeekDate(date, calendarType, offset), calendarType);
+}
+
+/**
+ * Gets next week start date from a given date.
+ *
+ * @param {Date} date Date to get next wek start from
+ * @returns {Date} Next week start date
+ */
+export function getNextWeekStart(date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601, offset = 1): Date {
+  return getWeekStartDate(getWeekDate(date, calendarType, offset), calendarType);
+}
+
+/**
+ * Gets previous week end date from a given date.
+ *
+ * @param {DateLike} date Date to get previous week end from
+ * @returns {Date} Previous week end date
+ */
+export function getPreviousWeekEnd(date: Date, calendarType: CalendarType = CALENDAR_TYPES.ISO_8601, offset = -1): Date {
+  return getWeekEndDate(getWeekDate(date, calendarType, offset), calendarType);
+}
+
+
+function makeGetRange<T>(getStart: (date: T) => Date, getEnd: (date: T) => Date) {
+  return function makeGetRangeInternal(date: T): [Date, Date] {
+    return [getStart(date), getEnd(date)];
+  };
+}
+
+/**
+ * Gets week start and end dates from a given date.
+ *
+ * @param {DateLike} date Date to get day start and end from
+ * @returns {[Date, Date]} Day start and end dates
+ */
+export const getWeekRange: (date: Date) => [Date, Date] = makeGetRange(getDayEnd, makeGetEdgeOfNeighborDay(getDayEnd, 6));
