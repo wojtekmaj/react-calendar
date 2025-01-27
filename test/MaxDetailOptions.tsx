@@ -1,6 +1,6 @@
 import type { View } from './shared/types.js';
 
-const allViews = ['century', 'decade', 'year', 'month'] as const;
+const allViews = ['century', 'decade', 'year', 'month', 'week'] as const;
 
 function upperCaseFirstLetter(str: string) {
   return str.slice(0, 1).toUpperCase() + str.slice(1);
