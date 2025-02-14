@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react';
 import clsx from 'clsx';
 
 import Navigation from './Calendar/Navigation.js';
@@ -392,6 +392,8 @@ export type CalendarProps = {
    * @example ({ activeStartDate, date, view }) => view === 'month' && date.getDay() === 3 ? 'wednesday' : null
    */
   tileClassName?: TileClassNameFunc | ClassName;
+  activeTileClassName?:string
+  nowTileClassName?:string
   /**
    * Allows to render custom content within a given calendar item (day on month view, month on year view and so on).
    *
@@ -653,6 +655,8 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       showWeekNumbers,
       tileClassName,
       tileContent,
+      activeTileClassName,
+      nowTileClassName,
       tileDisabled,
       value: valueProps,
       view: viewProps,
@@ -1020,6 +1024,8 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         onClick,
         onMouseOver: selectRange ? onMouseOver : undefined,
         tileClassName,
+        activeClassName:activeTileClassName,
+        nowClassName:nowTileClassName,
         tileContent,
         tileDisabled,
         value,
