@@ -61,6 +61,15 @@ type TileProps = {
    */
   tileContent?: TileContentFunc | React.ReactNode;
   /**
+   * Class name(s) that will be applied to a given calendar item tileContent wrapper (day on month view, month on year view and so on).
+   *
+   * @example 'class1 class2'
+   * @example ['class1', 'class2 class3']
+   * @example ({ activeStartDate, date, view }) => view === 'month' && date.getDay() === 3 ? 'wednesday' : null
+   */
+  tileContentWrapperClassName?: TileClassNameFunc | ClassName;
+
+  /**
    * Pass a function to determine if a certain day should be displayed as disabled.
    *
    * @example ({ activeStartDate, date, view }) => date.getDay() === 0
@@ -91,6 +100,7 @@ export default function Tile(props: TileProps): React.ReactElement {
     style,
     tileClassName: tileClassNameProps,
     tileContent: tileContentProps,
+    tileContentWrapperClassName: tileContentWrapperClassNameProps,
     tileDisabled,
     view,
   } = props;
@@ -107,6 +117,13 @@ export default function Tile(props: TileProps): React.ReactElement {
     return typeof tileContentProps === 'function' ? tileContentProps(args) : tileContentProps;
   }, [activeStartDate, date, tileContentProps, view]);
 
+  const tileContentWrapperClassName = useMemo(() => {
+    const args = { activeStartDate, date, view };
+
+    return typeof tileContentWrapperClassNameProps === 'function' ? tileContentWrapperClassNameProps(args) : tileContentWrapperClassNameProps;
+  }, [activeStartDate, date, tileContentWrapperClassNameProps, view]);
+
+
   return (
     <button
       className={clsx(classes, tileClassName)}
@@ -122,7 +139,9 @@ export default function Tile(props: TileProps): React.ReactElement {
       type="button"
     >
       {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}
-      {tileContent}
+      <div className={clsx(tileContentWrapperClassName)}>
+        {tileContent}
+      </div>
     </button>
   );
 }
