@@ -65,6 +65,10 @@ const formatMonthYearOptions = {
 const formatShortWeekdayOptions = { weekday: 'short' } satisfies Intl.DateTimeFormatOptions;
 const formatWeekdayOptions = { weekday: 'long' } satisfies Intl.DateTimeFormatOptions;
 const formatYearOptions = { year: 'numeric' } satisfies Intl.DateTimeFormatOptions;
+const formatShortDayMonthYearOptions = {
+  ...formatDateOptions,
+  month: 'short',
+} satisfies Intl.DateTimeFormatOptions;
 
 export const formatDate: (locale: string | undefined, date: Date) => string =
   getSafeFormatter(formatDateOptions);
@@ -76,6 +80,8 @@ export const formatMonth: (locale: string | undefined, date: Date) => string =
   getSafeFormatter(formatMonthOptions);
 export const formatMonthYear: (locale: string | undefined, date: Date) => string =
   getSafeFormatter(formatMonthYearOptions);
+export const formatShortDayMonthYear: (locale: string | undefined, date: Date) => string =
+  getSafeFormatter(formatShortDayMonthYearOptions);
 export const formatShortWeekday: (locale: string | undefined, date: Date) => string =
   getSafeFormatter(formatShortWeekdayOptions);
 export const formatWeekday: (locale: string | undefined, date: Date) => string =

@@ -39,10 +39,11 @@ import type {
   formatWeekday as defaultFormatWeekday,
   formatYear as defaultFormatYear,
 } from './shared/dateFormatter.js';
+import WeekView from './WeekView.js';
 
 const baseClassName = 'react-calendar';
-const allViews = ['century', 'decade', 'year', 'month'] as const;
-const allValueTypes = ['decade', 'year', 'month', 'day'] as const;
+const allViews = ['century', 'decade', 'year', 'month', 'week'] as const;
+const allValueTypes = ['decade', 'year', 'month', 'day', 'day'] as const;
 
 const defaultMinDate = new Date();
 defaultMinDate.setFullYear(1, 0, 1);
@@ -487,13 +488,14 @@ function getValue(value: LooseValue | undefined, index: 0 | 1): Date | null {
 }
 
 type DetailArgs = {
+  calendarType?: CalendarType;
   value?: LooseValue;
   minDate?: Date;
   maxDate?: Date;
   maxDetail: Detail;
 };
 
-function getDetailValue({ value, minDate, maxDate, maxDetail }: DetailArgs, index: 0 | 1) {
+function getDetailValue({ calendarType, value, minDate, maxDate, maxDetail }: DetailArgs, index: 0 | 1) {
   const valuePiece = getValue(value, index);
 
   if (!valuePiece) {
@@ -505,9 +507,9 @@ function getDetailValue({ value, minDate, maxDate, maxDetail }: DetailArgs, inde
   const detailValueFrom = (() => {
     switch (index) {
       case 0:
-        return getBegin(valueType, valuePiece);
+        return getBegin(valueType, valuePiece, calendarType);
       case 1:
-        return getEnd(valueType, valuePiece);
+        return getEnd(valueType, valuePiece, calendarType);
       default:
         throw new Error(`Invalid index value: ${index}`);
     }
@@ -527,6 +529,7 @@ const getDetailValueArray = (args: DetailArgs) =>
   ];
 
 function getActiveStartDate({
+  calendarType,
   maxDate,
   maxDetail,
   minDate,
@@ -540,17 +543,19 @@ function getActiveStartDate({
   const rangeType = getView(view, minDetail, maxDetail);
   const valueFrom =
     getDetailValueFrom({
+      calendarType,
       value,
       minDate,
       maxDate,
       maxDetail,
     }) || new Date();
 
-  return getBegin(rangeType, valueFrom);
+  return getBegin(rangeType, valueFrom, calendarType);
 }
 
 function getInitialActiveStartDate({
   activeStartDate,
+  calendarType,
   defaultActiveStartDate,
   defaultValue,
   defaultView,
@@ -562,6 +567,7 @@ function getInitialActiveStartDate({
   view,
 }: {
   activeStartDate?: Date;
+  calendarType?: CalendarType;
   defaultActiveStartDate?: Date;
   defaultValue?: LooseValue;
   defaultView?: View;
@@ -576,10 +582,11 @@ function getInitialActiveStartDate({
   const valueFrom = activeStartDate || defaultActiveStartDate;
 
   if (valueFrom) {
-    return getBegin(rangeType, valueFrom);
+    return getBegin(rangeType, valueFrom, calendarType);
   }
 
   return getActiveStartDate({
+    calendarType,
     maxDate,
     maxDetail,
     minDate,
@@ -675,6 +682,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       activeStartDateProps ||
       activeStartDateState ||
       getInitialActiveStartDate({
+        calendarType,
         activeStartDate: activeStartDateProps,
         defaultActiveStartDate,
         defaultValue,
@@ -736,13 +744,14 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         })();
 
         return processFunction({
+          calendarType,
           maxDate,
           maxDetail,
           minDate,
           value,
         });
       },
-      [maxDate, maxDetail, minDate, returnValue],
+      [calendarType, maxDate, maxDetail, minDate, returnValue],
     );
 
     const setActiveStartDate = useCallback(
@@ -773,6 +782,8 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
               return onClickYear;
             case 'year':
               return onClickMonth;
+            case 'week':
+              return onClickDay;
             case 'month':
               return onClickDay;
             default:
@@ -845,7 +856,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         throw new Error('Attempted to drill up from the highest view.');
       }
 
-      const nextActiveStartDate = getBegin(nextView, activeStartDate);
+      const nextActiveStartDate = getBegin(nextView, activeStartDate, calendarType);
 
       setActiveStartDateState(nextActiveStartDate);
       setViewState(nextView);
@@ -870,6 +881,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       }
     }, [
       activeStartDate,
+      calendarType,
       drillUpAvailable,
       onActiveStartDateChange,
       onDrillUp,
@@ -894,7 +906,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
           if (isFirstValueInRange) {
             // Value has 0 or 2 elements - either way we're starting a new array
             // First value
-            nextValue = getBegin(valueType, rawNextValue);
+            nextValue = getBegin(valueType, rawNextValue, calendarType);
           } else {
             if (!previousValue) {
               throw new Error('previousValue is required');
@@ -920,6 +932,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
           // Range selection turned on, second value, goToRangeStartOnSelect toggled on
           goToRangeStartOnSelect
             ? getActiveStartDate({
+                calendarType,
                 maxDate,
                 maxDetail,
                 minDate,
@@ -966,6 +979,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       [
         activeStartDate,
         allowPartialRange,
+        calendarType,
         getProcessedValue,
         goToRangeStartOnSelect,
         maxDate,
@@ -1006,8 +1020,8 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
 
     function renderContent(next?: boolean) {
       const currentActiveStartDate = next
-        ? getBeginNext(view, activeStartDate)
-        : getBegin(view, activeStartDate);
+        ? getBeginNext(view, activeStartDate, calendarType)
+        : getBegin(view, activeStartDate, calendarType);
 
       const onClick = drillDownAvailable ? drillDown : onChange;
 
@@ -1075,6 +1089,26 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
             />
           );
         }
+        case 'week': {
+          return (
+            <WeekView
+              calendarType={calendarType}
+              formatDay={formatDay}
+              formatLongDate={formatLongDate}
+              formatShortWeekday={formatShortWeekday}
+              formatWeekday={formatWeekday}
+              onClickWeekNumber={onClickWeekNumber}
+              onMouseLeave={selectRange ? onMouseLeave : undefined}
+              showFixedNumberOfWeeks={
+                typeof showFixedNumberOfWeeks !== 'undefined'
+                  ? showFixedNumberOfWeeks
+                  : showDoubleView
+              }
+              showWeekNumbers={showWeekNumbers}
+              {...commonProps}
+            />
+          );
+        }
         default:
           throw new Error(`Invalid view: ${view}.`);
       }
@@ -1088,6 +1122,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       return (
         <Navigation
           activeStartDate={activeStartDate}
+          calendarType={calendarType}
           drillUp={drillUp}
           formatMonthYear={formatMonthYear}
           formatYear={formatYear}
