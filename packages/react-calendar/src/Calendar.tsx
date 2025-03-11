@@ -400,6 +400,14 @@ export type CalendarProps = {
    */
   tileContent?: TileContentFunc | React.ReactNode;
   /**
+   * Class name(s) that will be applied to a given calendar item tileContent wrapper (day on month view, month on year view and so on).
+   *
+   * @example 'class1 class2'
+   * @example ['class1', 'class2 class3']
+   * @example ({ activeStartDate, date, view }) => view === 'month' && date.getDay() === 3 ? 'wednesday' : null
+   */
+  tileContentWrapperClassName?: TileClassNameFunc | ClassName;
+  /**
    * Pass a function to determine if a certain day should be displayed as disabled.
    *
    * @example ({ activeStartDate, date, view }) => date.getDay() === 0
@@ -653,6 +661,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       showWeekNumbers,
       tileClassName,
       tileContent,
+      tileContentWrapperClassName,
       tileDisabled,
       value: valueProps,
       view: viewProps,
@@ -1021,6 +1030,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         onMouseOver: selectRange ? onMouseOver : undefined,
         tileClassName,
         tileContent,
+        tileContentWrapperClassName,
         tileDisabled,
         value,
         valueType,
