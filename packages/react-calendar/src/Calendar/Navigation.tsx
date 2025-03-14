@@ -11,13 +11,16 @@ import {
   getBeginPrevious2,
   getEndPrevious,
   getEndPrevious2,
+  getWeekEndDate,
+  getWeekStartDate,
 } from '../shared/dates.js';
 import {
   formatMonthYear as defaultFormatMonthYear,
   formatYear as defaultFormatYear,
+  formatShortDayMonthYear,
 } from '../shared/dateFormatter.js';
 
-import type { Action, NavigationLabelFunc, RangeType } from '../shared/types.js';
+import type { Action, CalendarType, NavigationLabelFunc, RangeType } from '../shared/types.js';
 
 const className = 'react-calendar__navigation';
 
@@ -28,6 +31,12 @@ type NavigationProps = {
    * @example new Date(2017, 0, 1)
    */
   activeStartDate: Date;
+
+  /**
+   * Assists with "week" view to know which day to start on
+   */
+  calendarType?: CalendarType;
+
   drillUp: () => void;
   /**
    * Function called to override default formatting of months and years. Can be used to use your own formatting function.
@@ -151,6 +160,7 @@ type NavigationProps = {
 
 export default function Navigation({
   activeStartDate,
+  calendarType,
   drillUp,
   formatMonthYear = defaultFormatMonthYear,
   formatYear = defaultFormatYear,
@@ -176,20 +186,20 @@ export default function Navigation({
   const drillUpAvailable = views.indexOf(view) > 0;
   const shouldShowPrevNext2Buttons = view !== 'century';
 
-  const previousActiveStartDate = getBeginPrevious(view, activeStartDate);
+  const previousActiveStartDate = getBeginPrevious(view, activeStartDate, calendarType);
   const previousActiveStartDate2 = shouldShowPrevNext2Buttons
-    ? getBeginPrevious2(view, activeStartDate)
+    ? getBeginPrevious2(view, activeStartDate, calendarType)
     : undefined;
-  const nextActiveStartDate = getBeginNext(view, activeStartDate);
+  const nextActiveStartDate = getBeginNext(view, activeStartDate, calendarType);
   const nextActiveStartDate2 = shouldShowPrevNext2Buttons
-    ? getBeginNext2(view, activeStartDate)
+    ? getBeginNext2(view, activeStartDate, calendarType)
     : undefined;
 
   const prevButtonDisabled = (() => {
     if (previousActiveStartDate.getFullYear() < 0) {
       return true;
     }
-    const previousActiveEndDate = getEndPrevious(view, activeStartDate);
+    const previousActiveEndDate = getEndPrevious(view, activeStartDate, calendarType);
     return minDate && minDate >= previousActiveEndDate;
   })();
 
@@ -199,7 +209,7 @@ export default function Navigation({
       if ((previousActiveStartDate2 as Date).getFullYear() < 0) {
         return true;
       }
-      const previousActiveEndDate = getEndPrevious2(view, activeStartDate);
+      const previousActiveEndDate = getEndPrevious2(view, activeStartDate, calendarType);
       return minDate && minDate >= previousActiveEndDate;
     })();
 
@@ -224,7 +234,7 @@ export default function Navigation({
     setActiveStartDate(nextActiveStartDate2 as Date, 'next2');
   }
 
-  function renderLabel(date: Date) {
+  function renderLabel(date: Date, calendarType?: CalendarType) {
     const label = (() => {
       switch (view) {
         case 'century':
@@ -235,6 +245,13 @@ export default function Navigation({
           return formatYear(locale, date);
         case 'month':
           return formatMonthYear(locale, date);
+        case 'week': {
+          // start
+          const startDate = getWeekStartDate(date, calendarType);
+          // end
+          const endDate = getWeekEndDate(date, calendarType);
+          return `${formatShortDayMonthYear(locale, startDate)}-${formatShortDayMonthYear(locale, endDate)}`;
+        }
         default:
           throw new Error(`Invalid view: ${view}.`);
       }
@@ -263,13 +280,13 @@ export default function Navigation({
         type="button"
       >
         <span className={`${labelClassName}__labelText ${labelClassName}__labelText--from`}>
-          {renderLabel(activeStartDate)}
+          {renderLabel(activeStartDate, calendarType)}
         </span>
         {showDoubleView ? (
           <>
             <span className={`${labelClassName}__divider`}> – </span>
             <span className={`${labelClassName}__labelText ${labelClassName}__labelText--to`}>
-              {renderLabel(nextActiveStartDate)}
+              {renderLabel(nextActiveStartDate, calendarType)}
             </span>
           </>
         ) : null}
