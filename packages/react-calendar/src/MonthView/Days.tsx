@@ -49,6 +49,8 @@ export default function Days(props: DaysProps): React.ReactElement {
     showNeighboringMonth,
     value,
     valueType,
+    activeClassName,
+    nowClassName,
     ...otherProps
   } = props;
 
@@ -103,6 +105,8 @@ export default function Days(props: DaysProps): React.ReactElement {
       dateType="day"
       hover={hover}
       end={end}
+      activeClassName={activeClassName}
+      nowClassName={nowClassName}
       renderTile={({ date, ...otherTileProps }) => (
         <Day
           key={date.getTime()}
