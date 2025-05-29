@@ -1031,10 +1031,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wojtekmaj/date-utils@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "@wojtekmaj/date-utils@npm:1.1.3"
-  checksum: 10c0/c7af27dc4e5836382c44cd0a4be3b5594705e33976b99269d46b87208154f7d55b4ebb3a56bac7f1ff70136d943bd69ed454a96c672a40ff1ea98db4b6b79e1f
+"@wojtekmaj/date-utils@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@wojtekmaj/date-utils@npm:2.0.2"
+  checksum: 10c0/6a55542cf1d5d9477b0267b1df040b1ff2edef36e6622a99e2cbd9c3830f87415f767dc969e796e02bdd722c29a901e4826ba0a3ad123afb4fac8f105d08064f
   languageName: node
   linkType: hard
 
@@ -2353,7 +2353,7 @@ __metadata:
     "@types/react": "npm:*"
     "@types/react-dom": "npm:*"
     "@types/warning": "npm:^3.0.0"
-    "@wojtekmaj/date-utils": "npm:^1.1.3"
+    "@wojtekmaj/date-utils": "npm:^2.0.2"
     clsx: "npm:^2.0.0"
     cpy-cli: "npm:^5.0.0"
     get-user-locale: "npm:^2.2.1"
@@ -2735,7 +2735,7 @@ __metadata:
     "@biomejs/biome": "npm:1.9.0"
     "@types/react": "npm:*"
     "@vitejs/plugin-react": "npm:^4.3.4"
-    "@wojtekmaj/date-utils": "npm:^1.1.3"
+    "@wojtekmaj/date-utils": "npm:^2.0.2"
     get-user-locale: "npm:^2.2.1"
     react: "npm:^18.2.0"
     react-calendar: "workspace:packages/react-calendar"
