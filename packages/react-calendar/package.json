@@ -48,7 +48,7 @@
   "dependencies": {
     "@wojtekmaj/date-utils": "^2.0.2",
     "clsx": "^2.0.0",
-    "get-user-locale": "^2.2.1",
+    "get-user-locale": "^3.0.0",
     "warning": "^4.0.0"
   },
   "devDependencies": {
