@@ -329,6 +329,13 @@ export type CalendarProps = {
    */
   returnValue?: 'start' | 'end' | 'range';
   /**
+   * The WAI-ARIA role of the calendar.
+   *
+   * @default 'dialog'
+   * @example 'dialog'
+   */
+  role?: React.AriaRole;
+  /**
    * Whether the user shall select two dates forming a range instead of just one. **Note**: This feature will make react-calendar return array with two dates regardless of returnValue setting.
    *
    * @default false
@@ -643,6 +650,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       prevAriaLabel,
       prevLabel,
       returnValue = 'start',
+      role = 'dialog',
       selectRange,
       showDoubleView,
       showFixedNumberOfWeeks,
@@ -1124,6 +1132,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
           className,
         )}
         ref={inputRef}
+        role={role}
       >
         {renderNavigation()}
         <div
