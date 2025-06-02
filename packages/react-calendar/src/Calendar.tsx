@@ -64,6 +64,12 @@ export type CalendarProps = {
    */
   allowPartialRange?: boolean;
   /**
+   * `aria-label` attribute of the calendar container.
+   *
+   * @example 'Calendar'
+   */
+  ariaLabel?: string;
+  /**
    * Type of calendar that should be used. Can be `'gregory`, `'hebrew'`, `'islamic'`, `'iso8601'`. Setting to `"gregory"` or `"hebrew"` will change the first day of the week to Sunday. Setting to `"islamic"` will change the first day of the week to Saturday. Setting to `"islamic"` or `"hebrew"` will make weekends appear on Friday to Saturday.
    *
    * @example 'iso8601'
@@ -609,6 +615,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
     const {
       activeStartDate: activeStartDateProps,
       allowPartialRange,
+      ariaLabel,
       calendarType,
       className,
       defaultActiveStartDate,
@@ -1133,6 +1140,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         )}
         ref={inputRef}
         role={role}
+        aria-label={ariaLabel}
       >
         {renderNavigation()}
         <div
