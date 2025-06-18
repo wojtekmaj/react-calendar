@@ -35,7 +35,6 @@ export default function WeekNumber(props: WeekNumberProps): React.ReactElement {
         {children}
       </button>
     );
-    // biome-ignore lint/style/noUselessElse: TypeScript is unhappy if we remove this else
   } else {
     const { date, onClickWeekNumber, weekNumber, ...otherProps } = props;
 

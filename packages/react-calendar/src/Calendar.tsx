@@ -1126,6 +1126,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         ref={inputRef}
       >
         {renderNavigation()}
+        {/* biome-ignore lint/a11y/noStaticElementInteractions: This element is designed for mouse users only */}
         <div
           className={`${baseClassName}__viewContainer`}
           onBlur={selectRange ? onMouseLeave : undefined}
