@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { getISOLocalDateTime } from '@wojtekmaj/date-utils';
 
 type DateBoundariesOptionsProps = {
@@ -13,6 +14,9 @@ export default function DateBoundariesOptions({
   setMaxDate,
   setMinDate,
 }: DateBoundariesOptionsProps) {
+  const minDatetimeId = useId();
+  const maxDatetimeId = useId();
+
   function onMinChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
 
@@ -30,9 +34,9 @@ export default function DateBoundariesOptions({
       <legend>Minimum and maximum date</legend>
 
       <div>
-        <label htmlFor="minDatetime">Minimum date</label>
+        <label htmlFor={minDatetimeId}>Minimum date</label>
         <input
-          id="minDatetime"
+          id={minDatetimeId}
           onChange={onMinChange}
           type="datetime-local"
           value={minDate ? getISOLocalDateTime(minDate) : ''}
@@ -43,9 +47,9 @@ export default function DateBoundariesOptions({
         </button>
       </div>
       <div>
-        <label htmlFor="maxDatetime">Maximum date</label>
+        <label htmlFor={maxDatetimeId}>Maximum date</label>
         <input
-          id="maxDatetime"
+          id={maxDatetimeId}
           onChange={onMaxChange}
           type="datetime-local"
           value={maxDate ? getISOLocalDateTime(maxDate) : ''}

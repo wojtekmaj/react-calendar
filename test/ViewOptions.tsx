@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 type ViewOptionsProps = {
   setShowDoubleView: (showDoubleView: boolean) => void;
   setShowFixedNumberOfWeeks: (showFixedNumberOfWeeks: boolean) => void;
@@ -27,6 +29,13 @@ export default function ViewOptions({
   showNeighboringMonth,
   showWeekNumbers,
 }: ViewOptionsProps) {
+  const showDoubleViewId = useId();
+  const showFixedNumberOfWeeksId = useId();
+  const showNeighboringCenturyId = useId();
+  const showNeighboringDecadeId = useId();
+  const showNeighboringMonthId = useId();
+  const showWeekNumbersId = useId();
+
   function onShowDoubleViewChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { checked } = event.target;
 
@@ -70,63 +79,63 @@ export default function ViewOptions({
       <div>
         <input
           checked={showDoubleView}
-          id="showDoubleView"
+          id={showDoubleViewId}
           onChange={onShowDoubleViewChange}
           type="checkbox"
         />
-        <label htmlFor="showDoubleView">Show double view</label>
+        <label htmlFor={showDoubleViewId}>Show double view</label>
       </div>
 
       <div>
         <input
           checked={showFixedNumberOfWeeks || showDoubleView}
           disabled={showDoubleView}
-          id="showFixedNumberOfWeeks"
+          id={showFixedNumberOfWeeksId}
           onChange={onShowFixedNumberOfWeeksChange}
           type="checkbox"
         />
-        <label htmlFor="showFixedNumberOfWeeks">Show fixed number of weeks</label>
+        <label htmlFor={showFixedNumberOfWeeksId}>Show fixed number of weeks</label>
       </div>
 
       <div>
         <input
           checked={showNeighboringCentury}
-          id="showNeighboringCentury"
+          id={showNeighboringCenturyId}
           onChange={onShowNeighboringCenturyChange}
           type="checkbox"
         />
-        <label htmlFor="showNeighboringCentury">Show neighboring century's decades</label>
+        <label htmlFor={showNeighboringCenturyId}>Show neighboring century's decades</label>
       </div>
 
       <div>
         <input
           checked={showNeighboringDecade}
-          id="showNeighboringDecade"
+          id={showNeighboringDecadeId}
           onChange={onShowNeighboringDecadeChange}
           type="checkbox"
         />
-        <label htmlFor="showNeighboringDecade">Show neighboring decade's years</label>
+        <label htmlFor={showNeighboringDecadeId}>Show neighboring decade's years</label>
       </div>
 
       <div>
         <input
           checked={showNeighboringMonth || showFixedNumberOfWeeks}
           disabled={showFixedNumberOfWeeks}
-          id="showNeighboringMonth"
+          id={showNeighboringMonthId}
           onChange={onShowNeighboringMonthChange}
           type="checkbox"
         />
-        <label htmlFor="showNeighboringMonth">Show neighboring month's days</label>
+        <label htmlFor={showNeighboringMonthId}>Show neighboring month's days</label>
       </div>
 
       <div>
         <input
           checked={showWeekNumbers}
-          id="showWeekNumbers"
+          id={showWeekNumbersId}
           onChange={onShowWeekNumbersChange}
           type="checkbox"
         />
-        <label htmlFor="showWeekNumbers">Show week numbers</label>
+        <label htmlFor={showWeekNumbersId}>Show week numbers</label>
       </div>
     </fieldset>
   );

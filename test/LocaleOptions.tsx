@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useId, useRef } from 'react';
 
 type LocaleOptionsProps = {
   locale: string | undefined;
@@ -6,6 +6,11 @@ type LocaleOptionsProps = {
 };
 
 export default function LocaleOptions({ locale, setLocale }: LocaleOptionsProps) {
+  const localeDefaultId = useId();
+  const localeEnUSId = useId();
+  const localeFrFRId = useId();
+  const localeArEGId = useId();
+  const customLocaleId = useId();
   const customLocale = useRef<HTMLInputElement>(null);
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -38,54 +43,54 @@ export default function LocaleOptions({ locale, setLocale }: LocaleOptionsProps)
       <div>
         <input
           checked={locale === undefined}
-          id="localeDefault"
+          id={localeDefaultId}
           name="locale"
           onChange={onChange}
           type="radio"
           value="undefined"
         />
-        <label htmlFor="localeDefault">Auto</label>
+        <label htmlFor={localeDefaultId}>Auto</label>
       </div>
       <div>
         <input
           checked={locale === 'en-US'}
-          id="localeEnUS"
+          id={localeEnUSId}
           name="locale"
           onChange={onChange}
           type="radio"
           value="en-US"
         />
-        <label htmlFor="localeEnUS">en-US</label>
+        <label htmlFor={localeEnUSId}>en-US</label>
       </div>
       <div>
         <input
           checked={locale === 'fr-FR'}
-          id="localeFrFR"
+          id={localeFrFRId}
           name="locale"
           onChange={onChange}
           type="radio"
           value="fr-FR"
         />
-        <label htmlFor="localeFrFR">fr-FR</label>
+        <label htmlFor={localeFrFRId}>fr-FR</label>
       </div>
       <div>
         <input
           checked={locale === 'ar-EG'}
-          id="localeArEG"
+          id={localeArEGId}
           name="locale"
           onChange={onChange}
           type="radio"
           value="ar-EG"
         />
-        <label htmlFor="localeArEG">ar-EG</label>
+        <label htmlFor={localeArEGId}>ar-EG</label>
       </div>
       <form onSubmit={onCustomChange}>
-        <label htmlFor="customLocale">Custom locale:</label>
+        <label htmlFor={customLocaleId}>Custom locale:</label>
         &nbsp;
         <input
           key={locale}
           defaultValue={locale}
-          id="customLocale"
+          id={customLocaleId}
           name="customLocale"
           pattern="^[a-z]{2}(-[A-Z0-9]{2,3})?$"
           ref={customLocale}
