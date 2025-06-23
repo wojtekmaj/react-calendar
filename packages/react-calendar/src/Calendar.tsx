@@ -153,6 +153,10 @@ export type CalendarProps = {
    */
   inputRef?: React.Ref<HTMLDivElement>;
   /**
+   * Whether the range should remain selected if the user clicks on one of the "range boundaries". For instance, if the user selects days 1 and 3, and subsequently clicks on day 3 again, day 1 will remain selected to "update" the range.
+   */
+  keepBoundarySelected?: boolean;
+  /**
    * Locale that should be used by the calendar. Can be any [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag).
    *
    * **Note**: When using SSR, setting this prop may help resolving hydration errors caused by locale mismatch between server and client.
@@ -615,6 +619,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       formatWeekday,
       formatYear,
       goToRangeStartOnSelect = true,
+      keepBoundarySelected,
       inputRef,
       locale,
       maxDate = defaultMaxDate,
@@ -891,7 +896,19 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         if (selectRange) {
           // Range selection turned on
 
-          if (isFirstValueInRange) {
+          if (
+            keepBoundarySelected &&
+            Array.isArray(previousValue) &&
+            areDatesEqual(rawNextValue, previousValue[0])
+          ) {
+            nextValue = previousValue[1];
+          } else if (
+            keepBoundarySelected &&
+            Array.isArray(previousValue) &&
+            areDatesEqual(getEnd(valueType, rawNextValue), previousValue[1])
+          ) {
+            nextValue = previousValue[0];
+          } else if (isFirstValueInRange) {
             // Value has 0 or 2 elements - either way we're starting a new array
             // First value
             nextValue = getBegin(valueType, rawNextValue);
@@ -968,6 +985,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         allowPartialRange,
         getProcessedValue,
         goToRangeStartOnSelect,
+        keepBoundarySelected,
         maxDate,
         maxDetail,
         minDate,
