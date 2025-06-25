@@ -85,6 +85,7 @@ export default function Test() {
   const [showNeighboringDecade, setShowNeighboringDecade] = useState(false);
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(true);
   const [showWeekNumbers, setShowWeekNumbers] = useState(false);
+  const [showMonthView, setShowMonthView] = useState(false);
   const [value, setValue] = useState<LooseValue>(now);
   const [view, setView] = useState<View>('month');
 
@@ -157,6 +158,7 @@ export default function Test() {
     showNeighboringDecade,
     showNeighboringMonth,
     showWeekNumbers,
+    showMonthView,
     tileClassName,
     tileContent,
   };
@@ -198,12 +200,14 @@ export default function Test() {
             setShowNeighboringDecade={setShowNeighboringDecade}
             setShowNeighboringMonth={setShowNeighboringMonth}
             setShowWeekNumbers={setShowWeekNumbers}
+            setShowMonthView={setShowMonthView}
             showDoubleView={showDoubleView}
             showFixedNumberOfWeeks={showFixedNumberOfWeeks}
             showNeighboringCentury={showNeighboringCentury}
             showNeighboringDecade={showNeighboringDecade}
             showNeighboringMonth={showNeighboringMonth}
             showWeekNumbers={showWeekNumbers}
+            showMonthView={showMonthView}
           />
         </aside>
         <main className="Test__container__content">
