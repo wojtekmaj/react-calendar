@@ -4,6 +4,7 @@
     "esModuleInterop": true,
     "isolatedDeclarations": true,
     "isolatedModules": true,
+    "importHelpers": true,
     "jsx": "react-jsx",
     "module": "nodenext",
     "moduleDetection": "force",

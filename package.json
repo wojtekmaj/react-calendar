@@ -9,8 +9,8 @@
     "test"
   ],
   "scripts": {
-    "build": "yarn workspace react-calendar build",
-    "dev": "yarn workspace react-calendar watch & yarn workspace test dev",
+    "build": "yarn workspace iui-react-calendar build",
+    "dev": "yarn workspace iui-react-calendar watch & yarn workspace test dev",
     "format": "yarn workspaces foreach --all run format",
     "lint": "yarn workspaces foreach --all run lint",
     "postinstall": "husky",

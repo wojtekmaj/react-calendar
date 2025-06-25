@@ -7,12 +7,14 @@ type ViewOptionsProps = {
   setShowNeighboringDecade: (showNeighboringDecade: boolean) => void;
   setShowNeighboringMonth: (showNeighboringMonth: boolean) => void;
   setShowWeekNumbers: (showWeekNumbers: boolean) => void;
+  setShowMonthView: (showMonthView: boolean) => void;
   showDoubleView: boolean;
   showFixedNumberOfWeeks: boolean;
   showNeighboringCentury: boolean;
   showNeighboringDecade: boolean;
   showNeighboringMonth: boolean;
   showWeekNumbers: boolean;
+  showMonthView: boolean;
 };
 
 export default function ViewOptions({
@@ -22,12 +24,14 @@ export default function ViewOptions({
   setShowNeighboringDecade,
   setShowNeighboringMonth,
   setShowWeekNumbers,
+  setShowMonthView,
   showDoubleView,
   showFixedNumberOfWeeks,
   showNeighboringCentury,
   showNeighboringDecade,
   showNeighboringMonth,
   showWeekNumbers,
+  showMonthView,
 }: ViewOptionsProps) {
   const showDoubleViewId = useId();
   const showFixedNumberOfWeeksId = useId();
@@ -35,6 +39,7 @@ export default function ViewOptions({
   const showNeighboringDecadeId = useId();
   const showNeighboringMonthId = useId();
   const showWeekNumbersId = useId();
+  const showMonthViewId = useId();
 
   function onShowDoubleViewChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { checked } = event.target;
@@ -70,6 +75,12 @@ export default function ViewOptions({
     const { checked } = event.target;
 
     setShowNeighboringMonth(checked);
+  }
+
+  function onShowMonthViewChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { checked } = event.target;
+
+    setShowMonthView(checked);
   }
 
   return (
@@ -136,6 +147,16 @@ export default function ViewOptions({
           type="checkbox"
         />
         <label htmlFor={showWeekNumbersId}>Show week numbers</label>
+      </div>
+
+      <div>
+        <input
+          checked={showMonthView}
+          id={showMonthViewId}
+          onChange={onShowMonthViewChange}
+          type="checkbox"
+        />
+        <label htmlFor={showMonthViewId}>Show Month View</label>
       </div>
     </fieldset>
   );
