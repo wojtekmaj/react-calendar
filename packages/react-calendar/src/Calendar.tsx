@@ -718,6 +718,16 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
 
     const value: Value = (() => {
       const rawValue = (() => {
+        if (showMonthView && valueProps !== undefined) {
+          // if showMonthView is true, it doesn't honor the valueState
+          // return value can not be an array with single value
+          // so return the first value of the array if it contains only one value
+          // else return the array
+          return Array.isArray(valueProps) && getIsSingleValue(valueProps)
+            ? valueProps[0]
+            : valueProps;
+        }
+
         // In the middle of range selection, use value from state
         if (selectRange && getIsSingleValue(valueState)) {
           return valueState;
@@ -735,14 +745,6 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         : rawValue !== null
           ? toDate(rawValue)
           : null;
-
-      if (showMonthView) {
-        // return value can not be an array with single value,
-        // so return the first value of the array if it contains only one value, else return the array
-        return valueProps !== undefined && Array.isArray(values) && getIsSingleValue(values)
-          ? values[0]
-          : values;
-      }
       return values;
     })();
 
