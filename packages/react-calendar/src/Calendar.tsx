@@ -64,6 +64,12 @@ export type CalendarProps = {
    */
   allowPartialRange?: boolean;
   /**
+   * `aria-label` attribute of the calendar container.
+   *
+   * @example 'Calendar'
+   */
+  ariaLabel?: string;
+  /**
    * Type of calendar that should be used. Can be `'gregory`, `'hebrew'`, `'islamic'`, `'iso8601'`. Setting to `"gregory"` or `"hebrew"` will change the first day of the week to Sunday. Setting to `"islamic"` will change the first day of the week to Saturday. Setting to `"islamic"` or `"hebrew"` will make weekends appear on Friday to Saturday.
    *
    * @example 'iso8601'
@@ -328,6 +334,13 @@ export type CalendarProps = {
    * @example 'range'
    */
   returnValue?: 'start' | 'end' | 'range';
+  /**
+   * The WAI-ARIA role of the calendar.
+   *
+   * @default 'dialog'
+   * @example 'dialog'
+   */
+  role?: React.AriaRole;
   /**
    * Whether the user shall select two dates forming a range instead of just one. **Note**: This feature will make react-calendar return array with two dates regardless of returnValue setting.
    *
@@ -602,6 +615,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
     const {
       activeStartDate: activeStartDateProps,
       allowPartialRange,
+      ariaLabel,
       calendarType,
       className,
       defaultActiveStartDate,
@@ -643,6 +657,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       prevAriaLabel,
       prevLabel,
       returnValue = 'start',
+      role = 'dialog',
       selectRange,
       showDoubleView,
       showFixedNumberOfWeeks,
@@ -1124,6 +1139,8 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
           className,
         )}
         ref={inputRef}
+        role={role}
+        aria-label={ariaLabel}
       >
         {renderNavigation()}
         {/* biome-ignore lint/a11y/noStaticElementInteractions: This element is designed for mouse users only */}
