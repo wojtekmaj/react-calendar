@@ -3,19 +3,19 @@
 import { getUserLocale } from 'get-user-locale';
 
 import {
-  getCenturyLabel,
-  getDecadeLabel,
+  formatMonthYear as defaultFormatMonthYear,
+  formatYear as defaultFormatYear,
+} from '../shared/dateFormatter.js';
+import {
   getBeginNext,
   getBeginNext2,
   getBeginPrevious,
   getBeginPrevious2,
+  getCenturyLabel,
+  getDecadeLabel,
   getEndPrevious,
   getEndPrevious2,
 } from '../shared/dates.js';
-import {
-  formatMonthYear as defaultFormatMonthYear,
-  formatYear as defaultFormatYear,
-} from '../shared/dateFormatter.js';
 
 import type { Action, NavigationLabelFunc, RangeType } from '../shared/types.js';
 

@@ -4,7 +4,7 @@ import Days from './MonthView/Days.js';
 import Weekdays from './MonthView/Weekdays.js';
 import WeekNumbers from './MonthView/WeekNumbers.js';
 
-import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const.js';
+import { CALENDAR_TYPE_LOCALES, CALENDAR_TYPES } from './shared/const.js';
 
 import type { CalendarType } from './shared/types.js';
 

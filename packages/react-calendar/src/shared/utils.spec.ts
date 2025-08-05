@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
+
 import {
   between,
-  isValueWithinRange,
-  isRangeWithinRange,
   doRangesOverlap,
   getTileClasses,
+  isRangeWithinRange,
+  isValueWithinRange,
 } from './utils.js';
 
 import type { Range } from './types.js';

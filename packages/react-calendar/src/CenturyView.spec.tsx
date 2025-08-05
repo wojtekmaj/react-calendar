@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/react';
-import { getDecadeStart, getDecadeEnd } from '@wojtekmaj/date-utils';
+import { getDecadeEnd, getDecadeStart } from '@wojtekmaj/date-utils';
 
 import CenturyView from './CenturyView.js';
 

@@ -1,12 +1,12 @@
-import { getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
+import { getDayEnd, getDayStart } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile.js';
 
-import { isWeekend } from '../shared/dates.js';
 import {
   formatDay as defaultFormatDay,
   formatLongDate as defaultFormatLongDate,
 } from '../shared/dateFormatter.js';
+import { isWeekend } from '../shared/dates.js';
 
 import type { CalendarType } from '../shared/types.js';
 

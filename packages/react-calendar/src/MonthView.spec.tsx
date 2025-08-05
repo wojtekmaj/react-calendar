@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-
 import { render } from '@testing-library/react';
 
 import MonthView from './MonthView.js';
+
 import { formatShortWeekday } from './shared/dateFormatter.js';
 
 const { format } = new Intl.DateTimeFormat('en-US', {

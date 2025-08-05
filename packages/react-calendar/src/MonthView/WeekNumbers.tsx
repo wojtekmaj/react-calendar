@@ -1,7 +1,7 @@
-import { getYear, getMonth, getDate, getDaysInMonth } from '@wojtekmaj/date-utils';
+import { getDate, getDaysInMonth, getMonth, getYear } from '@wojtekmaj/date-utils';
 
-import WeekNumber from './WeekNumber.js';
 import Flex from '../Flex.js';
+import WeekNumber from './WeekNumber.js';
 
 import { getBeginOfWeek, getDayOfWeek, getWeekNumber } from '../shared/dates.js';
 

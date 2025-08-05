@@ -1,4 +1,4 @@
-import { getYear, getMonth, getDaysInMonth, getDayStart } from '@wojtekmaj/date-utils';
+import { getDayStart, getDaysInMonth, getMonth, getYear } from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup.js';
 import Day from './Day.js';

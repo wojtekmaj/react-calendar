@@ -1,9 +1,9 @@
-import { getDecadeStart, getDecadeEnd, getCenturyStart } from '@wojtekmaj/date-utils';
+import { getCenturyStart, getDecadeEnd, getDecadeStart } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile.js';
 
-import { getDecadeLabel } from '../shared/dates.js';
 import { formatYear as defaultFormatYear } from '../shared/dateFormatter.js';
+import { getDecadeLabel } from '../shared/dates.js';
 
 const className = 'react-calendar__century-view__decades__decade';
 

@@ -1,4 +1,4 @@
-import { getYearStart, getYearEnd, getDecadeStart } from '@wojtekmaj/date-utils';
+import { getDecadeStart, getYearEnd, getYearStart } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile.js';
 

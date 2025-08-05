@@ -1,4 +1,4 @@
-import { getMonthStart, getMonthEnd } from '@wojtekmaj/date-utils';
+import { getMonthEnd, getMonthStart } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile.js';
 

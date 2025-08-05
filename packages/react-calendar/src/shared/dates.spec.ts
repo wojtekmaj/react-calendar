@@ -1,24 +1,24 @@
 import { describe, expect, it } from 'vitest';
-import { getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
+import { getDayEnd, getDayStart } from '@wojtekmaj/date-utils';
 
 import {
-  getDayOfWeek,
+  getBegin,
+  getBeginNext,
+  getBeginNext2,
   getBeginOfCenturyYear,
   getBeginOfDecadeYear,
   getBeginOfWeek,
-  getWeekNumber,
-  getRange,
-  getBegin,
   getBeginPrevious,
-  getBeginNext,
   getBeginPrevious2,
-  getBeginNext2,
+  getCenturyLabel,
+  getDayOfWeek,
+  getDecadeLabel,
   getEnd,
   getEndPrevious,
   getEndPrevious2,
+  getRange,
   getValueRange,
-  getCenturyLabel,
-  getDecadeLabel,
+  getWeekNumber,
   isWeekend,
 } from './dates.js';
 

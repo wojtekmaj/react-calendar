@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createRef } from 'react';
 import { act, render } from '@testing-library/react';
+import { createRef } from 'react';
 import { getMonthStart } from '@wojtekmaj/date-utils';
 
 import Calendar from './Calendar.js';

@@ -1,13 +1,13 @@
+import { getMonth, getMonthStart, getYear } from '@wojtekmaj/date-utils';
 import clsx from 'clsx';
-import { getYear, getMonth, getMonthStart } from '@wojtekmaj/date-utils';
 
 import Flex from '../Flex.js';
 
-import { getDayOfWeek, isCurrentDayOfWeek, isWeekend } from '../shared/dates.js';
 import {
   formatShortWeekday as defaultFormatShortWeekday,
   formatWeekday as defaultFormatWeekday,
 } from '../shared/dateFormatter.js';
+import { getDayOfWeek, isCurrentDayOfWeek, isWeekend } from '../shared/dates.js';
 
 import type { CalendarType } from '../shared/types.js';
 

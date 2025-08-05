@@ -1,5 +1,4 @@
 import { describe, expect, it, vi } from 'vitest';
-
 import { fireEvent, render } from '@testing-library/react';
 
 import Year from './Year.js';
