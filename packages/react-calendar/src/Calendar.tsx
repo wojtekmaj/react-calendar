@@ -911,6 +911,15 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
           nextValue = getProcessedValue(rawNextValue);
         }
 
+        if (
+          !selectRange &&
+          previousValue instanceof Date &&
+          nextValue instanceof Date &&
+          previousValue.getTime() === nextValue.getTime()
+        ) {
+          return;
+        }
+
         const nextActiveStartDate =
           // Range selection turned off
           !selectRange ||
