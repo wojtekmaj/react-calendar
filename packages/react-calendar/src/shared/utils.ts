@@ -79,6 +79,7 @@ export function getTileClasses(args: {
   hover?: Date | null;
   value?: Value;
   valueType?: RangeType;
+  now?: Date;
 }): string[] {
   if (!args) {
     throw new Error('args is required');
@@ -93,7 +94,7 @@ export function getTileClasses(args: {
     return classes;
   }
 
-  const now = new Date();
+  const now = args.now ?? new Date();
   const dateRange = (() => {
     if (Array.isArray(date)) {
       return date;
