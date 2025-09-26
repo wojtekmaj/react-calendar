@@ -1,6 +1,8 @@
 import { defineConfig } from 'vitest/config';
 
-export default defineConfig({
+import type { ViteUserConfig } from 'vitest/config';
+
+const config: ViteUserConfig = defineConfig({
   test: {
     browser: {
       enabled: true,
@@ -12,3 +14,5 @@ export default defineConfig({
     watch: false,
   },
 });
+
+export default config;
