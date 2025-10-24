@@ -13,7 +13,6 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2018",
-    "types": ["@vitest/browser/matchers"],
     "verbatimModuleSyntax": true
   },
   "exclude": ["dist"]
