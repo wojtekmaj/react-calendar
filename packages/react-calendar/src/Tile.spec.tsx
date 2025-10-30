@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render } from '@testing-library/react';
+import { userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-react';
 
 import Tile from './Tile.js';
 
@@ -14,28 +15,28 @@ describe('<Tile /> component', () => {
     view: 'month',
   } satisfies React.ComponentProps<typeof Tile>;
 
-  it('renders button properly', () => {
-    const { container } = render(<Tile {...defaultProps} />);
+  it('renders button properly', async () => {
+    const { container } = await render(<Tile {...defaultProps} />);
 
     expect(container.querySelector('button')).toBeInTheDocument();
   });
 
-  it('passes onClick to button', () => {
+  it('passes onClick to button', async () => {
     const onClick = vi.fn();
 
-    const { container } = render(<Tile {...defaultProps} onClick={onClick} />);
+    const { container } = await render(<Tile {...defaultProps} onClick={onClick} />);
 
     const button = container.querySelector('button') as HTMLButtonElement;
 
-    fireEvent.click(button);
+    await userEvent.click(button);
 
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('passes classes to button properly', () => {
+  it('passes classes to button properly', async () => {
     const classes = ['a', 'b', 'c'];
 
-    const { container } = render(<Tile {...defaultProps} classes={classes} />);
+    const { container } = await render(<Tile {...defaultProps} classes={classes} />);
 
     const button = container.querySelector('button');
 
@@ -44,37 +45,37 @@ describe('<Tile /> component', () => {
     }
   });
 
-  it('renders children properly', () => {
+  it('renders children properly', async () => {
     const children = 'Hello';
 
-    const { container } = render(<Tile {...defaultProps}>{children}</Tile>);
+    const { container } = await render(<Tile {...defaultProps}>{children}</Tile>);
 
     expect(container).toHaveTextContent(children);
   });
 
-  it('does not render abbr by default', () => {
-    const { container } = render(<Tile {...defaultProps} />);
+  it('does not render abbr by default', async () => {
+    const { container } = await render(<Tile {...defaultProps} />);
 
     expect(container.querySelector('abbr')).not.toBeInTheDocument();
   });
 
-  it('calls formatAbbr properly', () => {
+  it('calls formatAbbr properly', async () => {
     const date = new Date(2019, 5, 1);
     const formatAbbr = vi.fn();
     const locale = 'en-US';
 
-    render(<Tile {...defaultProps} date={date} formatAbbr={formatAbbr} locale={locale} />);
+    await render(<Tile {...defaultProps} date={date} formatAbbr={formatAbbr} locale={locale} />);
 
     expect(formatAbbr).toHaveBeenCalledTimes(1);
     expect(formatAbbr).toHaveBeenCalledWith(locale, date);
   });
 
-  it('renders abbr with children properly given formatAbbr', () => {
+  it('renders abbr with children properly given formatAbbr', async () => {
     const children = 'Hello';
     const ariaLabel = 'ariaLabel';
     const formatAbbr = () => ariaLabel;
 
-    const { container } = render(
+    const { container } = await render(
       <Tile {...defaultProps} formatAbbr={formatAbbr}>
         {children}
       </Tile>,
@@ -87,13 +88,13 @@ describe('<Tile /> component', () => {
     expect(abbr).toHaveAccessibleName(ariaLabel);
   });
 
-  it('calls tileClassName properly', () => {
+  it('calls tileClassName properly', async () => {
     const activeStartDate = new Date(2019, 5, 1);
     const date = new Date(2019, 5, 15);
     const tileClassName = vi.fn();
     const view = 'month';
 
-    const { rerender } = render(
+    const { rerender } = await render(
       <Tile
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -104,7 +105,7 @@ describe('<Tile /> component', () => {
     );
 
     // Trigger any unrelated prop change
-    rerender(
+    await rerender(
       <Tile
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -123,34 +124,34 @@ describe('<Tile /> component', () => {
     });
   });
 
-  it('applies tileClassName to button properly given function', () => {
+  it('applies tileClassName to button properly given function', async () => {
     const className = 'className';
     const tileClassName = () => className;
 
-    const { container } = render(<Tile {...defaultProps} tileClassName={tileClassName} />);
+    const { container } = await render(<Tile {...defaultProps} tileClassName={tileClassName} />);
 
     const button = container.querySelector('button');
 
     expect(button).toHaveClass(className);
   });
 
-  it('applies tileClassName to button properly given string', () => {
+  it('applies tileClassName to button properly given string', async () => {
     const className = 'className';
 
-    const { container } = render(<Tile {...defaultProps} tileClassName={className} />);
+    const { container } = await render(<Tile {...defaultProps} tileClassName={className} />);
 
     const button = container.querySelector('button');
 
     expect(button).toHaveClass(className);
   });
 
-  it('calls tileContent properly', () => {
+  it('calls tileContent properly', async () => {
     const activeStartDate = new Date(2019, 5, 1);
     const date = new Date(2019, 5, 15);
     const tileContent = vi.fn();
     const view = 'month';
 
-    const { rerender } = render(
+    const { rerender } = await render(
       <Tile
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -161,7 +162,7 @@ describe('<Tile /> component', () => {
     );
 
     // Trigger any unrelated prop change
-    rerender(
+    await rerender(
       <Tile
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -180,34 +181,34 @@ describe('<Tile /> component', () => {
     });
   });
 
-  it('applies tileContent to button properly given function', () => {
+  it('applies tileContent to button properly given function', async () => {
     const content = 'content';
     const tileContent = () => content;
 
-    const { container } = render(<Tile {...defaultProps} tileContent={tileContent} />);
+    const { container } = await render(<Tile {...defaultProps} tileContent={tileContent} />);
 
     const button = container.querySelector('button');
 
     expect(button).toHaveTextContent(content);
   });
 
-  it('applies tileContent to button properly given string', () => {
+  it('applies tileContent to button properly given string', async () => {
     const content = 'className';
 
-    const { container } = render(<Tile {...defaultProps} tileContent={content} />);
+    const { container } = await render(<Tile {...defaultProps} tileContent={content} />);
 
     const button = container.querySelector('button');
 
     expect(button).toHaveTextContent(content);
   });
 
-  it('calls tileDisabled properly', () => {
+  it('calls tileDisabled properly', async () => {
     const activeStartDate = new Date(2019, 5, 1);
     const date = new Date(2019, 5, 15);
     const tileDisabled = vi.fn();
     const view = 'month';
 
-    render(
+    await render(
       <Tile
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -225,10 +226,10 @@ describe('<Tile /> component', () => {
     });
   });
 
-  it('disables button properly given tileDisabled returning true', () => {
+  it('disables button properly given tileDisabled returning true', async () => {
     const tileDisabled = () => true;
 
-    const { container } = render(<Tile {...defaultProps} tileDisabled={tileDisabled} />);
+    const { container } = await render(<Tile {...defaultProps} tileDisabled={tileDisabled} />);
 
     const button = container.querySelector('button');
 

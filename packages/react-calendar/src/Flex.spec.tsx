@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/react';
+import { render } from 'vitest-browser-react';
 
 import Flex from './Flex.js';
 
 describe('Flex', () => {
-  it('styles itself properly with wrap flag set to false', () => {
-    const { container } = render(
+  it('styles itself properly with wrap flag set to false', async () => {
+    const { container } = await render(
       <Flex count={3} wrap={false}>
         <div>Hey</div>
         <div>Hi</div>
@@ -19,8 +19,8 @@ describe('Flex', () => {
     expect(wrapper).toHaveStyle('flex-wrap: nowrap');
   });
 
-  it('styles itself properly with wrap flag set to true', () => {
-    const { container } = render(
+  it('styles itself properly with wrap flag set to true', async () => {
+    const { container } = await render(
       <Flex count={3} wrap>
         <div>Hey</div>
         <div>Hi</div>
@@ -34,8 +34,8 @@ describe('Flex', () => {
     expect(wrapper).toHaveStyle('flex-wrap: wrap');
   });
 
-  it('renders all given children', () => {
-    const { container } = render(
+  it('renders all given children', async () => {
+    const { container } = await render(
       <Flex count={3}>
         <div>Hey</div>
         <div>Hi</div>
@@ -52,8 +52,8 @@ describe('Flex', () => {
     expect(children[2]).toHaveTextContent('Hello');
   });
 
-  it('properly sizes and positions all the elements', () => {
-    const { container } = render(
+  it('properly sizes and positions all the elements', async () => {
+    const { container } = await render(
       <Flex count={3} offset={1}>
         <div>Hey</div>
         <div>Hi</div>

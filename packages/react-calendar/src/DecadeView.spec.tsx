@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/react';
+import { render } from 'vitest-browser-react';
 
 import DecadeView from './DecadeView.js';
 
@@ -9,10 +9,10 @@ describe('DecadeView', () => {
     valueType: 'year',
   } satisfies React.ComponentProps<typeof DecadeView>;
 
-  it('renders proper view when given activeStartDate', () => {
+  it('renders proper view when given activeStartDate', async () => {
     const activeStartDate = new Date(2011, 0, 1);
 
-    const { container } = render(
+    const { container } = await render(
       <DecadeView {...defaultProps} activeStartDate={activeStartDate} />,
     );
 
@@ -21,17 +21,19 @@ describe('DecadeView', () => {
     expect(firstDayTile).toHaveTextContent(`${activeStartDate.getFullYear()}`);
   });
 
-  it('applies tileClassName to its tiles when given a string', () => {
+  it('applies tileClassName to its tiles when given a string', async () => {
     const tileClassName = 'testClassName';
 
-    const { container } = render(<DecadeView {...defaultProps} tileClassName={tileClassName} />);
+    const { container } = await render(
+      <DecadeView {...defaultProps} tileClassName={tileClassName} />,
+    );
 
     const firstDayTile = container.querySelector('.react-calendar__tile');
 
     expect(firstDayTile).toHaveClass(tileClassName);
   });
 
-  it('applies tileClassName to its tiles conditionally when given a function that returns a string', () => {
+  it('applies tileClassName to its tiles conditionally when given a function that returns a string', async () => {
     const activeStartDate = new Date(2011, 0, 1);
     const tileClassNameFn = ({ date }: { date: Date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
@@ -41,7 +43,7 @@ describe('DecadeView', () => {
       return null;
     };
 
-    const { container } = render(
+    const { container } = await render(
       <DecadeView
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -58,10 +60,10 @@ describe('DecadeView', () => {
     expect(secondDayTile).not.toHaveClass('firstDayOfTheMonth');
   });
 
-  it('renders tileContent in its tiles when given a node', () => {
+  it('renders tileContent in its tiles when given a node', async () => {
     const tileContent = <div className="testContent" />;
 
-    const { container } = render(<DecadeView {...defaultProps} tileContent={tileContent} />);
+    const { container } = await render(<DecadeView {...defaultProps} tileContent={tileContent} />);
 
     const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
@@ -69,7 +71,7 @@ describe('DecadeView', () => {
     expect(firstDayTileContent).toBeInTheDocument();
   });
 
-  it('renders tileContent in its tiles conditionally when given a function that returns a node', () => {
+  it('renders tileContent in its tiles conditionally when given a function that returns a node', async () => {
     const activeStartDate = new Date(2011, 0, 1);
     const tileContentFn = ({ date }: { date: Date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
@@ -79,7 +81,7 @@ describe('DecadeView', () => {
       return null;
     };
 
-    const { container } = render(
+    const { container } = await render(
       <DecadeView
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -99,10 +101,10 @@ describe('DecadeView', () => {
     expect(secondDayTileContent).not.toBeInTheDocument();
   });
 
-  it('displays decade view with custom year formatting', () => {
+  it('displays decade view with custom year formatting', async () => {
     const formatYear = () => 'Year';
 
-    const { container } = render(<DecadeView {...defaultProps} formatYear={formatYear} />);
+    const { container } = await render(<DecadeView {...defaultProps} formatYear={formatYear} />);
 
     const year = container.querySelector('.react-calendar__decade-view__years__year');
 

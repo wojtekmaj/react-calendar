@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render } from '@testing-library/react';
+import { userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-react';
 
 import Month from './Month.js';
 
@@ -10,8 +11,8 @@ const tileProps = {
 };
 
 describe('Month', () => {
-  it('applies given classNames properly', () => {
-    const { container } = render(
+  it('applies given classNames properly', async () => {
+    const { container } = await render(
       <Month
         {...tileProps}
         classes={['react-calendar__tile', 'react-calendar__tile--flag']}
@@ -27,8 +28,8 @@ describe('Month', () => {
     expect(wrapper).toHaveClass('testFunctionClassName');
   });
 
-  it('renders component with proper abbreviation', () => {
-    const { container } = render(<Month {...tileProps} date={new Date(2018, 0, 1)} />);
+  it('renders component with proper abbreviation', async () => {
+    const { container } = await render(<Month {...tileProps} date={new Date(2018, 0, 1)} />);
 
     const abbr = container.querySelector('abbr');
 
@@ -37,8 +38,8 @@ describe('Month', () => {
     expect(container).toHaveTextContent('January');
   });
 
-  it("is disabled when date is before beginning of minDate's month", () => {
-    const { container } = render(
+  it("is disabled when date is before beginning of minDate's month", async () => {
+    const { container } = await render(
       <Month {...tileProps} date={new Date(2018, 6, 1)} minDate={new Date(2018, 7, 1)} />,
     );
 
@@ -47,8 +48,8 @@ describe('Month', () => {
     expect(tile).toBeDisabled();
   });
 
-  it("is not disabled when date is after beginning of minDate's month", () => {
-    const { container } = render(
+  it("is not disabled when date is after beginning of minDate's month", async () => {
+    const { container } = await render(
       <Month {...tileProps} date={new Date(2018, 0, 1)} minDate={new Date(2018, 0, 1)} />,
     );
 
@@ -57,8 +58,8 @@ describe('Month', () => {
     expect(tile).toBeEnabled();
   });
 
-  it("is disabled when date is after end of maxDate's month", () => {
-    const { container } = render(
+  it("is disabled when date is after end of maxDate's month", async () => {
+    const { container } = await render(
       <Month {...tileProps} date={new Date(2018, 6, 1)} maxDate={new Date(2018, 5, 1)} />,
     );
 
@@ -67,8 +68,8 @@ describe('Month', () => {
     expect(tile).toBeDisabled();
   });
 
-  it("is not disabled when date is before end of maxDate's month", () => {
-    const { container } = render(
+  it("is not disabled when date is before end of maxDate's month", async () => {
+    const { container } = await render(
       <Month {...tileProps} date={new Date(2018, 0, 1)} maxDate={new Date(2018, 0, 1)} />,
     );
 
@@ -77,46 +78,50 @@ describe('Month', () => {
     expect(tile).toBeEnabled();
   });
 
-  it('calls onClick callback when clicked and sends proper date as an argument', () => {
+  it('calls onClick callback when clicked and sends proper date as an argument', async () => {
     const date = new Date(2018, 0, 1);
     const onClick = vi.fn();
 
-    const { container } = render(<Month {...tileProps} date={date} onClick={onClick} />);
+    const { container } = await render(<Month {...tileProps} date={date} onClick={onClick} />);
 
-    fireEvent.click(container.querySelector('.react-calendar__tile') as HTMLDivElement);
+    await userEvent.click(container.querySelector('.react-calendar__tile') as HTMLDivElement);
 
     expect(onClick).toHaveBeenCalled();
     expect(onClick).toHaveBeenCalledWith(date, expect.any(Object));
   });
 
-  it('calls onMouseOver callback when hovered and sends proper date as an argument', () => {
+  it('calls onMouseOver callback when hovered and sends proper date as an argument', async () => {
     const date = new Date(2018, 0, 1);
     const onMouseOver = vi.fn();
 
-    const { container } = render(<Month {...tileProps} date={date} onMouseOver={onMouseOver} />);
+    const { container } = await render(
+      <Month {...tileProps} date={date} onMouseOver={onMouseOver} />,
+    );
 
     const tile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
-    fireEvent.mouseOver(tile);
+    await userEvent.hover(tile);
 
     expect(onMouseOver).toHaveBeenCalled();
     expect(onMouseOver).toHaveBeenCalledWith(date);
   });
 
-  it('calls onMouseOver callback when focused and sends proper date as an argument', () => {
+  it('calls onMouseOver callback when focused and sends proper date as an argument', async () => {
     const date = new Date(2018, 0, 1);
     const onMouseOver = vi.fn();
 
-    const { container } = render(<Month {...tileProps} date={date} onMouseOver={onMouseOver} />);
+    const { container } = await render(
+      <Month {...tileProps} date={date} onMouseOver={onMouseOver} />,
+    );
 
     const tile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
-    fireEvent.focus(tile);
+    tile.focus();
 
     expect(onMouseOver).toHaveBeenCalled();
     expect(onMouseOver).toHaveBeenCalledWith(date);
   });
 
-  it('renders tileContent properly', () => {
-    const { container } = render(
+  it('renders tileContent properly', async () => {
+    const { container } = await render(
       <Month {...tileProps} tileContent={<div className="testContent" />} />,
     );
 
@@ -125,12 +130,14 @@ describe('Month', () => {
     expect(testContent).toBeInTheDocument();
   });
 
-  it('renders tileContent function result properly and sends proper arguments to it', () => {
+  it('renders tileContent function result properly and sends proper arguments to it', async () => {
     const date = new Date(2018, 0, 1);
     const tileContent = vi.fn();
     tileContent.mockReturnValue(<div className="testContent" />);
 
-    const { container } = render(<Month {...tileProps} date={date} tileContent={tileContent} />);
+    const { container } = await render(
+      <Month {...tileProps} date={date} tileContent={tileContent} />,
+    );
 
     const testContent = container.querySelector('.testContent');
 
@@ -143,13 +150,13 @@ describe('Month', () => {
     expect(testContent).toBeInTheDocument();
   });
 
-  it('uses formatMonth if given', () => {
+  it('uses formatMonth if given', async () => {
     const locale = 'en-US';
     const date = new Date(2018, 0, 1);
     const formatMonth = vi.fn();
     formatMonth.mockReturnValue('Mock format');
 
-    const { container } = render(
+    const { container } = await render(
       <Month {...tileProps} date={date} formatMonth={formatMonth} locale={locale} />,
     );
 
@@ -160,13 +167,13 @@ describe('Month', () => {
     expect(tile).toHaveTextContent('Mock format');
   });
 
-  it('uses formatMonthYear if given', () => {
+  it('uses formatMonthYear if given', async () => {
     const locale = 'en-US';
     const date = new Date(2018, 0, 1);
     const formatMonthYear = vi.fn();
     formatMonthYear.mockReturnValue('Mock format');
 
-    const { container } = render(
+    const { container } = await render(
       <Month {...tileProps} date={date} formatMonthYear={formatMonthYear} locale={locale} />,
     );
 

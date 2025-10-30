@@ -11,7 +11,6 @@ const config: ViteUserConfig = defineConfig({
       instances: [{ browser: 'chromium' }],
       provider: playwright(),
     },
-    setupFiles: 'vitest.setup.ts',
     watch: false,
   },
 });

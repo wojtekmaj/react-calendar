@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/react';
+import { render } from 'vitest-browser-react';
 
 import YearView from './YearView.js';
 
@@ -11,10 +11,12 @@ describe('YearView', () => {
     valueType: 'month',
   } satisfies React.ComponentProps<typeof YearView>;
 
-  it('renders proper view when given activeStartDate', () => {
+  it('renders proper view when given activeStartDate', async () => {
     const activeStartDate = new Date(2017, 0, 1);
 
-    const { container } = render(<YearView {...defaultProps} activeStartDate={activeStartDate} />);
+    const { container } = await render(
+      <YearView {...defaultProps} activeStartDate={activeStartDate} />,
+    );
 
     const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileTimeAbbr = firstDayTile.querySelector('abbr');
@@ -22,17 +24,19 @@ describe('YearView', () => {
     expect(firstDayTileTimeAbbr).toHaveAccessibleName(format(activeStartDate));
   });
 
-  it('applies tileClassName to its tiles when given a string', () => {
+  it('applies tileClassName to its tiles when given a string', async () => {
     const tileClassName = 'testClassName';
 
-    const { container } = render(<YearView {...defaultProps} tileClassName={tileClassName} />);
+    const { container } = await render(
+      <YearView {...defaultProps} tileClassName={tileClassName} />,
+    );
 
     const firstDayTile = container.querySelector('.react-calendar__tile');
 
     expect(firstDayTile).toHaveClass(tileClassName);
   });
 
-  it('applies tileClassName to its tiles conditionally when given a function that returns a string', () => {
+  it('applies tileClassName to its tiles conditionally when given a function that returns a string', async () => {
     const activeStartDate = new Date(2017, 0, 1);
     const tileClassNameFn = ({ date }: { date: Date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
@@ -42,7 +46,7 @@ describe('YearView', () => {
       return null;
     };
 
-    const { container } = render(
+    const { container } = await render(
       <YearView
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -59,10 +63,10 @@ describe('YearView', () => {
     expect(secondDayTile).not.toHaveClass('firstDayOfTheMonth');
   });
 
-  it('renders tileContent in its tiles when given a node', () => {
+  it('renders tileContent in its tiles when given a node', async () => {
     const tileContent = <div className="testContent" />;
 
-    const { container } = render(<YearView {...defaultProps} tileContent={tileContent} />);
+    const { container } = await render(<YearView {...defaultProps} tileContent={tileContent} />);
 
     const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
@@ -70,7 +74,7 @@ describe('YearView', () => {
     expect(firstDayTileContent).toBeInTheDocument();
   });
 
-  it('renders tileContent in its tiles conditionally when given a function that returns a node', () => {
+  it('renders tileContent in its tiles conditionally when given a function that returns a node', async () => {
     const activeStartDate = new Date(2017, 0, 1);
     const tileContentFn = ({ date }: { date: Date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
@@ -80,7 +84,7 @@ describe('YearView', () => {
       return null;
     };
 
-    const { container } = render(
+    const { container } = await render(
       <YearView {...defaultProps} activeStartDate={activeStartDate} tileContent={tileContentFn} />,
     );
 
@@ -96,8 +100,8 @@ describe('YearView', () => {
     expect(secondDayTileContent).not.toBeInTheDocument();
   });
 
-  it('displays year view with custom month formatting', () => {
-    const { container } = render(<YearView {...defaultProps} formatMonth={() => 'Month'} />);
+  it('displays year view with custom month formatting', async () => {
+    const { container } = await render(<YearView {...defaultProps} formatMonth={() => 'Month'} />);
 
     const month = container.querySelector('.react-calendar__year-view__months__month');
 

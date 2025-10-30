@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/react';
+import { render } from 'vitest-browser-react';
 import { getDecadeEnd, getDecadeStart } from '@wojtekmaj/date-utils';
 
 import CenturyView from './CenturyView.js';
@@ -10,10 +10,10 @@ describe('CenturyView', () => {
     valueType: 'decade',
   } satisfies React.ComponentProps<typeof CenturyView>;
 
-  it('renders proper view when given activeStartDate', () => {
+  it('renders proper view when given activeStartDate', async () => {
     const activeStartDate = new Date(2001, 0, 1);
 
-    const { container } = render(
+    const { container } = await render(
       <CenturyView {...defaultProps} activeStartDate={activeStartDate} />,
     );
 
@@ -26,17 +26,19 @@ describe('CenturyView', () => {
     );
   });
 
-  it('applies tileClassName to its tiles when given a string', () => {
+  it('applies tileClassName to its tiles when given a string', async () => {
     const tileClassName = 'testClassName';
 
-    const { container } = render(<CenturyView {...defaultProps} tileClassName={tileClassName} />);
+    const { container } = await render(
+      <CenturyView {...defaultProps} tileClassName={tileClassName} />,
+    );
 
     const firstDayTile = container.querySelector('.react-calendar__tile');
 
     expect(firstDayTile).toHaveClass(tileClassName);
   });
 
-  it('applies tileClassName to its tiles conditionally when given a function that returns a string', () => {
+  it('applies tileClassName to its tiles conditionally when given a function that returns a string', async () => {
     const activeStartDate = new Date(2001, 0, 1);
     const tileClassNameFn = ({ date }: { date: Date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
@@ -46,7 +48,7 @@ describe('CenturyView', () => {
       return null;
     };
 
-    const { container } = render(
+    const { container } = await render(
       <CenturyView
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -63,10 +65,10 @@ describe('CenturyView', () => {
     expect(secondDayTile).not.toHaveClass('firstDayOfTheMonth');
   });
 
-  it('renders tileContent in its tiles when given a node', () => {
+  it('renders tileContent in its tiles when given a node', async () => {
     const tileContent = <div className="testContent" />;
 
-    const { container } = render(<CenturyView {...defaultProps} tileContent={tileContent} />);
+    const { container } = await render(<CenturyView {...defaultProps} tileContent={tileContent} />);
 
     const firstDayTile = container.querySelector('.react-calendar__tile') as HTMLDivElement;
     const firstDayTileContent = firstDayTile.querySelector('.testContent');
@@ -74,7 +76,7 @@ describe('CenturyView', () => {
     expect(firstDayTileContent).toBeInTheDocument();
   });
 
-  it('renders tileContent in its tiles conditionally when given a function that returns a node', () => {
+  it('renders tileContent in its tiles conditionally when given a function that returns a node', async () => {
     const activeStartDate = new Date(2001, 0, 1);
     const tileContentFn = ({ date }: { date: Date }) => {
       if (date.getTime() === activeStartDate.getTime()) {
@@ -84,7 +86,7 @@ describe('CenturyView', () => {
       return null;
     };
 
-    const { container } = render(
+    const { container } = await render(
       <CenturyView
         {...defaultProps}
         activeStartDate={activeStartDate}
@@ -104,10 +106,10 @@ describe('CenturyView', () => {
     expect(secondDayTileContent).not.toBeInTheDocument();
   });
 
-  it('displays century view with custom year formatting', () => {
+  it('displays century view with custom year formatting', async () => {
     const formatYear = () => 'Year';
 
-    const { container } = render(<CenturyView {...defaultProps} formatYear={formatYear} />);
+    const { container } = await render(<CenturyView {...defaultProps} formatYear={formatYear} />);
 
     const year = container.querySelector('.react-calendar__century-view__decades');
 
