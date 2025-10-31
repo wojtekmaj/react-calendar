@@ -76,6 +76,12 @@ export type CalendarProps = {
    */
   className?: ClassName;
   /**
+   * The test ID used for testing purposes.
+   *
+   * @example 'clock'
+   */
+  'data-testid'?: string;
+  /**
    * The beginning of a period that shall be displayed by default. If you wish to use react-calendar in a controlled way, use `activeStartDate` instead.
    *
    * @example new Date(2017, 0, 1)
@@ -603,6 +609,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       allowPartialRange,
       calendarType,
       className,
+      'data-testid': dataTestId,
       defaultActiveStartDate,
       defaultValue,
       defaultView,
@@ -1122,6 +1129,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
           showDoubleView && `${baseClassName}--doubleView`,
           className,
         )}
+        data-testid={dataTestId}
         ref={inputRef}
       >
         {renderNavigation()}

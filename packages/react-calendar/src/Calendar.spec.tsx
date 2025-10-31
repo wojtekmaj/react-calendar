@@ -43,6 +43,16 @@ describe('Calendar', () => {
     expect(wrapper).toHaveClass(className);
   });
 
+  it('applies data-testid to its wrapper when given a string', async () => {
+    const dataTestId = 'testCalendar';
+
+    const { container } = await render(<Calendar data-testid={dataTestId} />);
+
+    const wrapper = container.querySelector('.react-calendar');
+
+    expect(wrapper).toHaveAttribute('data-testid', dataTestId);
+  });
+
   it('passes container element to inputRef properly', async () => {
     const inputRef = createRef<HTMLDivElement>();
 
