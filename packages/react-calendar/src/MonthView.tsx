@@ -34,6 +34,15 @@ type MonthViewProps = {
    * @example true
    */
   showWeekNumbers?: boolean;
+  /**
+   * Render a custom month view.
+   *
+   * @example (props, state) => <div>Custom Month View</div>
+   */
+  render?: (
+    props: React.ComponentProps<'div'>,
+    state: Omit<MonthViewProps, 'render'>,
+  ) => React.ReactElement;
 } & Omit<
   React.ComponentProps<typeof Weekdays> &
     React.ComponentProps<typeof WeekNumbers> &
@@ -89,8 +98,11 @@ export default function MonthView(props: MonthViewProps): React.ReactElement {
 
   const className = 'react-calendar__month-view';
 
-  return (
-    <div className={clsx(className, showWeekNumbers ? `${className}--weekNumbers` : '')}>
+  const { render, ...monthViewProps } = props;
+
+  const rootNodeProps = {
+    className: clsx(className, showWeekNumbers ? `${className}--weekNumbers` : ''),
+    children: (
       <div
         style={{
           display: 'flex',
@@ -108,6 +120,11 @@ export default function MonthView(props: MonthViewProps): React.ReactElement {
           {renderDays()}
         </div>
       </div>
-    </div>
-  );
+    ),
+  };
+
+  if (render) {
+    return render(rootNodeProps, monthViewProps);
+  }
+  return <div {...rootNodeProps} />;
 }

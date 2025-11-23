@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
+import { Fragment, forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import Navigation from './Calendar/Navigation.js';
@@ -426,6 +426,15 @@ export type CalendarProps = {
    * @example 'year'
    */
   view?: View;
+
+  /**
+   * Props for the month view.
+   *
+   * @example { monthView: { showWeekNumbers: true } }
+   */
+  slotProps?: {
+    monthView?: React.ComponentProps<typeof MonthView>;
+  };
 };
 
 function toDate(value: Date | string): Date {
@@ -610,17 +619,13 @@ function areDatesEqual(date1?: Date | null, date2?: Date | null) {
 function getMonths(initialDate: Date) {
   const currentDate = getBegin('month', initialDate);
   const months = [];
-  const monthHeading = [];
   for (let i = 0; i < 13; i++) {
     const month = new Date(currentDate);
     month.setMonth(month.getMonth() + i);
     months.push(month);
-    const monthYear = month.toLocaleString('en-US', { month: 'long', year: 'numeric' });
-    monthHeading.push(monthYear);
   }
   return {
     months,
-    monthHeading,
   };
 }
 
@@ -684,6 +689,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       tileDisabled,
       value: valueProps,
       view: viewProps,
+      slotProps,
     } = props;
 
     const [activeStartDateState, setActiveStartDateState] = useState<Date | null | undefined>(
@@ -1033,7 +1039,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
     const renderMonthView = (initialDate: Date) => {
       const onClick = drillDownAvailable ? drillDown : onChange;
 
-      const { months, monthHeading } = getMonths(initialDate);
+      const { months } = getMonths(initialDate);
 
       const commonProps = {
         hover,
@@ -1047,14 +1053,14 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         tileDisabled,
         value,
         valueType,
+        ...slotProps,
       };
 
-      return months.map((month, index) => {
+      return months.map((month) => {
         const activeStartDateForMonth = getBegin(view, month);
 
         return (
-          <div key={month.getTime()}>
-            <div className="month-view--heading">{monthHeading[index]}</div>
+          <Fragment key={month.getTime()}>
             <MonthView
               calendarType={calendarType}
               formatDay={formatDay}
@@ -1073,7 +1079,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
               activeStartDate={activeStartDateForMonth}
               {...commonProps}
             />
-          </div>
+          </Fragment>
         );
       });
     };
