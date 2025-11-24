@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import Navigation from './Calendar/Navigation.js';
@@ -1060,26 +1060,25 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         const activeStartDateForMonth = getBegin(view, month);
 
         return (
-          <Fragment key={month.getTime()}>
-            <MonthView
-              calendarType={calendarType}
-              formatDay={formatDay}
-              formatLongDate={formatLongDate}
-              formatShortWeekday={formatShortWeekday}
-              formatWeekday={formatWeekday}
-              onClickWeekNumber={onClickWeekNumber}
-              onMouseLeave={selectRange ? onMouseLeave : undefined}
-              showFixedNumberOfWeeks={
-                typeof showFixedNumberOfWeeks !== 'undefined'
-                  ? showFixedNumberOfWeeks
-                  : showDoubleView
-              }
-              showNeighboringMonth={showNeighboringMonth}
-              showWeekNumbers={showWeekNumbers}
-              activeStartDate={activeStartDateForMonth}
-              {...commonProps}
-            />
-          </Fragment>
+          <MonthView
+            key={month.getTime()}
+            calendarType={calendarType}
+            formatDay={formatDay}
+            formatLongDate={formatLongDate}
+            formatShortWeekday={formatShortWeekday}
+            formatWeekday={formatWeekday}
+            onClickWeekNumber={onClickWeekNumber}
+            onMouseLeave={selectRange ? onMouseLeave : undefined}
+            showFixedNumberOfWeeks={
+              typeof showFixedNumberOfWeeks !== 'undefined'
+                ? showFixedNumberOfWeeks
+                : showDoubleView
+            }
+            showNeighboringMonth={showNeighboringMonth}
+            showWeekNumbers={showWeekNumbers}
+            activeStartDate={activeStartDateForMonth}
+            {...commonProps}
+          />
         );
       });
     };
