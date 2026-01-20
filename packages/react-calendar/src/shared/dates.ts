@@ -393,10 +393,11 @@ export function getDecadeLabel(
  * Returns a boolean determining whether a given date is the current day of the week.
  *
  * @param {Date} date Date.
+ * @param {Date} now optional defaults to new Date()
  * @returns {boolean} Whether a given date is the current day of the week.
  */
-export function isCurrentDayOfWeek(date: Date): boolean {
-  return date.getDay() === new Date().getDay();
+export function isCurrentDayOfWeek(date: Date, now?: Date): boolean {
+  return date.getDay() === (now ?? new Date()).getDay();
 }
 
 /**
