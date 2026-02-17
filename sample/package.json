@@ -23,5 +23,6 @@
     "@vitejs/plugin-react": "^4.6.0",
     "typescript": "^5.9.2",
     "vite": "^7.1.11"
-  }
+  },
+  "packageManager": "yarn@4.10.3"
 }
