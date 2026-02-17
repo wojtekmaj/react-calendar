@@ -49,6 +49,7 @@ export default function Days(props: DaysProps): React.ReactElement {
     showNeighboringMonth,
     value,
     valueType,
+    now,
     ...otherProps
   } = props;
 
@@ -118,6 +119,7 @@ export default function Days(props: DaysProps): React.ReactElement {
       start={start}
       value={value}
       valueType={valueType}
+      now={now}
     />
   );
 }
