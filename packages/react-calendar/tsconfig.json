@@ -11,7 +11,6 @@
     "noUncheckedIndexedAccess": true,
     "outDir": "dist",
     "skipLibCheck": true,
-    "strict": true,
     "target": "es2018",
     "verbatimModuleSyntax": true
   },
