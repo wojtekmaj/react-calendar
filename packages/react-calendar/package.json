@@ -1,6 +1,6 @@
 {
   "name": "react-calendar",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "Ultimate calendar for your React app.",
   "type": "module",
   "sideEffects": [
