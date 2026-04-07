@@ -15,10 +15,9 @@ function getFormatter(
     const formatterCacheLocale = formatterCache.get(localeWithDefault);
 
     if (!formatterCacheLocale.has(options)) {
-      formatterCacheLocale.set(
-        options,
-        new Intl.DateTimeFormat(localeWithDefault || undefined, options).format,
-      );
+      const formatter = new Intl.DateTimeFormat(localeWithDefault || undefined, options);
+
+      formatterCacheLocale.set(options, formatter.format.bind(formatter));
     }
 
     return formatterCacheLocale.get(options)(date);
