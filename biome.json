@@ -1,5 +1,6 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
+  "root": false,
+  "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
   "files": {
     "includes": [
       "**",
