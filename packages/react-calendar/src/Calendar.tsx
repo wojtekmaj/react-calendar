@@ -424,6 +424,13 @@ export type CalendarProps = {
    * @example 'year'
    */
   view?: View;
+  /**
+   * Determines which date to show as the current date on the calendar
+   *
+   * @default new Date()
+   * @example 'year'
+   */
+  now?: Date;
 };
 
 function toDate(value: Date | string): Date {
@@ -662,6 +669,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
       tileDisabled,
       value: valueProps,
       view: viewProps,
+      now,
     } = props;
 
     const [activeStartDateState, setActiveStartDateState] = useState<Date | null | undefined>(
@@ -1030,6 +1038,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         tileDisabled,
         value,
         valueType,
+        now,
       };
 
       switch (view) {
