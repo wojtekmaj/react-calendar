@@ -3,9 +3,9 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 import DateBoundariesOptions from './DateBoundariesOptions.js';
+import LocaleOptions from './LocaleOptions.js';
 import MaxDetailOptions from './MaxDetailOptions.js';
 import MinDetailOptions from './MinDetailOptions.js';
-import LocaleOptions from './LocaleOptions.js';
 import ValueOptions from './ValueOptions.js';
 import ViewOptions from './ViewOptions.js';
 

@@ -17,7 +17,6 @@ export type {
   TileContentFunc,
   TileDisabledFunc,
 } from './shared/types.js';
-
 export { Calendar, CenturyView, DecadeView, MonthView, Navigation, YearView };
 
 export default Calendar;
