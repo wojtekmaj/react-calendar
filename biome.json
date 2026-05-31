@@ -72,6 +72,16 @@
       },
       "suspicious": {
         "noConsole": "warn"
+      },
+      "style": {
+        "noCommonJs": "error",
+        "useBlockStatements": "error",
+        "useImportType": {
+          "level": "error",
+          "options": {
+            "style": "separatedType"
+          }
+        }
       }
     }
   },
