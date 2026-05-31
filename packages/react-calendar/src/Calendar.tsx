@@ -786,7 +786,9 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
           }
         })();
 
-        if (callback) callback(value, event);
+        if (callback) {
+          callback(value, event);
+        }
       },
       [onClickDay, onClickDecade, onClickMonth, onClickYear, view],
     );
