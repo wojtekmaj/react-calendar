@@ -15,7 +15,10 @@ import './Test.css';
 
 import type { LooseValue, Value, View } from './shared/types.js';
 
-const now = new Date();
+// Now can be changed to test the calendar in a different instant
+// const now = new Date();
+
+const now = new Date(2024, 7, 31);
 
 const tileClassName = ({ date, view }: { date: Date; view: View }) => {
   switch (view) {
@@ -122,6 +125,7 @@ export default function Test() {
     className: 'myCustomCalendarClassName',
     locale,
     maxDate,
+    now,
     maxDetail,
     minDate,
     minDetail,

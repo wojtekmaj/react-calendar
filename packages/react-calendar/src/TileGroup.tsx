@@ -17,6 +17,7 @@ type TileGroupProps = {
   step?: number;
   value?: Value;
   valueType: RangeType;
+  now?: Date;
 };
 
 export default function TileGroup({
@@ -32,6 +33,7 @@ export default function TileGroup({
   step = 1,
   value,
   valueType,
+  now,
 }: TileGroupProps): React.ReactElement {
   const tiles = [];
   for (let point = start; point <= end; point += step) {
@@ -45,6 +47,7 @@ export default function TileGroup({
           hover,
           value,
           valueType,
+          now,
         }),
         date,
       }),
