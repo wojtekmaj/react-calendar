@@ -6,6 +6,11 @@
   <img width="436" height="398" src="https://projects.wojtekmaj.pl/react-calendar/react-calendar.jpg">
 </div>
 
+## Translation Support
+[[English](https://github.com/wojtekmaj/react-calendar), [Korean](https://github.com/wojtekmaj/react-calendar/blob/main/languages/korean.md)]
+
+## Description
+
 Ultimate calendar for your React app.
 
 - Pick days, months, years, or even decades
