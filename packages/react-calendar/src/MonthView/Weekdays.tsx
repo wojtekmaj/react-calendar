@@ -40,6 +40,13 @@ type WeekdaysProps = {
    */
   locale?: string;
   onMouseLeave?: () => void;
+  /**
+   * Determines which date to show as the current date on the calendar
+   *
+   * @default new Date()
+   * @example 'year'
+   */
+  now?: Date;
 };
 
 export default function Weekdays(props: WeekdaysProps): React.ReactElement {
@@ -49,6 +56,7 @@ export default function Weekdays(props: WeekdaysProps): React.ReactElement {
     formatWeekday = defaultFormatWeekday,
     locale,
     onMouseLeave,
+    now,
   } = props;
 
   const anyDate = new Date();
@@ -72,7 +80,7 @@ export default function Weekdays(props: WeekdaysProps): React.ReactElement {
         key={weekday}
         className={clsx(
           weekdayClassName,
-          isCurrentDayOfWeek(weekdayDate) && `${weekdayClassName}--current`,
+          isCurrentDayOfWeek(weekdayDate, now) && `${weekdayClassName}--current`,
           isWeekend(weekdayDate, calendarType) && `${weekdayClassName}--weekend`,
         )}
       >

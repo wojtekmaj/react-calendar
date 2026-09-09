@@ -34,6 +34,13 @@ type MonthViewProps = {
    * @example true
    */
   showWeekNumbers?: boolean;
+  /**
+   * Determines which date to show as the current date on the calendar
+   *
+   * @default new Date()
+   * @example 'year'
+   */
+  now?: Date;
 } & Omit<
   React.ComponentProps<typeof Weekdays> &
     React.ComponentProps<typeof WeekNumbers> &
@@ -52,6 +59,7 @@ export default function MonthView(props: MonthViewProps): React.ReactElement {
     formatWeekday,
     onClickWeekNumber,
     showWeekNumbers,
+    now,
     ...childProps
   } = props;
 
@@ -63,6 +71,7 @@ export default function MonthView(props: MonthViewProps): React.ReactElement {
         formatWeekday={formatWeekday}
         locale={locale}
         onMouseLeave={onMouseLeave}
+        now={now}
       />
     );
   }
@@ -84,7 +93,7 @@ export default function MonthView(props: MonthViewProps): React.ReactElement {
   }
 
   function renderDays() {
-    return <Days calendarType={calendarType} {...childProps} />;
+    return <Days calendarType={calendarType} now={now} {...childProps} />;
   }
 
   const className = 'react-calendar__month-view';
