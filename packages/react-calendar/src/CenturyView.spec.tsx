@@ -111,8 +111,8 @@ describe('CenturyView', () => {
 
     const { container } = await render(<CenturyView {...defaultProps} formatYear={formatYear} />);
 
-    const year = container.querySelector('.react-calendar__century-view__decades');
+    const decade = container.querySelector('.react-calendar__century-view__decades__decade');
 
-    expect(year).toHaveTextContent('Year');
+    expect(decade).toHaveTextContent('Year – Year');
   });
 });

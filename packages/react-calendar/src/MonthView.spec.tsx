@@ -163,9 +163,9 @@ describe('MonthView', () => {
       <MonthView {...defaultProps} formatShortWeekday={formatShortWeekday} />,
     );
 
-    const weekdays = container.querySelector('.react-calendar__month-view__weekdays');
+    const weekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
 
-    expect(weekdays).toHaveTextContent('Wkdy');
+    expect(weekday).toHaveTextContent('Wkdy');
   });
 
   it('passes formatWeekday to Weekdays component', async () => {

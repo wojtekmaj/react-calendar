@@ -1149,9 +1149,9 @@ describe('Calendar', () => {
 
     const { container } = await render(<Calendar formatMonthYear={formatMonthYear} />);
 
-    const navigation = container.querySelector('.react-calendar__navigation');
+    const navigationLabel = container.querySelector('.react-calendar__navigation__label');
 
-    expect(navigation).toHaveTextContent('Month year');
+    expect(navigationLabel).toHaveTextContent('Month year');
   });
 
   it('passes formatYear to Navigation component', async () => {
@@ -1159,9 +1159,9 @@ describe('Calendar', () => {
 
     const { container } = await render(<Calendar formatYear={formatYear} view="year" />);
 
-    const navigation = container.querySelector('.react-calendar__navigation');
+    const navigationLabel = container.querySelector('.react-calendar__navigation__label');
 
-    expect(navigation).toHaveTextContent('Year');
+    expect(navigationLabel).toHaveTextContent('Year');
   });
 
   it('passes formatDay to MonthView component', async () => {
@@ -1169,9 +1169,9 @@ describe('Calendar', () => {
 
     const { container } = await render(<Calendar formatDay={formatDay} />);
 
-    const monthView = container.querySelector('.react-calendar__month-view');
+    const day = container.querySelector('.react-calendar__month-view__days__day');
 
-    expect(monthView).toHaveTextContent('Day');
+    expect(day).toHaveTextContent('Day');
   });
 
   it('passes formatLongDate to MonthView component', async () => {
@@ -1190,9 +1190,9 @@ describe('Calendar', () => {
 
     const { container } = await render(<Calendar formatShortWeekday={formatShortWeekday} />);
 
-    const monthView = container.querySelector('.react-calendar__month-view');
+    const weekday = container.querySelector('.react-calendar__month-view__weekdays__weekday');
 
-    expect(monthView).toHaveTextContent('Wkdy');
+    expect(weekday).toHaveTextContent('Wkdy');
   });
 
   it('passes formatWeekday to MonthView component', async () => {
@@ -1213,9 +1213,9 @@ describe('Calendar', () => {
 
     const { container } = await render(<Calendar formatMonth={formatMonth} view="year" />);
 
-    const yearView = container.querySelector('.react-calendar__year-view');
+    const month = container.querySelector('.react-calendar__year-view__months__month');
 
-    expect(yearView).toHaveTextContent('Month');
+    expect(month).toHaveTextContent('Month');
   });
 
   it('passes formatYear to DecadeView component', async () => {
@@ -1223,9 +1223,9 @@ describe('Calendar', () => {
 
     const { container } = await render(<Calendar formatYear={formatYear} view="decade" />);
 
-    const decadeView = container.querySelector('.react-calendar__decade-view');
+    const year = container.querySelector('.react-calendar__decade-view__years__year');
 
-    expect(decadeView).toHaveTextContent('Year');
+    expect(year).toHaveTextContent('Year');
   });
 
   it('passes formatYear to CenturyView component', async () => {
@@ -1233,8 +1233,8 @@ describe('Calendar', () => {
 
     const { container } = await render(<Calendar formatYear={formatYear} view="century" />);
 
-    const centuryView = container.querySelector('.react-calendar__century-view');
+    const decade = container.querySelector('.react-calendar__century-view__decades__decade');
 
-    expect(centuryView).toHaveTextContent('Year');
+    expect(decade).toHaveTextContent('Year – Year');
   });
 });
