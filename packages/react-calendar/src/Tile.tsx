@@ -110,11 +110,42 @@ export default function Tile(props: TileProps): React.ReactElement {
   return (
     <button
       className={clsx(classes, tileClassName)}
-      disabled={
-        (minDate && minDateTransform(minDate) > date) ||
-        (maxDate && maxDateTransform(maxDate) < date) ||
-        tileDisabled?.({ activeStartDate, date, view })
-      }
+      disabled={(() => {
+           return (
+             (minDate && minDateTransform(minDate) > date) ||
+             (maxDate && maxDateTransform(maxDate) < date) ||   
+             (
+              view === "year" 
+              ? Array.from({ length: new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() }).every((_, day) => {
+                const dayDate = new Date(date.getFullYear(), date.getMonth(), day + 1);
+                return tileDisabled?.({
+                  activeStartDate,
+                  date: dayDate,
+                  view: "year",
+                });
+              })
+                : view === "decade"
+                  ? Array.from({ length: 12 }).every((_, month) => {
+                      const monthDate = new Date(date.getFullYear(), month, 1);
+                      return tileDisabled?.({
+                        activeStartDate,
+                        date: monthDate,
+                        view: "decade",
+                      });
+                    })
+                    : view === "century"
+                    ? Array.from({ length: 10 }).every((_, i) => {
+                        const yearDate = new Date(date.getFullYear() + i, 0, 1);
+                        return tileDisabled?.({
+                          activeStartDate,
+                          date: yearDate,
+                          view: "century",
+                        });
+                      })
+                    : tileDisabled?.({ activeStartDate, date, view })
+            )   
+           );
+         })()}
       onClick={onClick ? (event) => onClick(date, event) : undefined}
       onFocus={onMouseOver ? () => onMouseOver(date) : undefined}
       onMouseOver={onMouseOver ? () => onMouseOver(date) : undefined}
