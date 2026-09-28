@@ -920,7 +920,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
           nextValue = getProcessedValue(rawNextValue);
         }
 
-        const nextActiveStartDate =
+        let nextActiveStartDate =
           // Range selection turned off
           !selectRange ||
           // Range selection turned on, first value
@@ -936,6 +936,14 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
                 view,
               })
             : null;
+
+        if (
+          !selectRange &&
+          showDoubleView &&
+          areDatesEqual(nextActiveStartDate, getBeginNext(view, activeStartDate))
+        ) {
+          nextActiveStartDate = activeStartDate;
+        }
 
         event.persist();
 
@@ -984,6 +992,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         onChangeProps,
         onClickTile,
         selectRange,
+        showDoubleView,
         value,
         valueType,
         view,
