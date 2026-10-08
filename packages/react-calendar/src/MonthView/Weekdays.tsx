@@ -9,7 +9,7 @@ import {
 } from '../shared/dateFormatter.js';
 import { getDayOfWeek, isCurrentDayOfWeek, isWeekend } from '../shared/dates.js';
 
-import type { CalendarType } from '../shared/types.js';
+import type { CalendarType, WeekdayContentFunc } from '../shared/types.js';
 
 const className = 'react-calendar__month-view__weekdays';
 const weekdayClassName = `${className}__weekday`;
@@ -34,6 +34,13 @@ type WeekdaysProps = {
    */
   formatWeekday?: typeof defaultFormatWeekday;
   /**
+   * Allows to render custom content within a given weekday container on month view.
+   *
+   * @example 'Sample'
+   * @example ({ locale, date }) => <p>{formatDate(date, 'dd')}</p>
+   */
+  weekdayContent?: WeekdayContentFunc | React.ReactNode;
+  /**
    * Locale that should be used by the calendar. Can be any [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag). **Note**: When using SSR, setting this prop may help resolving hydration errors caused by locale mismatch between server and client.
    *
    * @example 'hu-HU'
@@ -49,6 +56,7 @@ export default function Weekdays(props: WeekdaysProps): React.ReactElement {
     formatWeekday = defaultFormatWeekday,
     locale,
     onMouseLeave,
+    weekdayContent: weekdayContentProps,
   } = props;
 
   const anyDate = new Date();
@@ -66,6 +74,10 @@ export default function Weekdays(props: WeekdaysProps): React.ReactElement {
     );
 
     const abbr = formatWeekday(locale, weekdayDate);
+    const weekdayContent =
+      typeof weekdayContentProps === 'function'
+        ? weekdayContentProps({ date: weekdayDate, locale })
+        : weekdayContentProps;
 
     weekdays.push(
       <div
@@ -79,6 +91,7 @@ export default function Weekdays(props: WeekdaysProps): React.ReactElement {
         <abbr aria-label={abbr} title={abbr}>
           {formatShortWeekday(locale, weekdayDate).replace('.', '')}
         </abbr>
+        {weekdayContent}
       </div>,
     );
   }

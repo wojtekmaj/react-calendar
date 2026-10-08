@@ -52,6 +52,7 @@ export default function MonthView(props: MonthViewProps): React.ReactElement {
     formatWeekday,
     onClickWeekNumber,
     showWeekNumbers,
+    weekdayContent,
     ...childProps
   } = props;
 
@@ -63,6 +64,7 @@ export default function MonthView(props: MonthViewProps): React.ReactElement {
         formatWeekday={formatWeekday}
         locale={locale}
         onMouseLeave={onMouseLeave}
+        weekdayContent={weekdayContent}
       />
     );
   }
