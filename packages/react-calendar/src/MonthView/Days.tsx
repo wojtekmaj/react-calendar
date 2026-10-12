@@ -112,6 +112,7 @@ export default function Days(props: DaysProps): React.ReactElement {
           calendarType={calendarType}
           currentMonthIndex={monthIndex}
           date={date}
+          value={value}
         />
       )}
       offset={offset}
