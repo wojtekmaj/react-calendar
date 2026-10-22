@@ -188,6 +188,90 @@ describe('Calendar', () => {
     expect(instance.current.activeStartDate).toEqual(newActiveStartDate);
   });
 
+  it('does not change activeStartDate when selecting a date in the second month given showDoubleView flag', async () => {
+    const activeStartDate = new Date(2018, 0, 1);
+    const onActiveStartDateChange = vi.fn();
+    const instance = createRef<CalendarImperativeHandle>();
+
+    await render(
+      <Calendar
+        defaultActiveStartDate={activeStartDate}
+        onActiveStartDateChange={onActiveStartDateChange}
+        showDoubleView
+        ref={instance}
+      />,
+    );
+
+    act(() => {
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      instance.current.onChange(new Date(2018, 1, 10), event);
+    });
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
+
+    expect(instance.current.activeStartDate).toEqual(activeStartDate);
+    expect(onActiveStartDateChange).not.toHaveBeenCalled();
+  });
+
+  it('does not change activeStartDate when selecting the first value of a range in the second month given showDoubleView flag', async () => {
+    const activeStartDate = new Date(2018, 0, 1);
+    const onActiveStartDateChange = vi.fn();
+    const instance = createRef<CalendarImperativeHandle>();
+
+    await render(
+      <Calendar
+        defaultActiveStartDate={activeStartDate}
+        onActiveStartDateChange={onActiveStartDateChange}
+        selectRange
+        showDoubleView
+        ref={instance}
+      />,
+    );
+
+    act(() => {
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      instance.current.onChange(new Date(2018, 1, 10), event);
+    });
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
+
+    expect(instance.current.activeStartDate).toEqual(activeStartDate);
+    expect(onActiveStartDateChange).not.toHaveBeenCalled();
+  });
+
+  it('changes activeStartDate when selecting a date outside of both months given showDoubleView flag', async () => {
+    const newActiveStartDate = new Date(2018, 3, 1);
+    const instance = createRef<CalendarImperativeHandle>();
+
+    await render(
+      <Calendar defaultActiveStartDate={new Date(2018, 0, 1)} showDoubleView ref={instance} />,
+    );
+
+    act(() => {
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      instance.current.onChange(new Date(2018, 3, 10), event);
+    });
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
+
+    expect(instance.current.activeStartDate).toEqual(newActiveStartDate);
+  });
+
   it('changes Calendar view given new activeStartDate value', async () => {
     const activeStartDate = new Date(2017, 0, 1);
     const newActiveStartDate = new Date(2018, 0, 1);
@@ -1141,6 +1225,148 @@ describe('Calendar', () => {
         [new Date(2018, 0, 1), new Date(2018, 6, 1, 23, 59, 59, 999)],
         event,
       );
+    });
+
+    it('calls onChange function returning a range starting no earlier than minDate', async () => {
+      const onChange = vi.fn();
+      const instance = createRef<CalendarImperativeHandle>();
+
+      await render(
+        <Calendar
+          minDate={new Date(2018, 0, 1, 12)}
+          onChange={onChange}
+          selectRange
+          view="month"
+          ref={instance}
+        />,
+      );
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      const { onChange: onChangeInternal } = instance.current;
+
+      act(() => {
+        onChangeInternal(new Date(2018, 0, 1), event);
+      });
+
+      const { onChange: onChangeInternal2 } = instance.current;
+
+      act(() => {
+        onChangeInternal2(new Date(2018, 0, 10), event);
+      });
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledWith(
+        [new Date(2018, 0, 1, 12), new Date(2018, 0, 10, 23, 59, 59, 999)],
+        event,
+      );
+    });
+
+    it('calls onChange function returning a range ending no later than maxDate', async () => {
+      const onChange = vi.fn();
+      const instance = createRef<CalendarImperativeHandle>();
+
+      await render(
+        <Calendar
+          maxDate={new Date(2018, 0, 10, 12)}
+          onChange={onChange}
+          selectRange
+          view="month"
+          ref={instance}
+        />,
+      );
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      const { onChange: onChangeInternal } = instance.current;
+
+      act(() => {
+        onChangeInternal(new Date(2018, 0, 1), event);
+      });
+
+      const { onChange: onChangeInternal2 } = instance.current;
+
+      act(() => {
+        onChangeInternal2(new Date(2018, 0, 10), event);
+      });
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledWith(
+        [new Date(2018, 0, 1), new Date(2018, 0, 10, 12)],
+        event,
+      );
+    });
+
+    it('calls onChange function returning a range within minDate and maxDate when selected reversed two pieces of a range in year view', async () => {
+      const onChange = vi.fn();
+      const instance = createRef<CalendarImperativeHandle>();
+
+      await render(
+        <Calendar
+          maxDate={new Date(2018, 2, 15, 12)}
+          maxDetail="year"
+          minDate={new Date(2018, 0, 15, 12)}
+          onChange={onChange}
+          selectRange
+          view="year"
+          ref={instance}
+        />,
+      );
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      const { onChange: onChangeInternal } = instance.current;
+
+      act(() => {
+        onChangeInternal(new Date(2018, 2, 1), event);
+      });
+
+      const { onChange: onChangeInternal2 } = instance.current;
+
+      act(() => {
+        onChangeInternal2(new Date(2018, 0, 1), event);
+      });
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledWith(
+        [new Date(2018, 0, 15, 12), new Date(2018, 2, 15, 12)],
+        event,
+      );
+    });
+
+    it('calls onChange function returning a partial range starting no earlier than minDate given allowPartialRange = true', async () => {
+      const onChange = vi.fn();
+      const instance = createRef<CalendarImperativeHandle>();
+
+      await render(
+        <Calendar
+          allowPartialRange
+          minDate={new Date(2018, 0, 1, 12)}
+          onChange={onChange}
+          selectRange
+          view="month"
+          ref={instance}
+        />,
+      );
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      const { onChange: onChangeInternal } = instance.current;
+
+      act(() => {
+        onChangeInternal(new Date(2018, 0, 1), event);
+      });
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledWith([new Date(2018, 0, 1, 12), null], event);
     });
   });
 

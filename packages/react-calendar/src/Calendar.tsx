@@ -902,7 +902,12 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
           if (isFirstValueInRange) {
             // Value has 0 or 2 elements - either way we're starting a new array
             // First value
-            nextValue = getBegin(valueType, rawNextValue);
+            nextValue = getDetailValueFrom({
+              maxDate,
+              maxDetail,
+              minDate,
+              value: rawNextValue,
+            });
           } else {
             if (!previousValue) {
               throw new Error('previousValue is required');
@@ -912,15 +917,20 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
               throw new Error('previousValue must not be an array');
             }
 
-            // Second value
-            nextValue = getValueRange(valueType, previousValue, rawNextValue);
+            // Second value, limited by minDate and maxDate just like a single value
+            nextValue = getDetailValueArray({
+              maxDate,
+              maxDetail,
+              minDate,
+              value: getValueRange(valueType, previousValue, rawNextValue),
+            });
           }
         } else {
           // Range selection turned off
           nextValue = getProcessedValue(rawNextValue);
         }
 
-        const nextActiveStartDate =
+        const valueActiveStartDate =
           // Range selection turned off
           !selectRange ||
           // Range selection turned on, first value
@@ -936,6 +946,12 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
                 view,
               })
             : null;
+
+        const nextActiveStartDate =
+          // Double view, value already visible in the second period - keep the view where it is
+          showDoubleView && areDatesEqual(valueActiveStartDate, getBeginNext(view, activeStartDate))
+            ? activeStartDate
+            : valueActiveStartDate;
 
         event.persist();
 
@@ -984,6 +1000,7 @@ const Calendar: React.ForwardRefExoticComponent<CalendarProps & React.RefAttribu
         onChangeProps,
         onClickTile,
         selectRange,
+        showDoubleView,
         value,
         valueType,
         view,
