@@ -188,6 +188,90 @@ describe('Calendar', () => {
     expect(instance.current.activeStartDate).toEqual(newActiveStartDate);
   });
 
+  it('does not change activeStartDate when selecting a date in the second month given showDoubleView flag', async () => {
+    const activeStartDate = new Date(2018, 0, 1);
+    const onActiveStartDateChange = vi.fn();
+    const instance = createRef<CalendarImperativeHandle>();
+
+    await render(
+      <Calendar
+        defaultActiveStartDate={activeStartDate}
+        onActiveStartDateChange={onActiveStartDateChange}
+        showDoubleView
+        ref={instance}
+      />,
+    );
+
+    act(() => {
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      instance.current.onChange(new Date(2018, 1, 10), event);
+    });
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
+
+    expect(instance.current.activeStartDate).toEqual(activeStartDate);
+    expect(onActiveStartDateChange).not.toHaveBeenCalled();
+  });
+
+  it('does not change activeStartDate when selecting the first value of a range in the second month given showDoubleView flag', async () => {
+    const activeStartDate = new Date(2018, 0, 1);
+    const onActiveStartDateChange = vi.fn();
+    const instance = createRef<CalendarImperativeHandle>();
+
+    await render(
+      <Calendar
+        defaultActiveStartDate={activeStartDate}
+        onActiveStartDateChange={onActiveStartDateChange}
+        selectRange
+        showDoubleView
+        ref={instance}
+      />,
+    );
+
+    act(() => {
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      instance.current.onChange(new Date(2018, 1, 10), event);
+    });
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
+
+    expect(instance.current.activeStartDate).toEqual(activeStartDate);
+    expect(onActiveStartDateChange).not.toHaveBeenCalled();
+  });
+
+  it('changes activeStartDate when selecting a date outside of both months given showDoubleView flag', async () => {
+    const newActiveStartDate = new Date(2018, 3, 1);
+    const instance = createRef<CalendarImperativeHandle>();
+
+    await render(
+      <Calendar defaultActiveStartDate={new Date(2018, 0, 1)} showDoubleView ref={instance} />,
+    );
+
+    act(() => {
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      instance.current.onChange(new Date(2018, 3, 10), event);
+    });
+
+    if (!instance.current) {
+      throw new Error('Calendar ref is not set');
+    }
+
+    expect(instance.current.activeStartDate).toEqual(newActiveStartDate);
+  });
+
   it('changes Calendar view given new activeStartDate value', async () => {
     const activeStartDate = new Date(2017, 0, 1);
     const newActiveStartDate = new Date(2018, 0, 1);
