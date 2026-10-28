@@ -132,6 +132,14 @@ describe('isRangeWithinRange', () => {
 });
 
 describe('doRangesOverlap', () => {
+  it('returns true when one range contains the other', () => {
+    const month: Range<Date> = [new Date(2017, 0, 1), new Date(2017, 0, 31)];
+    const selection: Range<Date> = [new Date(2017, 0, 10), new Date(2017, 0, 15)];
+
+    expect(doRangesOverlap(month, selection)).toBe(true);
+    expect(doRangesOverlap(selection, month)).toBe(true);
+  });
+
   it('returns true for overlapping ranges', () => {
     const range1: Range<Date> = [new Date(2016, 0, 1), new Date(2017, 0, 1)];
     const range2: Range<Date> = [new Date(2016, 6, 1), new Date(2017, 6, 1)];
@@ -236,6 +244,19 @@ describe('getTileClasses', () => {
   });
 
   describe('range classes', () => {
+    it('marks both range ends when a month contains the whole selection', () => {
+      const result = getTileClasses({
+        value: [new Date(2017, 0, 10), new Date(2017, 0, 15)],
+        date: new Date(2017, 0, 1),
+        dateType: 'month',
+      });
+
+      expect(result).toContain('react-calendar__tile--range');
+      expect(result).toContain('react-calendar__tile--rangeStart');
+      expect(result).toContain('react-calendar__tile--rangeEnd');
+      expect(result).toContain('react-calendar__tile--rangeBothEnds');
+    });
+
     it('returns range flag set to true when passed a date within value array', () => {
       const value: Range<Date> = [new Date(2017, 0, 1), new Date(2017, 6, 1)];
 

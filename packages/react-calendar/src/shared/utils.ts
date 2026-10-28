@@ -31,7 +31,7 @@ export function isRangeWithinRange(greaterRange: Range<Date>, smallerRange: Rang
 }
 
 export function doRangesOverlap(range1: Range<Date>, range2: Range<Date>): boolean {
-  return isValueWithinRange(range1[0], range2) || isValueWithinRange(range1[1], range2);
+  return range1[0] <= range2[1] && range2[0] <= range1[1];
 }
 
 function getRangeClassNames(
