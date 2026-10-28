@@ -8,7 +8,8 @@ import {
 } from '../shared/dateFormatter.js';
 import { isWeekend } from '../shared/dates.js';
 
-import type { CalendarType } from '../shared/types.js';
+import type { CalendarType, Value } from '../shared/types.js';
+import { memo } from 'react';
 
 const className = 'react-calendar__month-view__days__day';
 
@@ -33,12 +34,20 @@ type DayProps = {
    * @example (locale, date) => formatDate(date, 'dd MMM YYYY')
    */
   formatLongDate?: typeof defaultFormatLongDate;
+  value?: Value;
 } & Omit<
   React.ComponentProps<typeof Tile>,
   'children' | 'formatAbbr' | 'maxDateTransform' | 'minDateTransform' | 'view'
 >;
 
-export default function Day({
+function isDateSelected(value: Value | undefined, targetDate: Date): boolean {
+  if (!value) {
+    return false;
+  }
+  return value instanceof Date && value.getTime() === targetDate.getTime();
+}
+
+function Day({
   calendarType,
   classes = [],
   currentMonthIndex,
@@ -79,3 +88,14 @@ export default function Day({
     </Tile>
   );
 }
+
+const MemoizedDay: React.ComponentType<DayProps> = memo(Day, (prevProps, nextProps) => {
+  if (Array.isArray(prevProps.value) || Array.isArray(nextProps.value)) {
+    return false;
+  }
+  const prevSelected = isDateSelected(prevProps.value, prevProps.date);
+  const nextSelected = isDateSelected(nextProps.value, nextProps.date);
+  return prevSelected === nextSelected;
+});
+
+export default MemoizedDay;
