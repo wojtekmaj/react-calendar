@@ -188,6 +188,81 @@ describe('Calendar', () => {
     expect(instance.current.activeStartDate).toEqual(newActiveStartDate);
   });
 
+  it.each(['month', 'year', 'decade', 'century'] as const)(
+    'keeps both periods visible when selecting a value in the second %s view',
+    async (view) => {
+      const activeStartDate = new Date(2001, 0, 1);
+      const onActiveStartDateChange = vi.fn();
+      const onChange = vi.fn();
+      const instance = createRef<CalendarImperativeHandle>();
+
+      const { container } = await render(
+        <Calendar
+          defaultActiveStartDate={activeStartDate}
+          maxDetail={view}
+          onActiveStartDateChange={onActiveStartDateChange}
+          onChange={onChange}
+          ref={instance}
+          showDoubleView
+          showFixedNumberOfWeeks={false}
+          showNeighboringCentury={false}
+          showNeighboringDecade={false}
+          showNeighboringMonth={false}
+        />,
+      );
+
+      const tile = container.querySelector(
+        '.react-calendar__viewContainer > :nth-child(2) .react-calendar__tile',
+      ) as HTMLButtonElement;
+
+      await userEvent.click(tile);
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      expect(instance.current.activeStartDate).toEqual(activeStartDate);
+      expect(tile).toHaveClass('react-calendar__tile--active');
+      expect(onChange).toHaveBeenCalledOnce();
+      expect(onActiveStartDateChange).not.toHaveBeenCalled();
+    },
+  );
+
+  it.each([
+    { selectedDate: new Date(2018, 11, 31), expectedStartDate: new Date(2018, 11, 1) },
+    { selectedDate: new Date(2019, 2, 1), expectedStartDate: new Date(2019, 2, 1) },
+  ])(
+    'navigates to a neighboring date outside both visible months: $selectedDate',
+    async ({ selectedDate, expectedStartDate }) => {
+      const onActiveStartDateChange = vi.fn();
+      const instance = createRef<CalendarImperativeHandle>();
+
+      const { getByRole } = await render(
+        <Calendar
+          defaultActiveStartDate={new Date(2019, 0, 1)}
+          locale="en-US"
+          onActiveStartDateChange={onActiveStartDateChange}
+          ref={instance}
+          showDoubleView
+        />,
+      );
+
+      await userEvent.click(getByRole('button', { name: format(selectedDate), exact: true }));
+
+      if (!instance.current) {
+        throw new Error('Calendar ref is not set');
+      }
+
+      expect(instance.current.activeStartDate).toEqual(expectedStartDate);
+      expect(onActiveStartDateChange).toHaveBeenCalledWith({
+        action: 'onChange',
+        activeStartDate: expectedStartDate,
+        value: selectedDate,
+        view: 'month',
+      });
+    },
+  );
+
   it('changes Calendar view given new activeStartDate value', async () => {
     const activeStartDate = new Date(2017, 0, 1);
     const newActiveStartDate = new Date(2018, 0, 1);
