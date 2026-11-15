@@ -55,6 +55,6 @@ body:
           - **React-Calendar version**: 3.0.0
           - **React version**: 17.0.0
       value: |
-          - **Browser (if applicable)**:
-          - **React-Calendar version**:
-          - **React version**:
+        - **Browser (if applicable)**:
+        - **React-Calendar version**:
+        - **React version**:
